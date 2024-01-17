@@ -2,18 +2,12 @@ import styles from "../Authstyles.module.css";
 import { GoPerson } from "react-icons/go";
 import { LuKey } from "react-icons/lu";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import Header from "../../../Components/Header/Header";
-import Footer from "../../../Components/Footer/Footer";
+import Theme from "../../../Components/Theme/Theme";
 
 const Login = () => {
     return (
         <>
-           
-            <div className={styles.themeContainer}>
-                <div className={styles.grad1}></div>
-                <div className={styles.grad2}></div>
-                <div className={styles.grad3}></div>
-                <Header />
+            <Theme>
                 <div>
                     <div className={styles.formContainer}>
                         <div className={styles.form}>
@@ -80,9 +74,8 @@ const Login = () => {
                             className={styles.mascot}
                         />
                     </div>
-                    <Footer />
                 </div>
-            </div>
+            </Theme>
         </>
     );
 };
