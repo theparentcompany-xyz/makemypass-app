@@ -45,12 +45,21 @@
     height: 100%;
 }
 
+.themeContainer {
+    height: 100vh;
+
+    background: #131517;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .formContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 91vh;
 
     background: #131517;
 
@@ -58,13 +67,15 @@
 
     display: flex;
     flex-direction: row;
+
+    margin-bottom: 5rem;
 }
 
 .form {
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.04);
     background: rgba(255, 255, 255, 0.04);
-    
+
     width: 25rem;
     padding: 2rem;
 }

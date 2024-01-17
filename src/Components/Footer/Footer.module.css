@@ -1,0 +1,36 @@
+footer {
+    background-color: #131517;
+}
+
+.footerContainer {
+    margin: auto;
+    max-width: 70rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+
+    position: absolute;
+
+    bottom: 3rem;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+}
+
+.footerContainer hr {
+    color: #a4a4a4;
+    opacity: 0.1;
+}
+
+.socialIcons {
+    margin: 1rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: end;
+
+    column-gap: 0.5rem;
+}

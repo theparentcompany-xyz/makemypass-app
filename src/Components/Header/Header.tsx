@@ -14,7 +14,6 @@ const Header = () => {
     const formatTime = (date: Date) => {
         const hours = date.getHours();
         const minutes = date.getMinutes();
-        const seconds = date.getSeconds();
         const offsetHours = Math.floor(date.getTimezoneOffset() / 60);
         const offsetMinutes = date.getTimezoneOffset() % 60;
 
