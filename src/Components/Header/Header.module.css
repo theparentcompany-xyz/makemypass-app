@@ -1,0 +1,18 @@
+.mainLogo {
+    display: flex;
+    flex-direction: row;
+}
+
+header {
+    background-color: #131517;
+    color: #a4a4a4;
+    padding: 2rem;
+    font-family: "Inter", sans-serif;
+}
+
+.headerComponent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}

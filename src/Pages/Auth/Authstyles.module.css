@@ -1,0 +1,142 @@
+.grad1 {
+    opacity: 0.5;
+    background: radial-gradient(
+        50% 50% at 0% 0%,
+        #7662fc 0%,
+        rgba(118, 98, 252, 0) 100%
+    );
+
+    filter: blur(144.6999969482422px);
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.grad2 {
+    background: radial-gradient(
+        100% 100% at 0% 80%,
+        #01f77e 0%,
+        rgba(118, 98, 252, 0) 100%
+    );
+
+    opacity: 0.1;
+
+    filter: blur(144.6999969482422px);
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.grad3 {
+    background: radial-gradient(
+        50% 50% at 100% 60%,
+        #01f77e 0%,
+        rgba(118, 98, 252, 0) 100%
+    );
+
+    opacity: 0.1;
+
+    filter: blur(144.6999969482422px);
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 91vh;
+
+    background: #131517;
+
+    font-family: "Inter", sans-serif;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.form {
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.04);
+    
+    width: 25rem;
+    padding: 2rem;
+}
+
+.formTitle {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.formText {
+    margin-top: 0.5rem;
+    font-weight: 400;
+    color: #a4a4a4;
+    font-size: 0.875rem;
+}
+
+.formInput {
+    margin: 1rem 0;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 24rem;
+}
+
+.formLabel {
+    color: #a4a4a4;
+    font-size: 0.875rem;
+    font-weight: 400;
+}
+
+.inputField {
+    margin-top: 0.25rem;
+    border-radius: 8px;
+    border: none;
+    padding: 0.75rem 0.75rem;
+    background: rgba(255, 255, 255, 0.04);
+
+    display: flex;
+}
+
+.inputField input {
+    background: none;
+    border: none;
+    outline: none;
+    color: #fff;
+    margin-left: 0.25rem;
+    font-weight: 400;
+}
+
+.submitButton {
+    margin-top: 2rem;
+    display: flex;
+    padding: 0.25rem 1.5rem;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 8px;
+    border: none;
+
+    color: #a4a4a4;
+    font-family: "Inter", sans-serif;
+    margin-right: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+
+    width: 6rem;
+
+    float: right;
+}
+
+.mascot {
+    width: 12rem;
+    margin-bottom: -12rem;
+}
