@@ -1,4 +1,4 @@
-import Theme from "../../../Components/Theme/Theme";
+import Theme from "../../../components/Theme/Theme";
 import styles from "./Home.module.css";
 import { GoPeople } from "react-icons/go";
 import { BsArrowRight } from "react-icons/bs";

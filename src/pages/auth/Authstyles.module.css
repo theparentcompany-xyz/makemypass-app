@@ -1,5 +1,3 @@
-
-
 .formContainer {
     display: flex;
     flex-direction: column;
@@ -23,6 +21,8 @@
 
     width: 25rem;
     padding: 2rem;
+
+    z-index: 2;
 }
 
 .formTitle {
@@ -90,6 +90,13 @@
     width: 6rem;
 
     float: right;
+}
+
+.submitButton:hover {
+    cursor: pointer;
+
+    transition: 0.25s ease-in-out;
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .mascot {
