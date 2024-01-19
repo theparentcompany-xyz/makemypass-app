@@ -5,6 +5,7 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 import Theme from "../../../components/Theme/Theme";
 import { useRef } from "react";
 import { login } from "../../../apis/auth/auth";
+import InputFIeld from "./InputFIeld";
 
 const Login = () => {
     const emailRef = useRef<HTMLInputElement>(null);
@@ -32,42 +33,22 @@ const Login = () => {
                                         event Aweasome!!!
                                     </p>
                                 </div>
-                                <div className={styles.formInput}>
-                                    <label
-                                        className={styles.formLabel}
-                                        htmlFor="email"
-                                    >
-                                        Email
-                                    </label>
-                                    <div className={styles.inputField}>
-                                        <GoPerson color="#A4A4A4" />
-                                        <input
-                                            ref={emailRef}
-                                            type="email"
-                                            name="email"
-                                            id="email"
-                                            placeholder="Enter your email"
-                                        />
-                                    </div>
-                                </div>
-                                <div className={styles.formInput}>
-                                    <label
-                                        className={styles.formLabel}
-                                        htmlFor="password"
-                                    >
-                                        Password
-                                    </label>
-                                    <div className={styles.inputField}>
-                                        <LuKey color="#A4A4A4" />
-                                        <input
-                                            ref={passwordRef}
-                                            type="password"
-                                            name="password"
-                                            id="password"
-                                            placeholder="Enter your password"
-                                        />
-                                    </div>
-                                </div>
+                                <InputFIeld
+                                    ref={emailRef}
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    placeholder="Enter your email"
+                                    icon={<GoPerson color="#A4A4A4" />}
+                                />
+                                <InputFIeld
+                                    ref={passwordRef}
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    placeholder="Enter your password"
+                                    icon={<LuKey color="#A4A4A4" />}
+                                />
                             </div>
 
                             <button
