@@ -8,7 +8,7 @@ export const publicGateway = axios.create({
     headers: {
         "Content-Type": "application/json",
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        product: "Wizard",
+        product: "Makemypass",
     },
 });
 
