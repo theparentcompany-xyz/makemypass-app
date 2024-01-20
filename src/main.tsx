@@ -5,15 +5,21 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/auth/Login/Login";
 import Home from "./pages/app/Home/Home";
 import "./index.css";
+import Overview from "./pages/app/Overview/Overview";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Home />,
+        
     },
     {
-        path: "login",
+        path: "/login",
         element: <Login />,
+    },
+    {
+        path: "/overview",
+        element: <Overview />,
     },
 ]);
 

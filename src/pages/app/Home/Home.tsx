@@ -5,13 +5,14 @@ import { BsArrowRight } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 import { getEvents } from "../../../apis/events";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-    const [events, setEvents] = useState([]);
+    // const [events, setEvents] = useState([]);
 
-    useEffect(() => {
-        getEvents(setEvents);
-    }, []);
+    // useEffect(() => {
+    //     getEvents(setEvents);
+    // }, []);
 
     return (
         <>
@@ -52,12 +53,18 @@ const Home = () => {
                                                     </span>
                                                     0 guests
                                                 </p>
-                                                <button
-                                                    className={styles.manage}
-                                                >
-                                                    Manage
-                                                    <BsArrowRight size={15} />
-                                                </button>
+                                                <Link to="/overview">
+                                                    <button
+                                                        className={
+                                                            styles.manage
+                                                        }
+                                                    >
+                                                        Manage
+                                                        <BsArrowRight
+                                                            size={15}
+                                                        />
+                                                    </button>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
