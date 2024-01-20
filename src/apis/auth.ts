@@ -2,20 +2,34 @@ import toast from "react-hot-toast";
 import { privateGateway, publicGateway } from "../../services/apiGateway";
 import { buildVerse, makeMyPass } from "../../services/urls";
 
-export const login = async (email: string, password: string) => {
+export const login = async (
+    email: string,
+    password: string,
+
+    isOtpSent?: boolean
+) => {
+    type LoginData = {
+        email: string;
+        otp?: string;
+        password?: string;
+    };
+
+    const data: LoginData = {
+        email: email,
+    };
+
+    if (isOtpSent) {
+        data["otp"] = password;
+    } else {
+        data["password"] = password;
+    }
+
     publicGateway
-        .post(
-            buildVerse.login,
-            {
-                email,
-                password,
+        .post(buildVerse.login, data, {
+            headers: {
+                product: "buildverse",
             },
-            {
-                headers: {
-                    product: "buildverse",
-                },
-            }
-        )
+        })
         .then((response) => {
             localStorage.setItem(
                 "accessToken",
@@ -29,7 +43,7 @@ export const login = async (email: string, password: string) => {
         })
         .catch((error) => {
             console.log(error);
-            toast.error(error.response.data.detail.message);
+            toast.error(error.response.data.message.general[0]);
         });
 };
 
@@ -41,5 +55,24 @@ export const onboardUser = async () => {
         })
         .catch((error) => {
             console.log(error);
+        });
+};
+
+export const preRegister = async (
+    email: string,
+    setIsOtpSent: (arg0: boolean) => void
+) => {
+    publicGateway
+        .post(buildVerse.preRegister, {
+            email: email,
+        })
+        .then((response) => {
+            console.log(response.data.message.general[0]);
+            toast.success(response.data.message.general[0]);
+            setIsOtpSent(true);
+            return response.data;
+        })
+        .catch((error) => {
+            toast.error(error.response.data.message.general[0]);
         });
 };

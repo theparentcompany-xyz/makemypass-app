@@ -1,14 +1,16 @@
-const buildURL = (basePath: string) => (endpoint: string) => `${basePath}${endpoint}`;
+const buildURL = (basePath: string) => (endpoint: string) =>
+    `${basePath}${endpoint}`;
 
-const buildVerseURL = buildURL('/buildverse');
-const makeMyPassURL = buildURL('/makemypass');
+const buildVerseURL = buildURL("/buildverse");
+const makeMyPassURL = buildURL("/makemypass");
 
 export const buildVerse = {
-    login: buildVerseURL('/login/'),
-    getAccessToken: buildVerseURL('/get-access-token/'),
+    login: buildVerseURL("/login/"),
+    getAccessToken: buildVerseURL("/get-access-token/"),
+    preRegister: buildVerseURL("/pre-register/"),
 };
 
 export const makeMyPass = {
-    onboardUser: makeMyPassURL('/onboard-user/'),
-    listEvents: makeMyPassURL('/list-events/'),
+    onboardUser: makeMyPassURL("/onboard-user/"),
+    listEvents: makeMyPassURL("/list-events/"),
 };

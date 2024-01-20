@@ -14,7 +14,7 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(
         return (
             <div className={styles.formInput}>
                 <label className={styles.formLabel} htmlFor="email">
-                    Email
+                    {inputProps.placeholder}
                 </label>
                 <div className={styles.inputField}>
                     {icon}

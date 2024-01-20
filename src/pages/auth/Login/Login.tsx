@@ -3,17 +3,26 @@ import { GoPerson } from "react-icons/go";
 import { LuKey } from "react-icons/lu";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Theme from "../../../components/Theme/Theme";
-import { useRef } from "react";
-import { login } from "../../../apis/auth";
+import { useRef, useState } from "react";
+import { login, preRegister } from "../../../apis/auth";
 import InputFIeld from "./InputFIeld";
 
 const Login = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
+    const otpRef = useRef<HTMLInputElement>(null);
+
+    const [isOtpSent, setIsOtpSent] = useState(false);
+    const [isPassword, setIsPassword] = useState(false);
+
     const handleSubmit = () => {
-        if (emailRef.current?.value && passwordRef.current?.value)
+        if (isPassword && emailRef.current?.value && passwordRef.current?.value)
             login(emailRef.current?.value, passwordRef.current?.value);
+        else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
+            login(emailRef.current?.value, otpRef.current?.value, isOtpSent);
+        else if (!isOtpSent && emailRef.current?.value)
+            preRegister(emailRef.current?.value, setIsOtpSent);
     };
 
     return (
@@ -41,28 +50,63 @@ const Login = () => {
                                     placeholder="Enter your email"
                                     icon={<GoPerson color="#A4A4A4" />}
                                 />
-                                <InputFIeld
-                                    ref={passwordRef}
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    placeholder="Enter your password"
-                                    icon={<LuKey color="#A4A4A4" />}
-                                />
+
+                                {isPassword && !isOtpSent && (
+                                    <InputFIeld
+                                        ref={passwordRef}
+                                        type="password"
+                                        name="password"
+                                        id="password"
+                                        placeholder="Enter your password"
+                                        icon={<LuKey color="#A4A4A4" />}
+                                    />
+                                )}
+
+                                {isOtpSent && !isPassword && (
+                                    <InputFIeld
+                                        ref={otpRef}
+                                        type="text"
+                                        name="otp"
+                                        id="otp"
+                                        placeholder="Enter OTP"
+                                        icon={<LuKey color="#A4A4A4" />}
+                                    />
+                                )}
                             </div>
 
-                            <button
-                                onClick={handleSubmit}
-                                className={styles.submitButton}
-                            >
-                                SignIn{" "}
-                                <span>
-                                    <IoIosArrowRoundForward
-                                        size={25}
-                                        color="#A4A4A4"
-                                    />
-                                </span>
-                            </button>
+                            <div className={styles.formFooter}>
+                                <p
+                                    onClick={() => {
+                                        if (!isPassword) {
+                                            setIsOtpSent(false);
+                                            setIsPassword(true);
+                                        } else {
+                                            setIsOtpSent(false);
+                                            setIsPassword(false);
+                                        }
+                                    }}
+                                >
+                                    Login with {isPassword ? "OTP" : "Password"}
+                                </p>
+                                <button
+                                    onClick={handleSubmit}
+                                    className={styles.submitButton}
+                                >
+                                    {
+                                        isOtpSent
+                                            ? "Login"
+                                            : isPassword
+                                            ? "Login"
+                                            : "Get OTP"
+                                    }
+                                    <span>
+                                        <IoIosArrowRoundForward
+                                            size={25}
+                                            color="#A4A4A4"
+                                        />
+                                    </span>
+                                </button>
+                            </div>
                         </div>
                         <img
                             src="/mascot.webp"

@@ -72,8 +72,21 @@
     font-weight: 400;
 }
 
-.submitButton {
+.formFooter {
     margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.formFooter p {
+    color: #a4a4a4;
+    font-size: 0.875rem;
+    font-weight: 400;
+}
+
+.submitButton {
     display: flex;
     padding: 0.25rem 1.5rem;
     justify-content: center;
@@ -87,7 +100,7 @@
     margin-right: 1rem;
     background: rgba(255, 255, 255, 0.08);
 
-    width: 6rem;
+    width: 9rem;
 
     float: right;
 }

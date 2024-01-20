@@ -7,6 +7,7 @@ import Home from "./pages/app/Home/Home";
 import "./index.css";
 import Overview from "./pages/app/Overview/Overview";
 import LandingPage from "./pages/app/LandingPage/LandingPage";
+import { Toaster, ToastPosition } from "react-hot-toast";
 
 const router = createBrowserRouter([
     {
@@ -27,8 +28,23 @@ const router = createBrowserRouter([
     },
 ]);
 
+const toasterProps = {
+    containerStyle: {
+      fontFamily: 'Inter, sans-serif',
+    },
+    toastOptions: {
+      style: {
+        backgroundColor: '#1B2725',
+        border: '0.5px solid #232A2B',
+        color: '#ffffff',
+      },
+    },
+    position: 'bottom-center' as ToastPosition,
+  };
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <RouterProvider router={router} />
+        <Toaster {...toasterProps} />
     </React.StrictMode>
 );
