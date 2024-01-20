@@ -1,0 +1,15 @@
+.buttonContainer {
+    display: flex;
+    padding: 4px 11px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    border: none;
+
+    padding: 0.5rem 1rem;
+}

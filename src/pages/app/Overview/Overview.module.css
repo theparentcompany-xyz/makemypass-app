@@ -36,3 +36,77 @@
     align-items: center;
     margin-top: 1rem;
 }
+
+.tableHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.tableHeading {
+    color: #fff;
+
+    font-family: "Inter", sans-serif;
+    font-size: 1.1rem;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.tableContainer {
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.04);
+    margin-top: 1rem;
+
+    padding: 1rem;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.rowData {
+    display: flex;
+}
+
+.rowName {
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.9rem;
+}
+
+.rowEmail {
+    color: rgba(255, 255, 255, 0.5);
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.8rem;
+    margin-left: 1rem;
+}
+
+.rowType {
+    border-radius: 100px;
+    background: rgba(7, 164, 96, 0.13);
+    color: #47c97e;
+    font-family: "Inter", sans-serif;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.rowDate {
+    color: rgba(255, 255, 255, 0.5);
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.75rem;
+    margin-left: 1rem;
+}

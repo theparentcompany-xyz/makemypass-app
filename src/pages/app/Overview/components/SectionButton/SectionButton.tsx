@@ -1,4 +1,4 @@
-import styles from "./Button.module.css";
+import styles from "./SectionButton.module.css";
 const Button = ({
     buttonText,
     icon,
