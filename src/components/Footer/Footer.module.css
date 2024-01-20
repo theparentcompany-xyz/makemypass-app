@@ -5,7 +5,7 @@ footer {
 .footerContainer {
     margin: auto;
     max-width: 70rem;
-
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -33,4 +33,10 @@ footer {
     align-items: end;
 
     column-gap: 0.5rem;
+}
+
+.tpclogo {
+    margin: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
 }

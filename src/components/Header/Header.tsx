@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./Header.module.css";
-const Header = () => {
+import SecondaryButton from "../../pages/app/Overview/components/SecondaryButton/SecondaryButton";
+const Header = ({ type }: { type?: string | undefined }) => {
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
@@ -29,11 +30,22 @@ const Header = () => {
         <header>
             <div className={styles.headerComponent}>
                 <div className={styles.mainLogo}>
-                    <img src="/logoText.webp" alt="" className={styles.header} />
+                    <img
+                        src="/logoText.webp"
+                        alt=""
+                        className={styles.header}
+                    />
                     <p className={styles.logo}>MakeMyPass</p>
                 </div>
 
-                <p className={styles.timeText}>{formatTime(currentTime)}</p>
+                {type != "landing" ? (
+                    <p className={styles.timeText}>{formatTime(currentTime)}</p>
+                ) : (
+                    <div className={styles.buttons}>
+                        <SecondaryButton buttonText="T&C" />
+                        <SecondaryButton buttonText="Privacy Policy" />
+                    </div>
+                )}
             </div>
         </header>
     );

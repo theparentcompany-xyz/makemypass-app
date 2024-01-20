@@ -2,3 +2,29 @@
     padding: 0;
     margin: 0;
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+    margin: 1rem;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #333333;
+    padding: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #121212;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3b3b3b;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}

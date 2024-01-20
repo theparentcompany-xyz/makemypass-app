@@ -1,0 +1,128 @@
+.landingPageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+
+    padding: 1rem;
+}
+
+.roundThing {
+    background: rgba(118, 98, 252, 0.13);
+    display: block;
+    width: 9rem;
+    padding: 0.5rem;
+
+    border-radius: 15px;
+    text-align: center;
+
+    color: #7662fc;
+    font-family: Inter;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16.767px; /* 113.52% */
+
+    margin: auto;
+    margin-bottom: 0.5rem;
+}
+
+.headingText {
+    text-align: center;
+    font-family: "Inter", sans-serif;
+}
+
+.mainHeading {
+    color: white;
+    text-align: center;
+    font-family: Inter;
+    font-size: 4rem;
+    font-style: normal;
+    line-height: 500px;
+    font-weight: 600;
+    line-height: 57.194px; /* 90.647% */
+}
+
+.mainHeading span {
+    color: #7662fc;
+}
+
+.subHeading {
+    color: rgba(255, 255, 255, 0.75);
+    text-align: center;
+    font-family: Inter;
+    max-width: 35rem;
+    margin: auto;
+    margin-top: 1rem;
+    line-height: 1.5rem;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.launch {
+    margin-top: 1rerm;
+    display: flex;
+    padding: 4px 11px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    border: none;
+
+    padding: 0.5rem 1rem;
+    margin: auto;
+    margin-top: 1rem;
+}
+
+.launchAt {
+    color: rgba(255, 255, 255, 0.75);
+    text-align: center;
+    font-family: Inter;
+    margin: auto;
+    line-height: 1.5rem;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    color: #7662fc;
+}
+
+.landingImage {
+    margin-top: 1rem;
+    width: 85%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .mainHeading {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+
+    .subHeading {
+        font-size: 0.8rem;
+        line-height: 1.3rem;
+        max-width: 25rem;
+    }
+
+    .launch {
+        padding: 0.3rem 0.8rem;
+    }
+
+    .launchAt {
+        font-size: 0.6rem;
+    }
+
+    .landingImage {
+        margin-top: 0.5rem;
+    }
+}
+

@@ -12,6 +12,7 @@ header {
 
     font-family: "Inter", sans-serif;
     height: 5vh;
+    
 }
 
 .headerComponent {
@@ -20,8 +21,20 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    max-width: 70rem;
+
+    margin: auto;
 }
 
 .logo {
     margin-left: 0.5rem;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 1rem;
 }

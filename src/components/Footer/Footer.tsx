@@ -8,9 +8,12 @@ const Footer = () => {
             <footer>
                 <div className={styles.footerContainer}>
                     <hr />
-                    <div className={styles.socialIcons}>
-                        <FaInstagram color="a4a4a4" size={20} />
-                        <FaXTwitter color="a4a4a4" size={20} />
+                    <div className="row">
+                        <img className={styles.tpclogo} src="/tpc.png" alt="" />
+                        <div className={styles.socialIcons}>
+                            <FaInstagram color="a4a4a4" size={20} />
+                            <FaXTwitter color="a4a4a4" size={20} />
+                        </div>
                     </div>
                 </div>
             </footer>
