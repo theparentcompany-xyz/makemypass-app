@@ -54,6 +54,15 @@
     font-weight: 600;
 }
 
+.tableHeading span {
+    color: #d2d4d7;
+    font-family: "Inter", sans-serif;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 400;
+    margin-top: 1rem;
+}
+
 .tableContainer {
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.04);
@@ -90,7 +99,7 @@
     font-style: normal;
     font-weight: 400;
     font-size: 0.8rem;
-    margin-left: 1rem;
+    margin-left: 0.35rem;
 }
 
 .rowType {
@@ -100,6 +109,7 @@
     font-family: "Inter", sans-serif;
     font-size: 0.7rem;
     padding: 0.25rem 0.5rem;
+    margin-left: 0.15rem;
 }
 
 .rowDate {
@@ -108,5 +118,5 @@
     font-style: normal;
     font-weight: 400;
     font-size: 0.75rem;
-    margin-left: 1rem;
+    margin-left: 0.35rem;
 }

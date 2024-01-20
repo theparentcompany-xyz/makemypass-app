@@ -7,6 +7,8 @@ import Header from "./components/Header/Header";
 import { HiUserGroup } from "react-icons/hi2";
 import { FaWrench } from "react-icons/fa";
 import { BsQrCodeScan } from "react-icons/bs";
+import { TbPencil } from "react-icons/tb";
+
 import SecondaryButton from "./components/SecondaryButton/SecondaryButton";
 
 const Overview = () => {
@@ -170,6 +172,43 @@ const Overview = () => {
                                             <p className={styles.rowDate}>
                                                 {data.date}
                                             </p>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+
+                <div className={styles.recentRegistrations}>
+                    <div className={styles.tableHeader}>
+                        <p className={styles.tableHeading}>
+                            Hosts <br />
+                            <span>
+                                Add hosts, special guests, and event managers.
+                            </span>
+                        </p>
+                        <SecondaryButton buttonText="+ Add Host" />
+                    </div>
+
+                    <div className={styles.tableContainer}>
+                        <div className={styles.table}>
+                            {tableData.map((data, index) => {
+                                return (
+                                    <div key={index} className={styles.row}>
+                                        <div className={styles.rowData}>
+                                            <p className={styles.rowName}>
+                                                {data.name}
+                                            </p>
+                                            <p className={styles.rowEmail}>
+                                                {data.email}
+                                            </p>
+                                            <p className={styles.rowType}>
+                                                {data.type}
+                                            </p>
+                                        </div>
+                                        <div className={styles.rowData}>
+                                            <TbPencil color="#8E8F90" size={18}/>
                                         </div>
                                     </div>
                                 );
