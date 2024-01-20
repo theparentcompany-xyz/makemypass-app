@@ -29,3 +29,10 @@
     border-bottom: 2px solid #fff;
 }
 
+.buttons {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+}

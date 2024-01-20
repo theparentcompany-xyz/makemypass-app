@@ -1,0 +1,34 @@
+.buttonContainer {
+    border-radius: 11px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.04);
+
+    border: none;
+
+    padding: 1rem 2rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.buttonText {
+    color: #fff;
+    margin-right: 1rem;
+    font-family: "Inter", sans-serif;
+    font-size: 1.1rem;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.buttonIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
