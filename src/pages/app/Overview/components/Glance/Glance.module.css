@@ -1,0 +1,50 @@
+.progresBarGraph {
+    width: 100%;
+    height: 100%;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    border-radius: 8px;
+}
+
+.glanceHeader,
+.guests {
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 1.25rem;
+    margin-top: 1rem;
+}
+
+.guests span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    color: #47c97e;
+}
+
+.progressBar {
+    margin-top: 1rem;
+    width: 30rem;
+    height: 0.5em;
+}
+
+.progressLabel {
+    display: flex;
+    flex-direction: row;
+    list-style-type: disc;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    font-family: "Inter", sans-serif;
+}
+
+.progressLabels ul {
+    display: flex;
+    flex-direction: row;
+    list-style-type: disc;
+    margin: 0;
+    padding: 0;
+    column-gap: 0.5rem;
+}

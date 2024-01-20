@@ -1,5 +1,6 @@
 import Theme from "../../../components/Theme/Theme";
 import styles from "./Overview.module.css";
+import Glance from "./components/Glance/Glance";
 import Header from "./components/Header/Header";
 
 const Overview = () => {
@@ -20,6 +21,8 @@ const Overview = () => {
                         </ol>
                     </div>
                 </div>
+
+                <Glance />
             </div>
         </Theme>
     );
