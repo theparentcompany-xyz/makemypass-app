@@ -3,8 +3,6 @@ import styles from "./Home.module.css";
 import { GoPeople } from "react-icons/go";
 import { BsArrowRight } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
-import { getEvents } from "../../../apis/events";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
