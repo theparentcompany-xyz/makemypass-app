@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 
 export const publicGateway = axios.create({
     baseURL:  (import.meta as any).env.VITE_BACKEND_URL as string,
-    //The beackend requires the timezone and product headers to be set for every request hence the following code.
     headers: {
         "Content-Type": "application/json",
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -12,7 +11,6 @@ export const publicGateway = axios.create({
     },
 });
 
-// Add a request interceptor
 publicGateway.interceptors.request.use(
     function (config) {
         console.log(config);
@@ -32,7 +30,7 @@ export const privateGateway = axios.create({
     },
 });
 
-// Add a request interceptor
+
 privateGateway.interceptors.request.use(
     function (config) {
         const accessToken = localStorage.getItem("accessToken");
@@ -47,8 +45,6 @@ privateGateway.interceptors.request.use(
     }
 );
 
-// Request Interceptor: Ensure that the URL ends with a trailing slash~
-// If the URL doesn't terminate with a slash, this interceptor appends one.
 privateGateway.interceptors.request.use(
     function (config) {
         if (config.url) {
@@ -63,7 +59,7 @@ privateGateway.interceptors.request.use(
     }
 );
 
-// Add a response interceptor
+
 privateGateway.interceptors.response.use(
     function (response) {
         return response;

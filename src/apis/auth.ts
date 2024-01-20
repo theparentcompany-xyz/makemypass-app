@@ -1,5 +1,6 @@
-import { privateGateway, publicGateway } from "../../../services/apiGateway";
-import { buildVerse, makeMyPass } from "../../../services/urls";
+import toast from "react-hot-toast";
+import { privateGateway, publicGateway } from "../../services/apiGateway";
+import { buildVerse, makeMyPass } from "../../services/urls";
 
 export const login = async (email: string, password: string) => {
     publicGateway
@@ -16,7 +17,6 @@ export const login = async (email: string, password: string) => {
             }
         )
         .then((response) => {
-            console.log(response);
             localStorage.setItem(
                 "accessToken",
                 response.data.response.access_token
@@ -29,6 +29,7 @@ export const login = async (email: string, password: string) => {
         })
         .catch((error) => {
             console.log(error);
+            toast.error(error.response.data.detail.message);
         });
 };
 

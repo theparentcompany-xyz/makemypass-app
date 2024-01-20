@@ -3,8 +3,16 @@ import styles from "./Home.module.css";
 import { GoPeople } from "react-icons/go";
 import { BsArrowRight } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
+import { getEvents } from "../../../apis/events";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        getEvents(setEvents);
+    }, []);
+
     return (
         <>
             <Theme>
@@ -18,13 +26,13 @@ const Home = () => {
                                     <p className={styles.day}>Wednesday</p>
                                 </div>
 
-                                <img src="/slider.png" alt="" />
+                                <img src="/slider.webp" alt="" />
 
                                 <div>
                                     <div className={styles.eventCard}>
                                         <div className={styles.innerCard}>
                                             <img
-                                                src="/scale.png"
+                                                src="/scale.webp"
                                                 alt=""
                                                 className={styles.eventImage}
                                             />

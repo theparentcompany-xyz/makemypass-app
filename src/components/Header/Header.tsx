@@ -29,7 +29,7 @@ const Header = () => {
         <header>
             <div className={styles.headerComponent}>
                 <div className={styles.mainLogo}>
-                    <img src="/logoText.png" alt="" className={styles.header} />
+                    <img src="/logoText.webp" alt="" className={styles.header} />
                     <p className={styles.logo}>MakeMyPass</p>
                 </div>
 

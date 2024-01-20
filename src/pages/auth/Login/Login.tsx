@@ -4,7 +4,7 @@ import { LuKey } from "react-icons/lu";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Theme from "../../../components/Theme/Theme";
 import { useRef } from "react";
-import { login } from "../../../apis/auth/auth";
+import { login } from "../../../apis/auth";
 import InputFIeld from "./InputFIeld";
 
 const Login = () => {
@@ -65,7 +65,7 @@ const Login = () => {
                             </button>
                         </div>
                         <img
-                            src="/mascot.png"
+                            src="/mascot.webp"
                             alt=""
                             className={styles.mascot}
                         />
