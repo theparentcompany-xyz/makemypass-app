@@ -17,17 +17,19 @@ const Header = ({ type }: { type?: string | undefined }) => {
     return (
         <header>
             <div className={styles.headerComponent}>
-                <div className={styles.mainLogo}>
-                    <img
-                        src="/logoText.webp"
-                        alt=""
-                        className={styles.header}
-                    />
-                    <p className={styles.logo}>MakeMyPass</p>
-                </div>
+                <Link to="/">
+                    <div className={styles.mainLogo}>
+                        <img
+                            src="/logoText.webp"
+                            alt=""
+                            className={styles.header}
+                        />
+                        <span className={styles.logo}>MakeMyPass</span>
+                    </div>
+                </Link>
 
                 {type != "landing" ? (
-                    isAuthenticated && (
+                    isAuthenticated ? (
                         <>
                             <div className="row">
                                 <p
@@ -57,11 +59,20 @@ const Header = ({ type }: { type?: string | undefined }) => {
                                 </Link>
                             </div>
                         </>
+                    ) : (
+                        <div className={styles.buttons}>
+                            <Link to="/login">
+                                <SecondaryButton buttonText="Login" />
+                            </Link>
+                        </div>
                     )
                 ) : (
                     <div className={styles.buttons}>
-                        <SecondaryButton buttonText="T&C" />
-                        <SecondaryButton buttonText="Privacy Policy" />
+                        {/* <SecondaryButton buttonText="T&C" />
+                        <SecondaryButton buttonText="Privacy Policy" /> */}
+                        <Link to="/login">
+                                <SecondaryButton buttonText="Login" />
+                            </Link>
                     </div>
                 )}
             </div>
