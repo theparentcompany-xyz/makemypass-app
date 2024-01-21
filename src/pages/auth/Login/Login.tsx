@@ -4,7 +4,7 @@ import { LuKey } from "react-icons/lu";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Theme from "../../../components/Theme/Theme";
 import { useRef, useState } from "react";
-import { login, preRegister } from "../../../apis/auth";
+import { login, generateOTP } from "../../../apis/auth";
 import InputFIeld from "./InputFIeld";
 
 const Login = () => {
@@ -22,7 +22,7 @@ const Login = () => {
         else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
             login(emailRef.current?.value, otpRef.current?.value, isOtpSent);
         else if (!isOtpSent && emailRef.current?.value)
-            preRegister(emailRef.current?.value, setIsOtpSent);
+            generateOTP(emailRef.current?.value, setIsOtpSent, "Login");
     };
 
     return (
@@ -39,7 +39,7 @@ const Login = () => {
                                     <p className={styles.formText}>
                                         Sign In now to make your
                                         <br />
-                                        event Aweasome!!!
+                                        event Aweasome!
                                     </p>
                                 </div>
                                 <InputFIeld
@@ -47,7 +47,7 @@ const Login = () => {
                                     type="email"
                                     name="email"
                                     id="email"
-                                    placeholder="Enter your email"
+                                    placeholder="Enter your Email*"
                                     icon={<GoPerson color="#A4A4A4" />}
                                 />
 
@@ -57,7 +57,7 @@ const Login = () => {
                                         type="password"
                                         name="password"
                                         id="password"
-                                        placeholder="Enter your password"
+                                        placeholder="Enter your Password*"
                                         icon={<LuKey color="#A4A4A4" />}
                                     />
                                 )}
@@ -68,7 +68,7 @@ const Login = () => {
                                         type="text"
                                         name="otp"
                                         id="otp"
-                                        placeholder="Enter OTP"
+                                        placeholder="Enter OTP*"
                                         icon={<LuKey color="#A4A4A4" />}
                                     />
                                 )}
@@ -92,13 +92,11 @@ const Login = () => {
                                     onClick={handleSubmit}
                                     className={styles.submitButton}
                                 >
-                                    {
-                                        isOtpSent
-                                            ? "Login"
-                                            : isPassword
-                                            ? "Login"
-                                            : "Get OTP"
-                                    }
+                                    {isOtpSent
+                                        ? "Login"
+                                        : isPassword
+                                        ? "Login"
+                                        : "Get OTP"}
                                     <span>
                                         <IoIosArrowRoundForward
                                             size={25}

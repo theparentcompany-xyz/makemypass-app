@@ -19,7 +19,7 @@
     border: 1px solid rgba(255, 255, 255, 0.04);
     background: rgba(255, 255, 255, 0.04);
 
-    width: 25rem;
+    max-width: 25rem;
     padding: 2rem;
 
     z-index: 2;
@@ -32,7 +32,7 @@
 }
 
 .formText {
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
     font-weight: 400;
     color: #a4a4a4;
     font-size: 0.875rem;
@@ -115,4 +115,39 @@
 .mascot {
     width: 12rem;
     margin-bottom: -12rem;
+}
+
+@media (max-width: 720px) {
+    .formContainer {
+        flex-direction: column-reverse;
+        height: 70vh;
+    }
+
+    .formInput {
+        width: 17.5rem;
+    }
+
+    .form {
+        max-width: 20rem;
+    }
+
+    .mascot {
+        width: 9rem;
+        margin-bottom: -1.5rem;
+    }
+
+    .submitButton {
+        padding: 0.15rem 0.5rem;
+
+        width: 8rem;
+        font-size: 0.8rem;
+
+        float: right;
+    }
+
+    .formFooter p {
+        color: #a4a4a4;
+        font-size: 0.75rem;
+        font-weight: 400;
+    }
 }

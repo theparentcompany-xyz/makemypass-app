@@ -18,7 +18,10 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(
                 </label>
                 <div className={styles.inputField}>
                     {icon}
-                    <input {...inputProps} ref={ref} />
+                    <input style={{
+                        width: "100%",
+                        fontFamily: "Inter"
+                    }} {...inputProps} ref={ref} />
                 </div>
             </div>
         );

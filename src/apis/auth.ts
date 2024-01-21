@@ -58,13 +58,15 @@ export const onboardUser = async () => {
         });
 };
 
-export const preRegister = async (
+export const generateOTP = async (
     email: string,
-    setIsOtpSent: (arg0: boolean) => void
+    setIsOtpSent: (arg0: boolean) => void,
+    type: string
 ) => {
     publicGateway
-        .post(buildVerse.preRegister, {
+        .post(buildVerse.generateOTP, {
             email: email,
+            type: type,
         })
         .then((response) => {
             console.log(response.data.message.general[0]);
