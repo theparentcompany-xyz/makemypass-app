@@ -1,31 +1,19 @@
 import { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import SecondaryButton from "../../pages/app/Overview/components/SecondaryButton/SecondaryButton";
+import { Link } from "react-router-dom";
 const Header = ({ type }: { type?: string | undefined }) => {
-    const [currentTime, setCurrentTime] = useState(new Date());
+    const [openSettings, setOpenSettings] = useState(false);
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const userEmail = localStorage.getItem("userEmail");
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            setCurrentTime(new Date());
-        }, 1000);
+        if (localStorage.getItem("accessToken") && !isAuthenticated) {
+            setIsAuthenticated(true);
+        }
+    }, [isAuthenticated]);
 
-        return () => clearInterval(intervalId);
-    }, []); // Empty dependency array to run the effect only once on mount
-
-    const formatTime = (date: Date) => {
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        const offsetHours = Math.floor(date.getTimezoneOffset() / 60);
-        const offsetMinutes = date.getTimezoneOffset() % 60;
-
-        const formattedTime = `${String(hours).padStart(2, "0")}:${String(
-            minutes
-        ).padStart(2, "0")} GMT${offsetHours >= 0 ? "+" : "-"}${String(
-            Math.abs(offsetHours)
-        ).padStart(2, "0")}:${String(offsetMinutes).padStart(2, "0")}`;
-
-        return formattedTime;
-    };
     return (
         <header>
             <div className={styles.headerComponent}>
@@ -39,7 +27,37 @@ const Header = ({ type }: { type?: string | undefined }) => {
                 </div>
 
                 {type != "landing" ? (
-                    <p className={styles.timeText}>{formatTime(currentTime)}</p>
+                    isAuthenticated && (
+                        <>
+                            <div className="row">
+                                <p
+                                    onClick={() => {
+                                        setOpenSettings(!openSettings);
+                                    }}
+                                    className={styles.userName}
+                                >
+                                    നമസ്കാരം {userEmail}
+                                    <span className={styles.avatar}>
+                                        {userEmail?.split("")[0].toUpperCase()}
+                                    </span>
+                                </p>
+
+                                <Link to="/login">
+                                    <SecondaryButton
+                                        buttonText="Logout"
+                                        onClick={() => {
+                                            localStorage.removeItem(
+                                                "accessToken"
+                                            );
+                                            localStorage.removeItem(
+                                                "userEmail"
+                                            );
+                                        }}
+                                    />
+                                </Link>
+                            </div>
+                        </>
+                    )
                 ) : (
                     <div className={styles.buttons}>
                         <SecondaryButton buttonText="T&C" />

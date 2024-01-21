@@ -5,7 +5,7 @@ import { buildVerse, makeMyPass } from "../../services/urls";
 export const login = async (
     email: string,
     password: string,
-
+    setIsAuthenticated: (arg0: boolean) => void,
     isOtpSent?: boolean
 ) => {
     type LoginData = {
@@ -31,6 +31,7 @@ export const login = async (
             },
         })
         .then((response) => {
+            const userEmail = email.split("@")[0];
             localStorage.setItem(
                 "accessToken",
                 response.data.response.access_token
@@ -39,6 +40,8 @@ export const login = async (
                 "refreshToken",
                 response.data.response.refresh_token
             );
+            localStorage.setItem("userEmail", userEmail);
+            setIsAuthenticated(true);
             onboardUser();
         })
         .catch((error) => {

@@ -3,11 +3,14 @@ import { GoPerson } from "react-icons/go";
 import { LuKey } from "react-icons/lu";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Theme from "../../../components/Theme/Theme";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { login, generateOTP } from "../../../apis/auth";
 import InputFIeld from "./InputFIeld";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -15,20 +18,40 @@ const Login = () => {
 
     const [isOtpSent, setIsOtpSent] = useState(false);
     const [isPassword, setIsPassword] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const handleSubmit = () => {
         if (isPassword && emailRef.current?.value && passwordRef.current?.value)
-            login(emailRef.current?.value, passwordRef.current?.value);
+            login(
+                emailRef.current?.value,
+                passwordRef.current?.value,
+                setIsAuthenticated
+            );
         else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
-            login(emailRef.current?.value, otpRef.current?.value, isOtpSent);
+            login(
+                emailRef.current?.value,
+                otpRef.current?.value,
+                setIsAuthenticated,
+                isOtpSent
+            );
         else if (!isOtpSent && emailRef.current?.value)
             generateOTP(emailRef.current?.value, setIsOtpSent, "Login");
     };
 
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/events");
+        }
+    }, [isAuthenticated]);
+
     return (
         <>
             <Theme>
-                <div>
+                <div
+                    style={{
+                        width: "100%",
+                    }}
+                >
                     <div className={styles.formContainer}>
                         <div className={styles.form}>
                             <div className={styles.formFields}>

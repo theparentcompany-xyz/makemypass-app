@@ -12,7 +12,6 @@ header {
 
     font-family: "Inter", sans-serif;
     height: 5vh;
-    
 }
 
 .headerComponent {
@@ -37,4 +36,36 @@ header {
     justify-content: space-between;
     align-items: center;
     column-gap: 1rem;
+}
+
+.userName {
+    font-size: 0.9rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 0.5rem;
+}
+
+.avatar {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background-color: #57575c;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    .logo {
+        display: none;
+    }
+
+    .userName {
+        font-size: 0.6rem;
+    }
 }

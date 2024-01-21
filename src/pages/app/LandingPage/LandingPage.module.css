@@ -6,6 +6,8 @@
     height: 80vh;
 
     padding: 1rem;
+
+    margin: auto;
 }
 
 .roundThing {
@@ -125,4 +127,3 @@
         margin-top: 0.5rem;
     }
 }
-
