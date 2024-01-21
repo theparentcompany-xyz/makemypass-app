@@ -1,6 +1,19 @@
+.centerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    margin: auto;
+    padding: 0 1rem;
+}
+
 .overViewContainer {
-    width: 51.875rem;
-    height: 20.5rem;
+    /* height: 20.5rem; */
+    max-width: 52.875rem;
+    min-width: 20rem;
+    width: 100%;
+    /* padding: 2rem; */
 }
 
 .tabsContainer {
@@ -37,6 +50,10 @@
     margin-top: 1rem;
 }
 
+.recentRegistrations {
+    margin-top: 1rem;
+}
+
 .tableHeader {
     display: flex;
     flex-direction: row;
@@ -52,6 +69,8 @@
     font-size: 1.1rem;
     font-style: normal;
     font-weight: 600;
+
+    width: 12rem;
 }
 
 .tableHeading span {
@@ -70,6 +89,9 @@
     margin-top: 1rem;
 
     padding: 1rem;
+
+    width: 51.875rem;
+    overflow: auto;
 }
 
 .row {
@@ -119,4 +141,15 @@
     font-weight: 400;
     font-size: 0.75rem;
     margin-left: 0.35rem;
+}
+
+@media screen and (max-width: 768px) {
+    .tableContainer {
+        width: 20rem;
+        overflow: auto;
+    }
+
+    .table {
+        width: 51rem;
+    }
 }

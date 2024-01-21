@@ -2,8 +2,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     z-index: 2;
+
+    width: 100%;
+    height: 80vh;
+    padding: 2rem;
+
+    margin-top: 2rem;
+
+    overflow: hidden;
 }
 
 .create {
@@ -19,7 +27,6 @@
     column-gap: 2rem;
     row-gap: 2rem;
 }
-
 
 .date {
     font-size: 1.25rem;
@@ -47,8 +54,9 @@
     border: 1px solid rgba(255, 255, 255, 0.04);
     background: rgba(255, 255, 255, 0.04);
 
-    width: 25rem;
-    padding: 1rem 2rem;
+    max-width: 25rem;
+    min-width: 20rem;
+    padding: 1rem;
 
     display: flex;
     flex-direction: column;
@@ -114,4 +122,31 @@
     display: flex;
     column-gap: 0.25rem;
     margin-top: 1rem;
+}
+
+@media (max-width: 720px) {
+    .slider {
+        display: none;
+    }
+
+    .eventDate {
+        margin: 1rem 0;
+    }
+
+    .event {
+        margin-top: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+
+        row-gap: 0;
+    }
+
+    .eventCard {
+        min-width: 18rem;
+    }
+
+    .day {
+        margin-top: 0;
+    }
 }

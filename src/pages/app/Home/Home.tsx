@@ -29,7 +29,9 @@ const Home = () => {
             <Theme>
                 <div className={styles.homeContainer}>
                     <div>
-                        <p className={styles.homeHeader}>Events</p>
+                        <p className={styles.homeHeader}>{
+                            events.length > 0 ? "Your Events" : "No Events Currently"
+                        }</p>
                         <div className={styles.eventsContainer}>
                             {events.map((event) => (
                                 <div className={styles.event}>
@@ -42,7 +44,11 @@ const Home = () => {
                                         </p>
                                     </div>
 
-                                    <img src="/slider.webp" alt="" />
+                                    <img
+                                        className={styles.slider}
+                                        src="/slider.webp"
+                                        alt=""
+                                    />
 
                                     <div>
                                         <div className={styles.eventCard}>

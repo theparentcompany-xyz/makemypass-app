@@ -16,7 +16,7 @@ header {
 }
 
 .headerComponent {
-    padding: 2rem;
+    padding: 1rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
