@@ -90,19 +90,24 @@ const Insights = () => {
         ],
     };
 
+    const [message, setMessage] = useState("");
+
     const [socket, setSocket] = useState<WebSocket | null>(null);
+
+    useEffect(() => {
+        return () => {
+            socket?.close();
+        };
+    }, []);
 
     useEffect(() => {
         const wsUrl = `wss://api.buildnship.in/makemypass/manage-event/d1929bdb-c891-4850-8c41-4097ae2c6c7f/analytics/`;
 
         connectPrivateSocket({ url: wsUrl }).then((ws) => {
             ws.onmessage = (event) => {
-                // console.log("Message from server ", event.data);
+                setMessage(event.data);
+                console.log(event.data);
             };
-
-            ws.onclose = () => {
-                console.log("Socket closed");
-            }
 
             setSocket(ws);
         });

@@ -1,46 +1,69 @@
+import { useEffect, useState } from "react";
 import styles from "./Glance.module.css";
+import { connectPrivateSocket } from "../../../../../../services/apiGateway";
 const Glance = () => {
-    const progressData = [
-        {
-            type: "Student",
-            color: "#47C97E",
-            value: 202,
-        },
-        {
-            type: "Startups",
-            color: "#7662FC",
-            value: 202,
-        },
-        {
-            type: "Local Business/SME",
-            color: "#C33D7B",
-            value: 126,
-        },
-        {
-            type: "NRE",
-            color: "#FBD85B",
-            value: 556,
-        },
-        {
-            type: "Working Profesionals",
-            color: "#5B75FB",
-            value: 45,
-        },
-        {
-            type: "Others",
-            color: "#D2D4D7",
-            value: 560,
-        },
-    ];
+    type progressDataType = {
+        type: string;
+        color: string | undefined;
+        value: number;
+    }[];
+
+    const [socket, setSocket] = useState<WebSocket | null>(null);
+
+    const [progressData, setprogressData] = useState<progressDataType>([]);
+    const [totalGuests, setTotalGuests] = useState<number>(0);
+
+    useEffect(() => {
+        return () => {
+            socket?.close();
+        };
+    }, []);
+
+    useEffect(() => {
+        const wsUrl = `wss://api.buildnship.in/makemypass/manage-event/d1929bdb-c891-4850-8c41-4097ae2c6c7f/register-count/`;
+
+        connectPrivateSocket({ url: wsUrl }).then((ws) => {
+            ws.onmessage = (event) => {
+                const category = JSON.parse(event.data).response.category;
+
+                setTotalGuests(Number(JSON.parse(event.data).response.total));
+
+                const newStrucure: progressDataType = [];
+                let colors = [
+                    "#47C97E",
+                    "#7662FC",
+                    "#C33D7B",
+                    "#FBD85B",
+                    "#5B75FB",
+                    "#D2D4D7",
+                ];
+
+                for (const [key, value] of Object.entries(category)) {
+                    console.log(`${key}: ${value}`);
+                    newStrucure.push({
+                        type: key,
+                        color: colors.pop(),
+                        value: Number(value),
+                    });
+                }
+
+                setprogressData(newStrucure);
+            };
+
+            setSocket(ws);
+        });
+    }, []);
 
     return (
         <>
             <div className={styles.glanceContainer}>
                 <p className={styles.glanceHeader}>At a Glance</p>
 
-                <p className={styles.guests}>
-                    20,002 <span>guests</span>
-                </p>
+                {totalGuests > 0 && (
+                    <p className={styles.guests}>
+                        {totalGuests} <span>guests</span>
+                    </p>
+                )}
 
                 <div className={styles.progresBarGraph}>
                     {progressData.map((data) => (

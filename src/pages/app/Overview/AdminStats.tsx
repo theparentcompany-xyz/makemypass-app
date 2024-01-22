@@ -7,7 +7,7 @@ import Overview from "./modules/Overview/Overview";
 import Insights from "./modules/Insights/Insights";
 
 const AdminStats = () => {
-    const [currentTab, setCurrentTab] = useState("insights");
+    const [currentTab, setCurrentTab] = useState("overview");
 
     const updateTab = (tab: string) => {
         setCurrentTab(tab);
