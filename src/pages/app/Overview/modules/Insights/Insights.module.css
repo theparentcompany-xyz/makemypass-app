@@ -1,0 +1,127 @@
+.registrationCount {
+    border-radius: 0 0 12px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 2rem;
+    font-family: "Inter", sans-serif;
+    color: white;
+
+    width: 100%;
+}
+
+.countSection {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    margin-bottom: 1rem;
+
+    row-gap: 1rem;
+    column-gap: 1rem;
+}
+
+.cLeftSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    margin-bottom: 1rem;
+
+    row-gap: 1rem;
+    column-gap: 1rem;
+
+    width: 18rem;
+}
+
+.weeklyCounts {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 70%;
+}
+
+.total {
+    color: #fff;
+
+    font-family: Inter;
+    font-size: 18.75px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.count {
+    font-size: 1.35rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.count span {
+    color: #47c97e;
+    font-size: 0.9rem;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.week {
+    color: rgba(255, 255, 255, 0.5);
+
+    font-family: Inter;
+    font-size: 12.695px;
+    font-style: normal;
+}
+
+.wcount {
+    color: #c33d7b;
+
+    font-family: Inter;
+    font-size: 24px;
+}
+
+.live {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.lcount {
+    color: #47c97e;
+
+    font-family: Inter;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.rightSectionHeading {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.categories {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+
+    row-gap: 0.5rem;
+    column-gap: 1rem;
+}
+
+.category {
+    display: flex;
+    align-items: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.categoryName {
+    color: rgba(255, 255, 255, 0.79);
+    font-size: 0.9rem;
+}
+
+.categoryCount {
+    font-size: 0.8rem;
+}

@@ -4,6 +4,7 @@ import Header from "./components/Header/Header";
 
 import { useState } from "react";
 import Overview from "./modules/Overview/Overview";
+import Insights from "./modules/Insights/Insights";
 
 const AdminStats = () => {
     const [currentTab, setCurrentTab] = useState("overview");
@@ -17,7 +18,7 @@ const AdminStats = () => {
             case "overview":
                 return <Overview />;
             case "insights":
-                return <div>Insights</div>;
+                return <Insights />;
             default:
                 return <div>Overview</div>;
         }
