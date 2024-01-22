@@ -4,7 +4,7 @@ footer {
 
 .footerContainer {
     margin: auto;
-    max-width: 70rem;
+    max-width: 73rem;
     display: flex;
     flex-direction: column;
     justify-content: end;
