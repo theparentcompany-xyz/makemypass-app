@@ -113,37 +113,117 @@ const Insights = () => {
                 </div>
             </div>
 
-            <div className={styles.pieContainer}>
-                <div className={styles.pieSection}>Pie Chart Comes Here</div>
-                <div className={styles.timeSection}>
-                    <p className={styles.rightSectionHeading}>Active Time</p>
-                    <div className={styles.times}>
-                        <div className={styles.time}>
-                            <hr
-                                style={{
-                                    backgroundColor: "#FBD85B",
-                                }}
-                                className={styles.line}
-                            />
-                            <p className="type">Morning</p>
+            <div className={styles.insightsContainer}>
+                <div className={styles.pieContainer}>
+                    <div className={styles.pieSection}>
+                        Pie Chart Comes Here
+                    </div>
+                    <div className={styles.timeSection}>
+                        <p className={styles.rightSectionHeading}>
+                            Active Time
+                        </p>
+                        <div className={styles.times}>
+                            <div className={styles.time}>
+                                <hr
+                                    style={{
+                                        backgroundColor: "#FBD85B",
+                                    }}
+                                    className={styles.line}
+                                />
+                                <p className="type">Morning</p>
+                            </div>
+                            <div className={styles.time}>
+                                <hr
+                                    style={{
+                                        backgroundColor: "#35A1EB",
+                                    }}
+                                    className={styles.line}
+                                />
+                                <p className="type">Evening</p>
+                            </div>
+                            <div className={styles.time}>
+                                <hr
+                                    style={{
+                                        backgroundColor: "#C33D7B",
+                                    }}
+                                    className={styles.line}
+                                />
+                                <p className="type">Night</p>
+                            </div>
                         </div>
-                        <div className={styles.time}>
-                            <hr
-                                style={{
-                                    backgroundColor: "#35A1EB",
-                                }}
-                                className={styles.line}
-                            />
-                            <p className="type">Evening</p>
+                    </div>
+                </div>
+
+                <div
+                    style={{
+                        borderRadius: "12px",
+                    }}
+                    className={styles.registrationCount}
+                >
+                    <div className={styles.countSection}>
+                        <div className={styles.cLeftSection}>
+                            <div className={styles.totalRegistered}>
+                                <p className={styles.total}>Page Visits</p>
+                                <p className={styles.count}>
+                                    20,002 <span>Visits</span>
+                                </p>
+                            </div>
+                            <div className={styles.weeklyCounts}>
+                                <div className={styles.weeklyCount}>
+                                    <p className={styles.week}>Yesterday</p>
+                                    <p className={styles.wcount}>300</p>
+                                </div>
+                                <div className={styles.weeklyCount}>
+                                    <p className={styles.week}>This week</p>
+                                    <p className={styles.wcount}>1400</p>
+                                </div>
+                            </div>
+                            <div className={styles.liveTraffic}>
+                                <p className={styles.live}>
+                                    Conversion Rate Vs Page Visit
+                                </p>
+                                <p className={styles.lcount}>_</p>
+                            </div>
                         </div>
-                        <div className={styles.time}>
-                            <hr
-                                style={{
-                                    backgroundColor: "#C33D7B",
-                                }}
-                                className={styles.line}
-                            />
-                            <p className="type">Night</p>
+                        <div className={styles.cRightSection}>
+                            <p className={styles.rightSectionHeading}>
+                                Registration Cities
+                            </p>
+
+                            <div className={styles.categories}>
+                                <div className={styles.category}>
+                                    <p className={styles.categoryName}>Pune</p>
+                                    <p className={styles.categoryCount}>100</p>
+                                </div>
+                                <div className={styles.category}>
+                                    <p className={styles.categoryName}>Dubai</p>
+                                    <p className={styles.categoryCount}>100</p>
+                                </div>
+                                <div className={styles.category}>
+                                    <p className={styles.categoryName}>
+                                        Kerala
+                                    </p>
+                                    <p className={styles.categoryCount}>100</p>
+                                </div>
+                                <div className={styles.category}>
+                                    <p className={styles.categoryName}>
+                                        Tamil Nadu
+                                    </p>
+                                    <p className={styles.categoryCount}>100</p>
+                                </div>
+                                <div className={styles.category}>
+                                    <p className={styles.categoryName}>
+                                        Karnataka
+                                    </p>
+                                    <p className={styles.categoryCount}>100</p>
+                                </div>
+                                <div className={styles.category}>
+                                    <p className={styles.categoryName}>
+                                        Mumbai
+                                    </p>
+                                    <p className={styles.categoryCount}>100</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
