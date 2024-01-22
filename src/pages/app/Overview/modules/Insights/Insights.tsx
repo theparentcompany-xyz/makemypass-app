@@ -49,8 +49,57 @@ const Insights = () => {
                                 <p className={styles.categoryName}>Investors</p>
                                 <p className={styles.categoryCount}>100</p>
                             </div>
+                            <div className={styles.category}>
+                                <p className={styles.categoryName}>SME</p>
+                                <p className={styles.categoryCount}>100</p>
+                            </div>
+                            <div className={styles.category}>
+                                <p className={styles.categoryName}>Investors</p>
+                                <p className={styles.categoryCount}>100</p>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div className={styles.todayRegistered}>
+                <div className={styles.totalRegistered}>
+                    <p className={styles.total}>Today Registered</p>
+                    <p className={styles.count}>
+                        10,002 <span>guests</span>
+                    </p>
+                </div>
+
+                <div className={styles.weeklyCounts}>
+                    <div className={styles.weeklyCount}>
+                        <p className={styles.week}>Students</p>
+                        <p className={styles.wcount}>300</p>
+                    </div>
+                    <div className={styles.weeklyCount}>
+                        <p className={styles.week}>Startups</p>
+                        <p className={styles.wcount}>1400</p>
+                    </div>
+                    <div className={styles.weeklyCount}>
+                        <p className={styles.week}>SME</p>
+                        <p className={styles.wcount}>300</p>
+                    </div>
+                    <div className={styles.weeklyCount}>
+                        <p className={styles.week}>Investor</p>
+                        <p className={styles.wcount}>1400</p>
+                    </div>
+                    <div className={styles.weeklyCount}>
+                        <p className={styles.week}>NRI</p>
+                        <p className={styles.wcount}>300</p>
+                    </div>
+                    <div className={styles.weeklyCount}>
+                        <p className={styles.week}>Professional</p>
+                        <p className={styles.wcount}>1400</p>
+                    </div>
+                </div>
+
+                <div className={styles.liveTraffic}>
+                    <p className={styles.live}>Date</p>
+                    <p className={styles.lcount}>Thu 18th Jan, 2024</p>
                 </div>
             </div>
         </div>
