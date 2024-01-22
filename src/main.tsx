@@ -5,9 +5,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/auth/Login/Login";
 import Home from "./pages/app/Home/Home";
 import "./index.css";
-import Overview from "./pages/app/Overview/Overview";
+import Overview from "./pages/app/Overview/AdminStats";
 import LandingPage from "./pages/app/LandingPage/LandingPage";
 import { Toaster, ToastPosition } from "react-hot-toast";
+import AdminStats from "./pages/app/Overview/AdminStats";
 
 const router = createBrowserRouter([
     {
@@ -24,23 +25,23 @@ const router = createBrowserRouter([
     },
     {
         path: "/overview",
-        element: <Overview />,
+        element: <AdminStats />,
     },
 ]);
 
 const toasterProps = {
     containerStyle: {
-      fontFamily: 'Inter, sans-serif',
+        fontFamily: "Inter, sans-serif",
     },
     toastOptions: {
-      style: {
-        backgroundColor: '#1B2725',
-        border: '0.5px solid #232A2B',
-        color: '#ffffff',
-      },
+        style: {
+            backgroundColor: "#1B2725",
+            border: "0.5px solid #232A2B",
+            color: "#ffffff",
+        },
     },
-    position: 'bottom-center' as ToastPosition,
-  };
+    position: "bottom-center" as ToastPosition,
+};
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
