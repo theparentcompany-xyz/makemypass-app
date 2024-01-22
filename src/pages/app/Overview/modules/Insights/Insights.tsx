@@ -1,10 +1,100 @@
 import styles from "./Insights.module.css";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    BarElement,
+    ArcElement,
+} from "chart.js";
+import { Line, Bar, Doughnut } from "react-chartjs-2";
+import { faker } from "@faker-js/faker";
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+
+    LinearScale,
+    BarElement,
+
+    ArcElement
+);
 
 const Insights = () => {
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: "top" as const,
+            },
+            title: {
+                display: true,
+                text: "Chart.js Line Chart",
+            },
+        },
+    };
+
+    const labels = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+    ];
+
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: "Dataset 1",
+                data: labels.map(() =>
+                    faker.datatype.number({ min: -1000, max: 1000 })
+                ),
+                borderColor: "rgb(255, 99, 132)",
+                backgroundColor: "rgba(255, 99, 132, 0.5)",
+            },
+        ],
+    };
+
+    const pieData = {
+        labels: ["Red", "Blue", "Yellow"],
+        datasets: [
+            {
+                label: "# of Votes",
+                data: [12, 19, 3],
+                backgroundColor: [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(54, 162, 235, 0.2)",
+                    "rgba(255, 206, 86, 0.2)",
+                ],
+                borderColor: [
+                    "rgba(255, 99, 132, 1)",
+                    "rgba(54, 162, 235, 1)",
+                    "rgba(255, 206, 86, 1)",
+                ],
+                borderWidth: 1,
+            },
+        ],
+    };
+
     return (
         <>
             <div className={styles.insightsContainer}>
                 <div className={styles.registrationCount}>
+                    <div className={styles.graphContainer}>
+                        <Line options={options} data={data} />
+                    </div>
                     <div className={styles.countSection}>
                         <div className={styles.cLeftSection}>
                             <div className={styles.totalRegistered}>
@@ -72,13 +162,15 @@ const Insights = () => {
                 </div>
 
                 <div className={styles.todayRegistered}>
+                    <div className={styles.graphContainer}>
+                        <Bar options={options} data={data} />
+                    </div>
                     <div className={styles.totalRegistered}>
                         <p className={styles.total}>Today Registered</p>
                         <p className={styles.count}>
                             10,002 <span>guests</span>
                         </p>
                     </div>
-
                     <div className={styles.weeklyCounts}>
                         <div className={styles.weeklyCount}>
                             <p className={styles.week}>Students</p>
@@ -105,7 +197,6 @@ const Insights = () => {
                             <p className={styles.wcount}>1400</p>
                         </div>
                     </div>
-
                     <div className={styles.liveTraffic}>
                         <p className={styles.live}>Date</p>
                         <p className={styles.lcount}>Thu 18th Jan, 2024</p>
@@ -116,7 +207,7 @@ const Insights = () => {
             <div className={styles.insightsContainer}>
                 <div className={styles.pieContainer}>
                     <div className={styles.pieSection}>
-                        Pie Chart Comes Here
+                        <Doughnut data={pieData} />
                     </div>
                     <div className={styles.timeSection}>
                         <p className={styles.rightSectionHeading}>

@@ -1,5 +1,5 @@
 .registrationCount {
-    border-radius: 0 0 12px 12px;
+    border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.04);
     background: rgba(255, 255, 255, 0.04);
     padding: 1rem 2rem;
@@ -19,6 +19,7 @@
 }
 
 .countSection {
+    margin-top: 1rem;
     display: flex;
     justify-content: start;
     align-items: start;
@@ -138,7 +139,7 @@
 /* Next Box */
 
 .todayRegistered {
-    border-radius: 0 0 12px 12px;
+    border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.04);
     background: rgba(255, 255, 255, 0.04);
     padding: 2rem;
@@ -152,6 +153,7 @@
 }
 
 .totalRegistered {
+    margin-top: 1rem;
     margin-bottom: 1rem;
 }
 
@@ -192,4 +194,13 @@
     width: 4rem;
     height: 2px;
     border: none;
+}
+/* 
+.graphContainer {
+    background-color: #131517;
+    padding: -2rem;
+} */
+
+.pieSection {
+    width: 12rem;
 }
