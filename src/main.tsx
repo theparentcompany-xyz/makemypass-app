@@ -3,13 +3,13 @@ import "./index.css";
 import * as React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/auth/Login/Login";
-import Home from "./pages/app/Home/Home";
 import "./index.css";
 import LandingPage from "./pages/app/LandingPage/LandingPage";
 import { Toaster, ToastPosition } from "react-hot-toast";
 
 import Insights from "./pages/app/Insights/Insights";
 import Overview from "./pages/app/Overview/Overview/Overview";
+import Events from "./pages/app/Home/Events";
 
 const router = createBrowserRouter([
     {
@@ -18,18 +18,18 @@ const router = createBrowserRouter([
     },
     {
         path: "/events",
-        element: <Home />,
+        element: <Events />,
     },
     {
         path: "/login",
         element: <Login />,
     },
     {
-        path: "/overview/:eventId",
+        path: "/:eventTitle/overview/:eventId",
         element: <Overview />,
     },
     {
-        path: "/insights/:eventId",
+        path: "/:eventTitle/insights/:eventId",
         element: <Insights />,
     },
 ]);

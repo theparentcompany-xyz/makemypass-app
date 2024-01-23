@@ -1,5 +1,5 @@
 import Theme from "../../../components/Theme/Theme";
-import styles from "./Home.module.css";
+import styles from "./Events.module.css";
 import { GoPeople } from "react-icons/go";
 import { BsArrowRight } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getEvents } from "../../../apis/events";
 
-const Home = () => {
+const Events = () => {
     type Event = {
         id: string;
         title: string;
@@ -29,9 +29,11 @@ const Home = () => {
             <Theme>
                 <div className={styles.homeContainer}>
                     <div>
-                        <p className={styles.homeHeader}>{
-                            events.length > 0 ? "Your Events" : "No Events Currently"
-                        }</p>
+                        <p className={styles.homeHeader}>
+                            {events.length > 0
+                                ? "Your Events"
+                                : "No Events Currently"}
+                        </p>
                         <div className={styles.eventsContainer}>
                             {events.map((event) => (
                                 <div className={styles.event}>
@@ -83,7 +85,9 @@ const Home = () => {
                                                         {event.members} guests
                                                     </p>
                                                     <Link
-                                                        to={`/overview?eventId=${event.id}`}
+                                                        to={`/${event.title.toLowerCase()}/overview/${
+                                                            event.id
+                                                        }`}
                                                     >
                                                         <button
                                                             className={
@@ -115,4 +119,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Events;

@@ -24,12 +24,15 @@ const Glance = (tab: any) => {
         };
     }, []);
 
-    const { eventId } = useParams<{ eventId: string }>();
+    const { eventTitle, eventId } = useParams<{
+        eventTitle: string;
+        eventId: string;
+    }>();
     const [currentTab, setCurrentTab] = useState("overview");
 
     const updateTab = (tab: string) => {
         setCurrentTab(tab);
-        navigate(`/${tab}/${eventId}`);
+        navigate(`/${eventTitle}/${tab}/${eventId}`);
     };
 
     useEffect(() => {
