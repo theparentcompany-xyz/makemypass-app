@@ -34,7 +34,11 @@ ChartJS.register(
 
 const Insights = () => {
     const [message, setMessage] = useState<AnalyticsData>();
+
     const [lineData, setLineData] = useState<any>();
+    const [barData, setBarData] = useState<any>();
+    const [pieData, setPieData] = useState<any>();
+
     const [socket, setSocket] = useState<WebSocket | null>(null);
 
     const options = {
@@ -50,51 +54,6 @@ const Insights = () => {
         },
     };
 
-    const labels = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-    ];
-
-    let data = {
-        labels,
-        datasets: [
-            {
-                label: "Dataset 1",
-                data: labels.map(() =>
-                    faker.datatype.number({ min: -1000, max: 1000 })
-                ),
-                borderColor: "rgb(255, 99, 132)",
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
-            },
-        ],
-    };
-
-    const pieData = {
-        labels: ["Red", "Blue", "Yellow"],
-        datasets: [
-            {
-                label: "# of Votes",
-                data: [12, 19, 3],
-                backgroundColor: [
-                    "rgba(255, 99, 132, 0.2)",
-                    "rgba(54, 162, 235, 0.2)",
-                    "rgba(255, 206, 86, 0.2)",
-                ],
-                borderColor: [
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(54, 162, 235, 1)",
-                    "rgba(255, 206, 86, 1)",
-                ],
-                borderWidth: 1,
-            },
-        ],
-    };
-
     useEffect(() => {
         return () => {
             socket?.close();
@@ -106,23 +65,49 @@ const Insights = () => {
 
         connectPrivateSocket({ url: wsUrl }).then((ws) => {
             ws.onmessage = (event) => {
-                const lineData = JSON.parse(event.data).response;
-                console.log(lineData);
-                setMessage(lineData);
-
+                const lineBarData = JSON.parse(event.data).response;
+                setMessage(lineBarData);
                 setLineData({
-                    labels: Object.keys(lineData?.analytics || {}),
+                    labels: Object.keys(lineBarData?.analytics || {}),
                     datasets: [
                         {
                             label: "Dataset 1",
-                            data: Object.values(lineData?.analytics || {}),
+                            data: Object.values(lineBarData?.analytics || {}),
                             borderColor: "rgb(255, 99, 132)",
                             backgroundColor: "rgba(255, 99, 132, 0.5)",
                         },
                     ],
                 });
 
-                console.log(data);
+                setBarData({
+                    labels: Object.keys(lineBarData?.today_category || {}),
+                    datasets: [
+                        {
+                            label: "Dataset 1",
+                            data: Object.values(
+                                lineBarData?.today_category || {}
+                            ),
+                            borderColor: "rgb(255, 99, 132)",
+                            backgroundColor: "rgba(255, 99, 132, 0.5)",
+                        },
+                    ],
+                });
+
+                setPieData({
+                    labels: Object.keys(lineBarData.active_timeframe),
+                    datasets: [
+                        {
+                            label: "# of Votes",
+                            data: Object.values(lineBarData.active_timeframe),
+                            backgroundColor: [
+                                "#FBD85B",
+                                "#C33D7B",
+                                "#47C97E",
+                                "#35A1EB",
+                            ],
+                        },
+                    ],
+                });
             };
 
             setSocket(ws);
@@ -188,51 +173,48 @@ const Insights = () => {
 
                 <div className={styles.todayRegistered}>
                     <div className={styles.graphContainer}>
-                        <Bar options={options} data={data} />
+                        {barData && <Bar options={options} data={barData} />}
                     </div>
                     <div className={styles.totalRegistered}>
                         <p className={styles.total}>Today Registered</p>
                         <p className={styles.count}>
-                            10,002 <span>guests</span>
+                            {message?.today_reg} <span>guests</span>
                         </p>
                     </div>
                     <div className={styles.weeklyCounts}>
-                        <div className={styles.weeklyCount}>
-                            <p className={styles.week}>Students</p>
-                            <p className={styles.wcount}>300</p>
-                        </div>
-                        <div className={styles.weeklyCount}>
-                            <p className={styles.week}>Startups</p>
-                            <p className={styles.wcount}>1400</p>
-                        </div>
-                        <div className={styles.weeklyCount}>
-                            <p className={styles.week}>SME</p>
-                            <p className={styles.wcount}>300</p>
-                        </div>
-                        <div className={styles.weeklyCount}>
-                            <p className={styles.week}>Investor</p>
-                            <p className={styles.wcount}>1400</p>
-                        </div>
-                        <div className={styles.weeklyCount}>
-                            <p className={styles.week}>NRI</p>
-                            <p className={styles.wcount}>300</p>
-                        </div>
-                        <div className={styles.weeklyCount}>
-                            <p className={styles.week}>Professional</p>
-                            <p className={styles.wcount}>1400</p>
-                        </div>
+                        {Object.entries(message?.today_category || {}).map(
+                            ([key, value]) => (
+                                <div className={styles.weeklyCount}>
+                                    <p className={styles.week}>
+                                        {key.substring(0, 8)}..
+                                    </p>
+                                    <p className={styles.wcount}>{value}</p>
+                                </div>
+                            )
+                        )}
                     </div>
                     <div className={styles.liveTraffic}>
-                        <p className={styles.live}>Date</p>
-                        <p className={styles.lcount}>Thu 18th Jan, 2024</p>
+                        <p className={styles.live}>Event Date</p>
+                        <p className={styles.lcount}>{message?.event_date}</p>
                     </div>
                 </div>
             </div>
 
-            {/* <div className={styles.insightsContainer}>
+            <div className={styles.insightsContainer}>
                 <div className={styles.pieContainer}>
                     <div className={styles.pieSection}>
-                        <Doughnut data={pieData} />
+                        {pieData && (
+                            <Doughnut
+                                data={pieData}
+                                options={{
+                                    plugins: {
+                                        legend: {
+                                            display: false,
+                                        },
+                                    },
+                                }}
+                            />
+                        )}
                     </div>
                     <div className={styles.timeSection}>
                         <p className={styles.rightSectionHeading}>
@@ -240,30 +222,47 @@ const Insights = () => {
                         </p>
                         <div className={styles.times}>
                             <div className={styles.time}>
-                                <hr
+                                <p
                                     style={{
-                                        backgroundColor: "#FBD85B",
+                                        color: "#FBD85B",
                                     }}
                                     className={styles.line}
-                                />
+                                >
+                                    {message?.active_timeframe.Morning}
+                                </p>
                                 <p className="type">Morning</p>
                             </div>
                             <div className={styles.time}>
-                                <hr
+                                <p
                                     style={{
-                                        backgroundColor: "#35A1EB",
+                                        color: "#35A1EB",
                                     }}
                                     className={styles.line}
-                                />
+                                >
+                                    {message?.active_timeframe.Evening}
+                                </p>
                                 <p className="type">Evening</p>
                             </div>
                             <div className={styles.time}>
-                                <hr
+                                <p
                                     style={{
-                                        backgroundColor: "#C33D7B",
+                                        color: "#47C97E",
                                     }}
                                     className={styles.line}
-                                />
+                                >
+                                    {message?.active_timeframe.Afternoon}
+                                </p>
+                                <p className="type">Afternoon</p>
+                            </div>
+                            <div className={styles.time}>
+                                <p
+                                    style={{
+                                        color: "#C33D7B",
+                                    }}
+                                    className={styles.line}
+                                >
+                                    {message?.active_timeframe.Night}
+                                </p>
                                 <p className="type">Night</p>
                             </div>
                         </div>
@@ -281,24 +280,44 @@ const Insights = () => {
                             <div className={styles.totalRegistered}>
                                 <p className={styles.total}>Page Visits</p>
                                 <p className={styles.count}>
-                                    20,002 <span>Visits</span>
+                                    {message?.page_visit.total
+                                        ? message?.page_visit.total
+                                        : "-"}{" "}
+                                    <span>Visits</span>
                                 </p>
                             </div>
                             <div className={styles.weeklyCounts}>
                                 <div className={styles.weeklyCount}>
                                     <p className={styles.week}>Yesterday</p>
-                                    <p className={styles.wcount}>300</p>
+                                    <p className={styles.wcount}>
+                                        {" "}
+                                        {message?.page_visit.yesterday
+                                            ? message?.page_visit.yesterday
+                                            : "-"}{" "}
+                                    </p>
                                 </div>
                                 <div className={styles.weeklyCount}>
                                     <p className={styles.week}>This week</p>
-                                    <p className={styles.wcount}>1400</p>
+                                    <p className={styles.wcount}>
+                                        {" "}
+                                        {message?.page_visit.this_week
+                                            ? message?.page_visit.this_week
+                                            : "-"}{" "}
+                                    </p>
                                 </div>
                             </div>
                             <div className={styles.liveTraffic}>
                                 <p className={styles.live}>
                                     Conversion Rate Vs Page Visit
                                 </p>
-                                <p className={styles.lcount}>_</p>
+                                <p className={styles.lcount}>
+                                    {" "}
+                                    {message?.page_visit
+                                        .conversion_rate_vs_page_visit
+                                        ? message?.page_visit
+                                              .conversion_rate_vs_page_visit
+                                        : "-"}{" "}
+                                </p>
                             </div>
                         </div>
                         <div className={styles.cRightSection}>
@@ -307,43 +326,23 @@ const Insights = () => {
                             </p>
 
                             <div className={styles.categories}>
-                                <div className={styles.category}>
-                                    <p className={styles.categoryName}>Pune</p>
-                                    <p className={styles.categoryCount}>100</p>
-                                </div>
-                                <div className={styles.category}>
-                                    <p className={styles.categoryName}>Dubai</p>
-                                    <p className={styles.categoryCount}>100</p>
-                                </div>
-                                <div className={styles.category}>
-                                    <p className={styles.categoryName}>
-                                        Kerala
-                                    </p>
-                                    <p className={styles.categoryCount}>100</p>
-                                </div>
-                                <div className={styles.category}>
-                                    <p className={styles.categoryName}>
-                                        Tamil Nadu
-                                    </p>
-                                    <p className={styles.categoryCount}>100</p>
-                                </div>
-                                <div className={styles.category}>
-                                    <p className={styles.categoryName}>
-                                        Karnataka
-                                    </p>
-                                    <p className={styles.categoryCount}>100</p>
-                                </div>
-                                <div className={styles.category}>
-                                    <p className={styles.categoryName}>
-                                        Mumbai
-                                    </p>
-                                    <p className={styles.categoryCount}>100</p>
-                                </div>
+                                {Object.entries(
+                                    message?.district_percentages || {}
+                                ).map(([key, value]) => (
+                                    <div className={styles.category}>
+                                        <p className={styles.categoryName}>
+                                            {key}
+                                        </p>
+                                        <p className={styles.categoryCount}>
+                                            {value}
+                                        </p>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> */}
+            </div>
         </>
     );
 };
