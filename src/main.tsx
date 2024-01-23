@@ -12,11 +12,21 @@ import Overview from "./pages/app/Overview/Overview/Overview";
 import Events from "./pages/app/Home/Events";
 import AuthCheck from "./components/AuthCheck/AuthCheck";
 import Guests from "./pages/app/Guests/Guests";
+import TermsConditions from "./pages/app/TermsCondictions/TermsConditions";
+import PrivacyPolicy from "./pages/app/PrivacyPolicy/PrivacyPolicy";
 
 const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login />,
+    },
+    {
+        path: "/termsandconditions",
+        element: <TermsConditions />,
+    },
+    {
+        path: "/privacypolicy",
+        element: <PrivacyPolicy />,
     },
     {
         path: "/",
