@@ -32,6 +32,8 @@ ChartJS.register(
     ArcElement
 );
 
+import { useSearchParams } from "react-router-dom";
+
 const Insights = () => {
     const [message, setMessage] = useState<AnalyticsData>();
 
@@ -41,15 +43,13 @@ const Insights = () => {
 
     const [socket, setSocket] = useState<WebSocket | null>(null);
 
+    const [searchParams] = useSearchParams();
+    const eventId = searchParams.get("eventId") || "";
     const options = {
         responsive: true,
         plugins: {
             legend: {
                 position: "top" as const,
-            },
-            title: {
-                display: true,
-                text: "Chart.js Line Chart",
             },
         },
     };
@@ -62,9 +62,7 @@ const Insights = () => {
 
     useEffect(() => {
         connectPrivateSocket({
-            url: makeMyPassSocket.analytics(
-                "d1929bdb-c891-4850-8c41-4097ae2c6c7f"
-            ),
+            url: makeMyPassSocket.analytics(eventId),
         }).then((ws) => {
             ws.onmessage = (event) => {
                 const lineBarData = JSON.parse(event.data).response;
@@ -73,7 +71,7 @@ const Insights = () => {
                     labels: Object.keys(lineBarData?.analytics || {}),
                     datasets: [
                         {
-                            label: "Dataset 1",
+                            label: "Daily Analytics",
                             data: Object.values(lineBarData?.analytics || {}),
                             borderColor: "rgb(255, 99, 132)",
                             backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -85,7 +83,7 @@ const Insights = () => {
                     labels: Object.keys(lineBarData?.today_category || {}),
                     datasets: [
                         {
-                            label: "Dataset 1",
+                            label: "Category Count",
                             data: Object.values(
                                 lineBarData?.today_category || {}
                             ),
@@ -99,9 +97,15 @@ const Insights = () => {
                     labels: Object.keys(lineBarData.active_timeframe),
                     datasets: [
                         {
-                            label: "# of Votes",
+                            label: "Active Time",
                             data: Object.values(lineBarData.active_timeframe),
                             backgroundColor: [
+                                "#FBD85B",
+                                "#C33D7B",
+                                "#47C97E",
+                                "#35A1EB",
+                            ],
+                            borderColor: [
                                 "#FBD85B",
                                 "#C33D7B",
                                 "#47C97E",

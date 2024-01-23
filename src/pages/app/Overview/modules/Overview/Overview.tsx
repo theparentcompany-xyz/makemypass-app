@@ -13,15 +13,18 @@ import { hostList, recentRegistration } from "./types";
 import { getHosts } from "../../../../../apis/overview";
 import { makeMyPassSocket } from "../../../../../../services/urls";
 
+import { useSearchParams } from "react-router-dom";
+
 const Overview = () => {
     const [recentRegistrations, setRecentRegistrations] = useState<
         recentRegistration[]
     >([]);
     const [socket, setSocket] = useState<WebSocket | null>(null);
     const [hostList, setHostList] = useState<hostList[]>([]);
-
+    const [searchParams] = useSearchParams();
+    const eventId = searchParams.get("eventId") || "";
     useEffect(() => {
-        getHosts("d1929bdb-c891-4850-8c41-4097ae2c6c7f", setHostList);
+        getHosts(eventId, setHostList);
         console.log(hostList);
     }, []);
 
