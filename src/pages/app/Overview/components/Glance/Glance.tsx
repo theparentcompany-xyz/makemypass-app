@@ -2,16 +2,18 @@ import { useEffect, useState } from "react";
 import styles from "./Glance.module.css";
 import { connectPrivateSocket } from "../../../../../../services/apiGateway";
 import { makeMyPassSocket } from "../../../../../../services/urls";
-import { useSearchParams } from "react-router-dom";
-const Glance = () => {
+import { useParams, useNavigate } from "react-router-dom";
+
+const Glance = (tab: any) => {
     type progressDataType = {
         type: string;
         color: string | undefined;
         value: number;
     }[];
 
-    const [socket, setSocket] = useState<WebSocket | null>(null);
+    const navigate = useNavigate();
 
+    const [socket, setSocket] = useState<WebSocket | null>(null);
     const [progressData, setprogressData] = useState<progressDataType>([]);
     const [totalGuests, setTotalGuests] = useState<number>(0);
     const [targetGuests, setTargetGuests] = useState<number>(0);
@@ -22,53 +24,54 @@ const Glance = () => {
         };
     }, []);
 
-    const [searchParams] = useSearchParams();
-    const eventId = searchParams.get("eventId") || "";
-
-    useEffect(() => {
-        connectPrivateSocket({
-            url: makeMyPassSocket.registerCounts(eventId),
-        }).then((ws) => {
-            ws.onmessage = (event) => {
-                const category = JSON.parse(event.data).response.category;
-
-                setTotalGuests(
-                    Number(JSON.parse(event.data).response.total_reg)
-                );
-                setTargetGuests(
-                    Number(JSON.parse(event.data).response.target_reg)
-                );
-
-                const newStrucure: progressDataType = [];
-                let colors = [
-                    "#47C97E",
-                    "#7662FC",
-                    "#C33D7B",
-                    "#FBD85B",
-                    "#5B75FB",
-                    "#D2D4D7",
-                ];
-
-                for (const [key, value] of Object.entries(category)) {
-                    newStrucure.push({
-                        type: key,
-                        color: colors.pop(),
-                        value: Number(value),
-                    });
-                }
-
-                setprogressData(newStrucure);
-            };
-
-            setSocket(ws);
-        });
-    }, []);
-
+    const { eventId } = useParams<{ eventId: string }>();
     const [currentTab, setCurrentTab] = useState("overview");
 
     const updateTab = (tab: string) => {
         setCurrentTab(tab);
+        navigate(`/${tab}/${eventId}`);
     };
+
+    useEffect(() => {
+        setCurrentTab(tab.tab);
+        if (eventId)
+            connectPrivateSocket({
+                url: makeMyPassSocket.registerCounts(eventId),
+            }).then((ws) => {
+                ws.onmessage = (event) => {
+                    const category = JSON.parse(event.data).response.category;
+
+                    setTotalGuests(
+                        Number(JSON.parse(event.data).response.total_reg)
+                    );
+                    setTargetGuests(
+                        Number(JSON.parse(event.data).response.target_reg)
+                    );
+
+                    const newStrucure: progressDataType = [];
+                    let colors = [
+                        "#47C97E",
+                        "#7662FC",
+                        "#C33D7B",
+                        "#FBD85B",
+                        "#5B75FB",
+                        "#D2D4D7",
+                    ];
+
+                    for (const [key, value] of Object.entries(category)) {
+                        newStrucure.push({
+                            type: key,
+                            color: colors.pop(),
+                            value: Number(value),
+                        });
+                    }
+
+                    setprogressData(newStrucure);
+                };
+
+                setSocket(ws);
+            });
+    }, []);
 
     return (
         <>

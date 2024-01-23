@@ -2,20 +2,21 @@ import { HiUserGroup } from "react-icons/hi2";
 import { FaWrench } from "react-icons/fa";
 import { BsQrCodeScan } from "react-icons/bs";
 import { TbPencil } from "react-icons/tb";
-import Glance from "../../components/Glance/Glance";
+import Glance from "../components/Glance/Glance";
 
 import styles from "./Overview.module.css";
-import SecondaryButton from "../../components/SecondaryButton/SecondaryButton";
-import SectionButton from "../../components/SectionButton/SectionButton";
+import SecondaryButton from "../components/SecondaryButton/SecondaryButton";
+import SectionButton from "../components/SectionButton/SectionButton";
 import { useEffect, useState } from "react";
-import { connectPrivateSocket } from "../../../../../../services/apiGateway";
-import { hostList, recentRegistration } from "./types";
-import { getHosts } from "../../../../../apis/overview";
-import { makeMyPassSocket } from "../../../../../../services/urls";
 
-import { useSearchParams } from "react-router-dom";
+import { hostList, recentRegistration } from "./types";
+
 import { HashLoader } from "react-spinners";
-import Theme from "../../../../../components/Theme/Theme";
+import { getHosts } from "../../../../apis/overview";
+import { connectPrivateSocket } from "../../../../../services/apiGateway";
+import { makeMyPassSocket } from "../../../../../services/urls";
+import Theme from "../../../../components/Theme/Theme";
+import { useParams } from "react-router-dom";
 
 const Overview = () => {
     const [recentRegistrations, setRecentRegistrations] = useState<
@@ -23,10 +24,9 @@ const Overview = () => {
     >([]);
     const [socket, setSocket] = useState<WebSocket | null>(null);
     const [hostList, setHostList] = useState<hostList[]>([]);
-    const [searchParams] = useSearchParams();
-    const eventId = searchParams.get("eventId") || "";
+    const { eventId } = useParams<{ eventId: string }>();
     useEffect(() => {
-        getHosts(eventId, setHostList);
+        if (eventId) getHosts(eventId, setHostList);
         console.log(hostList);
     }, []);
 
@@ -70,7 +70,7 @@ const Overview = () => {
                 recentRegistrations.length > 0 &&
                 hostList ? (
                     <div className={styles.overviewContainer}>
-                        <Glance />
+                        <Glance tab="overview" />
 
                         <div className={styles.buttons}>
                             <SectionButton

@@ -7,7 +7,9 @@ import Home from "./pages/app/Home/Home";
 import "./index.css";
 import LandingPage from "./pages/app/LandingPage/LandingPage";
 import { Toaster, ToastPosition } from "react-hot-toast";
-import Overview from "./pages/app/Overview/modules/Overview/Overview";
+
+import Insights from "./pages/app/Insights/Insights";
+import Overview from "./pages/app/Overview/Overview/Overview";
 
 const router = createBrowserRouter([
     {
@@ -23,8 +25,12 @@ const router = createBrowserRouter([
         element: <Login />,
     },
     {
-        path: "/overview",
+        path: "/overview/:eventId",
         element: <Overview />,
+    },
+    {
+        path: "/insights/:eventId",
+        element: <Insights />,
     },
 ]);
 
