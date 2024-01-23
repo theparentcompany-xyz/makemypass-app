@@ -33,6 +33,7 @@ ChartJS.register(
 );
 
 import { useSearchParams } from "react-router-dom";
+import { HashLoader } from "react-spinners";
 
 const Insights = () => {
     const [message, setMessage] = useState<AnalyticsData>();
@@ -396,7 +397,7 @@ const Insights = () => {
                 </>
             ) : (
                 <div className={styles.center}>
-                    <div className={styles.loader}></div>
+                     <HashLoader color={"#46BF75"} size={50} />
                 </div>
             )}
         </>

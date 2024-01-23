@@ -183,7 +183,7 @@ const Overview = () => {
                 </>
             ) : (
                 <div className={styles.center}>
-                    <HashLoader color={"#7662FC"} size={50} />
+                    <HashLoader color={"#46BF75"} size={50} />
                 </div>
             )}
         </>
