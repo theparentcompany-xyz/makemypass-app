@@ -46,7 +46,7 @@
 
     padding: 1rem;
 
-    width: 51.875rem;
+    /* width: 51.875rem; */
     overflow: auto;
 }
 
@@ -103,9 +103,5 @@
     .tableContainer {
         width: 20rem;
         overflow: auto;
-    }
-
-    .table {
-        width: 51rem;
     }
 }
