@@ -12,9 +12,10 @@ import {
     ArcElement,
 } from "chart.js";
 import { Line, Bar, Doughnut } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
+import { da, faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
 import { connectPrivateSocket } from "../../../../../../services/apiGateway";
+import AnalyticsData from "./types";
 
 ChartJS.register(
     CategoryScale,
@@ -32,6 +33,10 @@ ChartJS.register(
 );
 
 const Insights = () => {
+    const [message, setMessage] = useState<AnalyticsData>();
+    const [lineData, setLineData] = useState<any>();
+    const [socket, setSocket] = useState<WebSocket | null>(null);
+
     const options = {
         responsive: true,
         plugins: {
@@ -55,7 +60,7 @@ const Insights = () => {
         "July",
     ];
 
-    const data = {
+    let data = {
         labels,
         datasets: [
             {
@@ -90,10 +95,6 @@ const Insights = () => {
         ],
     };
 
-    const [message, setMessage] = useState("");
-
-    const [socket, setSocket] = useState<WebSocket | null>(null);
-
     useEffect(() => {
         return () => {
             socket?.close();
@@ -105,8 +106,23 @@ const Insights = () => {
 
         connectPrivateSocket({ url: wsUrl }).then((ws) => {
             ws.onmessage = (event) => {
-                setMessage(event.data);
-                console.log(event.data);
+                const lineData = JSON.parse(event.data).response;
+                console.log(lineData);
+                setMessage(lineData);
+
+                setLineData({
+                    labels: Object.keys(lineData?.analytics || {}),
+                    datasets: [
+                        {
+                            label: "Dataset 1",
+                            data: Object.values(lineData?.analytics || {}),
+                            borderColor: "rgb(255, 99, 132)",
+                            backgroundColor: "rgba(255, 99, 132, 0.5)",
+                        },
+                    ],
+                });
+
+                console.log(data);
             };
 
             setSocket(ws);
@@ -118,24 +134,28 @@ const Insights = () => {
             <div className={styles.insightsContainer}>
                 <div className={styles.registrationCount}>
                     <div className={styles.graphContainer}>
-                        <Line options={options} data={data} />
+                        {lineData && <Line options={options} data={lineData} />}
                     </div>
                     <div className={styles.countSection}>
                         <div className={styles.cLeftSection}>
                             <div className={styles.totalRegistered}>
                                 <p className={styles.total}>Total Registered</p>
                                 <p className={styles.count}>
-                                    20,002 <span>guests</span>
+                                    {message?.total_reg} <span>guests</span>
                                 </p>
                             </div>
                             <div className={styles.weeklyCounts}>
                                 <div className={styles.weeklyCount}>
                                     <p className={styles.week}>Yestered</p>
-                                    <p className={styles.wcount}>300</p>
+                                    <p className={styles.wcount}>
+                                        {message?.yesterday_reg}
+                                    </p>
                                 </div>
                                 <div className={styles.weeklyCount}>
                                     <p className={styles.week}>This week</p>
-                                    <p className={styles.wcount}>1400</p>
+                                    <p className={styles.wcount}>
+                                        {message?.week_count}
+                                    </p>
                                 </div>
                             </div>
                             <div className={styles.liveTraffic}>
@@ -149,38 +169,18 @@ const Insights = () => {
                             </p>
 
                             <div className={styles.categories}>
-                                <div className={styles.category}>
-                                    <p className={styles.categoryName}>
-                                        Students
-                                    </p>
-                                    <p className={styles.categoryCount}>100</p>
-                                </div>
-                                <div className={styles.category}>
-                                    <p className={styles.categoryName}>
-                                        Startups
-                                    </p>
-                                    <p className={styles.categoryCount}>100</p>
-                                </div>
-                                <div className={styles.category}>
-                                    <p className={styles.categoryName}>SME</p>
-                                    <p className={styles.categoryCount}>100</p>
-                                </div>
-                                <div className={styles.category}>
-                                    <p className={styles.categoryName}>
-                                        Investors
-                                    </p>
-                                    <p className={styles.categoryCount}>100</p>
-                                </div>
-                                <div className={styles.category}>
-                                    <p className={styles.categoryName}>SME</p>
-                                    <p className={styles.categoryCount}>100</p>
-                                </div>
-                                <div className={styles.category}>
-                                    <p className={styles.categoryName}>
-                                        Investors
-                                    </p>
-                                    <p className={styles.categoryCount}>100</p>
-                                </div>
+                                {Object.entries(
+                                    message?.category_percentages || {}
+                                ).map(([key, value]) => (
+                                    <div className={styles.category}>
+                                        <p className={styles.categoryName}>
+                                            {key}
+                                        </p>
+                                        <p className={styles.categoryCount}>
+                                            {value}
+                                        </p>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -229,7 +229,7 @@ const Insights = () => {
                 </div>
             </div>
 
-            <div className={styles.insightsContainer}>
+            {/* <div className={styles.insightsContainer}>
                 <div className={styles.pieContainer}>
                     <div className={styles.pieSection}>
                         <Doughnut data={pieData} />
@@ -343,7 +343,7 @@ const Insights = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </>
     );
 };

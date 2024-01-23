@@ -26,7 +26,9 @@ const Glance = () => {
             ws.onmessage = (event) => {
                 const category = JSON.parse(event.data).response.category;
 
-                setTotalGuests(Number(JSON.parse(event.data).response.total));
+                setTotalGuests(
+                    Number(JSON.parse(event.data).response.total_reg)
+                );
 
                 const newStrucure: progressDataType = [];
                 let colors = [
