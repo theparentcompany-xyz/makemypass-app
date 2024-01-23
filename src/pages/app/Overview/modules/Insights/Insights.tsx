@@ -156,7 +156,7 @@ const Insights = () => {
                         </div>
                         <div className={styles.cRightSection}>
                             <p className={styles.rightSectionHeading}>
-                                Total Category Reg Count
+                                Total Category %
                             </p>
 
                             <div className={styles.categories}>
@@ -279,7 +279,7 @@ const Insights = () => {
                     style={{
                         borderRadius: "12px",
                     }}
-                    className={styles.registrationCount}
+                    className={styles.pageVisitsCount}
                 >
                     <div className={styles.countSection}>
                         <div className={styles.cLeftSection}>

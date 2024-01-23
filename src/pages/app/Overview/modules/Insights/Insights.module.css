@@ -1,3 +1,15 @@
+.insightsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: wrap;
+    width: 100%;
+
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+}
+
 .registrationCount {
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.04);
@@ -5,19 +17,7 @@
     padding: 1rem 2rem;
     font-family: "Inter", sans-serif;
     color: white;
-    width: 100%;
-}
-
-.insightsContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
-    column-gap: 1rem;
-    margin-top: 1rem;
-    width: 100%;
-
-    margin-bottom: 2rem;
+    width: 43%;
 }
 
 .countSection {
@@ -144,6 +144,16 @@
 
 /* Next Box */
 
+.pageVisitsCount {
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 1rem 2rem;
+    font-family: "Inter", sans-serif;
+    color: white;
+    width: 57.5%;
+}
+
 .todayRegistered {
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.04);
@@ -152,14 +162,10 @@
     font-family: "Inter", sans-serif;
     color: white;
     max-width: 50rem;
-    width: 100%;
-
-    row-gap: 1rem;
-    column-gap: 1rem;
+    width: 43%;
 }
 
 .totalRegistered {
-    margin-top: 1rem;
     margin-bottom: 1rem;
 }
 
@@ -197,12 +203,35 @@
 
     margin: 0.25rem;
 }
-/* 
-.graphContainer {
-    background-color: #131517;
-    padding: -2rem;
-} */
 
 .pieSection {
     width: 10rem;
+}
+
+@media (max-width: 1120px) {
+    .registrationCount {
+        width: 100%;
+    }
+
+    .rightSectionHeading {
+        font-size: 0.8rem;
+    }
+
+    .totalRegistered {
+        font-size: 0.8rem;
+    }
+
+    .todayRegistered {
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    .pageVisitsCount {
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    .pieContainer {
+        max-width: 100%;
+    }
 }
