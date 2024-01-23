@@ -122,233 +122,283 @@ const Insights = () => {
 
     return (
         <>
-            <div className={styles.insightsContainer}>
-                <div className={styles.registrationCount}>
-                    <div className={styles.graphContainer}>
-                        {lineData && <Line options={options} data={lineData} />}
-                    </div>
-                    <div className={styles.countSection}>
-                        <div className={styles.cLeftSection}>
+            {lineData && barData && pieData ? (
+                <>
+                    <div className={styles.insightsContainer}>
+                        <div className={styles.registrationCount}>
+                            <div className={styles.graphContainer}>
+                                {lineData && (
+                                    <Line options={options} data={lineData} />
+                                )}
+                            </div>
+                            <div className={styles.countSection}>
+                                <div className={styles.cLeftSection}>
+                                    <div className={styles.totalRegistered}>
+                                        <p className={styles.total}>
+                                            Total Registered
+                                        </p>
+                                        <p className={styles.count}>
+                                            {message?.total_reg}{" "}
+                                            <span>guests</span>
+                                        </p>
+                                    </div>
+                                    <div className={styles.weeklyCounts}>
+                                        <div className={styles.weeklyCount}>
+                                            <p className={styles.week}>
+                                                Yestered
+                                            </p>
+                                            <p className={styles.wcount}>
+                                                {message?.yesterday_reg}
+                                            </p>
+                                        </div>
+                                        <div className={styles.weeklyCount}>
+                                            <p className={styles.week}>
+                                                This week
+                                            </p>
+                                            <p className={styles.wcount}>
+                                                {message?.week_count}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.liveTraffic}>
+                                        <p className={styles.live}>
+                                            Live Traffic
+                                        </p>
+                                        <p className={styles.lcount}>_</p>
+                                    </div>
+                                </div>
+                                <div className={styles.cRightSection}>
+                                    <p className={styles.rightSectionHeading}>
+                                        Total Category %
+                                    </p>
+
+                                    <div className={styles.categories}>
+                                        {Object.entries(
+                                            message?.category_percentages || {}
+                                        ).map(([key, value]) => (
+                                            <div className={styles.category}>
+                                                <p
+                                                    className={
+                                                        styles.categoryName
+                                                    }
+                                                >
+                                                    {key}
+                                                </p>
+                                                <p
+                                                    className={
+                                                        styles.categoryCount
+                                                    }
+                                                >
+                                                    {value}
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={styles.todayRegistered}>
+                            <div className={styles.graphContainer}>
+                                {barData && (
+                                    <Bar options={options} data={barData} />
+                                )}
+                            </div>
                             <div className={styles.totalRegistered}>
-                                <p className={styles.total}>Total Registered</p>
+                                <p className={styles.total}>Today Registered</p>
                                 <p className={styles.count}>
-                                    {message?.total_reg} <span>guests</span>
+                                    {message?.today_reg} <span>guests</span>
                                 </p>
                             </div>
                             <div className={styles.weeklyCounts}>
-                                <div className={styles.weeklyCount}>
-                                    <p className={styles.week}>Yestered</p>
-                                    <p className={styles.wcount}>
-                                        {message?.yesterday_reg}
-                                    </p>
-                                </div>
-                                <div className={styles.weeklyCount}>
-                                    <p className={styles.week}>This week</p>
-                                    <p className={styles.wcount}>
-                                        {message?.week_count}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className={styles.liveTraffic}>
-                                <p className={styles.live}>Live Traffic</p>
-                                <p className={styles.lcount}>_</p>
-                            </div>
-                        </div>
-                        <div className={styles.cRightSection}>
-                            <p className={styles.rightSectionHeading}>
-                                Total Category %
-                            </p>
-
-                            <div className={styles.categories}>
                                 {Object.entries(
-                                    message?.category_percentages || {}
+                                    message?.today_category || {}
                                 ).map(([key, value]) => (
-                                    <div className={styles.category}>
-                                        <p className={styles.categoryName}>
-                                            {key}
+                                    <div className={styles.weeklyCount}>
+                                        <p className={styles.week}>
+                                            {key.substring(0, 8)}..
                                         </p>
-                                        <p className={styles.categoryCount}>
-                                            {value}
-                                        </p>
+                                        <p className={styles.wcount}>{value}</p>
                                     </div>
                                 ))}
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={styles.todayRegistered}>
-                    <div className={styles.graphContainer}>
-                        {barData && <Bar options={options} data={barData} />}
-                    </div>
-                    <div className={styles.totalRegistered}>
-                        <p className={styles.total}>Today Registered</p>
-                        <p className={styles.count}>
-                            {message?.today_reg} <span>guests</span>
-                        </p>
-                    </div>
-                    <div className={styles.weeklyCounts}>
-                        {Object.entries(message?.today_category || {}).map(
-                            ([key, value]) => (
-                                <div className={styles.weeklyCount}>
-                                    <p className={styles.week}>
-                                        {key.substring(0, 8)}..
-                                    </p>
-                                    <p className={styles.wcount}>{value}</p>
-                                </div>
-                            )
-                        )}
-                    </div>
-                    <div className={styles.liveTraffic}>
-                        <p className={styles.live}>Event Date</p>
-                        <p className={styles.lcount}>{message?.event_date}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div className={styles.insightsContainer}>
-                <div className={styles.pieContainer}>
-                    <div className={styles.pieSection}>
-                        {pieData && (
-                            <Doughnut
-                                data={pieData}
-                                options={{
-                                    plugins: {
-                                        legend: {
-                                            display: false,
-                                        },
-                                    },
-                                }}
-                            />
-                        )}
-                    </div>
-                    <div className={styles.timeSection}>
-                        <p className={styles.rightSectionHeading}>
-                            Active Time
-                        </p>
-                        <div className={styles.times}>
-                            <div className={styles.time}>
-                                <p
-                                    style={{
-                                        color: "#FBD85B",
-                                    }}
-                                    className={styles.line}
-                                >
-                                    {message?.active_timeframe.Morning}
-                                </p>
-                                <p className="type">Morning</p>
-                            </div>
-                            <div className={styles.time}>
-                                <p
-                                    style={{
-                                        color: "#35A1EB",
-                                    }}
-                                    className={styles.line}
-                                >
-                                    {message?.active_timeframe.Evening}
-                                </p>
-                                <p className="type">Evening</p>
-                            </div>
-                            <div className={styles.time}>
-                                <p
-                                    style={{
-                                        color: "#47C97E",
-                                    }}
-                                    className={styles.line}
-                                >
-                                    {message?.active_timeframe.Afternoon}
-                                </p>
-                                <p className="type">Afternoon</p>
-                            </div>
-                            <div className={styles.time}>
-                                <p
-                                    style={{
-                                        color: "#C33D7B",
-                                    }}
-                                    className={styles.line}
-                                >
-                                    {message?.active_timeframe.Night}
-                                </p>
-                                <p className="type">Night</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div
-                    style={{
-                        borderRadius: "12px",
-                    }}
-                    className={styles.pageVisitsCount}
-                >
-                    <div className={styles.countSection}>
-                        <div className={styles.cLeftSection}>
-                            <div className={styles.totalRegistered}>
-                                <p className={styles.total}>Page Visits</p>
-                                <p className={styles.count}>
-                                    {message?.page_visit.total
-                                        ? message?.page_visit.total
-                                        : "-"}{" "}
-                                    <span>Visits</span>
-                                </p>
-                            </div>
-                            <div className={styles.weeklyCounts}>
-                                <div className={styles.weeklyCount}>
-                                    <p className={styles.week}>Yesterday</p>
-                                    <p className={styles.wcount}>
-                                        {" "}
-                                        {message?.page_visit.yesterday
-                                            ? message?.page_visit.yesterday
-                                            : "-"}{" "}
-                                    </p>
-                                </div>
-                                <div className={styles.weeklyCount}>
-                                    <p className={styles.week}>This week</p>
-                                    <p className={styles.wcount}>
-                                        {" "}
-                                        {message?.page_visit.this_week
-                                            ? message?.page_visit.this_week
-                                            : "-"}{" "}
-                                    </p>
-                                </div>
-                            </div>
                             <div className={styles.liveTraffic}>
-                                <p className={styles.live}>
-                                    Conversion Rate Vs Page Visit
-                                </p>
+                                <p className={styles.live}>Event Date</p>
                                 <p className={styles.lcount}>
-                                    {" "}
-                                    {message?.page_visit
-                                        .conversion_rate_vs_page_visit
-                                        ? message?.page_visit
-                                              .conversion_rate_vs_page_visit
-                                        : "-"}{" "}
+                                    {message?.event_date}
                                 </p>
                             </div>
                         </div>
-                        <div className={styles.cRightSection}>
-                            <p className={styles.rightSectionHeading}>
-                                Registration Cities
-                            </p>
+                    </div>
 
-                            <div className={styles.categories}>
-                                {Object.entries(
-                                    message?.district_percentages || {}
-                                ).map(([key, value]) => (
-                                    <div className={styles.category}>
-                                        <p className={styles.categoryName}>
-                                            {key}
+                    <div className={styles.insightsContainer}>
+                        <div className={styles.pieContainer}>
+                            <div className={styles.pieSection}>
+                                {pieData && (
+                                    <Doughnut
+                                        data={pieData}
+                                        options={{
+                                            plugins: {
+                                                legend: {
+                                                    display: false,
+                                                },
+                                            },
+                                        }}
+                                    />
+                                )}
+                            </div>
+                            <div className={styles.timeSection}>
+                                <p className={styles.rightSectionHeading}>
+                                    Active Time
+                                </p>
+                                <div className={styles.times}>
+                                    <div className={styles.time}>
+                                        <p
+                                            style={{
+                                                color: "#FBD85B",
+                                            }}
+                                            className={styles.line}
+                                        >
+                                            {message?.active_timeframe.Morning}
                                         </p>
-                                        <p className={styles.categoryCount}>
-                                            {value}
+                                        <p className="type">Morning</p>
+                                    </div>
+                                    <div className={styles.time}>
+                                        <p
+                                            style={{
+                                                color: "#35A1EB",
+                                            }}
+                                            className={styles.line}
+                                        >
+                                            {message?.active_timeframe.Evening}
+                                        </p>
+                                        <p className="type">Evening</p>
+                                    </div>
+                                    <div className={styles.time}>
+                                        <p
+                                            style={{
+                                                color: "#47C97E",
+                                            }}
+                                            className={styles.line}
+                                        >
+                                            {
+                                                message?.active_timeframe
+                                                    .Afternoon
+                                            }
+                                        </p>
+                                        <p className="type">Afternoon</p>
+                                    </div>
+                                    <div className={styles.time}>
+                                        <p
+                                            style={{
+                                                color: "#C33D7B",
+                                            }}
+                                            className={styles.line}
+                                        >
+                                            {message?.active_timeframe.Night}
+                                        </p>
+                                        <p className="type">Night</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            style={{
+                                borderRadius: "12px",
+                            }}
+                            className={styles.pageVisitsCount}
+                        >
+                            <div className={styles.countSection}>
+                                <div className={styles.cLeftSection}>
+                                    <div className={styles.totalRegistered}>
+                                        <p className={styles.total}>
+                                            Page Visits
+                                        </p>
+                                        <p className={styles.count}>
+                                            {message?.page_visit.total
+                                                ? message?.page_visit.total
+                                                : "-"}{" "}
+                                            <span>Visits</span>
                                         </p>
                                     </div>
-                                ))}
+                                    <div className={styles.weeklyCounts}>
+                                        <div className={styles.weeklyCount}>
+                                            <p className={styles.week}>
+                                                Yesterday
+                                            </p>
+                                            <p className={styles.wcount}>
+                                                {" "}
+                                                {message?.page_visit.yesterday
+                                                    ? message?.page_visit
+                                                          .yesterday
+                                                    : "-"}{" "}
+                                            </p>
+                                        </div>
+                                        <div className={styles.weeklyCount}>
+                                            <p className={styles.week}>
+                                                This week
+                                            </p>
+                                            <p className={styles.wcount}>
+                                                {" "}
+                                                {message?.page_visit.this_week
+                                                    ? message?.page_visit
+                                                          .this_week
+                                                    : "-"}{" "}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.liveTraffic}>
+                                        <p className={styles.live}>
+                                            Conversion Rate Vs Page Visit
+                                        </p>
+                                        <p className={styles.lcount}>
+                                            {" "}
+                                            {message?.page_visit
+                                                .conversion_rate_vs_page_visit
+                                                ? message?.page_visit
+                                                      .conversion_rate_vs_page_visit
+                                                : "-"}{" "}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className={styles.cRightSection}>
+                                    <p className={styles.rightSectionHeading}>
+                                        Registration Cities
+                                    </p>
+
+                                    <div className={styles.categories}>
+                                        {Object.entries(
+                                            message?.district_percentages || {}
+                                        ).map(([key, value]) => (
+                                            <div className={styles.category}>
+                                                <p
+                                                    className={
+                                                        styles.categoryName
+                                                    }
+                                                >
+                                                    {key}
+                                                </p>
+                                                <p
+                                                    className={
+                                                        styles.categoryCount
+                                                    }
+                                                >
+                                                    {value}
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </>
+            ) : (
+                <div className={styles.center}>
+                    <div className={styles.loader}></div>
                 </div>
-            </div>
+            )}
         </>
     );
 };
