@@ -115,7 +115,11 @@ export const connectPrivateSocket = ({
 }: {
     url: string;
 }): Promise<WebSocket> => {
-    let wsUrl = `${url}?Authorization=Bearer ${localStorage.getItem(
+    const baseURL =
+        ((import.meta as any).env.VITE_WEBSOCKET_URL as string) +
+        "makemypass/";
+
+    let wsUrl = `${baseURL}${url}?Authorization=Bearer ${localStorage.getItem(
         "accessToken"
     )}`;
 

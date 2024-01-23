@@ -15,6 +15,7 @@ import { Line, Bar, Doughnut } from "react-chartjs-2";
 import { useEffect, useState } from "react";
 import { connectPrivateSocket } from "../../../../../../services/apiGateway";
 import AnalyticsData from "./types";
+import { makeMyPassSocket } from "../../../../../../services/urls";
 
 ChartJS.register(
     CategoryScale,
@@ -60,9 +61,11 @@ const Insights = () => {
     }, []);
 
     useEffect(() => {
-        const wsUrl = `wss://dev-buildnship.in/makemypass/manage-event/d1929bdb-c891-4850-8c41-4097ae2c6c7f/analytics/`;
-
-        connectPrivateSocket({ url: wsUrl }).then((ws) => {
+        connectPrivateSocket({
+            url: makeMyPassSocket.analytics(
+                "d1929bdb-c891-4850-8c41-4097ae2c6c7f"
+            ),
+        }).then((ws) => {
             ws.onmessage = (event) => {
                 const lineBarData = JSON.parse(event.data).response;
                 setMessage(lineBarData);

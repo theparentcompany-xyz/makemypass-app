@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { connectPrivateSocket } from "../../../../../../services/apiGateway";
 import { hostList, recentRegistration } from "./types";
 import { getHosts } from "../../../../../apis/overview";
+import { makeMyPassSocket } from "../../../../../../services/urls";
 
 const Overview = () => {
     const [recentRegistrations, setRecentRegistrations] = useState<
@@ -31,9 +32,11 @@ const Overview = () => {
     }, []);
 
     useEffect(() => {
-        const wsUrl = `wss://dev-api.buildnship.in/makemypass/manage-event/d1929bdb-c891-4850-8c41-4097ae2c6c7f/recent-registrations/`;
-
-        connectPrivateSocket({ url: wsUrl }).then((ws) => {
+        connectPrivateSocket({
+            url: makeMyPassSocket.recentRegistrations(
+                "d1929bdb-c891-4850-8c41-4097ae2c6c7f"
+            ),
+        }).then((ws) => {
             ws.onmessage = (event) => {
                 if (JSON.parse(event.data).response.guests)
                     setRecentRegistrations(

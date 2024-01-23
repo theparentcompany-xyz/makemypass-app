@@ -13,5 +13,13 @@ export const buildVerse = {
 export const makeMyPass = {
     onboardUser: makeMyPassURL("/onboard-user/"),
     listEvents: makeMyPassURL("/list-events/"),
-    listHosts: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-hosts/`),
+    listHosts: (eventId: string) =>
+        makeMyPassURL(`/manage-event/${eventId}/list-hosts/`),
+};
+
+export const makeMyPassSocket = {
+    recentRegistrations: (eventId: string) =>
+        `manage-event/${eventId}/recent-registrations/`,
+
+    analytics: (eventId: string) => `manage-event/${eventId}/analytics/`,
 };

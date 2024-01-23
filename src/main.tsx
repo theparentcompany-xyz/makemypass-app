@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/auth/Login/Login";
 import Home from "./pages/app/Home/Home";
 import "./index.css";
-import Overview from "./pages/app/Overview/AdminStats";
 import LandingPage from "./pages/app/LandingPage/LandingPage";
 import { Toaster, ToastPosition } from "react-hot-toast";
 import AdminStats from "./pages/app/Overview/AdminStats";
