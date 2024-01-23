@@ -22,4 +22,6 @@ export const makeMyPassSocket = {
         `manage-event/${eventId}/recent-registrations/`,
 
     analytics: (eventId: string) => `manage-event/${eventId}/analytics/`,
+    registerCounts: (eventId: string) =>
+        `manage-event/${eventId}/register-count/`,
 };

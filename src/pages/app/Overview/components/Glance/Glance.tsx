@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "./Glance.module.css";
 import { connectPrivateSocket } from "../../../../../../services/apiGateway";
+import { makeMyPassSocket } from "../../../../../../services/urls";
+import { useSearchParams } from "react-router-dom";
 const Glance = () => {
     type progressDataType = {
         type: string;
@@ -20,10 +22,14 @@ const Glance = () => {
         };
     }, []);
 
-    useEffect(() => {
-        const wsUrl = `wss://dev-api.buildnship.in/makemypass/manage-event/d1929bdb-c891-4850-8c41-4097ae2c6c7f/register-count/`;
 
-        connectPrivateSocket({ url: wsUrl }).then((ws) => {
+    const [searchParams] = useSearchParams();
+    const eventId = searchParams.get("eventId") || "";
+
+    useEffect(() => {
+        connectPrivateSocket({
+            url: makeMyPassSocket.registerCounts(eventId),
+        }).then((ws) => {
             ws.onmessage = (event) => {
                 const category = JSON.parse(event.data).response.category;
 
@@ -45,7 +51,6 @@ const Glance = () => {
                 ];
 
                 for (const [key, value] of Object.entries(category)) {
-                    
                     newStrucure.push({
                         type: key,
                         color: colors.pop(),
