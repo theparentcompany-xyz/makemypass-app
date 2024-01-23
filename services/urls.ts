@@ -24,4 +24,7 @@ export const makeMyPassSocket = {
     analytics: (eventId: string) => `manage-event/${eventId}/analytics/`,
     registerCounts: (eventId: string) =>
         `manage-event/${eventId}/register-count/`,
+
+    listGuests: (eventId: string) => `manage-event/${eventId}/list-guests/`,
+
 };

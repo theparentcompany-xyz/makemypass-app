@@ -11,6 +11,7 @@ import Insights from "./pages/app/Insights/Insights";
 import Overview from "./pages/app/Overview/Overview/Overview";
 import Events from "./pages/app/Home/Events";
 import AuthCheck from "./components/AuthCheck/AuthCheck";
+import Guests from "./pages/app/Guests/Guests";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             {
                 path: "/:eventTitle/insights/:eventId",
                 element: <Insights />,
+            },
+            {
+                path: "/:eventTitle/guests/:eventId",
+                element: <Guests />,
             },
         ],
     },

@@ -38,30 +38,32 @@ const Overview = () => {
     }, []);
 
     useEffect(() => {
-        connectPrivateSocket({
-            url: makeMyPassSocket.recentRegistrations(
-                "d1929bdb-c891-4850-8c41-4097ae2c6c7f"
-            ),
-        }).then((ws) => {
-            ws.onmessage = (event) => {
-                if (JSON.parse(event.data).response.guests)
-                    setRecentRegistrations(
-                        JSON.parse(event.data).response.guests
-                    );
-                else if (JSON.parse(event.data).response.data) {
-                    const newRegistration = JSON.parse(event.data).response
-                        .data;
+        if (eventId)
+            connectPrivateSocket({
+                url: makeMyPassSocket.recentRegistrations(eventId),
+            }).then((ws) => {
+                ws.onmessage = (event) => {
+                    if (JSON.parse(event.data).response.guests)
+                        setRecentRegistrations(
+                            JSON.parse(event.data).response.guests
+                        );
+                    else if (JSON.parse(event.data).response.data) {
+                        const newRegistration = JSON.parse(event.data).response
+                            .data;
 
-                    setRecentRegistrations((prev) => {
-                        const updatedRegistrations = [newRegistration, ...prev];
-                        updatedRegistrations.pop();
-                        return updatedRegistrations;
-                    });
-                }
-            };
+                        setRecentRegistrations((prev) => {
+                            const updatedRegistrations = [
+                                newRegistration,
+                                ...prev,
+                            ];
+                            updatedRegistrations.pop();
+                            return updatedRegistrations;
+                        });
+                    }
+                };
 
-            setSocket(ws);
-        });
+                setSocket(ws);
+            });
     }, []);
 
     return (
