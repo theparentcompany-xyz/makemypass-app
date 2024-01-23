@@ -48,12 +48,7 @@ const Header = ({ type }: { type?: string | undefined }) => {
                                     <SecondaryButton
                                         buttonText="Logout"
                                         onClick={() => {
-                                            localStorage.removeItem(
-                                                "accessToken"
-                                            );
-                                            localStorage.removeItem(
-                                                "userEmail"
-                                            );
+                                            localStorage.clear();
                                         }}
                                     />
                                 </Link>
@@ -71,8 +66,8 @@ const Header = ({ type }: { type?: string | undefined }) => {
                         {/* <SecondaryButton buttonText="T&C" />
                         <SecondaryButton buttonText="Privacy Policy" /> */}
                         <Link to="/login">
-                                <SecondaryButton buttonText="Login" />
-                            </Link>
+                            <SecondaryButton buttonText="Login" />
+                        </Link>
                     </div>
                 )}
             </div>

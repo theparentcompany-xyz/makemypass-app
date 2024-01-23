@@ -20,6 +20,8 @@ const Login = () => {
     const [isPassword, setIsPassword] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+    let ruri = window.location.href.split("=")[1];
+
     const handleSubmit = () => {
         if (isPassword && emailRef.current?.value && passwordRef.current?.value)
             login(
@@ -39,8 +41,11 @@ const Login = () => {
     };
 
     useEffect(() => {
+        if (localStorage.getItem("accessToken")) setIsAuthenticated(true);
+
         if (isAuthenticated) {
-            navigate("/events");
+            if (ruri) navigate(`/${ruri}`);
+            else navigate("/events");
         }
     }, [isAuthenticated]);
 

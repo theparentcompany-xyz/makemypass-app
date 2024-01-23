@@ -10,27 +10,35 @@ import { Toaster, ToastPosition } from "react-hot-toast";
 import Insights from "./pages/app/Insights/Insights";
 import Overview from "./pages/app/Overview/Overview/Overview";
 import Events from "./pages/app/Home/Events";
+import AuthCheck from "./components/AuthCheck/AuthCheck";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <LandingPage />,
-    },
-    {
-        path: "/events",
-        element: <Events />,
-    },
     {
         path: "/login",
         element: <Login />,
     },
     {
-        path: "/:eventTitle/overview/:eventId",
-        element: <Overview />,
-    },
-    {
-        path: "/:eventTitle/insights/:eventId",
-        element: <Insights />,
+        path: "/",
+        element: <AuthCheck />,
+        children: [
+            {
+                path: "/",
+                element: <LandingPage />,
+            },
+            {
+                path: "/events",
+                element: <Events />,
+            },
+
+            {
+                path: "/:eventTitle/overview/:eventId",
+                element: <Overview />,
+            },
+            {
+                path: "/:eventTitle/insights/:eventId",
+                element: <Insights />,
+            },
+        ],
     },
 ]);
 
