@@ -9,112 +9,19 @@ import SecondaryButton from "../../components/SecondaryButton/SecondaryButton";
 import SectionButton from "../../components/SectionButton/SectionButton";
 import { useEffect, useState } from "react";
 import { connectPrivateSocket } from "../../../../../../services/apiGateway";
-import { recentRegistration } from "./types";
+import { hostList, recentRegistration } from "./types";
 import { getHosts } from "../../../../../apis/overview";
 
 const Overview = () => {
-    const tableData = [
-        {
-            name: "Dev Nandan R S",
-            email: "devnandan0502@gmail.com",
-            type: "Student",
-            date: "17th August 2023",
-        },
-        {
-            name: "John Doe",
-            email: "john.doe@example.com",
-            type: "Professional",
-            date: "20th September 2023",
-        },
-        {
-            name: "Jane Smith",
-            email: "jane.smith@example.com",
-            type: "Student",
-            date: "5th July 2023",
-        },
-        {
-            name: "Alice Johnson",
-            email: "alice.johnson@example.com",
-            type: "Student",
-            date: "12th November 2023",
-        },
-        {
-            name: "Bob Anderson",
-            email: "bob.anderson@example.com",
-            type: "Professional",
-            date: "8th January 2024",
-        },
-        {
-            name: "Eva Williams",
-            email: "eva.williams@example.com",
-            type: "Student",
-            date: "3rd April 2023",
-        },
-        {
-            name: "Michael Brown",
-            email: "michael.brown@example.com",
-            type: "Professional",
-            date: "14th February 2024",
-        },
-        {
-            name: "Sophie Taylor",
-            email: "sophie.taylor@example.com",
-            type: "Student",
-            date: "9th June 2023",
-        },
-        {
-            name: "Alex Turner",
-            email: "alex.turner@example.com",
-            type: "Professional",
-            date: "22nd May 2023",
-        },
-        {
-            name: "Grace Miller",
-            email: "grace.miller@example.com",
-            type: "Student",
-            date: "1st March 2024",
-        },
-        {
-            name: "Daniel Harris",
-            email: "daniel.harris@example.com",
-            type: "Professional",
-            date: "7th October 2023",
-        },
-        {
-            name: "Olivia Jackson",
-            email: "olivia.jackson@example.com",
-            type: "Student",
-            date: "19th December 2023",
-        },
-        {
-            name: "Ryan Wilson",
-            email: "ryan.wilson@example.com",
-            type: "Professional",
-            date: "11th April 2023",
-        },
-        {
-            name: "Emma White",
-            email: "emma.white@example.com",
-            type: "Student",
-            date: "26th July 2023",
-        },
-        {
-            name: "William Turner",
-            email: "william.turner@example.com",
-            type: "Professional",
-            date: "2nd September 2023",
-        },
-        // Add more objects as needed
-    ];
-
     const [recentRegistrations, setRecentRegistrations] = useState<
         recentRegistration[]
     >([]);
     const [socket, setSocket] = useState<WebSocket | null>(null);
-    const [hostList, setHostList] = useState([]);
+    const [hostList, setHostList] = useState<hostList[]>([]);
 
     useEffect(() => {
         getHosts("d1929bdb-c891-4850-8c41-4097ae2c6c7f", setHostList);
+        console.log(hostList);
     }, []);
 
     useEffect(() => {
@@ -221,26 +128,30 @@ const Overview = () => {
 
                 <div className={styles.tableContainer}>
                     <div className={styles.table}>
-                        {tableData.map((data, index) => {
-                            return (
-                                <div key={index} className={styles.row}>
-                                    <div className={styles.rowData}>
-                                        <p className={styles.rowName}>
-                                            {data.name}
-                                        </p>
-                                        <p className={styles.rowEmail}>
-                                            {data.email}
-                                        </p>
-                                        <p className={styles.rowType}>
-                                            {data.type}
-                                        </p>
+                        {hostList &&
+                            hostList.map((data, index) => {
+                                return (
+                                    <div key={index} className={styles.row}>
+                                        <div className={styles.rowData}>
+                                            <p className={styles.rowName}>
+                                                {data.name}
+                                            </p>
+                                            <p className={styles.rowEmail}>
+                                                {data.email}
+                                            </p>
+                                            <p className={styles.rowType}>
+                                                {data.role}
+                                            </p>
+                                        </div>
+                                        <div className={styles.rowData}>
+                                            <TbPencil
+                                                color="#8E8F90"
+                                                size={18}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className={styles.rowData}>
-                                        <TbPencil color="#8E8F90" size={18} />
-                                    </div>
-                                </div>
-                            );
-                        })}
+                                );
+                            })}
                     </div>
                 </div>
             </div>

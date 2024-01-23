@@ -8,3 +8,10 @@ export type recentRegistration = {
     category: string;
     organization: string;
 };
+
+export type hostList = {
+    id: string;
+    name: string | null;
+    email: string;
+    role: string;
+};
