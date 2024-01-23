@@ -124,7 +124,6 @@ export const connectPrivateSocket = ({
 
         ws.onmessage = async (event) => {
             const statusCode = JSON.parse(event.data).statusCode;
-            console.log(statusCode);
 
             if (statusCode === 1000) {
                 try {
@@ -145,7 +144,6 @@ export const connectPrivateSocket = ({
                     const ws = new WebSocket(wsUrl);
 
                     resolve(ws);
-
                 } catch (error) {
                     toast.error(
                         "Your session has expired. Please login again."

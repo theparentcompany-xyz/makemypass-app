@@ -12,6 +12,7 @@ const Glance = () => {
 
     const [progressData, setprogressData] = useState<progressDataType>([]);
     const [totalGuests, setTotalGuests] = useState<number>(0);
+    const [targetGuests, setTargetGuests] = useState<number>(0);
 
     useEffect(() => {
         return () => {
@@ -20,7 +21,7 @@ const Glance = () => {
     }, []);
 
     useEffect(() => {
-        const wsUrl = `wss://api.buildnship.in/makemypass/manage-event/d1929bdb-c891-4850-8c41-4097ae2c6c7f/register-count/`;
+        const wsUrl = `wss://dev-api.buildnship.in/makemypass/manage-event/d1929bdb-c891-4850-8c41-4097ae2c6c7f/register-count/`;
 
         connectPrivateSocket({ url: wsUrl }).then((ws) => {
             ws.onmessage = (event) => {
@@ -28,6 +29,9 @@ const Glance = () => {
 
                 setTotalGuests(
                     Number(JSON.parse(event.data).response.total_reg)
+                );
+                setTargetGuests(
+                    Number(JSON.parse(event.data).response.target_reg)
                 );
 
                 const newStrucure: progressDataType = [];
@@ -41,7 +45,7 @@ const Glance = () => {
                 ];
 
                 for (const [key, value] of Object.entries(category)) {
-                    console.log(`${key}: ${value}`);
+                    
                     newStrucure.push({
                         type: key,
                         color: colors.pop(),
@@ -63,7 +67,7 @@ const Glance = () => {
 
                 {totalGuests > 0 && (
                     <p className={styles.guests}>
-                        {totalGuests} <span>guests</span>
+                        {totalGuests}/{targetGuests} <span>guests</span>
                     </p>
                 )}
 

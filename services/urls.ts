@@ -13,4 +13,5 @@ export const buildVerse = {
 export const makeMyPass = {
     onboardUser: makeMyPassURL("/onboard-user/"),
     listEvents: makeMyPassURL("/list-events/"),
+    listHosts: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-hosts/`),
 };

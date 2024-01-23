@@ -12,7 +12,6 @@ import {
     ArcElement,
 } from "chart.js";
 import { Line, Bar, Doughnut } from "react-chartjs-2";
-import { da, faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
 import { connectPrivateSocket } from "../../../../../../services/apiGateway";
 import AnalyticsData from "./types";
@@ -61,7 +60,7 @@ const Insights = () => {
     }, []);
 
     useEffect(() => {
-        const wsUrl = `wss://api.buildnship.in/makemypass/manage-event/d1929bdb-c891-4850-8c41-4097ae2c6c7f/analytics/`;
+        const wsUrl = `wss://dev-buildnship.in/makemypass/manage-event/d1929bdb-c891-4850-8c41-4097ae2c6c7f/analytics/`;
 
         connectPrivateSocket({ url: wsUrl }).then((ws) => {
             ws.onmessage = (event) => {
