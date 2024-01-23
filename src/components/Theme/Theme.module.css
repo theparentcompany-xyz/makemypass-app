@@ -57,12 +57,10 @@
 }
 
 .childrenContainer {
-    display: flex;
-    align-items: center;
-    margin-top: 10vh;
-    z-index: 2;
-
+    width: 100%;
+    max-width: 70rem;
+    margin: auto;
+    margin-top: 8vh;
     overflow: auto;
-
-    /* height: 98vh; */
+    z-index: 1;
 }

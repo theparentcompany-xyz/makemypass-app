@@ -22,7 +22,6 @@ const Glance = () => {
         };
     }, []);
 
-
     const [searchParams] = useSearchParams();
     const eventId = searchParams.get("eventId") || "";
 
@@ -65,8 +64,52 @@ const Glance = () => {
         });
     }, []);
 
+    const [currentTab, setCurrentTab] = useState("overview");
+
+    const updateTab = (tab: string) => {
+        setCurrentTab(tab);
+    };
+
     return (
         <>
+            <div className={styles.tabsContainer}>
+                <div className={styles.tabs}>
+                    <ol>
+                        <li
+                            className={`${styles.tab} ${
+                                currentTab === "overview" ? styles.active : ""
+                            }`}
+                            onClick={() => updateTab("overview")}
+                        >
+                            Overview
+                        </li>
+                        <li
+                            className={`${styles.tab} ${
+                                currentTab === "insights" ? styles.active : ""
+                            }`}
+                            onClick={() => updateTab("insights")}
+                        >
+                            Insights
+                        </li>
+                        <li
+                            className={`${styles.tab} ${
+                                currentTab === "guests" ? styles.active : ""
+                            }`}
+                            onClick={() => updateTab("guests")}
+                        >
+                            Guests
+                        </li>
+                        <li
+                            className={`${styles.tab} ${
+                                currentTab === "checkins" ? styles.active : ""
+                            }`}
+                            onClick={() => updateTab("checkins")}
+                        >
+                            Check-In
+                        </li>
+                    </ol>
+                </div>
+            </div>
             <div className={styles.glanceContainer}>
                 <p className={styles.glanceHeader}>At a Glance</p>
 

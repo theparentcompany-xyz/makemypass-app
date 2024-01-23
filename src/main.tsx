@@ -7,7 +7,7 @@ import Home from "./pages/app/Home/Home";
 import "./index.css";
 import LandingPage from "./pages/app/LandingPage/LandingPage";
 import { Toaster, ToastPosition } from "react-hot-toast";
-import AdminStats from "./pages/app/Overview/AdminStats";
+import Overview from "./pages/app/Overview/modules/Overview/Overview";
 
 const router = createBrowserRouter([
     {
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/overview",
-        element: <AdminStats />,
+        element: <Overview />,
     },
 ]);
 

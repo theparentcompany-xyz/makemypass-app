@@ -1,3 +1,7 @@
+.overviewContainer {
+    padding: 0 2rem;
+}
+
 .buttons {
     display: flex;
     flex-direction: row;
@@ -61,6 +65,7 @@
 
 .rowData {
     display: flex;
+    align-items: center;
 }
 
 .rowName {
@@ -105,7 +110,7 @@
         overflow: auto;
     }
 
-    .table{
+    .table {
         width: 40rem;
     }
 }

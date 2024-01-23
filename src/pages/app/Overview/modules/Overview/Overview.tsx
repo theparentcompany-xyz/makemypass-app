@@ -15,6 +15,7 @@ import { makeMyPassSocket } from "../../../../../../services/urls";
 
 import { useSearchParams } from "react-router-dom";
 import { HashLoader } from "react-spinners";
+import Theme from "../../../../../components/Theme/Theme";
 
 const Overview = () => {
     const [recentRegistrations, setRecentRegistrations] = useState<
@@ -63,83 +64,45 @@ const Overview = () => {
     }, []);
 
     return (
-        <>
-            {recentRegistrations &&
-            recentRegistrations.length > 0 &&
-            hostList ? (
-                <>
-                    <Glance />
+        <Theme>
+            <>
+                {recentRegistrations &&
+                recentRegistrations.length > 0 &&
+                hostList ? (
+                    <div className={styles.overviewContainer}>
+                        <Glance />
 
-                    <div className={styles.buttons}>
-                        <SectionButton
-                            buttonText="Guest List"
-                            buttonColor="#7662FC"
-                            icon={<HiUserGroup size={25} color="#7662FC" />}
-                        />
-                        <SectionButton
-                            buttonText="Host List"
-                            buttonColor="#C33D7B"
-                            icon={<FaWrench size={25} color="#C33D7B" />}
-                        />
-                        <SectionButton
-                            buttonText="Check In"
-                            buttonColor="#5B75FB"
-                            icon={<BsQrCodeScan size={25} color="#5B75FB" />}
-                        />
-                    </div>
-
-                    <div className={styles.recentRegistrations}>
-                        <div className={styles.tableHeader}>
-                            <p className={styles.tableHeading}>
-                                Recent Registration
-                            </p>
-                            <SecondaryButton buttonText="All Guests ➞" />
+                        <div className={styles.buttons}>
+                            <SectionButton
+                                buttonText="Guest List"
+                                buttonColor="#7662FC"
+                                icon={<HiUserGroup size={25} color="#7662FC" />}
+                            />
+                            <SectionButton
+                                buttonText="Host List"
+                                buttonColor="#C33D7B"
+                                icon={<FaWrench size={25} color="#C33D7B" />}
+                            />
+                            <SectionButton
+                                buttonText="Check In"
+                                buttonColor="#5B75FB"
+                                icon={
+                                    <BsQrCodeScan size={25} color="#5B75FB" />
+                                }
+                            />
                         </div>
 
-                        <div className={styles.tableContainer}>
-                            <div className={styles.table}>
-                                {recentRegistrations.map((data, index) => {
-                                    return (
-                                        <div key={index} className={styles.row}>
-                                            <div className={styles.rowData}>
-                                                <p className={styles.rowName}>
-                                                    {data.name}
-                                                </p>
-                                                <p className={styles.rowEmail}>
-                                                    {data.email}
-                                                </p>
-                                            </div>
-                                            <div className={styles.rowData}>
-                                                <p className={styles.rowType}>
-                                                    {data.category}
-                                                </p>
-                                                <p className={styles.rowDate}>
-                                                    {data.registered_at}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                        <div className={styles.recentRegistrations}>
+                            <div className={styles.tableHeader}>
+                                <p className={styles.tableHeading}>
+                                    Recent Registration
+                                </p>
+                                <SecondaryButton buttonText="All Guests ➞" />
                             </div>
-                        </div>
-                    </div>
 
-                    <div className={styles.recentRegistrations}>
-                        <div className={styles.tableHeader}>
-                            <p className={styles.tableHeading}>
-                                Hosts <br />
-                                <span>
-                                    Add hosts, special guests, and event
-                                    managers.
-                                </span>
-                            </p>
-                            <SecondaryButton buttonText="+ Add Host" />
-                        </div>
-
-                        <div className={styles.tableContainer}>
-                            <div className={styles.table}>
-                                {hostList &&
-                                    hostList.map((data, index) => {
+                            <div className={styles.tableContainer}>
+                                <div className={styles.table}>
+                                    {recentRegistrations.map((data, index) => {
                                         return (
                                             <div
                                                 key={index}
@@ -160,33 +123,102 @@ const Overview = () => {
                                                     >
                                                         {data.email}
                                                     </p>
+                                                </div>
+                                                <div className={styles.rowData}>
                                                     <p
                                                         className={
                                                             styles.rowType
                                                         }
                                                     >
-                                                        {data.role}
+                                                        {data.category}
                                                     </p>
-                                                </div>
-                                                <div className={styles.rowData}>
-                                                    <TbPencil
-                                                        color="#8E8F90"
-                                                        size={18}
-                                                    />
+                                                    <p
+                                                        className={
+                                                            styles.rowDate
+                                                        }
+                                                    >
+                                                        {data.registered_at}
+                                                    </p>
                                                 </div>
                                             </div>
                                         );
                                     })}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={styles.recentRegistrations}>
+                            <div className={styles.tableHeader}>
+                                <p className={styles.tableHeading}>
+                                    Hosts <br />
+                                    <span>
+                                        Add hosts, special guests, and event
+                                        managers.
+                                    </span>
+                                </p>
+                                <SecondaryButton buttonText="+ Add Host" />
+                            </div>
+
+                            <div className={styles.tableContainer}>
+                                <div className={styles.table}>
+                                    {hostList &&
+                                        hostList.map((data, index) => {
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    className={styles.row}
+                                                >
+                                                    <div
+                                                        className={
+                                                            styles.rowData
+                                                        }
+                                                    >
+                                                        <p
+                                                            className={
+                                                                styles.rowName
+                                                            }
+                                                        >
+                                                            {data.name}
+                                                        </p>
+                                                        <p
+                                                            className={
+                                                                styles.rowEmail
+                                                            }
+                                                        >
+                                                            {data.email}
+                                                        </p>
+                                                        <p
+                                                            className={
+                                                                styles.rowType
+                                                            }
+                                                        >
+                                                            {data.role}
+                                                        </p>
+                                                    </div>
+                                                    <div
+                                                        className={
+                                                            styles.rowData
+                                                        }
+                                                    >
+                                                        <TbPencil
+                                                            color="#8E8F90"
+                                                            size={18}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </>
-            ) : (
-                <div className={styles.center}>
-                    <HashLoader color={"#46BF75"} size={50} />
-                </div>
-            )}
-        </>
+                ) : (
+                    <div className={styles.center}>
+                        <HashLoader color={"#46BF75"} size={50} />
+                    </div>
+                )}
+            </>
+        </Theme>
     );
 };
 
