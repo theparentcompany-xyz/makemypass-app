@@ -35,6 +35,7 @@ import { makeMyPassSocket } from "../../../../services/urls";
 import AnalyticsData from "./types";
 import Theme from "../../../components/Theme/Theme";
 import Glance from "../Overview/components/Glance/Glance";
+import Header from "../Overview/components/Header/Header";
 
 const Insights = () => {
     const [message, setMessage] = useState<AnalyticsData>();
@@ -133,7 +134,9 @@ const Insights = () => {
                 {lineData && barData && pieData ? (
                     <>
                         <div className={styles.insightsOuterContainer}>
+                            
                             <div className={styles.glanceContainer}>
+                            <Header />
                                 <Glance tab="insights" />
                             </div>
 

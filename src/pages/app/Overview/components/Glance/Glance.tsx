@@ -116,50 +116,52 @@ const Glance = (tab: any) => {
                     </ol>
                 </div>
             </div>
-            <div className={styles.glanceContainer}>
-                <p className={styles.glanceHeader}>At a Glance</p>
+            {currentTab && currentTab != "insights" && (
+                <div className={styles.glanceContainer}>
+                    <p className={styles.glanceHeader}>At a Glance</p>
 
-                {totalGuests > 0 && (
-                    <p className={styles.guests}>
-                        {totalGuests}/{targetGuests} <span>guests</span>
-                    </p>
-                )}
+                    {totalGuests > 0 && (
+                        <p className={styles.guests}>
+                            {totalGuests}/{targetGuests} <span>guests</span>
+                        </p>
+                    )}
 
-                <div className={styles.progresBarGraph}>
-                    {progressData.map((data) => (
-                        <>
-                            <div
-                                key={data.type}
-                                className={styles.progressBar}
-                                style={{
-                                    backgroundColor: data.color,
-                                    width: `${data.value / 10}%`,
-                                }}
-                            ></div>
-                        </>
-                    ))}
-                </div>
-
-                <div className={styles.progressLabels}>
-                    <ul>
+                    <div className={styles.progresBarGraph}>
                         {progressData.map((data) => (
                             <>
-                                <li
+                                <div
                                     key={data.type}
-                                    className={styles.progressLabel}
+                                    className={styles.progressBar}
                                     style={{
-                                        color: data.color,
+                                        backgroundColor: data.color,
+                                        width: `${data.value / 10}%`,
                                     }}
-                                >
-                                    <p className={styles.dataCount}>
-                                        • {data.value} {data.type}
-                                    </p>
-                                </li>
+                                ></div>
                             </>
                         ))}
-                    </ul>
+                    </div>
+
+                    <div className={styles.progressLabels}>
+                        <ul>
+                            {progressData.map((data) => (
+                                <>
+                                    <li
+                                        key={data.type}
+                                        className={styles.progressLabel}
+                                        style={{
+                                            color: data.color,
+                                        }}
+                                    >
+                                        <p className={styles.dataCount}>
+                                            • {data.value} {data.type}
+                                        </p>
+                                    </li>
+                                </>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            )}
         </>
     );
 };

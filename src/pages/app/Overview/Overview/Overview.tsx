@@ -17,6 +17,7 @@ import { connectPrivateSocket } from "../../../../../services/apiGateway";
 import { makeMyPassSocket } from "../../../../../services/urls";
 import Theme from "../../../../components/Theme/Theme";
 import { useParams } from "react-router-dom";
+import Header from "../components/Header/Header";
 
 const Overview = () => {
     const [recentRegistrations, setRecentRegistrations] = useState<
@@ -70,6 +71,7 @@ const Overview = () => {
                 recentRegistrations.length > 0 &&
                 hostList ? (
                     <div className={styles.overviewContainer}>
+                        <Header />
                         <Glance tab="overview" />
 
                         <div className={styles.buttons}>
