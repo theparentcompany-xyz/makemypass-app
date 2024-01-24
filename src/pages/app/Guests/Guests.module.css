@@ -126,3 +126,34 @@
     height: 70vh;
     margin-bottom: 3rem;
 }
+
+.searchInput {
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.5rem 1rem;
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.9rem;
+    /* width: 100%;
+    max-width: 65.5rem; */
+    margin-top: 1rem;
+
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+}
+
+.searchInput input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.9rem;
+    width: 100%;
+}

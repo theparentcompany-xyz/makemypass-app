@@ -9,11 +9,13 @@ import { makeMyPassSocket } from "../../../../services/urls";
 import { useParams } from "react-router-dom";
 import { guests } from "./types";
 import { getEventId } from "../../../apis/events";
+import { RiSearchLine } from "react-icons/ri";
 
 const Guests = () => {
     const [guests, setGuests] = useState<guests[]>([]);
 
     const [socket, setSocket] = useState<WebSocket | null>(null);
+    const [searchKeyword, setSearchKeyword] = useState<string>("");
 
     const getLocalEventId = () => {
         if (eventTitle) {
@@ -65,33 +67,53 @@ const Guests = () => {
                 <div className={styles.guests}>
                     <div className={styles.tableHeader}>
                         <p className={styles.tableHeading}>Guests List</p>
+
                         <SecondaryButton buttonText="All Guests ➞" />
+                    </div>
+                    <div className={styles.searchInput}>
+                        <RiSearchLine color="#5F6063" />
+                        <input
+                            onChange={(event) => {
+                                setSearchKeyword(event.target.value);
+                            }}
+                            placeholder="Search"
+                            type="text"
+                        />
                     </div>
 
                     <div className={styles.tableContainer}>
                         <div className={styles.table}>
-                            {guests.map((data, index) => {
-                                return (
-                                    <div key={index} className={styles.row}>
-                                        <div className={styles.rowData}>
-                                            <p className={styles.rowName}>
-                                                {data.name}
-                                            </p>
-                                            <p className={styles.rowEmail}>
-                                                {data.email}
-                                            </p>
+                            {guests
+                                .filter((data) => {
+                                    const { name, email } = data;
+                                    const keyword = searchKeyword.toLowerCase();
+                                    return (
+                                        name.toLowerCase().includes(keyword) ||
+                                        email.toLowerCase().includes(keyword)
+                                    );
+                                })
+                                .map((data, index) => {
+                                    return (
+                                        <div key={index} className={styles.row}>
+                                            <div className={styles.rowData}>
+                                                <p className={styles.rowName}>
+                                                    {data.name}
+                                                </p>
+                                                <p className={styles.rowEmail}>
+                                                    {data.email}
+                                                </p>
+                                            </div>
+                                            <div className={styles.rowData}>
+                                                <p className={styles.rowType}>
+                                                    {data.category}
+                                                </p>
+                                                <p className={styles.rowDate}>
+                                                    {data.registered_at}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div className={styles.rowData}>
-                                            <p className={styles.rowType}>
-                                                {data.category}
-                                            </p>
-                                            <p className={styles.rowDate}>
-                                                {data.registered_at}
-                                            </p>
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
                         </div>
                     </div>
                 </div>
