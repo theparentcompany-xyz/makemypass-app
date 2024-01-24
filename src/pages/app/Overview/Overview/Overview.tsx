@@ -16,7 +16,7 @@ import { getHosts } from "../../../../apis/overview";
 import { connectPrivateSocket } from "../../../../../services/apiGateway";
 import { makeMyPassSocket } from "../../../../../services/urls";
 import Theme from "../../../../components/Theme/Theme";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header/Header";
 import { getEventId } from "../../../../apis/events";
 
@@ -61,7 +61,7 @@ const Overview = () => {
     useEffect(() => {
         if (eventId) getHosts(eventId, setHostList);
         console.log(hostList);
-    }, []);
+    }, [eventId]);
 
     useEffect(() => {
         return () => {
@@ -109,23 +109,41 @@ const Overview = () => {
                         <Glance tab="overview" />
 
                         <div className={styles.buttons}>
-                            <SectionButton
-                                buttonText="Guest List"
-                                buttonColor="#7662FC"
-                                icon={<HiUserGroup size={25} color="#7662FC" />}
-                            />
-                            <SectionButton
-                                buttonText="Host List"
-                                buttonColor="#C33D7B"
-                                icon={<FaWrench size={25} color="#C33D7B" />}
-                            />
-                            <SectionButton
-                                buttonText="Check In"
-                                buttonColor="#5B75FB"
-                                icon={
-                                    <BsQrCodeScan size={25} color="#5B75FB" />
-                                }
-                            />
+                            <Link to="/scaleup/guests">
+                                <SectionButton
+                                    buttonText="Guest List"
+                                    buttonColor="#7662FC"
+                                    icon={
+                                        <HiUserGroup
+                                            size={25}
+                                            color="#7662FC"
+                                        />
+                                    }
+                                />
+                            </Link>
+
+                            <a href="#hosts">
+                                <SectionButton
+                                    buttonText="Host List"
+                                    buttonColor="#C33D7B"
+                                    icon={
+                                        <FaWrench size={25} color="#C33D7B" />
+                                    }
+                                />
+                            </a>
+
+                            <Link to="/scaleup/checkins">
+                                <SectionButton
+                                    buttonText="Check In"
+                                    buttonColor="#5B75FB"
+                                    icon={
+                                        <BsQrCodeScan
+                                            size={25}
+                                            color="#5B75FB"
+                                        />
+                                    }
+                                />
+                            </Link>
                         </div>
 
                         <div className={styles.recentRegistrations}>
@@ -195,7 +213,7 @@ const Overview = () => {
                                 <SecondaryButton buttonText="+ Add Host" />
                             </div>
 
-                            <div className={styles.tableContainer}>
+                            <div id="hosts" className={styles.tableContainer}>
                                 <div className={styles.table}>
                                     {hostList &&
                                         hostList.map((data, index) => {

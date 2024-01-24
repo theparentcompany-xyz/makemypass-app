@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Theme from "../../../components/Theme/Theme";
 import styles from "./LandingPage.module.css";
 
@@ -34,6 +35,16 @@ const LandingPage = () => {
                                 src="/landingImage.png"
                             />
                         </div>
+                    </div>
+                    <div className={styles.tc}>
+                        Checkout our&nbsp;
+                        <Link to="/termsandconditions">
+                            <p className={styles.terms}>Terms & Conditions&nbsp; </p>
+                        </Link>
+                        and&nbsp;
+                        <Link to="/privacypolicy">
+                            <p className={styles.privacy}>Privacy Policy</p>
+                        </Link>
                     </div>
                 </div>
             </Theme>

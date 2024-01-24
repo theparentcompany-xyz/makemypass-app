@@ -65,22 +65,4 @@
     z-index: 1;
 }
 
-.tc {
-    color: #a5a5a5;
-    font-family: "Inter", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    margin-top: 1rem;
-    font-size: 0.8rem;
 
-    text-align: center;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-gap: 1rem;
-    margin-bottom: 1rem;
-}
-.privacy {
-    margin-left: -0.75rem;
-}

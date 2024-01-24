@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { guests } from "./types";
 import { getEventId } from "../../../apis/events";
 import { RiSearchLine } from "react-icons/ri";
+import { HashLoader } from "react-spinners";
 
 const Guests = () => {
     const [guests, setGuests] = useState<guests[]>([]);
@@ -59,65 +60,95 @@ const Guests = () => {
 
     return (
         <Theme>
-            <div className={styles.guestsContainer}>
-                <Header />
+            {guests ? (
+                <div className={styles.guestsContainer}>
+                    <Header />
 
-                <Glance tab="guests" />
+                    <Glance tab="guests" />
 
-                <div className={styles.guests}>
-                    <div className={styles.tableHeader}>
-                        <p className={styles.tableHeading}>Guests List</p>
+                    <div className={styles.guests}>
+                        <div className={styles.tableHeader}>
+                            <p className={styles.tableHeading}>Guests List</p>
 
-                        <SecondaryButton buttonText="All Guests ➞" />
-                    </div>
-                    <div className={styles.searchInput}>
-                        <RiSearchLine color="#5F6063" />
-                        <input
-                            onChange={(event) => {
-                                setSearchKeyword(event.target.value);
-                            }}
-                            placeholder="Search"
-                            type="text"
-                        />
-                    </div>
+                            <SecondaryButton buttonText="All Guests ➞" />
+                        </div>
+                        <div className={styles.searchInput}>
+                            <RiSearchLine color="#5F6063" />
+                            <input
+                                onChange={(event) => {
+                                    setSearchKeyword(event.target.value);
+                                }}
+                                placeholder="Search"
+                                type="text"
+                            />
+                        </div>
 
-                    <div className={styles.tableContainer}>
-                        <div className={styles.table}>
-                            {guests
-                                .filter((data) => {
-                                    const { name, email } = data;
-                                    const keyword = searchKeyword.toLowerCase();
-                                    return (
-                                        name.toLowerCase().includes(keyword) ||
-                                        email.toLowerCase().includes(keyword)
-                                    );
-                                })
-                                .map((data, index) => {
-                                    return (
-                                        <div key={index} className={styles.row}>
-                                            <div className={styles.rowData}>
-                                                <p className={styles.rowName}>
-                                                    {data.name}
-                                                </p>
-                                                <p className={styles.rowEmail}>
-                                                    {data.email}
-                                                </p>
+                        <div className={styles.tableContainer}>
+                            <div className={styles.table}>
+                                {guests
+                                    .filter((data) => {
+                                        const { name, email } = data;
+                                        const keyword =
+                                            searchKeyword.toLowerCase();
+                                        return (
+                                            name
+                                                .toLowerCase()
+                                                .includes(keyword) ||
+                                            email
+                                                .toLowerCase()
+                                                .includes(keyword)
+                                        );
+                                    })
+                                    .map((data, index) => {
+                                        return (
+                                            <div
+                                                key={index}
+                                                className={styles.row}
+                                            >
+                                                <div className={styles.rowData}>
+                                                    <p
+                                                        className={
+                                                            styles.rowName
+                                                        }
+                                                    >
+                                                        {data.name}
+                                                    </p>
+                                                    <p
+                                                        className={
+                                                            styles.rowEmail
+                                                        }
+                                                    >
+                                                        {data.email}
+                                                    </p>
+                                                </div>
+                                                <div className={styles.rowData}>
+                                                    <p
+                                                        className={
+                                                            styles.rowType
+                                                        }
+                                                    >
+                                                        {data.category}
+                                                    </p>
+                                                    <p
+                                                        className={
+                                                            styles.rowDate
+                                                        }
+                                                    >
+                                                        {data.registered_at}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div className={styles.rowData}>
-                                                <p className={styles.rowType}>
-                                                    {data.category}
-                                                </p>
-                                                <p className={styles.rowDate}>
-                                                    {data.registered_at}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            ) : (
+                <div className={styles.center}>
+                    <HashLoader color={"#46BF75"} size={50} />
+                </div>
+            )}
         </Theme>
     );
 };

@@ -5,7 +5,7 @@
     justify-content: center;
 
     padding: 1rem;
-
+    overflow: hidden;
     margin: auto;
 }
 
@@ -125,4 +125,20 @@
     .landingImage {
         margin-top: 0.5rem;
     }
+}
+
+.tc {
+    color: #a5a5a5;
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
 }

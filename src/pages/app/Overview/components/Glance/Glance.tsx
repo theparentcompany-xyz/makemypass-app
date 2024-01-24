@@ -3,6 +3,7 @@ import styles from "./Glance.module.css";
 import { connectPrivateSocket } from "../../../../../../services/apiGateway";
 import { makeMyPassSocket } from "../../../../../../services/urls";
 import { useParams, useNavigate } from "react-router-dom";
+import { getEventId } from "../../../../../apis/events";
 
 const Glance = (tab: any) => {
     type progressDataType = {
@@ -24,16 +25,44 @@ const Glance = (tab: any) => {
         };
     }, []);
 
-    const { eventTitle, eventId } = useParams<{
-        eventTitle: string;
-        eventId: string;
-    }>();
     const [currentTab, setCurrentTab] = useState("overview");
 
     const updateTab = (tab: string) => {
         setCurrentTab(tab);
         navigate(`/${eventTitle}/${tab}/`);
     };
+
+    const [eventId, setEventId] = useState<string>("");
+    const { eventTitle } = useParams<{ eventTitle: string }>();
+
+    useEffect(() => {
+        const eventData = JSON.parse(
+            localStorage.getItem("eventData") as string
+        );
+
+        setEventId(eventData?.event_id);
+
+        if (!eventData)
+            setTimeout(() => {
+                getLocalEventId();
+            }, 2000);
+    }, []);
+
+    const getLocalEventId = () => {
+        const eventData = JSON.parse(
+            localStorage.getItem("eventData") as string
+        );
+
+        if (eventData) {
+            if (eventData.event_name !== eventTitle) {
+                localStorage.removeItem("eventData");
+                getEventId(eventTitle ?? "");
+            } else {
+                setEventId(eventData.event_id);
+            }
+        }
+    };
+
 
     useEffect(() => {
         setCurrentTab(tab.tab);
@@ -74,7 +103,7 @@ const Glance = (tab: any) => {
 
                 setSocket(ws);
             });
-    }, []);
+    }, [eventId]);
 
     return (
         <>
