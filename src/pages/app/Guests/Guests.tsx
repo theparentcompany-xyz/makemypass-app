@@ -8,12 +8,32 @@ import { connectPrivateSocket } from "../../../../services/apiGateway";
 import { makeMyPassSocket } from "../../../../services/urls";
 import { useParams } from "react-router-dom";
 import { guests } from "./types";
+import { getEventId } from "../../../apis/events";
 
 const Guests = () => {
     const [guests, setGuests] = useState<guests[]>([]);
 
     const [socket, setSocket] = useState<WebSocket | null>(null);
-    const { eventId } = useParams<{ eventId: string }>();
+
+    const getLocalEventId = () => {
+        if (eventTitle) {
+            const eventData = JSON.parse(
+                localStorage.getItem("eventData") as string
+            );
+
+            if (eventData) {
+                if (eventData.event_name !== eventTitle) {
+                    localStorage.removeItem("eventData");
+                    getEventId(eventTitle);
+                } else {
+                    return eventData.event_id;
+                }
+            }
+        }
+    };
+
+    const { eventTitle } = useParams<{ eventTitle: string }>();
+    const eventId = getLocalEventId();
 
     useEffect(() => {
         return () => {

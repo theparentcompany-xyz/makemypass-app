@@ -5,7 +5,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getEvents } from "../../../apis/events";
+import { getEventId, getEvents } from "../../../apis/events";
 
 const Events = () => {
     type Event = {
@@ -24,6 +24,19 @@ const Events = () => {
         console.log(events);
     }, []);
 
+    const handleClick = (eventName: string) => {
+        const currentEvent = localStorage.getItem("eventData");
+        if (currentEvent) {
+            const eventData = JSON.parse(currentEvent);
+            if (eventData.event_name !== eventName.trim().toLowerCase()) {
+                localStorage.removeItem("eventData");
+                getEventId(eventName.toLowerCase());
+            }
+        } else {
+            getEventId(eventName.toLowerCase());
+        }
+    };
+
     return (
         <>
             <Theme>
@@ -36,7 +49,7 @@ const Events = () => {
                         </p>
                         <div className={styles.eventsContainer}>
                             {events.map((event) => (
-                                <div className={styles.event}>
+                                <div key={event.id} className={styles.event}>
                                     <div className={styles.eventDate}>
                                         <p className={styles.date}>
                                             {event.date}
@@ -85,14 +98,17 @@ const Events = () => {
                                                         {event.members} guests
                                                     </p>
                                                     <Link
-                                                        to={`/${event.title.toLowerCase()}/overview/${
-                                                            event.id
-                                                        }`}
+                                                        to={`/${event.title.toLowerCase()}/overview/`}
                                                     >
                                                         <button
                                                             className={
                                                                 styles.manage
                                                             }
+                                                            onClick={() => {
+                                                                handleClick(
+                                                                    event.title
+                                                                );
+                                                            }}
                                                         >
                                                             Manage
                                                             <BsArrowRight

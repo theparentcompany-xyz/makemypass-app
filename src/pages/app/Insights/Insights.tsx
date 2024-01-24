@@ -36,6 +36,7 @@ import AnalyticsData from "./types";
 import Theme from "../../../components/Theme/Theme";
 import Glance from "../Overview/components/Glance/Glance";
 import Header from "../Overview/components/Header/Header";
+import { getEventId } from "../../../apis/events";
 
 const Insights = () => {
     const [message, setMessage] = useState<AnalyticsData>();
@@ -46,7 +47,26 @@ const Insights = () => {
 
     const [socket, setSocket] = useState<WebSocket | null>(null);
 
-    const { eventId } = useParams();
+    const getLocalEventId = () => {
+        if (eventTitle) {
+            const eventData = JSON.parse(
+                localStorage.getItem("eventData") as string
+            );
+
+            if (eventData) {
+                if (eventData.event_name !== eventTitle) {
+                    localStorage.removeItem("eventData");
+                    getEventId(eventTitle);
+                } else {
+                    return eventData.event_id;
+                }
+            }
+        }
+    };
+
+    const { eventTitle } = useParams<{ eventTitle: string }>();
+    const eventId = getLocalEventId();
+
 
     const options = {
         responsive: true,
@@ -134,9 +154,8 @@ const Insights = () => {
                 {lineData && barData && pieData ? (
                     <>
                         <div className={styles.insightsOuterContainer}>
-                            
                             <div className={styles.glanceContainer}>
-                            <Header />
+                                <Header />
                                 <Glance tab="insights" />
                             </div>
 

@@ -32,7 +32,7 @@ const Glance = (tab: any) => {
 
     const updateTab = (tab: string) => {
         setCurrentTab(tab);
-        navigate(`/${eventTitle}/${tab}/${eventId}`);
+        navigate(`/${eventTitle}/${tab}/`);
     };
 
     useEffect(() => {

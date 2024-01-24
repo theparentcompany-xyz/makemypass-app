@@ -18,6 +18,7 @@ import { makeMyPassSocket } from "../../../../../services/urls";
 import Theme from "../../../../components/Theme/Theme";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header/Header";
+import { getEventId } from "../../../../apis/events";
 
 const Overview = () => {
     const [recentRegistrations, setRecentRegistrations] = useState<
@@ -25,7 +26,38 @@ const Overview = () => {
     >([]);
     const [socket, setSocket] = useState<WebSocket | null>(null);
     const [hostList, setHostList] = useState<hostList[]>([]);
-    const { eventId } = useParams<{ eventId: string }>();
+
+    const [eventId, setEventId] = useState<string>("");
+    const { eventTitle } = useParams<{ eventTitle: string }>();
+
+    const getLocalEventId = () => {
+        const eventData = JSON.parse(
+            localStorage.getItem("eventData") as string
+        );
+
+        if (eventData) {
+            if (eventData.event_name !== eventTitle) {
+                localStorage.removeItem("eventData");
+                getEventId(eventTitle ?? "");
+            } else {
+                setEventId(eventData.event_id);
+            }
+        }
+    };
+
+    useEffect(() => {
+        const eventData = JSON.parse(
+            localStorage.getItem("eventData") as string
+        );
+
+        setEventId(eventData?.event_id);
+
+        if (!eventData)
+            setTimeout(() => {
+                getLocalEventId();
+            }, 2000);
+    }, []);
+
     useEffect(() => {
         if (eventId) getHosts(eventId, setHostList);
         console.log(hostList);
@@ -64,7 +96,7 @@ const Overview = () => {
 
                 setSocket(ws);
             });
-    }, []);
+    }, [eventId]);
 
     return (
         <Theme>

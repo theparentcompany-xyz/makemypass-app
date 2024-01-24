@@ -22,7 +22,21 @@ export const getEvents = async (setEvents: {
         .then((response) => {
             console.log(response);
             setEvents(response.data.response.events);
-            console.log(response.data.response.events)
+            console.log(response.data.response.events);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+
+export const getEventId = async (eventName: string) => {
+    privateGateway
+        .get(makeMyPass.getEventId(eventName))
+        .then((response) => {
+            localStorage.setItem(
+                "eventData",
+                JSON.stringify(response.data.response)
+            );
         })
         .catch((error) => {
             console.log(error);
