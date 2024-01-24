@@ -19,6 +19,7 @@ import AuthCheck from "./components/AuthCheck/AuthCheck";
 import Guests from "./pages/app/Guests/Guests";
 import TermsConditions from "./pages/app/TermsCondictions/TermsConditions";
 import PrivacyPolicy from "./pages/app/PrivacyPolicy/PrivacyPolicy";
+import FourNotFour from "./pages/FourNotFour/FourNotFour";
 
 const routes = [
     {
@@ -46,10 +47,6 @@ const routes = [
                 element: <Events />,
             },
             {
-                path: "/:eventTitle",
-                element: <Navigate to="/events" />,
-            },
-            {
                 path: "/:eventTitle/overview",
                 element: <Overview />,
             },
@@ -62,6 +59,10 @@ const routes = [
                 element: <Guests />,
             },
         ],
+    },
+    {
+        path: "*",
+        element: <FourNotFour />,
     },
 ];
 
