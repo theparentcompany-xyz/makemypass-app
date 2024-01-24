@@ -63,12 +63,12 @@
 }
 
 .scannerOuterContainer {
+   
     max-width: 30rem;
-    width: 100%;
+    width: 90%;
     background-color: #000;
     border-radius: 0.5rem;
     border-bottom: 2px solid #47c97e;
-    ;
 }
 
 .scanner {
@@ -77,4 +77,19 @@
 
     display: block;
     margin: auto;
+}
+
+.sucessContainer {
+    margin-top: 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 1rem;
+}
+
+.scannerHeader {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #47c97e;
 }

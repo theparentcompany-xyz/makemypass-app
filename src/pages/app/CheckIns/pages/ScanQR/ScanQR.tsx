@@ -4,10 +4,20 @@ import styles from "./ScanQR.module.css";
 import { HiOutlineCamera } from "react-icons/hi2";
 
 import { QrScanner } from "@yudiel/react-qr-scanner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { userInfo } from "../../../../../apis/scan";
 
 const ScanQR = () => {
     const [showQR, setShowQR] = useState(false);
+    const [ticketId, setTicketId] = useState<string>("");
+
+    const [checkIn, setCheckIn] = useState(false);
+
+    useEffect(() => {
+        if (ticketId.length > 0) {
+            userInfo(ticketId, setCheckIn);
+        }
+    }, [ticketId]);
 
     return (
         <Theme>
@@ -26,6 +36,7 @@ const ScanQR = () => {
                             <div
                                 onClick={() => {
                                     setShowQR(true);
+                                    setTicketId("");
                                 }}
                                 className={styles.camerabox}
                             >
@@ -51,12 +62,32 @@ const ScanQR = () => {
                                     backgroundColor: "#000",
                                 }}
                                 onResult={(result) => {
-                                    console.log(result);
+                                    setTicketId(result.getText());
+                                    setShowQR(false);
                                 }}
                                 onError={(error) => {
                                     console.log(error);
                                 }}
                             />
+                        </div>
+                    </div>
+                )}
+                {ticketId.length > 0 && (
+                    <div className={styles.sucessContainer}>
+                        <div className={styles.scannerSuccess}>
+                            <p
+                                className={styles.scannerHeader}
+                                style={{
+                                    color: checkIn ? "#5B75FB" : "#ed4545",
+                                }}
+                            >
+                                {checkIn
+                                    ? " User Scanning Successfull!"
+                                    : "User Scanning Failed!"}
+                            </p>
+                            <p className={styles.userIdText}>
+                                User ID: {ticketId}
+                            </p>
                         </div>
                     </div>
                 )}
