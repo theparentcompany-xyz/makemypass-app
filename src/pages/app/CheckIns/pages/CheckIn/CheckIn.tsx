@@ -53,9 +53,9 @@ const CheckIn = () => {
                 url: makeMyPassSocket.listCheckinGuests(eventId),
             }).then((ws) => {
                 ws.onmessage = (event) => {
-                    if (JSON.parse(event.data).response.guests)
+                    if (JSON.parse(event.data).response.datas)
                         setRecentRegistrations(
-                            JSON.parse(event.data).response.guests
+                            JSON.parse(event.data).response.datas
                         );
                     else if (JSON.parse(event.data).response.data) {
                         const newRegistration = JSON.parse(event.data).response
@@ -66,7 +66,7 @@ const CheckIn = () => {
                                 newRegistration,
                                 ...prev,
                             ];
-                            updatedRegistrations.pop();
+
                             return updatedRegistrations;
                         });
                     }
@@ -87,7 +87,7 @@ const CheckIn = () => {
             <div className={styles.checkInContainer}>
                 <Header />
 
-                <CheckInHeader />
+                <CheckInHeader currentCount={recentRegistrations.length} />
 
                 <div className={styles.searchInput}>
                     <RiSearchLine color="#5F6063" />

@@ -5,7 +5,13 @@ import { BsQrCodeScan } from "react-icons/bs";
 import SectionButton from "../../../../../../components/SectionButton/SectionButton";
 import { BiCalendarMinus } from "react-icons/bi";
 
-const CheckInHeader = ({ buttonType }: { buttonType?: string }) => {
+const CheckInHeader = ({
+    currentCount,
+    buttonType,
+}: {
+    currentCount?: number;
+    buttonType?: string;
+}) => {
     const navigate = useNavigate();
     return (
         <>
@@ -39,14 +45,16 @@ const CheckInHeader = ({ buttonType }: { buttonType?: string }) => {
                     />
                 )}
 
-                <div className={styles.checkInGlance}>
-                    <p className={styles.checkInGlanceHeader}>
-                        Check In at a Glance
-                    </p>
-                    <p className={styles.guests}>
-                        0 <span>Guests</span>
-                    </p>
-                </div>
+                {currentCount && (
+                    <div className={styles.checkInGlance}>
+                        <p className={styles.checkInGlanceHeader}>
+                            Check In at a Glance
+                        </p>
+                        <p className={styles.guests}>
+                            {currentCount} <span>Guests</span>
+                        </p>
+                    </div>
+                )}
             </div>
         </>
     );
