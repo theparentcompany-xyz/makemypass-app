@@ -1,5 +1,5 @@
 import styles from "./SectionButton.module.css";
-import React from "react";
+
 
 type ButtonProps = {
     buttonText: string;
@@ -11,7 +11,6 @@ type ButtonProps = {
 const Button = ({
     buttonText,
     icon,
-    buttonColor,
     onClick, // Add the onClick property to the component props
 }: ButtonProps) => {
     return (
