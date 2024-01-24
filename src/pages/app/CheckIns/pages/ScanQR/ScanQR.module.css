@@ -61,3 +61,20 @@
     color: white;
     opacity: 0.75;
 }
+
+.scannerOuterContainer {
+    max-width: 30rem;
+    width: 100%;
+    background-color: #000;
+    border-radius: 0.5rem;
+    border-bottom: 2px solid #47c97e;
+    ;
+}
+
+.scanner {
+    width: 17rem;
+    height: 17rem;
+
+    display: block;
+    margin: auto;
+}
