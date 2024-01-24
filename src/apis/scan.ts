@@ -3,7 +3,7 @@ import { privateGateway } from "../../services/apiGateway";
 import { makeMyPass } from "../../services/urls";
 import { SetStateAction } from "react";
 
-export const userInfo = async (ticketId: string, setCheckIn: { (value: SetStateAction<boolean>): void; (arg0: boolean): void; }) => {
+export const getUserInfo = async (ticketId: string, setCheckIn: { (value: SetStateAction<boolean>): void; (arg0: boolean): void; }) => {
     privateGateway
         .post(makeMyPass.userInfo(ticketId))
         .then((response) => {

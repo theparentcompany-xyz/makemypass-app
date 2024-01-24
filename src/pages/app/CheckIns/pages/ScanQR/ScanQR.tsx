@@ -5,7 +5,8 @@ import { HiOutlineCamera } from "react-icons/hi2";
 
 import { QrScanner } from "@yudiel/react-qr-scanner";
 import { useEffect, useState } from "react";
-import { userInfo } from "../../../../../apis/scan";
+import { getUserInfo } from "../../../../../apis/scan";
+import UserInfo from "../../components/UserInfo/UserInfo";
 
 const ScanQR = () => {
     const [showQR, setShowQR] = useState(false);
@@ -15,7 +16,7 @@ const ScanQR = () => {
 
     useEffect(() => {
         if (ticketId.length > 0) {
-            userInfo(ticketId, setCheckIn);
+            getUserInfo(ticketId, setCheckIn);
         }
     }, [ticketId]);
 
@@ -56,7 +57,7 @@ const ScanQR = () => {
 
                             <div className={styles.alertTexts}>
                                 <p className={styles.alertHeading}>
-                                    Click The Icon & Please Enable Camera Access
+                                    Click The Icon To Scan QR Code
                                 </p>
                                 <p className={styles.alertText}>
                                     We need access to your camera to scan QR
@@ -83,26 +84,10 @@ const ScanQR = () => {
                         </div>
                     </div>
                 )}
-                {ticketId.length > 0 && (
-                    <div className={styles.sucessContainer}>
-                        <div className={styles.scannerSuccess}>
-                            <p
-                                className={styles.scannerHeader}
-                                style={{
-                                    color: checkIn ? "#5B75FB" : "#ed4545",
-                                }}
-                            >
-                                {checkIn
-                                    ? " User Scanning Successfull!"
-                                    : "User Scanning Failed!"}
-                            </p>
-                            <p className={styles.userIdText}>
-                                User ID: {ticketId}
-                            </p>
-                        </div>
-                    </div>
-                )}
             </div>
+            {ticketId.length > 0 && (
+                <UserInfo ticketId={ticketId} status={checkIn} />
+            )}
         </Theme>
     );
 };
