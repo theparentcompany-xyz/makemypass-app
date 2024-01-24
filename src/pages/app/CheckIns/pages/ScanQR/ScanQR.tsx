@@ -21,6 +21,7 @@ const ScanQR = () => {
         phone: "",
         district: "",
         organization: "",
+        category: "",
     });
 
     useEffect(() => {
@@ -65,6 +66,7 @@ const ScanQR = () => {
                                         phone: "",
                                         district: "",
                                         organization: "",
+                                        category: "",
                                     });
                                 }}
                                 className={styles.camerabox}
@@ -103,6 +105,7 @@ const ScanQR = () => {
                                             phone: "",
                                             district: "",
                                             organization: "",
+                                            category: "",
                                         });
                                     }
                                 }}

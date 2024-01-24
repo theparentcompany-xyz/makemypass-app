@@ -8,6 +8,7 @@ const UserInfo = ({
     ticketId: string;
     status: boolean;
     userData: {
+        category: string;
         name: string;
         email: string;
         phone: string;
@@ -19,7 +20,7 @@ const UserInfo = ({
         <div className={styles.userInfoContainer}>
             <div className={styles.userInfo}>
                 <div className={styles.topSection}>
-                    <div className={styles.type}>Student</div>
+                    <div className={styles.type}>{userData.category}</div>
                     <p className={styles.name}>{userData.name}</p>
                     <p className={styles.email}>{userData.email}</p>
                 </div>
