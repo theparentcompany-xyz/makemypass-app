@@ -125,6 +125,7 @@ const ScanQR = () => {
                                 onResult={(result) => {
                                     setTicketId(result.getText());
                                     setShowQR(false);
+                                    setTrigger(true);
                                 }}
                                 onError={(error) => {
                                     console.log(error);
