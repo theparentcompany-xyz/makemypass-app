@@ -3,9 +3,7 @@ import "./index.css";
 import * as React from "react";
 import {
     createBrowserRouter,
-    Navigate,
     RouterProvider,
-    useParams,
 } from "react-router-dom";
 import Login from "./pages/auth/Login/Login";
 import "./index.css";
