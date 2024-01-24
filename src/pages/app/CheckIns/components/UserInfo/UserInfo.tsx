@@ -1,4 +1,3 @@
-import Theme from "../../../../../components/Theme/Theme";
 import styles from "./UserInfo.module.css";
 
 const UserInfo = ({

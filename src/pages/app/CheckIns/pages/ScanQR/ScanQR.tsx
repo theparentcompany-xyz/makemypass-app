@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { getUserInfo } from "../../../../../apis/scan";
 import UserInfo from "../../components/UserInfo/UserInfo";
 import SecondaryButton from "../../../Overview/components/SecondaryButton/SecondaryButton";
-import { tr } from "@faker-js/faker";
 
 const ScanQR = () => {
     const [showQR, setShowQR] = useState(false);

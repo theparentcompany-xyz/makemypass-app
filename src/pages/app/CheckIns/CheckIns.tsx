@@ -8,7 +8,6 @@ import { FaWrench } from "react-icons/fa6";
 import { HiUserGroup } from "react-icons/hi2";
 import { BsQrCodeScan } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import UserInfo from "./components/UserInfo/UserInfo";
 // import SecondaryButton from "../Overview/components/SecondaryButton/SecondaryButton";
 // import { useState } from "react";
 // import { tableType } from "./types";
