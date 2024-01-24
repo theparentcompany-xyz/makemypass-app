@@ -19,6 +19,17 @@ const ScanQR = () => {
         }
     }, [ticketId]);
 
+    useEffect(() => {
+        navigator.permissions
+            .query({ name: "camera" as PermissionName })
+            .then((permissionObj) => {
+                console.log(permissionObj.state);
+            })
+            .catch((error) => {
+                console.log("Got error :", error);
+            });
+    }, []);
+
     return (
         <Theme>
             <div className={styles.scanContainer}>

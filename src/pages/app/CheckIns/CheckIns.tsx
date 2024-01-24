@@ -42,13 +42,18 @@ const CheckIns = () => {
                                     }
                                 />
                             </Link>
-                            <SectionButton
-                                buttonText="User Info"
-                                buttonColor="#C33D7B"
-                                icon={
-                                    <BsQrCodeScan size={25} color="#5B75FB" />
-                                }
-                            />
+                            <Link to="checkin/scan">
+                                <SectionButton
+                                    buttonText="User Info"
+                                    buttonColor="#C33D7B"
+                                    icon={
+                                        <BsQrCodeScan
+                                            size={25}
+                                            color="#5B75FB"
+                                        />
+                                    }
+                                />
+                            </Link>
                         </div>
                         <div className="row">
                             <SectionButton
