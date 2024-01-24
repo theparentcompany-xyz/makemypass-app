@@ -17,6 +17,7 @@ import PrivacyPolicy from "./pages/app/PrivacyPolicy/PrivacyPolicy";
 import FourNotFour from "./pages/FourNotFour/FourNotFour";
 import CheckIns from "./pages/app/CheckIns/CheckIns";
 import CheckIn from "./pages/app/CheckIns/pages/CheckIn/CheckIn";
+import ScanQR from "./pages/app/CheckIns/pages/ScanQR/ScanQR";
 
 const routes = [
     {
@@ -62,6 +63,10 @@ const routes = [
             {
                 path: "/:eventTitle/checkins/checkin",
                 element: <CheckIn />,
+            },
+            {
+                path: "/:eventTitle/checkins/checkin/scan",
+                element: <ScanQR />,
             },
         ],
     },

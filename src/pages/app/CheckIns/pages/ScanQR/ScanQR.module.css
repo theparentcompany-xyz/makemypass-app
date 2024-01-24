@@ -1,0 +1,63 @@
+.scanContainer {
+    padding: 0 1.25rem;
+}
+
+.line {
+    margin-top: 1rem;
+    width: 100%;
+    color: #a4a4a4;
+    opacity: 0.1;
+}
+
+.scannerContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    font-family: "Inter";
+
+    margin-top: 2rem;
+}
+
+.scannerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45vh;
+    text-align: center;
+}
+
+.scanHeader {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.camerabox {
+    width: 4rem;
+    height: 4.25rem;
+    margin: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16.4px;
+    background: rgba(91, 117, 251, 0.13);
+}
+
+.alertHeading {
+    margin-top: 2rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.alertText {
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    color: white;
+    opacity: 0.75;
+}
