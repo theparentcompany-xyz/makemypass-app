@@ -7,14 +7,15 @@ import SectionButton from "../../../components/SectionButton/SectionButton";
 import { FaWrench } from "react-icons/fa6";
 import { HiUserGroup } from "react-icons/hi2";
 import { BsQrCodeScan } from "react-icons/bs";
-import SecondaryButton from "../Overview/components/SecondaryButton/SecondaryButton";
-import { useState } from "react";
-import { tableType } from "./types";
+import { Link } from "react-router-dom";
+// import SecondaryButton from "../Overview/components/SecondaryButton/SecondaryButton";
+// import { useState } from "react";
+// import { tableType } from "./types";
 
 const CheckIns = () => {
-    const [recentCheckIns, setRecentCheckIns] = useState<tableType[]>([]);
-    const [recentGiftClaims, setRecentGiftClaims] = useState<tableType[]>([]);
-    const [recentPerkClaims, setRecentPerkClaims] = useState<tableType[]>([]);
+    // const [recentCheckIns, setRecentCheckIns] = useState<tableType[]>([]);
+    // const [recentGiftClaims, setRecentGiftClaims] = useState<tableType[]>([]);
+    // const [recentPerkClaims, setRecentPerkClaims] = useState<tableType[]>([]);
 
     return (
         <Theme>
@@ -28,30 +29,45 @@ const CheckIns = () => {
                     </p>
                     <hr className={styles.line} />
                     <div className={styles.buttons}>
-                        <SectionButton
-                            buttonText="Check-In"
-                            buttonColor="#C33D7B"
-                            icon={<HiUserGroup size={25} color="#7662FC" />}
-                        />
-                        <SectionButton
-                            buttonText="User Info"
-                            buttonColor="#C33D7B"
-                            icon={<BsQrCodeScan size={25} color="#5B75FB" />}
-                        />
-                        <SectionButton
-                            buttonText="Perks"
-                            buttonColor="#C33D7B"
-                            icon={<BsQrCodeScan size={25} color="#5B75FB" />}
-                        />
-                        <SectionButton
-                            buttonText="Gifts"
-                            buttonColor="#C33D7B"
-                            icon={<FaWrench size={25} color="#C33D7B" />}
-                        />
+                        <div className="row">
+                            <Link to="checkin">
+                                <SectionButton
+                                    buttonText="Check-In"
+                                    buttonColor="#C33D7B"
+                                    icon={
+                                        <HiUserGroup
+                                            size={25}
+                                            color="#7662FC"
+                                        />
+                                    }
+                                />
+                            </Link>
+                            <SectionButton
+                                buttonText="User Info"
+                                buttonColor="#C33D7B"
+                                icon={
+                                    <BsQrCodeScan size={25} color="#5B75FB" />
+                                }
+                            />
+                        </div>
+                        <div className="row">
+                            <SectionButton
+                                buttonText="Perks"
+                                buttonColor="#C33D7B"
+                                icon={
+                                    <BsQrCodeScan size={25} color="#5B75FB" />
+                                }
+                            />
+                            <SectionButton
+                                buttonText="Gifts"
+                                buttonColor="#C33D7B"
+                                icon={<FaWrench size={25} color="#C33D7B" />}
+                            />
+                        </div>
                     </div>
                 </div>
 
-                <div className={styles.recentRegistrations}>
+                {/* <div className={styles.recentRegistrations}>
                     <div className={styles.tableHeader}>
                         <p className={styles.tableHeading}>Recent CheckIns</p>
                         <SecondaryButton buttonText="All Guests ➞" />
@@ -203,7 +219,7 @@ const CheckIns = () => {
                             )}
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </Theme>
     );

@@ -16,6 +16,7 @@ import TermsConditions from "./pages/app/TermsCondictions/TermsConditions";
 import PrivacyPolicy from "./pages/app/PrivacyPolicy/PrivacyPolicy";
 import FourNotFour from "./pages/FourNotFour/FourNotFour";
 import CheckIns from "./pages/app/CheckIns/CheckIns";
+import CheckIn from "./pages/app/CheckIns/pages/CheckIn/CheckIn";
 
 const routes = [
     {
@@ -57,6 +58,10 @@ const routes = [
             {
                 path: "/:eventTitle/checkins",
                 element: <CheckIns />,
+            },
+            {
+                path: "/:eventTitle/checkins/checkin",
+                element: <CheckIn />,
             },
         ],
     },
