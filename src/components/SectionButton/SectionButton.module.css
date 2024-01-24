@@ -13,7 +13,7 @@
 
     color: white;
     align-items: center;
-    margin-top: 1rem;
+    cursor: pointer;
 }
 
 .buttonText {

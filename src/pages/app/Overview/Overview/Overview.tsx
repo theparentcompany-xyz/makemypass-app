@@ -6,7 +6,7 @@ import Glance from "../components/Glance/Glance";
 
 import styles from "./Overview.module.css";
 import SecondaryButton from "../components/SecondaryButton/SecondaryButton";
-import SectionButton from "../components/SectionButton/SectionButton";
+import SectionButton from "../../../../components/SectionButton/SectionButton";
 import { useEffect, useState } from "react";
 
 import { hostList, recentRegistration } from "./types";

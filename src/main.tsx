@@ -1,10 +1,7 @@
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import * as React from "react";
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/auth/Login/Login";
 import "./index.css";
 import LandingPage from "./pages/app/LandingPage/LandingPage";
@@ -18,6 +15,7 @@ import Guests from "./pages/app/Guests/Guests";
 import TermsConditions from "./pages/app/TermsCondictions/TermsConditions";
 import PrivacyPolicy from "./pages/app/PrivacyPolicy/PrivacyPolicy";
 import FourNotFour from "./pages/FourNotFour/FourNotFour";
+import CheckIns from "./pages/app/CheckIns/CheckIns";
 
 const routes = [
     {
@@ -55,6 +53,10 @@ const routes = [
             {
                 path: "/:eventTitle/guests",
                 element: <Guests />,
+            },
+            {
+                path: "/:eventTitle/checkins",
+                element: <CheckIns />,
             },
         ],
     },
