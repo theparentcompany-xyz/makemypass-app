@@ -4,10 +4,11 @@ import Header from "../Overview/components/Header/Header";
 import styles from "./CheckIns.module.css";
 
 import SectionButton from "../../../components/SectionButton/SectionButton";
-import { FaWrench } from "react-icons/fa6";
+// import { FaWrench } from "react-icons/fa6";
 import { HiUserGroup } from "react-icons/hi2";
 import { BsQrCodeScan } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 // import SecondaryButton from "../Overview/components/SecondaryButton/SecondaryButton";
 // import { useState } from "react";
 // import { tableType } from "./types";
@@ -16,14 +17,12 @@ const CheckIns = () => {
     // const [recentCheckIns, setRecentCheckIns] = useState<tableType[]>([]);
     // const [recentGiftClaims, setRecentGiftClaims] = useState<tableType[]>([]);
     // const [recentPerkClaims, setRecentPerkClaims] = useState<tableType[]>([]);
-
+    const [role, setRole] = useState("");
     return (
-        
         <Theme>
             <div className={styles.checkInsContainer}>
-                <Header />
+                <Header setRole={setRole} />
                 <Glance tab={"checkins"} />
-
                 <div className={styles.checkInsButtons}>
                     <p className={styles.checkInsHeading}>
                         On-Site Event Management
@@ -31,18 +30,20 @@ const CheckIns = () => {
                     <hr className={styles.line} />
                     <div className={styles.buttons}>
                         <div className="row">
-                            <Link to="checkin">
-                                <SectionButton
-                                    buttonText="Check-In"
-                                    buttonColor="#C33D7B"
-                                    icon={
-                                        <HiUserGroup
-                                            size={25}
-                                            color="#7662FC"
-                                        />
-                                    }
-                                />
-                            </Link>
+                            {role === "Admin" && (
+                                <Link to="checkin">
+                                    <SectionButton
+                                        buttonText="Check-In"
+                                        buttonColor="#C33D7B"
+                                        icon={
+                                            <HiUserGroup
+                                                size={25}
+                                                color="#7662FC"
+                                            />
+                                        }
+                                    />
+                                </Link>
+                            )}
                             <Link to="checkin/scan">
                                 <SectionButton
                                     buttonText="User Info"
@@ -56,7 +57,7 @@ const CheckIns = () => {
                                 />
                             </Link>
                         </div>
-                        <div className="row">
+                        {/* <div className="row">
                             <SectionButton
                                 buttonText="Perks"
                                 buttonColor="#C33D7B"
@@ -69,11 +70,11 @@ const CheckIns = () => {
                                 buttonColor="#C33D7B"
                                 icon={<FaWrench size={25} color="#C33D7B" />}
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
-
-        //         {/* <div className={styles.recentRegistrations}>
+                //{" "}
+                {/* <div className={styles.recentRegistrations}>
         //             <div className={styles.tableHeader}>
         //                 <p className={styles.tableHeading}>Recent CheckIns</p>
         //                 <SecondaryButton buttonText="All Guests ➞" />
@@ -226,8 +227,10 @@ const CheckIns = () => {
         //                 </div>
         //             </div>
         //         </div> */}
-        //     </div>
-        // </Theme>
+                //{" "}
+            </div>
+            //{" "}
+        </Theme>
     );
 };
 

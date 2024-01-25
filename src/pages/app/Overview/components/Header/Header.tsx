@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import { getEventData, getEventId } from "../../../../../apis/events";
-import { privateGateway } from "../../../../../../services/apiGateway";
 import { useParams } from "react-router-dom";
 
-const Header = () => {
+const Header = ({
+    setRole,
+}: {
+    setRole?: React.Dispatch<React.SetStateAction<string>>;
+}) => {
     const [eventData, setEventData] = useState({
         title: "",
         date: "",
@@ -44,6 +47,10 @@ const Header = () => {
     useEffect(() => {
         if (eventId) getEventData(eventId, setEventData);
     }, [eventId]);
+
+    useEffect(() => {
+        if (setRole) setRole(eventData.role);
+    }, [eventData]);
 
     return (
         <>
