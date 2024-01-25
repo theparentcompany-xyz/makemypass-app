@@ -1,6 +1,6 @@
 {
     "name": "MakeMyPass",
-    "short_name": "makemypass",
+    "short_name": "MakeMyPass",
     "theme_color": "#192129",
     "background_color": "#192129",
     "display": "standalone",
