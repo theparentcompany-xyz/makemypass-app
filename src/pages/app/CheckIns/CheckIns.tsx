@@ -46,7 +46,7 @@ const CheckIns = () => {
                             )}
                             <Link to="checkin/scan">
                                 <SectionButton
-                                    buttonText="User Info"
+                                    buttonText="Scan User"
                                     buttonColor="#C33D7B"
                                     icon={
                                         <BsQrCodeScan

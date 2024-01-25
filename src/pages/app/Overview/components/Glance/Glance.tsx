@@ -186,7 +186,7 @@ const Glance = (tab: any) => {
                                     className={styles.progressBar}
                                     style={{
                                         backgroundColor: data.color,
-                                        width: `${data.value / 10}%`,
+                                        width: `${data.value / totalGuests}%`,
                                     }}
                                 ></div>
                             </>
