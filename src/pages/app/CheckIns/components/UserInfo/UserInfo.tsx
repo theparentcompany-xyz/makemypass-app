@@ -4,6 +4,7 @@ const UserInfo = ({
     ticketId,
     status,
     userData,
+    setTrigger,
 }: {
     ticketId: string;
     status: boolean;
@@ -15,9 +16,19 @@ const UserInfo = ({
         district: string;
         organization: string;
     };
+    setTrigger: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
     return (
         <div className={styles.userInfoContainer}>
+            <button
+                onClick={() => {
+                    setTrigger(false);
+                }}
+                className={styles.backButton}
+            >
+                Close
+            </button>
+            <br />
             <div className={styles.userInfo}>
                 <div className={styles.topSection}>
                     {userData.category && (

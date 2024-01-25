@@ -42,3 +42,24 @@ export const getEventId = async (eventName: string) => {
             console.log(error);
         });
 };
+
+export const getEventData = async (
+    eventId: string,
+    setEventData: React.Dispatch<
+        React.SetStateAction<{
+            title: string;
+            date: string;
+            role: string;
+        }>
+    >
+) => {
+    privateGateway
+        .get(makeMyPass.getEventData(eventId))
+        .then((response) => {
+            console.log(response.data.response);
+            setEventData(response.data.response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};

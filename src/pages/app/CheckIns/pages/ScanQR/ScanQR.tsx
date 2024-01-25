@@ -55,6 +55,7 @@ const ScanQR = () => {
                         ticketId={ticketId}
                         status={checkIn}
                         userData={userData}
+                        setTrigger={setTrigger}
                     />
                 )}
 

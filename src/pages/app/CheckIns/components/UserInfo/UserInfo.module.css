@@ -4,7 +4,7 @@
     justify-content: center;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.04);
-    background-color: #1E2123;
+    background-color: #1e2123;
     margin-top: 1rem;
     padding: 1rem;
     max-width: 20rem;
@@ -14,6 +14,30 @@
     position: absolute;
     z-index: 100;
     backdrop-filter: blur(800px); /* Add this line to blur the background */
+}
+
+.backButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100;
+
+    display: flex;
+    padding: 4px 11px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    border: none;
+
+    padding: 0.5rem 1rem;
+
+    cursor: pointer;
+    margin-bottom: 1rem;
 }
 
 /* Rest of your CSS code */
