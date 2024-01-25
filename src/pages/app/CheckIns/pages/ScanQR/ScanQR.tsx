@@ -50,6 +50,14 @@ const ScanQR = () => {
             </div>
 
             <div className={styles.scannerContainer}>
+                {ticketId.length > 0 && trigger && userData && (
+                    <UserInfo
+                        ticketId={ticketId}
+                        status={checkIn}
+                        userData={userData}
+                    />
+                )}
+
                 <p className={styles.scanHeader}>Scan QR Code Below</p>
 
                 {!showQR ? (
@@ -138,13 +146,6 @@ const ScanQR = () => {
                     </div>
                 )}
             </div>
-            {ticketId.length > 0 && trigger && userData && (
-                <UserInfo
-                    ticketId={ticketId}
-                    status={checkIn}
-                    userData={userData}
-                />
-            )}
         </Theme>
     );
 };

@@ -20,7 +20,9 @@ const UserInfo = ({
         <div className={styles.userInfoContainer}>
             <div className={styles.userInfo}>
                 <div className={styles.topSection}>
-                    <div className={styles.type}>{userData.category}</div>
+                    {userData.category && (
+                        <div className={styles.type}>{userData.category}</div>
+                    )}
                     <p className={styles.name}>{userData.name}</p>
                     <p className={styles.email}>{userData.email}</p>
                 </div>
