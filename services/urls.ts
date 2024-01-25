@@ -30,6 +30,8 @@ export const makeMyPassSocket = {
     analytics: (eventId: string) => `manage-event/${eventId}/analytics/`,
     registerCounts: (eventId: string) =>
         `manage-event/${eventId}/register-count/`,
+    checkInCounts: (eventId: string) =>
+        `checkin/${eventId}/count/`,
 
     listGuests: (eventId: string) => `manage-event/${eventId}/list-guests/`,
     listCheckinGuests: (eventId: string) => `checkin/${eventId}/list-guests/`,

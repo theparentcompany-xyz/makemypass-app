@@ -73,7 +73,6 @@ const CheckIns = () => {
                         </div> */}
                     </div>
                 </div>
-                //{" "}
                 {/* <div className={styles.recentRegistrations}>
         //             <div className={styles.tableHeader}>
         //                 <p className={styles.tableHeading}>Recent CheckIns</p>
@@ -227,9 +226,7 @@ const CheckIns = () => {
         //                 </div>
         //             </div>
         //         </div> */}
-                //{" "}
             </div>
-            //{" "}
         </Theme>
     );
 };

@@ -63,22 +63,45 @@ const Glance = (tab: any) => {
         }
     };
 
+    const [backendURL, setBackendURL] = useState<string>("");
+    useEffect(() => {
+        console.log(tab);
+        if (tab.tab === "checkins") {
+            setBackendURL(makeMyPassSocket.checkInCounts(eventId));
+        } else {
+            setBackendURL(makeMyPassSocket.registerCounts(eventId));
+        }
+    }, [tab, eventId]);
 
     useEffect(() => {
         setCurrentTab(tab.tab);
         if (eventId)
             connectPrivateSocket({
-                url: makeMyPassSocket.registerCounts(eventId),
+                url: backendURL,
             }).then((ws) => {
                 ws.onmessage = (event) => {
                     const category = JSON.parse(event.data).response.category;
 
-                    setTotalGuests(
-                        Number(JSON.parse(event.data).response.total_reg)
-                    );
-                    setTargetGuests(
-                        Number(JSON.parse(event.data).response.target_reg)
-                    );
+                    if (JSON.parse(event.data).response.total_reg) {
+                        setTotalGuests(
+                            Number(JSON.parse(event.data).response.total_reg)
+                        );
+                        setTargetGuests(
+                            Number(JSON.parse(event.data).response.target_reg)
+                        );
+                    } else {
+                        setTotalGuests(
+                            Number(
+                                JSON.parse(event.data).response.total_checkin
+                            )
+                        );
+                        setTargetGuests(
+                            Number(
+                                JSON.parse(event.data).response
+                                    .total_registration
+                            )
+                        );
+                    }
 
                     const newStrucure: progressDataType = [];
                     let colors = [
@@ -103,7 +126,7 @@ const Glance = (tab: any) => {
 
                 setSocket(ws);
             });
-    }, [eventId]);
+    }, [eventId, backendURL]);
 
     return (
         <>
