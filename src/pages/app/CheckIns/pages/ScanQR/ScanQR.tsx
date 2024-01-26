@@ -9,6 +9,7 @@ import { getUserInfo } from '../../../../../apis/scan';
 import UserInfo from '../../components/UserInfo/UserInfo';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { User } from './types';
+import toast from 'react-hot-toast';
 
 const ScanQR = () => {
   const [showQR, setShowQR] = useState(false);
@@ -23,17 +24,6 @@ const ScanQR = () => {
       getUserInfo(ticketId, setCheckIn, setUserData);
     }
   }, [ticketId, trigger]);
-
-  useEffect(() => {
-    navigator.permissions
-      .query({ name: 'camera' as PermissionName })
-      .then((permissionObj) => {
-        console.log(permissionObj.state);
-      })
-      .catch((error) => {
-        console.log('Got error :', error);
-      });
-  });
 
   return (
     <Theme>
@@ -127,7 +117,7 @@ const ScanQR = () => {
                   setTrigger(true);
                 }}
                 onError={(error) => {
-                  console.log(error);
+                  toast.error(error.message);
                 }}
               />
             </div>

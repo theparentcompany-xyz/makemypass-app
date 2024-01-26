@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Event } from './types'; // Assuming Event is the type for events
@@ -6,12 +7,10 @@ export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<E
   privateGateway
     .get(makeMyPass.listEvents)
     .then((response) => {
-      console.log(response);
       setEvents(response.data.response.events);
-      console.log(response.data.response.events);
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };
 
@@ -22,7 +21,7 @@ export const getEventId = async (eventName: string) => {
       localStorage.setItem('eventData', JSON.stringify(response.data.response));
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };
 
@@ -39,10 +38,9 @@ export const getEventData = async (
   privateGateway
     .get(makeMyPass.getEventData(eventId))
     .then((response) => {
-      console.log(response.data.response);
       setEventData(response.data.response);
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };

@@ -50,7 +50,6 @@ const Overview = () => {
 
   useEffect(() => {
     if (eventId && hostList.length === 0) getHosts(eventId, setHostList);
-    console.log('Vannatha Sutta Satha Repeatuu!!');
   }, [eventId, hostList]);
 
   useEffect(() => {

@@ -38,7 +38,6 @@ const Header = ({ setRole }: { setRole?: React.Dispatch<React.SetStateAction<str
 
   useEffect(() => {
     if (setRole) setRole(eventData.role);
-    console.log('Looppuuu');
   }, [eventData, setRole]);
 
   return (

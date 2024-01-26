@@ -39,20 +39,12 @@ export const login = async (
       onboardUser();
     })
     .catch((error) => {
-      console.log(error);
       toast.error(error.response.data.message.general[0]);
     });
 };
 
 export const onboardUser = async () => {
-  privateGateway
-    .post(makeMyPass.onboardUser)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  privateGateway.post(makeMyPass.onboardUser);
 };
 
 export const generateOTP = async (
@@ -66,7 +58,6 @@ export const generateOTP = async (
       type: type,
     })
     .then((response) => {
-      console.log(response.data.message.general[0]);
       toast.success(response.data.message.general[0]);
       setIsOtpSent(true);
       return response.data;

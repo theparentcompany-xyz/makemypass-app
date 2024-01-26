@@ -13,7 +13,6 @@ export const publicGateway = axios.create({
 
 publicGateway.interceptors.request.use(
   function (config) {
-    console.log(config);
     return config;
   },
   function (error) {

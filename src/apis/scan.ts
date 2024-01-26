@@ -11,13 +11,11 @@ export const getUserInfo = async (
   privateGateway
     .get(makeMyPass.userInfo(ticketId))
     .then((response) => {
-      console.log(response);
       setUserData(response.data.response);
       toast.success('Check-In Successful');
       setCheckIn(true);
     })
     .catch((error) => {
-      console.log(error);
       toast.error('Check-In Failed');
       setCheckIn(false);
     });

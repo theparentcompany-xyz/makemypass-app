@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { hostList } from './types';
@@ -12,6 +13,6 @@ export const getHosts = async (
       setHosts(response.data.response.hosts);
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };

@@ -21,7 +21,6 @@ const Events = () => {
 
   useEffect(() => {
     getEvents(setEvents);
-    console.log(events);
   }, [events]);
 
   const handleClick = (eventName: string) => {

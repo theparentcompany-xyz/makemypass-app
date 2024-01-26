@@ -20,7 +20,6 @@ const Glance = ({ tab }: { tab: string }) => {
   const [targetGuests, setTargetGuests] = useState<number>(0);
 
   useEffect(() => {
-    console.log(tab);
     return () => {
       socket?.close();
     };
