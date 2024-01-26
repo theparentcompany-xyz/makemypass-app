@@ -1,112 +1,110 @@
 .progresBarGraph {
-    width: 100%;
-    height: 100%;
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
+  width: 100%;
+  height: 100%;
 
-    display: flex;
+  display: flex;
 
-    border-radius: 8px;
+  border-radius: 8px;
 }
 
 .glanceHeader,
 .guests {
-    color: white;
-    font-family: "Inter", sans-serif;
-    font-size: 1.25rem;
-    margin-top: 1rem;
+  color: white;
+  font-family: "Inter", sans-serif;
+  font-size: 1.25rem;
+  margin-top: 1rem;
 }
 
 .guests span {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #fff;
-    font-family: "Inter", sans-serif;
-    color: #47c97e;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  color: #47c97e;
 }
 
 .progressBar {
-    margin-top: 1rem;
-    width: 30rem;
-    height: 0.5em;
+  margin-top: 1rem;
+  width: 30rem;
+  height: 0.5em;
 }
 
 .progressLabel {
-    display: flex;
-    flex-direction: row;
-    list-style-type: disc;
-    font-size: 0.9rem;
-    margin-top: 1rem;
-    font-family: "Inter", sans-serif;
+  display: flex;
+  flex-direction: row;
+  list-style-type: disc;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  font-family: "Inter", sans-serif;
 }
 
 .progressLabels ul {
-    display: flex;
-    flex-direction: row;
-    list-style-type: disc;
-    margin: 0;
-    padding: 0;
-    column-gap: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  list-style-type: disc;
+  margin: 0;
+  padding: 0;
+  column-gap: 0.5rem;
 }
 
 @media screen and (max-width: 768px) {
-    .dataCount {
-        font-size: 0.35rem;
-    }
+  .dataCount {
+    font-size: 0.35rem;
+  }
 
-    .glanceHeader,
-    .guests {
-        font-size: 1.1rem;
-    }
+  .glanceHeader,
+  .guests {
+    font-size: 1.1rem;
+  }
 }
-
 
 /* Tabs Container */
 
 .centerContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 
-    margin: auto;
-    padding: 0 1rem;
+  margin: auto;
+  padding: 0 1rem;
 
-    width: 100%;
-    max-width: 70rem;
+  width: 100%;
+  max-width: 70rem;
 }
 
 .overViewContainer {
-    /* height: 20.5rem; */
-    min-width: 20rem;
-    width: 100%;
-    /* padding: 2rem; */
+  /* height: 20.5rem; */
+  min-width: 20rem;
+  width: 100%;
+  /* padding: 2rem; */
 }
 
 .tabsContainer {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .tabs ol {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    column-gap: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  column-gap: 0.5rem;
 }
 
 .tab {
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.5);
-    font-family: "Inter", sans-serif;
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: "Inter", sans-serif;
+  font-size: 0.9rem;
+  padding-bottom: 0.5rem;
 }
 
 .active {
-    color: #fff;
-    border-bottom: 2px solid #fff;
+  color: #fff;
+  border-bottom: 2px solid #fff;
 }
-

@@ -1,41 +1,41 @@
 * {
-    padding: 0;
-    margin: 0;
-    scroll-behavior: smooth;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
-    margin: 1rem;
-    border-radius: 8px;
+  width: 5px;
+  margin: 1rem;
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #333333;
-    padding: 1px;
+  background: #333333;
+  padding: 1px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #121212;
+  background: #121212;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #3b3b3b;
+  background: #3b3b3b;
 }
 
 .row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    column-gap: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 0.5rem;
 }
 
 a {
-    text-decoration: none;
-    color: #fff;
+  text-decoration: none;
+  color: #fff;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }

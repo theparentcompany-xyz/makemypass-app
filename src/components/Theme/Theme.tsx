@@ -3,28 +3,25 @@ import Header from "../Header/Header";
 import styles from "./Theme.module.css";
 
 const Theme = ({
-    type,
-    children,
+  type,
+  children,
 }: {
-    type?: string | undefined;
-    children: React.ReactNode;
+  type?: string | undefined;
+  children: React.ReactNode;
 }) => {
-    return (
-        <>
-            <div className={styles.themeContainer}>
-                <div className={styles.grad1}></div>
-                <div className={styles.grad2}></div>
-                <div className={styles.grad3}></div>
-                <Header type={type} />
-                <div className={styles.childrenContainer}>
-                    {children}
-                  
-                </div>
+  return (
+    <>
+      <div className={styles.themeContainer}>
+        <div className={styles.grad1}></div>
+        <div className={styles.grad2}></div>
+        <div className={styles.grad3}></div>
+        <Header type={type} />
+        <div className={styles.childrenContainer}>{children}</div>
 
-                <Footer />
-            </div>
-        </>
-    );
+        <Footer />
+      </div>
+    </>
+  );
 };
 
 export default Theme;

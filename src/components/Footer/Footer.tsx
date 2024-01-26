@@ -9,7 +9,11 @@ const Footer = () => {
                 <div className={styles.footerContainer}>
                     <hr />
                     <div className="row">
-                        <img className={styles.tpclogo} src="/tpc.png" alt="" />
+                        <img
+                            className={styles.tpclogo}
+                            src="/app/tpc.png"
+                            alt=""
+                        />
                         <div className={styles.socialIcons}>
                             <FaInstagram color="a4a4a4" size={20} />
                             <FaXTwitter color="a4a4a4" size={20} />

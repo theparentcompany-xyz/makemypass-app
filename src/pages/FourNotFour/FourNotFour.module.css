@@ -1,49 +1,49 @@
 .fourNotFourContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Inter", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", sans-serif;
 
-    height: 70vh;
+  height: 70vh;
 
-    text-align: center;
+  text-align: center;
 }
 
 .fourNotFourHeading {
-    font-size: 8rem;
-    color: rgb(194, 194, 194);
-    font-weight: 600;
+  font-size: 8rem;
+  color: rgb(194, 194, 194);
+  font-weight: 600;
 }
 
 .fourNotFourSubHeading {
-    margin-top: -0.5rem;
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.75);
-    font-weight: 500;
+  margin-top: -0.5rem;
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
 }
 
 .fourNotFourText {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.75);
-    font-weight: 500;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
 }
 
 .fourNotFourButton {
-    display: flex;
-    padding: 4px 11px;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  padding: 4px 11px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.08);
 
-    color: #fff;
-    font-family: "Inter", sans-serif;
-    border: none;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  border: none;
 
-    padding: 0.5rem 1rem;
-    margin: auto;
-    margin-top: 3rem;
+  padding: 0.5rem 1rem;
+  margin: auto;
+  margin-top: 3rem;
 }

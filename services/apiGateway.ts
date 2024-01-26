@@ -77,9 +77,8 @@ privateGateway.interceptors.response.use(
                 );
                 // Retry the original request
                 const { config } = error;
-                config.headers[
-                    "Authorization"
-                ] = `Bearer ${localStorage.getItem("accessToken")}`;
+                config.headers["Authorization"] =
+                    `Bearer ${localStorage.getItem("accessToken")}`;
                 return await new Promise((resolve, reject) => {
                     privateGateway
                         .request(config)
@@ -108,7 +107,13 @@ privateGateway.interceptors.response.use(
     }
 );
 
-// WebSocket Things
+/* WebSocket Connect Function
+    a). The function sets up a WebSocket connection and listens for messages.
+    b). If a message with statusCode 1000 is received, it indicates session expiry. The function then attempts to refresh the access token.
+    c). If successful, it updates the token in local storage, creates a new WebSocket connection, and resolves the Promise with the new WebSocket.
+    d). If unsuccessful, it clears local storage, shows an error message, and redirects to the login page.
+    e).If the statusCode is not 1000, it resolves the Promise with the original WebSocket.
+*/
 
 export const connectPrivateSocket = ({
     url,
@@ -116,8 +121,7 @@ export const connectPrivateSocket = ({
     url: string;
 }): Promise<WebSocket> => {
     const baseURL =
-        ((import.meta as any).env.VITE_WEBSOCKET_URL as string) +
-        "makemypass/";
+        ((import.meta as any).env.VITE_WEBSOCKET_URL as string) + "makemypass/";
 
     let wsUrl = `${baseURL}${url}?Authorization=Bearer ${localStorage.getItem(
         "accessToken"

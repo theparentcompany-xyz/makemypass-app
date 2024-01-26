@@ -1,118 +1,118 @@
 .userInfoContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    background-color: #1e2123;
-    margin-top: 1rem;
-    padding: 1rem;
-    max-width: 20rem;
-    width: 100%;
-    margin: auto;
-    margin-bottom: 1rem;
-    position: absolute;
-    z-index: 100;
-    backdrop-filter: blur(800px); /* Add this line to blur the background */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background-color: #1e2123;
+  margin-top: 1rem;
+  padding: 1rem;
+  max-width: 20rem;
+  width: 100%;
+  margin: auto;
+  margin-bottom: 1rem;
+  position: absolute;
+  z-index: 100;
+  backdrop-filter: blur(800px); /* Add this line to blur the background */
 }
 
 .backButton {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    z-index: 100;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
 
-    display: flex;
-    padding: 4px 11px;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  padding: 4px 11px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
 
-    color: #fff;
-    font-family: "Inter", sans-serif;
-    border: none;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  border: none;
 
-    padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem;
 
-    cursor: pointer;
-    margin-bottom: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
 }
 
 /* Rest of your CSS code */
 .userInfo {
-    font-family: "Inter", sans-serif;
-    font-style: normal;
-    color: white;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  color: white;
 }
 
 .topSection {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .type {
-    border-radius: 100px;
-    background: rgba(7, 164, 96, 0.13);
-    color: #47c97e;
-    font-family: "Inter", sans-serif;
-    font-size: 1rem;
-    padding: 0.25rem 0.5rem;
-    margin-left: 0.15rem;
+  border-radius: 100px;
+  background: rgba(7, 164, 96, 0.13);
+  color: #47c97e;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+  margin-left: 0.15rem;
 }
 
 .name {
-    font-weight: 600;
-    font-size: 1.25rem;
-    margin-top: 0.5rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
 }
 
 .email {
-    font-weight: 400;
-    font-size: 0.9rem;
-    margin-top: 0.25rem;
-    opacity: 0.5;
+  font-weight: 400;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  opacity: 0.5;
 }
 
 .line {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    width: 100%;
-    color: #a4a4a4;
-    opacity: 0.1;
-    font-family: "Inter", sans-serif;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  color: #a4a4a4;
+  opacity: 0.1;
+  font-family: "Inter", sans-serif;
 }
 
 .scannerHeader {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .value {
-    font-weight: 500;
-    font-size: 1.1rem;
-    font-family: "Inter", sans-serif;
-    margin-top: 0.5rem;
+  font-weight: 500;
+  font-size: 1.1rem;
+  font-family: "Inter", sans-serif;
+  margin-top: 0.5rem;
 }
 
 .label {
-    font-weight: 400;
-    font-size: 0.9rem;
-    margin-top: 0.25rem;
-    opacity: 0.5;
-    font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  opacity: 0.5;
+  font-family: "Inter", sans-serif;
 }
 
 .dataBox {
-    width: 7rem;
+  width: 7rem;
 }
 
 .infoBody {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    column-gap: 1rem;
-    row-gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+  row-gap: 1rem;
 }

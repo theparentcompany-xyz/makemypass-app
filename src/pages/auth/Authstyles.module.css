@@ -1,154 +1,153 @@
 .formContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-    font-family: "Inter", sans-serif;
+  font-family: "Inter", sans-serif;
 
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 
-    margin-bottom: 5rem;
+  margin-bottom: 5rem;
 
-
-    height: 65vh;
+  height: 65vh;
 }
 
 .form {
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
 
-    max-width: 25rem;
-    padding: 2rem;
+  max-width: 25rem;
+  padding: 2rem;
 
-    z-index: 2;
+  z-index: 2;
 }
 
 .formTitle {
-    color: #fff;
-    font-size: 1.25rem;
-    font-weight: 500;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 
 .formText {
-    margin-top: 0.25rem;
-    font-weight: 400;
-    color: #a4a4a4;
-    font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-weight: 400;
+  color: #a4a4a4;
+  font-size: 0.875rem;
 }
 
 .formInput {
-    margin: 1rem 0;
+  margin: 1rem 0;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    width: 24rem;
+  width: 24rem;
 }
 
 .formLabel {
-    color: #a4a4a4;
-    font-size: 0.875rem;
-    font-weight: 400;
+  color: #a4a4a4;
+  font-size: 0.875rem;
+  font-weight: 400;
 }
 
 .inputField {
-    margin-top: 0.25rem;
-    border-radius: 8px;
-    border: none;
-    padding: 0.75rem 0.75rem;
-    background: rgba(255, 255, 255, 0.04);
+  margin-top: 0.25rem;
+  border-radius: 8px;
+  border: none;
+  padding: 0.75rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
 
-    display: flex;
+  display: flex;
 }
 
 .inputField input {
-    background: none;
-    border: none;
-    outline: none;
-    color: #fff;
-    margin-left: 0.25rem;
-    font-weight: 400;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  margin-left: 0.25rem;
+  font-weight: 400;
 }
 
 .formFooter {
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .formFooter p {
-    color: #a4a4a4;
-    font-size: 0.875rem;
-    font-weight: 400;
+  color: #a4a4a4;
+  font-size: 0.875rem;
+  font-weight: 400;
 }
 
 .submitButton {
-    display: flex;
-    padding: 0.25rem 1.5rem;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  padding: 0.25rem 1.5rem;
+  justify-content: center;
+  align-items: center;
 
-    border-radius: 8px;
-    border: none;
+  border-radius: 8px;
+  border: none;
 
-    color: #a4a4a4;
-    font-family: "Inter", sans-serif;
-    margin-right: 1rem;
-    background: rgba(255, 255, 255, 0.08);
+  color: #a4a4a4;
+  font-family: "Inter", sans-serif;
+  margin-right: 1rem;
+  background: rgba(255, 255, 255, 0.08);
 
-    width: 9rem;
+  width: 9rem;
 
-    float: right;
+  float: right;
 }
 
 .submitButton:hover {
-    cursor: pointer;
+  cursor: pointer;
 
-    transition: 0.25s ease-in-out;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: 0.25s ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .mascot {
-    width: 12rem;
-    margin-bottom: -12rem;
+  width: 12rem;
+  margin-bottom: -12rem;
 }
 
 @media (max-width: 720px) {
-    .formContainer {
-        flex-direction: column-reverse;
-        height: 70vh;
-    }
+  .formContainer {
+    flex-direction: column-reverse;
+    height: 70vh;
+  }
 
-    .formInput {
-        width: 17.5rem;
-    }
+  .formInput {
+    width: 17.5rem;
+  }
 
-    .form {
-        max-width: 20rem;
-    }
+  .form {
+    max-width: 20rem;
+  }
 
-    .mascot {
-        width: 9rem;
-        margin-bottom: -1.5rem;
-    }
+  .mascot {
+    width: 9rem;
+    margin-bottom: -1.5rem;
+  }
 
-    .submitButton {
-        padding: 0.15rem 0.5rem;
+  .submitButton {
+    padding: 0.15rem 0.5rem;
 
-        width: 8rem;
-        font-size: 0.8rem;
+    width: 8rem;
+    font-size: 0.8rem;
 
-        float: right;
-    }
+    float: right;
+  }
 
-    .formFooter p {
-        color: #a4a4a4;
-        font-size: 0.75rem;
-        font-weight: 400;
-    }
+  .formFooter p {
+    color: #a4a4a4;
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
 }

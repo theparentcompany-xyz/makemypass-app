@@ -11,144 +11,121 @@ import { connectPrivateSocket } from "../../../../../../services/apiGateway";
 import { makeMyPassSocket } from "../../../../../../services/urls";
 
 const CheckIn = () => {
-    const [recentRegistrations, setRecentRegistrations] = useState<guests[]>(
-        []
-    );
-    const [socket, setSocket] = useState<WebSocket | null>(null);
-    const [searchKeyword, setSearchKeyword] = useState<string>("");
-    const [eventId, setEventId] = useState<string>("");
-    const { eventTitle } = useParams<{ eventTitle: string }>();
+  const [recentRegistrations, setRecentRegistrations] = useState<guests[]>([]);
+  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [eventId, setEventId] = useState<string>("");
+  const { eventTitle } = useParams<{ eventTitle: string }>();
 
-    const getLocalEventId = () => {
-        const eventData = JSON.parse(
-            localStorage.getItem("eventData") as string
-        );
+  const getLocalEventId = () => {
+    const eventData = JSON.parse(localStorage.getItem("eventData") as string);
 
-        if (eventData) {
-            if (eventData.event_name !== eventTitle) {
-                localStorage.removeItem("eventData");
-                getEventId(eventTitle ?? "");
-            } else {
-                setEventId(eventData.event_id);
-            }
-        }
-    };
+    if (eventData) {
+      if (eventData.event_name !== eventTitle) {
+        localStorage.removeItem("eventData");
+        getEventId(eventTitle ?? "");
+      } else {
+        setEventId(eventData.event_id);
+      }
+    }
+  };
 
-    useEffect(() => {
-        const eventData = JSON.parse(
-            localStorage.getItem("eventData") as string
-        );
+  useEffect(() => {
+    const eventData = JSON.parse(localStorage.getItem("eventData") as string);
 
-        setEventId(eventData?.event_id);
+    setEventId(eventData?.event_id);
 
-        if (!eventData)
-            setTimeout(() => {
-                getLocalEventId();
-            }, 2000);
-    }, []);
+    if (!eventData)
+      setTimeout(() => {
+        getLocalEventId();
+      }, 2000);
+  }, []);
 
-    useEffect(() => {
-        if (eventId)
-            connectPrivateSocket({
-                url: makeMyPassSocket.listCheckinGuests(eventId),
-            }).then((ws) => {
-                ws.onmessage = (event) => {
-                    if (JSON.parse(event.data).response.datas)
-                        setRecentRegistrations(
-                            JSON.parse(event.data).response.datas
-                        );
-                    else if (JSON.parse(event.data).response.data) {
-                        const newRegistration = JSON.parse(event.data).response
-                            .data;
+  useEffect(() => {
+    if (eventId)
+      connectPrivateSocket({
+        url: makeMyPassSocket.listCheckinGuests(eventId),
+      }).then((ws) => {
+        ws.onmessage = (event) => {
+          if (JSON.parse(event.data).response.datas)
+            setRecentRegistrations(JSON.parse(event.data).response.datas);
+          else if (JSON.parse(event.data).response.data) {
+            const newRegistration = JSON.parse(event.data).response.data;
 
-                        setRecentRegistrations((prev) => {
-                            const updatedRegistrations = [
-                                newRegistration,
-                                ...prev,
-                            ];
+            setRecentRegistrations((prev) => {
+              const updatedRegistrations = [newRegistration, ...prev];
 
-                            return updatedRegistrations;
-                        });
-                    }
-                };
-
-                setSocket(ws);
+              return updatedRegistrations;
             });
-    }, [eventId]);
-
-    useEffect(() => {
-        return () => {
-            socket?.close();
+          }
         };
-    }, []);
 
-    return (
-        <Theme>
-            <div className={styles.checkInContainer}>
-                <Header />
+        setSocket(ws);
+      });
+  }, [eventId]);
 
-                <CheckInHeader currentCount={recentRegistrations.length} />
+  useEffect(() => {
+    return () => {
+      socket?.close();
+    };
+  }, []);
 
-                <div className={styles.searchInput}>
-                    <RiSearchLine color="#5F6063" />
-                    <input
-                        onChange={(event) => {
-                            setSearchKeyword(event.target.value);
-                        }}
-                        placeholder="Search"
-                        type="text"
-                    />
-                </div>
+  return (
+    <Theme>
+      <div className={styles.checkInContainer}>
+        <Header />
 
-                <div className={styles.tableContainer}>
-                    <div className={styles.table}>
-                        {recentRegistrations &&
-                        recentRegistrations.length > 0 ? (
-                            recentRegistrations
-                                .filter((data) => {
-                                    const { name, email } = data;
-                                    const keyword = searchKeyword.toLowerCase();
-                                    return (
-                                        name.toLowerCase().includes(keyword) ||
-                                        email.toLowerCase().includes(keyword)
-                                    );
-                                })
-                                .map((data, index) => {
-                                    return (
-                                        <div key={index} className={styles.row}>
-                                            <div className={styles.rowData}>
-                                                <p className={styles.rowName}>
-                                                    {data.name}
-                                                </p>
-                                                <p className={styles.rowEmail}>
-                                                    {data.email}
-                                                </p>
-                                            </div>
-                                            <div className={styles.rowData}>
-                                                <p className={styles.rowType}>
-                                                    {data.category}
-                                                </p>
-                                                <p className={styles.rowDate}>
-                                                    {data.registered_at}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    );
-                                })
-                        ) : (
-                            <div className={styles.row}>
-                                <div className={styles.rowData}>
-                                    <p className={styles.rowName}>
-                                        No CheckIns Yet!
-                                    </p>
-                                </div>
-                            </div>
-                        )}
+        <CheckInHeader currentCount={recentRegistrations.length} />
+
+        <div className={styles.searchInput}>
+          <RiSearchLine color="#5F6063" />
+          <input
+            onChange={(event) => {
+              setSearchKeyword(event.target.value);
+            }}
+            placeholder="Search"
+            type="text"
+          />
+        </div>
+
+        <div className={styles.tableContainer}>
+          <div className={styles.table}>
+            {recentRegistrations && recentRegistrations.length > 0 ? (
+              recentRegistrations
+                .filter((data) => {
+                  const { name, email } = data;
+                  const keyword = searchKeyword.toLowerCase();
+                  return (
+                    name.toLowerCase().includes(keyword) ||
+                    email.toLowerCase().includes(keyword)
+                  );
+                })
+                .map((data, index) => {
+                  return (
+                    <div key={index} className={styles.row}>
+                      <div className={styles.rowData}>
+                        <p className={styles.rowName}>{data.name}</p>
+                        <p className={styles.rowEmail}>{data.email}</p>
+                      </div>
+                      <div className={styles.rowData}>
+                        <p className={styles.rowType}>{data.category}</p>
+                        <p className={styles.rowDate}>{data.registered_at}</p>
+                      </div>
                     </div>
+                  );
+                })
+            ) : (
+              <div className={styles.row}>
+                <div className={styles.rowData}>
+                  <p className={styles.rowName}>No CheckIns Yet!</p>
                 </div>
-            </div>
-        </Theme>
-    );
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </Theme>
+  );
 };
 
 export default CheckIn;

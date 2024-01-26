@@ -1,48 +1,46 @@
 .buttonContainer {
-    border-radius: 11px;
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    background: rgba(255, 255, 255, 0.04);
+  border-radius: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
 
-    border: none;
+  border: none;
 
-    padding: 0.75rem 1.75rem;
+  padding: 0.75rem 1.75rem;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    color: white;
-    align-items: center;
-    cursor: pointer;
+  color: white;
+  align-items: center;
+  cursor: pointer;
 }
 
 .buttonText {
-    color: #fff;
-    margin-right: 1rem;
-    font-family: "Inter", sans-serif;
-    font-size: 1.1rem;
-    font-style: normal;
-    font-weight: 500;
+  color: #fff;
+  margin-right: 1rem;
+  font-family: "Inter", sans-serif;
+  font-size: 1.1rem;
+  font-style: normal;
+  font-weight: 500;
 
-    text-align: center;
+  text-align: center;
 }
 
 .buttonIcon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media screen and (max-width: 768px) {
-    .buttonContainer {
-        margin-top: 0;
-        padding: 0.5rem 1rem;
-    }
+  .buttonContainer {
+    margin-top: 0;
+    padding: 0.5rem 1rem;
+  }
 
-    .buttonText {
-        font-size: 0.8rem;
-        margin-right: 0.25rem;
-    }
-
-   
+  .buttonText {
+    font-size: 0.8rem;
+    margin-right: 0.25rem;
+  }
 }
