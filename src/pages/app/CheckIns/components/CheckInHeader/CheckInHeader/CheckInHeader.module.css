@@ -1,6 +1,6 @@
 .checkInHeading {
   margin-left: 5px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.25rem;
   font-weight: 600;
   color: white;
@@ -18,7 +18,7 @@
   background: rgba(255, 255, 255, 0.04);
   border: none;
   padding: 5px 10px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1rem;
   font-weight: 600;
   color: white;
@@ -44,7 +44,7 @@
 
 .checkInGlanceHeader {
   color: #fff;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 18.75px;
   font-style: normal;
   font-weight: 600;
@@ -52,7 +52,7 @@
 
 .guests {
   color: white;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.25rem;
   margin-top: 0.5rem;
 }
@@ -61,6 +61,6 @@
   font-size: 0.9rem;
   font-weight: 500;
   color: #fff;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #47c97e;
 }

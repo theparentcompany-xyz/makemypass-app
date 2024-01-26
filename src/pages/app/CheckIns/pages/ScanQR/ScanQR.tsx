@@ -1,50 +1,44 @@
-import Theme from "../../../../../components/Theme/Theme";
-import CheckInHeader from "../../components/CheckInHeader/CheckInHeader/CheckInHeader";
-import styles from "./ScanQR.module.css";
-import { HiOutlineCamera } from "react-icons/hi2";
+import Theme from '../../../../../components/Theme/Theme';
+import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
+import styles from './ScanQR.module.css';
+import { HiOutlineCamera } from 'react-icons/hi2';
 
-import { QrScanner } from "@yudiel/react-qr-scanner";
-import { useEffect, useState } from "react";
-import { getUserInfo } from "../../../../../apis/scan";
-import UserInfo from "../../components/UserInfo/UserInfo";
-import SecondaryButton from "../../../Overview/components/SecondaryButton/SecondaryButton";
+import { QrScanner } from '@yudiel/react-qr-scanner';
+import { useEffect, useState } from 'react';
+import { getUserInfo } from '../../../../../apis/scan';
+import UserInfo from '../../components/UserInfo/UserInfo';
+import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
+import { User } from './types';
 
 const ScanQR = () => {
   const [showQR, setShowQR] = useState(false);
-  const [ticketId, setTicketId] = useState<string>("");
+  const [ticketId, setTicketId] = useState<string>('');
   const [checkIn, setCheckIn] = useState(false);
   const [trigger, setTrigger] = useState(false);
 
-  const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    district: "",
-    organization: "",
-    category: "",
-  });
+  const [userData, setUserData] = useState<User>();
 
   useEffect(() => {
     if (ticketId.length > 0 && trigger) {
       getUserInfo(ticketId, setCheckIn, setUserData);
     }
-  }, [trigger]);
+  }, [ticketId, trigger]);
 
   useEffect(() => {
     navigator.permissions
-      .query({ name: "camera" as PermissionName })
+      .query({ name: 'camera' as PermissionName })
       .then((permissionObj) => {
         console.log(permissionObj.state);
       })
       .catch((error) => {
-        console.log("Got error :", error);
+        console.log('Got error :', error);
       });
-  }, []);
+  });
 
   return (
     <Theme>
       <div className={styles.scanContainer}>
-        <CheckInHeader buttonType="back" />
+        <CheckInHeader buttonType='back' />
 
         <hr className={styles.line} />
       </div>
@@ -67,29 +61,25 @@ const ScanQR = () => {
               <div
                 onClick={() => {
                   setShowQR(true);
-                  setTicketId("");
+                  setTicketId('');
                   setCheckIn(false);
                   setUserData({
-                    name: "",
-                    email: "",
-                    phone: "",
-                    district: "",
-                    organization: "",
-                    category: "",
+                    name: '',
+                    email: '',
+                    phone: '',
+                    district: '',
+                    organization: '',
+                    category: '',
                   });
                 }}
                 className={styles.camerabox}
               >
-                <HiOutlineCamera size={35} color="#5B75FB" />
+                <HiOutlineCamera size={35} color='#5B75FB' />
               </div>
 
               <div className={styles.alertTexts}>
-                <p className={styles.alertHeading}>
-                  Click The Icon To Scan QR Code
-                </p>
-                <p className={styles.alertText}>
-                  We need access to your camera to scan QR codes.
-                </p>
+                <p className={styles.alertHeading}>Click The Icon To Scan QR Code</p>
+                <p className={styles.alertText}>We need access to your camera to scan QR codes.</p>
               </div>
             </div>
 
@@ -97,7 +87,7 @@ const ScanQR = () => {
               <p className={styles.inputText}>Or Enter Code Below</p>
               <input
                 className={styles.input}
-                placeholder="Enter Ticket Code"
+                placeholder='Enter Ticket Code'
                 value={ticketId}
                 onChange={(e) => {
                   setTicketId(e.target.value);
@@ -106,18 +96,18 @@ const ScanQR = () => {
                     setTrigger(false);
                     setCheckIn(false);
                     setUserData({
-                      name: "",
-                      email: "",
-                      phone: "",
-                      district: "",
-                      organization: "",
-                      category: "",
+                      name: '',
+                      email: '',
+                      phone: '',
+                      district: '',
+                      organization: '',
+                      category: '',
                     });
                   }
                 }}
               />
               <SecondaryButton
-                buttonText="Check In"
+                buttonText='Check In'
                 onClick={() => {
                   setTrigger(true);
                 }}
@@ -129,7 +119,7 @@ const ScanQR = () => {
             <div className={styles.scanner}>
               <QrScanner
                 containerStyle={{
-                  backgroundColor: "#000",
+                  backgroundColor: '#000',
                 }}
                 onResult={(result) => {
                   setTicketId(result.getText());

@@ -1,22 +1,8 @@
-import { SetStateAction } from "react";
-import { privateGateway } from "../../services/apiGateway";
-import { makeMyPass } from "../../services/urls";
+import { privateGateway } from '../../services/apiGateway';
+import { makeMyPass } from '../../services/urls';
+import { Event } from './types'; // Assuming Event is the type for events
 
-export const getEvents = async (setEvents: {
-  (
-    value: SetStateAction<
-      {
-        id: string;
-        title: string;
-        members: number;
-        logo: string | null;
-        date: string;
-        day: string;
-      }[]
-    >,
-  ): void;
-  (arg0: any): void;
-}) => {
+export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<Event[]>>) => {
   privateGateway
     .get(makeMyPass.listEvents)
     .then((response) => {
@@ -33,7 +19,7 @@ export const getEventId = async (eventName: string) => {
   privateGateway
     .get(makeMyPass.getEventId(eventName))
     .then((response) => {
-      localStorage.setItem("eventData", JSON.stringify(response.data.response));
+      localStorage.setItem('eventData', JSON.stringify(response.data.response));
     })
     .catch((error) => {
       console.log(error);

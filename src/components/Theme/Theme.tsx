@@ -1,14 +1,8 @@
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
-import styles from "./Theme.module.css";
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import styles from './Theme.module.css';
 
-const Theme = ({
-  type,
-  children,
-}: {
-  type?: string | undefined;
-  children: React.ReactNode;
-}) => {
+const Theme = ({ type, children }: { type?: string | undefined; children: React.ReactNode }) => {
   return (
     <>
       <div className={styles.themeContainer}>

@@ -1,9 +1,10 @@
-import { privateGateway } from "../../services/apiGateway";
-import { makeMyPass } from "../../services/urls";
+import { privateGateway } from '../../services/apiGateway';
+import { makeMyPass } from '../../services/urls';
+import { hostList } from './types';
 
 export const getHosts = async (
   eventId: string,
-  setHosts: (arg0: any) => void,
+  setHosts: React.Dispatch<React.SetStateAction<hostList[]>>,
 ) => {
   privateGateway
     .get(makeMyPass.listHosts(eventId))

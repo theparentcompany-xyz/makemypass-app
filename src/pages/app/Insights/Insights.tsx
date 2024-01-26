@@ -1,4 +1,4 @@
-import styles from "./Insights.module.css";
+import styles from './Insights.module.css';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,9 +10,9 @@ import {
   Legend,
   BarElement,
   ArcElement,
-} from "chart.js";
-import { Line, Bar, Doughnut } from "react-chartjs-2";
-import { useEffect, useState } from "react";
+} from 'chart.js';
+import { Line, Bar, Doughnut } from 'react-chartjs-2';
+import { useEffect, useState } from 'react';
 
 ChartJS.register(
   CategoryScale,
@@ -28,32 +28,32 @@ ChartJS.register(
 
   ArcElement,
 );
-import { useParams } from "react-router-dom";
-import { HashLoader } from "react-spinners";
-import { connectPrivateSocket } from "../../../../services/apiGateway";
-import { makeMyPassSocket } from "../../../../services/urls";
-import AnalyticsData from "./types";
-import Theme from "../../../components/Theme/Theme";
-import Glance from "../Overview/components/Glance/Glance";
-import Header from "../Overview/components/Header/Header";
-import { getEventId } from "../../../apis/events";
+import { useParams } from 'react-router-dom';
+import { HashLoader } from 'react-spinners';
+import { connectPrivateSocket } from '../../../../services/apiGateway';
+import { makeMyPassSocket } from '../../../../services/urls';
+import { ChartData, AnalyticsData } from './types';
+import Theme from '../../../components/Theme/Theme';
+import Glance from '../Overview/components/Glance/Glance';
+import Header from '../Overview/components/Header/Header';
+import { getEventId } from '../../../apis/events';
 
 const Insights = () => {
   const [message, setMessage] = useState<AnalyticsData>();
 
-  const [lineData, setLineData] = useState<any>();
-  const [barData, setBarData] = useState<any>();
-  const [pieData, setPieData] = useState<any>();
+  const [lineData, setLineData] = useState<ChartData>();
+  const [barData, setBarData] = useState<ChartData>();
+  const [pieData, setPieData] = useState<ChartData>();
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   const getLocalEventId = () => {
     if (eventTitle) {
-      const eventData = JSON.parse(localStorage.getItem("eventData") as string);
+      const eventData = JSON.parse(localStorage.getItem('eventData') as string);
 
       if (eventData) {
         if (eventData.event_name !== eventTitle) {
-          localStorage.removeItem("eventData");
+          localStorage.removeItem('eventData');
           getEventId(eventTitle);
         } else {
           return eventData.event_id;
@@ -69,7 +69,7 @@ const Insights = () => {
     responsive: true,
     plugins: {
       legend: {
-        position: "top" as const,
+        position: 'top' as const,
       },
     },
   };
@@ -78,7 +78,7 @@ const Insights = () => {
     return () => {
       socket?.close();
     };
-  }, []);
+  });
 
   useEffect(() => {
     if (eventId)
@@ -92,10 +92,10 @@ const Insights = () => {
             labels: Object.keys(lineBarData?.analytics || {}),
             datasets: [
               {
-                label: "Daily Analytics",
+                label: 'Daily Analytics',
                 data: Object.values(lineBarData?.analytics || {}),
-                borderColor: "rgb(255, 99, 132)",
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
               },
             ],
           });
@@ -104,10 +104,10 @@ const Insights = () => {
             labels: Object.keys(lineBarData?.today_category || {}),
             datasets: [
               {
-                label: "Category Count",
+                label: 'Category Count',
                 data: Object.values(lineBarData?.today_category || {}),
-                borderColor: "rgb(255, 99, 132)",
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
               },
             ],
           });
@@ -116,10 +116,10 @@ const Insights = () => {
             labels: Object.keys(lineBarData.active_timeframe),
             datasets: [
               {
-                label: "Active Time",
+                label: 'Active Time',
                 data: Object.values(lineBarData.active_timeframe),
-                backgroundColor: ["#FBD85B", "#C33D7B", "#47C97E", "#35A1EB"],
-                borderColor: ["#FBD85B", "#C33D7B", "#47C97E", "#35A1EB"],
+                backgroundColor: ['#FBD85B', '#C33D7B', '#47C97E', '#35A1EB'],
+                borderColor: ['#FBD85B', '#C33D7B', '#47C97E', '#35A1EB'],
               },
             ],
           });
@@ -127,7 +127,7 @@ const Insights = () => {
 
         setSocket(ws);
       });
-  }, []);
+  });
 
   return (
     <Theme>
@@ -137,7 +137,7 @@ const Insights = () => {
             <div className={styles.insightsOuterContainer}>
               <div className={styles.glanceContainer}>
                 <Header />
-                <Glance tab="insights" />
+                <Glance tab='insights' />
               </div>
 
               <div className={styles.insightsContainer}>
@@ -156,9 +156,7 @@ const Insights = () => {
                       <div className={styles.weeklyCounts}>
                         <div className={styles.weeklyCount}>
                           <p className={styles.week}>Yestered</p>
-                          <p className={styles.wcount}>
-                            {message?.yesterday_reg}
-                          </p>
+                          <p className={styles.wcount}>{message?.yesterday_reg}</p>
                         </div>
                         <div className={styles.weeklyCount}>
                           <p className={styles.week}>This week</p>
@@ -171,14 +169,10 @@ const Insights = () => {
                       </div>
                     </div>
                     <div className={styles.cRightSection}>
-                      <p className={styles.rightSectionHeading}>
-                        Total Category %
-                      </p>
+                      <p className={styles.rightSectionHeading}>Total Category %</p>
 
                       <div className={styles.categories}>
-                        {Object.entries(
-                          message?.category_percentages || {},
-                        ).map(([key, value]) => (
+                        {Object.entries(message?.category_percentages || {}).map(([key, value]) => (
                           <div className={styles.category}>
                             <p className={styles.categoryName}>{key}</p>
                             <p className={styles.categoryCount}>{value}</p>
@@ -200,14 +194,12 @@ const Insights = () => {
                     </p>
                   </div>
                   <div className={styles.weeklyCounts}>
-                    {Object.entries(message?.today_category || {}).map(
-                      ([key, value]) => (
-                        <div className={styles.weeklyCount}>
-                          <p className={styles.week}>{key.substring(0, 8)}..</p>
-                          <p className={styles.wcount}>{value}</p>
-                        </div>
-                      ),
-                    )}
+                    {Object.entries(message?.today_category || {}).map(([key, value]) => (
+                      <div className={styles.weeklyCount}>
+                        <p className={styles.week}>{key.substring(0, 8)}..</p>
+                        <p className={styles.wcount}>{value}</p>
+                      </div>
+                    ))}
                   </div>
                   <div className={styles.liveTraffic}>
                     <p className={styles.live}>Event Date</p>
@@ -238,46 +230,46 @@ const Insights = () => {
                       <div className={styles.time}>
                         <p
                           style={{
-                            color: "#FBD85B",
+                            color: '#FBD85B',
                           }}
                           className={styles.line}
                         >
                           {message?.active_timeframe.Morning}
                         </p>
-                        <p className="type">Morning</p>
+                        <p className='type'>Morning</p>
                       </div>
                       <div className={styles.time}>
                         <p
                           style={{
-                            color: "#35A1EB",
+                            color: '#35A1EB',
                           }}
                           className={styles.line}
                         >
                           {message?.active_timeframe.Evening}
                         </p>
-                        <p className="type">Evening</p>
+                        <p className='type'>Evening</p>
                       </div>
                       <div className={styles.time}>
                         <p
                           style={{
-                            color: "#47C97E",
+                            color: '#47C97E',
                           }}
                           className={styles.line}
                         >
                           {message?.active_timeframe.Afternoon}
                         </p>
-                        <p className="type">Afternoon</p>
+                        <p className='type'>Afternoon</p>
                       </div>
                       <div className={styles.time}>
                         <p
                           style={{
-                            color: "#C33D7B",
+                            color: '#C33D7B',
                           }}
                           className={styles.line}
                         >
                           {message?.active_timeframe.Night}
                         </p>
-                        <p className="type">Night</p>
+                        <p className='type'>Night</p>
                       </div>
                     </div>
                   </div>
@@ -285,7 +277,7 @@ const Insights = () => {
 
                 <div
                   style={{
-                    borderRadius: "12px",
+                    borderRadius: '12px',
                   }}
                   className={styles.pageVisitsCount}
                 >
@@ -294,9 +286,7 @@ const Insights = () => {
                       <div className={styles.totalRegistered}>
                         <p className={styles.total}>Page Visits</p>
                         <p className={styles.count}>
-                          {message?.page_visit.total
-                            ? message?.page_visit.total
-                            : "-"}{" "}
+                          {message?.page_visit.total ? message?.page_visit.total : '-'}{' '}
                           <span>Visits</span>
                         </p>
                       </div>
@@ -304,43 +294,37 @@ const Insights = () => {
                         <div className={styles.weeklyCount}>
                           <p className={styles.week}>Yesterday</p>
                           <p className={styles.wcount}>
-                            {" "}
+                            {' '}
                             {message?.page_visit.yesterday
                               ? message?.page_visit.yesterday
-                              : "-"}{" "}
+                              : '-'}{' '}
                           </p>
                         </div>
                         <div className={styles.weeklyCount}>
                           <p className={styles.week}>This week</p>
                           <p className={styles.wcount}>
-                            {" "}
+                            {' '}
                             {message?.page_visit.this_week
                               ? message?.page_visit.this_week
-                              : "-"}{" "}
+                              : '-'}{' '}
                           </p>
                         </div>
                       </div>
                       <div className={styles.liveTraffic}>
-                        <p className={styles.live}>
-                          Conversion Rate Vs Page Visit
-                        </p>
+                        <p className={styles.live}>Conversion Rate Vs Page Visit</p>
                         <p className={styles.lcount}>
-                          {" "}
+                          {' '}
                           {message?.page_visit.conversion_rate_vs_page_visit
                             ? message?.page_visit.conversion_rate_vs_page_visit
-                            : "-"}{" "}
+                            : '-'}{' '}
                         </p>
                       </div>
                     </div>
                     <div className={styles.cRightSection}>
-                      <p className={styles.rightSectionHeading}>
-                        Registration Cities
-                      </p>
+                      <p className={styles.rightSectionHeading}>Registration Cities</p>
 
                       <div className={styles.categories}>
-                        {Object.entries(
-                          message?.district_percentages || {},
-                        ).map(([key, value]) => (
+                        {Object.entries(message?.district_percentages || {}).map(([key, value]) => (
                           <div className={styles.category}>
                             <p className={styles.categoryName}>{key}</p>
                             <p className={styles.categoryCount}>{value}</p>
@@ -355,7 +339,7 @@ const Insights = () => {
           </>
         ) : (
           <div className={styles.center}>
-            <HashLoader color={"#46BF75"} size={50} />
+            <HashLoader color={'#46BF75'} size={50} />
           </div>
         )}
       </>

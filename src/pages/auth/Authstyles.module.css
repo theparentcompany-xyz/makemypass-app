@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
 
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 
   display: flex;
   flex-direction: row;
@@ -96,7 +96,7 @@
   border: none;
 
   color: #a4a4a4;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   margin-right: 1rem;
   background: rgba(255, 255, 255, 0.08);
 

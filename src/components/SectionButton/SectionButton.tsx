@@ -1,4 +1,4 @@
-import styles from "./SectionButton.module.css";
+import styles from './SectionButton.module.css';
 
 type ButtonProps = {
   buttonText: string;

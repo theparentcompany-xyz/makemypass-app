@@ -1,4 +1,4 @@
-type AnalyticsData = {
+export type AnalyticsData = {
   analytics: {
     [date: string]: number;
   };
@@ -31,4 +31,14 @@ type AnalyticsData = {
   };
 };
 
-export default AnalyticsData;
+export interface Dataset {
+  label: string;
+  data: number[];
+  borderColor: string | string[];
+  backgroundColor: string | string[];
+}
+
+export interface ChartData {
+  labels: string[];
+  datasets: Dataset[];
+}

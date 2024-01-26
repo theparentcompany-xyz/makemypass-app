@@ -1,11 +1,11 @@
-import Theme from "../../../components/Theme/Theme";
-import styles from "./Events.module.css";
-import { GoPeople } from "react-icons/go";
-import { BsArrowRight } from "react-icons/bs";
-import { FaPlus } from "react-icons/fa6";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getEventId, getEvents } from "../../../apis/events";
+import Theme from '../../../components/Theme/Theme';
+import styles from './Events.module.css';
+import { GoPeople } from 'react-icons/go';
+import { BsArrowRight } from 'react-icons/bs';
+import { FaPlus } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getEventId, getEvents } from '../../../apis/events';
 
 const Events = () => {
   type Event = {
@@ -22,14 +22,14 @@ const Events = () => {
   useEffect(() => {
     getEvents(setEvents);
     console.log(events);
-  }, []);
+  }, [events]);
 
   const handleClick = (eventName: string) => {
-    const currentEvent = localStorage.getItem("eventData");
+    const currentEvent = localStorage.getItem('eventData');
     if (currentEvent) {
       const eventData = JSON.parse(currentEvent);
       if (eventData.event_name !== eventName.trim().toLowerCase()) {
-        localStorage.removeItem("eventData");
+        localStorage.removeItem('eventData');
         getEventId(eventName.toLowerCase());
       }
     } else {
@@ -43,7 +43,7 @@ const Events = () => {
         <div className={styles.homeContainer}>
           <div>
             <p className={styles.homeHeader}>
-              {events.length > 0 ? "Your Events" : "No Events Currently"}
+              {events.length > 0 ? 'Your Events' : 'No Events Currently'}
             </p>
             <div className={styles.eventsContainer}>
               {events.map((event) => (
@@ -53,21 +53,16 @@ const Events = () => {
                     <p className={styles.day}>{event.day}</p>
                   </div>
 
-                  <img className={styles.slider} src="/app/slider.webp" alt="" />
-
+                  <img className={styles.slider} src='/app/slider.webp' alt='' />
                   <div>
                     <div className={styles.eventCard}>
                       <div className={styles.innerCard}>
-                        <img
-                          src="/app/scale.webp"
-                          alt=""
-                          className={styles.eventImage}
-                        />
+                        <img src='/app/scale.webp' alt='' className={styles.eventImage} />
                         <div className={styles.eventDetails}>
                           <p className={styles.eventName}>{event.title}</p>
                           <p className={styles.eventGuests}>
                             <span>
-                              <GoPeople color="a4a4a4" />
+                              <GoPeople color='a4a4a4' />
                             </span>
                             {event.members} guests
                           </p>

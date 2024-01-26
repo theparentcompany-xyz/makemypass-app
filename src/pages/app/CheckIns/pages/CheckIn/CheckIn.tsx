@@ -1,45 +1,41 @@
-import Theme from "../../../../../components/Theme/Theme";
-import Header from "../../../Overview/components/Header/Header";
-import styles from "./CheckIn.module.css";
-import { RiSearchLine } from "react-icons/ri";
-import { useEffect, useState } from "react";
-import { guests } from "./types";
-import CheckInHeader from "../../components/CheckInHeader/CheckInHeader/CheckInHeader";
-import { useParams } from "react-router-dom";
-import { getEventId } from "../../../../../apis/events";
-import { connectPrivateSocket } from "../../../../../../services/apiGateway";
-import { makeMyPassSocket } from "../../../../../../services/urls";
+import Theme from '../../../../../components/Theme/Theme';
+import Header from '../../../Overview/components/Header/Header';
+import styles from './CheckIn.module.css';
+import { RiSearchLine } from 'react-icons/ri';
+import { useEffect, useState } from 'react';
+import { guests } from './types';
+import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
+import { useParams } from 'react-router-dom';
+import { getEventId } from '../../../../../apis/events';
+import { connectPrivateSocket } from '../../../../../../services/apiGateway';
+import { makeMyPassSocket } from '../../../../../../services/urls';
 
 const CheckIn = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<guests[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [searchKeyword, setSearchKeyword] = useState<string>("");
-  const [eventId, setEventId] = useState<string>("");
+  const [searchKeyword, setSearchKeyword] = useState<string>('');
+  const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
-  const getLocalEventId = () => {
-    const eventData = JSON.parse(localStorage.getItem("eventData") as string);
-
-    if (eventData) {
-      if (eventData.event_name !== eventTitle) {
-        localStorage.removeItem("eventData");
-        getEventId(eventTitle ?? "");
-      } else {
-        setEventId(eventData.event_id);
-      }
-    }
-  };
-
   useEffect(() => {
-    const eventData = JSON.parse(localStorage.getItem("eventData") as string);
-
-    setEventId(eventData?.event_id);
+    let eventData = JSON.parse(localStorage.getItem('eventData') as string);
 
     if (!eventData)
       setTimeout(() => {
-        getLocalEventId();
+        eventData = JSON.parse(localStorage.getItem('eventData') as string);
+
+        if (eventData) {
+          if (eventData.event_name !== eventTitle) {
+            localStorage.removeItem('eventData');
+            getEventId(eventTitle ?? '');
+          } else {
+            setEventId(eventData.event_id);
+          }
+        }
       }, 2000);
-  }, []);
+
+    setEventId(eventData?.event_id);
+  }, [eventTitle]);
 
   useEffect(() => {
     if (eventId)
@@ -68,7 +64,7 @@ const CheckIn = () => {
     return () => {
       socket?.close();
     };
-  }, []);
+  });
 
   return (
     <Theme>
@@ -78,13 +74,13 @@ const CheckIn = () => {
         <CheckInHeader currentCount={recentRegistrations.length} />
 
         <div className={styles.searchInput}>
-          <RiSearchLine color="#5F6063" />
+          <RiSearchLine color='#5F6063' />
           <input
             onChange={(event) => {
               setSearchKeyword(event.target.value);
             }}
-            placeholder="Search"
-            type="text"
+            placeholder='Search'
+            type='text'
           />
         </div>
 
@@ -96,8 +92,7 @@ const CheckIn = () => {
                   const { name, email } = data;
                   const keyword = searchKeyword.toLowerCase();
                   return (
-                    name.toLowerCase().includes(keyword) ||
-                    email.toLowerCase().includes(keyword)
+                    name.toLowerCase().includes(keyword) || email.toLowerCase().includes(keyword)
                   );
                 })
                 .map((data, index) => {

@@ -30,7 +30,7 @@
   font-size: 1.25rem;
   font-weight: 500;
   color: #fff;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .day {
@@ -38,11 +38,11 @@
   font-size: 0.9rem;
   font-weight: 500;
   color: #a4a4a4;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .homeHeader {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.5rem;
   color: white;
 }
@@ -78,7 +78,7 @@
   font-size: 1.25rem;
   font-weight: 500;
   color: #fff;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .eventGuests {
@@ -86,7 +86,7 @@
   font-size: 0.8rem;
   font-weight: 500;
   color: #a4a4a4;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .eventGuests span {

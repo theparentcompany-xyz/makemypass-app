@@ -1,12 +1,12 @@
-import styles from "../Authstyles.module.css";
-import { GoPerson } from "react-icons/go";
-import { LuKey } from "react-icons/lu";
-import { IoIosArrowRoundForward } from "react-icons/io";
-import Theme from "../../../components/Theme/Theme";
-import { useEffect, useRef, useState } from "react";
-import { login, generateOTP } from "../../../apis/auth";
-import InputFIeld from "./InputFIeld";
-import { useNavigate } from "react-router-dom";
+import styles from '../Authstyles.module.css';
+import { GoPerson } from 'react-icons/go';
+import { LuKey } from 'react-icons/lu';
+import { IoIosArrowRoundForward } from 'react-icons/io';
+import Theme from '../../../components/Theme/Theme';
+import { useEffect, useRef, useState } from 'react';
+import { login, generateOTP } from '../../../apis/auth';
+import InputFIeld from './InputFIeld';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,41 +20,32 @@ const Login = () => {
   const [isPassword, setIsPassword] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  let ruri = window.location.href.split("=")[1];
+  const ruri = window.location.href.split('=')[1];
 
   const handleSubmit = () => {
     if (isPassword && emailRef.current?.value && passwordRef.current?.value)
-      login(
-        emailRef.current?.value,
-        passwordRef.current?.value,
-        setIsAuthenticated,
-      );
+      login(emailRef.current?.value, passwordRef.current?.value, setIsAuthenticated);
     else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
-      login(
-        emailRef.current?.value,
-        otpRef.current?.value,
-        setIsAuthenticated,
-        isOtpSent,
-      );
+      login(emailRef.current?.value, otpRef.current?.value, setIsAuthenticated, isOtpSent);
     else if (!isOtpSent && emailRef.current?.value)
-      generateOTP(emailRef.current?.value, setIsOtpSent, "Login");
+      generateOTP(emailRef.current?.value, setIsOtpSent, 'Login');
   };
 
   useEffect(() => {
-    if (localStorage.getItem("accessToken")) setIsAuthenticated(true);
+    if (localStorage.getItem('accessToken')) setIsAuthenticated(true);
 
     if (isAuthenticated) {
       if (ruri) navigate(`/${ruri}`);
-      else navigate("/events");
+      else navigate('/events');
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate, ruri]);
 
   return (
     <>
       <Theme>
         <div
           style={{
-            width: "100%",
+            width: '100%',
           }}
         >
           <div className={styles.formContainer}>
@@ -70,32 +61,32 @@ const Login = () => {
                 </div>
                 <InputFIeld
                   ref={emailRef}
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Enter your Email*"
-                  icon={<GoPerson color="#A4A4A4" />}
+                  type='email'
+                  name='email'
+                  id='email'
+                  placeholder='Enter your Email*'
+                  icon={<GoPerson color='#A4A4A4' />}
                 />
 
                 {isPassword && !isOtpSent && (
                   <InputFIeld
                     ref={passwordRef}
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Enter your Password*"
-                    icon={<LuKey color="#A4A4A4" />}
+                    type='password'
+                    name='password'
+                    id='password'
+                    placeholder='Enter your Password*'
+                    icon={<LuKey color='#A4A4A4' />}
                   />
                 )}
 
                 {isOtpSent && !isPassword && (
                   <InputFIeld
                     ref={otpRef}
-                    type="text"
-                    name="otp"
-                    id="otp"
-                    placeholder="Enter OTP*"
-                    icon={<LuKey color="#A4A4A4" />}
+                    type='text'
+                    name='otp'
+                    id='otp'
+                    placeholder='Enter OTP*'
+                    icon={<LuKey color='#A4A4A4' />}
                   />
                 )}
               </div>
@@ -112,17 +103,17 @@ const Login = () => {
                     }
                   }}
                 >
-                  Login with {isPassword ? "OTP" : "Password"}
+                  Login with {isPassword ? 'OTP' : 'Password'}
                 </p>
                 <button onClick={handleSubmit} className={styles.submitButton}>
-                  {isOtpSent ? "Login" : isPassword ? "Login" : "Get OTP"}
+                  {isOtpSent ? 'Login' : isPassword ? 'Login' : 'Get OTP'}
                   <span>
-                    <IoIosArrowRoundForward size={25} color="#A4A4A4" />
+                    <IoIosArrowRoundForward size={25} color='#A4A4A4' />
                   </span>
                 </button>
               </div>
             </div>
-            <img src="/app/mascot.webp" alt="" className={styles.mascot} />
+            <img src='/app/mascot.webp' alt='' className={styles.mascot} />
           </div>
         </div>
       </Theme>

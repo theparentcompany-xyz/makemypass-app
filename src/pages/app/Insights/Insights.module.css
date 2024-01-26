@@ -30,7 +30,7 @@
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
 
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: white;
   width: 42%;
 }
@@ -164,7 +164,7 @@
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: white;
   width: 56.5%;
 }
@@ -174,7 +174,7 @@
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 2rem;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: white;
   max-width: 50rem;
   width: 43%;
@@ -195,7 +195,7 @@
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: white;
   max-width: 20rem;
   width: 100%;

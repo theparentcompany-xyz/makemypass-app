@@ -1,69 +1,63 @@
-import { HiUserGroup } from "react-icons/hi2";
-import { FaWrench } from "react-icons/fa";
-import { BsQrCodeScan } from "react-icons/bs";
-import { TbPencil } from "react-icons/tb";
-import Glance from "../components/Glance/Glance";
+import { HiUserGroup } from 'react-icons/hi2';
+import { FaWrench } from 'react-icons/fa';
+import { BsQrCodeScan } from 'react-icons/bs';
+import { TbPencil } from 'react-icons/tb';
+import Glance from '../components/Glance/Glance';
 
-import styles from "./Overview.module.css";
-import SecondaryButton from "../components/SecondaryButton/SecondaryButton";
-import SectionButton from "../../../../components/SectionButton/SectionButton";
-import { useEffect, useState } from "react";
+import styles from './Overview.module.css';
+import SecondaryButton from '../components/SecondaryButton/SecondaryButton';
+import SectionButton from '../../../../components/SectionButton/SectionButton';
+import { useEffect, useState } from 'react';
 
-import { hostList, recentRegistration } from "./types";
+import { hostList, recentRegistration } from './types';
 
-import { HashLoader } from "react-spinners";
-import { getHosts } from "../../../../apis/overview";
-import { connectPrivateSocket } from "../../../../../services/apiGateway";
-import { makeMyPassSocket } from "../../../../../services/urls";
-import Theme from "../../../../components/Theme/Theme";
-import { Link, useParams } from "react-router-dom";
-import Header from "../components/Header/Header";
-import { getEventId } from "../../../../apis/events";
+import { HashLoader } from 'react-spinners';
+import { getHosts } from '../../../../apis/overview';
+import { connectPrivateSocket } from '../../../../../services/apiGateway';
+import { makeMyPassSocket } from '../../../../../services/urls';
+import Theme from '../../../../components/Theme/Theme';
+import { Link, useParams } from 'react-router-dom';
+import Header from '../components/Header/Header';
+import { getEventId } from '../../../../apis/events';
 
 const Overview = () => {
-  const [recentRegistrations, setRecentRegistrations] = useState<
-    recentRegistration[]
-  >([]);
+  const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [hostList, setHostList] = useState<hostList[]>([]);
 
-  const [eventId, setEventId] = useState<string>("");
+  const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
-  const getLocalEventId = () => {
-    const eventData = JSON.parse(localStorage.getItem("eventData") as string);
-
-    if (eventData) {
-      if (eventData.event_name !== eventTitle) {
-        localStorage.removeItem("eventData");
-        getEventId(eventTitle ?? "");
-      } else {
-        setEventId(eventData.event_id);
-      }
-    }
-  };
-
   useEffect(() => {
-    const eventData = JSON.parse(localStorage.getItem("eventData") as string);
-
-    setEventId(eventData?.event_id);
+    let eventData = JSON.parse(localStorage.getItem('eventData') as string);
 
     if (!eventData)
       setTimeout(() => {
-        getLocalEventId();
+        eventData = JSON.parse(localStorage.getItem('eventData') as string);
+
+        if (eventData) {
+          if (eventData.event_name !== eventTitle) {
+            localStorage.removeItem('eventData');
+            getEventId(eventTitle ?? '');
+          } else {
+            setEventId(eventData.event_id);
+          }
+        }
       }, 2000);
-  }, []);
+
+    setEventId(eventData?.event_id);
+  }, [eventTitle]);
 
   useEffect(() => {
-    if (eventId) getHosts(eventId, setHostList);
-    console.log(hostList);
-  }, [eventId]);
+    if (eventId && hostList.length === 0) getHosts(eventId, setHostList);
+    console.log('Vannatha Sutta Satha Repeatuu!!');
+  }, [eventId, hostList]);
 
   useEffect(() => {
     return () => {
       socket?.close();
     };
-  }, []);
+  });
 
   useEffect(() => {
     if (eventId)
@@ -94,30 +88,30 @@ const Overview = () => {
         {recentRegistrations && recentRegistrations.length > 0 && hostList ? (
           <div className={styles.overviewContainer}>
             <Header />
-            <Glance tab="overview" />
+            <Glance tab='overview' />
 
             <div className={styles.buttons}>
-              <Link to="/scaleup/guests">
+              <Link to='/scaleup/guests'>
                 <SectionButton
-                  buttonText="Guest List"
-                  buttonColor="#7662FC"
-                  icon={<HiUserGroup size={25} color="#7662FC" />}
+                  buttonText='Guest List'
+                  buttonColor='#7662FC'
+                  icon={<HiUserGroup size={25} color='#7662FC' />}
                 />
               </Link>
 
-              <a href="#hosts">
+              <a href='#hosts'>
                 <SectionButton
-                  buttonText="Host List"
-                  buttonColor="#C33D7B"
-                  icon={<FaWrench size={25} color="#C33D7B" />}
+                  buttonText='Host List'
+                  buttonColor='#C33D7B'
+                  icon={<FaWrench size={25} color='#C33D7B' />}
                 />
               </a>
 
-              <Link to="/scaleup/checkins">
+              <Link to='/scaleup/checkins'>
                 <SectionButton
-                  buttonText="Check In"
-                  buttonColor="#5B75FB"
-                  icon={<BsQrCodeScan size={25} color="#5B75FB" />}
+                  buttonText='Check In'
+                  buttonColor='#5B75FB'
+                  icon={<BsQrCodeScan size={25} color='#5B75FB' />}
                 />
               </Link>
             </div>
@@ -125,7 +119,7 @@ const Overview = () => {
             <div className={styles.recentRegistrations}>
               <div className={styles.tableHeader}>
                 <p className={styles.tableHeading}>Recent Registration</p>
-                <SecondaryButton buttonText="All Guests ➞" />
+                <SecondaryButton buttonText='All Guests ➞' />
               </div>
 
               <div className={styles.tableContainer}>
@@ -154,10 +148,10 @@ const Overview = () => {
                   Hosts <br />
                   <span>Add hosts, special guests, and event managers.</span>
                 </p>
-                <SecondaryButton buttonText="+ Add Host" />
+                <SecondaryButton buttonText='+ Add Host' />
               </div>
 
-              <div id="hosts" className={styles.tableContainer}>
+              <div id='hosts' className={styles.tableContainer}>
                 <div className={styles.table}>
                   {hostList &&
                     hostList.map((data, index) => {
@@ -169,7 +163,7 @@ const Overview = () => {
                             <p className={styles.rowType}>{data.role}</p>
                           </div>
                           <div className={styles.rowData}>
-                            <TbPencil color="#8E8F90" size={18} />
+                            <TbPencil color='#8E8F90' size={18} />
                           </div>
                         </div>
                       );
@@ -180,7 +174,7 @@ const Overview = () => {
           </div>
         ) : (
           <div className={styles.center}>
-            <HashLoader color={"#46BF75"} size={50} />
+            <HashLoader color={'#46BF75'} size={50} />
           </div>
         )}
       </>

@@ -1,6 +1,6 @@
-import toast from "react-hot-toast";
-import { privateGateway, publicGateway } from "../../services/apiGateway";
-import { buildVerse, makeMyPass } from "../../services/urls";
+import toast from 'react-hot-toast';
+import { privateGateway, publicGateway } from '../../services/apiGateway';
+import { buildVerse, makeMyPass } from '../../services/urls';
 
 export const login = async (
   email: string,
@@ -19,25 +19,22 @@ export const login = async (
   };
 
   if (isOtpSent) {
-    data["otp"] = password;
+    data['otp'] = password;
   } else {
-    data["password"] = password;
+    data['password'] = password;
   }
 
   publicGateway
     .post(buildVerse.login, data, {
       headers: {
-        product: "buildverse",
+        product: 'buildverse',
       },
     })
     .then((response) => {
-      const userEmail = email.split("@")[0];
-      localStorage.setItem("accessToken", response.data.response.access_token);
-      localStorage.setItem(
-        "refreshToken",
-        response.data.response.refresh_token,
-      );
-      localStorage.setItem("userEmail", userEmail);
+      const userEmail = email.split('@')[0];
+      localStorage.setItem('accessToken', response.data.response.access_token);
+      localStorage.setItem('refreshToken', response.data.response.refresh_token);
+      localStorage.setItem('userEmail', userEmail);
       setIsAuthenticated(true);
       onboardUser();
     })

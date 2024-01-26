@@ -1,44 +1,36 @@
-import { useEffect, useState } from "react";
-import styles from "./Header.module.css";
-import { getEventData, getEventId } from "../../../../../apis/events";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import styles from './Header.module.css';
+import { getEventData, getEventId } from '../../../../../apis/events';
+import { useParams } from 'react-router-dom';
 
-const Header = ({
-  setRole,
-}: {
-  setRole?: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+const Header = ({ setRole }: { setRole?: React.Dispatch<React.SetStateAction<string>> }) => {
   const [eventData, setEventData] = useState({
-    title: "",
-    date: "",
-    role: "",
+    title: '',
+    date: '',
+    role: '',
   });
-  const [eventId, setEventId] = useState<string>("");
+  const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
-  const getLocalEventId = () => {
-    const eventData = JSON.parse(localStorage.getItem("eventData") as string);
-
-    if (eventData) {
-      if (eventData.event_name !== eventTitle) {
-        localStorage.removeItem("eventData");
-        getEventId(eventTitle ?? "");
-      } else {
-        setEventId(eventData.event_id);
-      }
-    }
-  };
-
   useEffect(() => {
-    const eventData = JSON.parse(localStorage.getItem("eventData") as string);
-
-    setEventId(eventData?.event_id);
+    let eventData = JSON.parse(localStorage.getItem('eventData') as string);
 
     if (!eventData)
       setTimeout(() => {
-        getLocalEventId();
+        eventData = JSON.parse(localStorage.getItem('eventData') as string);
+
+        if (eventData) {
+          if (eventData.event_name !== eventTitle) {
+            localStorage.removeItem('eventData');
+            getEventId(eventTitle ?? '');
+          } else {
+            setEventId(eventData.event_id);
+          }
+        }
       }, 2000);
-  }, []);
+
+    setEventId(eventData?.event_id);
+  }, [eventTitle]);
 
   useEffect(() => {
     if (eventId) getEventData(eventId, setEventData);
@@ -46,18 +38,19 @@ const Header = ({
 
   useEffect(() => {
     if (setRole) setRole(eventData.role);
-  }, [eventData]);
+    console.log('Looppuuu');
+  }, [eventData, setRole]);
 
   return (
     <>
       <div className={styles.headerRow}>
         <p className={styles.headerText}>
-          <img className={styles.headerImage} src="/scale.webp" alt="" />
+          <img className={styles.headerImage} src='/scale.webp' alt='' />
           {eventData?.title}
         </p>
-        <div className="row">
+        <div className='row'>
           <p className={styles.date}>{eventData?.date}</p>
-          <img src="/app/live.gif" alt="" className={styles.gif} />
+          <img src='/app/live.gif' alt='' className={styles.gif} />
         </div>
       </div>
       <hr className={styles.line} />

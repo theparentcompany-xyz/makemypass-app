@@ -12,7 +12,7 @@
 .glanceHeader,
 .guests {
   color: white;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.25rem;
   margin-top: 1rem;
 }
@@ -21,7 +21,7 @@
   font-size: 1rem;
   font-weight: 500;
   color: #fff;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #47c97e;
 }
 
@@ -37,7 +37,7 @@
   list-style-type: disc;
   font-size: 0.9rem;
   margin-top: 1rem;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .progressLabels ul {
@@ -99,7 +99,7 @@
 .tab {
   cursor: pointer;
   color: rgba(255, 255, 255, 0.5);
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   padding-bottom: 0.5rem;
 }

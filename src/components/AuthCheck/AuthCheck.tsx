@@ -1,7 +1,7 @@
-import { Navigate, Outlet, useParams } from "react-router-dom";
+import { Navigate, Outlet, useParams } from 'react-router-dom';
 
 const AuthCheck: React.FC = () => {
-  const refreshToken = localStorage.getItem("refreshToken");
+  const refreshToken = localStorage.getItem('refreshToken');
   const redirection = window.location.pathname.slice(1);
 
   const { eventTitle } = useParams<{ eventTitle: string }>();

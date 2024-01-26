@@ -8,7 +8,7 @@
   margin-top: 2rem;
   color: #fff;
 
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
   font-style: normal;
   font-weight: 600;
@@ -55,7 +55,7 @@
 .tableHeading {
   color: #fff;
 
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
   font-style: normal;
   font-weight: 600;
@@ -65,7 +65,7 @@
 
 .tableHeading span {
   color: #d2d4d7;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 0.8rem;
   font-style: normal;
   font-weight: 400;
@@ -99,7 +99,7 @@
 
 .rowName {
   color: #fff;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 0.9rem;
@@ -107,7 +107,7 @@
 
 .rowEmail {
   color: rgba(255, 255, 255, 0.5);
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 0.8rem;
@@ -118,7 +118,7 @@
   border-radius: 100px;
   background: rgba(7, 164, 96, 0.13);
   color: #47c97e;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 0.7rem;
   padding: 0.25rem 0.5rem;
   margin-left: 0.15rem;
@@ -126,7 +126,7 @@
 
 .rowDate {
   color: rgba(255, 255, 255, 0.5);
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 0.75rem;

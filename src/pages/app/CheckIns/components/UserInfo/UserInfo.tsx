@@ -1,4 +1,4 @@
-import styles from "./UserInfo.module.css";
+import styles from './UserInfo.module.css';
 
 const UserInfo = ({
   ticketId,
@@ -31,9 +31,7 @@ const UserInfo = ({
       <br />
       <div className={styles.userInfo}>
         <div className={styles.topSection}>
-          {userData.category && (
-            <div className={styles.type}>{userData.category}</div>
-          )}
+          {userData.category && <div className={styles.type}>{userData.category}</div>}
           <p className={styles.name}>{userData.name}</p>
           <p className={styles.email}>{userData.email}</p>
         </div>
@@ -65,10 +63,10 @@ const UserInfo = ({
         <p
           className={styles.scannerHeader}
           style={{
-            color: status ? "#5B75FB" : "#ed4545",
+            color: status ? '#5B75FB' : '#ed4545',
           }}
         >
-          {status ? " User Check-In Successfull!" : "User Check-In Failed!"}
+          {status ? ' User Check-In Successfull!' : 'User Check-In Failed!'}
         </p>
       </div>
     </div>

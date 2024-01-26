@@ -1,12 +1,6 @@
-import styles from "./SecondaryButton.module.css";
+import styles from './SecondaryButton.module.css';
 
-const SecondaryButton = ({
-  buttonText,
-  onClick,
-}: {
-  buttonText: string;
-  onClick?: () => void;
-}) => {
+const SecondaryButton = ({ buttonText, onClick }: { buttonText: string; onClick?: () => void }) => {
   return (
     <>
       <button onClick={onClick} className={styles.buttonContainer}>
