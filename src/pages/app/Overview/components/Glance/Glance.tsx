@@ -93,6 +93,7 @@ const Glance = ({ tab }: { tab: string }) => {
           }
 
           setprogressData(newStrucure);
+          console.log(newStrucure);
         };
 
         setSocket(ws);
@@ -145,16 +146,14 @@ const Glance = ({ tab }: { tab: string }) => {
 
           <div className={styles.progresBarGraph}>
             {progressData.map((data) => (
-              <>
-                <div
-                  key={data.type}
-                  className={styles.progressBar}
-                  style={{
-                    backgroundColor: data.color,
-                    width: `${data.value / 10}%`,
-                  }}
-                ></div>
-              </>
+              <div
+                key={data.type}
+                className={styles.progressBar}
+                style={{
+                  backgroundColor: data.color,
+                  width: `${(data.value / targetGuests) * 100}%`,
+                }}
+              ></div>
             ))}
           </div>
 

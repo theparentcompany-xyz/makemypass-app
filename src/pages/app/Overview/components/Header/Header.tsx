@@ -44,7 +44,7 @@ const Header = ({ setRole }: { setRole?: React.Dispatch<React.SetStateAction<str
     <>
       <div className={styles.headerRow}>
         <p className={styles.headerText}>
-          <img className={styles.headerImage} src='/scale.webp' alt='' />
+          <img className={styles.headerImage} src='/app/scale.webp' alt='' />
           {eventData?.title}
         </p>
         <div className='row'>

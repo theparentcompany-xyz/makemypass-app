@@ -34,12 +34,16 @@ const routes = [
   },
   {
     path: '/',
+    element: <LandingPage />,
+  },
+  {
+    path: '/home',
+    element: <LandingPage />,
+  },
+  {
+    path: '/',
     element: <AuthCheck />,
     children: [
-      {
-        path: '/',
-        element: <LandingPage />,
-      },
       {
         path: '/events',
         element: <Events />,

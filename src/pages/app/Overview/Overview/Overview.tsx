@@ -118,7 +118,7 @@ const Overview = () => {
             <div className={styles.recentRegistrations}>
               <div className={styles.tableHeader}>
                 <p className={styles.tableHeading}>Recent Registration</p>
-                <SecondaryButton buttonText='All Guests ➞' />
+                {/* <SecondaryButton buttonText='All Guests ➞' /> */}
               </div>
 
               <div className={styles.tableContainer}>

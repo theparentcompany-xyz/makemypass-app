@@ -16,7 +16,7 @@ export const getUserInfo = async (
       setCheckIn(true);
     })
     .catch((error) => {
-      toast.error('Check-In Failed');
+      toast.error(error.response.data.response.general[0] || 'Check-In Failed');
       setCheckIn(false);
     });
 };

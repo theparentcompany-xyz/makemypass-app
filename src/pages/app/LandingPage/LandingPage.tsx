@@ -1,14 +1,24 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Theme from '../../../components/Theme/Theme';
 import styles from './LandingPage.module.css';
+import { useEffect } from 'react';
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken') && location.pathname === '/') {
+      navigate('/events');
+    }
+  });
+
   return (
     <>
       <Theme type='landing'>
         <div className={styles.landingPageContainer}>
           <div className={styles.headerSection}>
-            <div className={styles.roundThing}>One Click, One Scan</div>
+            <div className={styles.roundThing}>One Click, One Scanb</div>
             <div className={styles.headingText}>
               <p className={styles.mainHeading}>
                 <span>Make</span> Your <br /> Passes <span>with Ease</span>
