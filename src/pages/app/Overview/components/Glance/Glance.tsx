@@ -3,9 +3,15 @@ import styles from './Glance.module.css';
 import { connectPrivateSocket } from '../../../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../../../services/urls';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getEventId } from '../../../../../apis/events';
+import { getEventData, getEventId } from '../../../../../apis/events';
 
 const Glance = ({ tab }: { tab: string }) => {
+  const [eventData, setEventData] = useState({
+    title: '',
+    date: '',
+    role: '',
+  });
+
   type progressDataType = {
     type: string;
     color: string | undefined;
@@ -34,6 +40,12 @@ const Glance = ({ tab }: { tab: string }) => {
 
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
+
+  useEffect(() => {
+    if (eventId) getEventData(eventId, setEventData);
+
+    console.log(eventData);
+  }, [eventId]);
 
   useEffect(() => {
     let eventData = JSON.parse(localStorage.getItem('eventData') as string);
@@ -102,36 +114,38 @@ const Glance = ({ tab }: { tab: string }) => {
 
   return (
     <>
-      <div className={styles.tabsContainer}>
-        <div className={styles.tabs}>
-          <ol>
-            <li
-              className={`${styles.tab} ${currentTab === 'overview' ? styles.active : ''}`}
-              onClick={() => updateTab('overview')}
-            >
-              Overview
-            </li>
-            <li
-              className={`${styles.tab} ${currentTab === 'insights' ? styles.active : ''}`}
-              onClick={() => updateTab('insights')}
-            >
-              Insights
-            </li>
-            <li
-              className={`${styles.tab} ${currentTab === 'guests' ? styles.active : ''}`}
-              onClick={() => updateTab('guests')}
-            >
-              Guests
-            </li>
-            <li
-              className={`${styles.tab} ${currentTab === 'checkins' ? styles.active : ''}`}
-              onClick={() => updateTab('checkins')}
-            >
-              Check-In
-            </li>
-          </ol>
+      {eventData && eventData.role !== 'Volunteer' && (
+        <div className={styles.tabsContainer}>
+          <div className={styles.tabs}>
+            <ol>
+              <li
+                className={`${styles.tab} ${currentTab === 'overview' ? styles.active : ''}`}
+                onClick={() => updateTab('overview')}
+              >
+                Overview
+              </li>
+              <li
+                className={`${styles.tab} ${currentTab === 'insights' ? styles.active : ''}`}
+                onClick={() => updateTab('insights')}
+              >
+                Insights
+              </li>
+              <li
+                className={`${styles.tab} ${currentTab === 'guests' ? styles.active : ''}`}
+                onClick={() => updateTab('guests')}
+              >
+                Guests
+              </li>
+              <li
+                className={`${styles.tab} ${currentTab === 'checkins' ? styles.active : ''}`}
+                onClick={() => updateTab('checkins')}
+              >
+                Check-In
+              </li>
+            </ol>
+          </div>
         </div>
-      </div>
+      )}
       {currentTab && currentTab != 'insights' && (
         <div className={styles.glanceContainer}>
           <p className={styles.glanceHeader}>
@@ -151,7 +165,7 @@ const Glance = ({ tab }: { tab: string }) => {
                 className={styles.progressBar}
                 style={{
                   backgroundColor: data.color,
-                  width: `${(data.value / targetGuests) * 100}%`,
+                  width: `${(data.value / totalGuests) * 100}%`,
                 }}
               ></div>
             ))}

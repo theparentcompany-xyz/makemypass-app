@@ -21,7 +21,7 @@ const Events = () => {
 
   useEffect(() => {
     getEvents(setEvents);
-  }, [events]);
+  }, []);
 
   const handleClick = (eventName: string) => {
     const currentEvent = localStorage.getItem('eventData');

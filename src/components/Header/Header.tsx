@@ -17,7 +17,7 @@ const Header = ({ type }: { type?: string | undefined }) => {
   return (
     <header>
       <div className={styles.headerComponent}>
-        <Link to='/'>
+        <Link to='/home'>
           <div className={styles.mainLogo}>
             <img src='/app/logoText.webp' alt='' className={styles.header} />
             <span className={styles.logo}>MakeMyPass</span>
