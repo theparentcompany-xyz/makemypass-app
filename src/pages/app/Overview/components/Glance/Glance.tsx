@@ -43,8 +43,6 @@ const Glance = ({ tab }: { tab: string }) => {
 
   useEffect(() => {
     if (eventId) getEventData(eventId, setEventData);
-
-    console.log(eventData);
   }, [eventId]);
 
   useEffect(() => {

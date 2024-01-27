@@ -3,5 +3,5 @@ export type TableType = {
   name: string;
   email: string;
   category: string;
-  registered_at: string;
+  date: string;
 };

@@ -5,7 +5,7 @@ import { TableType } from './types';
 const Table = ({ tableData }: { tableData: TableType[] }) => {
   return (
     <>
-      <div className={styles.recentRegistrations}>
+      <div className={styles.tableOuterContainer}>
         <div className={styles.tableHeader}>
           <p className={styles.tableHeading}>Recent Registration</p>
           <SecondaryButton buttonText='All Guests ➞' />
@@ -22,7 +22,7 @@ const Table = ({ tableData }: { tableData: TableType[] }) => {
                   </div>
                   <div className={styles.rowData}>
                     <p className={styles.rowType}>{data.category}</p>
-                    <p className={styles.rowDate}>{data.registered_at}</p>
+                    <p className={styles.rowDate}>{data.date}</p>
                   </div>
                 </div>
               );

@@ -20,9 +20,11 @@ import { Link, useParams } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import { getEventId } from '../../../../apis/events';
 import Table from '../../../../components/Table/Table';
+import { TableType } from '../../../../components/Table/types';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
+  const [recentTableData, setRecentTableData] = useState<TableType[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [hostList, setHostList] = useState<hostList[]>([]);
 
@@ -82,6 +84,47 @@ const Overview = () => {
       });
   }, [eventId]);
 
+  const recentTableMapping = {
+    name: 'name',
+    email: 'email',
+    category: 'category',
+    registered_at: 'date',
+  };
+
+  interface recentRegistration {
+    [key: string]: any;
+  }
+
+  const transformRecentRegistrations = (
+    recentTableMapping: Record<string, string>,
+    recentRegistrations: recentRegistration[],
+  ) => {
+    return recentRegistrations.map((registration) => {
+      const transformedRegistration: Record<string, any> = {};
+
+      for (const key in recentTableMapping) {
+        if (recentTableMapping.hasOwnProperty(key)) {
+          const newKey = recentTableMapping[key];
+          transformedRegistration[newKey] = registration[key];
+        }
+      }
+
+      return transformedRegistration;
+    });
+  };
+
+  useEffect(() => {
+    if (recentRegistrations) {
+      const transformedRecentRegistrations = transformRecentRegistrations(
+        recentTableMapping,
+        recentRegistrations,
+      );
+
+      console.log(transformedRecentRegistrations);
+      setRecentTableData(transformedRecentRegistrations as TableType[]);
+    }
+  }, [recentRegistrations]);
+
   return (
     <Theme>
       <>
@@ -116,7 +159,7 @@ const Overview = () => {
               </Link>
             </div>
 
-            <Table tableData={recentRegistrations} />
+            <Table tableData={recentTableData} />
 
             <div className={styles.recentRegistrations}>
               <div className={styles.tableHeader}>
