@@ -8,3 +8,9 @@ export type guests = {
   category: string;
   organization: string;
 };
+
+export type resentTicket = {
+  status: boolean;
+  name: string;
+  guestId: string;
+};

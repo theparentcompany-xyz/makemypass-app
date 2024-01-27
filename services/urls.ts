@@ -16,6 +16,7 @@ export const makeMyPass = {
   getEventId: (eventName: string) => makeMyPassURL(`/get-event-id/${eventName}/`),
   userInfo: (ticketCode: string) => makeMyPassURL(`/checkin/user-info/${ticketCode}/`),
   getEventData: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/info`),
+  resentTicket: makeMyPassURL('/manage-event/resent-ticket/'),
 };
 
 export const makeMyPassSocket = {

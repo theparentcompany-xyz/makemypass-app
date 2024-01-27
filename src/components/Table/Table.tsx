@@ -1,14 +1,19 @@
+import { Dispatch } from 'react';
+import { resentTicket } from '../../pages/app/Guests/types';
 import styles from './Table.module.css';
 import { TableType } from './types';
+import { BsTicketPerforatedFill } from 'react-icons/bs';
 
 const Table = ({
   tableHeading,
   tableData,
   search,
+  setResentTicket,
 }: {
   tableHeading: string;
   tableData: TableType[];
   search?: string;
+  setResentTicket?: Dispatch<React.SetStateAction<resentTicket>>;
 }) => {
   return (
     <>
@@ -39,6 +44,23 @@ const Table = ({
                     <div className={styles.rowData}>
                       <p className={styles.rowType}>{data.category}</p>
                       <p className={styles.rowDate}>{data.date}</p>
+                      {setResentTicket && (
+                        <div className={styles.icon}>
+                          <BsTicketPerforatedFill
+                            onClick={() => {
+                              if (setResentTicket) {
+                                setResentTicket((prevState) => ({
+                                  ...prevState,
+                                  status: true,
+                                  guestId: data.id,
+                                  name: data.name,
+                                }));
+                              }
+                            }}
+                            color='#8E8E8E'
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 );
