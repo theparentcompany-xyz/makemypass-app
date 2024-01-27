@@ -9,7 +9,7 @@ export type Event = {
 
 export type hostList = {
   id: string;
-  name: string | null;
+  name: string;
   email: string;
   role: string;
 };

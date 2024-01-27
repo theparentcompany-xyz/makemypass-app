@@ -70,14 +70,14 @@ const CheckIn = () => {
     };
   });
 
-  const recentTableMapping = {
-    name: 'name',
-    email: 'email',
-    category: 'category',
-    registered_at: 'date',
-  };
-
   useEffect(() => {
+    const recentTableMapping = {
+      name: 'name',
+      email: 'email',
+      category: 'category',
+      registered_at: 'date',
+    };
+
     if (recentRegistrations) {
       const transformedRecentRegistrations = transformTableData(
         recentTableMapping,

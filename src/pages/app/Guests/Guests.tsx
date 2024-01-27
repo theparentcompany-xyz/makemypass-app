@@ -59,14 +59,14 @@ const Guests = () => {
       });
   });
 
-  const guestsTableMapping = {
-    name: 'name',
-    email: 'email',
-    category: 'category',
-    registered_at: 'date',
-  };
-
   useEffect(() => {
+    const guestsTableMapping = {
+      name: 'name',
+      email: 'email',
+      category: 'category',
+      registered_at: 'date',
+    };
+
     if (guests) {
       const transformedData = transformTableData(guestsTableMapping, guests);
 

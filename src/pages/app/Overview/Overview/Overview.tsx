@@ -33,19 +33,6 @@ const Overview = () => {
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
-  const recentTableMapping = {
-    name: 'name',
-    email: 'email',
-    category: 'category',
-    registered_at: 'date',
-  };
-
-  const hostListMapping = {
-    name: 'name',
-    email: 'email',
-    role: 'category',
-  };
-
   useEffect(() => {
     let eventData = JSON.parse(localStorage.getItem('eventData') as string);
 
@@ -100,6 +87,13 @@ const Overview = () => {
   }, [eventId]);
 
   useEffect(() => {
+    const recentTableMapping = {
+      name: 'name',
+      email: 'email',
+      category: 'category',
+      registered_at: 'date',
+    };
+
     if (recentRegistrations) {
       const transformedRecentRegistrations = transformTableData(
         recentTableMapping,
@@ -110,6 +104,11 @@ const Overview = () => {
   }, [recentRegistrations]);
 
   useEffect(() => {
+    const hostListMapping = {
+      name: 'name',
+      email: 'email',
+      role: 'category',
+    };
     if (hostList) {
       const transformedHostList = transformTableData(hostListMapping, hostList);
       setHostListTableData(transformedHostList as TableType[]);

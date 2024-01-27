@@ -1,5 +1,5 @@
 interface transformTableDataType {
-  [key: string]: any;
+  [key: string]: string;
 }
 
 export const transformTableData = (
@@ -7,10 +7,10 @@ export const transformTableData = (
   recentRegistrations: transformTableDataType[],
 ) => {
   return recentRegistrations.map((registration) => {
-    const transformedRegistration: Record<string, any> = {};
+    const transformedRegistration: Record<string, string> = {};
 
     for (const key in recentTableMapping) {
-      if (recentTableMapping.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(recentTableMapping, key)) {
         const newKey = recentTableMapping[key];
         transformedRegistration[newKey] = registration[key];
       }
