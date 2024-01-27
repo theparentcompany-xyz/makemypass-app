@@ -13,11 +13,14 @@ const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
   const [trigger, setTrigger] = useState(false);
 
+  const [message, setMessage] = useState<string>('');
+
   useEffect(() => {
     if (ticketId.length > 0 && trigger) {
-      getUserInfo(ticketId);
+      getUserInfo(ticketId, setMessage);
       setTimeout(() => {
         setTicketId('');
+        setMessage('');
       }, 2000);
     }
   }, [ticketId, trigger]);
@@ -26,65 +29,73 @@ const ScanQR = () => {
 
   return (
     <Theme>
-      <div className={styles.scanContainer}>
-        <CheckInHeader buttonType='back' />
+      <>
+        {message && message.length > 0 && (
+          <dialog className={styles.onClickModal}>
+            <p className={styles.modalHeader}>{message}</p>
+          </dialog>
+        )}
 
-        <hr className={styles.line} />
-      </div>
+        <div className={styles.scanContainer}>
+          <CheckInHeader buttonType='back' />
 
-      <div className={styles.scannerContainer}>
-        <p className={styles.scanHeader}>Scan QR Code Below</p>
-        <div className={styles.scannerOuterContainer}>
-          <div className={styles.scanner}>
-            <div className={styles.closeButton}>
-              <SecondaryButton
-                buttonText='Close'
-                onClick={() => {
-                  navigate(-1);
+          <hr className={styles.line} />
+        </div>
+
+        <div className={styles.scannerContainer}>
+          <p className={styles.scanHeader}>Scan QR Code Below</p>
+          <div className={styles.scannerOuterContainer}>
+            <div className={styles.scanner}>
+              <div className={styles.closeButton}>
+                <SecondaryButton
+                  buttonText='Close'
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                />
+              </div>
+              <QrScanner
+                containerStyle={{
+                  backgroundColor: '#000',
+                }}
+                onResult={(result) => {
+                  setTicketId(result.getText());
+
+                  if (result.getText().length > 0 && result.getText() !== ticketId) {
+                    setTrigger(true);
+                  }
+                }}
+                onError={(error) => {
+                  toast.error(error.message);
                 }}
               />
             </div>
-            <QrScanner
-              containerStyle={{
-                backgroundColor: '#000',
-              }}
-              onResult={(result) => {
-                setTicketId(result.getText());
+          </div>
 
-                if (result.getText().length > 0 && result.getText() !== ticketId) {
-                  setTrigger(true);
+          <div className={styles.inputContainer}>
+            <br />
+            <p className={styles.inputText}>Or Enter Code Below</p>
+            <input
+              className={styles.input}
+              placeholder='Enter Ticket Code'
+              value={ticketId}
+              onChange={(e) => {
+                setTicketId(e.target.value);
+
+                if (trigger) {
+                  setTrigger(false);
                 }
               }}
-              onError={(error) => {
-                toast.error(error.message);
+            />
+            <SecondaryButton
+              buttonText='Check In'
+              onClick={() => {
+                setTrigger(true);
               }}
             />
           </div>
         </div>
-
-        <div className={styles.inputContainer}>
-          <br />
-          <p className={styles.inputText}>Or Enter Code Below</p>
-          <input
-            className={styles.input}
-            placeholder='Enter Ticket Code'
-            value={ticketId}
-            onChange={(e) => {
-              setTicketId(e.target.value);
-
-              if (trigger) {
-                setTrigger(false);
-              }
-            }}
-          />
-          <SecondaryButton
-            buttonText='Check In'
-            onClick={() => {
-              setTrigger(true);
-            }}
-          />
-        </div>
-      </div>
+      </>
     </Theme>
   );
 };

@@ -127,7 +127,7 @@ const Insights = () => {
 
         setSocket(ws);
       });
-  });
+  }, []);
 
   return (
     <Theme>
