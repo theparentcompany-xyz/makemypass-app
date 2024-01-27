@@ -1,11 +1,12 @@
+import { HTMLInputTypeAttribute } from 'react';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Table.module.css';
 import { TableType } from './types';
 
-const Table = ({ tableData }: { tableData: TableType[] }) => {
+const Table = ({ tableData, ...props }: { tableData: TableType[] & HTMLInputTypeAttribute }) => {
   return (
     <>
-      <div className={styles.tableOuterContainer}>
+      <div {...props} className={styles.tableOuterContainer}>
         <div className={styles.tableHeader}>
           <p className={styles.tableHeading}>Recent Registration</p>
           <SecondaryButton buttonText='All Guests ➞' />

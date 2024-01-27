@@ -25,8 +25,11 @@ import { TableType } from '../../../../components/Table/types';
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
   const [recentTableData, setRecentTableData] = useState<TableType[]>([]);
+
   const [socket, setSocket] = useState<WebSocket | null>(null);
+
   const [hostList, setHostList] = useState<hostList[]>([]);
+  const [hostListTableData, setHostListTableData] = useState<TableType[]>([]);
 
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -91,6 +94,12 @@ const Overview = () => {
     registered_at: 'date',
   };
 
+  const hostListMapping = {
+    name: 'name',
+    email: 'email',
+    role: 'category',
+  };
+
   interface recentRegistration {
     [key: string]: any;
   }
@@ -124,6 +133,13 @@ const Overview = () => {
       setRecentTableData(transformedRecentRegistrations as TableType[]);
     }
   }, [recentRegistrations]);
+
+  useEffect(() => {
+    if (hostList) {
+      const transformedHostList = transformRecentRegistrations(hostListMapping, hostList);
+      setHostListTableData(transformedHostList as TableType[]);
+    }
+  }, [hostList]);
 
   return (
     <Theme>
@@ -161,35 +177,7 @@ const Overview = () => {
 
             <Table tableData={recentTableData} />
 
-            <div className={styles.recentRegistrations}>
-              <div className={styles.tableHeader}>
-                <p className={styles.tableHeading}>
-                  Hosts <br />
-                  <span>Add hosts, special guests, and event managers.</span>
-                </p>
-                <SecondaryButton buttonText='+ Add Host' />
-              </div>
-
-              <div id='hosts' className={styles.tableContainer}>
-                <div className={styles.table}>
-                  {hostList &&
-                    hostList.map((data, index) => {
-                      return (
-                        <div key={index} className={styles.row}>
-                          <div className={styles.rowData}>
-                            <p className={styles.rowName}>{data.name}</p>
-                            <p className={styles.rowEmail}>{data.email}</p>
-                            <p className={styles.rowType}>{data.role}</p>
-                          </div>
-                          <div className={styles.rowData}>
-                            <TbPencil color='#8E8F90' size={18} />
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-              </div>
-            </div>
+            <Table tableData={hostListTableData} id='hosts' />
           </div>
         ) : (
           <div className={styles.center}>
