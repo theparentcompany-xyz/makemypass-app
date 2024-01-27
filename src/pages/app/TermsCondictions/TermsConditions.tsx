@@ -9,7 +9,7 @@ const TermsConditions = () => {
 
         <h4>1. Introduction</h4>
         <p>
-          Welcome to MakeMyPass (the "Service"), operated by [Your Company Name] (referred to as
+          Welcome to MakeMyPass (the "Service"), operated by The Parent Company (referred to as
           "us", "we", or "our"). Our website is available at
           <a href='http://makemypass.com'>makemypass.com</a>. This Terms of Service agreement
           governs your use of our Service.
@@ -31,8 +31,8 @@ const TermsConditions = () => {
         <h4>4. Privacy and Data Protection</h4>
         <p>
           We are committed to protecting the privacy of our users. Our
-          <a href='[Link to Privacy Policy]'>Privacy Policy</a>, available on our website, explains
-          how we collect, use, and disclose information about our users.
+          <a href='/privacypolicy'>Privacy Policy</a>, available on our website, explains how we
+          collect, use, and disclose information about our users.
         </p>
 
         <h4>5. User Conduct</h4>
@@ -68,7 +68,7 @@ const TermsConditions = () => {
         <h4>9. Changes to Terms</h4>
         <p>
           We reserve the right, at our sole discretion, to modify or replace these Terms at any
-          time. We will provide at least [number] days' notice prior to any new terms taking effect.
+          time. We will provide at least 7 days' notice prior to any new terms taking effect.
         </p>
 
         <h4>10. Contact Us</h4>

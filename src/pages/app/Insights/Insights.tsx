@@ -238,17 +238,7 @@ const Insights = () => {
                         </p>
                         <p className='type'>Morning</p>
                       </div>
-                      <div className={styles.time}>
-                        <p
-                          style={{
-                            color: '#35A1EB',
-                          }}
-                          className={styles.line}
-                        >
-                          {message?.active_timeframe.Evening}
-                        </p>
-                        <p className='type'>Evening</p>
-                      </div>
+
                       <div className={styles.time}>
                         <p
                           style={{
@@ -259,6 +249,18 @@ const Insights = () => {
                           {message?.active_timeframe.Afternoon}
                         </p>
                         <p className='type'>Afternoon</p>
+                      </div>
+
+                      <div className={styles.time}>
+                        <p
+                          style={{
+                            color: '#35A1EB',
+                          }}
+                          className={styles.line}
+                        >
+                          {message?.active_timeframe.Evening}
+                        </p>
+                        <p className='type'>Evening</p>
                       </div>
                       <div className={styles.time}>
                         <p
