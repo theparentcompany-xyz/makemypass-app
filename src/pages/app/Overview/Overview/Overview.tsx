@@ -19,6 +19,7 @@ import Theme from '../../../../components/Theme/Theme';
 import { Link, useParams } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import { getEventId } from '../../../../apis/events';
+import Table from '../../../../components/Table/Table';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
@@ -115,31 +116,7 @@ const Overview = () => {
               </Link>
             </div>
 
-            <div className={styles.recentRegistrations}>
-              <div className={styles.tableHeader}>
-                <p className={styles.tableHeading}>Recent Registration</p>
-                {/* <SecondaryButton buttonText='All Guests ➞' /> */}
-              </div>
-
-              <div className={styles.tableContainer}>
-                <div className={styles.table}>
-                  {recentRegistrations.map((data, index) => {
-                    return (
-                      <div key={index} className={styles.row}>
-                        <div className={styles.rowData}>
-                          <p className={styles.rowName}>{data.name}</p>
-                          <p className={styles.rowEmail}>{data.email}</p>
-                        </div>
-                        <div className={styles.rowData}>
-                          <p className={styles.rowType}>{data.category}</p>
-                          <p className={styles.rowDate}>{data.registered_at}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
+            <Table tableData={recentRegistrations} />
 
             <div className={styles.recentRegistrations}>
               <div className={styles.tableHeader}>
