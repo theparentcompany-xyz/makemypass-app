@@ -3,11 +3,13 @@ import styles from './Events.module.css';
 import { GoPeople } from 'react-icons/go';
 import { BsArrowRight } from 'react-icons/bs';
 import { FaPlus } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getEventId, getEvents } from '../../../apis/events';
+import { getEventData, getEventId, getEvents } from '../../../apis/events';
+import { useNavigate } from 'react-router-dom';
 
 const Events = () => {
+  const navigate = useNavigate();
+
   type Event = {
     id: string;
     title: string;
@@ -18,6 +20,11 @@ const Events = () => {
   };
 
   const [events, setEvents] = useState([] as Event[]);
+  const [eventData, setEventData] = useState({
+    title: '',
+    date: '',
+    role: '',
+  });
 
   useEffect(() => {
     getEvents(setEvents);
@@ -35,6 +42,18 @@ const Events = () => {
       getEventId(eventName.toLowerCase());
     }
   };
+
+  const getEventRole = (eventId: string) => {
+    getEventData(eventId, setEventData);
+  };
+
+  useEffect(() => {
+    if (eventData.role === 'Admin') {
+      navigate(`/${eventData.title.toLowerCase()}/overview/`);
+    } else if (eventData.role === 'Volunteer') {
+      navigate(`/${eventData.title.toLowerCase()}/checkins/`);
+    }
+  }, [eventData]);
 
   return (
     <>
@@ -65,17 +84,17 @@ const Events = () => {
                             </span>
                             {event.members} guests
                           </p>
-                          <Link to={`/${event.title.toLowerCase()}/overview/`}>
-                            <button
-                              className={styles.manage}
-                              onClick={() => {
-                                handleClick(event.title);
-                              }}
-                            >
-                              Manage
-                              <BsArrowRight size={15} />
-                            </button>
-                          </Link>
+
+                          <button
+                            className={styles.manage}
+                            onClick={() => {
+                              handleClick(event.title);
+                              getEventRole(event.id);
+                            }}
+                          >
+                            Manage
+                            <BsArrowRight size={15} />
+                          </button>
                         </div>
                       </div>
                     </div>

@@ -6,7 +6,7 @@ export const getUserInfo = async (ticketId: string) => {
   privateGateway
     .get(makeMyPass.userInfo(ticketId))
     .then((response) => {
-      toast.success('Check-In Successful');
+      toast.success(response.data.message.general[0] || 'Check-In Successful');
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Check-In Failed');
