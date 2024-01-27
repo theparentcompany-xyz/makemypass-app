@@ -1,11 +1,9 @@
 import { HiUserGroup } from 'react-icons/hi2';
 import { FaWrench } from 'react-icons/fa';
 import { BsQrCodeScan } from 'react-icons/bs';
-import { TbPencil } from 'react-icons/tb';
 import Glance from '../components/Glance/Glance';
 
 import styles from './Overview.module.css';
-import SecondaryButton from '../components/SecondaryButton/SecondaryButton';
 import SectionButton from '../../../../components/SectionButton/SectionButton';
 import { useEffect, useState } from 'react';
 
@@ -21,6 +19,7 @@ import Header from '../components/Header/Header';
 import { getEventId } from '../../../../apis/events';
 import Table from '../../../../components/Table/Table';
 import { TableType } from '../../../../components/Table/types';
+import { transformTableData } from '../../../../common/commonFunctions';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
@@ -33,6 +32,19 @@ const Overview = () => {
 
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
+
+  const recentTableMapping = {
+    name: 'name',
+    email: 'email',
+    category: 'category',
+    registered_at: 'date',
+  };
+
+  const hostListMapping = {
+    name: 'name',
+    email: 'email',
+    role: 'category',
+  };
 
   useEffect(() => {
     let eventData = JSON.parse(localStorage.getItem('eventData') as string);
@@ -87,56 +99,19 @@ const Overview = () => {
       });
   }, [eventId]);
 
-  const recentTableMapping = {
-    name: 'name',
-    email: 'email',
-    category: 'category',
-    registered_at: 'date',
-  };
-
-  const hostListMapping = {
-    name: 'name',
-    email: 'email',
-    role: 'category',
-  };
-
-  interface recentRegistration {
-    [key: string]: any;
-  }
-
-  const transformRecentRegistrations = (
-    recentTableMapping: Record<string, string>,
-    recentRegistrations: recentRegistration[],
-  ) => {
-    return recentRegistrations.map((registration) => {
-      const transformedRegistration: Record<string, any> = {};
-
-      for (const key in recentTableMapping) {
-        if (recentTableMapping.hasOwnProperty(key)) {
-          const newKey = recentTableMapping[key];
-          transformedRegistration[newKey] = registration[key];
-        }
-      }
-
-      return transformedRegistration;
-    });
-  };
-
   useEffect(() => {
     if (recentRegistrations) {
-      const transformedRecentRegistrations = transformRecentRegistrations(
+      const transformedRecentRegistrations = transformTableData(
         recentTableMapping,
         recentRegistrations,
       );
-
-      console.log(transformedRecentRegistrations);
       setRecentTableData(transformedRecentRegistrations as TableType[]);
     }
   }, [recentRegistrations]);
 
   useEffect(() => {
     if (hostList) {
-      const transformedHostList = transformRecentRegistrations(hostListMapping, hostList);
+      const transformedHostList = transformTableData(hostListMapping, hostList);
       setHostListTableData(transformedHostList as TableType[]);
     }
   }, [hostList]);
@@ -177,7 +152,9 @@ const Overview = () => {
 
             <Table tableData={recentTableData} />
 
-            <Table tableData={hostListTableData} id='hosts' />
+            <div id='hosts'>
+              <Table tableData={hostListTableData} />
+            </div>
           </div>
         ) : (
           <div className={styles.center}>

@@ -9,11 +9,15 @@ import { useParams } from 'react-router-dom';
 import { getEventId } from '../../../../../apis/events';
 import { connectPrivateSocket } from '../../../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../../../services/urls';
+import { transformTableData } from '../../../../../common/commonFunctions';
+import { TableType } from '../../../../../components/Table/types';
+import Table from '../../../../../components/Table/Table';
 
 const CheckIn = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<guests[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
+  const [recentTableData, setRecentTableData] = useState<TableType[]>([]);
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
@@ -66,6 +70,23 @@ const CheckIn = () => {
     };
   });
 
+  const recentTableMapping = {
+    name: 'name',
+    email: 'email',
+    category: 'category',
+    registered_at: 'date',
+  };
+
+  useEffect(() => {
+    if (recentRegistrations) {
+      const transformedRecentRegistrations = transformTableData(
+        recentTableMapping,
+        recentRegistrations,
+      );
+      setRecentTableData(transformedRecentRegistrations as TableType[]);
+    }
+  }, [recentRegistrations]);
+
   return (
     <Theme>
       <div className={styles.checkInContainer}>
@@ -84,40 +105,7 @@ const CheckIn = () => {
           />
         </div>
 
-        <div className={styles.tableContainer}>
-          <div className={styles.table}>
-            {recentRegistrations && recentRegistrations.length > 0 ? (
-              recentRegistrations
-                .filter((data) => {
-                  const { name, email } = data;
-                  const keyword = searchKeyword.toLowerCase();
-                  return (
-                    name.toLowerCase().includes(keyword) || email.toLowerCase().includes(keyword)
-                  );
-                })
-                .map((data, index) => {
-                  return (
-                    <div key={index} className={styles.row}>
-                      <div className={styles.rowData}>
-                        <p className={styles.rowName}>{data.name}</p>
-                        <p className={styles.rowEmail}>{data.email}</p>
-                      </div>
-                      <div className={styles.rowData}>
-                        <p className={styles.rowType}>{data.category}</p>
-                        <p className={styles.rowDate}>{data.registered_at}</p>
-                      </div>
-                    </div>
-                  );
-                })
-            ) : (
-              <div className={styles.row}>
-                <div className={styles.rowData}>
-                  <p className={styles.rowName}>No CheckIns Yet!</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+        <Table tableData={recentTableData} search={searchKeyword} />
       </div>
     </Theme>
   );

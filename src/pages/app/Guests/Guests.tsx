@@ -11,10 +11,13 @@ import { guests } from './types';
 import { getEventId } from '../../../apis/events';
 import { RiSearchLine } from 'react-icons/ri';
 import { HashLoader } from 'react-spinners';
+import Table from '../../../components/Table/Table';
+import { transformTableData } from '../../../common/commonFunctions';
+import { TableType } from '../../../components/Table/types';
 
 const Guests = () => {
   const [guests, setGuests] = useState<guests[]>([]);
-
+  const [guestsTableData, setGuestsTableData] = useState<TableType[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
@@ -56,6 +59,21 @@ const Guests = () => {
       });
   });
 
+  const guestsTableMapping = {
+    name: 'name',
+    email: 'email',
+    category: 'category',
+    registered_at: 'date',
+  };
+
+  useEffect(() => {
+    if (guests) {
+      const transformedData = transformTableData(guestsTableMapping, guests);
+
+      setGuestsTableData(transformedData as TableType[]);
+    }
+  }, [guests]);
+
   return (
     <Theme>
       {guests ? (
@@ -70,6 +88,7 @@ const Guests = () => {
 
               <SecondaryButton buttonText='All Guests ➞' />
             </div>
+
             <div className={styles.searchInput}>
               <RiSearchLine color='#5F6063' />
               <input
@@ -81,32 +100,7 @@ const Guests = () => {
               />
             </div>
 
-            <div className={styles.tableContainer}>
-              <div className={styles.table}>
-                {guests
-                  .filter((data) => {
-                    const { name, email } = data;
-                    const keyword = searchKeyword.toLowerCase();
-                    return (
-                      name.toLowerCase().includes(keyword) || email.toLowerCase().includes(keyword)
-                    );
-                  })
-                  .map((data, index) => {
-                    return (
-                      <div key={index} className={styles.row}>
-                        <div className={styles.rowData}>
-                          <p className={styles.rowName}>{data.name}</p>
-                          <p className={styles.rowEmail}>{data.email}</p>
-                        </div>
-                        <div className={styles.rowData}>
-                          <p className={styles.rowType}>{data.category}</p>
-                          <p className={styles.rowDate}>{data.registered_at}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            </div>
+            <Table tableData={guestsTableData} search={searchKeyword} />
           </div>
         </div>
       ) : (
