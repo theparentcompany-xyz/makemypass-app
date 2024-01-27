@@ -26,9 +26,9 @@ const CheckInHeader = ({
         </button>
         <p className={styles.checkInHeading}>Check In</p>
       </div>
-      <hr className={styles.line} />
+
       <div className={styles.checkInActions}>
-        {buttonType != 'back' ? (
+        {buttonType != 'back' && (
           <Link to='scan'>
             <SectionButton
               buttonText='Scan QR Code'
@@ -36,13 +36,6 @@ const CheckInHeader = ({
               icon={<BsQrCodeScan size={25} color='#5B75FB' />}
             />
           </Link>
-        ) : (
-          <SectionButton
-            buttonText='Back to Event'
-            buttonColor='#C33D7B'
-            icon={<BiCalendarMinus size={25} color='#5B75FB' />}
-            onClick={() => navigate('/events')}
-          />
         )}
 
         {currentCount && (
