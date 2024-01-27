@@ -6,22 +6,20 @@ import { HiOutlineCamera } from 'react-icons/hi2';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useEffect, useState } from 'react';
 import { getUserInfo } from '../../../../../apis/scan';
-import UserInfo from '../../components/UserInfo/UserInfo';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
-import { User } from './types';
 import toast from 'react-hot-toast';
 
 const ScanQR = () => {
   const [showQR, setShowQR] = useState(false);
   const [ticketId, setTicketId] = useState<string>('');
-  const [checkIn, setCheckIn] = useState(false);
   const [trigger, setTrigger] = useState(false);
-
-  const [userData, setUserData] = useState<User>();
 
   useEffect(() => {
     if (ticketId.length > 0 && trigger) {
-      getUserInfo(ticketId, setCheckIn, setUserData);
+      getUserInfo(ticketId);
+      setTimeout(() => {
+        setTicketId('');
+      }, 2000);
     }
   }, [ticketId, trigger]);
 
@@ -34,15 +32,6 @@ const ScanQR = () => {
       </div>
 
       <div className={styles.scannerContainer}>
-        {ticketId.length > 0 && trigger && userData && (
-          <UserInfo
-            ticketId={ticketId}
-            status={checkIn}
-            userData={userData}
-            setTrigger={setTrigger}
-          />
-        )}
-
         <p className={styles.scanHeader}>Scan QR Code Below</p>
 
         {!showQR ? (
@@ -52,15 +41,6 @@ const ScanQR = () => {
                 onClick={() => {
                   setShowQR(true);
                   setTicketId('');
-                  setCheckIn(false);
-                  setUserData({
-                    name: '',
-                    email: '',
-                    phone: '',
-                    district: '',
-                    organization: '',
-                    category: '',
-                  });
                 }}
                 className={styles.camerabox}
               >
@@ -84,15 +64,6 @@ const ScanQR = () => {
 
                   if (trigger) {
                     setTrigger(false);
-                    setCheckIn(false);
-                    setUserData({
-                      name: '',
-                      email: '',
-                      phone: '',
-                      district: '',
-                      organization: '',
-                      category: '',
-                    });
                   }
                 }}
               />
@@ -107,14 +78,24 @@ const ScanQR = () => {
         ) : (
           <div className={styles.scannerOuterContainer}>
             <div className={styles.scanner}>
+              <div className={styles.closeButton}>
+                <SecondaryButton
+                  buttonText='Close'
+                  onClick={() => {
+                    setShowQR(false);
+                  }}
+                />
+              </div>
               <QrScanner
                 containerStyle={{
                   backgroundColor: '#000',
                 }}
                 onResult={(result) => {
                   setTicketId(result.getText());
-                  setShowQR(false);
-                  setTrigger(true);
+
+                  if (result.getText().length > 0 && result.getText() !== ticketId) {
+                    setTrigger(true);
+                  }
                 }}
                 onError={(error) => {
                   toast.error(error.message);

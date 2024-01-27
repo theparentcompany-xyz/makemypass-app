@@ -62,7 +62,7 @@ privateGateway.interceptors.response.use(
     return response;
   },
   async function (error) {
-    if (error.response?.data?.detail.statusCode === 1000) {
+    if (error.response?.data?.detail?.statusCode === 1000) {
       try {
         const response = await publicGateway.post(buildVerse.getAccessToken, {
           refresh_token: localStorage.getItem('refreshToken'),
