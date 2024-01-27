@@ -3,7 +3,6 @@ import styles from './CheckInHeader.module.css';
 import { BsQrCodeScan } from 'react-icons/bs';
 
 import SectionButton from '../../../../../../components/SectionButton/SectionButton';
-import { BiCalendarMinus } from 'react-icons/bi';
 
 const CheckInHeader = ({
   currentCount,
