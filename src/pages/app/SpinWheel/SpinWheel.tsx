@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Theme from '../../../components/Theme/Theme';
 import styles from './SpinWheel.module.css';
 import SectionButton from '../../../components/SectionButton/SectionButton';
