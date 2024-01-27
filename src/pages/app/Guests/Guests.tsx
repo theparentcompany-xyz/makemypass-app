@@ -57,7 +57,7 @@ const Guests = () => {
 
         setSocket(ws);
       });
-  });
+  }, [eventId]);
 
   useEffect(() => {
     const guestsTableMapping = {
@@ -76,7 +76,7 @@ const Guests = () => {
 
   return (
     <Theme>
-      {guests ? (
+      {guests && guests.length > 0 ? (
         <div className={styles.guestsContainer}>
           <Header />
 
