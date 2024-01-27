@@ -94,7 +94,6 @@
 
 @media screen and (max-width: 768px) {
   .tableContainer {
-    width: 21rem;
     overflow: auto;
   }
 

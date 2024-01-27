@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Theme from '../../../components/Theme/Theme';
 import Glance from '../Overview/components/Glance/Glance';
 import Header from '../Overview/components/Header/Header';
-import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Guests.module.css';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
@@ -86,7 +85,7 @@ const Guests = () => {
             <div className={styles.tableHeader}>
               <p className={styles.tableHeading}>Guests List</p>
 
-              <SecondaryButton buttonText='All Guests ➞' />
+              {/* <SecondaryButton buttonText='All Guests ➞' /> */}
             </div>
 
             <div className={styles.searchInput}>
@@ -100,7 +99,11 @@ const Guests = () => {
               />
             </div>
 
-            <Table tableData={guestsTableData} search={searchKeyword} />
+            <Table
+              tableHeading='Recent Guests'
+              tableData={guestsTableData}
+              search={searchKeyword}
+            />
           </div>
         </div>
       ) : (

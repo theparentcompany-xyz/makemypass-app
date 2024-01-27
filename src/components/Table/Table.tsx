@@ -1,14 +1,21 @@
-import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Table.module.css';
 import { TableType } from './types';
 
-const Table = ({ tableData, search }: { tableData: TableType[]; search?: string }) => {
+const Table = ({
+  tableHeading,
+  tableData,
+  search,
+}: {
+  tableHeading: string;
+  tableData: TableType[];
+  search?: string;
+}) => {
   return (
     <>
       <div className={styles.tableOuterContainer}>
         <div className={styles.tableHeader}>
-          <p className={styles.tableHeading}>Recent Registration</p>
-          <SecondaryButton buttonText='All Guests ➞' />
+          <p className={styles.tableHeading}>{tableHeading}</p>
+          {/* <SecondaryButton buttonText='All Guests ➞' /> */}
         </div>
 
         <div className={styles.tableContainer}>

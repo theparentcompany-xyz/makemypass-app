@@ -105,7 +105,7 @@ const CheckIn = () => {
           />
         </div>
 
-        <Table tableData={recentTableData} search={searchKeyword} />
+        <Table tableHeading='Recent CheckIns' tableData={recentTableData} search={searchKeyword} />
       </div>
     </Theme>
   );

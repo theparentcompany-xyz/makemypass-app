@@ -149,10 +149,10 @@ const Overview = () => {
               </Link>
             </div>
 
-            <Table tableData={recentTableData} />
+            <Table tableHeading='Recent Registration' tableData={recentTableData} />
 
             <div id='hosts'>
-              <Table tableData={hostListTableData} />
+              <Table tableHeading='Event Hosts' tableData={hostListTableData} />
             </div>
           </div>
         ) : (
