@@ -28,6 +28,8 @@ export const makeMyPassSocket = {
 
   listGuests: (eventId: string) => `manage-event/${eventId}/list-guests/`,
   listCheckinGuests: (eventId: string) => `checkin/${eventId}/list-guests/`,
+
+  checkInAnalytics: (eventId: string) => `checkin/${eventId}/checkin-analytics/`,
 };
 
 // /checkin/register/ticketcode/

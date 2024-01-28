@@ -17,7 +17,7 @@ import {
 } from 'chart.js';
 import { Line, Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
-import { ChartData } from '../Insights/types';
+import { AnalyticsData, ChartData } from '../Insights/types';
 import { guests } from '../Guests/types';
 import { useParams } from 'react-router-dom';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
@@ -49,6 +49,8 @@ const InEventStats = () => {
     },
   };
 
+  const [message, setMessage] = useState<AnalyticsData>();
+
   const [lineData, setLineData] = useState<ChartData>();
   const [barData, setBarData] = useState<ChartData>();
 
@@ -71,6 +73,43 @@ const InEventStats = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const eventId = getLocalEventId();
   const [socket, setSocket] = useState<WebSocket | null>(null);
+
+  useEffect(() => {
+    if (eventId)
+      connectPrivateSocket({
+        url: makeMyPassSocket.checkInAnalytics(eventId),
+      }).then((ws) => {
+        ws.onmessage = (event) => {
+          const lineBarData = JSON.parse(event.data).response['2024-01-28'];
+          setMessage(lineBarData);
+          setLineData({
+            labels: Object.keys(lineBarData || {}),
+            datasets: [
+              {
+                label: 'Daily Analytics',
+                data: Object.values(lineBarData || {}),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+              },
+            ],
+          });
+
+          setBarData({
+            labels: Object.keys(lineBarData?.today_category || {}),
+            datasets: [
+              {
+                label: 'Category Count',
+                data: Object.values(lineBarData?.today_category || {}),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+              },
+            ],
+          });
+        };
+
+        setSocket(ws);
+      });
+  }, [eventId]);
 
   useEffect(() => {
     if (eventId)
@@ -101,34 +140,6 @@ const InEventStats = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLineData({
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-          {
-            label: 'Sales',
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: 'rgba(75,192,192,1)',
-            data: [65, 59, 80, 81, 56, 55, 40],
-          },
-        ],
-      });
-      setBarData({
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-          {
-            label: 'Sales',
-            backgroundColor: 'rgba(75,192,192,0.2)',
-            borderColor: 'rgba(75,192,192,1)',
-            data: [65, 59, 80, 81, 56, 55, 40],
-          },
-        ],
-      });
-    }, 1000);
-    return () => clearTimeout(timer);
-  });
-
   return (
     <Theme>
       <>
@@ -147,17 +158,18 @@ const InEventStats = () => {
                 <div className={styles.totalRegistered}>
                   <p className={styles.total}>Total Registered</p>
                   <p className={styles.count}>
-                    100 <span>guests</span>
+                    {Object.keys(message || {}).length}
+                    <span> guests</span>
                   </p>
                 </div>
                 <div className={styles.weeklyCounts}>
                   <div className={styles.weeklyCount}>
-                    <p className={styles.week}>Yestered</p>
-                    <p className={styles.wcount}>1500</p>
+                    <p className={styles.week}>Yesterday</p>
+                    <p className={styles.wcount}>-</p>
                   </div>
                   <div className={styles.weeklyCount}>
                     <p className={styles.week}>This week</p>
-                    <p className={styles.wcount}>5620</p>
+                    <p className={styles.wcount}>-</p>
                   </div>
                 </div>
                 <div className={styles.liveTraffic}>
@@ -169,10 +181,10 @@ const InEventStats = () => {
                 <p className={styles.rightSectionHeading}>Total Category %</p>
 
                 <div className={styles.categories}>
-                  <div className={styles.category}>
+                  {/* <div className={styles.category}>
                     <p className={styles.categoryName}>Student</p>
                     <p className={styles.categoryCount}>100%</p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -185,13 +197,13 @@ const InEventStats = () => {
             <div className={styles.totalRegistered}>
               <p className={styles.total}>Today Registered</p>
               <p className={styles.count}>
-                500 <span>guests</span>
+                - <span>guests</span>
               </p>
             </div>
             <div className={styles.weeklyCounts}>
               <div className={styles.weeklyCount}>
                 <p className={styles.week}>Student</p>
-                <p className={styles.wcount}>100%</p>
+                <p className={styles.wcount}>-</p>
               </div>
             </div>
             <div className={styles.liveTraffic}>
