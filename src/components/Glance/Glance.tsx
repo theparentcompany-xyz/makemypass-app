@@ -156,7 +156,7 @@ const Glance = ({ tab }: { tab: string }) => {
             {tab === 'checkins' || tab === 'inevent' ? 'Check-In at a Glance' : 'At a Glance'}
           </p>
 
-          {totalGuests > 0 && (
+          {totalGuests >= 0 && (
             <p className={styles.guests}>
               {totalGuests}/{targetGuests} <span>guests</span>
             </p>

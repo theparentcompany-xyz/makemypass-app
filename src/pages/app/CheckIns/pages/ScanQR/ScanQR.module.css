@@ -142,14 +142,6 @@
   }
 }
 
-.error {
-}
-
-.success {
-  border: 1px solid rgba(37, 85, 37, 0.04);
-  background: rgba(31, 185, 31, 0.2);
-}
-
 .onClickModal {
   display: flex;
   flex-direction: column;
@@ -159,10 +151,6 @@
   padding: 1rem;
 
   max-width: 20rem;
-
-  /* 
-  max-width: 20rem;
-  width: 100%; */
 
   margin-bottom: 1rem;
   position: absolute;
@@ -185,15 +173,15 @@
 .modalHeader {
   font-family: 'Inter';
   font-weight: 600;
-  font-size: 1.25rem;
+  font-size: 1rem;
   margin-top: 0.5rem;
 }
 
 .modalSubText {
   font-family: 'Inter';
   font-weight: 400;
-  font-size: 1rem;
-  margin-top: 0.25rem;
+  font-size: 1.1rem;
+  /* margin-top: 0.25rem; */
   margin-bottom: 1rem;
 }
 

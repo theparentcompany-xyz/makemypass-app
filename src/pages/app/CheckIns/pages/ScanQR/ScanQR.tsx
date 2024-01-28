@@ -54,8 +54,8 @@ const ScanQR = () => {
               open
               className={styles.onClickModal}
             >
-              <p className={styles.modalHeader}>User Check-In Status</p>
-              <hr className={styles.line} />
+              {/* <p className={styles.modalHeader}>User Check-In Status</p> */}
+              {/* <hr className={styles.line} /> */}
               <br />
               <p className={styles.modalSubText}>{message}</p>
               <SectionButton
