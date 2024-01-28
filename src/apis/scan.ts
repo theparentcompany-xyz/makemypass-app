@@ -6,7 +6,7 @@ export const getUserInfo = async (
   setMessage: React.Dispatch<React.SetStateAction<string>>,
 ) => {
   privateGateway
-    .get(makeMyPass.userInfo(ticketId))
+    .post(makeMyPass.userInfo(ticketId))
     .then((response) => {
       setMessage(response.data.message.general[0] || 'Check-In Successful');
     })

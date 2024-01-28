@@ -20,8 +20,11 @@ const ScanQR = () => {
       getUserInfo(ticketId, setMessage);
       setTimeout(() => {
         setTicketId('');
-        setMessage('');
       }, 2000);
+
+      setTimeout(() => {
+        setMessage('');
+      }, 4000);
     }
   }, [ticketId, trigger]);
 
@@ -31,9 +34,15 @@ const ScanQR = () => {
     <Theme>
       <>
         {message && message.length > 0 && (
-          <dialog className={styles.onClickModal}>
-            <p className={styles.modalHeader}>{message}</p>
-          </dialog>
+          <>
+            <div className={styles.backgroundBlur}></div>
+            <dialog open className={styles.onClickModal}>
+              <p className={styles.modalHeader}>User Check-In Status</p>
+              <hr className={styles.line} />
+              <br />
+              <p className={styles.modalSubText}>{message}</p>
+            </dialog>
+          </>
         )}
 
         <div className={styles.scanContainer}>

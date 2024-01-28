@@ -141,3 +141,59 @@
     color: #47c97e;
   }
 }
+
+.onClickModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1rem;
+
+  /* 
+  max-width: 20rem;
+  width: 100%; */
+
+  margin-bottom: 1rem;
+  position: absolute;
+  z-index: 100;
+  backdrop-filter: blur(800px);
+
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: translateY(-50%);
+
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  color: white;
+
+  text-align: center;
+}
+
+.modalHeader {
+  font-family: 'Inter';
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.modalSubText {
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
+.backgroundBlur {
+  backdrop-filter: blur(3px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+}
