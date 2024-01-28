@@ -158,7 +158,7 @@ const InEventStats = () => {
                 <div className={styles.totalRegistered}>
                   <p className={styles.total}>Total Registered</p>
                   <p className={styles.count}>
-                    {Object.keys(message || {}).length}
+                    {guests.length}
                     <span> guests</span>
                   </p>
                 </div>
