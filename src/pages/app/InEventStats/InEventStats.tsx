@@ -17,7 +17,7 @@ import {
 } from 'chart.js';
 import { Line, Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
-import { AnalyticsData, ChartData } from '../Insights/types';
+import { ChartData } from '../Insights/types';
 import { guests } from '../Guests/types';
 import { useParams } from 'react-router-dom';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
