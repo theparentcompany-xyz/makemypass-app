@@ -142,14 +142,20 @@
   }
 }
 
+.error {
+}
+
+.success {
+  border: 1px solid rgba(37, 85, 37, 0.04);
+  background: rgba(31, 185, 31, 0.2);
+}
+
 .onClickModal {
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  border: none;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  background: rgba(255, 255, 255, 0.04);
   padding: 1rem;
 
   max-width: 20rem;

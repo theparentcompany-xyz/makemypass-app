@@ -16,10 +16,11 @@ const ScanQR = () => {
   const [trigger, setTrigger] = useState(false);
 
   const [message, setMessage] = useState<string>('');
+  const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
     if (ticketId.length > 0 && trigger) {
-      getUserInfo(ticketId, setMessage);
+      getUserInfo(ticketId, setMessage, setIsError);
       setTimeout(() => {
         setTicketId('');
       }, 2000);
@@ -38,7 +39,21 @@ const ScanQR = () => {
         {message && message.length > 0 && (
           <>
             <div className={styles.backgroundBlur}></div>
-            <dialog open className={styles.onClickModal}>
+            <dialog
+              style={
+                isError
+                  ? {
+                      borderBottom: '3px solid #f71e1e',
+                      background: 'rgba(185, 31, 31, 0.09)',
+                    }
+                  : {
+                      borderBottom: '3px solid #47c97e',
+                      background: 'rgba(31, 185, 31, 0.09)',
+                    }
+              }
+              open
+              className={styles.onClickModal}
+            >
               <p className={styles.modalHeader}>User Check-In Status</p>
               <hr className={styles.line} />
               <br />
