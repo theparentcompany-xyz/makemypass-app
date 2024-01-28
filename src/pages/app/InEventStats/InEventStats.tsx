@@ -49,7 +49,8 @@ const InEventStats = () => {
     },
   };
 
-  const [message, setMessage] = useState<AnalyticsData>();
+  const [firstRender, setFirstRender] = useState(true);
+  const [newUser, setNewUser] = useState('');
 
   const [lineData, setLineData] = useState<ChartData>();
   const [barData, setBarData] = useState<ChartData>();
@@ -75,13 +76,24 @@ const InEventStats = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   useEffect(() => {
+    if (!firstRender)
+      if (guests.length > 0) {
+        setNewUser(guests[0]?.name);
+
+        setTimeout(() => {
+          setNewUser('');
+        }, 2000);
+      }
+  }, [guests, firstRender]);
+
+  useEffect(() => {
     if (eventId)
       connectPrivateSocket({
         url: makeMyPassSocket.checkInAnalytics(eventId),
       }).then((ws) => {
         ws.onmessage = (event) => {
           const lineBarData = JSON.parse(event.data).response['2024-01-28'];
-          setMessage(lineBarData);
+
           setLineData({
             labels: Object.keys(lineBarData || {}),
             datasets: [
@@ -120,6 +132,7 @@ const InEventStats = () => {
           if (JSON.parse(event.data).response.datas)
             setGuests(JSON.parse(event.data).response.datas);
           else if (JSON.parse(event.data).response.data) {
+            if (firstRender) setFirstRender(false);
             const newGuest = JSON.parse(event.data).response.data;
 
             setGuests((prev) => {
@@ -143,6 +156,19 @@ const InEventStats = () => {
   return (
     <Theme>
       <>
+        {newUser && newUser.length > 0 && (
+          <>
+            {' '}
+            <div className={styles.backgroundBlur}></div>
+            <dialog open className={styles.welcomeContainer}>
+              <p className={styles.welcomeMessgae}>Welcome to ScaleUp 2024, {newUser}</p>
+              <p className={styles.welcomeSubText}>
+                Welcome to ScaleUp Conclave 2024! Let's propel Kerala's startups together!
+              </p>
+            </dialog>{' '}
+          </>
+        )}
+
         <div className={styles.inEventContainer}>
           <Header />
           <Glance tab='inevent' />

@@ -250,3 +250,51 @@
   font-weight: 600;
   color: #fff;
 }
+
+.welcomeContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem;
+
+  background: rgba(255, 255, 255, 0.04);
+  margin-bottom: 1rem;
+  position: absolute;
+  z-index: 100;
+  backdrop-filter: blur(800px);
+  max-width: 75rem;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: translateY(-50%);
+
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  color: white;
+
+  text-align: center;
+}
+
+.welcomeMessgae {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 2.25rem;
+  color: #3bcf79;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.backgroundBlur {
+  backdrop-filter: blur(3px);
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+}
