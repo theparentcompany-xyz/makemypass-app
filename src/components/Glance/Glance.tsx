@@ -4,6 +4,7 @@ import { connectPrivateSocket } from '../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../services/urls';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getEventData, getEventId } from '../../apis/events';
+import { motion } from 'framer-motion';
 
 const Glance = ({ tab }: { tab: string }) => {
   const [eventData, setEventData] = useState({
@@ -116,62 +117,99 @@ const Glance = ({ tab }: { tab: string }) => {
         <div className={styles.tabsContainer}>
           <div className={styles.tabs}>
             <ol>
-              <li
-                className={`${styles.tab} ${currentTab === 'overview' ? styles.active : ''}`}
-                onClick={() => updateTab('overview')}
-              >
-                Overview
-              </li>
-              <li
-                className={`${styles.tab} ${currentTab === 'insights' ? styles.active : ''}`}
-                onClick={() => updateTab('insights')}
-              >
-                Insights
-              </li>
-              <li
-                className={`${styles.tab} ${currentTab === 'guests' ? styles.active : ''}`}
-                onClick={() => updateTab('guests')}
-              >
-                Guests
-              </li>
-              <li
-                className={`${styles.tab} ${currentTab === 'checkins' ? styles.active : ''}`}
-                onClick={() => updateTab('checkins')}
-              >
-                Check-In
-              </li>
-              <li
-                className={`${styles.tab} ${currentTab === 'inevent' ? styles.active : ''}`}
-                onClick={() => updateTab('inevent')}
-              >
-                In-Event
-              </li>
+              <div>
+                <motion.li
+                  whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                  className={styles.tab}
+                  onClick={() => updateTab('overview')}
+                >
+                  Overview
+                </motion.li>
+                {currentTab === 'overview' && (
+                  <motion.div layoutId='tab-indicator' className={styles.active} />
+                )}
+              </div>
+              <div>
+                <motion.li
+                  whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                  className={styles.tab}
+                  onClick={() => updateTab('insights')}
+                >
+                  Insights
+                </motion.li>
+
+                {currentTab === 'insights' && (
+                  <motion.div layoutId='tab-indicator' className={styles.active} />
+                )}
+              </div>
+              <div>
+                <motion.li
+                  whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                  className={styles.tab}
+                  onClick={() => updateTab('guests')}
+                >
+                  Guests
+                </motion.li>
+                {currentTab === 'guests' && (
+                  <motion.div layoutId='tab-indicator' className={styles.active} />
+                )}
+              </div>
+              <div>
+                <motion.li
+                  whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                  className={styles.tab}
+                  onClick={() => updateTab('checkins')}
+                >
+                  Check-In
+                </motion.li>
+                {currentTab === 'checkins' && (
+                  <motion.div layoutId='tab-indicator' className={styles.active} />
+                )}
+              </div>
+              <div>
+                <motion.li
+                  whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                  className={styles.tab}
+                  onClick={() => updateTab('inevent')}
+                >
+                  In-Event
+                </motion.li>
+                {currentTab === 'inevent' && (
+                  <motion.div layoutId='tab-indicator' className={styles.active} />
+                )}
+              </div>
             </ol>
           </div>
         </div>
       )}
       {currentTab && currentTab != 'insights' && (
         <div className={styles.glanceContainer}>
-          <p className={styles.glanceHeader}>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className={styles.glanceHeader}
+          >
             {tab === 'checkins' || tab === 'inevent' ? 'Check-In at a Glance' : 'At a Glance'}
-          </p>
+          </motion.p>
 
           {totalGuests >= 0 && (
-            <p className={styles.guests}>
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={styles.guests}>
               {totalGuests}/{targetGuests} <span>guests</span>
-            </p>
+            </motion.p>
           )}
 
           <div className={styles.progresBarGraph}>
             {progressData.map((data) => (
-              <div
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${(data.value / totalGuests) * 100}%` }}
                 key={data.type}
                 className={styles.progressBar}
                 style={{
                   backgroundColor: data.color,
                   width: `${(data.value / totalGuests) * 100}%`,
                 }}
-              ></div>
+              ></motion.div>
             ))}
           </div>
 
@@ -179,7 +217,9 @@ const Glance = ({ tab }: { tab: string }) => {
             <ul>
               {progressData.map((data) => (
                 <>
-                  <li
+                  <motion.li
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     key={data.type}
                     className={styles.progressLabel}
                     style={{
@@ -189,7 +229,7 @@ const Glance = ({ tab }: { tab: string }) => {
                     <p className={styles.dataCount}>
                       • {data.value} {data.type.substring(0, 8)}..
                     </p>
-                  </li>
+                  </motion.li>
                 </>
               ))}
             </ul>

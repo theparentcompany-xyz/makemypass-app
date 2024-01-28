@@ -16,6 +16,7 @@
   cursor: pointer;
 
   min-width: 10rem;
+  width: 100%;
 }
 
 .buttonText {

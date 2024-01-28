@@ -1,4 +1,5 @@
 import styles from './SectionButton.module.css';
+import { motion } from 'framer-motion';
 
 type ButtonProps = {
   buttonText: string;
@@ -14,13 +15,18 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <>
-      <button onClick={onClick} className={styles.buttonContainer}>
+      <motion.button
+        whileHover={{ scale: 1.05, marginRight: 10 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={onClick}
+        className={styles.buttonContainer}
+      >
         <p className={styles.buttonText}>{buttonText}</p>
 
         <div className={styles.buttonIcon}>
           <div className={styles.icon}>{icon}</div>
         </div>
-      </button>
+      </motion.button>
     </>
   );
 };
