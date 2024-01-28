@@ -11,6 +11,7 @@
   width: 100%;
   padding: 0.5rem 0;
   padding-right: 0;
+  margin-top: 1rem;
 }
 
 .registrationCount,
@@ -70,6 +71,8 @@
   font-size: 18.75px;
   font-style: normal;
   font-weight: 600;
+
+  margin-top: 1rem;
 }
 
 .count {
@@ -172,53 +175,6 @@
   font-family: 'Inter', sans-serif;
   color: white;
   width: 43%;
-}
-
-.totalRegistered {
-  margin-bottom: 1rem;
-}
-
-.liveTraffic {
-  margin-top: 1rem;
-}
-
-/* Timme Box */
-
-.pieContainer {
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  background: rgba(255, 255, 255, 0.04);
-  padding: 1rem 2rem;
-  font-family: 'Inter', sans-serif;
-  color: white;
-  max-width: 20rem;
-  width: 100%;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.times {
-  margin-top: 1rem;
-}
-
-.line {
-  width: 2rem;
-}
-
-.time {
-  display: flex;
-  flex-direction: row;
-  column-gap: 1rem;
-  align-items: center;
-
-  margin: 0.25rem;
-}
-
-.pieSection {
-  width: 10rem;
 }
 
 @media (max-width: 1120px) {

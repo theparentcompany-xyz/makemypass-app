@@ -86,7 +86,7 @@ const InEventStats = () => {
             labels: Object.keys(lineBarData || {}),
             datasets: [
               {
-                label: 'Daily Analytics',
+                label: 'CheckIn Analytics',
                 data: Object.values(lineBarData || {}),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -98,7 +98,7 @@ const InEventStats = () => {
             labels: Object.keys(lineBarData?.today_category || {}),
             datasets: [
               {
-                label: 'Category Count',
+                label: 'District-Wise Count',
                 data: Object.values(lineBarData?.today_category || {}),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -154,38 +154,12 @@ const InEventStats = () => {
               {lineData && <Line options={options} data={lineData} />}
             </div>
             <div className={styles.countSection}>
-              <div className={styles.cLeftSection}>
-                <div className={styles.totalRegistered}>
-                  <p className={styles.total}>Total Registered</p>
-                  <p className={styles.count}>
-                    {guests.length}
-                    <span> guests</span>
-                  </p>
-                </div>
-                <div className={styles.weeklyCounts}>
-                  <div className={styles.weeklyCount}>
-                    <p className={styles.week}>Yesterday</p>
-                    <p className={styles.wcount}>-</p>
-                  </div>
-                  <div className={styles.weeklyCount}>
-                    <p className={styles.week}>This week</p>
-                    <p className={styles.wcount}>-</p>
-                  </div>
-                </div>
-                <div className={styles.liveTraffic}>
-                  <p className={styles.live}>Live Traffic</p>
-                  <p className={styles.lcount}>_</p>
-                </div>
-              </div>
-              <div className={styles.cRightSection}>
-                <p className={styles.rightSectionHeading}>Total Category %</p>
-
-                <div className={styles.categories}>
-                  {/* <div className={styles.category}>
-                    <p className={styles.categoryName}>Student</p>
-                    <p className={styles.categoryCount}>100%</p>
-                  </div> */}
-                </div>
+              <div className={styles.totalRegistered}>
+                <p className={styles.total}>Total Check-Ins</p>
+                <p className={styles.count}>
+                  {guests.length}
+                  <span> guests</span>
+                </p>
               </div>
             </div>
           </div>
@@ -194,25 +168,15 @@ const InEventStats = () => {
             <div className={styles.graphContainer}>
               {barData && <Bar options={options} data={barData} />}
             </div>
+
             <div className={styles.totalRegistered}>
-              <p className={styles.total}>Today Registered</p>
+              <p className={styles.total}>Top District</p>
               <p className={styles.count}>
-                - <span>guests</span>
+                0 <span>guests</span>
               </p>
-            </div>
-            <div className={styles.weeklyCounts}>
-              <div className={styles.weeklyCount}>
-                <p className={styles.week}>Student</p>
-                <p className={styles.wcount}>-</p>
-              </div>
-            </div>
-            <div className={styles.liveTraffic}>
-              <p className={styles.live}>Event Date</p>
-              <p className={styles.lcount}>3rd February</p>
             </div>
           </div>
         </div>
-
         <div className={styles.insightsContainer}>
           <div
             style={{
