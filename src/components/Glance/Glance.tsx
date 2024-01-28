@@ -29,7 +29,7 @@ const Glance = ({ tab }: { tab: string }) => {
     return () => {
       socket?.close();
     };
-  });
+  }, []);
 
   const [currentTab, setCurrentTab] = useState('overview');
 

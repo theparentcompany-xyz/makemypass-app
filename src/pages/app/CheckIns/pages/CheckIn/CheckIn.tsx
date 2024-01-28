@@ -68,7 +68,7 @@ const CheckIn = () => {
     return () => {
       socket?.close();
     };
-  });
+  }, []);
 
   useEffect(() => {
     const recentTableMapping = {

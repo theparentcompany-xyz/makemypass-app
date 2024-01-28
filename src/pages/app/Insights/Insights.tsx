@@ -78,7 +78,7 @@ const Insights = () => {
     return () => {
       socket?.close();
     };
-  });
+  }, []);
 
   useEffect(() => {
     if (eventId)

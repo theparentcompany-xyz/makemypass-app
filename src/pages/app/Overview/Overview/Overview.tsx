@@ -61,7 +61,7 @@ const Overview = () => {
     return () => {
       socket?.close();
     };
-  });
+  }, []);
 
   useEffect(() => {
     if (eventId)

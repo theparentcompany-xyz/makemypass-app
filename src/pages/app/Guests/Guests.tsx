@@ -46,12 +46,6 @@ const Guests = () => {
   const eventId = getLocalEventId();
 
   useEffect(() => {
-    return () => {
-      socket?.close();
-    };
-  });
-
-  useEffect(() => {
     if (eventId)
       connectPrivateSocket({
         url: makeMyPassSocket.listGuests(eventId),
@@ -59,11 +53,26 @@ const Guests = () => {
         ws.onmessage = (event) => {
           if (JSON.parse(event.data).response.guests)
             setGuests(JSON.parse(event.data).response.guests);
+          else if (JSON.parse(event.data).response.data) {
+            const newGuest = JSON.parse(event.data).response.data;
+
+            setGuests((prev) => {
+              const updatedGuests = [newGuest, ...prev];
+
+              return updatedGuests;
+            });
+          }
         };
 
         setSocket(ws);
       });
   }, [eventId]);
+
+  useEffect(() => {
+    return () => {
+      socket?.close();
+    };
+  }, []);
 
   useEffect(() => {
     const guestsTableMapping = {
