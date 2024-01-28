@@ -24,7 +24,7 @@ const ScanQR = () => {
 
       setTimeout(() => {
         setMessage('');
-      }, 4000);
+      }, 1000);
     }
   }, [ticketId, trigger]);
 
