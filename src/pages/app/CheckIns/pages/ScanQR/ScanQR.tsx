@@ -8,6 +8,8 @@ import { getUserInfo } from '../../../../../apis/scan';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import SectionButton from '../../../../../components/SectionButton/SectionButton';
+import { CgClose } from 'react-icons/cg';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -24,7 +26,7 @@ const ScanQR = () => {
 
       setTimeout(() => {
         setMessage('');
-      }, 1000);
+      }, 1150);
     }
   }, [ticketId, trigger]);
 
@@ -41,6 +43,14 @@ const ScanQR = () => {
               <hr className={styles.line} />
               <br />
               <p className={styles.modalSubText}>{message}</p>
+              <SectionButton
+                buttonText='Close'
+                onClick={() => {
+                  setMessage('');
+                }}
+                buttonColor='red'
+                icon={<CgClose />}
+              />
             </dialog>
           </>
         )}
