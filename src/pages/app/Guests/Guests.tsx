@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Theme from '../../../components/Theme/Theme';
-import Glance from '../Overview/components/Glance/Glance';
-import Header from '../Overview/components/Header/Header';
+import Glance from '../../../components/Glance/Glance';
+import Header from '../../../components/EventHeader/EventHeader';
 import styles from './Guests.module.css';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';

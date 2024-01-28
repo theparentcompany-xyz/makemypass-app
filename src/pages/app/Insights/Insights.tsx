@@ -34,8 +34,8 @@ import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
 import { ChartData, AnalyticsData } from './types';
 import Theme from '../../../components/Theme/Theme';
-import Glance from '../Overview/components/Glance/Glance';
-import Header from '../Overview/components/Header/Header';
+import Glance from '../../../components/Glance/Glance';
+import Header from '../../../components/EventHeader/EventHeader';
 import { getEventId } from '../../../apis/events';
 
 const Insights = () => {

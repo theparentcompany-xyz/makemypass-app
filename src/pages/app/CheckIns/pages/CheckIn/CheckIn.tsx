@@ -1,5 +1,5 @@
 import Theme from '../../../../../components/Theme/Theme';
-import Header from '../../../Overview/components/Header/Header';
+import Header from '../../../../../components/EventHeader/EventHeader';
 import styles from './CheckIn.module.css';
 import { RiSearchLine } from 'react-icons/ri';
 import { useEffect, useState } from 'react';

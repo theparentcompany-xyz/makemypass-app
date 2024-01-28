@@ -1,7 +1,7 @@
 import { HiUserGroup } from 'react-icons/hi2';
 import { FaWrench } from 'react-icons/fa';
 import { BsQrCodeScan } from 'react-icons/bs';
-import Glance from '../components/Glance/Glance';
+import Glance from '../../../../components/Glance/Glance';
 
 import styles from './Overview.module.css';
 import SectionButton from '../../../../components/SectionButton/SectionButton';
@@ -15,7 +15,7 @@ import { connectPrivateSocket } from '../../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../../services/urls';
 import Theme from '../../../../components/Theme/Theme';
 import { Link, useParams } from 'react-router-dom';
-import Header from '../components/Header/Header';
+import Header from '../../../../components/EventHeader/EventHeader';
 import { getEventId } from '../../../../apis/events';
 import Table from '../../../../components/Table/Table';
 import { TableType } from '../../../../components/Table/types';

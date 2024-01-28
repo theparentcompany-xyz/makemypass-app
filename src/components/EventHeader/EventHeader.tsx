@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import styles from './Header.module.css';
-import { getEventData, getEventId } from '../../../../../apis/events';
+import styles from './EventHeader.module.css';
+import { getEventData, getEventId } from '../../apis/events';
 import { useParams } from 'react-router-dom';
 
-const Header = ({ setRole }: { setRole?: React.Dispatch<React.SetStateAction<string>> }) => {
+const EventHeader = ({ setRole }: { setRole?: React.Dispatch<React.SetStateAction<string>> }) => {
   const [eventData, setEventData] = useState({
     title: '',
     date: '',
@@ -57,4 +57,4 @@ const Header = ({ setRole }: { setRole?: React.Dispatch<React.SetStateAction<str
   );
 };
 
-export default Header;
+export default EventHeader;

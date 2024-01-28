@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import styles from './Glance.module.css';
-import { connectPrivateSocket } from '../../../../../../services/apiGateway';
-import { makeMyPassSocket } from '../../../../../../services/urls';
+import { connectPrivateSocket } from '../../../services/apiGateway';
+import { makeMyPassSocket } from '../../../services/urls';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getEventData, getEventId } from '../../../../../apis/events';
+import { getEventData, getEventId } from '../../apis/events';
 
 const Glance = ({ tab }: { tab: string }) => {
   const [eventData, setEventData] = useState({
@@ -68,7 +68,7 @@ const Glance = ({ tab }: { tab: string }) => {
   const [backendURL, setBackendURL] = useState<string>('');
   useEffect(() => {
     setCurrentTab(tab);
-    if (tab === 'checkins') {
+    if (tab === 'checkins' || tab === 'inevent') {
       setBackendURL(makeMyPassSocket.checkInCounts(eventId));
     } else {
       setBackendURL(makeMyPassSocket.registerCounts(eventId));
@@ -140,6 +140,12 @@ const Glance = ({ tab }: { tab: string }) => {
               >
                 Check-In
               </li>
+              <li
+                className={`${styles.tab} ${currentTab === 'inevent' ? styles.active : ''}`}
+                onClick={() => updateTab('inevent')}
+              >
+                In-Event
+              </li>
             </ol>
           </div>
         </div>
@@ -147,7 +153,7 @@ const Glance = ({ tab }: { tab: string }) => {
       {currentTab && currentTab != 'insights' && (
         <div className={styles.glanceContainer}>
           <p className={styles.glanceHeader}>
-            {tab === 'checkins' ? 'Check-In at a Glance' : 'At a Glance'}
+            {tab === 'checkins' || tab === 'inevent' ? 'Check-In at a Glance' : 'At a Glance'}
           </p>
 
           {totalGuests > 0 && (
