@@ -32,7 +32,6 @@
 }
 
 .countSection {
-  margin-top: 1rem;
   display: flex;
   justify-content: start;
   align-items: start;
@@ -162,7 +161,7 @@
   padding: 1rem 2rem;
   font-family: 'Inter', sans-serif;
   color: white;
-  width: 56.5%;
+  width: 100%;
 }
 
 .todayRegistered {
@@ -266,4 +265,32 @@
   width: 100%;
   height: 70vh;
   margin-bottom: 3rem;
+}
+
+.usersContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  flex-wrap: wrap;
+
+  width: 100%;
+  margin-top: 1rem;
+
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+}
+
+.user {
+  border-radius: 12px;
+  font-size: 0.9rem;
+
+  padding: 0.5rem 1rem;
+}
+
+.header {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
 }
