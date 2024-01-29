@@ -104,7 +104,6 @@ const Glance = ({ tab }: { tab: string }) => {
           }
 
           setprogressData(newStrucure);
-          console.log(newStrucure);
         };
 
         setSocket(ws);

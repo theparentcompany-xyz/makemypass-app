@@ -73,6 +73,7 @@ const InEventStats = () => {
 
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const eventId = getLocalEventId();
+  const topDistrict = guests[0]?.district;
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   useEffect(() => {
@@ -92,14 +93,25 @@ const InEventStats = () => {
         url: makeMyPassSocket.checkInAnalytics(eventId),
       }).then((ws) => {
         ws.onmessage = (event) => {
-          const lineBarData = JSON.parse(event.data).response['2024-01-28'];
+          const lineData = JSON.parse(event.data).response.time['2024-01-28'];
+          const barData = JSON.parse(event.data).response.district;
+
+          const lst = Object.values(barData || {});
+
+          const numericArray = lst.map((item) => {
+            if (typeof item === 'string') {
+              return parseFloat(item.replace('%', ''));
+            } else {
+              return item;
+            }
+          });
 
           setLineData({
-            labels: Object.keys(lineBarData || {}),
+            labels: Object.keys(lineData || {}),
             datasets: [
               {
                 label: 'CheckIn Analytics',
-                data: Object.values(lineBarData || {}),
+                data: Object.values(lineData || {}),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
               },
@@ -107,11 +119,11 @@ const InEventStats = () => {
           });
 
           setBarData({
-            labels: Object.keys(lineBarData?.today_category || {}),
+            labels: Object.keys(barData || {}),
             datasets: [
               {
                 label: 'District-Wise Count',
-                data: Object.values(lineBarData?.today_category || {}),
+                data: Object.values((numericArray as number[]) || {}),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
               },
