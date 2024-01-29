@@ -187,9 +187,10 @@ const InEventStats = () => {
             {' '}
             <div className={styles.backgroundBlur}></div>
             <dialog open className={styles.welcomeContainer}>
-              <p className={styles.welcomeMessgae}>Welcome to ScaleUp 2024, {newUser}</p>
+              <p className={styles.welcomeMessgae}>{newUser}, Welcome to ScaleUp 2024</p>
               <p className={styles.welcomeSubText}>
-                Welcome to ScaleUp Conclave 2024! Let's propel Kerala's startups together!
+                Join us for two days of inspiration, networking, and innovation. Let's propel
+                Kerala's startup ecosystem together!"
               </p>
             </dialog>{' '}
           </>
