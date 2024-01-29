@@ -4,12 +4,13 @@ import styles from './ScanQR.module.css';
 
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useEffect, useState } from 'react';
-import { getUserInfo } from '../../../../../apis/scan';
+import { checkInUser } from '../../../../../apis/scan';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import { CgClose } from 'react-icons/cg';
+import { getEventId } from '../../../../../apis/events';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -18,9 +19,27 @@ const ScanQR = () => {
   const [message, setMessage] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
 
+  const getLocalEventId = () => {
+    if (eventTitle) {
+      const eventData = JSON.parse(localStorage.getItem('eventData') as string);
+
+      if (eventData) {
+        if (eventData.event_name !== eventTitle) {
+          localStorage.removeItem('eventData');
+          getEventId(eventTitle);
+        } else {
+          return eventData.event_id;
+        }
+      }
+    }
+  };
+
+  const { eventTitle } = useParams<{ eventTitle: string }>();
+  const eventId = getLocalEventId();
+
   useEffect(() => {
     if (ticketId.length > 0 && trigger) {
-      getUserInfo(ticketId, setMessage, setIsError);
+      checkInUser(ticketId, eventId, setMessage, setIsError);
       setTimeout(() => {
         setTicketId('');
       }, 2000);
@@ -54,8 +73,6 @@ const ScanQR = () => {
               open
               className={styles.onClickModal}
             >
-              {/* <p className={styles.modalHeader}>User Check-In Status</p> */}
-              {/* <hr className={styles.line} /> */}
               <br />
               <p className={styles.modalSubText}>{message}</p>
               <SectionButton

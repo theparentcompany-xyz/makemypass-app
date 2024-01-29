@@ -82,7 +82,7 @@ const Login = () => {
                 {isOtpSent && !isPassword && (
                   <InputFIeld
                     ref={otpRef}
-                    type='text'
+                    type='number'
                     name='otp'
                     id='otp'
                     placeholder='Enter OTP*'

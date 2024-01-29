@@ -14,7 +14,8 @@ export const makeMyPass = {
   listEvents: makeMyPassURL('/list-events/'),
   listHosts: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-hosts/`),
   getEventId: (eventName: string) => makeMyPassURL(`/get-event-id/${eventName}/`),
-  userInfo: (ticketCode: string) => makeMyPassURL(`/checkin/register/${ticketCode}/`),
+  checkInUser: (ticketCode: string, eventId: string) =>
+    makeMyPassURL(`/checkin/${eventId}/register/${ticketCode}/`),
   getEventData: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/info`),
   resentTicket: makeMyPassURL('/manage-event/resent-ticket/'),
 };
@@ -31,5 +32,3 @@ export const makeMyPassSocket = {
 
   checkInAnalytics: (eventId: string) => `checkin/${eventId}/checkin-analytics/`,
 };
-
-// /checkin/register/ticketcode/
