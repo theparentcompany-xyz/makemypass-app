@@ -4,7 +4,7 @@ import styles from './ScanQR.module.css';
 
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useEffect, useState } from 'react';
-import { checkInUser } from '../../../../../apis/scan';
+import { checkInUser, getCheckInCount } from '../../../../../apis/scan';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -18,6 +18,7 @@ const ScanQR = () => {
 
   const [message, setMessage] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
+  const [scanCount, setScanCount] = useState<number>(0);
 
   const getLocalEventId = () => {
     if (eventTitle) {
@@ -38,6 +39,7 @@ const ScanQR = () => {
   const eventId = getLocalEventId();
 
   useEffect(() => {
+    getCheckInCount(eventId, setScanCount);
     if (ticketId.length > 0 && trigger) {
       checkInUser(ticketId, eventId, setMessage, setIsError);
       setTimeout(() => {
@@ -97,6 +99,14 @@ const ScanQR = () => {
           <p className={styles.scanHeader}>Scan QR Code Below</p>
           <div className={styles.scannerOuterContainer}>
             <div className={styles.scanner}>
+              <div className={styles.scanCount}>
+                <SecondaryButton
+                  buttonText={`${scanCount} Scans`}
+                  onClick={() => {
+                    console.log('close');
+                  }}
+                />
+              </div>
               <div className={styles.closeButton}>
                 <SecondaryButton
                   buttonText='Close'

@@ -155,7 +155,7 @@ const Insights = () => {
                       </div>
                       <div className={styles.weeklyCounts}>
                         <div className={styles.weeklyCount}>
-                          <p className={styles.week}>Yestered</p>
+                          <p className={styles.week}>Yesterday</p>
                           <p className={styles.wcount}>{message?.yesterday_reg}</p>
                         </div>
                         <div className={styles.weeklyCount}>

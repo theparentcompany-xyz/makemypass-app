@@ -18,3 +18,17 @@ export const checkInUser = async (
       setIsError(true);
     });
 };
+
+export const getCheckInCount = async (
+  eventId: string,
+  setCheckInCount: React.Dispatch<React.SetStateAction<number>>,
+) => {
+  privateGateway
+    .get(makeMyPass.checkInCount(eventId))
+    .then((response) => {
+      setCheckInCount(response.data.response.authorized_count);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
