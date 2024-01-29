@@ -49,6 +49,13 @@ const InEventStats = () => {
     },
   };
 
+  type LineDataSet = {
+    label: string;
+    data: number[];
+    borderColor: string;
+    backgroundColor: string;
+  };
+
   const [firstRender, setFirstRender] = useState(true);
   const [newUser, setNewUser] = useState('');
 
@@ -73,7 +80,6 @@ const InEventStats = () => {
 
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const eventId = getLocalEventId();
-  const topDistrict = guests[0]?.district;
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   useEffect(() => {
@@ -93,7 +99,7 @@ const InEventStats = () => {
         url: makeMyPassSocket.checkInAnalytics(eventId),
       }).then((ws) => {
         ws.onmessage = (event) => {
-          const lineData = JSON.parse(event.data).response.time['2024-01-28'];
+          const lineData = JSON.parse(event.data).response.time;
           const barData = JSON.parse(event.data).response.district;
 
           const lst = Object.values(barData || {});
@@ -106,16 +112,24 @@ const InEventStats = () => {
             }
           });
 
+          const dates = Object.keys(lineData || {});
+
+          const lineDataSet: LineDataSet[] = dates.map((date, index) => {
+            const colors = ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'];
+            const borderColor = colors[index % colors.length];
+            const backgroundColor = `rgba(${borderColor}, 0.5)`;
+
+            return {
+              label: date,
+              data: Object.values(lineData[date] || {}),
+              borderColor,
+              backgroundColor,
+            };
+          });
+
           setLineData({
-            labels: Object.keys(lineData || {}),
-            datasets: [
-              {
-                label: 'CheckIn Analytics',
-                data: Object.values(lineData || {}),
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-              },
-            ],
+            labels: Object.keys(lineData['2024-01-28'] || {}),
+            datasets: lineDataSet,
           });
 
           setBarData({
