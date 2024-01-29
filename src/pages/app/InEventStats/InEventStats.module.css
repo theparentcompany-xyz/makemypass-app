@@ -171,10 +171,14 @@
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
-  padding: 2rem;
+
   font-family: 'Inter', sans-serif;
   color: white;
   width: 43%;
+}
+
+.totalRegistered {
+  padding: 0 2rem;
 }
 
 @media (max-width: 1120px) {
@@ -276,6 +280,55 @@
   color: white;
 
   text-align: center;
+}
+
+.districtsCount {
+  display: flex;
+  flex-direction: row;
+
+  overflow: hidden;
+
+  row-gap: 1rem;
+
+  white-space: nowrap;
+
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.scrollContainer {
+  display: flex;
+  column-gap: 0.5rem;
+  animation: swipe 30s linear infinite backwards;
+}
+
+.district {
+  padding: 0.25rem 0.5rem;
+  /* color: #1d1d1d; */
+
+  background: rgba(255, 255, 255, 0.04);
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-radius: 8px;
+}
+
+@keyframes swipe {
+  0% {
+    transform: translate(0);
+  }
+
+  100% {
+    transform: translate(-100%);
+  }
+}
+
+.graphContainer {
+  max-height: 15rem;
+  max-width: 15rem;
+  margin: auto;
+
+  padding: 0 2rem;
+  padding-top: 1rem;
 }
 
 .welcomeMessgae {

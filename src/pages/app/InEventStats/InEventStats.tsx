@@ -15,7 +15,7 @@ import {
   BarElement,
   ArcElement,
 } from 'chart.js';
-import { Line, Bar } from 'react-chartjs-2';
+import { Line, Doughnut } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import { ChartData } from '../Insights/types';
 import { guests } from '../Guests/types';
@@ -49,6 +49,15 @@ const InEventStats = () => {
     },
   };
 
+  const doughnutOption = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+
   type LineDataSet = {
     label: string;
     data: number[];
@@ -56,11 +65,33 @@ const InEventStats = () => {
     backgroundColor: string;
   };
 
+  type DistrictData = {
+    [district: string]: number;
+  };
+
+  const colors = [
+    'rgb(71, 201, 126)',
+    'rgb(251, 216, 91)',
+    'rgb(53, 161, 235)',
+    'rgb(53, 161, 235)',
+    'rgb(195, 61, 123)',
+    'rgb(210, 212, 215)',
+    'rgb(203, 62, 62)',
+    'rgb(200, 62, 203)',
+    'rgb(158, 62, 203)',
+    'rgb(65, 62, 203)',
+    'rgb(203, 96, 62)',
+    'rgb(62, 203, 203)',
+    'rgb(62, 203, 76)',
+    'rgb(225, 57, 57)',
+  ];
+
   const [firstRender, setFirstRender] = useState(true);
   const [newUser, setNewUser] = useState('');
 
   const [lineData, setLineData] = useState<ChartData>();
   const [barData, setBarData] = useState<ChartData>();
+  const [districtData, setDistrictData] = useState<DistrictData>({});
 
   const [guests, setGuests] = useState<guests[]>([]);
   const getLocalEventId = () => {
@@ -101,16 +132,7 @@ const InEventStats = () => {
         ws.onmessage = (event) => {
           const lineData = JSON.parse(event.data).response.time;
           const barData = JSON.parse(event.data).response.district;
-
-          const lst = Object.values(barData || {});
-
-          const numericArray = lst.map((item) => {
-            if (typeof item === 'string') {
-              return parseFloat(item.replace('%', ''));
-            } else {
-              return item;
-            }
-          });
+          setDistrictData(barData);
 
           const dates = Object.keys(lineData || {});
 
@@ -137,9 +159,10 @@ const InEventStats = () => {
             datasets: [
               {
                 label: 'District-Wise Count',
-                data: Object.values((numericArray as number[]) || {}),
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                data: Object.values(barData || {}),
+                borderWidth: 1,
+                borderColor: colors,
+                backgroundColor: colors,
               },
             ],
           });
@@ -179,6 +202,23 @@ const InEventStats = () => {
     };
   }, []);
 
+  const findDistrictWithMostNumber = () => {
+    let maxDistrict = null;
+    let maxNumber = -Infinity;
+
+    for (const district in districtData) {
+      if (districtData[district] > maxNumber) {
+        maxNumber = districtData[district];
+        maxDistrict = {
+          district: district,
+          value: maxNumber,
+        };
+      }
+    }
+
+    return maxDistrict;
+  };
+
   return (
     <Theme>
       <>
@@ -203,9 +243,8 @@ const InEventStats = () => {
 
         <div className={styles.insightsContainer}>
           <div className={styles.registrationCount}>
-            <div className={styles.graphContainer}>
-              {lineData && <Line options={options} data={lineData} />}
-            </div>
+            {lineData && <Line options={options} data={lineData} />}
+
             <div className={styles.countSection}>
               <div className={styles.totalRegistered}>
                 <p className={styles.total}>Total Check-Ins</p>
@@ -219,14 +258,27 @@ const InEventStats = () => {
 
           <div className={styles.todayRegistered}>
             <div className={styles.graphContainer}>
-              {barData && <Bar options={options} data={barData} />}
+              {barData && <Doughnut options={doughnutOption} data={barData} />}
             </div>
 
             <div className={styles.totalRegistered}>
-              <p className={styles.total}>Top District</p>
+              <p className={styles.total}>Top District: {findDistrictWithMostNumber()?.district}</p>
               <p className={styles.count}>
-                0 <span>guests</span>
+                {findDistrictWithMostNumber()?.value} <span>guests</span>
               </p>
+            </div>
+            <div className={styles.districtsCount}>
+              <div className={styles.scrollContainer}>
+                {Object.keys(districtData).map((key, index) => (
+                  <div
+                    key={index}
+                    className={styles.district}
+                    style={{ color: colors[index % colors.length] }}
+                  >
+                    {key}: {districtData[key]}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

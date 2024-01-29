@@ -36,6 +36,7 @@ export interface Dataset {
   data: number[];
   borderColor: string | string[];
   backgroundColor: string | string[];
+  borderWidth?: number;
 }
 
 export interface ChartData {
