@@ -13,13 +13,19 @@ import { HashLoader } from 'react-spinners';
 import Table from '../../../components/Table/Table';
 import { transformTableData } from '../../../common/commonFunctions';
 import { TableType } from '../../../components/Table/types';
-import { resentEventTicket } from '../../../apis/guests';
+import { editSubmissons, resentEventTicket } from '../../../apis/guests';
+
+import Select from 'react-select';
+import { categoryOptions, districtOptions } from './data';
 
 const Guests = () => {
   const [guests, setGuests] = useState<guests[]>([]);
   const [guestsTableData, setGuestsTableData] = useState<TableType[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
+
+  const [selectedGuestId, setSelectedGuestId] = useState<string | null>(null);
+  const [selectedGuest, setSelectedGuest] = useState<guests | null>(null);
 
   const [resentTicket, setResentTicket] = useState<resentTicket>({
     status: false,
@@ -42,11 +48,18 @@ const Guests = () => {
     }
   };
 
+  const getGuestData = () => {
+    const selectedGuestData = guests.filter((guest) => guest.id === selectedGuestId);
+
+    setSelectedGuest(selectedGuestData[0]);
+  };
+
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const eventId = getLocalEventId();
 
   useEffect(() => {
-    if (eventId)
+    if (eventId && !selectedGuestId) {
+      if (socket) socket.close();
       connectPrivateSocket({
         url: makeMyPassSocket.listGuests(eventId),
       }).then((ws) => {
@@ -66,13 +79,38 @@ const Guests = () => {
 
         setSocket(ws);
       });
-  }, [eventId]);
+    }
+  }, [eventId, selectedGuestId]);
 
   useEffect(() => {
     return () => {
       socket?.close();
     };
   }, []);
+
+  useEffect(() => {
+    getGuestData();
+  }, [selectedGuestId]);
+
+  const handleDistrictChange = (event: any) => {
+    const selectedDistrict = event.value;
+
+    setSelectedGuest((prevState) => ({
+      ...prevState!,
+      district: selectedDistrict,
+      id: prevState?.id ?? '',
+    }));
+  };
+
+  const handleCategoryChange = (event: any) => {
+    const selectedCategory = event.value;
+
+    setSelectedGuest((prevState) => ({
+      ...prevState!,
+      category: selectedCategory,
+      id: prevState?.id ?? '',
+    }));
+  };
 
   useEffect(() => {
     const guestsTableMapping = {
@@ -96,6 +134,39 @@ const Guests = () => {
     resentEventTicket(resentTicket, setResentTicket);
   };
 
+  const handleSubmissionEdit = () => {
+    editSubmissons(eventId, selectedGuest, setSelectedGuestId);
+  };
+
+  const customStyles = {
+    control: (provided: any) => ({
+      ...provided,
+      border: 'none',
+      backgroundColor: '#2A3533',
+      fontFamily: 'Inter, sans-serif',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      fontSize: '0.9rem',
+    }),
+
+    group: (provided: any) => ({
+      ...provided,
+      paddingTop: 0,
+    }),
+
+    singleValue: (base: any) => ({
+      ...base,
+      color: '#fff',
+    }),
+    option: (provided: any) => ({
+      ...provided,
+      fontFamily: 'Inter, sans-serif',
+      color: '#000',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      fontSize: '0.9rem',
+    }),
+  };
   return (
     <Theme>
       {guests && guests.length > 0 ? (
@@ -137,6 +208,128 @@ const Guests = () => {
               </div>
             </dialog>
           )}
+          {selectedGuestId && (
+            <dialog className={styles.onClickModal}>
+              <div className={styles.userInfoModalContainer}>
+                <p className={styles.modalHeader}>Edit Guest</p>
+                <div className={styles.inputContainers}>
+                  <div className={styles.inputContainer}>
+                    <p className={styles.inputLabel}>Name</p>
+                    <input
+                      value={selectedGuest?.name}
+                      className={styles.input}
+                      type='text'
+                      onChange={(event) => {
+                        setSelectedGuest((prevState) => ({
+                          ...prevState!,
+                          name: event.target.value,
+                        }));
+                      }}
+                    />
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <p className={styles.inputLabel}>Email</p>
+                    <input
+                      value={selectedGuest?.email}
+                      className={styles.input}
+                      type='text'
+                      onChange={(event) => {
+                        setSelectedGuest((prevState) => ({
+                          ...prevState!,
+                          email: event.target.value,
+                        }));
+                      }}
+                    />
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <p className={styles.inputLabel}>Organization</p>
+                    <input
+                      value={selectedGuest?.organization}
+                      className={styles.input}
+                      type='text'
+                      onChange={(event) => {
+                        setSelectedGuest((prevState) => ({
+                          ...prevState!,
+                          organization: event.target.value,
+                        }));
+                      }}
+                    />
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <p className={styles.inputLabel}>Phone Number</p>
+                    <input
+                      value={selectedGuest?.phone_number}
+                      className={styles.input}
+                      type='text'
+                      onChange={(event) => {
+                        setSelectedGuest((prevState) => ({
+                          ...prevState!,
+                          phone_number: event?.target.value || '',
+                        }));
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className={styles.dropdownContainer}>
+                  <div className={styles.dropdown}>
+                    <p className={styles.inputLabel}>District</p>
+                    <Select
+                      className='basic-single'
+                      classNamePrefix='select'
+                      value={
+                        districtOptions.filter(
+                          (district) => district.value === selectedGuest?.district,
+                        )[0]
+                      }
+                      onChange={(event) => {
+                        handleDistrictChange(event);
+                      }}
+                      name='district'
+                      options={districtOptions}
+                      styles={customStyles}
+                    />
+                  </div>
+                  <div className={styles.dropdown}>
+                    <p className={styles.inputLabel}>Category</p>
+                    <Select
+                      className='basic-single'
+                      classNamePrefix='select'
+                      value={
+                        categoryOptions.filter(
+                          (category) => category.value === selectedGuest?.category,
+                        )[0]
+                      }
+                      onChange={(event) => {
+                        handleCategoryChange(event);
+                      }}
+                      name='district'
+                      options={categoryOptions}
+                      styles={customStyles}
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.buttons}>
+                  <p
+                    onClick={() => {
+                      handleSubmissionEdit();
+                    }}
+                    className={styles.button}
+                  >
+                    Edit
+                  </p>
+                  <p
+                    onClick={() => {
+                      setSelectedGuestId(null);
+                    }}
+                    className={styles.button}
+                  >
+                    Cancel
+                  </p>
+                </div>
+              </div>
+            </dialog>
+          )}
           <div className={styles.guestsContainer}>
             <Header />
 
@@ -165,6 +358,7 @@ const Guests = () => {
                 tableData={guestsTableData}
                 search={searchKeyword}
                 setResentTicket={setResentTicket}
+                setSelectedGuestId={setSelectedGuestId}
               />
             </div>
           </div>

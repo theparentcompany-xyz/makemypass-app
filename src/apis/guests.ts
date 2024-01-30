@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { resentTicket } from '../pages/app/Guests/types';
+import { guests, resentTicket } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
 
 export const resentEventTicket = async (
@@ -26,4 +26,33 @@ export const resentEventTicket = async (
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
     });
+};
+
+export const editSubmissons = async (
+  eventId: string,
+  data: guests | null,
+  setSelectedGuestId: React.Dispatch<React.SetStateAction<string | null>>,
+) => {
+  const dataToSent = {
+    name: data?.name,
+    email: data?.email,
+    phone_number: data?.phone_number,
+    district: data?.district,
+    category: data?.category,
+    organization: data?.organization,
+  };
+
+  if (data)
+    privateGateway
+      .put(makeMyPass.editSubmission(eventId, data.id), dataToSent)
+      .then((response) => {
+        toast.success(response.data.message.general[0] || 'Submission edited successfully');
+        setSelectedGuestId(null);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message.general[0] || 'Something went wrong');
+      });
+  else {
+    toast.error("Edit data can't be empty");
+  }
 };
