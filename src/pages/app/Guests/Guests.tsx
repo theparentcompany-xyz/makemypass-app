@@ -13,7 +13,7 @@ import { HashLoader } from 'react-spinners';
 import Table from '../../../components/Table/Table';
 import { transformTableData } from '../../../common/commonFunctions';
 import { TableType } from '../../../components/Table/types';
-import { resentEventTicket } from '../../../apis/guests';
+import { editSubmissons, resentEventTicket } from '../../../apis/guests';
 
 import Select from 'react-select';
 import { categoryOptions, districtOptions } from './data';
@@ -58,7 +58,8 @@ const Guests = () => {
   const eventId = getLocalEventId();
 
   useEffect(() => {
-    if (eventId)
+    if (eventId && !selectedGuestId) {
+      if (socket) socket.close();
       connectPrivateSocket({
         url: makeMyPassSocket.listGuests(eventId),
       }).then((ws) => {
@@ -78,7 +79,8 @@ const Guests = () => {
 
         setSocket(ws);
       });
-  }, [eventId]);
+    }
+  }, [eventId, selectedGuestId]);
 
   useEffect(() => {
     return () => {
@@ -130,6 +132,10 @@ const Guests = () => {
 
   const handleTicketResend = () => {
     resentEventTicket(resentTicket, setResentTicket);
+  };
+
+  const handleSubmissionEdit = () => {
+    editSubmissons(eventId, selectedGuest, setSelectedGuestId);
   };
 
   const customStyles = {
@@ -306,7 +312,7 @@ const Guests = () => {
                 <div className={styles.buttons}>
                   <p
                     onClick={() => {
-                      console.log(selectedGuest);
+                      handleSubmissionEdit();
                     }}
                     className={styles.button}
                   >
