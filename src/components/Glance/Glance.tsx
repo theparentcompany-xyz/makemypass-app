@@ -38,6 +38,7 @@ const Glance = ({ tab }: { tab: string }) => {
   const [currentTab, setCurrentTab] = useState('overview');
 
   const updateTab = (tab: string) => {
+    setFirstRender(true);
     setCurrentTab(tab);
     navigate(`/${eventTitle}/${tab}/`);
   };
@@ -80,11 +81,11 @@ const Glance = ({ tab }: { tab: string }) => {
   }, [tab, eventId]);
 
   useEffect(() => {
-    if (firstRender) setFirstRender(false);
-    else {
+    if(!firstRender && totalGuests > 0) {
       const audio = new Audio('/count.mp3');
       audio.play();
     }
+    if(firstRender && totalGuests > 0) setFirstRender(false);
   }, [totalGuests]);
 
   useEffect(() => {
@@ -216,7 +217,7 @@ const Glance = ({ tab }: { tab: string }) => {
               animate={{ opacity: 1 }}
               className={styles.lastUpdated}
             >
-              Last Updated: Today, {lastUpdated}
+              Last {tab === "checkins" ? "Check-In" : "Registered"}: Today, {lastUpdated}
             </motion.p>
           </div>
 
