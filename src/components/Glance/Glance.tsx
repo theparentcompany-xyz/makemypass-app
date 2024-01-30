@@ -27,6 +27,8 @@ const Glance = ({ tab }: { tab: string }) => {
   const [totalGuests, setTotalGuests] = useState<number>(0);
   const [targetGuests, setTargetGuests] = useState<number>(0);
 
+  const [firstRender, setFirstRender] = useState<boolean>(true);
+
   useEffect(() => {
     return () => {
       socket?.close();
@@ -78,8 +80,11 @@ const Glance = ({ tab }: { tab: string }) => {
   }, [tab, eventId]);
 
   useEffect(() => {
-    const audio = new Audio('/count.mp3');
-    audio.play();
+    if (firstRender) setFirstRender(false);
+    else {
+      const audio = new Audio('/count.mp3');
+      audio.play();
+    }
   }, [totalGuests]);
 
   useEffect(() => {
@@ -219,7 +224,7 @@ const Glance = ({ tab }: { tab: string }) => {
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={styles.guests}>
               <motion.p
                 animate={{
-                  scale: [1, 1.5, 1, 1.5, 1],
+                  scale: [1, 1.25, 1, 1.25, 1],
                   marginRight: [0, 5, 0, 5, 0],
                   color: ['#ffffff', '#47c97e', '#ffffff', '#47c97e', '#ffffff'],
                 }}
