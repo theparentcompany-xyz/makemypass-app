@@ -235,7 +235,7 @@ const Glance = ({ tab }: { tab: string }) => {
               >
                 {totalGuests}
               </motion.p>
-              /{targetGuests} <span>guests</span>
+              /{targetGuests} <span>&nbsp; guests</span>
             </motion.p>
           )}
 
