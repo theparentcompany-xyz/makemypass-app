@@ -11,6 +11,8 @@
   font-family: 'Inter', sans-serif;
   font-size: 1.25rem;
   margin-top: 1rem;
+
+  display: flex;
 }
 
 .guests span {
@@ -104,4 +106,21 @@
 .active {
   border: 1.5px solid #fff;
   border-radius: 8px;
+}
+
+.glanceHeaderSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  margin-top: 1rem;
+}
+
+.lastUpdated {
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  text-align: right;
 }

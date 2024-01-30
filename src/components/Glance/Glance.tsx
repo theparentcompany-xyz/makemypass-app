@@ -23,6 +23,7 @@ const Glance = ({ tab }: { tab: string }) => {
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [progressData, setprogressData] = useState<progressDataType>([]);
+  const [lastUpdated, setLastUpdated] = useState<string>('');
   const [totalGuests, setTotalGuests] = useState<number>(0);
   const [targetGuests, setTargetGuests] = useState<number>(0);
 
@@ -77,6 +78,11 @@ const Glance = ({ tab }: { tab: string }) => {
   }, [tab, eventId]);
 
   useEffect(() => {
+    const audio = new Audio('/count.mp3');
+    audio.play();
+  }, [totalGuests]);
+
+  useEffect(() => {
     if (eventId)
       connectPrivateSocket({
         url: backendURL,
@@ -104,6 +110,14 @@ const Glance = ({ tab }: { tab: string }) => {
           }
 
           setprogressData(newStrucure);
+
+          var currentDate = new Date();
+          var formattedTime = currentDate.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          });
+          setLastUpdated(formattedTime);
         };
 
         setSocket(ws);
@@ -183,17 +197,40 @@ const Glance = ({ tab }: { tab: string }) => {
       )}
       {currentTab && currentTab != 'insights' && (
         <div className={styles.glanceContainer}>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className={styles.glanceHeader}
-          >
-            {tab === 'checkins' || tab === 'inevent' ? 'Check-In at a Glance' : 'At a Glance'}
-          </motion.p>
+          <div className={styles.glanceHeaderSection}>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className={styles.glanceHeader}
+            >
+              {tab === 'checkins' || tab === 'inevent' ? 'Check-In at a Glance' : 'At a Glance'}
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className={styles.lastUpdated}
+            >
+              Last Updated: Today, {lastUpdated}
+            </motion.p>
+          </div>
 
           {totalGuests >= 0 && (
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={styles.guests}>
-              {totalGuests}/{targetGuests} <span>guests</span>
+              <motion.p
+                animate={{
+                  scale: [1, 1.5, 1, 1.5, 1],
+                  marginRight: [0, 5, 0, 5, 0],
+                  color: ['#ffffff', '#47c97e', '#ffffff', '#47c97e', '#ffffff'],
+                }}
+                transition={{
+                  duration: 0.75,
+                }}
+                key={totalGuests}
+              >
+                {totalGuests}
+              </motion.p>
+              /{targetGuests} <span>guests</span>
             </motion.p>
           )}
 
