@@ -1,8 +1,15 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
+import { hostData } from '../pages/app/Overview/Overview/types';
+import { Dispatch } from 'react';
 
-export const addHosts = async (eventId: string, hostMail: string, role: string) => {
+export const addHosts = async (
+  eventId: string,
+  hostMail: string,
+  role: string,
+  setHostData: Dispatch<React.SetStateAction<hostData>>,
+) => {
   console.log(role);
   privateGateway
     .post(makeMyPass.addHost(eventId), {
@@ -11,20 +18,36 @@ export const addHosts = async (eventId: string, hostMail: string, role: string) 
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Host addedd successfully');
+      setHostData({
+        email: '',
+        role: '',
+        id: '',
+      });
     })
+
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };
 
-export const updateHostRole = async (eventId: string, hostId: string, role: string) => {
+export const updateHostRole = async (
+  eventId: string,
+  hostId: string,
+  role: string,
+  setHostData: Dispatch<React.SetStateAction<hostData>>,
+) => {
   privateGateway
     .put(makeMyPass.updateHostRole(eventId), {
       host_id: hostId,
       role: role,
     })
     .then((response) => {
-      toast.success(response.data.message.general[0] || 'Host addedd successfully');
+      toast.success(response.data.message.general[0] || 'Host added successfully');
+      setHostData({
+        email: '',
+        role: '',
+        id: '',
+      });
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');

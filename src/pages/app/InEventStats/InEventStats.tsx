@@ -122,7 +122,7 @@ const InEventStats = () => {
 
         setTimeout(() => {
           setNewUser('');
-        }, 2000);
+        }, 5000);
       }
   }, [guests, firstRender]);
 
@@ -225,7 +225,7 @@ const InEventStats = () => {
     <Theme>
       <>
         
-        {newUser && newUser.length > 0 && (
+        {(newUser && newUser.length > 0) && (
           <>
             <div className={styles.backgroundBlur}></div>
             <Confetti className={styles.confetti} />
@@ -237,6 +237,7 @@ const InEventStats = () => {
               animate={{
                 opacity: 1,
                 scale: 1,
+               
               }}
               exit={{
                 opacity: 0,
@@ -328,7 +329,7 @@ const InEventStats = () => {
                             }
                       }
                     >
-                      <p className={styles.userName}>{guest.name}</p>
+                      <p className={styles.cuserName}>{guest.name}</p>
                     </div>
                   ))}
               </div>

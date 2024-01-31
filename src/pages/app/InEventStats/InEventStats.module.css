@@ -267,7 +267,7 @@
   z-index: 100;
   backdrop-filter: blur(900px);
 
-  top: 50%;
+  top: 35%;
   left: 0;
   right: 0;
   margin: auto;
@@ -284,6 +284,7 @@
 
 .image {
   width: 20rem;
+  border-radius: 12px;
 }
 
 .districtsCount {
@@ -356,7 +357,7 @@
   z-index: 50;
 }
 
-.confetti{
+.confetti {
   z-index: 75 !important;
 }
 
@@ -389,12 +390,17 @@
   margin: auto;
 }
 
-.userName{
-  font-size: 1.75rem;
+.userName {
+  font-size: 2rem;
   color: #fff;
+}
+
+.cuserName {
+  font-size: 0.9rem;
+  color: white;
 }
 
 .userEmail {
   color: #d2d4d7;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }

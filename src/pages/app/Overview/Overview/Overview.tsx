@@ -167,8 +167,8 @@ const Overview = () => {
   };
 
   const onSubmit = () => {
-    if (!hostData.id) addHosts(eventId, hostData.email, hostData.role);
-    if (hostData.id) updateHostRole(eventId, hostData.id, hostData.role);
+    if (!hostData.id) addHosts(eventId, hostData.email, hostData.role, setHostData);
+    if (hostData.id) updateHostRole(eventId, hostData.id, hostData.role, setHostData);
     setOpenAddModal(false);
   };
 
