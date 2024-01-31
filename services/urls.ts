@@ -21,6 +21,15 @@ export const makeMyPass = {
   checkInCount: (eventId: string) => makeMyPassURL(`/checkin/${eventId}/checkin-count/`),
   editSubmission: (eventId: string, submissionId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/edit-submission/${submissionId}`),
+
+  listSpinWheelItems: (eventId: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/list-spin-wheel-items/`),
+  spin: (eventId: string, ticketCode: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/spin/${ticketCode}`),
+  listUserGifts: (eventId: string, ticketCode: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/list-user-gifts/${ticketCode}`),
+  claimGift: (eventId: string, ticketCode: string, date: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/claim-gift/${ticketCode}/${date}`),
 };
 
 export const makeMyPassSocket = {
