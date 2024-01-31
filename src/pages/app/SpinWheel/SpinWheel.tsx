@@ -14,6 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import toast from 'react-hot-toast';
+import EventHeader from '../../../components/EventHeader/EventHeader';
+import Glance from '../../../components/Glance/Glance';
 
 const SpinWheel = () => {
   const getLocalEventId = () => {
@@ -41,18 +43,20 @@ const SpinWheel = () => {
   const [prizeNumber, setPrizeNumber] = useState<number>(0);
   const [spinWheelData, setSpinWheelData] = useState<OptionStyle[]>([]);
 
+  const [giftName, setGiftName] = useState<string>('');
+
   const [isScanning, setIsScanning] = useState<boolean>(false);
   const [trigger, setTrigger] = useState<boolean>(false);
+  const [prizeTrigger, setPrizeTrigger] = useState<boolean>(true);
 
   const [message, setMessage] = useState('');
 
-  const handleSpinClick = () => {
-    // if (!mustSpin) {
-    //   const newPrizeNumber = Math.floor(Math.random() * spinWheelData.length);
-    //   setPrizeNumber(newPrizeNumber);
-    //   setMustSpin(true);
-    //   setMessage(`You won a ${spinWheelData[newPrizeNumber]?.option}!`);
-    // }
+  const handleSpinClick = (prizeIndex: number) => {
+    if (!mustSpin) {
+      setPrizeNumber(prizeIndex);
+      setMustSpin(true);
+      setMessage(`You won a ${spinWheelData[prizeIndex]?.option}!`);
+    }
   };
 
   useEffect(() => {
@@ -62,14 +66,24 @@ const SpinWheel = () => {
   useEffect(() => {
     if (trigger && ticketId.length > 0) {
       setIsScanning(false);
-      spin(eventId, ticketId);
-    } else {
-      toast.error('There was an error verifing your ticket. Please try again.');
+      spin(eventId, ticketId, setGiftName);
     }
   }, [trigger, ticketId]);
 
+  useEffect(() => {
+    if (giftName.length > 0) {
+      const prizeIndex = spinWheelData.findIndex((item) => item.option === giftName);
+      setPrizeTrigger(true);
+      handleSpinClick(prizeIndex);
+    }
+  }, [giftName]);
+
   return (
     <Theme>
+      <div className={styles.outerContainer}>
+        <Glance tab='spinwheel' />
+      </div>
+
       {spinWheelData && spinWheelData.length > 0 ? (
         <div className={styles.spinWheelContainer}>
           {isScanning && (
@@ -121,7 +135,7 @@ const SpinWheel = () => {
             </div>
           )}
 
-          {!isScanning && (
+          {!isScanning && prizeTrigger && (
             <div className={styles.wheel}>
               <Wheel
                 innerBorderWidth={0}
@@ -150,7 +164,8 @@ const SpinWheel = () => {
                   if (!ticketId) {
                     setIsScanning(true);
                   } else {
-                    handleSpinClick();
+                    setTicketId('');
+                    setIsScanning(true);
                   }
                 }}
               />

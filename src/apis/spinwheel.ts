@@ -38,7 +38,7 @@ export const listSpinWheelItems = async (eventId: string, setSpinWheelItems: any
 
 export const listUserGifts = async (eventId: string, ticketCode: string, setGifts?: any) => {
   privateGateway
-    .post(makeMyPass.listUserGift(eventId, ticketCode))
+    .get(makeMyPass.listUserGift(eventId, ticketCode))
 
     .then((response) => {
       const gifts = response.data.response.gifts;
@@ -49,13 +49,17 @@ export const listUserGifts = async (eventId: string, ticketCode: string, setGift
     });
 };
 
-export const spin = async (eventId: string, ticketCode: string, setGifts?: any) => {
+export const spin = async (
+  eventId: string,
+  ticketCode: string,
+  setGiftName: React.Dispatch<React.SetStateAction<string>>,
+) => {
   privateGateway
     .post(makeMyPass.spin(eventId, ticketCode))
 
     .then((response) => {
-      const gifts = response.data.response.gifts;
-      setGifts(gifts);
+      const gift = response.data.response.gift;
+      setGiftName(gift);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');

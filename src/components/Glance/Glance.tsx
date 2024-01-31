@@ -216,7 +216,7 @@ const Glance = ({ tab }: { tab: string }) => {
           </div>
         </div>
       )}
-      {currentTab && currentTab != 'insights' && (
+      {currentTab && currentTab != 'insights' && currentTab != 'spinwheel' && (
         <div className={styles.glanceContainer}>
           <div className={styles.glanceHeaderSection}>
             <motion.p

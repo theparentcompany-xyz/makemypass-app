@@ -25,6 +25,7 @@ import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
 import { getEventId } from '../../../apis/events';
 import Confetti from 'react-confetti';
+import EventHeader from '../../../components/EventHeader/EventHeader';
 
 ChartJS.register(
   CategoryScale,
@@ -224,25 +225,23 @@ const InEventStats = () => {
   return (
     <Theme>
       <>
-        {(newUser && newUser.length > 0) && (
+        
+        {newUser && newUser.length > 0 && (
           <>
             <div className={styles.backgroundBlur}></div>
             <Confetti className={styles.confetti} />
             <motion.dialog
               initial={{
-               opacity: 0,
-               scale: 0.5,
-             
+                opacity: 0,
+                scale: 0.5,
               }}
               animate={{
                 opacity: 1,
                 scale: 1,
-               
               }}
               exit={{
                 opacity: 0,
                 scale: 0.5,
-               
               }}
               open
               className={styles.welcomeContainer}
