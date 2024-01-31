@@ -53,6 +53,7 @@ export const spin = async (
   eventId: string,
   ticketCode: string,
   setGiftName: React.Dispatch<React.SetStateAction<string>>,
+  setPrizeTrigger: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   privateGateway
     .post(makeMyPass.spin(eventId, ticketCode))
@@ -63,5 +64,6 @@ export const spin = async (
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+      setPrizeTrigger(true);
     });
 };

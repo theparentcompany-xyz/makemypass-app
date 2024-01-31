@@ -14,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import toast from 'react-hot-toast';
-import EventHeader from '../../../components/EventHeader/EventHeader';
 import Glance from '../../../components/Glance/Glance';
 
 const SpinWheel = () => {
@@ -39,42 +38,36 @@ const SpinWheel = () => {
   const eventId = getLocalEventId();
 
   const [ticketId, setTicketId] = useState<string>('');
+
   const [mustSpin, setMustSpin] = useState(false);
-  const [prizeNumber, setPrizeNumber] = useState<number>(0);
+  const [prizeNumber, setPrizeNumber] = useState<number | null>();
+  const [giftName, setGiftName] = useState<string>('');
   const [spinWheelData, setSpinWheelData] = useState<OptionStyle[]>([]);
 
-  const [giftName, setGiftName] = useState<string>('');
-
   const [isScanning, setIsScanning] = useState<boolean>(false);
-  const [trigger, setTrigger] = useState<boolean>(false);
+  const [idTrigger, setIdTrigger] = useState<boolean>(false);
   const [prizeTrigger, setPrizeTrigger] = useState<boolean>(true);
 
-  const [message, setMessage] = useState('');
-
-  const handleSpinClick = (prizeIndex: number) => {
-    if (!mustSpin) {
-      setPrizeNumber(prizeIndex);
-      setMustSpin(true);
-      setMessage(`You won a ${spinWheelData[prizeIndex]?.option}!`);
-    }
-  };
+  const [winMessage, setWinMessage] = useState('');
 
   useEffect(() => {
     listSpinWheelItems(eventId, setSpinWheelData);
   }, []);
 
   useEffect(() => {
-    if (trigger && ticketId.length > 0) {
+    if (idTrigger && ticketId.length > 0) {
+      setPrizeTrigger(false);
       setIsScanning(false);
-      spin(eventId, ticketId, setGiftName);
+      spin(eventId, ticketId, setGiftName, setPrizeTrigger);
     }
-  }, [trigger, ticketId]);
+  }, [idTrigger, ticketId]);
 
   useEffect(() => {
     if (giftName.length > 0) {
       const prizeIndex = spinWheelData.findIndex((item) => item.option === giftName);
+      setPrizeNumber(prizeIndex);
       setPrizeTrigger(true);
-      handleSpinClick(prizeIndex);
+      setMustSpin(true);
     }
   }, [giftName]);
 
@@ -105,7 +98,7 @@ const SpinWheel = () => {
                     }}
                     onResult={(result) => {
                       setTicketId(result.getText());
-                      setTrigger(true);
+                      setIdTrigger(true);
                     }}
                     onError={(error) => {
                       toast.error(error.message);
@@ -127,7 +120,7 @@ const SpinWheel = () => {
                 />
                 <SecondaryButton
                   onClick={() => {
-                    setTrigger(true);
+                    setIdTrigger(true);
                   }}
                   buttonText='Confirm Ticket Number'
                 />
@@ -135,7 +128,7 @@ const SpinWheel = () => {
             </div>
           )}
 
-          {!isScanning && prizeTrigger && (
+          {!isScanning && prizeTrigger && prizeNumber && !isNaN(prizeNumber) && (
             <div className={styles.wheel}>
               <Wheel
                 innerBorderWidth={0}
@@ -166,12 +159,13 @@ const SpinWheel = () => {
                   } else {
                     setTicketId('');
                     setIsScanning(true);
+                    setWinMessage('');
                   }
                 }}
               />
             </div>
           )}
-          {!mustSpin && <p className={styles.messageText}>{message}</p>}
+          {!mustSpin && <p className={styles.messageText}>{winMessage}</p>}
         </div>
       ) : (
         <div className={styles.center}>
