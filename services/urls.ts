@@ -30,6 +30,8 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-event/${eventId}/list-user-gifts/${ticketCode}`),
   claimGift: (eventId: string, ticketCode: string, date: string) =>
     makeMyPassURL(`/manage-event/${eventId}/claim-gift/${ticketCode}/${date}`),
+  downloadTicket: (eventId: string, ticketCode: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/download-ticket/${ticketCode}`),
 };
 
 export const makeMyPassSocket = {

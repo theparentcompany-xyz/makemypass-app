@@ -7,11 +7,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MdEdit } from 'react-icons/md';
 import { FixedSizeList } from 'react-window';
 import { FaCheck } from 'react-icons/fa6';
+import { MdDownload } from 'react-icons/md';
 
 type ItemDataType = {
   filteredData: TableType[];
   setResentTicket?: Dispatch<React.SetStateAction<resentTicket>>;
-  setSelectedGuestId?: Dispatch<React.SetStateAction<string | null>>;
+  setSelectedGuestId?: Dispatch<React.SetStateAction<any | null>>;
 };
 
 const RowComponent = React.memo(
@@ -60,7 +61,25 @@ const RowComponent = React.memo(
                 <MdEdit
                   onClick={() => {
                     if (setSelectedGuestId) {
-                      setSelectedGuestId(item.id);
+                      setSelectedGuestId((prevState: any) => ({
+                        ...prevState,
+                        id: item.id,
+                        type: 'edit',
+                      }));
+                    }
+                  }}
+                  color='#8E8E8E'
+                />
+              </div>
+              <div className={styles.icon}>
+                <MdDownload
+                  onClick={() => {
+                    if (setSelectedGuestId) {
+                      setSelectedGuestId((prevState: any) => ({
+                        ...prevState,
+                        id: item.id,
+                        type: 'download',
+                      }));
                     }
                   }}
                   color='#8E8E8E'
@@ -85,14 +104,16 @@ const Table = ({
   tableData: TableType[];
   search?: string;
   setResentTicket?: Dispatch<React.SetStateAction<resentTicket>>;
-  setSelectedGuestId?: Dispatch<React.SetStateAction<string | null>>;
+  setSelectedGuestId?: Dispatch<React.SetStateAction<any | null>>;
 }) => {
   const filteredData = useMemo(() => {
     let keyword = '';
     if (search) keyword = search.toLowerCase();
     return tableData.filter(
       (item) =>
-        item.name?.toLowerCase().includes(keyword) || item.email.toLowerCase().includes(keyword) || item.phone_number.toLowerCase().includes(keyword),
+        item.name?.toLowerCase().includes(keyword) ||
+        item.email.toLowerCase().includes(keyword) ||
+        item.phone_number.toLowerCase().includes(keyword),
     );
   }, [tableData, search]);
 

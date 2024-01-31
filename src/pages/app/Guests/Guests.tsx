@@ -5,7 +5,7 @@ import Header from '../../../components/EventHeader/EventHeader';
 import styles from './Guests.module.css';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
-import { useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { guests, resentTicket } from './types';
 import { getEventId } from '../../../apis/events';
 import { RiSearchLine } from 'react-icons/ri';
@@ -13,7 +13,7 @@ import { HashLoader } from 'react-spinners';
 import Table from '../../../components/Table/Table';
 import { transformTableData } from '../../../common/commonFunctions';
 import { TableType } from '../../../components/Table/types';
-import { editSubmissons, resentEventTicket } from '../../../apis/guests';
+import { downloadTicket, editSubmissons, resentEventTicket } from '../../../apis/guests';
 
 import Select from 'react-select';
 import { categoryOptions, districtOptions } from './data';
@@ -24,7 +24,10 @@ const Guests = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
-  const [selectedGuestId, setSelectedGuestId] = useState<string | null>(null);
+  const [selectedGuestId, setSelectedGuestId] = useState({
+    id: '',
+    type: '',
+  });
   const [selectedGuest, setSelectedGuest] = useState<guests | null>(null);
 
   const [resentTicket, setResentTicket] = useState<resentTicket>({
@@ -49,7 +52,7 @@ const Guests = () => {
   };
 
   const getGuestData = () => {
-    const selectedGuestData = guests.filter((guest) => guest.id === selectedGuestId);
+    const selectedGuestData = guests.filter((guest) => guest.id === selectedGuestId.id);
 
     setSelectedGuest(selectedGuestData[0]);
   };
@@ -58,7 +61,7 @@ const Guests = () => {
   const eventId = getLocalEventId();
 
   useEffect(() => {
-    if (eventId && !selectedGuestId) {
+    if (eventId && !selectedGuestId.id) {
       if (socket) socket.close();
       connectPrivateSocket({
         url: makeMyPassSocket.listGuests(eventId),
@@ -89,7 +92,9 @@ const Guests = () => {
   }, []);
 
   useEffect(() => {
-    getGuestData();
+    if (selectedGuestId.id && selectedGuestId.type === 'edit') getGuestData();
+    else if (selectedGuestId.id && selectedGuestId.type === 'download')
+      downloadTicket(eventId, selectedGuestId.id);
   }, [selectedGuestId]);
 
   const handleDistrictChange = (event: any) => {
@@ -210,7 +215,7 @@ const Guests = () => {
               </div>
             </dialog>
           )}
-          {selectedGuestId && (
+          {selectedGuestId && selectedGuestId.id.length > 0 && selectedGuestId.type === 'edit' && (
             <dialog className={styles.onClickModal}>
               <div className={styles.userInfoModalContainer}>
                 <p className={styles.modalHeader}>Edit Guest</p>
@@ -322,7 +327,10 @@ const Guests = () => {
                   </p>
                   <p
                     onClick={() => {
-                      setSelectedGuestId(null);
+                      setSelectedGuestId({
+                        id: '',
+                        type: '',
+                      });
                     }}
                     className={styles.button}
                   >

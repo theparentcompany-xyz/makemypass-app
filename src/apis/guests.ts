@@ -31,7 +31,7 @@ export const resentEventTicket = async (
 export const editSubmissons = async (
   eventId: string,
   data: guests | null,
-  setSelectedGuestId: React.Dispatch<React.SetStateAction<string | null>>,
+  setSelectedGuestId: React.Dispatch<React.SetStateAction<any | null>>,
 ) => {
   const dataToSent = {
     name: data?.name,
@@ -55,4 +55,16 @@ export const editSubmissons = async (
   else {
     toast.error("Edit data can't be empty");
   }
+};
+
+export const downloadTicket = async (eventId: string, ticketCode: string) => {
+  privateGateway
+    .get(makeMyPass.downloadTicket(eventId, ticketCode))
+    .then((response) => {
+      toast.success(response.data.message.general[0] || 'Ticket downloaded successfully');
+      window.open(response.data.response.image, '_blank');
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Something went wrong');
+    });
 };
