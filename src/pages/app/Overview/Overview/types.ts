@@ -17,6 +17,7 @@ export type hostList = {
 };
 
 export type hostData = {
-  email: string,
-  role: string
-}
+  email: string;
+  role: string;
+  id?: string;
+};

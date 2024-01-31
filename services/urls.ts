@@ -33,7 +33,8 @@ export const makeMyPass = {
   downloadTicket: (eventId: string, ticketCode: string) =>
     makeMyPassURL(`/manage-event/${eventId}/download-ticket/${ticketCode}`),
 
-  addHost: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/add-host`),
+  addHost: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/add-host/`),
+  updateHostRole: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/update-host-role/`)
 };
 
 export const makeMyPassSocket = {

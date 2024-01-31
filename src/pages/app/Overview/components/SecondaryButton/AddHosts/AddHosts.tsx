@@ -18,7 +18,7 @@ const AddHosts = ({
 }) => {
   const handleRoleChange = (event: any) => {
     const selectedRole = event.value;
-    console.log(selectedRole)
+    console.log(selectedRole);
     setHostData((prevState) => ({
       ...prevState!,
       role: selectedRole,
@@ -62,9 +62,11 @@ const AddHosts = ({
         <div className={styles.inputContainers}>
           <div className={styles.inputContainer}>
             <p className={styles.inputLabel}>Email</p>
+
             <input
               value={hostData?.email}
               className={styles.input}
+              disabled={hostData.id ? true : false}
               type='text'
               onChange={(event) => {
                 setHostData((prevState) => ({
@@ -83,7 +85,7 @@ const AddHosts = ({
               classNamePrefix='select'
               value={roleOptions.filter((role) => role.value === hostData?.role)[0]}
               onChange={(event) => {
-                console.log(event?.value)
+                console.log(event?.value);
                 handleRoleChange(event);
               }}
               name='role'

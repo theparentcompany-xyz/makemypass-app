@@ -22,7 +22,7 @@ import { TableType } from '../../../../components/Table/types';
 import { transformTableData } from '../../../../common/commonFunctions';
 import SecondaryButton from '../components/SecondaryButton/SecondaryButton';
 import AddHosts from '../components/SecondaryButton/AddHosts/AddHosts';
-import { addHosts } from '../../../../apis/host';
+import { addHosts, updateHostRole } from '../../../../apis/host';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
@@ -32,6 +32,7 @@ const Overview = () => {
 
   const [hostList, setHostList] = useState<hostList[]>([]);
   const [hostListTableData, setHostListTableData] = useState<TableType[]>([]);
+  const [hostId, setHostId] = useState<string>('');
 
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -117,6 +118,7 @@ const Overview = () => {
       name: 'name',
       email: 'email',
       role: 'category',
+      id: 'id',
     };
     if (hostList) {
       const transformedHostList = transformTableData(hostListMapping, hostList);
@@ -124,12 +126,28 @@ const Overview = () => {
     }
   }, [hostList]);
 
+  useEffect(() => {
+    if (hostId) {
+      const selectedHost = hostList.filter((host) => host.id === hostId)[0];
+
+      setHostData((prevState) => ({
+        ...prevState!,
+        email: selectedHost.email,
+        role: selectedHost.role,
+        id: selectedHost.id,
+      }));
+
+      setOpenAddModal(true);
+    }
+  }, [hostId]);
+
   const addHost = () => {
     setOpenAddModal(true);
   };
 
   const onSubmit = () => {
-    addHosts(eventId, hostData.email, hostData.role);
+    if (!hostData.id) addHosts(eventId, hostData.email, hostData.role);
+    if (hostData.id) updateHostRole(eventId, hostData.id, hostData.role);
     setOpenAddModal(false);
   };
 
@@ -186,6 +204,7 @@ const Overview = () => {
                 tableHeading='Event Hosts'
                 tableData={hostListTableData}
                 secondaryButton={<SecondaryButton buttonText='Add Hosts +' onClick={addHost} />}
+                setHostId={setHostId}
               />
             </div>
           </div>

@@ -8,17 +8,17 @@ import { MdEdit } from 'react-icons/md';
 import { FixedSizeList } from 'react-window';
 import { FaCheck } from 'react-icons/fa6';
 import { MdDownload } from 'react-icons/md';
-import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 
 type ItemDataType = {
   filteredData: TableType[];
   setResentTicket?: Dispatch<React.SetStateAction<resentTicket>>;
   setSelectedGuestId?: Dispatch<React.SetStateAction<any | null>>;
+  setHostId?: Dispatch<React.SetStateAction<string>>;
 };
 
 const RowComponent = React.memo(
   ({ index, style, data }: { index: number; style: React.CSSProperties; data: ItemDataType }) => {
-    const { filteredData, setResentTicket, setSelectedGuestId } = data;
+    const { filteredData, setResentTicket, setSelectedGuestId, setHostId } = data;
     const item = filteredData[index];
 
     return (
@@ -88,6 +88,19 @@ const RowComponent = React.memo(
               </div>
             </>
           )}
+          {setHostId && (
+            <div className={styles.icon}>
+              <MdEdit
+                onClick={() => {
+                  if (setHostId) {
+                    setHostId(item.id);
+                    
+                  }
+                }}
+                color='#8E8E8E'
+              />
+            </div>
+          )}
         </div>
       </motion.div>
     );
@@ -100,7 +113,8 @@ const Table = ({
   search,
   setResentTicket,
   setSelectedGuestId,
-  secondaryButton
+  secondaryButton,
+  setHostId,
 }: {
   tableHeading: string;
   tableData: TableType[];
@@ -108,6 +122,7 @@ const Table = ({
   setResentTicket?: Dispatch<React.SetStateAction<resentTicket>>;
   setSelectedGuestId?: Dispatch<React.SetStateAction<any | null>>;
   secondaryButton?: React.ReactElement;
+  setHostId?: Dispatch<React.SetStateAction<string>>;
 }) => {
   const filteredData = useMemo(() => {
     let keyword = '';
@@ -125,8 +140,9 @@ const Table = ({
       filteredData,
       setResentTicket,
       setSelectedGuestId,
+      setHostId,
     }),
-    [filteredData, setResentTicket, setSelectedGuestId],
+    [filteredData, setResentTicket, setSelectedGuestId, setHostId],
   );
 
   return (
