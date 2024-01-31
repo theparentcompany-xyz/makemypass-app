@@ -15,3 +15,8 @@ export type hostList = {
   email: string;
   role: string;
 };
+
+export type hostData = {
+  email: string,
+  role: string
+}

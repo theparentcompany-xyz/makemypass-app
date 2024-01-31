@@ -8,6 +8,7 @@ import { MdEdit } from 'react-icons/md';
 import { FixedSizeList } from 'react-window';
 import { FaCheck } from 'react-icons/fa6';
 import { MdDownload } from 'react-icons/md';
+import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 
 type ItemDataType = {
   filteredData: TableType[];
@@ -99,12 +100,14 @@ const Table = ({
   search,
   setResentTicket,
   setSelectedGuestId,
+  secondaryButton
 }: {
   tableHeading: string;
   tableData: TableType[];
   search?: string;
   setResentTicket?: Dispatch<React.SetStateAction<resentTicket>>;
   setSelectedGuestId?: Dispatch<React.SetStateAction<any | null>>;
+  secondaryButton?: React.ReactElement;
 }) => {
   const filteredData = useMemo(() => {
     let keyword = '';
@@ -131,6 +134,7 @@ const Table = ({
       <div className={styles.tableOuterContainer}>
         <div className={styles.tableHeader}>
           <p className={styles.tableHeading}>{tableHeading}</p>
+          {secondaryButton && secondaryButton}
         </div>
 
         <div className={styles.tableContainer}>

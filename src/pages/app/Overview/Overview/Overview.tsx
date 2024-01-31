@@ -7,7 +7,7 @@ import styles from './Overview.module.css';
 import SectionButton from '../../../../components/SectionButton/SectionButton';
 import { useEffect, useState } from 'react';
 
-import { hostList, recentRegistration } from './types';
+import { hostData, hostList, recentRegistration } from './types';
 
 import { HashLoader } from 'react-spinners';
 import { getHosts } from '../../../../apis/overview';
@@ -20,6 +20,9 @@ import { getEventId } from '../../../../apis/events';
 import Table from '../../../../components/Table/Table';
 import { TableType } from '../../../../components/Table/types';
 import { transformTableData } from '../../../../common/commonFunctions';
+import SecondaryButton from '../components/SecondaryButton/SecondaryButton';
+import AddHosts from '../components/SecondaryButton/AddHosts/AddHosts';
+import { addHosts } from '../../../../apis/host';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
@@ -32,6 +35,12 @@ const Overview = () => {
 
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
+
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [hostData, setHostData] = useState<hostData>({
+    email: '',
+    role: '',
+  });
 
   useEffect(() => {
     let eventData = JSON.parse(localStorage.getItem('eventData') as string);
@@ -115,9 +124,30 @@ const Overview = () => {
     }
   }, [hostList]);
 
+  const addHost = () => {
+    setOpenAddModal(true);
+  };
+
+  const onSubmit = () => {
+    addHosts(eventId, hostData.email, hostData.role);
+    setOpenAddModal(false);
+  };
+
   return (
     <Theme>
       <>
+        {openAddModal && (
+          <AddHosts
+            hostData={hostData}
+            setHostData={setHostData}
+            onSubmit={() => {
+              onSubmit();
+            }}
+            onClose={() => {
+              setOpenAddModal(false);
+            }}
+          />
+        )}
         {recentRegistrations && recentRegistrations.length > 0 && hostList ? (
           <div className={styles.overviewContainer}>
             <Header />
@@ -152,7 +182,11 @@ const Overview = () => {
             <Table tableHeading='Recent Registration' tableData={recentTableData} />
 
             <div id='hosts'>
-              <Table tableHeading='Event Hosts' tableData={hostListTableData} />
+              <Table
+                tableHeading='Event Hosts'
+                tableData={hostListTableData}
+                secondaryButton={<SecondaryButton buttonText='Add Hosts +' onClick={addHost} />}
+              />
             </div>
           </div>
         ) : (
