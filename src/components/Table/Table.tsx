@@ -6,6 +6,7 @@ import { BsTicketPerforatedFill } from 'react-icons/bs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MdEdit } from 'react-icons/md';
 import { FixedSizeList } from 'react-window';
+import { FaCheck } from 'react-icons/fa6';
 
 type ItemDataType = {
   filteredData: TableType[];
@@ -14,7 +15,7 @@ type ItemDataType = {
 };
 
 const RowComponent = React.memo(
-  ({ index, style, data }: { index: number; style: React.CSSProperties; data: ItemDataType; }) => {
+  ({ index, style, data }: { index: number; style: React.CSSProperties; data: ItemDataType }) => {
     const { filteredData, setResentTicket, setSelectedGuestId } = data;
     const item = filteredData[index];
 
@@ -28,6 +29,11 @@ const RowComponent = React.memo(
         <div className={styles.rowData}>
           <p className={styles.rowName}>{item.name}</p>
           <p className={styles.rowEmail}>{item.email}</p>
+          {item.check_in_date && (
+            <div className={styles.icon}>
+              <FaCheck color='white' size={12} />
+            </div>
+          )}
         </div>
         <div className={styles.rowData}>
           <p className={styles.rowType}>{item.category}</p>
@@ -85,13 +91,11 @@ const Table = ({
     if (search) keyword = search.toLowerCase();
     return tableData.filter(
       (item) =>
-        item.name.toLowerCase().includes(keyword) || item.email.toLowerCase().includes(keyword),
+        item.name?.toLowerCase().includes(keyword) || item.email.toLowerCase().includes(keyword),
     );
   }, [tableData, search]);
 
-
-
-  const itemData:ItemDataType = useMemo(
+  const itemData: ItemDataType = useMemo(
     () => ({
       filteredData,
       setResentTicket,
@@ -111,7 +115,7 @@ const Table = ({
           <div className={styles.table}>
             <AnimatePresence>
               <FixedSizeList
-                height={500} // Adjust based on your UI
+                height={filteredData.length > 10 ? 550 : filteredData.length * 35}
                 width='100%'
                 itemCount={filteredData.length}
                 itemSize={35} // Adjust based on row height

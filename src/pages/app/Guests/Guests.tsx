@@ -119,6 +119,7 @@ const Guests = () => {
       email: 'email',
       category: 'category',
       registered_at: 'date',
+      check_in_date: 'check_in_date',
     };
 
     if (guests) {
