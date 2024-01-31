@@ -10,6 +10,10 @@ import { useParams } from 'react-router-dom';
 import { getEventId } from '../../../apis/events';
 import { HashLoader } from 'react-spinners';
 import { OptionStyle } from './types';
+import { useNavigate } from 'react-router-dom';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import { QrScanner } from '@yudiel/react-qr-scanner';
+import toast from 'react-hot-toast';
 
 const SpinWheel = () => {
   const getLocalEventId = () => {
@@ -27,12 +31,14 @@ const SpinWheel = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const eventId = getLocalEventId();
 
+  const [ticketId, setTicketId] = useState<string>('');
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
-
   const [spinWheelData, setSpinWheelData] = useState<OptionStyle[]>([]);
 
   const [message, setMessage] = useState('');
@@ -55,6 +61,49 @@ const SpinWheel = () => {
     <Theme>
       {spinWheelData && spinWheelData.length > 0 ? (
         <div className={styles.spinWheelContainer}>
+          <div className={styles.scannerContainer}>
+            <p className={styles.scanHeader}>Scan QR Code Below</p>
+            <div className={styles.scannerOuterContainer}>
+              <div className={styles.scanner}>
+                <div className={styles.closeButton}>
+                  <SecondaryButton
+                    buttonText='Close'
+                    onClick={() => {
+                      navigate(-1);
+                    }}
+                  />
+                </div>
+                <QrScanner
+                  containerStyle={{
+                    backgroundColor: '#000',
+                  }}
+                  onResult={(result) => {
+                    setTicketId(result.getText());
+                  }}
+                  onError={(error) => {
+                    toast.error(error.message);
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className={styles.inputContainer}>
+              <br />
+              <p className={styles.inputText}>Or Enter Code Below</p>
+              <input
+                className={styles.input}
+                placeholder='Enter Ticket Code'
+                value={ticketId}
+                onChange={(e) => {
+                  setTicketId(e.target.value);
+                }}
+              />
+              <SecondaryButton
+                buttonText='Check In'
+                
+              />
+            </div>
+          </div>
           <div className={styles.wheel}>
             <Wheel
               innerBorderWidth={0}
