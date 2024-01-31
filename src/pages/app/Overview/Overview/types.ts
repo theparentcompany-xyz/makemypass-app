@@ -21,3 +21,8 @@ export type hostData = {
   role: string;
   id?: string;
 };
+
+export type hostId = {
+  id: string;
+  type: 'edit' | 'delete';
+};

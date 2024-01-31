@@ -97,7 +97,7 @@ const AddHosts = ({
 
         <div className={styles.buttons}>
           <p className={styles.button} onClick={onSubmit}>
-            Add Host
+            {hostData.id ? 'Edit Host' : 'Add Host'}
           </p>
           <p className={styles.button} onClick={onClose}>
             Cancel

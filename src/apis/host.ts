@@ -30,3 +30,19 @@ export const updateHostRole = async (eventId: string, hostId: string, role: stri
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };
+
+export const removeHost = async (
+  eventId: string,
+  hostId: string,
+  setOpenDeleteModal: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+  privateGateway
+    .delete(makeMyPass.removeHost(eventId, hostId))
+    .then((response) => {
+      toast.success(response.data.message.general[0] || 'Host removed successfully');
+      setOpenDeleteModal(false);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};

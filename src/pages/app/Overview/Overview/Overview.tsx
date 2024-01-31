@@ -7,7 +7,7 @@ import styles from './Overview.module.css';
 import SectionButton from '../../../../components/SectionButton/SectionButton';
 import { useEffect, useState } from 'react';
 
-import { hostData, hostList, recentRegistration } from './types';
+import { hostData, hostId, hostList, recentRegistration } from './types';
 
 import { HashLoader } from 'react-spinners';
 import { getHosts } from '../../../../apis/overview';
@@ -22,7 +22,7 @@ import { TableType } from '../../../../components/Table/types';
 import { transformTableData } from '../../../../common/commonFunctions';
 import SecondaryButton from '../components/SecondaryButton/SecondaryButton';
 import AddHosts from '../components/SecondaryButton/AddHosts/AddHosts';
-import { addHosts, updateHostRole } from '../../../../apis/host';
+import { addHosts, removeHost, updateHostRole } from '../../../../apis/host';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
@@ -32,12 +32,16 @@ const Overview = () => {
 
   const [hostList, setHostList] = useState<hostList[]>([]);
   const [hostListTableData, setHostListTableData] = useState<TableType[]>([]);
-  const [hostId, setHostId] = useState<string>('');
+  const [hostId, setHostId] = useState<hostId>({
+    id: '',
+    type: 'edit',
+  });
 
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
   const [openAddModal, setOpenAddModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [hostData, setHostData] = useState<hostData>({
     email: '',
     role: '',
@@ -127,22 +131,39 @@ const Overview = () => {
   }, [hostList]);
 
   useEffect(() => {
-    if (hostId) {
-      const selectedHost = hostList.filter((host) => host.id === hostId)[0];
+    if (hostId && hostId.type === 'edit' && hostId.id.length > 0) {
+      const selectedHost = hostList.filter((host) => host.id === hostId.id)[0];
 
       setHostData((prevState) => ({
         ...prevState!,
-        email: selectedHost.email,
-        role: selectedHost.role,
-        id: selectedHost.id,
+        email: selectedHost?.email,
+        role: selectedHost?.role,
+        id: selectedHost?.id,
       }));
 
       setOpenAddModal(true);
+    }
+
+    if (hostId && hostId.type === 'delete') {
+      const selectedHost = hostList.filter((host) => host.id === hostId.id)[0];
+
+      setHostData((prevState) => ({
+        ...prevState!,
+        email: selectedHost?.email,
+        role: selectedHost?.role,
+        id: selectedHost?.id,
+      }));
+      console.log(selectedHost);
+      setOpenDeleteModal(true);
     }
   }, [hostId]);
 
   const addHost = () => {
     setOpenAddModal(true);
+  };
+
+  const removeHostAccount = () => {
+    removeHost(eventId, hostId.id, setOpenDeleteModal);
   };
 
   const onSubmit = () => {
@@ -165,6 +186,40 @@ const Overview = () => {
               setOpenAddModal(false);
             }}
           />
+        )}
+        {openDeleteModal && (
+          <dialog className={styles.onClickModal}>
+            <p className={styles.modalHeader}>Remove Host</p>
+            <p className={styles.modalSubText}>
+              Are you sure you want to delete&nbsp;
+              <span
+                style={{
+                  fontWeight: '600',
+                  color: '#ff0c28',
+                }}
+              >
+                {hostData.email}
+              </span>
+            </p>
+            <div className={styles.buttons}>
+              <p
+                onClick={() => {
+                  removeHostAccount();
+                }}
+                className={styles.button}
+              >
+                Remove Host
+              </p>
+              <p
+                onClick={() => {
+                  setOpenDeleteModal(false);
+                }}
+                className={styles.button}
+              >
+                Cancel
+              </p>
+            </div>
+          </dialog>
         )}
         {recentRegistrations && recentRegistrations.length > 0 && hostList ? (
           <div className={styles.overviewContainer}>

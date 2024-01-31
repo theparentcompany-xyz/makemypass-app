@@ -4,16 +4,17 @@ import styles from './Table.module.css';
 import { TableType } from './types';
 import { BsTicketPerforatedFill } from 'react-icons/bs';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MdEdit } from 'react-icons/md';
+import { MdDelete, MdEdit } from 'react-icons/md';
 import { FixedSizeList } from 'react-window';
 import { FaCheck } from 'react-icons/fa6';
 import { MdDownload } from 'react-icons/md';
+import { hostId } from '../../pages/app/Overview/Overview/types';
 
 type ItemDataType = {
   filteredData: TableType[];
   setResentTicket?: Dispatch<React.SetStateAction<resentTicket>>;
   setSelectedGuestId?: Dispatch<React.SetStateAction<any | null>>;
-  setHostId?: Dispatch<React.SetStateAction<string>>;
+  setHostId?: Dispatch<React.SetStateAction<hostId>>;
 };
 
 const RowComponent = React.memo(
@@ -89,17 +90,36 @@ const RowComponent = React.memo(
             </>
           )}
           {setHostId && (
-            <div className={styles.icon}>
-              <MdEdit
-                onClick={() => {
-                  if (setHostId) {
-                    setHostId(item.id);
-                    
-                  }
-                }}
-                color='#8E8E8E'
-              />
-            </div>
+            <>
+              <div className={styles.icon}>
+                <MdEdit
+                  onClick={() => {
+                    if (setHostId) {
+                      setHostId((prevState: any) => ({
+                        ...prevState,
+                        id: item.id,
+                        type: 'edit',
+                      }));
+                    }
+                  }}
+                  color='#8E8E8E'
+                />
+              </div>
+              <div className={styles.icon}>
+                <MdDelete
+                  onClick={() => {
+                    if (setHostId) {
+                      setHostId((prevState: any) => ({
+                        ...prevState,
+                        id: item.id,
+                        type: 'delete',
+                      }));
+                    }
+                  }}
+                  color='#8E8E8E'
+                />
+              </div>
+            </>
           )}
         </div>
       </motion.div>
@@ -122,7 +142,7 @@ const Table = ({
   setResentTicket?: Dispatch<React.SetStateAction<resentTicket>>;
   setSelectedGuestId?: Dispatch<React.SetStateAction<any | null>>;
   secondaryButton?: React.ReactElement;
-  setHostId?: Dispatch<React.SetStateAction<string>>;
+  setHostId?: Dispatch<React.SetStateAction<hostId>>;
 }) => {
   const filteredData = useMemo(() => {
     let keyword = '';
