@@ -5,7 +5,7 @@ import SectionButton from '../../../components/SectionButton/SectionButton';
 
 import { Wheel } from 'react-custom-roulette';
 import { ImSpinner9 } from 'react-icons/im';
-import { listSpinWheelItems, listUserGifts, spin } from '../../../apis/spinwheel';
+import { listSpinWheelItems, spin } from '../../../apis/spinwheel';
 import { useParams } from 'react-router-dom';
 import { getEventId } from '../../../apis/events';
 import { HashLoader } from 'react-spinners';

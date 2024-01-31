@@ -25,7 +25,6 @@ import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
 import { getEventId } from '../../../apis/events';
 import Confetti from 'react-confetti';
-import EventHeader from '../../../components/EventHeader/EventHeader';
 
 ChartJS.register(
   CategoryScale,
