@@ -2,6 +2,7 @@ import Glance from '../../../components/Glance/Glance';
 import Theme from '../../../components/Theme/Theme';
 import Header from '../../../components/EventHeader/EventHeader';
 import styles from './InEventStats.module.css';
+import { motion } from 'framer-motion';
 
 import {
   Chart as ChartJS,
@@ -23,6 +24,7 @@ import { useParams } from 'react-router-dom';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
 import { getEventId } from '../../../apis/events';
+import Confetti from 'react-confetti';
 
 ChartJS.register(
   CategoryScale,
@@ -222,17 +224,36 @@ const InEventStats = () => {
   return (
     <Theme>
       <>
-        {newUser && newUser.length > 0 && (
+        {(newUser && newUser.length > 0) && (
           <>
-            {' '}
             <div className={styles.backgroundBlur}></div>
-            <dialog open className={styles.welcomeContainer}>
-              <p className={styles.welcomeMessgae}>{newUser}, Welcome to ScaleUp 2024</p>
-              <p className={styles.welcomeSubText}>
-                Join us for two days of inspiration, networking, and innovation. Let's propel
-                Kerala's startup ecosystem together!"
-              </p>
-            </dialog>{' '}
+            <Confetti className={styles.confetti} />
+            <motion.dialog
+              initial={{
+               opacity: 0,
+               scale: 0.5,
+             
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+               
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.5,
+               
+              }}
+              open
+              className={styles.welcomeContainer}
+            >
+              <img src='/app/welcome.png' alt='' className={styles.image} />
+              <div className={styles.welcomeText}>
+                <p className={styles.userType}>Student</p>
+                <p className={styles.userName}>Aswin Asok</p>
+                <p className={styles.userEmail}>aswinasokofficial@gmail.com</p>
+              </div>
+            </motion.dialog>
           </>
         )}
 
