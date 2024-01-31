@@ -220,7 +220,7 @@ const Glance = ({ tab }: { tab: string }) => {
               animate={{ opacity: 1 }}
               className={styles.lastUpdated}
             >
-              Last {tab === "checkins" ? "Check-In" : "Registered"}: Today, {lastUpdated}
+              Last {tab === 'checkins' ? 'Check-In' : 'Registered'}: Today, {lastUpdated}
             </motion.p>
           </div>
 
@@ -228,18 +228,23 @@ const Glance = ({ tab }: { tab: string }) => {
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={styles.guests}>
               <motion.p
                 animate={{
-                  scale: [1, 1.25, 1, 1.25, 1],
-                  marginRight: [0, 5, 0, 5, 0],
-                  color: ['#ffffff', '#47c97e', '#ffffff', '#47c97e', '#ffffff'],
+                  scale: [1, 1.25, 1],
+                  marginRight: [0, 5, 0],
+                  color: ['#47c97e', '#ffffff', '#47c97e'],
                 }}
                 transition={{
                   duration: 0.75,
                 }}
                 key={totalGuests}
               >
-                {totalGuests}
+                <p
+                  style={totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#ffffff' }}
+                >
+                  {totalGuests}
+                </p>
               </motion.p>
               /{targetGuests} <span>&nbsp;guests</span>
+              <p className={styles.popper}>🎉</p>
             </motion.p>
           )}
 

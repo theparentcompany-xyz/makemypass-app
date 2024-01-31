@@ -11,8 +11,13 @@
   font-family: 'Inter', sans-serif;
   font-size: 1.25rem;
   margin-top: 1rem;
-
   display: flex;
+
+  align-items: center;
+}
+
+.popper{
+  font-size: 1.25rem;
 }
 
 .glanceHeader {
