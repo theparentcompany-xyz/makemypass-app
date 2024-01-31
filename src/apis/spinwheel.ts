@@ -35,3 +35,29 @@ export const listSpinWheelItems = async (eventId: string, setSpinWheelItems: any
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };
+
+export const listUserGifts = async (eventId: string, ticketCode: string, setGifts?: any) => {
+  privateGateway
+    .post(makeMyPass.listUserGift(eventId, ticketCode))
+
+    .then((response) => {
+      const gifts = response.data.response.gifts;
+      setGifts(gifts);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
+export const spin = async (eventId: string, ticketCode: string, setGifts?: any) => {
+  privateGateway
+    .post(makeMyPass.spin(eventId, ticketCode))
+
+    .then((response) => {
+      const gifts = response.data.response.gifts;
+      setGifts(gifts);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};

@@ -26,8 +26,8 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-event/${eventId}/list-spin-wheel-items/`),
   spin: (eventId: string, ticketCode: string) =>
     makeMyPassURL(`/manage-event/${eventId}/spin/${ticketCode}`),
-  listUserGifts: (eventId: string, ticketCode: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/list-user-gifts/${ticketCode}`),
+  listUserGift: (eventId: string, ticketCode: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/list-user-gift/${ticketCode}`),
   claimGift: (eventId: string, ticketCode: string, date: string) =>
     makeMyPassURL(`/manage-event/${eventId}/claim-gift/${ticketCode}/${date}`),
   downloadTicket: (eventId: string, ticketCode: string) =>

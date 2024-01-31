@@ -5,7 +5,7 @@ import SectionButton from '../../../components/SectionButton/SectionButton';
 
 import { Wheel } from 'react-custom-roulette';
 import { ImSpinner9 } from 'react-icons/im';
-import { listSpinWheelItems } from '../../../apis/spinwheel';
+import { listSpinWheelItems, listUserGifts, spin } from '../../../apis/spinwheel';
 import { useParams } from 'react-router-dom';
 import { getEventId } from '../../../apis/events';
 import { HashLoader } from 'react-spinners';
@@ -38,101 +38,129 @@ const SpinWheel = () => {
 
   const [ticketId, setTicketId] = useState<string>('');
   const [mustSpin, setMustSpin] = useState(false);
-  const [prizeNumber, setPrizeNumber] = useState(0);
+  const [prizeNumber, setPrizeNumber] = useState<number>(0);
   const [spinWheelData, setSpinWheelData] = useState<OptionStyle[]>([]);
+
+  const [isScanning, setIsScanning] = useState<boolean>(false);
+  const [trigger, setTrigger] = useState<boolean>(false);
 
   const [message, setMessage] = useState('');
 
   const handleSpinClick = () => {
-    if (!mustSpin) {
-      const newPrizeNumber = Math.floor(Math.random() * spinWheelData.length);
-      setPrizeNumber(newPrizeNumber);
-      setMustSpin(true);
-
-      setMessage(`You won a ${spinWheelData[newPrizeNumber]?.option}!`);
-    }
+    // if (!mustSpin) {
+    //   const newPrizeNumber = Math.floor(Math.random() * spinWheelData.length);
+    //   setPrizeNumber(newPrizeNumber);
+    //   setMustSpin(true);
+    //   setMessage(`You won a ${spinWheelData[newPrizeNumber]?.option}!`);
+    // }
   };
 
   useEffect(() => {
     listSpinWheelItems(eventId, setSpinWheelData);
   }, []);
 
+  useEffect(() => {
+    if (trigger && ticketId.length > 0) {
+      setIsScanning(false);
+      spin(eventId, ticketId);
+    } else {
+      toast.error('There was an error verifing your ticket. Please try again.');
+    }
+  }, [trigger, ticketId]);
+
   return (
     <Theme>
       {spinWheelData && spinWheelData.length > 0 ? (
         <div className={styles.spinWheelContainer}>
-          <div className={styles.scannerContainer}>
-            <p className={styles.scanHeader}>Scan QR Code Below</p>
-            <div className={styles.scannerOuterContainer}>
-              <div className={styles.scanner}>
-                <div className={styles.closeButton}>
-                  <SecondaryButton
-                    buttonText='Close'
-                    onClick={() => {
-                      navigate(-1);
+          {isScanning && (
+            <div className={styles.scannerContainer}>
+              <p className={styles.scanHeader}>Scan QR Code Below</p>
+              <div className={styles.scannerOuterContainer}>
+                <div className={styles.scanner}>
+                  <div className={styles.closeButton}>
+                    <SecondaryButton
+                      buttonText='Close'
+                      onClick={() => {
+                        navigate(-1);
+                      }}
+                    />
+                  </div>
+                  <QrScanner
+                    containerStyle={{
+                      backgroundColor: '#000',
+                    }}
+                    onResult={(result) => {
+                      setTicketId(result.getText());
+                      setTrigger(true);
+                    }}
+                    onError={(error) => {
+                      toast.error(error.message);
                     }}
                   />
                 </div>
-                <QrScanner
-                  containerStyle={{
-                    backgroundColor: '#000',
+              </div>
+
+              <div className={styles.inputContainer}>
+                <br />
+                <p className={styles.inputText}>Or Enter Code Below</p>
+                <input
+                  className={styles.input}
+                  placeholder='Enter Ticket Code'
+                  value={ticketId}
+                  onChange={(e) => {
+                    setTicketId(e.target.value);
                   }}
-                  onResult={(result) => {
-                    setTicketId(result.getText());
+                />
+                <SecondaryButton
+                  onClick={() => {
+                    setTrigger(true);
                   }}
-                  onError={(error) => {
-                    toast.error(error.message);
-                  }}
+                  buttonText='Confirm Ticket Number'
                 />
               </div>
             </div>
+          )}
 
-            <div className={styles.inputContainer}>
-              <br />
-              <p className={styles.inputText}>Or Enter Code Below</p>
-              <input
-                className={styles.input}
-                placeholder='Enter Ticket Code'
-                value={ticketId}
-                onChange={(e) => {
-                  setTicketId(e.target.value);
+          {!isScanning && (
+            <div className={styles.wheel}>
+              <Wheel
+                innerBorderWidth={0}
+                outerBorderWidth={0}
+                radiusLineWidth={1}
+                mustStartSpinning={mustSpin}
+                prizeNumber={prizeNumber}
+                fontFamily='Inter, sans-serif'
+                data={spinWheelData}
+                onStopSpinning={() => {
+                  setMustSpin(false);
                 }}
-              />
-              <SecondaryButton
-                buttonText='Check In'
-                
+                fontSize={15}
+                radiusLineColor='#232A2B'
               />
             </div>
-          </div>
-          <div className={styles.wheel}>
-            <Wheel
-              innerBorderWidth={0}
-              outerBorderWidth={0}
-              radiusLineWidth={1}
-              mustStartSpinning={mustSpin}
-              prizeNumber={prizeNumber}
-              fontFamily='Inter, sans-serif'
-              data={spinWheelData}
-              onStopSpinning={() => {
-                setMustSpin(false);
-              }}
-              fontSize={15}
-              radiusLineColor='#232A2B'
-            />
-          </div>
-          <div className={styles.spinButton}>
-            <SectionButton
-              buttonText='Spin The Wheel'
-              icon={<ImSpinner9 size={25} />}
-              buttonColor='#47C97E'
-              onClick={handleSpinClick}
-            />
-          </div>
+          )}
+
+          {!isScanning && (
+            <div className={styles.spinButton}>
+              <SectionButton
+                buttonText='Spin The Wheel'
+                icon={<ImSpinner9 size={25} />}
+                buttonColor='#47C97E'
+                onClick={() => {
+                  if (!ticketId) {
+                    setIsScanning(true);
+                  } else {
+                    handleSpinClick();
+                  }
+                }}
+              />
+            </div>
+          )}
           {!mustSpin && <p className={styles.messageText}>{message}</p>}
         </div>
       ) : (
-        <div className={styles.loadingContainer}>
-          <HashLoader color='#47C97E' size={100} />
+        <div className={styles.center}>
+          <HashLoader color='#47C97E' size={50} />
         </div>
       )}
     </Theme>
