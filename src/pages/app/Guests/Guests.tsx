@@ -120,6 +120,7 @@ const Guests = () => {
       category: 'category',
       registered_at: 'date',
       check_in_date: 'check_in_date',
+      phone_number: 'phone_number',
     };
 
     if (guests) {
