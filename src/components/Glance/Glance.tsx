@@ -41,6 +41,8 @@ const Glance = ({ tab }: { tab: string }) => {
     setFirstRender(true);
     setCurrentTab(tab);
     navigate(`/${eventTitle}/${tab}/`);
+
+    setFirstRender(true);
   };
 
   const [eventId, setEventId] = useState<string>('');
@@ -81,11 +83,12 @@ const Glance = ({ tab }: { tab: string }) => {
   }, [tab, eventId]);
 
   useEffect(() => {
-    if(!firstRender && totalGuests > 0) {
+    if (!firstRender && totalGuests > 0) {
       const audio = new Audio('/count.mp3');
       audio.play();
     }
-    if(firstRender && totalGuests > 0) setFirstRender(false);
+
+    if (firstRender && totalGuests > 0) setFirstRender(false);
   }, [totalGuests]);
 
   useEffect(() => {
@@ -236,7 +239,7 @@ const Glance = ({ tab }: { tab: string }) => {
               >
                 {totalGuests}
               </motion.p>
-              /{targetGuests} <span> guests</span>
+              /{targetGuests} <span>&nbsp;guests</span>
             </motion.p>
           )}
 
