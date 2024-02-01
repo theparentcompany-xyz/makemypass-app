@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Wheel } from 'react-custom-roulette';
 import { listSpinWheelItems } from '../../../apis/spinwheel';
 import { OptionStyle } from './types';
@@ -17,12 +17,11 @@ const SpinWheel = () => {
   useEffect(() => {
     if (eventTitle && !eventId) getEventUUID(eventTitle, setEventId);
 
-    if (eventId) listSpinWheelItems(eventId, spinWheelData);
+    if (eventId) listSpinWheelItems(eventId, setSpinWheelData);
+    
 
     console.log(eventId, spinWheelData);
   }, [eventId]);
-
-  const data = [{ option: '0' }, { option: '1' }, { option: '2' }];
 
   const handleSpinClick = () => {
     if (!mustSpin) {
