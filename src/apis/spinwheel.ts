@@ -1,6 +1,7 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
+import { OptionStyle } from '../pages/app/SpinWheel/types';
 
 const data = [
   { style: { backgroundColor: '#47C97E', textColor: '#1E2132' } },
@@ -52,18 +53,18 @@ export const listUserGifts = async (eventId: string, ticketCode: string, setGift
 export const spin = async (
   eventId: string,
   ticketCode: string,
-  setGiftName: React.Dispatch<React.SetStateAction<string>>,
-  setPrizeTrigger: React.Dispatch<React.SetStateAction<boolean>>,
+  setPrizeNumber: React.Dispatch<React.SetStateAction<number>>,
+  spinWheelData: OptionStyle[],
 ) => {
   privateGateway
     .post(makeMyPass.spin(eventId, ticketCode))
 
     .then((response) => {
       const gift = response.data.response.gift;
-      setGiftName(gift);
+      const prizeIndex = spinWheelData.findIndex((item) => item.option === gift);
+      setPrizeNumber(prizeIndex);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-      setPrizeTrigger(true);
     });
 };
