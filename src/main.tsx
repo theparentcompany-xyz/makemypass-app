@@ -21,6 +21,10 @@ import ScanQR from './pages/app/CheckIns/pages/ScanQR/ScanQR';
 import SpinWheel from './pages/app/SpinWheel/SpinWheel';
 import InEventStats from './pages/app/InEventStats/InEventStats';
 
+import SecureAuthRoutes from '../services/authRoutes';
+
+const RoleChecker = SecureAuthRoutes();
+
 const routes = [
   {
     path: '/login',
@@ -52,35 +56,35 @@ const routes = [
       },
       {
         path: '/:eventTitle/overview',
-        element: <Overview />,
+        element: <RoleChecker roles={['Admin']} children={<Overview />} />,
       },
       {
         path: '/:eventTitle/insights',
-        element: <Insights />,
+        element: <RoleChecker roles={['Admin']} children={<Insights />} />,
       },
       {
         path: '/:eventTitle/guests',
-        element: <Guests />,
+        element: <RoleChecker roles={['Admin']} children={<Guests />} />,
       },
       {
         path: '/:eventTitle/checkins',
-        element: <CheckIns />,
+        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<CheckIns />} />,
       },
       {
         path: '/:eventTitle/checkins/checkin',
-        element: <CheckIn />,
+        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<CheckIn />} />,
       },
       {
         path: '/:eventTitle/checkins/checkin/scan',
-        element: <ScanQR />,
+        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<ScanQR />} />,
       },
       {
         path: '/:eventTitle/spinwheel',
-        element: <SpinWheel />,
+        element: <RoleChecker roles={['Admin', 'Gamer']} children={<SpinWheel />} />,
       },
       {
         path: '/:eventTitle/inevent',
-        element: <InEventStats />,
+        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<InEventStats />} />,
       },
     ],
   },
