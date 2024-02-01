@@ -22,7 +22,7 @@ const CheckIns = () => {
           <hr className={styles.line} />
           <div className={styles.buttons}>
             <div className='row'>
-              {role === 'Admin' && (
+              {/* {role === 'Admin' && (
                 <Link to='checkin'>
                   <SectionButton
                     buttonText='Check-In'
@@ -30,7 +30,7 @@ const CheckIns = () => {
                     icon={<HiUserGroup size={25} color='#7662FC' />}
                   />
                 </Link>
-              )}
+              )} */}
               <Link to='checkin/scan'>
                 <SectionButton
                   buttonText='Scan User'

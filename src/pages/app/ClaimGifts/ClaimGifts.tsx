@@ -7,12 +7,13 @@ import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryBut
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import toast from 'react-hot-toast';
 import { claimGift, listUserGifts } from '../../../apis/spinwheel';
-import { BsFillRocketTakeoffFill } from 'react-icons/bs';
+import { BsFillRocketTakeoffFill, BsQrCodeScan } from 'react-icons/bs';
 import CheckInHeader from '../CheckIns/components/CheckInHeader/CheckInHeader/CheckInHeader';
+import SectionButton from '../../../components/SectionButton/SectionButton';
 
 const ClaimGifts = () => {
   const [ticketId, setTicketId] = useState<string>('');
-  const [isScanning, setIsScanning] = useState<boolean>(true);
+  const [isScanning, setIsScanning] = useState<boolean>(false);
   const [gitfs, setGifts] = useState<any[]>([]);
   const [giftsTableData, setGiftsTableData] = useState<any[]>([]);
 
@@ -86,45 +87,7 @@ const ClaimGifts = () => {
 
         <hr className={styles.line} />
       </div>
-      <div className={styles.scannerContainer}>
-        <p className={styles.scanHeader}>Scan QR Code Below</p>
-        <div className={styles.scannerOuterContainer}>
-          <div className={styles.scanner}>
-            <QrScanner
-              containerStyle={{
-                backgroundColor: '#000',
-              }}
-              onResult={(result) => {
-                setTicketId(result.getText());
-                setIsScanning(false);
-              }}
-              onError={(error) => {
-                toast.error(error.message);
-              }}
-            />
-          </div>
-        </div>
-
-        <div className={styles.inputContainer}>
-          <br />
-          <p className={styles.inputText}>Or Enter Code Below</p>
-          <input
-            className={styles.input}
-            placeholder='Enter Ticket Code'
-            value={ticketId}
-            onChange={(e) => {
-              setTicketId(e.target.value);
-            }}
-          />
-          <SecondaryButton
-            buttonText='Check In'
-            onClick={() => {
-              setIsScanning(false);
-            }}
-          />
-        </div>
-      </div>
-      {!isScanning && (
+      {!isScanning && giftsTableData.length > 0 && (
         <div className={styles.tableOuterContainer}>
           <div className={styles.tableHeader}>
             <div className={styles.tableHeading}>Your Gifts</div>
@@ -143,21 +106,76 @@ const ClaimGifts = () => {
                     <div className={styles.rowData}>
                       <p className={styles.date}>{item.claimedAt ? item.claimed_at : '-'}</p>
                       <p className={styles.claimedBy}>{item.claimedBy ? item.claimed_by : '-'}</p>
-                      <div className={styles.icon}>
-                        <BsFillRocketTakeoffFill
-                          onClick={() => {
-                            setOpenConfirm(true);
-                            setItem(item);
-                          }}
-                          color='#8E8E8E'
-                        />
-                      </div>
+                      {item.type === 'unclaimed' && (
+                        <div className={styles.icon}>
+                          <BsFillRocketTakeoffFill
+                            onClick={() => {
+                              setOpenConfirm(true);
+                              setItem(item);
+                            }}
+                            color='#8E8E8E'
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 );
               })}
             </div>
           </div>
+        </div>
+      )}
+      {isScanning && (
+        <div className={styles.scannerContainer}>
+          <p className={styles.scanHeader}>Scan QR Code Below</p>
+          <div className={styles.scannerOuterContainer}>
+            <div className={styles.scanner}>
+              <QrScanner
+                containerStyle={{
+                  backgroundColor: '#000',
+                }}
+                onResult={(result) => {
+                  setTicketId(result.getText());
+                  setIsScanning(false);
+                }}
+                onError={(error) => {
+                  toast.error(error.message);
+                }}
+              />
+            </div>
+          </div>
+
+          <div className={styles.inputContainer}>
+            <br />
+            <p className={styles.inputText}>Or Enter Code Below</p>
+            <input
+              className={styles.input}
+              placeholder='Enter Ticket Code'
+              value={ticketId}
+              onChange={(e) => {
+                setTicketId(e.target.value);
+              }}
+            />
+            <SecondaryButton
+              buttonText='Check In'
+              onClick={() => {
+                setIsScanning(false);
+              }}
+            />
+          </div>
+        </div>
+      )}
+      {!isScanning && (
+        <div className={styles.scanButton}>
+          <SectionButton
+            buttonText='Scan QR Code'
+            onClick={() => {
+              setIsScanning(true);
+              setTicketId('');
+            }}
+            buttonColor='#5B75FB'
+            icon={<BsQrCodeScan size={25} color='#5B75FB' />}
+          />
         </div>
       )}
     </Theme>
