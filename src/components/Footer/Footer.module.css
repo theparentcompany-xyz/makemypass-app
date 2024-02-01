@@ -1,5 +1,5 @@
 footer {
-  background-color: #131517;
+  z-index: 5;
 }
 
 .footerContainer {

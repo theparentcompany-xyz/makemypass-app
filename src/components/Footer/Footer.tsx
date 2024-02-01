@@ -9,10 +9,20 @@ const Footer = () => {
         <div className={styles.footerContainer}>
           <hr />
           <div className='row'>
-            <img className={styles.tpclogo} src='/app/tpc.png' alt='' />
+            <a href='https://www.theparentcompany.xyz/' target='_blank' rel='noopener noreferrer'>
+              <img className={styles.tpclogo} src='/app/tpc.png' alt='' />
+            </a>
             <div className={styles.socialIcons}>
-              <FaInstagram color='a4a4a4' size={20} />
-              <FaXTwitter color='a4a4a4' size={20} />
+              <a
+                href='https://www.instagram.com/theparentcompany.xyz/'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                <FaInstagram color='a4a4a4' size={20} />
+              </a>
+              <a href='https://twitter.com/tpc_xyz' target='_blank' rel='noopener noreferrer'>
+                <FaXTwitter color='a4a4a4' size={20} />
+              </a>
             </div>
           </div>
         </div>

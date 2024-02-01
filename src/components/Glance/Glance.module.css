@@ -92,7 +92,6 @@
 
 .tabsContainer {
   margin-top: 1rem;
-  margin-left: 1rem;
 }
 
 .tabs ol {
@@ -103,6 +102,9 @@
   margin: 0;
   padding: 0;
   column-gap: 0.5rem;
+
+  overflow: auto;
+  padding-bottom: 1rem;
 }
 
 .tab {
@@ -111,6 +113,8 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   padding-bottom: 0.5rem;
+  width: 100%;
+  white-space: nowrap;
 }
 
 .active {

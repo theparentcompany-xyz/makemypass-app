@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { login, generateOTP } from '../../../apis/auth';
 import InputFIeld from './InputFIeld';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -49,7 +50,20 @@ const Login = () => {
           }}
         >
           <div className={styles.formContainer}>
-            <div className={styles.form}>
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 100,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.5,
+              }}
+              className={styles.form}
+            >
               <div className={styles.formFields}>
                 <div className={styles.formHeader}>
                   <p className={styles.formTitle}>Hola, to MakeMyPass</p>
@@ -105,15 +119,34 @@ const Login = () => {
                 >
                   Login with {isPassword ? 'OTP' : 'Password'}
                 </p>
-                <button onClick={handleSubmit} className={styles.submitButton}>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  onClick={handleSubmit}
+                  className={styles.submitButton}
+                >
                   {isOtpSent ? 'Login' : isPassword ? 'Login' : 'Get OTP'}
                   <span>
                     <IoIosArrowRoundForward size={25} color='#A4A4A4' />
                   </span>
-                </button>
+                </motion.button>
               </div>
-            </div>
-            <img src='/app/mascot.webp' alt='' className={styles.mascot} />
+            </motion.div>
+            <motion.img
+              initial={{
+                opacity: 0,
+                x: 100,
+              }}
+              animate={{
+                opacity: 1,
+                x: 0,
+              }}
+              transition={{
+                duration: 0.5,
+              }}
+              src='/app/mascot.webp'
+              alt=''
+              className={styles.mascot}
+            />
           </div>
         </div>
       </Theme>

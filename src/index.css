@@ -35,6 +35,7 @@
 a {
   text-decoration: none;
   color: #fff;
+  cursor: pointer;
 }
 
 button {

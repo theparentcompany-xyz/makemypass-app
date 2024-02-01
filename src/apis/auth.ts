@@ -66,3 +66,19 @@ export const generateOTP = async (
       toast.error(error.response.data.message.general[0]);
     });
 };
+
+export const hostWithUs = async (name: string, email: string, phone: string) => {
+  publicGateway
+    .post(makeMyPass.hostWithUs, {
+      name: name,
+      email: email,
+      phone: phone,
+    })
+    .then((response) => {
+      toast.success(response.data.message.general[0]);
+      return response.data;
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0]);
+    });
+};

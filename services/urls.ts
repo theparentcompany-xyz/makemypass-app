@@ -37,6 +37,7 @@ export const makeMyPass = {
   updateHostRole: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/update-host-role/`),
   removeHost: (eventId: string, hostId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/remove-host/${hostId}`),
+  hostWithUs: makeMyPassURL(`/host-with-us/`),
 };
 
 export const makeMyPassSocket = {

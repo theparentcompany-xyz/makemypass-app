@@ -2,10 +2,10 @@ import Theme from '../../../components/Theme/Theme';
 import styles from './Events.module.css';
 import { GoPeople } from 'react-icons/go';
 import { BsArrowRight } from 'react-icons/bs';
-import { FaPlus } from 'react-icons/fa6';
 import { useEffect, useState } from 'react';
 import { getEventData, getEventId, getEvents } from '../../../apis/events';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Events = () => {
   const navigate = useNavigate();
@@ -62,22 +62,51 @@ const Events = () => {
       <Theme>
         <div className={styles.homeContainer}>
           <div>
-            <p className={styles.homeHeader}>
+            <motion.p
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className={styles.homeHeader}
+            >
               {events.length > 0 ? 'Your Events' : 'No Events Currently'}
-            </p>
+            </motion.p>
             <div className={styles.eventsContainer}>
               {events.map((event) => (
                 <div key={event.id} className={styles.event}>
-                  <div className={styles.eventDate}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className={styles.eventDate}
+                  >
                     <p className={styles.date}>{event.date}</p>
                     <p className={styles.day}>{event.day}</p>
-                  </div>
+                  </motion.div>
 
-                  <img className={styles.slider} src='/app/slider.webp' alt='' />
+                  <motion.img
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className={styles.slider}
+                    src='/app/slider.webp'
+                    alt=''
+                  />
                   <div>
-                    <div className={styles.eventCard}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className={styles.eventCard}
+                    >
                       <div className={styles.innerCard}>
-                        <img src='/app/scale.webp' alt='' className={styles.eventImage} />
+                        <motion.img
+                          initial={{ opacity: 0, y: 50 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5 }}
+                          src='/app/scale.webp'
+                          alt=''
+                          className={styles.eventImage}
+                        />
                         <div className={styles.eventDetails}>
                           <p className={styles.eventName}>{event.title}</p>
                           <p className={styles.eventGuests}>
@@ -87,7 +116,8 @@ const Events = () => {
                             {event.members} guests
                           </p>
 
-                          <button
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
                             className={styles.manage}
                             onClick={() => {
                               handleClick(event.title);
@@ -96,15 +126,15 @@ const Events = () => {
                           >
                             Manage
                             <BsArrowRight size={15} />
-                          </button>
+                          </motion.button>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
 
-                    <button className={styles.create}>
+                    {/* <button className={styles.create}>
                       <FaPlus size={15} />
                       Create New Event
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               ))}

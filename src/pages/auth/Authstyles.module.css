@@ -72,6 +72,11 @@
   font-weight: 400;
 }
 
+.inputField input:focus {
+  border: none;
+  outline: none;
+}
+
 .formFooter {
   margin-top: 2rem;
   display: flex;
@@ -103,13 +108,6 @@
   width: 9rem;
 
   float: right;
-}
-
-.submitButton:hover {
-  cursor: pointer;
-
-  transition: 0.25s ease-in-out;
-  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .mascot {
