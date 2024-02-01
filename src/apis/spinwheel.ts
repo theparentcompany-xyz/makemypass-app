@@ -42,7 +42,7 @@ export const listUserGifts = async (eventId: string, ticketCode: string, setGift
     .get(makeMyPass.listUserGift(eventId, ticketCode))
 
     .then((response) => {
-      const gifts = response.data.response.gifts;
+      const gifts = response.data.response;
       setGifts(gifts);
     })
     .catch((error) => {
@@ -68,5 +68,16 @@ export const spin = async (
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
       setTicketId('');
+    });
+};
+
+export const claimGift = async (eventId: string, ticketCode: string, date: string) => {
+  privateGateway
+    .post(makeMyPass.claimGift(eventId, ticketCode, date))
+    .then((response) => {
+      toast.success(response.data.message.general[0] || 'Gift claimed successfully');
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };

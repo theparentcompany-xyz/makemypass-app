@@ -22,6 +22,7 @@ import SpinWheel from './pages/app/SpinWheel/SpinWheel';
 import InEventStats from './pages/app/InEventStats/InEventStats';
 
 import SecureAuthRoutes from '../services/authRoutes';
+import ClaimGifts from './pages/app/ClaimGifts/ClaimGifts';
 
 const RoleChecker = SecureAuthRoutes();
 
@@ -86,6 +87,10 @@ const routes = [
         path: '/:eventTitle/inevent',
         element: <RoleChecker roles={['Admin', 'Volunteer']} children={<InEventStats />} />,
       },
+      {
+        path: `/:eventTitle/claimgifts`,
+        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<ClaimGifts />} />,
+      }
     ],
   },
   {
