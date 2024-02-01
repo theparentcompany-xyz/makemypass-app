@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { claimGift, listUserGifts } from '../../../apis/spinwheel';
 import Glance from '../../../components/Glance/Glance';
 import { BsFillRocketTakeoffFill } from 'react-icons/bs';
+import CheckInHeader from '../CheckIns/components/CheckInHeader/CheckInHeader/CheckInHeader';
 
 const ClaimGifts = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -52,6 +53,7 @@ const ClaimGifts = () => {
 
   const handleClaimButtonClick = (item: any) => {
     claimGift(eventId, ticketId, item.date);
+    setOpenConfirm(false);
   };
 
   return (
@@ -80,7 +82,11 @@ const ClaimGifts = () => {
           </div>
         </dialog>
       )}
-      <Glance tab='claimgifts' />
+      <div className={styles.scanContainer}>
+        <CheckInHeader buttonType='back' />
+
+        <hr className={styles.line} />
+      </div>
       <div className={styles.scannerContainer}>
         <p className={styles.scanHeader}>Scan QR Code Below</p>
         <div className={styles.scannerOuterContainer}>

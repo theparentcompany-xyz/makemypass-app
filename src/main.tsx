@@ -80,6 +80,10 @@ const routes = [
         element: <RoleChecker roles={['Admin', 'Volunteer']} children={<ScanQR />} />,
       },
       {
+        path: `/:eventTitle/checkins/claimgifts`,
+        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<ClaimGifts />} />,
+      },
+      {
         path: '/:eventTitle/spinwheel',
         element: <RoleChecker roles={['Admin', 'Gamer']} children={<SpinWheel />} />,
       },
@@ -87,10 +91,6 @@ const routes = [
         path: '/:eventTitle/inevent',
         element: <RoleChecker roles={['Admin', 'Volunteer']} children={<InEventStats />} />,
       },
-      {
-        path: `/:eventTitle/claimgifts`,
-        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<ClaimGifts />} />,
-      }
     ],
   },
   {

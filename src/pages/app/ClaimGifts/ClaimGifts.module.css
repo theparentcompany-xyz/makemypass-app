@@ -335,3 +335,34 @@
 .button:hover {
   background: rgba(255, 255, 255, 0.1);
 }
+
+.scannerContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+  font-family: 'Inter';
+
+  margin-top: 2rem;
+
+  position: relative;
+}
+
+.scanHeader {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.scanContainer {
+  padding: 0 1.25rem;
+}
+
+.line {
+  margin-top: 1rem;
+  width: 100%;
+  color: #a4a4a4;
+  opacity: 0.1;
+}
