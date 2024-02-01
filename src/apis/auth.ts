@@ -1,6 +1,7 @@
 import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { buildVerse, makeMyPass } from '../../services/urls';
+import { Dispatch } from 'react';
 
 export const login = async (
   email: string,
@@ -50,6 +51,7 @@ export const onboardUser = async () => {
 export const generateOTP = async (
   email: string,
   setIsOtpSent: (arg0: boolean) => void,
+  setIsRegistered: Dispatch<React.SetStateAction<boolean>>,
   type: string,
 ) => {
   publicGateway
@@ -60,10 +62,51 @@ export const generateOTP = async (
     .then((response) => {
       toast.success(response.data.message.general[0]);
       setIsOtpSent(true);
+      if (setIsRegistered) {
+        setIsRegistered(true);
+      }
       return response.data;
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0]);
+      if (setIsRegistered) {
+        setIsRegistered(false);
+      }
+    });
+};
+
+export const preRegister = async (email: string, setIsOtpSent: (arg0: boolean) => void) => {
+  publicGateway
+    .post(buildVerse.preRegister, {
+      email: email,
+    })
+    .then((response) => {
+      toast.success(response.data.message.general[0]);
+      setIsOtpSent(true);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0]);
+    });
+};
+
+export const register = async (
+  email: string,
+  otp: string,
+  setIsRegistered: Dispatch<React.SetStateAction<boolean>>,
+  setIsOtpSent: Dispatch<React.SetStateAction<boolean>>,
+) => {
+  publicGateway
+    .post(buildVerse.register, {
+      email: email,
+      otp: otp,
+    })
+    .then((response) => {
+      toast.success(response.data.message.general[0] || 'Registered successfully');
+      setIsRegistered(true);
+      setIsOtpSent(false);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Something went wrong');
     });
 };
 

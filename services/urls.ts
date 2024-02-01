@@ -7,6 +7,8 @@ export const buildVerse = {
   login: buildVerseURL('/login/'),
   getAccessToken: buildVerseURL('/get-access-token/'),
   generateOTP: buildVerseURL('/generate-otp/'),
+  preRegister: buildVerseURL('/pre-register/'),
+  register: buildVerseURL('/register/'),
 };
 
 export const makeMyPass = {

@@ -4,7 +4,7 @@ import { LuKey } from 'react-icons/lu';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import Theme from '../../../components/Theme/Theme';
 import { useEffect, useRef, useState } from 'react';
-import { login, generateOTP } from '../../../apis/auth';
+import { login, generateOTP, preRegister, register } from '../../../apis/auth';
 import InputFIeld from './InputFIeld';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -21,15 +21,23 @@ const Login = () => {
   const [isPassword, setIsPassword] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const [isRegistered, setIsRegistered] = useState(true);
+
   const ruri = window.location.href.split('=')[1];
 
   const handleSubmit = () => {
-    if (isPassword && emailRef.current?.value && passwordRef.current?.value)
-      login(emailRef.current?.value, passwordRef.current?.value, setIsAuthenticated);
-    else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
-      login(emailRef.current?.value, otpRef.current?.value, setIsAuthenticated, isOtpSent);
-    else if (!isOtpSent && emailRef.current?.value)
-      generateOTP(emailRef.current?.value, setIsOtpSent, 'Login');
+    if (isRegistered) {
+      if (isPassword && emailRef.current?.value && passwordRef.current?.value)
+        login(emailRef.current?.value, passwordRef.current?.value, setIsAuthenticated);
+      else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
+        login(emailRef.current?.value, otpRef.current?.value, setIsAuthenticated, isOtpSent);
+      else if (!isOtpSent && emailRef.current?.value)
+        generateOTP(emailRef.current?.value, setIsOtpSent, setIsRegistered, 'Login');
+    } else {
+      if (!isOtpSent && emailRef.current?.value) preRegister(emailRef.current?.value, setIsOtpSent);
+      else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
+        register(emailRef.current?.value, otpRef.current?.value, setIsRegistered, setIsOtpSent);
+    }
   };
 
   useEffect(() => {
@@ -40,6 +48,10 @@ const Login = () => {
       else navigate('/events');
     }
   }, [isAuthenticated, navigate, ruri]);
+
+  useEffect(() => {
+    if (!isRegistered) setIsOtpSent(false);
+  }, [isRegistered]);
 
   return (
     <>
@@ -66,12 +78,22 @@ const Login = () => {
             >
               <div className={styles.formFields}>
                 <div className={styles.formHeader}>
-                  <p className={styles.formTitle}>Hola, to MakeMyPass</p>
-                  <p className={styles.formText}>
-                    Sign In now to make your
-                    <br />
-                    event Aweasome!
+                  <p className={styles.formTitle}>
+                    {isRegistered ? 'Hola, to MakeMyPass' : 'Register to MakeMyPass'}
                   </p>
+                  {isRegistered ? (
+                    <p className={styles.formText}>
+                      Sign In now to make your
+                      <br />
+                      event Aweasome!
+                    </p>
+                  ) : (
+                    <p className={styles.formText}>
+                      Register now to make your
+                      <br />
+                      event Aweasome!
+                    </p>
+                  )}
                 </div>
                 <InputFIeld
                   ref={emailRef}
@@ -124,7 +146,13 @@ const Login = () => {
                   onClick={handleSubmit}
                   className={styles.submitButton}
                 >
-                  {isOtpSent ? 'Login' : isPassword ? 'Login' : 'Get OTP'}
+                  {isRegistered
+                    ? isOtpSent
+                      ? 'Login'
+                      : isPassword
+                        ? 'Login'
+                        : 'Get OTP'
+                    : 'Register'}
                   <span>
                     <IoIosArrowRoundForward size={25} color='#A4A4A4' />
                   </span>
