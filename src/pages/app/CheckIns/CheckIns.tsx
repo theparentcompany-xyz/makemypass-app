@@ -4,7 +4,6 @@ import Header from '../../../components/EventHeader/EventHeader';
 import styles from './CheckIns.module.css';
 
 import SectionButton from '../../../components/SectionButton/SectionButton';
-import { HiUserGroup } from 'react-icons/hi2';
 import { BsQrCodeScan } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -12,6 +11,7 @@ import { IoGiftSharp } from 'react-icons/io5';
 
 const CheckIns = () => {
   const [role, setRole] = useState('');
+  console.log(role);
   return (
     <Theme>
       <div className={styles.checkInsContainer}>

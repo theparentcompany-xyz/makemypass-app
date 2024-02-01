@@ -30,6 +30,8 @@ const SpinWheel = () => {
 
   const [prizeNumber, setPrizeNumber] = useState<number>(0);
 
+  const [cameraType, setCameraType] = useState<'user' | 'environment'>('user');
+
   useEffect(() => {
     if (eventTitle && !eventId) getEventUUID(eventTitle, setEventId);
 
@@ -133,6 +135,14 @@ const SpinWheel = () => {
                 <div className={styles.scanner}>
                   <div className={styles.closeButton}>
                     <SecondaryButton
+                      buttonText='Switch'
+                      onClick={() => {
+                        setCameraType((prevState) =>
+                          prevState === 'user' ? 'environment' : 'user',
+                        );
+                      }}
+                    />
+                    <SecondaryButton
                       buttonText='Close'
                       onClick={() => {
                         setIsScanning(false);
@@ -150,6 +160,11 @@ const SpinWheel = () => {
                     onError={(error) => {
                       toast.error(error.message);
                     }}
+                    constraints={
+                      {
+                        facingMode: cameraType,
+                      } as any
+                    }
                   />
                 </div>
               </div>
