@@ -40,6 +40,9 @@ export const makeMyPass = {
   removeHost: (eventId: string, hostId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/remove-host/${hostId}`),
   hostWithUs: makeMyPassURL(`/host-with-us/`),
+
+  userInfo: (eventId: string, ticketCode: string) =>
+    makeMyPassURL(`/checkin/${eventId}/user-info/${ticketCode}`),
 };
 
 export const makeMyPassSocket = {

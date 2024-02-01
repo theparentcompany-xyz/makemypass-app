@@ -1,33 +1,24 @@
 import styles from './UserInfo.module.css';
 
+type UserInfoType = {
+  category: string;
+  name: string;
+  email: string;
+  phone: string;
+  district: string;
+  organization: string;
+};
+
 const UserInfo = ({
   ticketId,
-  status,
   userData,
-  setTrigger,
 }: {
   ticketId: string;
   status: boolean;
-  userData: {
-    category: string;
-    name: string;
-    email: string;
-    phone: string;
-    district: string;
-    organization: string;
-  };
-  setTrigger: React.Dispatch<React.SetStateAction<boolean>>;
+  userData: UserInfoType;
 }) => {
   return (
     <div className={styles.userInfoContainer}>
-      <button
-        onClick={() => {
-          setTrigger(false);
-        }}
-        className={styles.backButton}
-      >
-        Close
-      </button>
       <br />
       <div className={styles.userInfo}>
         <div className={styles.topSection}>
@@ -60,14 +51,6 @@ const UserInfo = ({
             </div>
           )}
         </div>
-        <p
-          className={styles.scannerHeader}
-          style={{
-            color: status ? '#5B75FB' : '#ed4545',
-          }}
-        >
-          {status ? ' User Check-In Successfull!' : 'User Check-In Failed!'}
-        </p>
       </div>
     </div>
   );

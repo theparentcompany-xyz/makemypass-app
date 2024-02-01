@@ -10,12 +10,31 @@ import { claimGift, listUserGifts } from '../../../apis/spinwheel';
 import { BsFillRocketTakeoffFill, BsQrCodeScan } from 'react-icons/bs';
 import CheckInHeader from '../CheckIns/components/CheckInHeader/CheckInHeader/CheckInHeader';
 import SectionButton from '../../../components/SectionButton/SectionButton';
+import { getUserInfo } from '../../../apis/user';
+import UserInfo from '../CheckIns/components/UserInfo/UserInfo';
+
+type UserInfoType = {
+  category: string;
+  name: string;
+  email: string;
+  phone: string;
+  district: string;
+  organization: string;
+};
 
 const ClaimGifts = () => {
   const [ticketId, setTicketId] = useState<string>('');
   const [isScanning, setIsScanning] = useState<boolean>(false);
   const [gitfs, setGifts] = useState<any[]>([]);
   const [giftsTableData, setGiftsTableData] = useState<any[]>([]);
+  const [userInfo, setUserInfo] = useState<UserInfoType>({
+    category: '',
+    name: '',
+    email: '',
+    phone: '',
+    district: '',
+    organization: '',
+  });
 
   const [openConfirm, setOpenConfirm] = useState(false);
   const [item, setItem] = useState();
@@ -28,8 +47,11 @@ const ClaimGifts = () => {
   }, [eventTitle]);
 
   useEffect(() => {
-    if (eventId) listUserGifts(eventId, ticketId, setGifts);
-  }, [isScanning]);
+    if (eventId && ticketId.length > 0) {
+      listUserGifts(eventId, ticketId, setGifts);
+      getUserInfo(eventId, ticketId, setUserInfo);
+    }
+  }, [isScanning, ticketId, eventId]);
 
   useEffect(() => {
     const convertGifts: any = [];
@@ -88,42 +110,45 @@ const ClaimGifts = () => {
         <hr className={styles.line} />
       </div>
       {!isScanning && giftsTableData.length > 0 && (
-        <div className={styles.tableOuterContainer}>
-          <div className={styles.tableHeader}>
-            <div className={styles.tableHeading}>Your Gifts</div>
-          </div>
+        <>
+          <div className={styles.tableOuterContainer}>
+            <div className={styles.tableHeader}>
+              <div className={styles.tableHeading}>Your Gifts</div>
+            </div>
 
-          <div className={styles.tableContainer}>
-            <div className={styles.table}>
-              {giftsTableData.map((item, index) => {
-                return (
-                  <div key={index} className={styles.row}>
-                    <div className={styles.rowData}>
-                      <p className={styles.giftName}>{item.item}</p>
-                      <p className={styles.date}>{item.date}</p>
-                      <p className={styles.status}>{item.type}</p>
+            <div className={styles.tableContainer}>
+              <div className={styles.table}>
+                {giftsTableData.map((item, index) => {
+                  return (
+                    <div key={index} className={styles.row}>
+                      <div className={styles.rowData}>
+                        <p className={styles.giftName}>{item.item}</p>
+                        <p className={styles.date}>{item.date}</p>
+                        <p className={styles.status}>{item.type}</p>
+                      </div>
+                      <div className={styles.rowData}>
+                        <p className={styles.date}>{item.claimedAt ? item.claimed_at : '-'}</p>
+                        <p className={styles.claimedBy}>{item.claimedBy ? item.claimed_by : '-'}</p>
+                        {item.type === 'unclaimed' && (
+                          <div className={styles.icon}>
+                            <BsFillRocketTakeoffFill
+                              onClick={() => {
+                                setOpenConfirm(true);
+                                setItem(item);
+                              }}
+                              color='#8E8E8E'
+                            />
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    <div className={styles.rowData}>
-                      <p className={styles.date}>{item.claimedAt ? item.claimed_at : '-'}</p>
-                      <p className={styles.claimedBy}>{item.claimedBy ? item.claimed_by : '-'}</p>
-                      {item.type === 'unclaimed' && (
-                        <div className={styles.icon}>
-                          <BsFillRocketTakeoffFill
-                            onClick={() => {
-                              setOpenConfirm(true);
-                              setItem(item);
-                            }}
-                            color='#8E8E8E'
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+          <UserInfo ticketId={ticketId} userData={userInfo} status={true} />
+        </>
       )}
       {isScanning && (
         <div className={styles.scannerContainer}>
