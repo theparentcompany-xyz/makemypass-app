@@ -78,7 +78,7 @@ const Glance = ({ tab }: { tab: string }) => {
     if (tab === 'checkins' || tab === 'inevent') {
       setBackendURL(makeMyPassSocket.checkInCounts(eventId));
     } else {
-      setBackendURL(makeMyPassSocket.registerCounts(eventId));
+      if (eventId) setBackendURL(makeMyPassSocket.registerCounts(eventId));
     }
   }, [tab, eventId]);
 
@@ -216,7 +216,6 @@ const Glance = ({ tab }: { tab: string }) => {
                   <motion.div layoutId='tab-indicator' className={styles.active} />
                 )}
               </div>
-             
             </ol>
           </div>
         </div>
