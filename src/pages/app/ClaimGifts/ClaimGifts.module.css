@@ -184,14 +184,14 @@
 .modalHeader {
   font-family: 'Inter';
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.25rem;
   margin-top: 0.5rem;
 }
 
 .modalSubText {
   font-family: 'Inter';
   font-weight: 400;
-  font-size: 1.1rem;
+  font-size: 1rem;
   /* margin-top: 0.25rem; */
   margin-bottom: 1rem;
 }
@@ -299,8 +299,7 @@
   font-size: 0.8rem;
   font-style: normal;
   font-weight: 500;
-  color: #47c97e;
-  background-color: rgba(71, 201, 126, 0.1);
+ 
   padding: 0.5rem 0.75rem;
 
   border-radius: 8px;
@@ -371,4 +370,21 @@
   max-width: 15rem;
   margin: auto;
   margin-top: 2rem;
+}
+
+.noDataContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.noDataText {
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 600;
+  color: #d2d4d7;
+  margin-top: 1rem;
 }

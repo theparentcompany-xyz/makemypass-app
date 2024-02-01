@@ -114,14 +114,16 @@ const SpinWheel = () => {
                     }, 3000);
                   }}
                 />
-                <div className={styles.spinButton}>
-                  <SectionButton
-                    buttonText='Spin The Wheel'
-                    icon={<ImSpinner9 size={25} />}
-                    buttonColor='#47C97E'
-                    onClick={handleSpinClick}
-                  />
-                </div>
+                {!mustSpin && (
+                  <div className={styles.spinButton}>
+                    <SectionButton
+                      buttonText='Spin The Wheel'
+                      icon={<ImSpinner9 size={25} />}
+                      buttonColor='#47C97E'
+                      onClick={handleSpinClick}
+                    />
+                  </div>
+                )}
               </div>
             )
           ) : (

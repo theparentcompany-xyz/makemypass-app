@@ -76,6 +76,9 @@ const ClaimGifts = () => {
   const handleClaimButtonClick = (item: any) => {
     claimGift(eventId, ticketId, item.date);
     setOpenConfirm(false);
+    setTimeout(() => {
+      listUserGifts(eventId, ticketId, setGifts);
+    }, 1000);
   };
 
   return (
@@ -109,7 +112,7 @@ const ClaimGifts = () => {
 
         <hr className={styles.line} />
       </div>
-      {!isScanning && giftsTableData.length > 0 && (
+      {!isScanning && giftsTableData.length > 0 ? (
         <>
           <div className={styles.tableOuterContainer}>
             <div className={styles.tableHeader}>
@@ -124,7 +127,22 @@ const ClaimGifts = () => {
                       <div className={styles.rowData}>
                         <p className={styles.giftName}>{item.item}</p>
                         <p className={styles.date}>{item.date}</p>
-                        <p className={styles.status}>{item.type}</p>
+                        <p
+                          style={
+                            item.type === 'claimed'
+                              ? {
+                                  color: '#47c97e',
+                                  backgroundColor: 'rgba(71, 201, 126, 0.1)',
+                                }
+                              : {
+                                  color: '#F44336',
+                                  backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                                }
+                          }
+                          className={styles.status}
+                        >
+                          {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+                        </p>
                       </div>
                       <div className={styles.rowData}>
                         <p className={styles.date}>{item.claimedAt ? item.claimed_at : '-'}</p>
@@ -149,6 +167,12 @@ const ClaimGifts = () => {
           </div>
           <UserInfo ticketId={ticketId} userData={userInfo} status={true} />
         </>
+      ) : (
+        ticketId.length > 0 && (
+          <div className={styles.noDataContainer}>
+            <p className={styles.noDataText}>No Gifts Found</p>
+          </div>
+        )
       )}
       {isScanning && (
         <div className={styles.scannerContainer}>
