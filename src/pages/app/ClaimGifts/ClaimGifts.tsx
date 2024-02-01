@@ -16,6 +16,9 @@ const ClaimGifts = () => {
   const [gitfs, setGifts] = useState<any[]>([]);
   const [giftsTableData, setGiftsTableData] = useState<any[]>([]);
 
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [item, setItem] = useState();
+
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
@@ -48,12 +51,35 @@ const ClaimGifts = () => {
   }, [gitfs]);
 
   const handleClaimButtonClick = (item: any) => {
-    claimGift(eventId, ticketId, item.dat)
-  }
-    
+    claimGift(eventId, ticketId, item.date);
+  };
 
   return (
     <Theme>
+      {openConfirm && (
+        <dialog className={styles.onClickModal}>
+          <p className={styles.modalHeader}>Claim Gift</p>
+          <p className={styles.modalSubText}>Are you sure you want to claim&nbsp;</p>
+          <div className={styles.buttons}>
+            <p
+              onClick={() => {
+                handleClaimButtonClick(item);
+              }}
+              className={styles.button}
+            >
+              Confirm
+            </p>
+            <p
+              onClick={() => {
+                setOpenConfirm(false);
+              }}
+              className={styles.button}
+            >
+              Cancel
+            </p>
+          </div>
+        </dialog>
+      )}
       <Glance tab='claimgifts' />
       <div className={styles.scannerContainer}>
         <p className={styles.scanHeader}>Scan QR Code Below</p>
@@ -113,9 +139,13 @@ const ClaimGifts = () => {
                       <p className={styles.date}>{item.claimedAt ? item.claimed_at : '-'}</p>
                       <p className={styles.claimedBy}>{item.claimedBy ? item.claimed_by : '-'}</p>
                       <div className={styles.icon}>
-                        <BsFillRocketTakeoffFill onClick={() => {
-                            handleClaimButtonClick(item)
-                        }} color='#8E8E8E' />
+                        <BsFillRocketTakeoffFill
+                          onClick={() => {
+                            setOpenConfirm(true);
+                            setItem(item);
+                          }}
+                          color='#8E8E8E'
+                        />
                       </div>
                     </div>
                   </div>
