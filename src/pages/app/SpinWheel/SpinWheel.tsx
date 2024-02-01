@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Wheel } from 'react-custom-roulette';
 import { listSpinWheelItems, spin } from '../../../apis/spinwheel';
 import { OptionStyle } from './types';
