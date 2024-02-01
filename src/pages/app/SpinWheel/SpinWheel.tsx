@@ -128,14 +128,14 @@ const SpinWheel = () => {
             </div>
           )}
 
-          {!isScanning && prizeTrigger && prizeNumber && !isNaN(prizeNumber) && (
+          {!isScanning && prizeTrigger && (
             <div className={styles.wheel}>
               <Wheel
                 innerBorderWidth={0}
                 outerBorderWidth={0}
                 radiusLineWidth={1}
                 mustStartSpinning={mustSpin}
-                prizeNumber={prizeNumber}
+                prizeNumber={0}
                 fontFamily='Inter, sans-serif'
                 data={spinWheelData}
                 onStopSpinning={() => {
