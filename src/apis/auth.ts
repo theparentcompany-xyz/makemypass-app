@@ -76,7 +76,6 @@ export const hostWithUs = async (name: string, email: string, phone: string) => 
     })
     .then((response) => {
       toast.success(response.data.message.general[0]);
-      return response.data;
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0]);
