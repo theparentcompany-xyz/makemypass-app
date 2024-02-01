@@ -61,32 +61,34 @@ const SpinWheel = () => {
   return (
     <Theme>
       <>
-        <>
-          <div className={styles.backgroundBlur}></div>
-          <Confetti className={styles.confetti} />
-          <motion.dialog
-            initial={{
-              opacity: 0,
-              scale: 0.5,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-            }}
-            exit={{
-              opacity: 0,
-              scale: 0.5,
-            }}
-            open
-            className={styles.congratzContainer}
-          >
-            <img src='/app/congrats.png' alt='' className={styles.image} />
-            <div className={styles.welcomeText}>
-              <p className={styles.youWon}>You Won</p>
-              <p className={styles.prize}>Better Luck, Next Time</p>
-            </div>
-          </motion.dialog>
-        </>
+        {showMessage && (
+          <>
+            <div className={styles.backgroundBlur}></div>
+            <Confetti className={styles.confetti} />
+            <motion.dialog
+              initial={{
+                opacity: 0,
+                scale: 0.5,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.5,
+              }}
+              open
+              className={styles.congratzContainer}
+            >
+              <img src='/app/congrats.png' alt='' className={styles.image} />
+              <div className={styles.welcomeText}>
+                <p className={styles.youWon}>You Won</p>
+                <p className={styles.prize}>{spinWheelData && spinWheelData[prizeNumber].option}</p>
+              </div>
+            </motion.dialog>
+          </>
+        )}
         <Glance tab='spinwheel' />
         <div className={styles.spinWheelContainer}>
           {!isScanning ? (
