@@ -42,14 +42,18 @@ const SpinWheel = () => {
   }, [isScanning]);
 
   const handleSpinClick = () => {
-    if (ticketId) {
-      if (!mustSpin) {
-        setMustSpin(true);
-      }
-    } else {
+    if (!ticketId) {
       setIsScanning(true);
     }
   };
+
+  useEffect(() => {
+    if (prizeNumber && ticketId) {
+      if (!mustSpin) {
+        setMustSpin(true);
+      }
+    }
+  }, [prizeNumber]);
 
   return (
     <Theme>
