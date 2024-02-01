@@ -13,6 +13,8 @@ import toast from 'react-hot-toast';
 
 import SectionButton from '../../../components/SectionButton/SectionButton';
 import { ImSpinner9 } from 'react-icons/im';
+import Confetti from 'react-confetti';
+import { motion } from 'framer-motion';
 
 const SpinWheel = () => {
   const [mustSpin, setMustSpin] = useState(false);
@@ -24,6 +26,7 @@ const SpinWheel = () => {
 
   const [ticketId, setTicketId] = useState<string>('');
   const [isScanning, setIsScanning] = useState<boolean>(false);
+  const [showMessage, setShowMessage] = useState<boolean>(false);
 
   const [prizeNumber, setPrizeNumber] = useState<number>(0);
 
@@ -58,6 +61,32 @@ const SpinWheel = () => {
   return (
     <Theme>
       <>
+        <>
+          <div className={styles.backgroundBlur}></div>
+          <Confetti className={styles.confetti} />
+          <motion.dialog
+            initial={{
+              opacity: 0,
+              scale: 0.5,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+            }}
+            exit={{
+              opacity: 0,
+              scale: 0.5,
+            }}
+            open
+            className={styles.congratzContainer}
+          >
+            <img src='/app/congrats.png' alt='' className={styles.image} />
+            <div className={styles.welcomeText}>
+              <p className={styles.youWon}>You Won</p>
+              <p className={styles.prize}>Better Luck, Next Time</p>
+            </div>
+          </motion.dialog>
+        </>
         <Glance tab='spinwheel' />
         <div className={styles.spinWheelContainer}>
           {!isScanning ? (
@@ -76,6 +105,11 @@ const SpinWheel = () => {
                   onStopSpinning={() => {
                     setMustSpin(false);
                     setTicketId('');
+                    setShowMessage(true);
+
+                    setTimeout(() => {
+                      setShowMessage(false);
+                    }, 3000);
                   }}
                 />
                 <div className={styles.spinButton}>

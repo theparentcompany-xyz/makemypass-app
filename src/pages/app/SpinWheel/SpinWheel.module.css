@@ -181,3 +181,97 @@
     color: #47c97e;
   }
 }
+
+.welcomeMessgae {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 2.25rem;
+  color: #3bcf79;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.backgroundBlur {
+  backdrop-filter: blur(3px);
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+}
+
+.confetti {
+  z-index: 75 !important;
+}
+
+.congratzContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  border: none;
+
+  background: #202224;
+  margin-bottom: 1rem;
+  position: absolute;
+  z-index: 100;
+  backdrop-filter: blur(900px);
+
+  top: 35%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: translateY(-50%);
+
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  color: white;
+
+  text-align: center;
+
+  border-radius: 12px;
+}
+
+.welcomeText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 0.5rem;
+
+  width: 25rem;
+}
+
+.userType {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #47c97e;
+  margin-right: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 12px;
+  width: 6rem;
+
+  margin: auto;
+}
+
+.image {
+  width: 20rem;
+  border-radius: 12px;
+}
+
+.youWon {
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.prize {
+  font-size: 1.25rem;
+  margin-top: -0.5rem;
+  color: #47c97e;
+  font-weight: 500;
+}

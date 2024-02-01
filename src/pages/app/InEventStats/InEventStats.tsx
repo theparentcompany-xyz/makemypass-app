@@ -89,7 +89,7 @@ const InEventStats = () => {
   ];
 
   const [firstRender, setFirstRender] = useState(true);
-  const [newUser, setNewUser] = useState('');
+  const [newUser, setNewUser] = useState<guests>();
 
   const [lineData, setLineData] = useState<ChartData>();
   const [barData, setBarData] = useState<ChartData>();
@@ -118,10 +118,10 @@ const InEventStats = () => {
   useEffect(() => {
     if (!firstRender)
       if (guests.length > 0) {
-        setNewUser(guests[0]?.name);
+        setNewUser(guests[0]);
 
         setTimeout(() => {
-          setNewUser('');
+          setNewUser({} as guests);
         }, 5000);
       }
   }, [guests, firstRender]);
@@ -224,8 +224,7 @@ const InEventStats = () => {
   return (
     <Theme>
       <>
-        
-        {(newUser && newUser.length > 0) && (
+        {newUser && newUser.name && (
           <>
             <div className={styles.backgroundBlur}></div>
             <Confetti className={styles.confetti} />
@@ -237,7 +236,6 @@ const InEventStats = () => {
               animate={{
                 opacity: 1,
                 scale: 1,
-               
               }}
               exit={{
                 opacity: 0,
@@ -248,9 +246,9 @@ const InEventStats = () => {
             >
               <img src='/app/welcome.png' alt='' className={styles.image} />
               <div className={styles.welcomeText}>
-                <p className={styles.userType}>Student</p>
-                <p className={styles.userName}>Aswin Asok</p>
-                <p className={styles.userEmail}>aswinasokofficial@gmail.com</p>
+                <p className={styles.userType}>{newUser.category}</p>
+                <p className={styles.userName}>{newUser.name}</p>
+                <p className={styles.userEmail}>{newUser.email}</p>
               </div>
             </motion.dialog>
           </>
