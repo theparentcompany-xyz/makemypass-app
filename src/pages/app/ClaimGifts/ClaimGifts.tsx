@@ -7,7 +7,6 @@ import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryBut
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import toast from 'react-hot-toast';
 import { claimGift, listUserGifts } from '../../../apis/spinwheel';
-import Glance from '../../../components/Glance/Glance';
 import { BsFillRocketTakeoffFill } from 'react-icons/bs';
 import CheckInHeader from '../CheckIns/components/CheckInHeader/CheckInHeader/CheckInHeader';
 
