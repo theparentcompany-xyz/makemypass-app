@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+import { getEventId } from '../apis/events';
 interface transformTableDataType {
   [key: string]: string;
 }
@@ -18,4 +20,24 @@ export const transformTableData = (
 
     return transformedRegistration;
   });
+};
+
+export const getEventUUID = (eventTitle: string, setEventId: Dispatch<SetStateAction<string>>) => {
+  let eventData = JSON.parse(localStorage.getItem('eventData') as string);
+
+  if (!eventData)
+    setTimeout(() => {
+      eventData = JSON.parse(localStorage.getItem('eventData') as string);
+
+      if (eventData) {
+        if (eventData.event_name !== eventTitle) {
+          localStorage.removeItem('eventData');
+          getEventId(eventTitle ?? '');
+        } else {
+          setEventId(eventData.event_id);
+        }
+      }
+    }, 2000);
+
+  setEventId(eventData?.event_id);
 };
