@@ -139,67 +139,71 @@ const Glance = ({ tab }: { tab: string }) => {
         <div className={styles.tabsContainer}>
           <div className={styles.tabs}>
             <ol>
-              <div>
-                <motion.li
-                  whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
-                  className={styles.tab}
-                  onClick={() => updateTab('overview')}
-                >
-                  Overview
-                </motion.li>
-                {currentTab === 'overview' && (
-                  <motion.div layoutId='tab-indicator' className={styles.active} />
-                )}
-              </div>
-              <div>
-                <motion.li
-                  whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
-                  className={styles.tab}
-                  onClick={() => updateTab('insights')}
-                >
-                  Insights
-                </motion.li>
+              {eventData.role != 'Gamer' && (
+                <>
+                  <div>
+                    <motion.li
+                      whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                      className={styles.tab}
+                      onClick={() => updateTab('overview')}
+                    >
+                      Overview
+                    </motion.li>
+                    {currentTab === 'overview' && (
+                      <motion.div layoutId='tab-indicator' className={styles.active} />
+                    )}
+                  </div>
+                  <div>
+                    <motion.li
+                      whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                      className={styles.tab}
+                      onClick={() => updateTab('insights')}
+                    >
+                      Insights
+                    </motion.li>
 
-                {currentTab === 'insights' && (
-                  <motion.div layoutId='tab-indicator' className={styles.active} />
-                )}
-              </div>
-              <div>
-                <motion.li
-                  whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
-                  className={styles.tab}
-                  onClick={() => updateTab('guests')}
-                >
-                  Guests
-                </motion.li>
-                {currentTab === 'guests' && (
-                  <motion.div layoutId='tab-indicator' className={styles.active} />
-                )}
-              </div>
-              <div>
-                <motion.li
-                  whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
-                  className={styles.tab}
-                  onClick={() => updateTab('checkins')}
-                >
-                  Check-In
-                </motion.li>
-                {currentTab === 'checkins' && (
-                  <motion.div layoutId='tab-indicator' className={styles.active} />
-                )}
-              </div>
-              <div>
-                <motion.li
-                  whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
-                  className={styles.tab}
-                  onClick={() => updateTab('inevent')}
-                >
-                  In-Event
-                </motion.li>
-                {currentTab === 'inevent' && (
-                  <motion.div layoutId='tab-indicator' className={styles.active} />
-                )}
-              </div>
+                    {currentTab === 'insights' && (
+                      <motion.div layoutId='tab-indicator' className={styles.active} />
+                    )}
+                  </div>
+                  <div>
+                    <motion.li
+                      whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                      className={styles.tab}
+                      onClick={() => updateTab('guests')}
+                    >
+                      Guests
+                    </motion.li>
+                    {currentTab === 'guests' && (
+                      <motion.div layoutId='tab-indicator' className={styles.active} />
+                    )}
+                  </div>
+                  <div>
+                    <motion.li
+                      whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                      className={styles.tab}
+                      onClick={() => updateTab('checkins')}
+                    >
+                      Check-In
+                    </motion.li>
+                    {currentTab === 'checkins' && (
+                      <motion.div layoutId='tab-indicator' className={styles.active} />
+                    )}
+                  </div>
+                  <div>
+                    <motion.li
+                      whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                      className={styles.tab}
+                      onClick={() => updateTab('inevent')}
+                    >
+                      In-Event
+                    </motion.li>
+                    {currentTab === 'inevent' && (
+                      <motion.div layoutId='tab-indicator' className={styles.active} />
+                    )}
+                  </div>
+                </>
+              )}
               <div>
                 <motion.li
                   whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}

@@ -40,7 +40,7 @@ const SpinWheel = () => {
 
   useEffect(() => {
     if (ticketId.length > 0 && spinWheelData) {
-      spin(eventId, ticketId, setPrizeNumber, spinWheelData);
+      spin(eventId, ticketId, setPrizeNumber, spinWheelData, setTicketId);
     }
   }, [isScanning]);
 

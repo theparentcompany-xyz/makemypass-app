@@ -16,7 +16,7 @@
   align-items: center;
 }
 
-.popper{
+.popper {
   font-size: 1.25rem;
 }
 
@@ -92,6 +92,7 @@
 
 .tabsContainer {
   margin-top: 1rem;
+  margin-left: 1rem;
 }
 
 .tabs ol {

@@ -52,6 +52,8 @@ const Events = () => {
       navigate(`/${eventData.title?.toLowerCase()}/overview/`);
     } else if (eventData.role === 'Volunteer') {
       navigate(`/${eventData.title?.toLowerCase()}/checkins/`);
+    } else if (eventData.role === 'Gamer') {
+      navigate(`/${eventData.title?.toLowerCase()}/spinwheel/`);
     }
   }, [eventData]);
 
