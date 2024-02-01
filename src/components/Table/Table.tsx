@@ -150,8 +150,8 @@ const Table = ({
     return tableData.filter(
       (item) =>
         item.name?.toLowerCase().includes(keyword) ||
-        item.email.toLowerCase().includes(keyword) ||
-        item.phone_number.toLowerCase().includes(keyword),
+        item.email?.toLowerCase().includes(keyword) ||
+        item.phone_number?.toLowerCase().includes(keyword),
     );
   }, [tableData, search]);
 

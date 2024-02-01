@@ -36,10 +36,10 @@ const Events = () => {
       const eventData = JSON.parse(currentEvent);
       if (eventData.event_name !== eventName.trim().toLowerCase()) {
         localStorage.removeItem('eventData');
-        getEventId(eventName.toLowerCase());
+        getEventId(eventName?.toLowerCase());
       }
     } else {
-      getEventId(eventName.toLowerCase());
+      getEventId(eventName?.toLowerCase());
     }
   };
 
@@ -49,9 +49,9 @@ const Events = () => {
 
   useEffect(() => {
     if (eventData.role === 'Admin') {
-      navigate(`/${eventData.title.toLowerCase()}/overview/`);
+      navigate(`/${eventData.title?.toLowerCase()}/overview/`);
     } else if (eventData.role === 'Volunteer') {
-      navigate(`/${eventData.title.toLowerCase()}/checkins/`);
+      navigate(`/${eventData.title?.toLowerCase()}/checkins/`);
     }
   }, [eventData]);
 
