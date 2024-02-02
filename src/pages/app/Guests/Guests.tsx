@@ -52,7 +52,7 @@ const Guests = () => {
   };
 
   const getGuestData = () => {
-    const selectedGuestData = guests.filter((guest) => guest.id === selectedGuestId.id);
+    const selectedGuestData = guests.filter((guest) => guest?.id === selectedGuestId?.id);
 
     setSelectedGuest(selectedGuestData[0]);
   };
@@ -61,7 +61,7 @@ const Guests = () => {
   const eventId = getLocalEventId();
 
   useEffect(() => {
-    if (eventId && !selectedGuestId.id) {
+    if (eventId && !selectedGuestId?.id) {
       if (socket) socket.close();
       connectPrivateSocket({
         url: makeMyPassSocket.listGuests(eventId),
@@ -92,9 +92,9 @@ const Guests = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedGuestId.id && selectedGuestId.type === 'edit') getGuestData();
-    else if (selectedGuestId.id && selectedGuestId.type === 'download')
-      downloadTicket(eventId, selectedGuestId.id);
+    if (selectedGuestId?.id && selectedGuestId.type === 'edit') getGuestData();
+    else if (selectedGuestId?.id && selectedGuestId.type === 'download')
+      downloadTicket(eventId, selectedGuestId?.id);
   }, [selectedGuestId]);
 
   const handleDistrictChange = (event: any) => {

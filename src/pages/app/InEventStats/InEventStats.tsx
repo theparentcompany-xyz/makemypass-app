@@ -127,6 +127,13 @@ const InEventStats = () => {
   }, [guests, firstRender]);
 
   useEffect(() => {
+    if (newUser && newUser.name) {
+      const audio = new Audio('/count.mp3');
+      audio.play();
+    }
+  }, [newUser]);
+
+  useEffect(() => {
     if (eventId)
       connectPrivateSocket({
         url: makeMyPassSocket.checkInAnalytics(eventId),
