@@ -2,7 +2,7 @@ import Glance from '../../../components/Glance/Glance';
 import Theme from '../../../components/Theme/Theme';
 import Header from '../../../components/EventHeader/EventHeader';
 import styles from './InEventStats.module.css';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import {
   Chart as ChartJS,
@@ -152,7 +152,7 @@ const InEventStats = () => {
           });
 
           setLineData({
-            labels: Object.keys(lineData['2024-01-28'] || {}),
+            labels: Object.keys(lineData['2024-02-02'] || {}),
             datasets: lineDataSet,
           });
 
@@ -224,35 +224,37 @@ const InEventStats = () => {
   return (
     <Theme>
       <>
-        {newUser && newUser.name && (
-          <>
-            <div className={styles.backgroundBlur}></div>
-            <Confetti className={styles.confetti} />
-            <motion.dialog
-              initial={{
-                opacity: 0,
-                scale: 0.5,
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0.5,
-              }}
-              open
-              className={styles.welcomeContainer}
-            >
-              <img src='/app/welcome.png' alt='' className={styles.image} />
-              <div className={styles.welcomeText}>
-                <p className={styles.userType}>{newUser.category}</p>
-                <p className={styles.userName}>{newUser.name}</p>
-                <p className={styles.userEmail}>{newUser.email}</p>
-              </div>
-            </motion.dialog>
-          </>
-        )}
+        <AnimatePresence>
+          {newUser && newUser.name && (
+            <>
+              <div className={styles.backgroundBlur}></div>
+              <Confetti className={styles.confetti} />
+              <motion.dialog
+                initial={{
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                open
+                className={styles.welcomeContainer}
+              >
+                <img src='/app/welcome.png' alt='' className={styles.image} />
+                <div className={styles.welcomeText}>
+                  <p className={styles.userType}>{newUser.category}</p>
+                  <p className={styles.userName}>{newUser.name}</p>
+                  <p className={styles.userEmail}>{newUser.email}</p>
+                </div>
+              </motion.dialog>
+            </>
+          )}
+        </AnimatePresence>
 
         <div className={styles.inEventContainer}>
           <Header />
