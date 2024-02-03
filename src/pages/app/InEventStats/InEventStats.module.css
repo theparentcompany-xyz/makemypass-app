@@ -75,13 +75,30 @@
   margin-top: 1rem;
 }
 
+.day {
+  color: #fff;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
 .count {
   font-size: 1.35rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
 
-.count span {
+.dcount {
+  font-size: 1.15rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.count span,
+.dcount span {
   color: #47c97e;
   font-size: 0.9rem;
   font-style: normal;
@@ -178,7 +195,11 @@
 }
 
 .totalRegistered {
-  padding: 0 2rem;
+  padding: 0 1rem;
+}
+
+.dailyCount {
+  margin: 1rem;
 }
 
 @media (max-width: 1120px) {
@@ -301,10 +322,20 @@
   padding-bottom: 1rem;
 }
 
-.scrollContainer {
+/* .scrollContainer {
   display: flex;
   column-gap: 0.5rem;
   animation: swipe 30s linear infinite backwards;
+} */
+
+.scrollContainerr {
+  margin: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 0.25rem;
+  row-gap: 0.25rem;
+  margin-top: 0;
 }
 
 .district {
@@ -313,7 +344,7 @@
 
   background: rgba(255, 255, 255, 0.04);
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   border-radius: 8px;
 }
 
@@ -386,7 +417,7 @@
   margin-right: 0.5rem;
   padding: 0.35rem 0.95rem;
   border-radius: 12px;
-  
+
   background-color: #1d332c;
 
   margin: auto;
@@ -462,4 +493,12 @@
   .userEmail {
     font-size: 0.8rem;
   }
+}
+
+.checkInHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }

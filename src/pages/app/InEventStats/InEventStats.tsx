@@ -25,6 +25,8 @@ import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
 import { getEventId } from '../../../apis/events';
 import Confetti from 'react-confetti';
+import { formatDate } from '../../../common/commonFunctions';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 
 ChartJS.register(
   CategoryScale,
@@ -94,6 +96,14 @@ const InEventStats = () => {
   const [lineData, setLineData] = useState<ChartData>();
   const [barData, setBarData] = useState<ChartData>();
   const [districtData, setDistrictData] = useState<DistrictData>({});
+  const [showWelcome, setShowWelcome] = useState(true);
+  type DailyCount = {
+    day: string;
+    count: number;
+    color?: string;
+  };
+
+  const [dailyCount, setDailyCount] = useState<DailyCount[]>([]);
 
   const [guests, setGuests] = useState<guests[]>([]);
   const getLocalEventId = () => {
@@ -144,11 +154,27 @@ const InEventStats = () => {
           setDistrictData(barData);
 
           const dates = Object.keys(lineData || {});
-
+          setDailyCount([]);
           const lineDataSet: LineDataSet[] = dates.map((date, index) => {
             const colors = ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'];
             const borderColor = colors[index % colors.length];
             const backgroundColor = `rgba(${borderColor}, 0.5)`;
+
+            setDailyCount((prev: DailyCount[]) => {
+              const updatedDailyCount = [
+                ...prev,
+                {
+                  day: date,
+                  count: Object.values(lineData[date] || {}).reduce(
+                    (a, b) => (a as number) + (b as number),
+                    0,
+                  ) as number,
+                  color: borderColor,
+                },
+              ];
+              console.log(updatedDailyCount);
+              return updatedDailyCount;
+            });
 
             return {
               label: date,
@@ -232,7 +258,7 @@ const InEventStats = () => {
     <Theme>
       <>
         <AnimatePresence>
-          {!(newUser && newUser.name) && (
+          {showWelcome && newUser && newUser.name && (
             <>
               <div className={styles.backgroundBlur}></div>
               <Confetti className={styles.confetti} />
@@ -254,11 +280,9 @@ const InEventStats = () => {
               >
                 <img src='/app/welcome.png' alt='' className={styles.image} />
                 <div className={styles.welcomeText}>
-                  <p className={styles.userType}>{newUser?.category ?? 'Student'}</p>
-                  <p className={styles.userName}>{newUser?.name ?? 'Aswin Asok'}</p>
-                  <p className={styles.userEmail}>
-                    {newUser?.email ?? 'aswinasokofficial@gmail.com'}
-                  </p>
+                  <p className={styles.userType}>{newUser?.category}</p>
+                  <p className={styles.userName}>{newUser?.name}</p>
+                  <p className={styles.userEmail}>{newUser?.email}</p>
                 </div>
               </motion.dialog>
             </>
@@ -283,6 +307,25 @@ const InEventStats = () => {
                 </p>
               </div>
             </div>
+
+            <div className={styles.countSection}>
+              {dailyCount.length > 0 &&
+                dailyCount.map((day, index) => (
+                  <div key={index} className={styles.dailyCount}>
+                    <p
+                      style={{
+                        color: day.color,
+                      }}
+                      className={styles.day}
+                    >
+                      {formatDate(day.day)}
+                    </p>
+                    <p className={styles.dcount}>
+                      {day.count} <span>guests</span>
+                    </p>
+                  </div>
+                ))}
+            </div>
           </div>
 
           <div className={styles.todayRegistered}>
@@ -297,7 +340,7 @@ const InEventStats = () => {
               </p>
             </div>
             <div className={styles.districtsCount}>
-              <div className={styles.scrollContainer}>
+              <div className={styles.scrollContainerr}>
                 {Object.keys(districtData).map((key, index) => (
                   <div
                     key={index}
@@ -318,7 +361,15 @@ const InEventStats = () => {
             }}
             className={styles.pageVisitsCount}
           >
-            <p className={styles.header}>Recent Check-Ins</p>
+            <div className={styles.checkInHeader}>
+              <p className={styles.header}>Recent Check-Ins</p>
+              <SecondaryButton
+                onClick={() => {
+                  setShowWelcome(() => !showWelcome);
+                }}
+                buttonText={showWelcome ? 'Hide Card' : 'Show Card'}
+              />
+            </div>
             <div className={styles.countSection}>
               <div className={styles.usersContainer}>
                 {guests &&

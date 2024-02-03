@@ -41,3 +41,41 @@ export const getEventUUID = (eventTitle: string, setEventId: Dispatch<SetStateAc
 
   setEventId(eventData?.event_id);
 };
+
+export const formatDate = (dateString: string) => {
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  const date = new Date(dateString);
+
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  // Function to get the ordinal suffix for the day
+  function getOrdinal(n: number) {
+    return (
+      n +
+      (n % 10 === 1 && n % 100 !== 11
+        ? 'st'
+        : n % 10 === 2 && n % 100 !== 12
+          ? 'nd'
+          : n % 10 === 3 && n % 100 !== 13
+            ? 'rd'
+            : 'th')
+    );
+  }
+
+  return `${getOrdinal(day)} ${month} ${year}`;
+};
