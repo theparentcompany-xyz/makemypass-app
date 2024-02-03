@@ -75,6 +75,17 @@
   }
 }
 
+@media screen and (max-width: 496px) {
+  .glanceHeader,
+  .guests {
+    font-size: 1rem;
+  }
+
+  .guests span {
+    font-size: 0.8rem;
+  }
+}
+
 /* Tabs Container */
 
 .centerContainer {

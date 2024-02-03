@@ -502,3 +502,9 @@
   align-items: center;
   margin-bottom: 1rem;
 }
+
+.total span {
+  font-size: 1rem;
+  color: #47c97e;
+  font-weight: 500;
+}

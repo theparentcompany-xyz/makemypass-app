@@ -150,7 +150,7 @@ const InEventStats = () => {
       }).then((ws) => {
         ws.onmessage = (event) => {
           const lineData = JSON.parse(event.data).response.time;
-          const barData = JSON.parse(event.data).response.district;
+          let barData = JSON.parse(event.data).response.district;
           setDistrictData(barData);
 
           const dates = Object.keys(lineData || {});
@@ -302,7 +302,7 @@ const InEventStats = () => {
               <div className={styles.totalRegistered}>
                 <p className={styles.total}>Total Check-Ins</p>
                 <p className={styles.count}>
-                  {guests.length}
+                  {dailyCount.length > 0 && dailyCount.reduce((a, b) => a + b.count, 0)}
                   <span> guests</span>
                 </p>
               </div>
@@ -334,22 +334,27 @@ const InEventStats = () => {
             </div>
 
             <div className={styles.totalRegistered}>
-              <p className={styles.total}>Top District: {findDistrictWithMostNumber()?.district}</p>
-              <p className={styles.count}>
-                {findDistrictWithMostNumber()?.value} <span>guests</span>
+              <p className={styles.total}>
+                Top District: {findDistrictWithMostNumber()?.district}&nbsp;
+                <span>
+                  ({findDistrictWithMostNumber()?.value} <span>guests</span>)
+                </span>
               </p>
+              <p className={styles.count}></p>
             </div>
             <div className={styles.districtsCount}>
               <div className={styles.scrollContainerr}>
-                {Object.keys(districtData).map((key, index) => (
-                  <div
-                    key={index}
-                    className={styles.district}
-                    style={{ color: colors[index % colors.length] }}
-                  >
-                    {key}: {districtData[key]}
-                  </div>
-                ))}
+                {Object.keys(districtData)
+                  .sort((a, b) => districtData[b] - districtData[a])
+                  .map((key, index) => (
+                    <div
+                      key={index}
+                      className={styles.district}
+                      style={{ color: colors[index % colors.length] }}
+                    >
+                      {key}: {districtData[key]}
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
