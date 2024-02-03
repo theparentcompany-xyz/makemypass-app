@@ -20,6 +20,13 @@
   font-size: 1.25rem;
 }
 
+.guestsCount {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .glanceHeader {
   margin-top: 0;
 }

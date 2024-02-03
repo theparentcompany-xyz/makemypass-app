@@ -26,6 +26,7 @@ const Glance = ({ tab }: { tab: string }) => {
   const [lastUpdated, setLastUpdated] = useState<string>('');
   const [totalGuests, setTotalGuests] = useState<number>(0);
   const [targetGuests, setTargetGuests] = useState<number>(0);
+  const [todayCheckIns, setTodayCheckIns] = useState<number>(0);
 
   const [firstRender, setFirstRender] = useState<boolean>(true);
 
@@ -105,6 +106,7 @@ const Glance = ({ tab }: { tab: string }) => {
           } else {
             setTotalGuests(Number(JSON.parse(event.data).response.total_checkin));
             setTargetGuests(Number(JSON.parse(event.data).response.total_registration));
+            setTodayCheckIns(Number(JSON.parse(event.data).response.today_checkin));
           }
 
           const newStrucure: progressDataType = [];
@@ -243,32 +245,68 @@ const Glance = ({ tab }: { tab: string }) => {
               </motion.p>
             </div>
 
-            {totalGuests >= 0 && (
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={styles.guests}>
+            <div className={styles.guestsCount}>
+              {totalGuests >= 0 && (
                 <motion.p
-                  animate={{
-                    scale: [1, 1.25, 1],
-                    marginRight: [0, 5, 0],
-                    color: ['#47c97e', '#ffffff', '#47c97e'],
-                  }}
-                  transition={{
-                    duration: 0.75,
-                  }}
-                  key={totalGuests}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className={styles.guests}
                 >
-                  <p
-                    style={
-                      totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#ffffff' }
-                    }
+                  <motion.p
+                    animate={{
+                      scale: [1, 1.25, 1],
+                      marginRight: [0, 5, 0],
+                      color: ['#47c97e', '#ffffff', '#47c97e'],
+                    }}
+                    transition={{
+                      duration: 0.75,
+                    }}
+                    key={totalGuests}
                   >
-                    {totalGuests}
-                  </p>
+                    <p
+                      style={
+                        totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#ffffff' }
+                      }
+                    >
+                      {totalGuests}
+                    </p>
+                  </motion.p>
+                  /{targetGuests}
+                  {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}
+                  <span>&nbsp;guests</span>
                 </motion.p>
-                /{targetGuests}
-                {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}
-                <span>&nbsp;guests</span>
-              </motion.p>
-            )}
+              )}
+              {totalGuests >= 0 && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className={styles.guests}
+                >
+                  <motion.p
+                    animate={{
+                      scale: [1, 1.25, 1],
+                      marginRight: [0, 5, 0],
+                      color: ['#47c97e', '#ffffff', '#47c97e'],
+                    }}
+                    transition={{
+                      duration: 0.75,
+                    }}
+                    key={totalGuests}
+                  >
+                    <p
+                      style={
+                        totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#ffffff' }
+                      }
+                    >
+                      {todayCheckIns}
+                    </p>
+                  </motion.p>
+                  /{targetGuests}
+                  {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}
+                  <span>&nbsp;today's guests</span>
+                </motion.p>
+              )}
+            </div>
 
             <div className={styles.progresBarGraph}>
               {progressData.map((data) => (
