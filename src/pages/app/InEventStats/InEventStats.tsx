@@ -232,7 +232,7 @@ const InEventStats = () => {
     <Theme>
       <>
         <AnimatePresence>
-          {newUser && newUser.name && (
+          {!(newUser && newUser.name) && (
             <>
               <div className={styles.backgroundBlur}></div>
               <Confetti className={styles.confetti} />
@@ -254,9 +254,11 @@ const InEventStats = () => {
               >
                 <img src='/app/welcome.png' alt='' className={styles.image} />
                 <div className={styles.welcomeText}>
-                  <p className={styles.userType}>{newUser.category}</p>
-                  <p className={styles.userName}>{newUser.name}</p>
-                  <p className={styles.userEmail}>{newUser.email}</p>
+                  <p className={styles.userType}>{newUser?.category ?? 'Student'}</p>
+                  <p className={styles.userName}>{newUser?.name ?? 'Aswin Asok'}</p>
+                  <p className={styles.userEmail}>
+                    {newUser?.email ?? 'aswinasokofficial@gmail.com'}
+                  </p>
                 </div>
               </motion.dialog>
             </>

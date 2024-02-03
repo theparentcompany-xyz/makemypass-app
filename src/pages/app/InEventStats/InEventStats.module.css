@@ -406,3 +406,60 @@
   color: #d2d4d7;
   font-size: 1rem;
 }
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .welcomeText {
+    width: 100%;
+  }
+
+  .userType {
+    font-size: 1rem;
+    padding: 0.25rem 0.75rem;
+  }
+
+  .userName {
+    font-size: 1.5rem;
+  }
+
+  .cuserName {
+    font-size: 0.75rem;
+  }
+
+  .userEmail {
+    font-size: 0.9rem;
+  }
+
+  .image {
+    width: 15rem;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcomeText {
+    width: 100%;
+  }
+
+  .userType {
+    font-size: 0.9rem;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .image {
+    width: 11rem;
+    border-radius: 12px;
+  }
+
+  .userName {
+    font-size: 1.25rem;
+  }
+
+  .cuserName {
+    font-size: 0.6rem;
+  }
+
+  .userEmail {
+    font-size: 0.8rem;
+  }
+}
