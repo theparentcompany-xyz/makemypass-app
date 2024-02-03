@@ -241,7 +241,8 @@ const Glance = ({ tab }: { tab: string }) => {
                 animate={{ opacity: 1 }}
                 className={styles.lastUpdated}
               >
-                Last {tab === 'checkins' ? 'Check-In' : 'Registered'}: Today, {lastUpdated}
+                Last {tab === 'checkins' || tab === 'inevent' ? 'Check-In' : 'Registered'}: Today,{' '}
+                {lastUpdated}
               </motion.p>
             </div>
 
@@ -276,35 +277,36 @@ const Glance = ({ tab }: { tab: string }) => {
                   <span>&nbsp;guests</span>
                 </motion.p>
               )}
-              {totalGuests >= 0 && (
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className={styles.guests}
-                >
+              {currentTab == 'checkin' ||
+                (currentTab == 'inevent' && totalGuests >= 0 && (
                   <motion.p
-                    animate={{
-                      scale: [1, 1.25, 1],
-                      marginRight: [0, 5, 0],
-                      color: ['#47c97e', '#ffffff', '#47c97e'],
-                    }}
-                    transition={{
-                      duration: 0.75,
-                    }}
-                    key={totalGuests}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className={styles.guests}
                   >
-                    <p
-                      style={
-                        totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#ffffff' }
-                      }
+                    <motion.p
+                      animate={{
+                        scale: [1, 1.25, 1],
+                        marginRight: [0, 5, 0],
+                        color: ['#47c97e', '#ffffff', '#47c97e'],
+                      }}
+                      transition={{
+                        duration: 0.75,
+                      }}
+                      key={totalGuests}
                     >
-                      {todayCheckIns}
-                    </p>
+                      <p
+                        style={
+                          totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#ffffff' }
+                        }
+                      >
+                        {todayCheckIns}
+                      </p>
+                    </motion.p>
+                    {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}
+                    <span>&nbsp;today's guests</span>
                   </motion.p>
-                  {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}
-                  <span>&nbsp;today's guests</span>
-                </motion.p>
-              )}
+                ))}
             </div>
 
             <div className={styles.progresBarGraph}>
