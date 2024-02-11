@@ -2,6 +2,8 @@ import styles from './EventPage.module.css';
 import Theme from '../../../components/Theme/Theme';
 import { FiClock } from 'react-icons/fi';
 import { IoLocationOutline } from 'react-icons/io5';
+import InputFIeld from '../../auth/Login/InputFIeld';
+import { GoPerson } from 'react-icons/go';
 
 const EventPage = () => {
   return (
@@ -29,7 +31,38 @@ const EventPage = () => {
           </div>
 
           <div className={styles.eventForm}>
-            <div className={styles.form}></div>
+            <p className={styles.eventFormTitle}>Registration Form</p>
+            <p className={styles.eventDescription}>
+              Please fill in the form below to register for the event.
+            </p>
+            <InputFIeld
+              type='text'
+              name='name'
+              id='name'
+              placeholder='Name'
+              icon={<GoPerson size={15} />}
+            />
+            <InputFIeld
+              type='email'
+              name='email'
+              id='email'
+              placeholder='Email'
+              icon={<GoPerson size={15} />}
+            />
+            <InputFIeld
+              type='number'
+              name='phone'
+              id='phone'
+              placeholder='Phone'
+              icon={<GoPerson size={15} />}
+            />
+            <InputFIeld
+              type='text'
+              name='company'
+              id='company'
+              placeholder='Company'
+              icon={<GoPerson size={15} />}
+            />
           </div>
         </div>
       </Theme>
