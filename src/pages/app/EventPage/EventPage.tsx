@@ -4,6 +4,7 @@ import { FiClock } from 'react-icons/fi';
 import { IoLocationOutline } from 'react-icons/io5';
 import InputFIeld from '../../auth/Login/InputFIeld';
 import { GoPerson } from 'react-icons/go';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 
 const EventPage = () => {
   return (
@@ -64,6 +65,27 @@ const EventPage = () => {
               icon={<GoPerson size={15} />}
             />
           </div>
+
+          <div className={styles.ticketTypes}>
+            <p className={styles.ticketTypesTitle}>Ticket Types</p>
+            <p className={styles.eventDescription}>
+              Select a ticket type to register for the event.
+            </p>
+            <div className={styles.ticketType}>
+              <p className={styles.ticketName}>Golden Pass</p>
+              <p className={styles.ticketPrice}>$50</p>
+            </div>
+            <div className={styles.ticketType}>
+              <p className={styles.ticketName}>Diamond Pass</p>
+              <p className={styles.ticketPrice}>$100</p>
+            </div>
+            <div className={styles.ticketType}>
+              <p className={styles.ticketName}>Sliver Pass</p>
+              <p className={styles.ticketPrice}>$200</p>
+            </div>
+          </div>
+
+          <button className={styles.submitButton}>Register Now</button>
         </div>
       </Theme>
     </>
