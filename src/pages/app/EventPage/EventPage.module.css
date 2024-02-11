@@ -92,8 +92,8 @@
   padding: 2rem;
 
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
 
   margin: 1rem auto;
 
@@ -101,7 +101,7 @@
   font-family: 'Inter', sans-serif;
 }
 
-.ticketName {
+.ticketTypeTitle {
   font-size: 1.25rem;
   font-weight: 500;
   color: #fff;
@@ -133,5 +133,40 @@
   margin: 1rem auto;
 
   color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.passText {
+  display: flex;
+}
+
+.ticketHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: space;
+  margin-bottom: 1rem;
+}
+
+.perkList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+}
+
+.perk {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #bbbaba;
+  font-family: 'Inter', sans-serif;
+}
+
+.ticketPerksTitle {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #fff;
   font-family: 'Inter', sans-serif;
 }

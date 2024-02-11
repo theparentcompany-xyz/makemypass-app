@@ -4,9 +4,29 @@ import { FiClock } from 'react-icons/fi';
 import { IoLocationOutline } from 'react-icons/io5';
 import InputFIeld from '../../auth/Login/InputFIeld';
 import { GoPerson } from 'react-icons/go';
-import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getEventId } from '../../../apis/events';
+import { getTickets } from '../../../apis/publicpage';
+import { TicketOptions } from './types';
 
 const EventPage = () => {
+  const { eventTitle } = useParams<{ eventTitle: string }>();
+  const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
+
+  useEffect(() => {
+    if (eventTitle) getEventId(eventTitle);
+
+    setTimeout(() => {
+      const eventId = JSON.parse(localStorage.getItem('eventData') || '{}').event_id;
+      if (eventId) {
+        getTickets(eventId, setTicketInfo);
+      } else {
+        console.log('Event not found');
+      }
+    }, 100);
+  }, [eventTitle]);
+
   return (
     <>
       <Theme>
@@ -30,7 +50,44 @@ const EventPage = () => {
               </div>
             </div>
           </div>
+          <div className={styles.ticketTypes}>
+            <p className={styles.ticketTypesTitle}>Ticket Types</p>
+            <p className={styles.eventDescription}>
+              Select a ticket type to register for the event.
+            </p>
+            {ticketInfo &&
+              Object.keys(ticketInfo).map((ticketType) => (
+                <div key={ticketType} className={styles.ticketType}>
+                  <div className={styles.ticketHeader}>
+                    <div className={styles.passText}>
+                      <p className={styles.ticketTypeTitle}>{ticketType} Pass</p>
+                      <p className={styles.ticketPrice}>Rs.{ticketInfo[ticketType].price}</p>
+                    </div>
 
+                    {ticketInfo[ticketType].limit && (
+                      <div className={styles.ticketCount}>
+                        <p className={styles.ticketCountText}>
+                          {ticketInfo[ticketType].slots_left}/{ticketInfo[ticketType].limit} tickets
+                          left
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  <div className={styles.ticketBody}>
+                    <p className={styles.ticketPerksTitle}>Ticket Perks</p>
+                    <div className={styles.ticketPerks}>
+                      <ul className={styles.perkList}>
+                        {Object.keys(ticketInfo[ticketType].perks).map((perk) => (
+                          <li key={perk} className={styles.perk}>
+                            {perk}: {ticketInfo[ticketType].perks[perk]}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
           <div className={styles.eventForm}>
             <p className={styles.eventFormTitle}>Registration Form</p>
             <p className={styles.eventDescription}>
@@ -65,27 +122,6 @@ const EventPage = () => {
               icon={<GoPerson size={15} />}
             />
           </div>
-
-          <div className={styles.ticketTypes}>
-            <p className={styles.ticketTypesTitle}>Ticket Types</p>
-            <p className={styles.eventDescription}>
-              Select a ticket type to register for the event.
-            </p>
-            <div className={styles.ticketType}>
-              <p className={styles.ticketName}>Golden Pass</p>
-              <p className={styles.ticketPrice}>$50</p>
-            </div>
-            <div className={styles.ticketType}>
-              <p className={styles.ticketName}>Diamond Pass</p>
-              <p className={styles.ticketPrice}>$100</p>
-            </div>
-            <div className={styles.ticketType}>
-              <p className={styles.ticketName}>Sliver Pass</p>
-              <p className={styles.ticketPrice}>$200</p>
-            </div>
-          </div>
-
-          <button className={styles.submitButton}>Register Now</button>
         </div>
       </Theme>
     </>
