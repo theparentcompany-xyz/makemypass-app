@@ -32,7 +32,7 @@ export const getFormFields = async (eventId: string, setFormFields: React.Dispat
 export const submitForm = async (eventId: string, data: any) => {
   publicGateway
     .post(makeMyPass.submitForm(eventId), data)
-    .then((response) => {
+    .then(() => {
       toast.success('Form submitted successfully');
     })
     .catch((error) => {
