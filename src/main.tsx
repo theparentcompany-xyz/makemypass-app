@@ -23,6 +23,7 @@ import InEventStats from './pages/app/InEventStats/InEventStats';
 
 import SecureAuthRoutes from '../services/authRoutes';
 import ClaimGifts from './pages/app/ClaimGifts/ClaimGifts';
+import EventPage from './pages/app/EventPage/EventPage';
 
 const RoleChecker = SecureAuthRoutes();
 
@@ -48,6 +49,10 @@ const routes = [
     element: <LandingPage />,
   },
   {
+    path: '/events/:eventTitle',
+    element: <EventPage />,
+  },
+  {
     path: '/',
     element: <AuthCheck />,
     children: [
@@ -55,6 +60,7 @@ const routes = [
         path: '/events',
         element: <Events />,
       },
+
       {
         path: '/:eventTitle/overview',
         element: <RoleChecker roles={['Admin']} children={<Overview />} />,

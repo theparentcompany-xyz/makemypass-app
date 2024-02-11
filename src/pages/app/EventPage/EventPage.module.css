@@ -1,0 +1,60 @@
+.eventDataContainer {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+
+  max-width: 30rem;
+  min-width: 20rem;
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+
+  margin: auto;
+
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.eventTitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+
+  font-family: 'Inter', sans-serif;
+}
+
+.eventDescription {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #bbbaba;
+  font-family: 'Inter', sans-serif;
+}
+
+.otherDetials {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  column-gap: 0.25rem;
+  margin-top: 1.5rem;
+}
+
+.eventDate {
+  margin-right: 1rem;
+}
+
+.time,
+.subLocation {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #bbbaba;
+  font-family: 'Inter', sans-serif;
+}
+
+.clockIcon {
+  margin-right: 0.25rem;
+  color: #bbbaba;
+}
