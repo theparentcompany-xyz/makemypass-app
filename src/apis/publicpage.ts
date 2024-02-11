@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { TicketOptions } from '../pages/app/EventPage/types';
@@ -22,6 +23,17 @@ export const getFormFields = async (eventId: string, setFormFields: React.Dispat
     .then((response) => {
       console.log(response.data);
       setFormFields(response.data.response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const submitForm = async (eventId: string, data: any) => {
+  publicGateway
+    .post(makeMyPass.submitForm(eventId), data)
+    .then((response) => {
+      toast.success('Form submitted successfully');
     })
     .catch((error) => {
       console.log(error);

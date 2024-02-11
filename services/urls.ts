@@ -45,7 +45,8 @@ export const makeMyPass = {
     makeMyPassURL(`/checkin/${eventId}/user-info/${ticketCode}`),
 
   getTicketInfo: (eventId: string) => makeMyPassURL(`/rsvp/get-tickets-info/${eventId}/`),
-  getFormFields: (ticketId: string) => makeMyPassURL(`/rsvp/get-form-fields/${ticketId}/`),
+  getFormFields: (evenid: string) => makeMyPassURL(`/rsvp/get-form-fields/${evenid}/`),
+  submitForm: (eventId: string) => makeMyPassURL(`/rsvp/submit/${eventId}/`),
 };
 
 export const makeMyPassSocket = {

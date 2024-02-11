@@ -7,10 +7,11 @@ import { GoPerson } from 'react-icons/go';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getEventId } from '../../../apis/events';
-import { getFormFields, getTickets } from '../../../apis/publicpage';
+import { getFormFields, getTickets, submitForm } from '../../../apis/publicpage';
 import { TicketOptions } from './types';
 
 import Select from 'react-select';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -93,22 +94,41 @@ const EventPage = () => {
       field_key: 'organization',
     },
   ]);
+  const [ticketId, setTicketId] = useState<string>('');
+
+  let eventId: string = '';
+
+  const [formData, setFormData] = useState<any>({});
 
   useEffect(() => {
     if (eventTitle) getEventId(eventTitle);
 
     setTimeout(() => {
-      const eventId = JSON.parse(localStorage.getItem('eventData') || '{}').event_id;
+      eventId = JSON.parse(localStorage.getItem('eventData') || '{}').event_id;
       if (eventId) {
         getTickets(eventId, setTicketInfo);
         getFormFields(eventId, setFormFields);
-      } else {
-        console.log('Event not found');
       }
-
-      console.log(formFields);
     }, 100);
   }, [eventTitle]);
+
+  useEffect(() => {
+    ticketInfo &&
+      Object.keys(ticketInfo).map((ticketType) => {
+        if (ticketInfo[ticketType].default_selected) {
+          setTicketId(ticketInfo[ticketType].id);
+        }
+      });
+  }, [ticketInfo]);
+
+  useEffect(() => {
+    setFormData(
+      formFields.reduce((data: any, field: any) => {
+        data[field.field_key] = '';
+        return data;
+      }, {}),
+    );
+  }, [formFields]);
 
   const customStyles = {
     control: (provided: any) => ({
@@ -138,6 +158,13 @@ const EventPage = () => {
       fontWeight: 400,
       fontSize: '0.9rem',
     }),
+  };
+
+  const onFieldChange = (fieldName: string, fieldValue: string) => {
+    setFormData({
+      ...formData,
+      [fieldName]: fieldValue,
+    });
   };
 
   return (
@@ -175,6 +202,9 @@ const EventPage = () => {
                   placeholder={field.title}
                   id={field.id}
                   key={field.id}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange(field.field_key, e.target.value)
+                  }
                   type='text'
                   icon={
                     <GoPerson
@@ -195,6 +225,9 @@ const EventPage = () => {
                         label: option,
                       }))}
                       styles={customStyles}
+                      onChange={(selectedOption: any) =>
+                        onFieldChange(field.field_key, selectedOption.value)
+                      }
                       placeholder={field.title}
                       isSearchable={false}
                     />
@@ -216,7 +249,19 @@ const EventPage = () => {
             </div>
             {ticketInfo &&
               Object.keys(ticketInfo).map((ticketType) => (
-                <div key={ticketType} className={styles.ticketType}>
+                <div
+                  key={ticketType}
+                  onClick={() => {
+                    setTicketId(ticketInfo[ticketType].id);
+                  }}
+                  className={styles.ticketType}
+                  style={{
+                    border:
+                      ticketId === ticketInfo[ticketType].id
+                        ? '2px solid #FFFFFF'
+                        : '2px solid #2A3533',
+                  }}
+                >
                   <div className={styles.ticketHeader}>
                     <div className={styles.passText}>
                       <p className={styles.ticketTypeTitle}>{ticketType} Pass</p>
@@ -247,6 +292,9 @@ const EventPage = () => {
                 </div>
               ))}
           </div>
+          <button onClick={() => submitForm(ticketId, formData)} className={styles.submitButton}>
+            Submit Form
+          </button>
         </div>
       </Theme>
     </>

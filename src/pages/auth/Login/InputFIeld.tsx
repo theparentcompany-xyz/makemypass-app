@@ -7,6 +7,7 @@ interface FormProps {
   id: string;
   placeholder: string;
   icon: React.ReactNode;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProps }, ref) => {
