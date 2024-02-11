@@ -11,7 +11,6 @@ import { getFormFields, getTickets, submitForm } from '../../../apis/publicpage'
 import { TicketOptions } from './types';
 
 import Select from 'react-select';
-import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
