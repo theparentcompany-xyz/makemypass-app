@@ -15,3 +15,15 @@ export const getTickets = async (
       console.log(error);
     });
 };
+
+export const getFormFields = async (eventId: string, setFormFields: React.Dispatch<any>) => {
+  publicGateway
+    .get(makeMyPass.getFormFields(eventId))
+    .then((response) => {
+      console.log(response.data);
+      setFormFields(response.data.response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

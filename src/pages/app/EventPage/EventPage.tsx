@@ -7,12 +7,90 @@ import { GoPerson } from 'react-icons/go';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getEventId } from '../../../apis/events';
-import { getTickets } from '../../../apis/publicpage';
+import { getFormFields, getTickets } from '../../../apis/publicpage';
 import { TicketOptions } from './types';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
+  const [formFields, setFormFields] = useState<any>([
+    {
+      id: 'f3a54a2f-7f0d-4f38-a6c1-84c49d3c6c1d',
+      type: 'SmallText',
+      title: 'Name',
+      unique: false,
+      options: [],
+      required: true,
+      field_key: 'name',
+    },
+    {
+      id: 'a2b5e5e6-4a69-48f3-823a-3a9bbd2a6c8f',
+      type: 'SmallText',
+      title: 'Email',
+      unique: false,
+      options: [],
+      required: true,
+      field_key: 'email',
+    },
+    {
+      id: 'c0f47e51-9b64-4b18-bf8a-1c9b0a7cc3ea',
+      type: 'SmallText',
+      title: 'Phone Number',
+      unique: false,
+      options: [],
+      required: true,
+      field_key: 'phone_number',
+    },
+    {
+      id: 'd8e37a91-6d63-4c1f-9a3b-82d5c2e7bax3',
+      type: 'Dropdown',
+      title: 'District',
+      unique: false,
+      options: [
+        'Thiruvananthapuram',
+        'Kollam',
+        'Pathanamthitta',
+        'Alappuzha',
+        'Kottayam',
+        'Idukki',
+        'Ernakulam',
+        'Thrissur',
+        'Palakkad',
+        'Malappuram',
+        'Kozhikode',
+        'Wayanad',
+        'Kannur',
+        'Kasaragod',
+      ],
+      required: true,
+      field_key: 'district',
+    },
+    {
+      id: 'e32ab742-ee2b-4cb4-90b0-071aeb446f58',
+      type: 'Dropdown',
+      title: 'Category',
+      unique: false,
+      options: [
+        'Student',
+        'Startup',
+        'Local Business/SME',
+        'Working Professional',
+        'NRE or Gulf Returnees',
+        'Other',
+      ],
+      required: true,
+      field_key: 'category',
+    },
+    {
+      id: '3a2c14b3-7cf2-42e5-8c2d-6faedaae2e25',
+      type: 'SmallText',
+      title: 'Company / Organization',
+      unique: false,
+      options: [],
+      required: false,
+      field_key: 'organization',
+    },
+  ]);
 
   useEffect(() => {
     if (eventTitle) getEventId(eventTitle);
@@ -21,6 +99,7 @@ const EventPage = () => {
       const eventId = JSON.parse(localStorage.getItem('eventData') || '{}').event_id;
       if (eventId) {
         getTickets(eventId, setTicketInfo);
+        getFormFields(eventId, setFormFields);
       } else {
         console.log('Event not found');
       }
@@ -51,10 +130,16 @@ const EventPage = () => {
             </div>
           </div>
           <div className={styles.ticketTypes}>
-            <p className={styles.ticketTypesTitle}>Ticket Types</p>
-            <p className={styles.eventDescription}>
-              Select a ticket type to register for the event.
-            </p>
+            <div
+              style={{
+                marginLeft: '8px',
+              }}
+            >
+              <p className={styles.ticketTypesTitle}>Ticket Types</p>
+              <p className={styles.eventDescription}>
+                Select a ticket type to register for the event.
+              </p>
+            </div>
             {ticketInfo &&
               Object.keys(ticketInfo).map((ticketType) => (
                 <div key={ticketType} className={styles.ticketType}>
