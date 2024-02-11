@@ -10,6 +10,8 @@ import { getEventId } from '../../../apis/events';
 import { getFormFields, getTickets } from '../../../apis/publicpage';
 import { TicketOptions } from './types';
 
+import Select from 'react-select';
+
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
@@ -103,8 +105,40 @@ const EventPage = () => {
       } else {
         console.log('Event not found');
       }
+
+      console.log(formFields);
     }, 100);
   }, [eventTitle]);
+
+  const customStyles = {
+    control: (provided: any) => ({
+      ...provided,
+      border: 'none',
+      backgroundColor: '#2A3533',
+      fontFamily: 'Inter, sans-serif',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      fontSize: '0.9rem',
+    }),
+
+    group: (provided: any) => ({
+      ...provided,
+      paddingTop: 0,
+    }),
+
+    singleValue: (base: any) => ({
+      ...base,
+      color: '#fff',
+    }),
+    option: (provided: any) => ({
+      ...provided,
+      fontFamily: 'Inter, sans-serif',
+      color: '#000',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      fontSize: '0.9rem',
+    }),
+  };
 
   return (
     <>
@@ -128,6 +162,46 @@ const EventPage = () => {
                 <p className={styles.subLocation}>Eiffel Tower, 5th Floor</p>
               </div>
             </div>
+          </div>
+          <div className={styles.eventForm}>
+            <p className={styles.eventFormTitle}>Registration Form</p>
+            <p className={styles.eventDescription}>
+              Please fill in the form below to register for the event.
+            </p>
+            {formFields.map((field: any) =>
+              field.type === 'SmallText' ? (
+                <InputFIeld
+                  name={field.field_key}
+                  placeholder={field.title}
+                  id={field.id}
+                  key={field.id}
+                  type='text'
+                  icon={
+                    <GoPerson
+                      size={20}
+                      style={{
+                        color: '#9E9E9E',
+                      }}
+                    />
+                  }
+                />
+              ) : (
+                <>
+                  <p className={styles.formLabel}>{field.title}</p>
+                  <div className={styles.dropdown}>
+                    <Select
+                      options={field.options.map((option: string) => ({
+                        value: option,
+                        label: option,
+                      }))}
+                      styles={customStyles}
+                      placeholder={field.title}
+                      isSearchable={false}
+                    />
+                  </div>
+                </>
+              ),
+            )}
           </div>
           <div className={styles.ticketTypes}>
             <div
@@ -172,40 +246,6 @@ const EventPage = () => {
                   </div>
                 </div>
               ))}
-          </div>
-          <div className={styles.eventForm}>
-            <p className={styles.eventFormTitle}>Registration Form</p>
-            <p className={styles.eventDescription}>
-              Please fill in the form below to register for the event.
-            </p>
-            <InputFIeld
-              type='text'
-              name='name'
-              id='name'
-              placeholder='Name'
-              icon={<GoPerson size={15} />}
-            />
-            <InputFIeld
-              type='email'
-              name='email'
-              id='email'
-              placeholder='Email'
-              icon={<GoPerson size={15} />}
-            />
-            <InputFIeld
-              type='number'
-              name='phone'
-              id='phone'
-              placeholder='Phone'
-              icon={<GoPerson size={15} />}
-            />
-            <InputFIeld
-              type='text'
-              name='company'
-              id='company'
-              placeholder='Company'
-              icon={<GoPerson size={15} />}
-            />
           </div>
         </div>
       </Theme>

@@ -170,3 +170,15 @@
   color: #fff;
   font-family: 'Inter', sans-serif;
 }
+
+.formLabel {
+  margin-top: 1rem;
+  color: #a4a4a4;
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.dropdown {
+  max-width: 24rem;
+}

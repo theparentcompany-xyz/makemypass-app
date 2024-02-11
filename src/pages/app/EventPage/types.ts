@@ -12,3 +12,9 @@ type TicketType = {
 export type TicketOptions = {
   [key: string]: TicketType;
 };
+
+export const fieldMappings = {
+  BigText: 'textarea',
+  SmallText: 'text',
+  Dropdown: 'dropdown',
+};
