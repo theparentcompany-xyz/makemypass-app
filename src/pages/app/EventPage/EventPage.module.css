@@ -1,3 +1,7 @@
+.eventPageContainer {
+  padding: 0 1.25rem;
+}
+
 .eventDataContainer,
 .eventForm {
   border-radius: 12px;
