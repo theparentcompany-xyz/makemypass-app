@@ -6,7 +6,7 @@ import InputFIeld from '../../auth/Login/InputFIeld';
 import { GoPerson } from 'react-icons/go';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getEventId } from '../../../apis/events';
+import { getEventData, getEventId } from '../../../apis/events';
 import { getFormFields, getTickets, submitForm } from '../../../apis/publicpage';
 import { TicketOptions } from './types';
 
@@ -94,6 +94,7 @@ const EventPage = () => {
     },
   ]);
   const [ticketId, setTicketId] = useState<string>('');
+  const [eventData, setEventData] = useState<any>({});
 
   let eventId: string = '';
 
@@ -113,7 +114,7 @@ const EventPage = () => {
 
   useEffect(() => {
     ticketInfo &&
-      Object.keys(ticketInfo).map((ticketType) => {
+      Object.keys(ticketInfo)?.map((ticketType) => {
         if (ticketInfo[ticketType].default_selected) {
           setTicketId(ticketInfo[ticketType].id);
         }
@@ -194,8 +195,8 @@ const EventPage = () => {
             <p className={styles.eventDescription}>
               Please fill in the form below to register for the event.
             </p>
-            {formFields.map((field: any) =>
-              field.type === 'SmallText' ? (
+            {formFields?.map((field: any) =>
+              field.type === 'text' ? (
                 <InputFIeld
                   name={field.field_key}
                   placeholder={field.title}
@@ -219,7 +220,7 @@ const EventPage = () => {
                   <p className={styles.formLabel}>{field.title}</p>
                   <div className={styles.dropdown}>
                     <Select
-                      options={field.options.map((option: string) => ({
+                      options={field.options?.map((option: string) => ({
                         value: option,
                         label: option,
                       }))}
@@ -227,7 +228,7 @@ const EventPage = () => {
                       onChange={(selectedOption: any) =>
                         onFieldChange(field.field_key, selectedOption.value)
                       }
-                      placeholder={field.title}
+                      placeholder={`Select your ${field.title}`}
                       isSearchable={false}
                     />
                   </div>
@@ -235,19 +236,20 @@ const EventPage = () => {
               ),
             )}
           </div>
-          <div className={styles.ticketTypes}>
-            <div
-              style={{
-                marginLeft: '8px',
-              }}
-            >
-              <p className={styles.ticketTypesTitle}>Ticket Types</p>
-              <p className={styles.eventDescription}>
-                Select a ticket type to register for the event.
-              </p>
-            </div>
-            {ticketInfo &&
-              Object.keys(ticketInfo).map((ticketType) => (
+          {ticketInfo && (
+            <div className={styles.ticketTypes}>
+              <div
+                style={{
+                  marginLeft: '8px',
+                }}
+              >
+                <p className={styles.ticketTypesTitle}>Ticket Types</p>
+                <p className={styles.eventDescription}>
+                  Select a ticket type to register for the event.
+                </p>
+              </div>
+
+              {Object.keys(ticketInfo)?.map((ticketType) => (
                 <div
                   key={ticketType}
                   onClick={() => {
@@ -280,7 +282,7 @@ const EventPage = () => {
                     <p className={styles.ticketPerksTitle}>Ticket Perks</p>
                     <div className={styles.ticketPerks}>
                       <ul className={styles.perkList}>
-                        {Object.keys(ticketInfo[ticketType].perks).map((perk) => (
+                        {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
                           <li key={perk} className={styles.perk}>
                             {perk}: {ticketInfo[ticketType].perks[perk]}
                           </li>
@@ -290,7 +292,8 @@ const EventPage = () => {
                   </div>
                 </div>
               ))}
-          </div>
+            </div>
+          )}
           <button onClick={() => submitForm(ticketId, formData)} className={styles.submitButton}>
             Submit Form
           </button>

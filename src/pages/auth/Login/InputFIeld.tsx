@@ -24,6 +24,7 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
             fontFamily: 'Inter',
           }}
           {...inputProps}
+          placeholder={`Enter Your ${inputProps.placeholder}`}
           ref={ref}
         />
       </div>
