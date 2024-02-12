@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 export const publicGateway = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL as string,
   headers: {
+    'ngrok-skip-browser-warning': '69420',
     'Content-Type': 'application/json',
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     product: 'Makemypass',
@@ -23,6 +24,7 @@ publicGateway.interceptors.request.use(
 export const privateGateway = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL as string,
   headers: {
+    'ngrok-skip-browser-warning': '69420',
     'Content-Type': 'application/json',
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     product: 'Wizard',

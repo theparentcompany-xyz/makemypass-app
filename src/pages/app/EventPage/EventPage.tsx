@@ -11,7 +11,7 @@ import { getFormFields, getTickets, submitForm } from '../../../apis/publicpage'
 import { TicketOptions } from './types';
 
 import Select from 'react-select';
-import Razorpay from './components/Razorpay';
+import { showRazorpay } from './components/Razorpay';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -99,6 +99,7 @@ const EventPage = () => {
   let eventId: string = '';
 
   const [formData, setFormData] = useState<any>({});
+  const [amount, setAmount] = useState<string>('');
 
   useEffect(() => {
     if (eventTitle) getEventId(eventTitle);
@@ -109,7 +110,7 @@ const EventPage = () => {
         getTickets(eventId, setTicketInfo);
         getFormFields(eventId, setFormFields);
       }
-    }, 100);
+    }, 1000);
   }, [eventTitle]);
 
   useEffect(() => {
@@ -254,6 +255,7 @@ const EventPage = () => {
                   key={ticketType}
                   onClick={() => {
                     setTicketId(ticketInfo[ticketType].id);
+                    setAmount(ticketInfo[ticketType].price.toString());
                   }}
                   className={styles.ticketType}
                   style={{
@@ -294,10 +296,15 @@ const EventPage = () => {
               ))}
             </div>
           )}
-          <button onClick={() => submitForm(ticketId, formData)} className={styles.submitButton}>
+          <button
+            onClick={() => {
+              if (amount === '0') submitForm(ticketId, formData);
+              else showRazorpay(amount, formData.name, ticketId, formData);
+            }}
+            className={styles.submitButton}
+          >
             Submit Form
           </button>
-          <Razorpay />
         </div>
       </Theme>
     </>

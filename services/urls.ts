@@ -49,6 +49,7 @@ export const makeMyPass = {
   submitForm: (eventId: string) => makeMyPassURL(`/rsvp/submit/${eventId}/`),
 
   createPayment: makeMyPassURL(`/razorpay/create-payment/`),
+  success: makeMyPassURL(`/razorpay/success/`),
 };
 
 export const makeMyPassSocket = {
