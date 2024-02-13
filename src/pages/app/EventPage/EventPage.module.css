@@ -119,6 +119,8 @@
   font-size: 0.9rem;
 
   padding: 0.25rem 0.5rem;
+
+  height: 1rem;
   border-radius: 6px;
 }
 
@@ -206,4 +208,12 @@
   font-family: 'Inter', sans-serif;
   text-align: center;
   width: 24rem;
+}
+
+.extraCharges {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #bbbaba;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
 }

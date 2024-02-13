@@ -7,6 +7,8 @@ type TicketType = {
   limit: number | null;
   slots_left: number;
   default_selected: boolean;
+  platform_fee: number;
+  platform_fee_from_user: boolean;
 };
 
 export type TicketOptions = {

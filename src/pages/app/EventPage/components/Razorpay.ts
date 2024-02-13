@@ -26,15 +26,14 @@ export const showRazorpay = async (name: any, ticketId: any, formData: any) => {
     amount: paymentAmount,
     currency: 'INR',
     name: name,
-    description: 'Test Transactions',
-    image: '', // add image url
+    description: 'Event Registration',
+    image: '/maskable.png',
     order_id: paymentId,
     handler: function (response: any) {
-      console.log('paymentResponse', response);
       submitForm(ticketId, formData, response);
     },
     theme: {
-      color: '#3399cc',
+      color: '#00FF82',
     },
   };
 

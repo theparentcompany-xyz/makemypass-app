@@ -190,15 +190,24 @@ const EventPage = () => {
                   <div className={styles.ticketHeader}>
                     <div className={styles.passText}>
                       <p className={styles.ticketTypeTitle}>{ticketType} Pass</p>
-                      <p className={styles.ticketPrice}>Rs.{ticketInfo[ticketType].price}</p>
+                      <p className={styles.ticketPrice}>
+                        {Number(ticketInfo[ticketType].price) === 0
+                          ? 'Free'
+                          : `Rs.${ticketInfo[ticketType].price}`}
+                      </p>
                     </div>
 
                     {ticketInfo[ticketType].limit && (
                       <div className={styles.ticketCount}>
                         <p className={styles.ticketCountText}>
-                          {ticketInfo[ticketType].slots_left}/{ticketInfo[ticketType].limit} tickets
-                          left
+                          {ticketInfo[ticketType].slots_left} tickets left
                         </p>
+                        {ticketInfo[ticketType].platform_fee_from_user &&
+                          Number(ticketInfo[ticketType].price) > 0 && (
+                            <p className={styles.extraCharges}>
+                              {ticketInfo[ticketType].platform_fee}% extra charges
+                            </p>
+                          )}
                       </div>
                     )}
                   </div>
