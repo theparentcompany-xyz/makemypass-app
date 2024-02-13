@@ -12,6 +12,7 @@ import { TicketOptions } from './types';
 
 import Select from 'react-select';
 import { showRazorpay } from './components/Razorpay';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -138,7 +139,7 @@ const EventPage = () => {
                     />
                   }
                 />
-              ) : (
+              ) : field.type === 'dropdown' || field.type === 'checkbox' ? (
                 <>
                   <p className={styles.formLabel}>{field.title}</p>
                   <div className={styles.dropdown}>
@@ -154,6 +155,31 @@ const EventPage = () => {
                       placeholder={`Select your ${field.title}`}
                       isSearchable={false}
                     />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className={styles.row}>
+                    <InputFIeld
+                      name={field.field_key}
+                      placeholder={field.title}
+                      id={field.id}
+                      key={field.id}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        onFieldChange(field.field_key, e.target.value)
+                      }
+                      type='text'
+                      icon={
+                        <GoPerson
+                          size={20}
+                          style={{
+                            color: '#9E9E9E',
+                          }}
+                        />
+                      }
+                    />
+
+                    <SecondaryButton buttonText='Validate Code' />
                   </div>
                 </>
               ),

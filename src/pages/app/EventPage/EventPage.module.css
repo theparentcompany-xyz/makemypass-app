@@ -217,3 +217,10 @@
   font-family: 'Inter', sans-serif;
   margin-top: 0.5rem;
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  column-gap: 0.25rem;
+}

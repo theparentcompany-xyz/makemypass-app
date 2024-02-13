@@ -12,6 +12,7 @@
   border: none;
 
   padding: 0.5rem 1rem;
+  max-height: 2.75rem;
 
   cursor: pointer;
 }
