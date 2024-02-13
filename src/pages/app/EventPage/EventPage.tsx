@@ -221,7 +221,7 @@ const EventPage = () => {
           <button
             onClick={() => {
               if (amount === '0') submitForm(ticketId, formData);
-              else showRazorpay(amount, formData.name, ticketId, formData);
+              else showRazorpay(formData.name, ticketId, formData);
             }}
             className={styles.submitButton}
           >

@@ -1,36 +1,17 @@
 import { publicGateway } from '../../../../../services/apiGateway';
 import { makeMyPass } from '../../../../../services/urls';
-import toast from 'react-hot-toast';
 import { submitForm } from '../../../../apis/publicpage';
 
-const handlePaymentSuccess = async (response: any, ticketId: any, formData: any) => {
-  try {
-    publicGateway
-      .post(makeMyPass.success, response)
-      .then(() => {
-        toast.success('Payment Successful');
-        submitForm(ticketId, formData);
-      })
-      .catch(() => {
-        toast.error('Payment Failed');
-      });
-  } catch {
-    console.log('Error');
-  }
-};
-
-export const showRazorpay = async (amount: any, name: any, ticketId: any, formData: any) => {
+export const showRazorpay = async (name: any, ticketId: any, formData: any) => {
   const script = document.createElement('script');
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';
   document.body.appendChild(script);
 
   let paymentId: string = '';
   let paymentAmount: string = '';
+
   await publicGateway
-    .post(makeMyPass.createPayment, {
-      amount: amount,
-      name: name,
-    })
+    .post(makeMyPass.createPayment(ticketId), formData)
     .then((response) => {
       paymentId = response.data.response.id;
       paymentAmount = response.data.response.amount;
@@ -50,7 +31,7 @@ export const showRazorpay = async (amount: any, name: any, ticketId: any, formDa
     order_id: paymentId,
     handler: function (response: any) {
       console.log('paymentResponse', response);
-      handlePaymentSuccess(response, ticketId, formData);
+      submitForm(ticketId, formData, response);
     },
     theme: {
       color: '#3399cc',
