@@ -20,3 +20,8 @@ export const fieldMappings = {
   SmallText: 'text',
   Dropdown: 'dropdown',
 };
+
+export type DiscountData = {
+  discount_type: string;
+  discount_value: number;
+};

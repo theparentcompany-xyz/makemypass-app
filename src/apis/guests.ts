@@ -1,12 +1,12 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { guests, resentTicket } from '../pages/app/Guests/types';
+import { GuestsType, ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
 
 export const resentEventTicket = async (
-  ticketData: resentTicket,
-  setResentTicket: Dispatch<React.SetStateAction<resentTicket>>,
+  ticketData: ResentTicket,
+  setResentTicket: Dispatch<React.SetStateAction<ResentTicket>>,
 ) => {
   const eventId = JSON.parse(localStorage.getItem('eventData')!).event_id;
   console.log(ticketData.guestId);
@@ -30,8 +30,8 @@ export const resentEventTicket = async (
 
 export const editSubmissons = async (
   eventId: string,
-  data: guests | null,
-  setSelectedGuestId: React.Dispatch<React.SetStateAction<any | null>>,
+  data: GuestsType | null,
+  setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
 ) => {
   const dataToSent = {
     name: data?.name,

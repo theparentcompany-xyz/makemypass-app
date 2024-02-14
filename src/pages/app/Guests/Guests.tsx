@@ -5,8 +5,8 @@ import Header from '../../../components/EventHeader/EventHeader';
 import styles from './Guests.module.css';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
-import {  useParams } from 'react-router-dom';
-import { guests, resentTicket } from './types';
+import { useParams } from 'react-router-dom';
+import { GuestsType, ResentTicket, SelectedGuest } from './types';
 import { getEventId } from '../../../apis/events';
 import { RiSearchLine } from 'react-icons/ri';
 import { HashLoader } from 'react-spinners';
@@ -19,18 +19,18 @@ import Select from 'react-select';
 import { categoryOptions, districtOptions } from './data';
 
 const Guests = () => {
-  const [guests, setGuests] = useState<guests[]>([]);
+  const [guests, setGuests] = useState<GuestsType[]>([]);
   const [guestsTableData, setGuestsTableData] = useState<TableType[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
-  const [selectedGuestId, setSelectedGuestId] = useState({
+  const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
     type: '',
   });
-  const [selectedGuest, setSelectedGuest] = useState<guests | null>(null);
+  const [selectedGuest, setSelectedGuest] = useState<GuestsType | null>(null);
 
-  const [resentTicket, setResentTicket] = useState<resentTicket>({
+  const [resentTicket, setResentTicket] = useState<ResentTicket>({
     status: false,
     guestId: '',
     name: '',
@@ -142,7 +142,7 @@ const Guests = () => {
   };
 
   const handleSubmissionEdit = () => {
-    editSubmissons(eventId, selectedGuest, setSelectedGuestId);
+    if (selectedGuest) editSubmissons(eventId, selectedGuest, setSelectedGuestId);
   };
 
   const customStyles = {

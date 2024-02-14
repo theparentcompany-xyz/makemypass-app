@@ -90,7 +90,7 @@ const Glance = ({ tab }: { tab: string }) => {
     }
 
     if (firstRender && totalGuests > 0) setFirstRender(false);
-  }, [totalGuests]);
+  }, [totalGuests, firstRender]);
 
   useEffect(() => {
     if (eventId)
@@ -122,8 +122,8 @@ const Glance = ({ tab }: { tab: string }) => {
 
           setprogressData(newStrucure);
 
-          var currentDate = new Date();
-          var formattedTime = currentDate.toLocaleTimeString('en-US', {
+          let currentDate = new Date();
+          let formattedTime = currentDate.toLocaleTimeString('en-US', {
             hour: 'numeric',
             minute: 'numeric',
             hour12: true,

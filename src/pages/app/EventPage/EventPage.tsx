@@ -8,28 +8,27 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getEventId } from '../../../apis/events';
 import { applyCoupon, getFormFields, getTickets, submitForm } from '../../../apis/publicpage';
-import { TicketOptions } from './types';
+import { DiscountData, TicketOptions } from './types';
 
 import Select from 'react-select';
 import { showRazorpay } from './components/Razorpay';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import { FormData, FormField } from '../../../apis/types';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
-  const [formFields, setFormFields] = useState<any>([]);
+
+  const [formFields, setFormFields] = useState<FormField[]>([]);
   const [ticketId, setTicketId] = useState<string>('');
   const [eventData, setEventData] = useState<any>({});
   const [formErrors, setFormErrors] = useState<any>({});
   const [eventId, setEventId] = useState<string>('');
 
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState<FormData>({});
   const [amount, setAmount] = useState<string>('');
 
-  const [discount, setDiscount] = useState<{
-    discount_type: string;
-    discount_value: number;
-  }>({
+  const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
     discount_value: 0,
   });

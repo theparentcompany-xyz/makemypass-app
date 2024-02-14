@@ -19,7 +19,7 @@ import {
 import { Line, Doughnut } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import { ChartData } from '../Insights/types';
-import { guests } from '../Guests/types';
+import { GuestsType } from '../Guests/types';
 import { useParams } from 'react-router-dom';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
@@ -91,7 +91,7 @@ const InEventStats = () => {
   ];
 
   const [firstRender, setFirstRender] = useState(true);
-  const [newUser, setNewUser] = useState<guests>();
+  const [newUser, setNewUser] = useState<GuestsType>();
 
   const [lineData, setLineData] = useState<ChartData>();
   const [barData, setBarData] = useState<ChartData>();
@@ -105,7 +105,7 @@ const InEventStats = () => {
 
   const [dailyCount, setDailyCount] = useState<DailyCount[]>([]);
 
-  const [guests, setGuests] = useState<guests[]>([]);
+  const [guests, setGuests] = useState<GuestsType[]>([]);
   const getLocalEventId = () => {
     if (eventTitle) {
       const eventData = JSON.parse(localStorage.getItem('eventData') as string);
@@ -131,7 +131,7 @@ const InEventStats = () => {
         setNewUser(guests[0]);
 
         setTimeout(() => {
-          setNewUser({} as guests);
+          setNewUser({} as GuestsType);
         }, 5000);
       }
   }, [guests, firstRender]);

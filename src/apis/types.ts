@@ -22,3 +22,20 @@ export type User = {
   organization: string;
   category: string;
 };
+
+export type FormField = {
+  id: string;
+  type: string;
+  title: string;
+  required: boolean;
+  field_key: string;
+  options?: string[];
+  integration?: {
+    url: string;
+    method: string;
+  };
+};
+
+export type FormData = {
+  [key: string]: string;
+};

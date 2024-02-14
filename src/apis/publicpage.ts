@@ -1,7 +1,9 @@
 import toast from 'react-hot-toast';
 import { publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { TicketOptions } from '../pages/app/EventPage/types';
+import { DiscountData, TicketOptions } from '../pages/app/EventPage/types';
+import { Dispatch } from 'react';
+import { FormData, FormField } from './types';
 
 export const getTickets = async (
   eventId: string,
@@ -13,23 +15,25 @@ export const getTickets = async (
       setTicketInfo(response.data.response);
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(error.response.data.message.general[0] || 'Error in Fetching Tickets');
     });
 };
 
-export const getFormFields = async (eventId: string, setFormFields: React.Dispatch<any>) => {
+export const getFormFields = async (
+  eventId: string,
+  setFormFields: Dispatch<React.SetStateAction<FormField[]>>,
+) => {
   publicGateway
     .get(makeMyPass.getFormFields(eventId))
     .then((response) => {
-      console.log(response.data);
       setFormFields(response.data.response);
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(error.response.data.message.general[0] || 'Error in Fetching Form Fields');
     });
 };
 
-export const submitForm = async (ticketId: string, data: any, response?: any) => {
+export const submitForm = async (ticketId: string, data: FormData, response?: any) => {
   publicGateway
     .post(makeMyPass.submitForm(ticketId), {
       rsvp_data: data,
@@ -46,7 +50,7 @@ export const submitForm = async (ticketId: string, data: any, response?: any) =>
 export const applyCoupon = async (
   eventId: string,
   couponCode: string,
-  setDiscount: React.Dispatch<any>,
+  setDiscount: React.Dispatch<DiscountData>,
 ) => {
   publicGateway
     .post(makeMyPass.validateCoupon(eventId), {

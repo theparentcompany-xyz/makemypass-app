@@ -1,10 +1,10 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import toast from 'react-hot-toast';
 import { Roles } from './types';
 import { Navigate } from 'react-router-dom';
 
 interface AuthRoutesProps {
-  redirectPath?:any;
+  redirectPath?: JSX.Element;
   children: JSX.Element;
   roles: Roles[];
   toastTitle?: string;
@@ -13,16 +13,12 @@ interface AuthRoutesProps {
 
 let localRoles = 'Viewer';
 
-export const refreshRoles = () => {
-  localRoles = localStorage.getItem('role') || '';
-  return localRoles;
-};
 function SecureAuthRoutes() {
   const hasRoleNoFetch = (roles: Roles[]) => {
-    localRoles = refreshRoles();
+    localRoles = localStorage.getItem('role') || '';
     return roles.some((role) => localRoles.includes(role));
   };
-  const func: FC<AuthRoutesProps> = ({
+  const Func: FC<AuthRoutesProps> = ({
     redirectPath,
     children,
     roles,
@@ -32,20 +28,16 @@ function SecureAuthRoutes() {
     if (hasRoleNoFetch(roles)) {
       return children;
     } else {
-      useEffect(() => {
-        if (toast) {
-          toast.error(`${toastTitle || 'Unauthorized'}: ${toastDescription || 'You are not authorized to view this page'}`);
-        }
-      }, [toast]);
+      if (toast) {
+        toast.error(
+          `${toastTitle || 'Unauthorized'}: ${toastDescription || 'You are not authorized to view this page'}`,
+        );
+      }
 
-      return redirectPath ? (
-        redirectPath
-    ) : (
-        <Navigate to="/login" replace={true} />
-    );
+      return redirectPath ? redirectPath : <Navigate to='/login' replace={true} />;
     }
   };
 
-  return func;
+  return Func;
 }
 export default SecureAuthRoutes;

@@ -1,4 +1,4 @@
-export type guests = {
+export type GuestsType = {
   id: string;
   registered_at: string;
   name: string;
@@ -9,8 +9,13 @@ export type guests = {
   organization: string;
 };
 
-export type resentTicket = {
+export type ResentTicket = {
   status: boolean;
   name: string;
   guestId: string;
+};
+
+export type SelectedGuest = {
+  id: string;
+  type: string;
 };

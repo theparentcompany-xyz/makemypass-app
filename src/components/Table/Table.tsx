@@ -1,5 +1,5 @@
 import React, { Dispatch, useMemo } from 'react';
-import { resentTicket } from '../../pages/app/Guests/types';
+import { ResentTicket } from '../../pages/app/Guests/types';
 import styles from './Table.module.css';
 import { TableType } from './types';
 import { BsTicketPerforatedFill } from 'react-icons/bs';
@@ -12,7 +12,7 @@ import { hostId } from '../../pages/app/Overview/Overview/types';
 
 type ItemDataType = {
   filteredData: TableType[];
-  setResentTicket?: Dispatch<React.SetStateAction<resentTicket>>;
+  setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
   setSelectedGuestId?: Dispatch<React.SetStateAction<any | null>>;
   setHostId?: Dispatch<React.SetStateAction<hostId>>;
 };
@@ -139,7 +139,7 @@ const Table = ({
   tableHeading: string;
   tableData: TableType[];
   search?: string;
-  setResentTicket?: Dispatch<React.SetStateAction<resentTicket>>;
+  setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
   setSelectedGuestId?: Dispatch<React.SetStateAction<any | null>>;
   secondaryButton?: React.ReactElement;
   setHostId?: Dispatch<React.SetStateAction<hostId>>;
