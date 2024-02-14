@@ -224,3 +224,11 @@
   align-items: flex-end;
   column-gap: 0.25rem;
 }
+
+.errorText {
+  color: #f04b4b;
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
+}

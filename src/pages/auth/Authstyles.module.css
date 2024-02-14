@@ -149,3 +149,11 @@
     font-weight: 400;
   }
 }
+
+.errorText {
+  color: #f04b4b;
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}

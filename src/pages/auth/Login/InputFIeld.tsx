@@ -24,13 +24,15 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
           style={{
             width: '100%',
             fontFamily: 'Inter',
-            borderColor: inputProps.error ? 'red' : undefined,
           }}
           {...inputProps}
           placeholder={`Enter Your ${inputProps.placeholder}`}
           ref={ref}
         />
       </div>
+      {inputProps.error && (
+        <p className={styles.errorText}>{`${inputProps.placeholder} is required.`}</p>
+      )}
     </div>
   );
 });

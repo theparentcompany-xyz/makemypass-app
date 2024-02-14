@@ -152,7 +152,10 @@ const EventPage = () => {
               } else if (field.type === 'dropdown' || field.type === 'checkbox') {
                 return (
                   <>
-                    <p className={styles.formLabel}>{field.title}</p>
+                    <p className={styles.formLabel}>
+                      {field.title}
+                      {field.required && '*'}
+                    </p>
                     <div className={styles.dropdown}>
                       <Select
                         options={field.options?.map((option: string) => ({
@@ -167,6 +170,9 @@ const EventPage = () => {
                         isSearchable={false}
                       />
                     </div>
+                    {formErrors[field.field_key] && (
+                      <p className={styles.errorText}>{`${field.title} is required.`}</p>
+                    )}
                   </>
                 );
               } else {
