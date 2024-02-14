@@ -42,3 +42,20 @@ export const submitForm = async (ticketId: string, data: any, response?: any) =>
       toast.error('Error in Registering Event');
     });
 };
+
+export const applyCoupon = async (
+  eventId: string,
+  couponCode: string,
+  setAmount: React.Dispatch<any>,
+) => {
+  publicGateway
+    .post(makeMyPass.validateCoupon(eventId), {
+      coupon_code: couponCode,
+    })
+    .then((response) => {
+      setAmount(response.data.response.amount);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

@@ -7,7 +7,7 @@ import { GoPerson } from 'react-icons/go';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getEventId } from '../../../apis/events';
-import { getFormFields, getTickets, submitForm } from '../../../apis/publicpage';
+import { applyCoupon, getFormFields, getTickets, submitForm } from '../../../apis/publicpage';
 import { TicketOptions } from './types';
 
 import Select from 'react-select';
@@ -25,6 +25,11 @@ const EventPage = () => {
 
   const [formData, setFormData] = useState<any>({});
   const [amount, setAmount] = useState<string>('');
+
+  // const [discount, setDiscount] = useState<{
+  //   coupon_code: string;
+  //   coupon_type: string;
+  // }>();
 
   useEffect(() => {
     if (eventTitle) getEventId(eventTitle);
@@ -119,71 +124,82 @@ const EventPage = () => {
             <p className={styles.eventDescription}>
               Please fill in the form below to register for the event.
             </p>
-            {formFields?.map((field: any) =>
-              field.type === 'text' ? (
-                <InputFIeld
-                  name={field.field_key}
-                  placeholder={field.title}
-                  id={field.id}
-                  key={field.id}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    onFieldChange(field.field_key, e.target.value)
-                  }
-                  type='text'
-                  icon={
-                    <GoPerson
-                      size={20}
-                      style={{
-                        color: '#9E9E9E',
-                      }}
-                    />
-                  }
-                />
-              ) : field.type === 'dropdown' || field.type === 'checkbox' ? (
-                <>
-                  <p className={styles.formLabel}>{field.title}</p>
-                  <div className={styles.dropdown}>
-                    <Select
-                      options={field.options?.map((option: string) => ({
-                        value: option,
-                        label: option,
-                      }))}
-                      styles={customStyles}
-                      onChange={(selectedOption: any) =>
-                        onFieldChange(field.field_key, selectedOption.value)
-                      }
-                      placeholder={`Select your ${field.title}`}
-                      isSearchable={false}
-                    />
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className={styles.row}>
-                    <InputFIeld
-                      name={field.field_key}
-                      placeholder={field.title}
-                      id={field.id}
-                      key={field.id}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        onFieldChange(field.field_key, e.target.value)
-                      }
-                      type='text'
-                      icon={
-                        <GoPerson
-                          size={20}
-                          style={{
-                            color: '#9E9E9E',
-                          }}
-                        />
-                      }
-                    />
+            {formFields?.map((field: any) => {
+              if (field.type === 'text') {
+                return (
+                  <InputFIeld
+                    name={field.field_key}
+                    placeholder={field.title}
+                    id={field.id}
+                    key={field.id}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onFieldChange(field.field_key, e.target.value)
+                    }
+                    type={field.type}
+                    icon={
+                      <GoPerson
+                        size={20}
+                        style={{
+                          color: '#9E9E9E',
+                        }}
+                      />
+                    }
+                  />
+                );
+              } else if (field.type === 'dropdown' || field.type === 'checkbox') {
+                return (
+                  <>
+                    <p className={styles.formLabel}>{field.title}</p>
+                    <div className={styles.dropdown}>
+                      <Select
+                        options={field.options?.map((option: string) => ({
+                          value: option,
+                          label: option,
+                        }))}
+                        styles={customStyles}
+                        onChange={(selectedOption: any) =>
+                          onFieldChange(field.field_key, selectedOption.value)
+                        }
+                        placeholder={`Select your ${field.title}`}
+                        isSearchable={false}
+                      />
+                    </div>
+                  </>
+                );
+              } else {
+                return (
+                  <>
+                    <div className={styles.row}>
+                      <InputFIeld
+                        name={field.field_key}
+                        placeholder={field.title}
+                        id={field.id}
+                        key={field.id}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          onFieldChange(field.field_key, e.target.value)
+                        }
+                        type='text'
+                        icon={
+                          <GoPerson
+                            size={20}
+                            style={{
+                              color: '#9E9E9E',
+                            }}
+                          />
+                        }
+                      />
 
-                    <SecondaryButton buttonText='Validate Code' />
-                  </div>
-                </>
-              ),
-            )}
+                      <SecondaryButton
+                        onClick={() => {
+                          applyCoupon(eventId, formData[field.field_key], setAmount);
+                        }}
+                        buttonText='Validate Code'
+                      />
+                    </div>
+                  </>
+                );
+              }
+            })}
           </div>
           {ticketInfo && (
             <div className={styles.ticketTypes}>
