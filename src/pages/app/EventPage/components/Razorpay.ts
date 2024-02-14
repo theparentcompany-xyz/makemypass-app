@@ -18,7 +18,7 @@ export const showRazorpay = async (name: any, ticketId: any, formData: any, setF
     })
     .catch((err) => {
       console.log(err);
-      setFormErrors(err.response.data.response);
+      setFormErrors(err.response.data.message);
     });
 
   var options = {

@@ -10,6 +10,7 @@ interface FormProps {
   required?: boolean;
   error?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  description?: string;
 }
 
 const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProps }, ref) => {
@@ -18,6 +19,7 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
       <label className={styles.formLabel} htmlFor='email'>
         {inputProps.required ? inputProps.placeholder + '*' : inputProps.placeholder}
       </label>
+      <p className={styles.fieldDescription}>{inputProps.description}</p>
       <div className={styles.inputField}>
         {icon}
         <input

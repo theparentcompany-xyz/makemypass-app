@@ -46,14 +46,14 @@ export const submitForm = async (ticketId: string, data: any, response?: any) =>
 export const applyCoupon = async (
   eventId: string,
   couponCode: string,
-  setAmount: React.Dispatch<any>,
+  setDiscount: React.Dispatch<any>,
 ) => {
   publicGateway
     .post(makeMyPass.validateCoupon(eventId), {
       coupon_code: couponCode,
     })
     .then((response) => {
-      setAmount(response.data.response.amount);
+      setDiscount(response.data.response);
     })
     .catch((error) => {
       console.log(error);

@@ -21,22 +21,24 @@ const EventPage = () => {
   const [ticketId, setTicketId] = useState<string>('');
   const [eventData, setEventData] = useState<any>({});
   const [formErrors, setFormErrors] = useState<any>({});
-
-  let eventId: string = '';
+  const [eventId, setEventId] = useState<string>('');
 
   const [formData, setFormData] = useState<any>({});
   const [amount, setAmount] = useState<string>('');
 
-  // const [discount, setDiscount] = useState<{
-  //   coupon_code: string;
-  //   coupon_type: string;
-  // }>();
+  const [discount, setDiscount] = useState<{
+    discount_type: string;
+    discount_value: number;
+  }>({
+    discount_type: '',
+    discount_value: 0,
+  });
 
   useEffect(() => {
     if (eventTitle) getEventId(eventTitle);
 
     setTimeout(() => {
-      eventId = JSON.parse(localStorage.getItem('eventData') || '{}').event_id;
+      setEventId(JSON.parse(localStorage.getItem('eventData') || '{}').event_id);
       setEventData(JSON.parse(localStorage.getItem('eventData') || '{}'));
       if (eventId) {
         getTickets(eventId, setTicketInfo);
@@ -103,7 +105,7 @@ const EventPage = () => {
   return (
     <>
       <Theme>
-        <form className={styles.eventPageContainer}>
+        <div className={styles.eventPageContainer}>
           <div className={styles.eventDataContainer}>
             <p className={styles.eventTitle}>{eventData.event_name}</p>
             <p className={styles.eventDescription}>{eventData.description}</p>
@@ -198,11 +200,12 @@ const EventPage = () => {
                           />
                         }
                         required={field.required}
+                        description={field.description}
                       />
 
                       <SecondaryButton
                         onClick={() => {
-                          applyCoupon(eventId, formData[field.field_key], setAmount);
+                          applyCoupon(eventId, formData[field.field_key], setDiscount);
                         }}
                         buttonText='Validate Code'
                       />
@@ -225,59 +228,74 @@ const EventPage = () => {
                 </p>
               </div>
 
-              {Object.keys(ticketInfo)?.map((ticketType) => (
-                <div
-                  key={ticketType}
-                  onClick={() => {
-                    setTicketId(ticketInfo[ticketType].id);
-                    setAmount(ticketInfo[ticketType].price.toString());
-                  }}
-                  className={styles.ticketType}
-                  style={{
-                    border:
-                      ticketId === ticketInfo[ticketType].id
-                        ? '2px solid #FFFFFF'
-                        : '2px solid #2A3533',
-                  }}
-                >
-                  <div className={styles.ticketHeader}>
-                    <div className={styles.passText}>
-                      <p className={styles.ticketTypeTitle}>{ticketType}</p>
-                      <p className={styles.ticketPrice}>
-                        {Number(ticketInfo[ticketType].price) === 0
-                          ? 'Free'
-                          : `Rs.${ticketInfo[ticketType].price}`}
-                      </p>
-                    </div>
-
-                    {ticketInfo[ticketType].limit && (
-                      <div className={styles.ticketCount}>
-                        <p className={styles.ticketCountText}>
-                          {ticketInfo[ticketType].slots_left} tickets left
-                        </p>
-                        {ticketInfo[ticketType].platform_fee_from_user &&
-                          Number(ticketInfo[ticketType].price) > 0 && (
-                            <p className={styles.extraCharges}>
-                              {ticketInfo[ticketType].platform_fee}% extra charges
+              {Object.keys(ticketInfo)?.map(
+                (ticketType) => (
+                  console.log(ticketInfo[ticketType]),
+                  (
+                    <div
+                      key={ticketType}
+                      onClick={() => {
+                        setTicketId(ticketInfo[ticketType].id);
+                        setAmount(ticketInfo[ticketType].price.toString());
+                      }}
+                      className={styles.ticketType}
+                      style={{
+                        border:
+                          ticketId === ticketInfo[ticketType].id
+                            ? '2px solid #FFFFFF'
+                            : '2px solid #2A3533',
+                      }}
+                    >
+                      <div className={styles.ticketHeader}>
+                        <div className={styles.passText}>
+                          <p className={styles.ticketTypeTitle}>{ticketType}</p>
+                          <p className={styles.ticketPrice}>
+                            {Number(ticketInfo[ticketType].price) === 0
+                              ? 'Free'
+                              : `Rs.${ticketInfo[ticketType].price}`}
+                          </p>
+                          {discount.discount_type && discount.discount_value > 0 && (
+                            <p className={styles.calculateFinalPrice}>
+                              {discount?.discount_type === 'percentage'
+                                ? `Final Price: Rs.${(
+                                    ticketInfo[ticketType].price -
+                                    (ticketInfo[ticketType].price * discount.discount_value) / 100
+                                  ).toFixed(2)}`
+                                : `Rs.${ticketInfo[ticketType].price - discount?.discount_value}`}
                             </p>
                           )}
+                        </div>
+
+                        <div className={styles.ticketCount}>
+                          {ticketInfo[ticketType].limit && (
+                            <p className={styles.ticketCountText}>
+                              {ticketInfo[ticketType].slots_left} tickets left
+                            </p>
+                          )}
+                          {ticketInfo[ticketType].platform_fee_from_user &&
+                            Number(ticketInfo[ticketType].price) > 0 && (
+                              <p className={styles.extraCharges}>
+                                {ticketInfo[ticketType].platform_fee}% extra charges
+                              </p>
+                            )}
+                        </div>
                       </div>
-                    )}
-                  </div>
-                  <div className={styles.ticketBody}>
-                    <p className={styles.ticketPerksTitle}>Ticket Perks</p>
-                    <div className={styles.ticketPerks}>
-                      <ul className={styles.perkList}>
-                        {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
-                          <li key={perk} className={styles.perk}>
-                            {perk}: {ticketInfo[ticketType].perks[perk]}
-                          </li>
-                        ))}
-                      </ul>
+                      <div className={styles.ticketBody}>
+                        <p className={styles.ticketPerksTitle}>Ticket Perks</p>
+                        <div className={styles.ticketPerks}>
+                          <ul className={styles.perkList}>
+                            {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
+                              <li key={perk} className={styles.perk}>
+                                {perk}: {ticketInfo[ticketType].perks[perk]}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  )
+                ),
+              )}
             </div>
           )}
           <button
@@ -291,7 +309,7 @@ const EventPage = () => {
           >
             Submit Form
           </button>
-        </form>
+        </div>
       </Theme>
     </>
   );
