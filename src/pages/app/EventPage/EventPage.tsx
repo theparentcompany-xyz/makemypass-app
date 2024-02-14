@@ -99,6 +99,13 @@ const EventPage = () => {
       ...formData,
       [fieldName]: fieldValue,
     });
+
+    if (formErrors[fieldName]) {
+      setFormErrors({
+        ...formErrors,
+        [fieldName]: '',
+      });
+    }
   };
 
   return (
