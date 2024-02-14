@@ -2,7 +2,7 @@ import { publicGateway } from '../../../../../services/apiGateway';
 import { makeMyPass } from '../../../../../services/urls';
 import { submitForm } from '../../../../apis/publicpage';
 
-export const showRazorpay = async (name: any, ticketId: any, formData: any) => {
+export const showRazorpay = async (name: any, ticketId: any, formData: any, setFormErrors: any) => {
   const script = document.createElement('script');
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';
   document.body.appendChild(script);
@@ -18,11 +18,11 @@ export const showRazorpay = async (name: any, ticketId: any, formData: any) => {
     })
     .catch((err) => {
       console.log(err);
+      setFormErrors(err.response.data.response);
     });
 
   var options = {
     key_id: import.meta.env.VITE_APP_PUBLIC_KEY,
-    key_secret: import.meta.env.VITE_APP_SECRET_KEY,
     amount: paymentAmount,
     currency: 'INR',
     name: name,

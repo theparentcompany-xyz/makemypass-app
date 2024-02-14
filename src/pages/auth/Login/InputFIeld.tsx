@@ -7,6 +7,8 @@ interface FormProps {
   id: string;
   placeholder: string;
   icon: React.ReactNode;
+  required?: boolean;
+  error?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -14,7 +16,7 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
   return (
     <div className={styles.formInput}>
       <label className={styles.formLabel} htmlFor='email'>
-        {inputProps.placeholder}
+        {inputProps.required ? inputProps.placeholder + '*' : inputProps.placeholder}
       </label>
       <div className={styles.inputField}>
         {icon}
@@ -22,6 +24,7 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
           style={{
             width: '100%',
             fontFamily: 'Inter',
+            borderColor: inputProps.error ? 'red' : undefined,
           }}
           {...inputProps}
           placeholder={`Enter Your ${inputProps.placeholder}`}

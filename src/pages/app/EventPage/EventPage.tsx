@@ -20,6 +20,7 @@ const EventPage = () => {
   const [formFields, setFormFields] = useState<any>([]);
   const [ticketId, setTicketId] = useState<string>('');
   const [eventData, setEventData] = useState<any>({});
+  const [formErrors, setFormErrors] = useState<any>({});
 
   let eventId: string = '';
 
@@ -102,7 +103,7 @@ const EventPage = () => {
   return (
     <>
       <Theme>
-        <div className={styles.eventPageContainer}>
+        <form className={styles.eventPageContainer}>
           <div className={styles.eventDataContainer}>
             <p className={styles.eventTitle}>{eventData.event_name}</p>
             <p className={styles.eventDescription}>{eventData.description}</p>
@@ -135,6 +136,7 @@ const EventPage = () => {
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       onFieldChange(field.field_key, e.target.value)
                     }
+                    error={formErrors[field.field_key]}
                     type={field.type}
                     icon={
                       <GoPerson
@@ -144,6 +146,7 @@ const EventPage = () => {
                         }}
                       />
                     }
+                    required={field.required}
                   />
                 );
               } else if (field.type === 'dropdown' || field.type === 'checkbox') {
@@ -175,6 +178,7 @@ const EventPage = () => {
                         placeholder={field.title}
                         id={field.id}
                         key={field.id}
+                        error={formErrors[field.field_key]}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                           onFieldChange(field.field_key, e.target.value)
                         }
@@ -187,6 +191,7 @@ const EventPage = () => {
                             }}
                           />
                         }
+                        required={field.required}
                       />
 
                       <SecondaryButton
@@ -231,7 +236,7 @@ const EventPage = () => {
                 >
                   <div className={styles.ticketHeader}>
                     <div className={styles.passText}>
-                      <p className={styles.ticketTypeTitle}>{ticketType} Pass</p>
+                      <p className={styles.ticketTypeTitle}>{ticketType}</p>
                       <p className={styles.ticketPrice}>
                         {Number(ticketInfo[ticketType].price) === 0
                           ? 'Free'
@@ -270,15 +275,17 @@ const EventPage = () => {
             </div>
           )}
           <button
-            onClick={() => {
+            type='submit'
+            onClick={(e) => {
+              e.preventDefault();
               if (amount === '0') submitForm(ticketId, formData);
-              else showRazorpay(formData.name, ticketId, formData);
+              else showRazorpay(formData.name, ticketId, formData, setFormErrors);
             }}
             className={styles.submitButton}
           >
             Submit Form
           </button>
-        </div>
+        </form>
       </Theme>
     </>
   );
