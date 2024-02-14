@@ -119,7 +119,6 @@
 }
 
 .ticketPrice {
-  margin-left: 0.5rem;
   background-color: rgb(70, 70, 70);
   color: white;
   font-size: 0.9rem;
@@ -150,6 +149,8 @@
 
 .passText {
   display: flex;
+  align-items: center;
+  column-gap: 0.25rem;
 }
 
 .ticketHeader {

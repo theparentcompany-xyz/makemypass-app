@@ -177,7 +177,7 @@ const EventPage = () => {
                             />
                           </div>
                           {formErrors[field.field_key] && (
-                            <p className={styles.errorText}>{`${field.title} is required.`}</p>
+                            <p className={styles.errorText}>{formErrors[field.field_key][0]}</p>
                           )}
                         </div>
                       </>
@@ -255,21 +255,28 @@ const EventPage = () => {
                         <div className={styles.ticketHeader}>
                           <div className={styles.passText}>
                             <p className={styles.ticketTypeTitle}>{ticketType}</p>
-                            <p className={styles.ticketPrice}>
-                              {Number(ticketInfo[ticketType].price) === 0
-                                ? 'Free'
-                                : `Rs.${ticketInfo[ticketType].price}`}
-                            </p>
-                            {discount.discount_type && discount.discount_value > 0 && (
-                              <p className={styles.calculateFinalPrice}>
-                                {discount?.discount_type === 'percentage'
-                                  ? `Final Price: Rs.${(
-                                      ticketInfo[ticketType].price -
-                                      (ticketInfo[ticketType].price * discount.discount_value) / 100
-                                    ).toFixed(2)}`
-                                  : `Rs.${ticketInfo[ticketType].price - discount?.discount_value}`}
-                              </p>
-                            )}
+                            {discount.discount_type &&
+                              discount.discount_value > 0 &&
+                              ticketInfo[ticketType].price > 0 && (
+                                <p className={styles.ticketPrice}>
+                                  {discount?.discount_type === 'percentage'
+                                    ? `Final Price: Rs.${(
+                                        ticketInfo[ticketType].price -
+                                        (ticketInfo[ticketType].price * discount.discount_value) /
+                                          100
+                                      ).toFixed(2)}`
+                                    : `Rs.${ticketInfo[ticketType].price - discount?.discount_value}`}
+                                </p>
+                              )}
+                            {(discount.discount_value <= 0 &&
+                              ticketInfo[ticketType].price - discount.discount_value >= 0) ||
+                              (ticketInfo[ticketType].price === 0 && (
+                                <p className={styles.ticketPrice}>
+                                  {Number(ticketInfo[ticketType].price) === 0
+                                    ? 'Free'
+                                    : `Rs.${ticketInfo[ticketType].price}`}
+                                </p>
+                              ))}
                           </div>
 
                           <div className={styles.ticketCount}>

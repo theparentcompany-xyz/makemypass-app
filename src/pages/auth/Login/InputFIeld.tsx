@@ -32,9 +32,7 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
           ref={ref}
         />
       </div>
-      {inputProps.error && (
-        <p className={styles.errorText}>{`${inputProps.placeholder} is required.`}</p>
-      )}
+      {inputProps.error && <p className={styles.errorText}>{`${inputProps.error}`}</p>}
     </div>
   );
 });
