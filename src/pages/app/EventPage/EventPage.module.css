@@ -9,13 +9,13 @@
   background: rgba(255, 255, 255, 0.04);
 
   max-width: 25rem;
-  min-width: 20rem;
-  padding: 2rem;
 
   display: flex;
   flex-direction: column;
 
   margin: 1rem auto;
+
+  padding: 2rem;
 
   color: white;
   font-family: 'Inter', sans-serif;
@@ -74,7 +74,7 @@
 
 .ticketTypes {
   max-width: 30rem;
-  min-width: 20rem;
+  width: 100%;
   margin: auto;
 }
 
@@ -92,7 +92,6 @@
   background: rgba(255, 255, 255, 0.04);
 
   max-width: 25rem;
-  min-width: 20rem;
   padding: 2rem;
 
   display: flex;
@@ -207,7 +206,8 @@
   color: white;
   font-family: 'Inter', sans-serif;
   text-align: center;
-  width: 24rem;
+  max-width: 24rem;
+  width: 100%;
 }
 
 .extraCharges {
