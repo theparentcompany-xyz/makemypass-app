@@ -49,10 +49,6 @@ const routes = [
     element: <LandingPage />,
   },
   {
-    path: '/events/:eventTitle',
-    element: <EventPage />,
-  },
-  {
     path: '/',
     element: <AuthCheck />,
     children: [
@@ -98,6 +94,11 @@ const routes = [
         element: <RoleChecker roles={['Admin', 'Volunteer']} children={<InEventStats />} />,
       },
     ],
+  },
+
+  {
+    path: '/:eventTitle',
+    element: <EventPage />,
   },
   {
     path: '*',
