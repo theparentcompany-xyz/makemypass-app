@@ -136,7 +136,7 @@ const EventPage = () => {
                 <IoLocationOutline size={20} className={styles.clockIcon} />
                 <div className={styles.location}>
                   <p className={styles.mainLocation}>{eventData.location}</p>
-                  <p className={styles.subLocation}>{eventData.sub_location || 'Kerala, India'}</p>
+                  <p className={styles.subLocation}>{eventData.sub_location}</p>
                 </div>
                 <FiClock size={20} className={styles.clockIcon} />
                 <div className={styles.eventDate}>
@@ -252,6 +252,10 @@ const EventPage = () => {
                           className={`${styles.row} ${styles.ticketType}`}
                           style={{
                             marginTop: '0rem',
+                            border:
+                              discount.discount_value > 0
+                                ? '2px solid #46BF75'
+                                : '2px solid #2A3533',
                           }}
                         >
                           <InputFIeld
@@ -274,8 +278,37 @@ const EventPage = () => {
                             }
                             required={field.required}
                             description={field.description}
-                            style={{ marginTop: '-1rem' }}
+                            style={{
+                              marginTop: '-1rem',
+                              border:
+                                discount.discount_value > 0
+                                  ? '2px solid #46BF75'
+                                  : '2px solid #2A3533',
+                            }}
                           />
+                          {discount.discount_type && discount.discount_value > 0 ? (
+                            <p
+                              style={{
+                                marginTop: '-1.75rem',
+                              }}
+                              className={styles.discountText}
+                            >
+                              {discount.discount_type.toLowerCase() === 'percentage'
+                                ? `${discount.discount_value}% discount applied`
+                                : `${discount.discount_value} ${ticketInfo[Object.keys(ticketInfo)[0]].currency} discount applied`}
+                            </p>
+                          ) : (
+                            discount.discount_type && (
+                              <p
+                                style={{
+                                  marginTop: '-1.75rem',
+                                }}
+                                className={styles.discountErrorText}
+                              >
+                                No discount found for this code.
+                              </p>
+                            )
+                          )}
 
                           <div
                             style={{
