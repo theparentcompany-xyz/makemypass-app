@@ -36,6 +36,8 @@ const EventPage = () => {
   const [formData, setFormData] = useState<FormData>({});
   const [amount, setAmount] = useState<string>('');
 
+  const [formNumber, setFormNumber] = useState<number>(0);
+
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
     discount_value: 0,
@@ -135,106 +137,109 @@ const EventPage = () => {
               </div>
             </div>
             <div className={styles.formContainer}>
-              <div className={styles.eventForm}>
-                <div>
-                  <p className={styles.eventFormTitle}>Registration Form</p>
-                  <p className={styles.eventDescription}>
-                    Please fill in the form below to register for the event.
-                  </p>
-                </div>
-                <div className={styles.formFields}>
-                  {formFields?.map((field: any) => {
-                    if (field.type === 'text') {
-                      return (
-                        <InputFIeld
-                          name={field.field_key}
-                          placeholder={field.title}
-                          id={field.id}
-                          key={field.id}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            onFieldChange(field.field_key, e.target.value)
-                          }
-                          error={formErrors[field.field_key]}
-                          type={field.type}
-                          icon={
-                            <GoPerson
-                              size={20}
-                              style={{
-                                color: '#9E9E9E',
-                              }}
-                            />
-                          }
-                          required={field.required}
-                        />
-                      );
-                    } else if (field.type === 'dropdown' || field.type === 'checkbox') {
-                      return (
-                        <>
-                          <div>
-                            <p className={styles.formLabel}>
-                              {field.title}
-                              {field.required && '*'}
-                            </p>
-                            <div className={styles.dropdown}>
-                              <Select
-                                options={field.options?.map((option: string) => ({
-                                  value: option,
-                                  label: option,
-                                }))}
-                                styles={customStyles}
-                                onChange={(selectedOption: any) =>
-                                  onFieldChange(field.field_key, selectedOption.value)
+              {formNumber === 0 && (
+                <div className={styles.eventForm}>
+                  <div>
+                    <p className={styles.eventFormTitle}>Registration Form</p>
+                    <p className={styles.eventDescription}>
+                      Please fill in the form below to register for the event.
+                    </p>
+                  </div>
+                  <div className={styles.formFields}>
+                    {formFields?.map((field: any) => {
+                      if (field.type === 'text') {
+                        return (
+                          <InputFIeld
+                            name={field.field_key}
+                            placeholder={field.title}
+                            id={field.id}
+                            key={field.id}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                              onFieldChange(field.field_key, e.target.value)
+                            }
+                            error={formErrors[field.field_key]}
+                            type={field.type}
+                            icon={
+                              <GoPerson
+                                size={20}
+                                style={{
+                                  color: '#9E9E9E',
+                                }}
+                              />
+                            }
+                            required={field.required}
+                          />
+                        );
+                      } else if (field.type === 'dropdown' || field.type === 'checkbox') {
+                        return (
+                          <>
+                            <div>
+                              <p className={styles.formLabel}>
+                                {field.title}
+                                {field.required && '*'}
+                              </p>
+                              <div className={styles.dropdown}>
+                                <Select
+                                  options={field.options?.map((option: string) => ({
+                                    value: option,
+                                    label: option,
+                                  }))}
+                                  styles={customStyles}
+                                  onChange={(selectedOption: any) =>
+                                    onFieldChange(field.field_key, selectedOption.value)
+                                  }
+                                  placeholder={`Select your ${field.title}`}
+                                  isSearchable={false}
+                                />
+                              </div>
+                              {formErrors[field.field_key] && (
+                                <p className={styles.errorText}>{formErrors[field.field_key][0]}</p>
+                              )}
+                            </div>
+                          </>
+                        );
+                      } else {
+                        return (
+                          <>
+                            <div className={styles.row}>
+                              <InputFIeld
+                                name={field.field_key}
+                                placeholder={field.title}
+                                id={field.id}
+                                key={field.id}
+                                error={formErrors[field.field_key]}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                  onFieldChange(field.field_key, e.target.value)
                                 }
-                                placeholder={`Select your ${field.title}`}
-                                isSearchable={false}
+                                type='text'
+                                icon={
+                                  <GoPerson
+                                    size={20}
+                                    style={{
+                                      color: '#9E9E9E',
+                                    }}
+                                  />
+                                }
+                                required={field.required}
+                                description={field.description}
+                              />
+
+                              <SecondaryButton
+                                onClick={() => {
+                                  applyCoupon(eventId, formData[field.field_key], setDiscount);
+                                }}
+                                buttonText='Validate Code'
                               />
                             </div>
-                            {formErrors[field.field_key] && (
-                              <p className={styles.errorText}>{formErrors[field.field_key][0]}</p>
-                            )}
-                          </div>
-                        </>
-                      );
-                    } else {
-                      return (
-                        <>
-                          <div className={styles.row}>
-                            <InputFIeld
-                              name={field.field_key}
-                              placeholder={field.title}
-                              id={field.id}
-                              key={field.id}
-                              error={formErrors[field.field_key]}
-                              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                onFieldChange(field.field_key, e.target.value)
-                              }
-                              type='text'
-                              icon={
-                                <GoPerson
-                                  size={20}
-                                  style={{
-                                    color: '#9E9E9E',
-                                  }}
-                                />
-                              }
-                              required={field.required}
-                              description={field.description}
-                            />
-
-                            <SecondaryButton
-                              onClick={() => {
-                                applyCoupon(eventId, formData[field.field_key], setDiscount);
-                              }}
-                              buttonText='Validate Code'
-                            />
-                          </div>
-                        </>
-                      );
-                    }
-                  })}
+                          </>
+                        );
+                      }
+                    })}
+                  </div>
                 </div>
-              </div>
-              {ticketInfo && (
+              )}
+
+              {ticketInfo && formNumber === 1 && (
                 <div className={styles.ticketTypes}>
                   <div
                     style={{
@@ -308,16 +313,21 @@ const EventPage = () => {
                   )}
                 </div>
               )}
+
               <button
                 type='submit'
                 onClick={(e) => {
                   e.preventDefault();
-                  if (amount === '0') submitForm(ticketId, formData);
-                  else showRazorpay(formData.name, ticketId, formData, setFormErrors);
+                  if (formNumber === 0) {
+                    setFormNumber(1);
+                  } else {
+                    if (amount === '0') submitForm(ticketId, formData);
+                    else showRazorpay(formData.name, ticketId, formData, setFormErrors);
+                  }
                 }}
                 className={styles.submitButton}
               >
-                Submit Form
+                {formNumber === 0 ? 'Next' : 'Register Now'}
               </button>
             </div>
           </div>
