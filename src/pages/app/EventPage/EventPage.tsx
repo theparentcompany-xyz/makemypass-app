@@ -38,7 +38,7 @@ const EventPage = () => {
   const [formData, setFormData] = useState<FormData>({});
   const [amount, setAmount] = useState<string>('');
 
-  const [formNumber, setFormNumber] = useState<number>(0);
+  const [formNumber, setFormNumber] = useState<number>(1);
 
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
@@ -443,7 +443,9 @@ const EventPage = () => {
                   <div className={styles.backButton}>
                     <p
                       onClick={() => {
-                        setFormNumber(formNumber - 1);
+                        setFormNumber((prevState) => {
+                          return prevState - 1;
+                        });
                       }}
                     >
                       Back
