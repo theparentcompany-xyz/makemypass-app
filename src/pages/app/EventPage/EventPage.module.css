@@ -262,6 +262,7 @@
   align-items: flex-end;
   column-gap: 0.25rem;
   flex-wrap: wrap;
+  max-width: 25rem;
   row-gap: 1rem;
   justify-content: flex-start;
 }

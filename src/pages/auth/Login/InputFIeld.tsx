@@ -11,6 +11,7 @@ interface FormProps {
   error?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   description?: string;
+  style?: React.CSSProperties;
 }
 
 const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProps }, ref) => {
@@ -23,13 +24,13 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
       <div className={styles.inputField}>
         {icon}
         <input
+          {...inputProps}
+          placeholder={`Enter Your ${inputProps.placeholder}`}
+          ref={ref}
           style={{
             width: '100%',
             fontFamily: 'Inter',
           }}
-          {...inputProps}
-          placeholder={`Enter Your ${inputProps.placeholder}`}
-          ref={ref}
         />
       </div>
       {inputProps.error && <p className={styles.errorText}>{`${inputProps.error}`}</p>}

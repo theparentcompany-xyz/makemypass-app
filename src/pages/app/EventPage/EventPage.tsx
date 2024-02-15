@@ -198,41 +198,6 @@ const EventPage = () => {
                             </div>
                           </>
                         );
-                      } else {
-                        return (
-                          <>
-                            <div className={styles.row}>
-                              <InputFIeld
-                                name={field.field_key}
-                                placeholder={field.title}
-                                id={field.id}
-                                key={field.id}
-                                error={formErrors[field.field_key]}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                  onFieldChange(field.field_key, e.target.value)
-                                }
-                                type='text'
-                                icon={
-                                  <GoPerson
-                                    size={20}
-                                    style={{
-                                      color: '#9E9E9E',
-                                    }}
-                                  />
-                                }
-                                required={field.required}
-                                description={field.description}
-                              />
-
-                              <SecondaryButton
-                                onClick={() => {
-                                  applyCoupon(eventId, formData[field.field_key], setDiscount);
-                                }}
-                                buttonText='Validate Code'
-                              />
-                            </div>
-                          </>
-                        );
                       }
                     })}
                   </div>
@@ -240,78 +205,129 @@ const EventPage = () => {
               )}
 
               {ticketInfo && formNumber === 1 && (
-                <div className={styles.ticketTypes}>
-                  <div
-                    style={{
-                      marginLeft: '8px',
-                    }}
-                  >
-                    <p className={styles.ticketTypesTitle}>Ticket Types</p>
-                    <p className={styles.eventDescription}>
-                      Select a ticket type to register for the event.
-                    </p>
-                  </div>
-
-                  {Object.keys(ticketInfo)?.map(
-                    (ticketType) => (
-                      console.log(ticketInfo[ticketType]),
-                      (
+                <>
+                  {formFields?.map((field: any) => {
+                    return (
+                      field.type === 'apicoupon' && (
                         <div
-                          key={ticketType}
-                          onClick={() => {
-                            setTicketId(ticketInfo[ticketType].id);
-                            setAmount(ticketInfo[ticketType].price.toString());
-                          }}
-                          className={styles.ticketType}
+                          className={`${styles.row} ${styles.ticketType}`}
                           style={{
-                            border:
-                              ticketId === ticketInfo[ticketType].id
-                                ? '2px solid #FFFFFF'
-                                : '2px solid #2A3533',
+                            marginTop: '0rem',
                           }}
                         >
-                          <div className={styles.ticketHeader}>
-                            <div className={styles.passText}>
-                              <p className={styles.ticketTypeTitle}>{ticketType}</p>
+                          <InputFIeld
+                            name={field.field_key}
+                            placeholder={field.title}
+                            id={field.id}
+                            key={field.id}
+                            error={formErrors[field.field_key]}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                              onFieldChange(field.field_key, e.target.value)
+                            }
+                            type='text'
+                            icon={
+                              <GoPerson
+                                size={20}
+                                style={{
+                                  color: '#9E9E9E',
+                                }}
+                              />
+                            }
+                            required={field.required}
+                            description={field.description}
+                            style={{ marginTop: '-1rem' }}
+                          />
 
-                              <p className={styles.ticketPrice}>
-                                {discountedTicketPrice(Number(ticketInfo[ticketType].price)) === 0
-                                  ? 'Free'
-                                  : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(Number(ticketInfo[ticketType].price))}`}
-                              </p>
-                            </div>
-
-                            <div className={styles.ticketCount}>
-                              {ticketInfo[ticketType].limit && (
-                                <p className={styles.ticketCountText}>
-                                  {ticketInfo[ticketType].slots_left} tickets left
-                                </p>
-                              )}
-                              {ticketInfo[ticketType].platform_fee_from_user &&
-                                Number(ticketInfo[ticketType].price) > 0 && (
-                                  <p className={styles.extraCharges}>
-                                    {ticketInfo[ticketType].platform_fee}% extra charges
-                                  </p>
-                                )}
-                            </div>
-                          </div>
-                          <div className={styles.ticketBody}>
-                            <p className={styles.ticketPerksTitle}>Ticket Perks</p>
-                            <div className={styles.ticketPerks}>
-                              <ul className={styles.perkList}>
-                                {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
-                                  <li key={perk} className={styles.perk}>
-                                    {perk}: {ticketInfo[ticketType].perks[perk]}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
+                          <div
+                            style={{
+                              marginTop: '-1rem',
+                            }}
+                          >
+                            <SecondaryButton
+                              onClick={() => {
+                                applyCoupon(eventId, formData[field.field_key], setDiscount);
+                              }}
+                              buttonText='Validate Code'
+                            />
                           </div>
                         </div>
                       )
-                    ),
-                  )}
-                </div>
+                    );
+                  })}
+
+                  <div className={styles.ticketTypes}>
+                    <div
+                      style={{
+                        marginLeft: '8px',
+                      }}
+                    >
+                      <p className={styles.ticketTypesTitle}>Ticket Types</p>
+                      <p className={styles.eventDescription}>
+                        Select a ticket type to register for the event.
+                      </p>
+                    </div>
+
+                    {Object.keys(ticketInfo)?.map(
+                      (ticketType) => (
+                        console.log(ticketInfo[ticketType]),
+                        (
+                          <div
+                            key={ticketType}
+                            onClick={() => {
+                              setTicketId(ticketInfo[ticketType].id);
+                              setAmount(ticketInfo[ticketType].price.toString());
+                            }}
+                            className={styles.ticketType}
+                            style={{
+                              border:
+                                ticketId === ticketInfo[ticketType].id
+                                  ? '2px solid #FFFFFF'
+                                  : '2px solid #2A3533',
+                            }}
+                          >
+                            <div className={styles.ticketHeader}>
+                              <div className={styles.passText}>
+                                <p className={styles.ticketTypeTitle}>{ticketType}</p>
+
+                                <p className={styles.ticketPrice}>
+                                  {discountedTicketPrice(Number(ticketInfo[ticketType].price)) === 0
+                                    ? 'Free'
+                                    : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(Number(ticketInfo[ticketType].price))}`}
+                                </p>
+                              </div>
+
+                              <div className={styles.ticketCount}>
+                                {ticketInfo[ticketType].limit && (
+                                  <p className={styles.ticketCountText}>
+                                    {ticketInfo[ticketType].slots_left} tickets left
+                                  </p>
+                                )}
+                                {ticketInfo[ticketType].platform_fee_from_user &&
+                                  Number(ticketInfo[ticketType].price) > 0 && (
+                                    <p className={styles.extraCharges}>
+                                      {ticketInfo[ticketType].platform_fee}% extra charges
+                                    </p>
+                                  )}
+                              </div>
+                            </div>
+                            <div className={styles.ticketBody}>
+                              <p className={styles.ticketPerksTitle}>Ticket Perks</p>
+                              <div className={styles.ticketPerks}>
+                                <ul className={styles.perkList}>
+                                  {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
+                                    <li key={perk} className={styles.perk}>
+                                      {perk}: {ticketInfo[ticketType].perks[perk]}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      ),
+                    )}
+                  </div>
+                </>
               )}
 
               <button
