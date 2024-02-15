@@ -14,6 +14,7 @@ import Select from 'react-select';
 import { showRazorpay } from './components/Razorpay';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { FormData, FormField } from '../../../apis/types';
+import { customStyles } from './constants';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -32,6 +33,18 @@ const EventPage = () => {
     discount_type: '',
     discount_value: 0,
   });
+
+  const discountedTicketPrice = (ticketPrice: number) => {
+    let discountedPrice = 0;
+    if (discount.discount_type === 'percentage') {
+      discountedPrice = (ticketPrice * (100 - discount.discount_value)) / 100;
+    } else {
+      discountedPrice = ticketPrice - discount.discount_value;
+    }
+
+    if (discountedPrice < 0) return 0;
+    return discountedPrice;
+  };
 
   useEffect(() => {
     if (eventTitle) getEventId(eventTitle);
@@ -63,36 +76,6 @@ const EventPage = () => {
       }, {}),
     );
   }, [formFields]);
-
-  const customStyles = {
-    control: (provided: any) => ({
-      ...provided,
-      border: 'none',
-      backgroundColor: '#2A3533',
-      fontFamily: 'Inter, sans-serif',
-      fontStyle: 'normal',
-      fontWeight: 400,
-      fontSize: '0.9rem',
-    }),
-
-    group: (provided: any) => ({
-      ...provided,
-      paddingTop: 0,
-    }),
-
-    singleValue: (base: any) => ({
-      ...base,
-      color: '#fff',
-    }),
-    option: (provided: any) => ({
-      ...provided,
-      fontFamily: 'Inter, sans-serif',
-      color: '#000',
-      fontStyle: 'normal',
-      fontWeight: 400,
-      fontSize: '0.9rem',
-    }),
-  };
 
   const onFieldChange = (fieldName: string, fieldValue: string) => {
     setFormData({
@@ -261,28 +244,12 @@ const EventPage = () => {
                         <div className={styles.ticketHeader}>
                           <div className={styles.passText}>
                             <p className={styles.ticketTypeTitle}>{ticketType}</p>
-                            {discount.discount_type &&
-                              discount.discount_value > 0 &&
-                              ticketInfo[ticketType].price > 0 && (
-                                <p className={styles.ticketPrice}>
-                                  {discount?.discount_type === 'percentage'
-                                    ? `Final Price: Rs.${(
-                                        ticketInfo[ticketType].price -
-                                        (ticketInfo[ticketType].price * discount.discount_value) /
-                                          100
-                                      ).toFixed(2)}`
-                                    : `Rs.${ticketInfo[ticketType].price - discount?.discount_value}`}
-                                </p>
-                              )}
-                            {(discount.discount_value <= 0 &&
-                              ticketInfo[ticketType].price - discount.discount_value >= 0) ||
-                              (ticketInfo[ticketType].price === 0 && (
-                                <p className={styles.ticketPrice}>
-                                  {Number(ticketInfo[ticketType].price) === 0
-                                    ? 'Free'
-                                    : `Rs.${ticketInfo[ticketType].price}`}
-                                </p>
-                              ))}
+
+                            <p className={styles.ticketPrice}>
+                              {discountedTicketPrice(Number(ticketInfo[ticketType].price)) === 0
+                                ? 'Free'
+                                : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(Number(ticketInfo[ticketType].price))}`}
+                            </p>
                           </div>
 
                           <div className={styles.ticketCount}>

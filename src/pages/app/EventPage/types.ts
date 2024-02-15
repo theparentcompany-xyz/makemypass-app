@@ -1,4 +1,5 @@
 type TicketType = {
+  currency: ReactNode;
   id: string;
   price: number;
   perks: {
