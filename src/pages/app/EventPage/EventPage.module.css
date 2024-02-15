@@ -222,6 +222,23 @@
   margin-bottom: 0.5rem;
 }
 
+.textarea {
+  margin-top: 0.25rem;
+  border-radius: 8px;
+  border: none;
+  padding: 0.75rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  width: 95%;
+  display: flex;
+  font-family: 'Inter', sans-serif;
+  color: white;
+}
+
+.textarea:focus {
+  border: none;
+  outline: none;
+}
+
 .dropdown {
   max-width: 24rem;
 }

@@ -233,6 +233,44 @@ const EventPage = () => {
                             </div>
                           </>
                         );
+                      } else if (field.type === 'textarea') {
+                        return (
+                          <div
+                            style={{
+                              marginBottom: '1rem',
+                            }}
+                          >
+                            <p className={styles.formLabel}>
+                              {field.title}
+                              {field.required && '*'}
+                            </p>
+                            <motion.textarea
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              transition={{ duration: 0.2 }}
+                              rows={4}
+                              className={styles.textarea}
+                              placeholder={`Enter your ${field.title}`}
+                              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                                onFieldChange(field.field_key, e.target.value)
+                              }
+                            />
+                            <AnimatePresence>
+                              {formErrors[field.field_key] && (
+                                <motion.p
+                                  initial={{ opacity: 0, y: -10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{ opacity: 0, y: -10 }}
+                                  transition={{ duration: 0.2 }}
+                                  className={styles.errorText}
+                                >
+                                  {formErrors[field.field_key][0]}
+                                </motion.p>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        );
                       }
                     })}
                   </div>
