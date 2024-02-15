@@ -38,7 +38,7 @@ const EventPage = () => {
   const [formData, setFormData] = useState<FormData>({});
   const [amount, setAmount] = useState<string>('');
 
-  const [formNumber, setFormNumber] = useState<number>(1);
+  const [formNumber, setFormNumber] = useState<number>(0);
 
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
