@@ -83,8 +83,7 @@ export const validateRsvp = async (
 ) => {
   return publicGateway
     .post(makeMyPass.validateRsvp(ticketId), formData)
-    .then((response) => {
-      console.log(response);
+    .then(() => {
       setFormNumber(1);
     })
     .catch((error) => {

@@ -38,7 +38,7 @@ const EventPage = () => {
   const [formData, setFormData] = useState<FormData>({});
   const [amount, setAmount] = useState<string>('');
 
-  const [formNumber, setFormNumber] = useState<number>(0);
+  const [formNumber, setFormNumber] = useState<number>(1);
 
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
@@ -310,11 +310,7 @@ const EventPage = () => {
                             )
                           )}
 
-                          <div
-                            style={{
-                              marginTop: '-1rem',
-                            }}
-                          >
+                          <div>
                             <SecondaryButton
                               onClick={() => {
                                 applyCoupon(eventId, formData[field.field_key], setDiscount);
@@ -386,7 +382,9 @@ const EventPage = () => {
                           </div>
                         </div>
                         <div className={styles.ticketBody}>
-                          <p className={styles.ticketPerksTitle}>Ticket Perks</p>
+                          {Object.keys(ticketInfo[ticketType].perks).length > 0 && (
+                            <p className={styles.ticketPerksTitle}>Ticket Perks</p>
+                          )}
                           <div className={styles.ticketPerks}>
                             <ul className={styles.perkList}>
                               {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
@@ -402,27 +400,40 @@ const EventPage = () => {
                   </motion.div>
                 </>
               )}
-
-              <motion.button
-                initial={{ opacity: 0, y: 35 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileTap={{ scale: 0.95 }}
-                type='submit'
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (formNumber === 0) {
-                    {
-                      validateRsvp(ticketId, formData, setFormNumber, setFormErrors);
+              <div className={styles.buttons}>
+                {formNumber > 0 && (
+                  <div className={styles.backButton}>
+                    <p
+                      onClick={() => {
+                        setFormNumber(formNumber - 1);
+                      }}
+                    >
+                      Back
+                    </p>
+                  </div>
+                )}
+                <motion.button
+                  initial={{ opacity: 0, y: 35 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileTap={{ scale: 0.95 }}
+                  type='submit'
+                  onClick={() => {
+                    if (formNumber === 0) {
+                      {
+                        validateRsvp(ticketId, formData, setFormNumber, setFormErrors);
+                      }
+                    } else {
+                      if (amount === '0') submitForm(ticketId, formData);
+                      else if (formData) {
+                        showRazorpay(formData?.name, ticketId, formData, setFormErrors);
+                      }
                     }
-                  } else {
-                    if (amount === '0') submitForm(ticketId, formData);
-                    else showRazorpay(formData?.name, ticketId, formData, setFormErrors);
-                  }
-                }}
-                className={styles.submitButton}
-              >
-                {formNumber === 0 ? 'Next' : 'Register Now'}
-              </motion.button>
+                  }}
+                  className={styles.submitButton}
+                >
+                  {formNumber === 0 ? 'Next' : 'Register Now'}
+                </motion.button>
+              </div>
             </div>
           </div>
         ) : (
