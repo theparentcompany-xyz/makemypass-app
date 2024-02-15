@@ -63,3 +63,14 @@ export const applyCoupon = async (
       console.log(error);
     });
 };
+
+export const registerUpdateView = async (eventId: string) => {
+  return publicGateway
+    .post(makeMyPass.registerUpdateView(eventId))
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

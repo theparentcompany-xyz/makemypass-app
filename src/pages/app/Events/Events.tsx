@@ -17,6 +17,7 @@ const Events = () => {
     logo: string | null;
     date: string;
     day: string;
+    name: string;
   };
 
   const [events, setEvents] = useState([] as Event[]);
@@ -24,6 +25,7 @@ const Events = () => {
     title: '',
     date: '',
     role: '',
+    name: '',
   });
 
   useEffect(() => {
@@ -34,12 +36,14 @@ const Events = () => {
     const currentEvent = localStorage.getItem('eventData');
     if (currentEvent) {
       const eventData = JSON.parse(currentEvent);
-      if (eventData.event_name !== eventName.trim().toLowerCase()) {
+      if (eventData.event_name !== eventName?.trim().toLowerCase()) {
         localStorage.removeItem('eventData');
         getEventId(eventName?.toLowerCase());
+        localStorage.setItem('eventName', eventName?.toLowerCase());
       }
     } else {
       getEventId(eventName?.toLowerCase());
+      localStorage.setItem('eventName', eventName?.toLowerCase());
     }
   };
 
@@ -48,12 +52,14 @@ const Events = () => {
   };
 
   useEffect(() => {
+    const eventName = localStorage.getItem('eventName') || '';
+    console.log(eventName);
     if (eventData.role === 'Admin') {
-      navigate(`/${eventData.title?.toLowerCase()}/overview/`);
+      navigate(`/${eventName.toLowerCase()}/overview/`);
     } else if (eventData.role === 'Volunteer') {
-      navigate(`/${eventData.title?.toLowerCase()}/checkins/`);
+      navigate(`/${eventName.toLowerCase()}/checkins/`);
     } else if (eventData.role === 'Gamer') {
-      navigate(`/${eventData.title?.toLowerCase()}/spinwheel/`);
+      navigate(`/${eventName.toLowerCase()}/spinwheel/`);
     }
   }, [eventData]);
 
@@ -103,7 +109,7 @@ const Events = () => {
                           initial={{ opacity: 0, y: 50 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.5 }}
-                          src='/app/scale.webp'
+                          src={event.logo || '/maskable.png'}
                           alt=''
                           className={styles.eventImage}
                         />
@@ -120,7 +126,8 @@ const Events = () => {
                             whileHover={{ scale: 1.05 }}
                             className={styles.manage}
                             onClick={() => {
-                              handleClick(event.title);
+                              console.log(event);
+                              handleClick(event.name);
                               getEventRole(event.id);
                             }}
                           >

@@ -7,7 +7,13 @@ import { GoPerson } from 'react-icons/go';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getEventId } from '../../../apis/events';
-import { applyCoupon, getFormFields, getTickets, submitForm } from '../../../apis/publicpage';
+import {
+  applyCoupon,
+  getFormFields,
+  getTickets,
+  registerUpdateView,
+  submitForm,
+} from '../../../apis/publicpage';
 import { DiscountData, TicketOptions } from './types';
 
 import Select from 'react-select';
@@ -36,7 +42,7 @@ const EventPage = () => {
 
   const discountedTicketPrice = (ticketPrice: number) => {
     let discountedPrice = 0;
-    if (discount.discount_type === 'percentage') {
+    if (discount.discount_type.toLowerCase() === 'percentage') {
       discountedPrice = (ticketPrice * (100 - discount.discount_value)) / 100;
     } else {
       discountedPrice = ticketPrice - discount.discount_value;
@@ -55,6 +61,7 @@ const EventPage = () => {
       if (eventId) {
         getTickets(eventId, setTicketInfo);
         getFormFields(eventId, setFormFields);
+        registerUpdateView(eventId);
       }
     }, 1000);
   }, [eventTitle, eventId]);

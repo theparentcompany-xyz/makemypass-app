@@ -5,6 +5,7 @@ export type Event = {
   logo: string | null;
   date: string;
   day: string;
+  name: string;
 };
 
 export type hostList = {

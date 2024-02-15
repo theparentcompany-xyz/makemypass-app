@@ -50,6 +50,8 @@ export const makeMyPass = {
 
   createPayment: (ticketId: string) => makeMyPassURL(`/rsvp/create-order/${ticketId}/`),
   validateCoupon: (eventId: string) => makeMyPassURL(`/rsvp/apply-coupon-code/${eventId}/`),
+
+  registerUpdateView: (eventId: string) => makeMyPassURL(`/register-update-view/${eventId}/`),
 };
 
 export const makeMyPassSocket = {
