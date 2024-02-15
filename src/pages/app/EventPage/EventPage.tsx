@@ -17,6 +17,7 @@ import {
   validateRsvp,
 } from '../../../apis/publicpage';
 import { DiscountData, TicketOptions } from './types';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import Select from 'react-select';
 import { showRazorpay } from './components/Razorpay';
@@ -37,7 +38,7 @@ const EventPage = () => {
   const [formData, setFormData] = useState<FormData>({});
   const [amount, setAmount] = useState<string>('');
 
-  const [formNumber, setFormNumber] = useState<number>(0);
+  const [formNumber, setFormNumber] = useState<number>(1);
 
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
@@ -107,7 +108,13 @@ const EventPage = () => {
       <Theme>
         {formFields.length > 0 ? (
           <div className={styles.eventPageContainer}>
-            <div className={styles.eventDataContainer}>
+            <motion.div
+              initial={{ opacity: 0, y: 35 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.5 }}
+              className={styles.eventDataContainer}
+            >
               <div className={styles.eventTopHeader}>
                 <div>
                   <p className={styles.eventTitle}>{eventData.event_name}</p>
@@ -137,10 +144,16 @@ const EventPage = () => {
                   <p className={styles.time}>{eventData.time}</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
             <div className={styles.formContainer}>
               {formNumber === 0 && (
-                <div className={styles.eventForm}>
+                <motion.div
+                  initial={{ opacity: 0, y: 35 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.5 }}
+                  className={styles.eventForm}
+                >
                   <div>
                     <p className={styles.eventFormTitle}>Registration Form</p>
                     <p className={styles.eventDescription}>
@@ -175,12 +188,22 @@ const EventPage = () => {
                       } else if (field.type === 'dropdown' || field.type === 'checkbox') {
                         return (
                           <>
-                            <div>
+                            <div
+                              style={{
+                                marginBottom: '1rem',
+                              }}
+                            >
                               <p className={styles.formLabel}>
                                 {field.title}
                                 {field.required && '*'}
                               </p>
-                              <div className={styles.dropdown}>
+                              <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.2 }}
+                                className={styles.dropdown}
+                              >
                                 <Select
                                   options={field.options?.map((option: string) => ({
                                     value: option,
@@ -193,17 +216,27 @@ const EventPage = () => {
                                   placeholder={`Select your ${field.title}`}
                                   isSearchable={false}
                                 />
-                              </div>
-                              {formErrors[field.field_key] && (
-                                <p className={styles.errorText}>{formErrors[field.field_key][0]}</p>
-                              )}
+                              </motion.div>
+                              <AnimatePresence>
+                                {formErrors[field.field_key] && (
+                                  <motion.p
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.2 }}
+                                    className={styles.errorText}
+                                  >
+                                    {formErrors[field.field_key][0]}
+                                  </motion.p>
+                                )}
+                              </AnimatePresence>
                             </div>
                           </>
                         );
                       }
                     })}
                   </div>
-                </div>
+                </motion.div>
               )}
 
               {ticketInfo && formNumber === 1 && (
@@ -211,7 +244,11 @@ const EventPage = () => {
                   {formFields?.map((field: any) => {
                     return (
                       field.type === 'apicoupon' && (
-                        <div
+                        <motion.div
+                          initial={{ opacity: 0, y: 35 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.5 }}
                           className={`${styles.row} ${styles.ticketType}`}
                           style={{
                             marginTop: '0rem',
@@ -252,12 +289,18 @@ const EventPage = () => {
                               buttonText='Validate Code'
                             />
                           </div>
-                        </div>
+                        </motion.div>
                       )
                     );
                   })}
 
-                  <div className={styles.ticketTypes}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 35 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.5 }}
+                    className={styles.ticketTypes}
+                  >
                     <div
                       style={{
                         marginLeft: '8px',
@@ -269,70 +312,68 @@ const EventPage = () => {
                       </p>
                     </div>
 
-                    {Object.keys(ticketInfo)?.map(
-                      (ticketType) => (
-                        console.log(ticketInfo[ticketType]),
-                        (
-                          <div
-                            key={ticketType}
-                            onClick={() => {
-                              setTicketId(ticketInfo[ticketType].id);
-                              setAmount(ticketInfo[ticketType].price.toString());
-                            }}
-                            className={styles.ticketType}
-                            style={{
-                              border:
-                                ticketId === ticketInfo[ticketType].id
-                                  ? '2px solid #FFFFFF'
-                                  : '2px solid #2A3533',
-                            }}
-                          >
-                            <div className={styles.ticketHeader}>
-                              <div className={styles.passText}>
-                                <p className={styles.ticketTypeTitle}>{ticketType}</p>
+                    {Object.keys(ticketInfo)?.map((ticketType) => (
+                      <div
+                        key={ticketType}
+                        onClick={() => {
+                          setTicketId(ticketInfo[ticketType].id);
+                          setAmount(ticketInfo[ticketType].price.toString());
+                        }}
+                        className={styles.ticketType}
+                        style={{
+                          border:
+                            ticketId === ticketInfo[ticketType].id
+                              ? '2px solid #FFFFFF'
+                              : '2px solid #2A3533',
+                        }}
+                      >
+                        <div className={styles.ticketHeader}>
+                          <div className={styles.passText}>
+                            <p className={styles.ticketTypeTitle}>{ticketType}</p>
 
-                                <p className={styles.ticketPrice}>
-                                  {discountedTicketPrice(Number(ticketInfo[ticketType].price)) === 0
-                                    ? 'Free'
-                                    : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(Number(ticketInfo[ticketType].price))}`}
-                                </p>
-                              </div>
-
-                              <div className={styles.ticketCount}>
-                                {ticketInfo[ticketType].limit && (
-                                  <p className={styles.ticketCountText}>
-                                    {ticketInfo[ticketType].slots_left} tickets left
-                                  </p>
-                                )}
-                                {ticketInfo[ticketType].platform_fee_from_user &&
-                                  Number(ticketInfo[ticketType].price) > 0 && (
-                                    <p className={styles.extraCharges}>
-                                      {ticketInfo[ticketType].platform_fee}% extra charges
-                                    </p>
-                                  )}
-                              </div>
-                            </div>
-                            <div className={styles.ticketBody}>
-                              <p className={styles.ticketPerksTitle}>Ticket Perks</p>
-                              <div className={styles.ticketPerks}>
-                                <ul className={styles.perkList}>
-                                  {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
-                                    <li key={perk} className={styles.perk}>
-                                      {perk}: {ticketInfo[ticketType].perks[perk]}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            </div>
+                            <p className={styles.ticketPrice}>
+                              {discountedTicketPrice(Number(ticketInfo[ticketType].price)) === 0
+                                ? 'Free'
+                                : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(Number(ticketInfo[ticketType].price))}`}
+                            </p>
                           </div>
-                        )
-                      ),
-                    )}
-                  </div>
+
+                          <div className={styles.ticketCount}>
+                            {ticketInfo[ticketType].limit && (
+                              <p className={styles.ticketCountText}>
+                                {ticketInfo[ticketType].slots_left} tickets left
+                              </p>
+                            )}
+                            {ticketInfo[ticketType].platform_fee_from_user &&
+                              Number(ticketInfo[ticketType].price) > 0 && (
+                                <p className={styles.extraCharges}>
+                                  {ticketInfo[ticketType].platform_fee}% extra charges
+                                </p>
+                              )}
+                          </div>
+                        </div>
+                        <div className={styles.ticketBody}>
+                          <p className={styles.ticketPerksTitle}>Ticket Perks</p>
+                          <div className={styles.ticketPerks}>
+                            <ul className={styles.perkList}>
+                              {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
+                                <li key={perk} className={styles.perk}>
+                                  {perk}: {ticketInfo[ticketType].perks[perk]}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </motion.div>
                 </>
               )}
 
-              <button
+              <motion.button
+                initial={{ opacity: 0, y: 35 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileTap={{ scale: 0.95 }}
                 type='submit'
                 onClick={(e) => {
                   e.preventDefault();
@@ -348,7 +389,7 @@ const EventPage = () => {
                 className={styles.submitButton}
               >
                 {formNumber === 0 ? 'Next' : 'Register Now'}
-              </button>
+              </motion.button>
             </div>
           </div>
         ) : (

@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import styles from '../Authstyles.module.css';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface FormProps {
   type: string;
@@ -16,7 +17,13 @@ interface FormProps {
 
 const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProps }, ref) => {
   return (
-    <div className={styles.formInput}>
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 10 }}
+      transition={{ duration: 0.2 }}
+      className={styles.formInput}
+    >
       <label className={styles.formLabel} htmlFor='email'>
         {inputProps.required ? inputProps.placeholder + '*' : inputProps.placeholder}
       </label>
@@ -33,8 +40,18 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
           }}
         />
       </div>
-      {inputProps.error && <p className={styles.errorText}>{`${inputProps.error}`}</p>}
-    </div>
+      <AnimatePresence>
+        {inputProps.error && (
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className={styles.errorText}
+          >{`${inputProps.error}`}</motion.p>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 });
 
