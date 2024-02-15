@@ -8,6 +8,7 @@ const EventHeader = ({ setRole }: { setRole?: React.Dispatch<React.SetStateActio
     title: '',
     date: '',
     role: '',
+    name: '',
   });
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();

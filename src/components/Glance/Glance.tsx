@@ -11,6 +11,7 @@ const Glance = ({ tab }: { tab: string }) => {
     title: '',
     date: '',
     role: '',
+    name: '',
   });
 
   type progressDataType = {
