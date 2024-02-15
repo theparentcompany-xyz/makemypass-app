@@ -105,17 +105,32 @@ const EventPage = () => {
         {formFields.length > 0 ? (
           <div className={styles.eventPageContainer}>
             <div className={styles.eventDataContainer}>
-              <p className={styles.eventTitle}>{eventData.event_name}</p>
-              <p className={styles.eventDescription}>{eventData.description}</p>
+              <div className={styles.eventTopHeader}>
+                <div>
+                  <p className={styles.eventTitle}>{eventData.event_name}</p>
+                  <p className={styles.eventDescription}>
+                    {eventData.description ||
+                      'In50hrs is a weekend Prototyping event, where teams register to build prototypes of solutions for real problems.'}
+                  </p>
+                </div>
+                <div className={styles.headerRightSide}>
+                  <img
+                    src={eventData.logo || 'https://via.placeholder.com/90'}
+                    alt='event'
+                    className={styles.eventImage}
+                  />
+                </div>
+              </div>
               <div className={styles.otherDetials}>
-                <FiClock size={25} className={styles.clockIcon} />
+                <IoLocationOutline size={20} className={styles.clockIcon} />
+                <div className={styles.location}>
+                  <p className={styles.mainLocation}>{eventData.location}</p>
+                  <p className={styles.subLocation}>{eventData.sub_location || 'Kerala, India'}</p>
+                </div>
+                <FiClock size={20} className={styles.clockIcon} />
                 <div className={styles.eventDate}>
                   <p className={styles.date}>{eventData.date}</p>
                   <p className={styles.time}>{eventData.time}</p>
-                </div>
-                <IoLocationOutline size={25} className={styles.clockIcon} />
-                <div className={styles.location}>
-                  <p className={styles.mainLocation}>{eventData.location}</p>
                 </div>
               </div>
             </div>
