@@ -416,7 +416,7 @@ const EventPage = () => {
                     }
                   } else {
                     if (amount === '0') submitForm(ticketId, formData);
-                    else showRazorpay(formData.name, ticketId, formData, setFormErrors);
+                    else showRazorpay(formData?.name, ticketId, formData, setFormErrors);
                   }
                 }}
                 className={styles.submitButton}
