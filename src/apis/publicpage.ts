@@ -74,3 +74,20 @@ export const registerUpdateView = async (eventId: string) => {
       console.log(error);
     });
 };
+
+export const validateRsvp = async (
+  ticketId: string,
+  formData: FormData,
+  setFormNumber: React.Dispatch<React.SetStateAction<number>>,
+  setFieldErrors: Dispatch<React.SetStateAction<any>>,
+) => {
+  return publicGateway
+    .post(makeMyPass.validateRsvp(ticketId), formData)
+    .then((response) => {
+      console.log(response);
+      setFormNumber(1);
+    })
+    .catch((error) => {
+      setFieldErrors(error.response.data.message);
+    });
+};

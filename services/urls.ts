@@ -52,6 +52,7 @@ export const makeMyPass = {
   validateCoupon: (eventId: string) => makeMyPassURL(`/rsvp/apply-coupon-code/${eventId}/`),
 
   registerUpdateView: (eventId: string) => makeMyPassURL(`/register-update-view/${eventId}/`),
+  validateRsvp: (ticketId: string) => makeMyPassURL(`/rsvp/validate-rsvp/${ticketId}/`),
 };
 
 export const makeMyPassSocket = {

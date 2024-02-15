@@ -14,6 +14,7 @@ import {
   getTickets,
   registerUpdateView,
   submitForm,
+  validateRsvp,
 } from '../../../apis/publicpage';
 import { DiscountData, TicketOptions } from './types';
 
@@ -123,6 +124,7 @@ const EventPage = () => {
                   />
                 </div>
               </div>
+
               <div className={styles.otherDetials}>
                 <IoLocationOutline size={20} className={styles.clockIcon} />
                 <div className={styles.location}>
@@ -335,7 +337,9 @@ const EventPage = () => {
                 onClick={(e) => {
                   e.preventDefault();
                   if (formNumber === 0) {
-                    setFormNumber(1);
+                    {
+                      validateRsvp(ticketId, formData, setFormNumber, setFormErrors);
+                    }
                   } else {
                     if (amount === '0') submitForm(ticketId, formData);
                     else showRazorpay(formData.name, ticketId, formData, setFormErrors);
