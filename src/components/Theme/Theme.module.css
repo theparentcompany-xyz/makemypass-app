@@ -1,6 +1,7 @@
 .grad1 {
   opacity: 0.5;
   background: radial-gradient(50% 50% at 0% 0%, #7662fc 0%, rgba(118, 98, 252, 0) 100%);
+  
 
   filter: blur(144.6999969482422px);
 

@@ -15,7 +15,7 @@ export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<E
     });
 };
 
-export const getEventId = async (eventName: string, navigate: NavigateFunction) => {
+export const getEventId = async (eventName: string, navigate?: NavigateFunction) => {
   privateGateway
     .get(makeMyPass.getEventId(eventName))
     .then((response) => {
@@ -23,7 +23,7 @@ export const getEventId = async (eventName: string, navigate: NavigateFunction) 
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-      navigate('/404');
+      navigate && navigate('/404');
     });
 };
 

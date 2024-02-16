@@ -165,17 +165,10 @@ const EventPage = () => {
               <div className={styles.eventTopHeader}>
                 <div>
                   <p className={styles.eventTitle}>{eventData.title}</p>
-                  <p className={styles.eventDescription}>
-                    {eventData.description ||
-                      'In50hrs is a weekend Prototyping event, where teams register to build prototypes of solutions for real problems.'}
-                  </p>
+                  <p className={styles.eventDescription}>{eventData.description}</p>
                 </div>
                 <div className={styles.headerRightSide}>
-                  <img
-                    src={eventData.logo || 'https://via.placeholder.com/90'}
-                    alt='event'
-                    className={styles.eventImage}
-                  />
+                  <img src={eventData.logo} alt='event' className={styles.eventImage} />
                 </div>
               </div>
 
@@ -457,7 +450,7 @@ const EventPage = () => {
                         }}
                       >
                         <div className={styles.passText}>
-                          <p className={styles.ticketTypeTitle}>{ticketType.toUpperCase()}</p>
+                          <p className={styles.ticketTypeTitle}>{ticketType?.toUpperCase()}</p>
 
                           <div className={styles.perks}>
                             {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
@@ -508,7 +501,7 @@ const EventPage = () => {
                           </div>
                         </div>
 
-                        <p className={styles.cardText}>{eventData.event_name.toUpperCase()}</p>
+                        <p className={styles.cardText}>{eventData.title?.toUpperCase()}</p>
                       </div>
                     ))}
                   </motion.div>
