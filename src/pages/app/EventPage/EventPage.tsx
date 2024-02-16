@@ -6,9 +6,10 @@ import InputFIeld from '../../auth/Login/InputFIeld';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
-import { getEventId } from '../../../apis/events';
+import {  getEventId } from '../../../apis/events';
 import {
   applyCoupon,
+  getEventDatas,
   getFormFields,
   getTickets,
   registerUpdateView,
@@ -50,10 +51,11 @@ const EventPage = () => {
 
     setTimeout(() => {
       setEventId(JSON.parse(localStorage.getItem('eventData') || '{}').event_id);
-      setEventData(JSON.parse(localStorage.getItem('eventData') || '{}'));
+      // setEventData(JSON.parse(localStorage.getItem('eventData') || '{}'));
       if (eventId) {
         getTickets(eventId, setTicketInfo);
         getFormFields(eventId, setFormFields);
+        getEventDatas(eventId, setEventData);
         registerUpdateView(eventId);
       }
     }, 1000);
@@ -160,7 +162,7 @@ const EventPage = () => {
             >
               <div className={styles.eventTopHeader}>
                 <div>
-                  <p className={styles.eventTitle}>{eventData.event_name}</p>
+                  <p className={styles.eventTitle}>{eventData.title}</p>
                   <p className={styles.eventDescription}>
                     {eventData.description ||
                       'In50hrs is a weekend Prototyping event, where teams register to build prototypes of solutions for real problems.'}

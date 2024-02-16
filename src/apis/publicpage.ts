@@ -104,3 +104,14 @@ export const validateRsvp = async (
       setFieldErrors(error.response.data.message);
     });
 };
+
+export const getEventDatas = async (eventId: string, setEventData: any) => {
+  return publicGateway
+    .get(makeMyPass.getEventDatas(eventId))
+    .then((response) => {
+      setEventData(response.data.response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
