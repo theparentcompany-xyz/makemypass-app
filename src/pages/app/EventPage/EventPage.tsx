@@ -23,6 +23,7 @@ import { showRazorpay } from './components/Razorpay';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { FormData, FormField } from '../../../apis/types';
 import { customStyles, discountedTicketPrice, getIcon } from './constants';
+import { useNavigate } from 'react-router-dom';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -34,8 +35,11 @@ const EventPage = () => {
   const [formErrors, setFormErrors] = useState<any>({});
   const [eventId, setEventId] = useState<string>('');
 
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState<FormData>({});
   const [amount, setAmount] = useState<string>('');
+  const [success, setSuccess] = useState<string>('');
 
   const [formNumber, setFormNumber] = useState<number>(0);
 
@@ -110,6 +114,44 @@ const EventPage = () => {
   return (
     <>
       <Theme>
+        {
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5 }}
+            className={styles.successMessage}
+          >
+            {success && (
+              <>
+                <div className={styles.backgroundBlur}></div>
+                <dialog
+                  style={{
+                    borderBottom: '3px solid #47c97e',
+                    background: 'rgba(31, 185, 31, 0.09)',
+                  }}
+                  open
+                  className={styles.onClickModal}
+                >
+                  <button
+                    onClick={() => {
+                      setSuccess('');
+                    }}
+                    className={styles.closeButton}
+                  >
+                    X
+                  </button>
+                  <p className={styles.modalSubText}>Registration Successful</p>
+                  <p className={styles.modalText}>
+                    Your registration for the event has been successful. You will receive a
+                    confirmation email shortly.
+                  </p>
+                  {success && <p className={styles.ticketCode}>You're Ticket Code is: {success}</p>}
+                </dialog>
+              </>
+            )}
+          </motion.div>
+        }
         {formFields.length > 0 ? (
           <div className={styles.eventPageContainer}>
             <motion.div
@@ -177,6 +219,7 @@ const EventPage = () => {
                               onFieldChange(field.field_key, e.target.value)
                             }
                             error={formErrors[field.field_key]}
+                            value={formData[field.field_key]}
                             type={field.type}
                             icon={getIcon(field.field_key)}
                             required={field.required}
@@ -210,6 +253,14 @@ const EventPage = () => {
                                   onChange={(selectedOption: any) =>
                                     onFieldChange(field.field_key, selectedOption.value)
                                   }
+                                  value={field.options
+                                    ?.map((option: string) => ({
+                                      value: option,
+                                      label: option,
+                                    }))
+                                    .filter(
+                                      (option: any) => option.value === formData[field.field_key],
+                                    )}
                                   placeholder={`Select an option`}
                                   isSearchable={false}
                                 />
@@ -248,6 +299,7 @@ const EventPage = () => {
                               transition={{ duration: 0.2 }}
                               rows={4}
                               className={styles.textarea}
+                              value={formData[field.field_key]}
                               placeholder={`Enter your ${field.title}`}
                               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                                 onFieldChange(field.field_key, e.target.value)
@@ -459,16 +511,15 @@ const EventPage = () => {
               )}
               <div className={styles.buttons}>
                 {formNumber > 0 && (
-                  <div className={styles.backButton}>
-                    <p
-                      onClick={() => {
-                        setFormNumber((prevState) => {
-                          return prevState - 1;
-                        });
-                      }}
-                    >
-                      Back
-                    </p>
+                  <div
+                    onClick={() => {
+                      setFormNumber((prevState) => {
+                        return prevState - 1;
+                      });
+                    }}
+                    className={styles.backButton}
+                  >
+                    <p>Back</p>
                   </div>
                 )}
                 <motion.button
@@ -482,9 +533,18 @@ const EventPage = () => {
                         validateRsvp(ticketId, formData, setFormNumber, setFormErrors);
                       }
                     } else {
-                      if (amount === '0') submitForm(ticketId, formData);
+                      if (amount === '0')
+                        submitForm(ticketId, formData, '', setSuccess, setFormNumber, setFormData);
                       else if (formData) {
-                        showRazorpay(formData?.name, ticketId, formData, setFormErrors);
+                        showRazorpay(
+                          formData?.name,
+                          ticketId,
+                          formData,
+                          setFormErrors,
+                          setSuccess,
+                          setFormNumber,
+                          setFormData
+                        );
                       }
                     }
                   }}

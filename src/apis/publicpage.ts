@@ -33,14 +33,28 @@ export const getFormFields = async (
     });
 };
 
-export const submitForm = async (ticketId: string, data: FormData, response?: any) => {
+export const submitForm = async (
+  ticketId: string,
+  data: FormData,
+  response?: any,
+  setSuccess?: React.Dispatch<React.SetStateAction<string>>,
+  setFormNumber?: React.Dispatch<React.SetStateAction<number>>,
+  setFormData?: React.Dispatch<React.SetStateAction<FormData>>,
+) => {
+  console.log(data);
   publicGateway
     .post(makeMyPass.submitForm(ticketId), {
       rsvp_data: data,
       payment_data: response,
     })
-    .then(() => {
-      toast.success('Event Registered Successfully');
+    .then((response) => {
+      setSuccess && setSuccess(response.data.response.code);
+
+      setTimeout(() => {
+        setSuccess && setSuccess('');
+        setFormNumber && setFormNumber(0);
+        setFormData && setFormData({});
+      }, 3000);
     })
     .catch(() => {
       toast.error('Error in Registering Event');

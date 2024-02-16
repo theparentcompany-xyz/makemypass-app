@@ -1,8 +1,17 @@
+import { NavigateFunction } from 'react-router';
 import { publicGateway } from '../../../../../services/apiGateway';
 import { makeMyPass } from '../../../../../services/urls';
 import { submitForm } from '../../../../apis/publicpage';
 
-export const showRazorpay = async (name: any, ticketId: any, formData: any, setFormErrors: any) => {
+export const showRazorpay = async (
+  name: string,
+  ticketId: string,
+  formData: any,
+  setFormErrors: any,
+  setSuccess: React.Dispatch<React.SetStateAction<string>>,
+  setFormNumber: React.Dispatch<React.SetStateAction<number>>,
+  setFormData: React.Dispatch<React.SetStateAction<any>>,
+) => {
   const script = document.createElement('script');
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';
   document.body.appendChild(script);
@@ -30,7 +39,7 @@ export const showRazorpay = async (name: any, ticketId: any, formData: any, setF
     image: '/maskable.png',
     order_id: paymentId,
     handler: function (response: any) {
-      submitForm(ticketId, formData, response);
+      submitForm(ticketId, formData, response, setSuccess, setFormNumber, setFormData);
     },
     theme: {
       color: '#00FF82',

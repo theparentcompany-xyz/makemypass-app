@@ -144,7 +144,7 @@
 
 .ticketTypeTitle {
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 600;
   color: #4eff99;
   max-width: 8rem;
   line-height: 1.75rem;
@@ -419,4 +419,106 @@
   right: 0;
   bottom: 0;
   z-index: -1;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 2;
+
+  &:hover {
+    color: #47c97e;
+  }
+}
+
+.modalSubText {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #f1f1f1;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.modalText {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #bbbaba;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.onClickModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  border-radius: 12px;
+  padding: 1rem;
+
+  max-width: 20rem;
+
+  margin-bottom: 1rem;
+  position: absolute;
+  z-index: 100;
+  backdrop-filter: blur(800px);
+
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: translateY(-50%);
+
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  color: white;
+
+  text-align: center;
+}
+
+.backgroundBlur {
+  backdrop-filter: blur(3px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+}
+
+.ticketCode {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+
+  font-size: 0.8rem;
+  cursor: pointer;
+  z-index: 2;
+
+  padding: 0.25rem 0.75rem;
+
+  &:hover {
+    color: #47c97e;
+  }
 }
