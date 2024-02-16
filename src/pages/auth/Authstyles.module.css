@@ -130,7 +130,7 @@
   }
 
   .formInput {
-    width: 17.5rem;
+    max-width: 20.5rem;
   }
 
   .form {
