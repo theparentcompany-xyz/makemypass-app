@@ -2,6 +2,7 @@ import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Event } from './types'; // Assuming Event is the type for events
+import { NavigateFunction } from 'react-router';
 
 export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<Event[]>>) => {
   privateGateway
@@ -14,7 +15,7 @@ export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<E
     });
 };
 
-export const getEventId = async (eventName: string) => {
+export const getEventId = async (eventName: string, navigate: NavigateFunction) => {
   privateGateway
     .get(makeMyPass.getEventId(eventName))
     .then((response) => {
@@ -22,6 +23,7 @@ export const getEventId = async (eventName: string) => {
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+      navigate('/404');
     });
 };
 

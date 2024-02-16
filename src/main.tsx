@@ -95,7 +95,10 @@ const routes = [
       },
     ],
   },
-
+  {
+    path: '/404',
+    element: <FourNotFour />,
+  },
   {
     path: '/:eventTitle',
     element: <EventPage />,

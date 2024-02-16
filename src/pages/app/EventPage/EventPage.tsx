@@ -3,10 +3,10 @@ import Theme from '../../../components/Theme/Theme';
 import { FiClock } from 'react-icons/fi';
 import { IoLocationOutline } from 'react-icons/io5';
 import InputFIeld from '../../auth/Login/InputFIeld';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
-import {  getEventId } from '../../../apis/events';
+import { getEventId } from '../../../apis/events';
 import {
   applyCoupon,
   getEventDatas,
@@ -46,8 +46,10 @@ const EventPage = () => {
     discount_value: 0,
   });
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (eventTitle) getEventId(eventTitle);
+    if (eventTitle) getEventId(eventTitle, navigate);
 
     setTimeout(() => {
       setEventId(JSON.parse(localStorage.getItem('eventData') || '{}').event_id);
