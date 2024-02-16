@@ -3,6 +3,7 @@ import { GoPerson } from 'react-icons/go';
 import { IoCallOutline } from 'react-icons/io5';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { RiCoupon3Line } from 'react-icons/ri';
+import { DiscountData } from './types';
 
 export const customStyles = {
   control: (provided: any) => ({
@@ -66,7 +67,7 @@ export const getIcon = (type: string) => {
     case 'organisation_campus':
       return (
         <BsSuitcaseLg
-          size={20}
+          size={22}
           style={{
             color: '#9E9E9E',
           }}
@@ -81,5 +82,19 @@ export const getIcon = (type: string) => {
           }}
         />
       );
+  }
+};
+
+export const discountedTicketPrice = (ticketPrice: number, discount: DiscountData) => {
+  let discountedPrice = 0;
+  if (discount.discount_type.toLowerCase() === 'percentage') {
+    discountedPrice = (ticketPrice * (100 - discount.discount_value)) / 100;
+  } else {
+    discountedPrice = ticketPrice - discount.discount_value;
+  }
+
+  if (discountedPrice < 0) return 0;
+  else {
+    return discountedPrice;
   }
 };

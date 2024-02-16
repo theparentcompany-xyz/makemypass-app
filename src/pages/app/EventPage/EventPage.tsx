@@ -23,7 +23,7 @@ import Select from 'react-select';
 import { showRazorpay } from './components/Razorpay';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { FormData, FormField } from '../../../apis/types';
-import { customStyles, getIcon } from './constants';
+import { customStyles, discountedTicketPrice, getIcon } from './constants';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -38,24 +38,12 @@ const EventPage = () => {
   const [formData, setFormData] = useState<FormData>({});
   const [amount, setAmount] = useState<string>('');
 
-  const [formNumber, setFormNumber] = useState<number>(1);
+  const [formNumber, setFormNumber] = useState<number>(0);
 
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
     discount_value: 0,
   });
-
-  const discountedTicketPrice = (ticketPrice: number) => {
-    let discountedPrice = 0;
-    if (discount.discount_type.toLowerCase() === 'percentage') {
-      discountedPrice = (ticketPrice * (100 - discount.discount_value)) / 100;
-    } else {
-      discountedPrice = ticketPrice - discount.discount_value;
-    }
-
-    if (discountedPrice < 0) return 0;
-    return discountedPrice;
-  };
 
   useEffect(() => {
     if (eventTitle) getEventId(eventTitle);
@@ -70,6 +58,23 @@ const EventPage = () => {
       }
     }, 1000);
   }, [eventTitle, eventId]);
+
+  useEffect(() => {
+    if (discount.discount_value > 0) {
+      setAmount(discountedTicketPrice(Number(amount), discount).toString());
+    } else {
+      if (ticketInfo && ticketId) {
+        let ticketPrice = 0;
+        Object.keys(ticketInfo)?.map((ticketType) => {
+          if (ticketInfo[ticketType].id === ticketId) {
+            ticketPrice = ticketInfo[ticketType].price;
+          }
+        });
+
+        setAmount(ticketPrice.toString());
+      }
+    }
+  }, [discount]);
 
   useEffect(() => {
     ticketInfo &&
@@ -206,7 +211,7 @@ const EventPage = () => {
                                   onChange={(selectedOption: any) =>
                                     onFieldChange(field.field_key, selectedOption.value)
                                   }
-                                  placeholder={`Select your ${field.title}`}
+                                  placeholder={`Select an option`}
                                   isSearchable={false}
                                 />
                               </motion.div>
@@ -353,7 +358,6 @@ const EventPage = () => {
                       )
                     );
                   })}
-
                   <motion.div
                     initial={{ opacity: 0, y: 35 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -377,7 +381,16 @@ const EventPage = () => {
                         key={ticketType}
                         onClick={() => {
                           setTicketId(ticketInfo[ticketType].id);
-                          setAmount(ticketInfo[ticketType].price.toString());
+                          if (discount.discount_value > 0)
+                            setAmount(
+                              discountedTicketPrice(
+                                Number(ticketInfo[ticketType].price),
+                                discount,
+                              ).toString(),
+                            );
+                          else {
+                            setAmount(ticketInfo[ticketType].price.toString());
+                          }
                         }}
                         className={styles.ticketType}
                         style={{
@@ -387,45 +400,59 @@ const EventPage = () => {
                               : '2px solid #2A3533',
                         }}
                       >
-                        <div className={styles.ticketHeader}>
-                          <div className={styles.passText}>
-                            <p className={styles.ticketTypeTitle}>{ticketType}</p>
+                        <div className={styles.passText}>
+                          <p className={styles.ticketTypeTitle}>{ticketType.toUpperCase()}</p>
 
+                          <div className={styles.perks}>
+                            {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
+                              <div key={perk} className={styles.perk}>
+                                {perk}: {ticketInfo[ticketType].perks[perk]}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className={styles.ticketPriceData}>
+                          {discount.discount_value > 0 && ticketInfo[ticketType].price > 0 && (
+                            <div className={styles.discountData}>
+                              <p className={styles.discountAmount}>
+                                {discount.discount_type.toLowerCase() === 'percentage'
+                                  ? `${discount.discount_value}% off`
+                                  : `${ticketInfo[ticketType].currency} ${discount.discount_value} off`}
+                              </p>
+                              <p className={styles.originalPrice}>
+                                <del>
+                                  M.R.P. {ticketInfo[ticketType].currency}{' '}
+                                  {ticketInfo[ticketType].price}
+                                </del>
+                              </p>
+                            </div>
+                          )}
+                          <div className={styles.priceData}>
                             <p className={styles.ticketPrice}>
-                              {discountedTicketPrice(Number(ticketInfo[ticketType].price)) === 0
-                                ? 'Free'
-                                : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(Number(ticketInfo[ticketType].price))}`}
+                              {discountedTicketPrice(
+                                Number(ticketInfo[ticketType].price),
+                                discount,
+                              ) === 0
+                                ? 'FREE'
+                                : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(Number(ticketInfo[ticketType].price), discount)}`}
+                            </p>
+                            <p className={styles.extraCharges}>
+                              {ticketInfo[ticketType].platform_fee_from_user &&
+                                Number(ticketInfo[ticketType].price) > 0 &&
+                                discountedTicketPrice(
+                                  Number(ticketInfo[ticketType].price),
+                                  discount,
+                                ) !== 0 && (
+                                  <p className={styles.extraCharges}>
+                                    {ticketInfo[ticketType].platform_fee}% extra charges
+                                  </p>
+                                )}
                             </p>
                           </div>
+                        </div>
 
-                          <div className={styles.ticketCount}>
-                            {ticketInfo[ticketType].limit && (
-                              <p className={styles.ticketCountText}>
-                                {ticketInfo[ticketType].slots_left} tickets left
-                              </p>
-                            )}
-                            {ticketInfo[ticketType].platform_fee_from_user &&
-                              Number(ticketInfo[ticketType].price) > 0 && (
-                                <p className={styles.extraCharges}>
-                                  {ticketInfo[ticketType].platform_fee}% extra charges
-                                </p>
-                              )}
-                          </div>
-                        </div>
-                        <div className={styles.ticketBody}>
-                          {Object.keys(ticketInfo[ticketType].perks).length > 0 && (
-                            <p className={styles.ticketPerksTitle}>Ticket Perks</p>
-                          )}
-                          <div className={styles.ticketPerks}>
-                            <ul className={styles.perkList}>
-                              {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
-                                <li key={perk} className={styles.perk}>
-                                  {perk}: {ticketInfo[ticketType].perks[perk]}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
+                        <p className={styles.cardText}>{eventData.event_name.toUpperCase()}</p>
                       </div>
                     ))}
                   </motion.div>
