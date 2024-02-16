@@ -1,4 +1,3 @@
-import { NavigateFunction } from 'react-router';
 import { publicGateway } from '../../../../../services/apiGateway';
 import { makeMyPass } from '../../../../../services/urls';
 import { submitForm } from '../../../../apis/publicpage';

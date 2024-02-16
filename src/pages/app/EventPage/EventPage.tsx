@@ -23,7 +23,6 @@ import { showRazorpay } from './components/Razorpay';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { FormData, FormField } from '../../../apis/types';
 import { customStyles, discountedTicketPrice, getIcon } from './constants';
-import { useNavigate } from 'react-router-dom';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -34,8 +33,6 @@ const EventPage = () => {
   const [eventData, setEventData] = useState<any>({});
   const [formErrors, setFormErrors] = useState<any>({});
   const [eventId, setEventId] = useState<string>('');
-
-  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<FormData>({});
   const [amount, setAmount] = useState<string>('');
