@@ -205,7 +205,11 @@ const EventPage = () => {
                   </div>
                   <div className={styles.formFields}>
                     {formFields?.map((field: any) => {
-                      if (field.type === 'text') {
+                      if (
+                        field.type === 'text' ||
+                        field.type === 'email' ||
+                        field.type === 'phonenumber'
+                      ) {
                         return (
                           <InputFIeld
                             name={field.field_key}
@@ -540,7 +544,7 @@ const EventPage = () => {
                           setFormErrors,
                           setSuccess,
                           setFormNumber,
-                          setFormData
+                          setFormData,
                         );
                       }
                     }
