@@ -3,7 +3,6 @@ import { makeMyPass } from '../../../../../services/urls';
 import { submitForm } from '../../../../apis/publicpage';
 
 export const showRazorpay = async (
-  name: string,
   ticketId: string,
   formData: any,
   setFormErrors: any,
@@ -33,7 +32,7 @@ export const showRazorpay = async (
     key_id: import.meta.env.VITE_APP_PUBLIC_KEY,
     amount: paymentAmount,
     currency: 'INR',
-    name: name,
+    name: 'MakeMyPass',
     description: 'Event Registration',
     image: '/maskable.png',
     order_id: paymentId,

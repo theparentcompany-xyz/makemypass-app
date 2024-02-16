@@ -33,6 +33,13 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
         {icon}
         <input
           {...inputProps}
+          type={
+            inputProps.type === 'phonenumber'
+              ? 'number'
+              : '' || inputProps.type === 'email'
+                ? 'email'
+                : 'text'
+          }
           placeholder={`Enter Your ${inputProps.placeholder}`}
           ref={ref}
           style={{
