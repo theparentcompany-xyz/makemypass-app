@@ -3,7 +3,6 @@ import Theme from '../../../components/Theme/Theme';
 import { FiClock } from 'react-icons/fi';
 import { IoLocationOutline } from 'react-icons/io5';
 import InputFIeld from '../../auth/Login/InputFIeld';
-import { GoPerson } from 'react-icons/go';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
