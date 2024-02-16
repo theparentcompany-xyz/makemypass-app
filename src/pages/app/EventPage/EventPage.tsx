@@ -23,7 +23,7 @@ import Select from 'react-select';
 import { showRazorpay } from './components/Razorpay';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { FormData, FormField } from '../../../apis/types';
-import { customStyles } from './constants';
+import { customStyles, getIcon } from './constants';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -174,14 +174,7 @@ const EventPage = () => {
                             }
                             error={formErrors[field.field_key]}
                             type={field.type}
-                            icon={
-                              <GoPerson
-                                size={20}
-                                style={{
-                                  color: '#9E9E9E',
-                                }}
-                              />
-                            }
+                            icon={getIcon(field.field_key)}
                             required={field.required}
                           />
                         );
@@ -306,14 +299,7 @@ const EventPage = () => {
                               onFieldChange(field.field_key, e.target.value)
                             }
                             type='text'
-                            icon={
-                              <GoPerson
-                                size={20}
-                                style={{
-                                  color: '#9E9E9E',
-                                }}
-                              />
-                            }
+                            icon={getIcon(field.field_key)}
                             required={field.required}
                             description={field.description}
                             style={{
@@ -351,7 +337,14 @@ const EventPage = () => {
                           <div>
                             <SecondaryButton
                               onClick={() => {
-                                applyCoupon(eventId, formData[field.field_key], setDiscount);
+                                if (formData[field.field_key])
+                                  applyCoupon(eventId, formData[field.field_key], setDiscount);
+                                else {
+                                  setFormErrors({
+                                    ...formErrors,
+                                    [field.field_key]: 'Please enter a valid coupon code',
+                                  });
+                                }
                               }}
                               buttonText='Validate Code'
                             />
