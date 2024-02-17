@@ -52,7 +52,7 @@ const Events = () => {
   };
 
   useEffect(() => {
-    const eventName = localStorage.getItem('eventName') || '';
+    const eventName = JSON.parse(localStorage.getItem('eventData')!)?.event_name || '';
     console.log(eventName);
     if (eventData.role === 'Admin') {
       navigate(`/${eventName.toLowerCase()}/overview/`);
