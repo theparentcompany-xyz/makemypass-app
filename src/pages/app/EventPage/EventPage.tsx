@@ -365,7 +365,7 @@ const EventPage = () => {
                                   : '2px solid #2A3533',
                             }}
                           />
-                          {discount.discount_type && discount.discount_value > 0 && (
+                          {discount.discount_type && discount.discount_value > 0 ? (
                             <p
                               style={{
                                 marginTop: '-1.75rem',
@@ -376,6 +376,18 @@ const EventPage = () => {
                                 ? `${discount.discount_value}% discount applied`
                                 : `${discount.discount_value} ${ticketInfo[Object.keys(ticketInfo)[0]].currency} discount applied`}
                             </p>
+                          ) : (
+                            discount.discount_type &&
+                            discount.discount_value === 0 && (
+                              <p
+                                style={{
+                                  marginTop: '-1.75rem',
+                                }}
+                                className={styles.errorText}
+                              >
+                                Invalid Coupon Code, Please enter a valid coupon code.
+                              </p>
+                            )
                           )}
 
                           <div>
