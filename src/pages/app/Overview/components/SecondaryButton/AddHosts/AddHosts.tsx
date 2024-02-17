@@ -79,7 +79,7 @@ const AddHosts = ({
         </div>
         <div className={styles.dropdownContainer}>
           <div className={styles.dropdown}>
-            <p className={styles.inputLabel}>District</p>
+            <p className={styles.inputLabel}>Select Role</p>
             <Select
               className='basic-single'
               classNamePrefix='select'

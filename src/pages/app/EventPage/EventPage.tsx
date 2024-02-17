@@ -39,7 +39,7 @@ const EventPage = () => {
   const [amount, setAmount] = useState<string>('');
   const [success, setSuccess] = useState<string>('');
 
-  const [formNumber, setFormNumber] = useState<number>(0);
+  const [formNumber, setFormNumber] = useState<number>(1);
 
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
@@ -384,7 +384,8 @@ const EventPage = () => {
                                 }}
                                 className={styles.discountErrorText}
                               >
-                                No discount found for this code.
+                                {formErrors[field.field_key] ||
+                                  'Invalid Coupon, No discount found!'}
                               </p>
                             )
                           )}
