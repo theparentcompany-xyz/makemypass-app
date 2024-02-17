@@ -115,6 +115,7 @@ export const getEventDatas = async (eventId: string, setEventData?: any) => {
 
       const eventData = JSON.parse(localStorage.getItem('eventData') || '{}');
       eventData['logo'] = response.data.response['logo'];
+      console.log(eventData);
       localStorage.setItem('eventData', JSON.stringify(eventData));
     })
     .catch((error) => {

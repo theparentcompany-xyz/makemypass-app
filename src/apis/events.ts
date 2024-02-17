@@ -3,6 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Event } from './types'; // Assuming Event is the type for events
 import { NavigateFunction } from 'react-router';
+import { getEventDatas } from './publicpage';
 
 export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<Event[]>>) => {
   privateGateway
@@ -20,6 +21,7 @@ export const getEventId = async (eventName: string, navigate?: NavigateFunction)
     .get(makeMyPass.getEventId(eventName))
     .then((response) => {
       localStorage.setItem('eventData', JSON.stringify(response.data.response));
+      getEventDatas(response.data.response.event_id);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
