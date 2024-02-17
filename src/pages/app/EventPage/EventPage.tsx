@@ -39,7 +39,7 @@ const EventPage = () => {
   const [amount, setAmount] = useState<string>('');
   const [success, setSuccess] = useState<string>('');
 
-  const [formNumber, setFormNumber] = useState<number>(0);
+  const [formNumber, setFormNumber] = useState<number>(1);
 
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
@@ -365,7 +365,7 @@ const EventPage = () => {
                                   : '2px solid #2A3533',
                             }}
                           />
-                          {discount.discount_type && discount.discount_value > 0 ? (
+                          {discount.discount_type && discount.discount_value > 0 && (
                             <p
                               style={{
                                 marginTop: '-1.75rem',
@@ -376,25 +376,18 @@ const EventPage = () => {
                                 ? `${discount.discount_value}% discount applied`
                                 : `${discount.discount_value} ${ticketInfo[Object.keys(ticketInfo)[0]].currency} discount applied`}
                             </p>
-                          ) : (
-                            discount.discount_type && (
-                              <p
-                                style={{
-                                  marginTop: '-1.75rem',
-                                }}
-                                className={styles.discountErrorText}
-                              >
-                                {formErrors[field.field_key] ||
-                                  'Invalid Coupon, No discount found!'}
-                              </p>
-                            )
                           )}
 
                           <div>
                             <SecondaryButton
                               onClick={() => {
                                 if (formData[field.field_key])
-                                  applyCoupon(eventId, formData[field.field_key], setDiscount);
+                                  applyCoupon(
+                                    eventId,
+                                    formData[field.field_key],
+                                    setDiscount,
+                                    formErrors,
+                                  );
                                 else {
                                   setFormErrors({
                                     ...formErrors,
