@@ -81,6 +81,7 @@
 }
 
 .location {
+  max-width: 12rem;
   font-size: 0.85rem;
   margin-right: 1rem;
 }
