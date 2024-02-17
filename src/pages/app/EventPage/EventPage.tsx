@@ -59,6 +59,7 @@ const EventPage = () => {
         getFormFields(eventId, setFormFields);
         getEventDatas(eventId, setEventData);
         registerUpdateView(eventId);
+        getEventDatas(eventId);
       }
     }, 1000);
   }, [eventTitle, eventId]);
@@ -532,7 +533,14 @@ const EventPage = () => {
                       }
                     } else {
                       if (amount === '0')
-                        submitForm(ticketId, formData, setSuccess, setFormNumber, setFormData, setAmount);
+                        submitForm(
+                          ticketId,
+                          formData,
+                          setSuccess,
+                          setFormNumber,
+                          setFormData,
+                          setAmount,
+                        );
                       else if (formData) {
                         showRazorpay(
                           ticketId,
@@ -541,7 +549,7 @@ const EventPage = () => {
                           setSuccess,
                           setFormNumber,
                           setFormData,
-                          setAmount
+                          setAmount,
                         );
                       }
                     }

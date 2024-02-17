@@ -107,11 +107,15 @@ export const validateRsvp = async (
     });
 };
 
-export const getEventDatas = async (eventId: string, setEventData: any) => {
+export const getEventDatas = async (eventId: string, setEventData?: any) => {
   return publicGateway
     .get(makeMyPass.getEventDatas(eventId))
     .then((response) => {
-      setEventData(response.data.response);
+      if (setEventData) setEventData(response.data.response);
+
+      const eventData = JSON.parse(localStorage.getItem('eventData') || '{}');
+      eventData['logo'] = response.data.response['logo'];
+      localStorage.setItem('eventData', JSON.stringify(eventData));
     })
     .catch((error) => {
       console.log(error);

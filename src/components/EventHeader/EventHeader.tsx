@@ -11,11 +11,12 @@ const EventHeader = ({ setRole }: { setRole?: React.Dispatch<React.SetStateActio
     name: '',
   });
   const [eventId, setEventId] = useState<string>('');
+  const [eventLogo, setEventLogo] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
   useEffect(() => {
     let eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
+    setEventLogo(eventData?.logo);
     if (!eventData)
       setTimeout(() => {
         eventData = JSON.parse(localStorage.getItem('eventData') as string);
@@ -45,7 +46,7 @@ const EventHeader = ({ setRole }: { setRole?: React.Dispatch<React.SetStateActio
     <>
       <div className={styles.headerRow}>
         <p className={styles.headerText}>
-          <img className={styles.headerImage} src='/app/scale.webp' alt='' />
+          <img className={styles.headerImage} src={eventLogo} alt='' />
           {eventData?.title}
         </p>
         <div className='row'>
