@@ -103,6 +103,13 @@ export const validateRsvp = async (
   setFormNumber: React.Dispatch<React.SetStateAction<number>>,
   setFieldErrors: Dispatch<React.SetStateAction<any>>,
 ) => {
+  // Remove empty key-value pairs from formData
+  Object.keys(formData).forEach((key) => {
+    if (formData[key] === '') {
+      delete formData[key];
+    }
+  });
+
   return publicGateway
     .post(makeMyPass.validateRsvp(ticketId), formData)
     .then(() => {
