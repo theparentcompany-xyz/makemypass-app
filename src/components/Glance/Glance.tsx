@@ -99,7 +99,7 @@ const Glance = ({ tab }: { tab: string }) => {
         url: backendURL,
       }).then((ws) => {
         ws.onmessage = (event) => {
-          const category = JSON.parse(event.data).response.category;
+          const category = JSON.parse(event.data).response.bargraph;
 
           if (JSON.parse(event.data).response.total_reg) {
             setTotalGuests(Number(JSON.parse(event.data).response.total_reg));

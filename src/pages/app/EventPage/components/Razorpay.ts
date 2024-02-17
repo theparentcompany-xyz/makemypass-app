@@ -9,6 +9,7 @@ export const showRazorpay = async (
   setSuccess: React.Dispatch<React.SetStateAction<string>>,
   setFormNumber: React.Dispatch<React.SetStateAction<number>>,
   setFormData: React.Dispatch<React.SetStateAction<any>>,
+  setAmount: React.Dispatch<React.SetStateAction<string>>,
 ) => {
   const script = document.createElement('script');
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';
@@ -37,7 +38,7 @@ export const showRazorpay = async (
     image: '/maskable.png',
     order_id: paymentId,
     handler: function (response: any) {
-      submitForm(ticketId, formData, response, setSuccess, setFormNumber, setFormData);
+      submitForm(ticketId, formData, setSuccess, setFormNumber, setFormData, setAmount, response);
     },
     theme: {
       color: '#00FF82',

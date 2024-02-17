@@ -532,7 +532,7 @@ const EventPage = () => {
                       }
                     } else {
                       if (amount === '0')
-                        submitForm(ticketId, formData, '', setSuccess, setFormNumber, setFormData);
+                        submitForm(ticketId, formData, setSuccess, setFormNumber, setFormData, setAmount);
                       else if (formData) {
                         showRazorpay(
                           ticketId,
@@ -541,6 +541,7 @@ const EventPage = () => {
                           setSuccess,
                           setFormNumber,
                           setFormData,
+                          setAmount
                         );
                       }
                     }

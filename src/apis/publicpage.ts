@@ -36,10 +36,11 @@ export const getFormFields = async (
 export const submitForm = async (
   ticketId: string,
   data: FormData,
-  response?: any,
   setSuccess?: React.Dispatch<React.SetStateAction<string>>,
   setFormNumber?: React.Dispatch<React.SetStateAction<number>>,
   setFormData?: React.Dispatch<React.SetStateAction<FormData>>,
+  setAmount?: React.Dispatch<React.SetStateAction<string>>,
+  response?: any,
 ) => {
   console.log(data);
   publicGateway
@@ -54,6 +55,7 @@ export const submitForm = async (
         setSuccess && setSuccess('');
         setFormNumber && setFormNumber(0);
         setFormData && setFormData({});
+        setAmount && setAmount('');
       }, 3000);
     })
     .catch(() => {
