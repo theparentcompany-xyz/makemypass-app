@@ -30,6 +30,16 @@
   padding: 2rem;
 }
 
+@media (max-width: 550px) {
+  .viewGuestsContainer {
+    margin: 1rem;
+  }
+}
+
+.viewGuests {
+  margin-top: 1rem;
+}
+
 .topSection {
   display: flex;
   flex-direction: column;
@@ -113,4 +123,14 @@
   width: 100%;
   color: #a4a4a4;
   opacity: 0.1;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  cursor: pointer;
+  color: white;
+  font-size: 0.9rem;
+  transition: 0.3s;
 }

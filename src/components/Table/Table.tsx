@@ -29,7 +29,18 @@ const RowComponent = React.memo(
         style={style}
         className={styles.row}
       >
-        <div className={styles.rowData}>
+        <div
+          className={styles.rowData}
+          onClick={() => {
+            if (setSelectedGuestId) {
+              setSelectedGuestId((prevState: any) => ({
+                ...prevState,
+                id: item.id,
+                type: 'view',
+              }));
+            }
+          }}
+        >
           <p className={styles.rowName}>{item.name}</p>
           <p className={styles.rowEmail}>{item.email}</p>
           <p className={styles.rowEmail}>{item.phone_number}</p>

@@ -1,52 +1,68 @@
 import styles from './ViewGuest.module.css';
+import { FormData } from '../../../../../apis/types';
+import { SelectedGuest } from '../../types';
+import { Dispatch } from 'react';
+import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 
-const ViewGuest = () => {
+const ViewGuest = ({
+  formData,
+  setSelectedGuestId,
+}: {
+  formData: FormData;
+  setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
+}) => {
   return (
     <div className={styles.viewGuestsContainer}>
+      <div className={styles.closeButton}>
+        <SecondaryButton
+          buttonText='Close'
+          onClick={() => {
+            setSelectedGuestId(null);
+          }}
+        />
+      </div>
       <div className={styles.viewGuests}>
         <div className={styles.topSection}>
           <div className={styles.row}>
             <div className={styles.tsTexts}>
-              <p className={styles.name}>Drijusha TK</p>
-              <p className={styles.emailAddress}>kmwcs007drijusha@gmail.com</p>
+              <p className={styles.name}>{formData['name']}</p>
+              <p className={styles.emailAddress}>{formData['email']}</p>
             </div>
             <div className={styles.type}>Students</div>
           </div>
           <div className={styles.tsRow2}>
             <div className={styles.field}>
               <p className={styles.fieldLabel}>Registered</p>
-              <p className={styles.fieldData}>14 Aug, 20:59F</p>
+              <p className={styles.fieldData}>{formData['registered_at']}</p>
             </div>
-            <div className={styles.field}>
-              <p className={styles.fieldLabel}>Checked In</p>
-              <p className={styles.fieldData}>14 Aug, 20:59F</p>
-            </div>
+            {formData['check_in_date'] && (
+              <div className={styles.field}>
+                <p className={styles.fieldLabel}>Checked In</p>
+                <p className={styles.fieldData}>{formData['check_in_date']}</p>
+              </div>
+            )}
           </div>
         </div>
         <hr className={styles.line} />
         <div className={styles.bottomSection}>
-          <div className={styles.field}>
-            <p className={styles.fieldLabel}>Phone Number</p>
-            <p className={styles.fieldData}>+91 1234567890</p>
-          </div>
-          <div className={styles.field}>
-            <p className={styles.fieldLabel}>Organization</p>
-            <p className={styles.fieldData}>Mar Baselios College of Engineering, Kerala, India</p>
-          </div>
-          <div className={styles.field}>
-            <p className={styles.fieldLabel}>Profession</p>
-            <p className={styles.fieldData}>Student</p>
-          </div>
-          <div className={styles.field}>
-            <p className={styles.fieldLabel}>What do you expect from in50</p>
-            <p className={styles.fieldData}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus reiciendis excepturi,
-              nobis ipsum iusto amet magnam, quam expedita commodi perferendis hic aperiam dolores
-              beatae animi odit, facere ipsa ea. Ad inventore delectus modi. Vitae, alias impedit?
-              Consequatur aliquam culpa maiores dolores. Dicta recusandae soluta iure non nostrum
-              esse culpa similique.
-            </p>
-          </div>
+          {Object.keys(formData).map((key: string) => {
+            if (
+              key !== 'name' &&
+              key !== 'email' &&
+              key !== 'registered_at' &&
+              key !== 'check_in_date'
+            ) {
+              return (
+                <div className={styles.field} key={key}>
+                  <p className={styles.fieldLabel}>{key.charAt(0).toUpperCase() + key.slice(1)}</p>
+                  <p className={styles.fieldData}>
+                    {key === 'amount' && Number(formData[key]) <= 0 ? 'Free' : formData[key]}
+                  </p>
+                </div>
+              );
+            }
+            return null;
+          })}
         </div>
       </div>
     </div>

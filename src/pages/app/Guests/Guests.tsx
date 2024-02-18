@@ -98,7 +98,8 @@ const Guests = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedGuestId?.id && selectedGuestId.type === 'edit') getGuestData();
+    if (selectedGuestId?.id && (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view'))
+      getGuestData();
     else if (selectedGuestId?.id && selectedGuestId.type === 'download')
       downloadTicket(eventId, selectedGuestId?.id);
   }, [selectedGuestId]);
@@ -146,7 +147,11 @@ const Guests = () => {
 
   return (
     <Theme>
-      <ViewGuest />
+      {selectedGuestId && formData && selectedGuestId.id && (
+        <>
+          <ViewGuest formData={formData} setSelectedGuestId={setSelectedGuestId} />
+        </>
+      )}
       {guests && guests.length > 0 ? (
         <>
           {resentTicket && resentTicket.status && (
