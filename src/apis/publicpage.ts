@@ -77,8 +77,7 @@ export const applyCoupon = async (
       setDiscount(response.data.response);
     })
     .catch((error) => {
-      console.log(error.response.data.message.general[0].coupon_code[0]);
-      formErrors['coupon_code'] = error.response.data.message.general[0].coupon_code[0];
+      formErrors['coupon_code'] = error.response.data.message.coupon_code[0];
       setDiscount({
         discount_value: 0,
         discount_type: 'error',
