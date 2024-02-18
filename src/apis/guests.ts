@@ -30,21 +30,12 @@ export const resentEventTicket = async (
 
 export const editSubmissons = async (
   eventId: string,
-  data: GuestsType | null,
+  data: any,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
 ) => {
-  const dataToSent = {
-    name: data?.name,
-    email: data?.email,
-    phone_number: data?.phone_number,
-    district: data?.district,
-    category: data?.category,
-    organization: data?.organization,
-  };
-
   if (data)
     privateGateway
-      .put(makeMyPass.editSubmission(eventId, data.id), dataToSent)
+      .put(makeMyPass.editSubmission(eventId, data.id), data)
       .then((response) => {
         toast.success(response.data.message.general[0] || 'Submission edited successfully');
         setSelectedGuestId(null);

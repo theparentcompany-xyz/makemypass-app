@@ -1,0 +1,31 @@
+.textarea {
+  margin-top: 0.25rem;
+  border-radius: 8px;
+  border: none;
+  padding: 0.75rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  width: 95%;
+  display: flex;
+  font-family: 'Inter', sans-serif;
+  color: white;
+}
+
+.textarea:focus {
+  border: none;
+  outline: none;
+}
+
+.formLabel {
+  text-align: left;
+  color: #a4a4a4;
+  font-size: 0.875rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+}
+
+.formFields {
+  padding-right: 0.5rem;
+  overflow: auto;
+  overflow-x: hidden;
+  height: 60vh;
+}

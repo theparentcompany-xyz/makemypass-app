@@ -17,12 +17,20 @@ import { downloadTicket, editSubmissons, resentEventTicket } from '../../../apis
 
 import Select from 'react-select';
 import { categoryOptions, districtOptions } from './data';
+import { FormData, FormField } from '../../../apis/types';
+import { getFormFields } from '../../../apis/publicpage';
+import { customStyles } from '../EventPage/constants';
+import DynamicType from '../../../components/DynamicType/DynamicType';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
   const [guestsTableData, setGuestsTableData] = useState<TableType[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
+
+  const [formFields, setFormFields] = useState<FormField[]>([]);
+  const [formErrors, setFormErrors] = useState<any>({});
+  const [formData, setFormData] = useState<FormData>({});
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
@@ -53,8 +61,8 @@ const Guests = () => {
 
   const getGuestData = () => {
     const selectedGuestData = guests.filter((guest) => guest?.id === selectedGuestId?.id);
-
     setSelectedGuest(selectedGuestData[0]);
+    setFormData(selectedGuestData[0]);
   };
 
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -86,6 +94,7 @@ const Guests = () => {
   }, [eventId, selectedGuestId]);
 
   useEffect(() => {
+    getFormFields(eventId, setFormFields);
     return () => {
       socket?.close();
     };
@@ -132,8 +141,6 @@ const Guests = () => {
       const transformedData = transformTableData(guestsTableMapping, guests);
 
       setGuestsTableData(transformedData as TableType[]);
-
-      console.log(transformedData);
     }
   }, [guests]);
 
@@ -142,38 +149,23 @@ const Guests = () => {
   };
 
   const handleSubmissionEdit = () => {
-    if (selectedGuest) editSubmissons(eventId, selectedGuest, setSelectedGuestId);
+    if (selectedGuest) editSubmissons(eventId, formData, setSelectedGuestId);
   };
 
-  const customStyles = {
-    control: (provided: any) => ({
-      ...provided,
-      border: 'none',
-      backgroundColor: '#2A3533',
-      fontFamily: 'Inter, sans-serif',
-      fontStyle: 'normal',
-      fontWeight: 400,
-      fontSize: '0.9rem',
-    }),
+  const onFieldChange = (fieldName: string, fieldValue: string) => {
+    setFormData({
+      ...formData,
+      [fieldName]: fieldValue,
+    });
 
-    group: (provided: any) => ({
-      ...provided,
-      paddingTop: 0,
-    }),
-
-    singleValue: (base: any) => ({
-      ...base,
-      color: '#fff',
-    }),
-    option: (provided: any) => ({
-      ...provided,
-      fontFamily: 'Inter, sans-serif',
-      color: '#000',
-      fontStyle: 'normal',
-      fontWeight: 400,
-      fontSize: '0.9rem',
-    }),
+    if (formErrors[fieldName]) {
+      setFormErrors({
+        ...formErrors,
+        [fieldName]: '',
+      });
+    }
   };
+
   return (
     <Theme>
       {guests && guests.length > 0 ? (
@@ -219,102 +211,12 @@ const Guests = () => {
             <dialog className={styles.onClickModal}>
               <div className={styles.userInfoModalContainer}>
                 <p className={styles.modalHeader}>Edit Guest</p>
-                <div className={styles.inputContainers}>
-                  <div className={styles.inputContainer}>
-                    <p className={styles.inputLabel}>Name</p>
-                    <input
-                      value={selectedGuest?.name}
-                      className={styles.input}
-                      type='text'
-                      onChange={(event) => {
-                        setSelectedGuest((prevState) => ({
-                          ...prevState!,
-                          name: event.target.value,
-                        }));
-                      }}
-                    />
-                  </div>
-                  <div className={styles.inputContainer}>
-                    <p className={styles.inputLabel}>Email</p>
-                    <input
-                      value={selectedGuest?.email}
-                      className={styles.input}
-                      type='text'
-                      onChange={(event) => {
-                        setSelectedGuest((prevState) => ({
-                          ...prevState!,
-                          email: event.target.value,
-                        }));
-                      }}
-                    />
-                  </div>
-                  <div className={styles.inputContainer}>
-                    <p className={styles.inputLabel}>Organization</p>
-                    <input
-                      value={selectedGuest?.organization}
-                      className={styles.input}
-                      type='text'
-                      onChange={(event) => {
-                        setSelectedGuest((prevState) => ({
-                          ...prevState!,
-                          organization: event.target.value,
-                        }));
-                      }}
-                    />
-                  </div>
-                  <div className={styles.inputContainer}>
-                    <p className={styles.inputLabel}>Phone Number</p>
-                    <input
-                      value={selectedGuest?.phone_number}
-                      className={styles.input}
-                      type='text'
-                      onChange={(event) => {
-                        setSelectedGuest((prevState) => ({
-                          ...prevState!,
-                          phone_number: event?.target.value || '',
-                        }));
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className={styles.dropdownContainer}>
-                  <div className={styles.dropdown}>
-                    <p className={styles.inputLabel}>District</p>
-                    <Select
-                      className='basic-single'
-                      classNamePrefix='select'
-                      value={
-                        districtOptions.filter(
-                          (district) => district.value === selectedGuest?.district,
-                        )[0]
-                      }
-                      onChange={(event) => {
-                        handleDistrictChange(event);
-                      }}
-                      name='district'
-                      options={districtOptions}
-                      styles={customStyles}
-                    />
-                  </div>
-                  <div className={styles.dropdown}>
-                    <p className={styles.inputLabel}>Category</p>
-                    <Select
-                      className='basic-single'
-                      classNamePrefix='select'
-                      value={
-                        categoryOptions.filter(
-                          (category) => category.value === selectedGuest?.category,
-                        )[0]
-                      }
-                      onChange={(event) => {
-                        handleCategoryChange(event);
-                      }}
-                      name='district'
-                      options={categoryOptions}
-                      styles={customStyles}
-                    />
-                  </div>
-                </div>
+                <DynamicType
+                  formFields={formFields}
+                  formErrors={formErrors}
+                  formData={formData}
+                  onFieldChange={onFieldChange}
+                />
 
                 <div className={styles.buttons}>
                   <p
