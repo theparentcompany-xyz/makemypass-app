@@ -17,6 +17,7 @@ import { downloadTicket, editSubmissons, resentEventTicket } from '../../../apis
 import { FormData, FormField } from '../../../apis/types';
 import { getFormFields } from '../../../apis/publicpage';
 import DynamicType from '../../../components/DynamicType/DynamicType';
+import ViewGuest from './components/ViewGuest/ViewGuest';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -145,6 +146,7 @@ const Guests = () => {
 
   return (
     <Theme>
+      <ViewGuest />
       {guests && guests.length > 0 ? (
         <>
           {resentTicket && resentTicket.status && (
