@@ -25,6 +25,7 @@
 }
 
 .formFields {
+  width: 100%;
   overflow: auto;
   overflow-x: hidden;
   margin-top: 2rem;
