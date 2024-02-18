@@ -111,12 +111,13 @@ const Guests = () => {
       registered_at: 'date',
       check_in_date: 'check_in_date',
       phone_number: 'phone_number',
+      amount: 'amount',
     };
 
     if (guests) {
       const transformedData = transformTableData(guestsTableMapping, guests);
 
-      setGuestsTableData(transformedData as TableType[]);
+      setGuestsTableData(transformedData as unknown as TableType[]);
     }
   }, [guests]);
 

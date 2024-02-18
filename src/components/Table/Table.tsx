@@ -6,7 +6,7 @@ import { BsTicketPerforatedFill } from 'react-icons/bs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { FixedSizeList } from 'react-window';
-import { FaCheck } from 'react-icons/fa6';
+import { FaCheck, FaDollarSign } from 'react-icons/fa6';
 import { MdDownload } from 'react-icons/md';
 import { hostId } from '../../pages/app/Overview/Overview/types';
 
@@ -86,6 +86,9 @@ const RowComponent = React.memo(
                   }}
                   color='#8E8E8E'
                 />
+              </div>
+              <div className={styles.icon}>
+                <FaDollarSign color={item.amount > 0 ? '#47c97' : '#8E8E8'} />
               </div>
             </>
           )}
