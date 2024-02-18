@@ -88,7 +88,7 @@ const RowComponent = React.memo(
                 />
               </div>
               <div className={styles.icon}>
-                <FaDollarSign color={item.amount > 0 ? '#47c97' : '#8E8E8'} />
+                <FaDollarSign color={item.amount > 0 ? '#47c97e' : '#8E8E8'} />
               </div>
             </>
           )}
