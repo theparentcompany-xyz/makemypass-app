@@ -122,6 +122,10 @@
   margin-top: 1rem;
 }
 
+.event {
+  margin: 1rem;
+}
+
 @media (max-width: 720px) {
   .slider {
     display: none;

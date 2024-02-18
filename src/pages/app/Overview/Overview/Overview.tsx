@@ -227,7 +227,7 @@ const Overview = () => {
             <Glance tab='overview' />
 
             <div className={styles.buttons}>
-              <Link to='/scaleup/guests'>
+              <Link to={`/${eventTitle}/guests`}>
                 <SectionButton
                   buttonText='Guest List'
                   buttonColor='#7662FC'
@@ -243,7 +243,7 @@ const Overview = () => {
                 />
               </a>
 
-              <Link to='/scaleup/checkins'>
+              <Link to={`/${eventTitle}/checkins`}>
                 <SectionButton
                   buttonText='Check In'
                   buttonColor='#5B75FB'

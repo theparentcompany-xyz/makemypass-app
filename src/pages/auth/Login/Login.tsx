@@ -82,19 +82,12 @@ const Login = () => {
                     {isRegistered ? 'Hola, to MakeMyPass' : 'Register to MakeMyPass'}
                   </p>
                   {isRegistered ? (
-                    <p className={styles.formText}>
-                      Sign In now to make your
-                      <br />
-                      event Aweasome!
-                    </p>
+                    <p className={styles.formText}>Sign In now to make your event Awesome!</p>
                   ) : (
-                    <p className={styles.formText}>
-                      Register now to make your
-                      <br />
-                      event Aweasome!
-                    </p>
+                    <p className={styles.formText}>Register now to make your event Awesome!</p>
                   )}
                 </div>
+                <br />
                 <InputFIeld
                   ref={emailRef}
                   type='email'

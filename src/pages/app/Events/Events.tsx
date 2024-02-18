@@ -89,14 +89,14 @@ const Events = () => {
                     <p className={styles.day}>{event.day}</p>
                   </motion.div>
 
-                  <motion.img
+                  {/* <motion.img
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     className={styles.slider}
                     src='/app/slider.webp'
                     alt=''
-                  />
+                  /> */}
                   <div>
                     <motion.div
                       initial={{ opacity: 0, y: 50 }}

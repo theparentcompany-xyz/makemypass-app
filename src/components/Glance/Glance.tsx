@@ -5,6 +5,7 @@ import { makeMyPassSocket } from '../../../services/urls';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getEventData, getEventId } from '../../apis/events';
 import { motion } from 'framer-motion';
+import { formatDate } from '../../common/commonFunctions';
 
 const Glance = ({ tab }: { tab: string }) => {
   const [eventData, setEventData] = useState({
@@ -28,6 +29,7 @@ const Glance = ({ tab }: { tab: string }) => {
   const [totalGuests, setTotalGuests] = useState<number>(0);
   const [targetGuests, setTargetGuests] = useState<number>(0);
   const [todayCheckIns, setTodayCheckIns] = useState<number>(0);
+  const [lastRegistered, setLastRegistered] = useState<string>('');
 
   const [firstRender, setFirstRender] = useState<boolean>(true);
 
@@ -109,6 +111,8 @@ const Glance = ({ tab }: { tab: string }) => {
             setTargetGuests(Number(JSON.parse(event.data).response.total_registration));
             setTodayCheckIns(Number(JSON.parse(event.data).response.today_checkin));
           }
+
+          setLastRegistered(JSON.parse(event.data).response.last_registered_at);
 
           const newStrucure: progressDataType = [];
           const colors = ['#47C97E', '#7662FC', '#C33D7B', '#FBD85B', '#5B75FB', '#D2D4D7'];
@@ -243,7 +247,7 @@ const Glance = ({ tab }: { tab: string }) => {
                 className={styles.lastUpdated}
               >
                 Last {tab === 'checkins' || tab === 'inevent' ? 'Check-In' : 'Registered'}: Today,{' '}
-                {lastUpdated}
+                {formatDate(lastRegistered)}
               </motion.p>
             </div>
 
