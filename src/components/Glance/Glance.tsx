@@ -246,7 +246,7 @@ const Glance = ({ tab }: { tab: string }) => {
                 animate={{ opacity: 1 }}
                 className={styles.lastUpdated}
               >
-                Last {tab === 'checkins' || tab === 'inevent' ? 'Check-In' : 'Registered'}: Today,{' '}
+                Last {tab === 'checkins' || tab === 'inevent' ? 'Check-In' : 'Registered'}:
                 {formatDate(lastRegistered)}
               </motion.p>
             </div>
