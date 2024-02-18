@@ -25,7 +25,6 @@ const Glance = ({ tab }: { tab: string }) => {
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [progressData, setprogressData] = useState<progressDataType>([]);
-  const [lastUpdated, setLastUpdated] = useState<string>('');
   const [totalGuests, setTotalGuests] = useState<number>(0);
   const [targetGuests, setTargetGuests] = useState<number>(0);
   const [todayCheckIns, setTodayCheckIns] = useState<number>(0);
@@ -126,14 +125,6 @@ const Glance = ({ tab }: { tab: string }) => {
           }
 
           setprogressData(newStrucure);
-
-          let currentDate = new Date();
-          let formattedTime = currentDate.toLocaleTimeString('en-US', {
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true,
-          });
-          setLastUpdated(formattedTime);
         };
 
         setSocket(ws);
@@ -246,7 +237,7 @@ const Glance = ({ tab }: { tab: string }) => {
                 animate={{ opacity: 1 }}
                 className={styles.lastUpdated}
               >
-                Last {tab === 'checkins' || tab === 'inevent' ? 'Check-In' : 'Registered'}:
+                Last {tab === 'checkins' || tab === 'inevent' ? 'Check-In' : 'Registered'}:&nbsp;
                 {formatDate(lastRegistered)}
               </motion.p>
             </div>

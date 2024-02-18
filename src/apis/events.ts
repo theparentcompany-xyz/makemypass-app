@@ -23,7 +23,7 @@ export const getEventId = async (eventName: string, navigate?: NavigateFunction)
       localStorage.setItem('eventData', JSON.stringify(response.data.response));
       getEventDatas(response.data.response.event_id);
     })
-    .catch((error) => {KW
+    .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
       navigate && navigate('/404');
     });
