@@ -14,12 +14,8 @@ import Table from '../../../components/Table/Table';
 import { transformTableData } from '../../../common/commonFunctions';
 import { TableType } from '../../../components/Table/types';
 import { downloadTicket, editSubmissons, resentEventTicket } from '../../../apis/guests';
-
-import Select from 'react-select';
-import { categoryOptions, districtOptions } from './data';
 import { FormData, FormField } from '../../../apis/types';
 import { getFormFields } from '../../../apis/publicpage';
-import { customStyles } from '../EventPage/constants';
 import DynamicType from '../../../components/DynamicType/DynamicType';
 
 const Guests = () => {
@@ -105,26 +101,6 @@ const Guests = () => {
     else if (selectedGuestId?.id && selectedGuestId.type === 'download')
       downloadTicket(eventId, selectedGuestId?.id);
   }, [selectedGuestId]);
-
-  const handleDistrictChange = (event: any) => {
-    const selectedDistrict = event.value;
-
-    setSelectedGuest((prevState) => ({
-      ...prevState!,
-      district: selectedDistrict,
-      id: prevState?.id ?? '',
-    }));
-  };
-
-  const handleCategoryChange = (event: any) => {
-    const selectedCategory = event.value;
-
-    setSelectedGuest((prevState) => ({
-      ...prevState!,
-      category: selectedCategory,
-      id: prevState?.id ?? '',
-    }));
-  };
 
   useEffect(() => {
     const guestsTableMapping = {

@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { GuestsType, ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
+import { ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
 
 export const resentEventTicket = async (

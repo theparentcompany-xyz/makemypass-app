@@ -17,13 +17,11 @@ import {
   validateRsvp,
 } from '../../../apis/publicpage';
 import { DiscountData, TicketOptions } from './types';
-import { AnimatePresence, motion } from 'framer-motion';
-
-import Select from 'react-select';
+import { motion } from 'framer-motion';
 import { showRazorpay } from './components/Razorpay';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { FormData, FormField } from '../../../apis/types';
-import { customStyles, discountedTicketPrice, getIcon } from './constants';
+import { discountedTicketPrice, getIcon } from './constants';
 import DynamicType from '../../../components/DynamicType/DynamicType';
 
 const EventPage = () => {
