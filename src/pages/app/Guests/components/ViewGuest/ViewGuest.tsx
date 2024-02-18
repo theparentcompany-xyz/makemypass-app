@@ -1,13 +1,15 @@
 import styles from './ViewGuest.module.css';
-import { FormData } from '../../../../../apis/types';
+import { FormData, FormField } from '../../../../../apis/types';
 import { SelectedGuest } from '../../types';
 import { Dispatch } from 'react';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 
 const ViewGuest = ({
+  formFields,
   formData,
   setSelectedGuestId,
 }: {
+  formFields: FormField[];
   formData: FormData;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
 }) => {
@@ -54,7 +56,11 @@ const ViewGuest = ({
             ) {
               return (
                 <div className={styles.field} key={key}>
-                  <p className={styles.fieldLabel}>{key.charAt(0).toUpperCase() + key.slice(1)}</p>
+                  <p className={styles.fieldLabel}>
+                    {key === 'amount'
+                      ? 'Amount'
+                      : formFields.find((field) => field.field_key === key)?.title}
+                  </p>
                   <p className={styles.fieldData}>
                     {key === 'amount' && Number(formData[key]) <= 0 ? 'Free' : formData[key]}
                   </p>

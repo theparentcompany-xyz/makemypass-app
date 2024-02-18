@@ -149,7 +149,11 @@ const Guests = () => {
     <Theme>
       {selectedGuestId && formData && selectedGuestId.id && (
         <>
-          <ViewGuest formData={formData} setSelectedGuestId={setSelectedGuestId} />
+          <ViewGuest
+            formFields={formFields}
+            formData={formData}
+            setSelectedGuestId={setSelectedGuestId}
+          />
         </>
       )}
       {guests && guests.length > 0 ? (
