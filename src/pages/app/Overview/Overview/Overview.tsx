@@ -126,7 +126,7 @@ const Overview = () => {
     };
     if (hostList) {
       const transformedHostList = transformTableData(hostListMapping, hostList);
-      setHostListTableData(transformedHostList as TableType[]);
+      setHostListTableData(transformedHostList as unknown as TableType[]);
     }
   }, [hostList]);
 
