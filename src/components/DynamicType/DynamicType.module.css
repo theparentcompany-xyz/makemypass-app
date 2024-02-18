@@ -21,12 +21,13 @@
   font-size: 0.875rem;
   font-weight: 400;
   font-family: 'Inter', sans-serif;
+  margin-bottom: 0.5rem;
 }
 
 .formFields {
-  padding-right: 0.5rem;
   overflow: auto;
   overflow-x: hidden;
+  margin-top: 2rem;
   height: 60vh;
 }
 
