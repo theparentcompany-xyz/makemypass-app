@@ -113,7 +113,7 @@ const Overview = () => {
         recentTableMapping,
         recentRegistrations,
       );
-      setRecentTableData(transformedRecentRegistrations as TableType[]);
+      setRecentTableData(transformedRecentRegistrations as unknown as TableType[]);
     }
   }, [recentRegistrations]);
 
