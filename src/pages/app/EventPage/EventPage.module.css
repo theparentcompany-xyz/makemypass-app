@@ -524,3 +524,15 @@
     color: #47c97e;
   }
 }
+
+.privateEventText {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #bbbaba;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  max-width: 30rem;
+  margin-top: 1rem;
+}
