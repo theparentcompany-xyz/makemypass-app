@@ -64,6 +64,7 @@
   font-weight: 400;
   font-size: 0.9rem;
   margin-left: 0.25rem;
+  white-space: nowrap;
 }
 
 .rowEmail {
