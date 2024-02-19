@@ -48,19 +48,17 @@ const ViewGuest = ({
         <hr className={styles.line} />
         <div className={styles.bottomSection}>
           {Object.keys(formData).map((key: string) => {
+            let fieldName = formFields.find((field) => field.field_key === key)?.title;
             if (
               key !== 'name' &&
               key !== 'email' &&
               key !== 'registered_at' &&
-              key !== 'check_in_date'
+              key !== 'check_in_date' &&
+              fieldName
             ) {
               return (
                 <div className={styles.field} key={key}>
-                  <p className={styles.fieldLabel}>
-                    {key === 'amount'
-                      ? 'Amount'
-                      : formFields.find((field) => field.field_key === key)?.title}
-                  </p>
+                  <p className={styles.fieldLabel}>{key === 'amount' ? 'Amount' : fieldName}</p>
                   <p className={styles.fieldData}>
                     {key === 'amount' && Number(formData[key]) <= 0 ? 'Free' : formData[key]}
                   </p>

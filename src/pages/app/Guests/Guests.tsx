@@ -147,7 +147,7 @@ const Guests = () => {
 
   return (
     <Theme>
-      {selectedGuestId && formData && selectedGuestId.id && (
+      {selectedGuestId && formData && selectedGuestId.id && selectedGuestId.type == 'view' && (
         <>
           <ViewGuest
             formFields={formFields}
