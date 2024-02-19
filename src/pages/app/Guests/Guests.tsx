@@ -15,9 +15,12 @@ import { transformTableData } from '../../../common/commonFunctions';
 import { TableType } from '../../../components/Table/types';
 import { downloadTicket, editSubmissons, resentEventTicket } from '../../../apis/guests';
 import { FormData, FormField } from '../../../apis/types';
-import { getFormFields } from '../../../apis/publicpage';
+import { getFormFields, getTickets } from '../../../apis/publicpage';
 import DynamicType from '../../../components/DynamicType/DynamicType';
 import ViewGuest from './components/ViewGuest/ViewGuest';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import { TicketOptions } from '../EventPage/types';
+import { addGuest } from '../../../apis/guest';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -28,6 +31,8 @@ const Guests = () => {
   const [formFields, setFormFields] = useState<FormField[]>([]);
   const [formErrors, setFormErrors] = useState<any>({});
   const [formData, setFormData] = useState<FormData>({});
+  const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
+  const [ticketId, setTicketId] = useState<string>('');
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
@@ -92,6 +97,7 @@ const Guests = () => {
 
   useEffect(() => {
     getFormFields(eventId, setFormFields);
+    getTickets(eventId, setTicketInfo);
     return () => {
       socket?.close();
     };
@@ -128,7 +134,7 @@ const Guests = () => {
   };
 
   const handleSubmissionEdit = () => {
-    if (selectedGuest) editSubmissons(eventId, formData, setSelectedGuestId);
+    if (selectedGuest) editSubmissons(eventId, formData, setSelectedGuestId, setFormData);
   };
 
   const onFieldChange = (fieldName: string, fieldValue: string) => {
@@ -188,6 +194,11 @@ const Guests = () => {
                       ...prevState,
                       status: false,
                     }));
+                    setFormData({});
+                    setSelectedGuestId({
+                      id: '',
+                      type: '',
+                    });
                   }}
                   className={styles.button}
                 >
@@ -196,7 +207,7 @@ const Guests = () => {
               </div>
             </dialog>
           )}
-          {selectedGuestId && selectedGuestId.id.length > 0 && selectedGuestId.type === 'edit' && (
+          {selectedGuestId && selectedGuestId.type === 'edit' && (
             <dialog className={styles.onClickModal}>
               <div className={styles.userInfoModalContainer}>
                 <p className={styles.modalHeader}>Edit Guest</p>
@@ -215,6 +226,44 @@ const Guests = () => {
                     className={styles.button}
                   >
                     Edit
+                  </p>
+                  <p
+                    onClick={() => {
+                      setSelectedGuestId({
+                        id: '',
+                        type: '',
+                      });
+                    }}
+                    className={styles.button}
+                  >
+                    Cancel
+                  </p>
+                </div>
+              </div>
+            </dialog>
+          )}
+          {selectedGuestId && selectedGuestId.type === 'add' && (
+            <dialog className={styles.onClickModal}>
+              <div className={styles.userInfoModalContainer}>
+                <p className={styles.modalHeader}>Add Guest</p>
+                <DynamicType
+                  formFields={formFields}
+                  formErrors={formErrors}
+                  formData={formData}
+                  onFieldChange={onFieldChange}
+                  ticketInfo={ticketInfo}
+                  setTicketId={setTicketId}
+                  ticketId={ticketId}
+                />
+
+                <div className={styles.buttons}>
+                  <p
+                    onClick={() => {
+                      addGuest(eventId, ticketId, formData, setFormErrors);
+                    }}
+                    className={styles.button}
+                  >
+                    Add
                   </p>
                   <p
                     onClick={() => {
@@ -260,6 +309,18 @@ const Guests = () => {
                 search={searchKeyword}
                 setResentTicket={setResentTicket}
                 setSelectedGuestId={setSelectedGuestId}
+                secondaryButton={
+                  <SecondaryButton
+                    buttonText='Add Guests +'
+                    onClick={() => {
+                      setSelectedGuestId({
+                        id: '',
+                        type: 'add',
+                      });
+                      setFormData({});
+                    }}
+                  />
+                }
               />
             </div>
           </div>

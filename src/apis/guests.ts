@@ -32,6 +32,7 @@ export const editSubmissons = async (
   eventId: string,
   data: any,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
+  setFormData: Dispatch<React.SetStateAction<any>>,
 ) => {
   if (data)
     privateGateway
@@ -39,6 +40,7 @@ export const editSubmissons = async (
       .then((response) => {
         toast.success(response.data.message.general[0] || 'Submission edited successfully');
         setSelectedGuestId(null);
+        setFormData({});
       })
       .catch((error) => {
         toast.error(error.response.data.message.general[0] || 'Something went wrong');

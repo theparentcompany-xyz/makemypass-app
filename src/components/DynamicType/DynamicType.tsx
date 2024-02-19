@@ -1,5 +1,7 @@
+import { Dispatch } from 'react';
 import { FormData, FormField } from '../../apis/types';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
+import { TicketOptions } from '../../pages/app/EventPage/types';
 import InputFIeld from '../../pages/auth/Login/InputFIeld';
 import styles from './DynamicType.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,15 +12,57 @@ const DynamicType = ({
   formErrors,
   formData,
   onFieldChange,
+  ticketInfo,
+  setTicketId,
+  ticketId,
 }: {
   formFields: FormField[];
   formErrors: any;
   formData: FormData;
   onFieldChange: (fieldName: string, fieldValue: string) => void;
+  ticketInfo?: TicketOptions;
+  setTicketId?: Dispatch<React.SetStateAction<string>>;
+  ticketId?: string;
 }) => {
   return (
     <>
       <div className={styles.formFields}>
+        {ticketInfo && (
+          <div
+            style={{
+              marginBottom: '1rem',
+            }}
+          >
+            <p className={styles.formLabel}>Ticket Type</p>
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className={styles.dropdown}
+            >
+              <Select
+                options={Object.keys(ticketInfo).map((key) => ({
+                  value: ticketInfo[key].id,
+                  label: key,
+                }))}
+                styles={customStyles}
+                onChange={(selectedOption: any) => setTicketId && setTicketId(selectedOption.value)}
+                value={
+                  ticketInfo &&
+                  Object.keys(ticketInfo)
+                    .map((key) => ({
+                      value: ticketInfo[key].id,
+                      label: key,
+                    }))
+                    .filter((option: any) => option.value === ticketId)
+                }
+                placeholder={`Select an option`}
+                isSearchable={false}
+              />
+            </motion.div>
+          </div>
+        )}
         {formFields?.map((field: any) => {
           if (field.type === 'text' || field.type === 'email' || field.type === 'phonenumber') {
             return (
