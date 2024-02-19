@@ -153,6 +153,7 @@ const Guests = () => {
             formFields={formFields}
             formData={formData}
             setSelectedGuestId={setSelectedGuestId}
+            eventId={eventId}
           />
         </>
       )}

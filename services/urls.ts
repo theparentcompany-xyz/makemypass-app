@@ -54,6 +54,12 @@ export const makeMyPass = {
   registerUpdateView: (eventId: string) => makeMyPassURL(`/register-update-view/${eventId}/`),
   validateRsvp: (ticketId: string) => makeMyPassURL(`/rsvp/validate-rsvp/${ticketId}/`),
   getEventDatas: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
+
+  sentInvite: (eventId: string, ticketId: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/sent-invite/${ticketId}`),
+
+  shortListUser: (eventId: string, userId: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/short-list-user/${userId}`),
 };
 
 export const makeMyPassSocket = {

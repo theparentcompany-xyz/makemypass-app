@@ -3,15 +3,18 @@ import { FormData, FormField } from '../../../../../apis/types';
 import { SelectedGuest } from '../../types';
 import { Dispatch } from 'react';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
+import { shortListUser } from '../../../../../apis/guest';
 
 const ViewGuest = ({
   formFields,
   formData,
   setSelectedGuestId,
+  eventId,
 }: {
   formFields: FormField[];
   formData: FormData;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
+  eventId: string;
 }) => {
   return (
     <div className={styles.viewGuestsContainer}>
@@ -33,16 +36,32 @@ const ViewGuest = ({
             <div className={styles.type}>Students</div>
           </div>
           <div className={styles.tsRow2}>
-            <div className={styles.field}>
-              <p className={styles.fieldLabel}>Registered</p>
-              <p className={styles.fieldData}>{formData['registered_at']}</p>
-            </div>
-            {formData['check_in_date'] && (
+            <div>
               <div className={styles.field}>
-                <p className={styles.fieldLabel}>Checked In</p>
-                <p className={styles.fieldData}>{formData['check_in_date']}</p>
+                <p className={styles.fieldLabel}>Registered</p>
+                <p className={styles.fieldData}>{formData['registered_at']}</p>
               </div>
-            )}
+              {formData['check_in_date'] && (
+                <div className={styles.field}>
+                  <p className={styles.fieldLabel}>Checked In</p>
+                  <p className={styles.fieldData}>{formData['check_in_date']}</p>
+                </div>
+              )}
+            </div>
+            <div className={styles.guestActions}>
+              <SecondaryButton
+                onClick={() => {
+                  shortListUser(eventId, formData['id'], true, setSelectedGuestId);
+                }}
+                buttonText='Accept'
+              />
+              <SecondaryButton
+                onClick={() => {
+                  shortListUser(eventId, formData['id'], false, setSelectedGuestId);
+                }}
+                buttonText='Decline'
+              />
+            </div>
           </div>
         </div>
         <hr className={styles.line} />
