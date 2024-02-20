@@ -14,7 +14,7 @@ import { getHosts } from '../../../../apis/overview';
 import { connectPrivateSocket } from '../../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../../services/urls';
 import Theme from '../../../../components/Theme/Theme';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Header from '../../../../components/EventHeader/EventHeader';
 import { getEventId } from '../../../../apis/events';
 import Table from '../../../../components/Table/Table';
@@ -29,8 +29,6 @@ const Overview = () => {
   const [recentTableData, setRecentTableData] = useState<TableType[]>([]);
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const navigate = useNavigate();
-
   const [hostList, setHostList] = useState<hostList[]>([]);
   const [hostListTableData, setHostListTableData] = useState<TableType[]>([]);
   const [hostId, setHostId] = useState<hostId>({
