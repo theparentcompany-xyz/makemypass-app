@@ -14,7 +14,7 @@ import { getHosts } from '../../../../apis/overview';
 import { connectPrivateSocket } from '../../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../../services/urls';
 import Theme from '../../../../components/Theme/Theme';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../../../components/EventHeader/EventHeader';
 import { getEventId } from '../../../../apis/events';
 import Table from '../../../../components/Table/Table';
@@ -29,6 +29,7 @@ const Overview = () => {
   const [recentTableData, setRecentTableData] = useState<TableType[]>([]);
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const navigate = useNavigate();
 
   const [hostList, setHostList] = useState<hostList[]>([]);
   const [hostListTableData, setHostListTableData] = useState<TableType[]>([]);
@@ -264,7 +265,22 @@ const Overview = () => {
           </div>
         ) : (
           <div className={styles.center}>
-            <HashLoader color={'#46BF75'} size={50} />
+            {eventId ? (
+              <>
+                <p className={styles.addGuestsText}>
+                  It seems like you don't have any guests or hosts yet. Navigate to the guests page
+                  to add.
+                </p>
+                <SecondaryButton
+                  buttonText='Visit Guests Page'
+                  onClick={() => {
+                    navigate(`/${eventTitle}/guests`);
+                  }}
+                />
+              </>
+            ) : (
+              <HashLoader color='#47C97E' size={50} />
+            )}
           </div>
         )}
       </>

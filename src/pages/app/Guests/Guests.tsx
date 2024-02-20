@@ -331,7 +331,7 @@ const Guests = () => {
         <div className={styles.center}>
           {eventId ? (
             <>
-              <p className={styles.addguetsText}>
+              <p className={styles.addGuestsText}>
                 Add guests to see the list here. You can add guests by clicking on the button below.
               </p>
               <SecondaryButton

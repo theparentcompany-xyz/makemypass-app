@@ -29,7 +29,7 @@
   overflow: auto;
   overflow-x: hidden;
   margin-top: 2rem;
-  height: 60vh;
+  min-height: 60vh;
 }
 
 .errorText {

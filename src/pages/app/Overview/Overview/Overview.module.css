@@ -152,3 +152,15 @@
   margin-top: 1rem;
   width: 20rem;
 }
+
+.addGuestsText {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  color: #868686;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  width: 25rem;
+  text-align: center;
+}
