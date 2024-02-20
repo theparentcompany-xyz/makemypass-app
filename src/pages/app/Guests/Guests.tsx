@@ -155,6 +155,7 @@ const Guests = () => {
     <Theme>
       {selectedGuestId && formData && selectedGuestId.id && selectedGuestId.type == 'view' && (
         <>
+          <div className={styles.backgroundBlur}></div>
           <ViewGuest
             formFields={formFields}
             formData={formData}

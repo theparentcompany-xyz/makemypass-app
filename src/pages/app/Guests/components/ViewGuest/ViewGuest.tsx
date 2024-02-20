@@ -30,7 +30,10 @@ const ViewGuest = ({
         <div className={styles.topSection}>
           <div className={styles.row}>
             <div className={styles.tsTexts}>
-              <p className={styles.name}>{formData['name']}</p>
+              <p className={styles.name}>
+                {formData['name']}
+                {formData['is_shortlisted'] && <span className={styles.rowType}>Shortlisted</span>}
+              </p>
               <p className={styles.emailAddress}>{formData['email']}</p>
             </div>
             <div className={styles.type}>Students</div>
@@ -49,18 +52,21 @@ const ViewGuest = ({
               )}
             </div>
             <div className={styles.guestActions}>
-              <SecondaryButton
-                onClick={() => {
-                  shortListUser(eventId, formData['id'], true, setSelectedGuestId);
-                }}
-                buttonText='Accept'
-              />
-              <SecondaryButton
-                onClick={() => {
-                  shortListUser(eventId, formData['id'], false, setSelectedGuestId);
-                }}
-                buttonText='Decline'
-              />
+              {formData['is_shortlisted'] ? (
+                <SecondaryButton
+                  onClick={() => {
+                    shortListUser(eventId, formData['id'], false, setSelectedGuestId);
+                  }}
+                  buttonText='Decline'
+                />
+              ) : (
+                <SecondaryButton
+                  onClick={() => {
+                    shortListUser(eventId, formData['id'], true, setSelectedGuestId);
+                  }}
+                  buttonText='Accept'
+                />
+              )}
             </div>
           </div>
         </div>
