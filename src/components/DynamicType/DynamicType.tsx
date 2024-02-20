@@ -48,7 +48,9 @@ const DynamicType = ({
                   label: key,
                 }))}
                 styles={customStyles}
-                onChange={(selectedOption: any) => setTicketId && setTicketId(selectedOption.value)}
+                onChange={(selectedOption: { value: string } | null) =>
+                  setTicketId && setTicketId(selectedOption?.value || '')
+                }
                 value={
                   ticketInfo &&
                   Object.keys(ticketInfo)
@@ -56,7 +58,7 @@ const DynamicType = ({
                       value: ticketInfo[key].id,
                       label: key,
                     }))
-                    .filter((option: any) => option.value === ticketId)
+                    .filter((option: { value: string }) => option.value === ticketId)
                 }
                 placeholder={`Select an option`}
                 isSearchable={false}
@@ -64,7 +66,7 @@ const DynamicType = ({
             </motion.div>
           </div>
         )}
-        {formFields?.map((field: any) => {
+        {formFields?.map((field: FormField) => {
           if (field.type === 'text' || field.type === 'email' || field.type === 'phonenumber') {
             return (
               <InputFIeld
@@ -107,15 +109,17 @@ const DynamicType = ({
                         label: option,
                       }))}
                       styles={customStyles}
-                      onChange={(selectedOption: any) =>
-                        onFieldChange(field.field_key, selectedOption.value)
+                      onChange={(selectedOption: { value: string } | null) =>
+                        onFieldChange(field.field_key, selectedOption?.value || '')
                       }
                       value={field.options
                         ?.map((option: string) => ({
                           value: option,
                           label: option,
                         }))
-                        .filter((option: any) => option.value === formData[field.field_key])}
+                        .filter(
+                          (option: { value: string }) => option.value === formData[field.field_key],
+                        )}
                       placeholder={`Select an option`}
                       isSearchable={false}
                     />

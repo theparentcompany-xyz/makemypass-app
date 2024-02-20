@@ -118,6 +118,7 @@ export const getEventDatas = async (eventId: string, setEventData?: any) => {
     .get(makeMyPass.getEventDatas(eventId))
     .then((response) => {
       if (setEventData) setEventData(response.data.response);
+      console.log(response.data.response);
 
       const eventData = JSON.parse(localStorage.getItem('eventData') || '{}');
       eventData['logo'] = response.data.response['logo'];

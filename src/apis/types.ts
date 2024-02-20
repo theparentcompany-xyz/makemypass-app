@@ -44,3 +44,17 @@ export type FormData = {
 export type ErrorMessages = {
   [key: string]: string[];
 };
+
+export type EventDetails = {
+  id: string;
+  name: string;
+  title: string;
+  description: string | null;
+  date: string;
+  logo: string;
+  time: string;
+  location: string;
+  registered_members_count: number;
+  is_private: boolean;
+  shortlist: boolean;
+};

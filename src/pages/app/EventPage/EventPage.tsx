@@ -20,7 +20,7 @@ import { DiscountData, TicketOptions } from './types';
 import { motion } from 'framer-motion';
 import { showRazorpay } from './components/Razorpay';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import { FormData, FormField } from '../../../apis/types';
+import { EventDetails, FormData, FormField } from '../../../apis/types';
 import { discountedTicketPrice, getIcon } from './constants';
 import DynamicType from '../../../components/DynamicType/DynamicType';
 
@@ -30,7 +30,7 @@ const EventPage = () => {
 
   const [formFields, setFormFields] = useState<FormField[]>([]);
   const [ticketId, setTicketId] = useState<string>('');
-  const [eventData, setEventData] = useState<any>({});
+  const [eventData, setEventData] = useState<EventDetails>();
   const [formErrors, setFormErrors] = useState<any>({});
   const [eventId, setEventId] = useState<string>('');
 
@@ -52,7 +52,6 @@ const EventPage = () => {
 
     setTimeout(() => {
       setEventId(JSON.parse(localStorage.getItem('eventData') || '{}').event_id);
-      // setEventData(JSON.parse(localStorage.getItem('eventData') || '{}'));
       if (eventId) {
         getTickets(eventId, setTicketInfo);
         getFormFields(eventId, setFormFields);
@@ -111,6 +110,40 @@ const EventPage = () => {
     }
   };
 
+  const EventHeader = () => {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 35 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.5 }}
+        className={styles.eventDataContainer}
+      >
+        <div className={styles.eventTopHeader}>
+          <div>
+            <p className={styles.eventTitle}>{eventData?.title}</p>
+            <p className={styles.eventDescription}>{eventData?.description}</p>
+          </div>
+          <div className={styles.headerRightSide}>
+            <img src={eventData?.logo} alt='event' className={styles.eventImage} />
+          </div>
+        </div>
+
+        <div className={styles.otherDetials}>
+          <IoLocationOutline size={20} className={styles.clockIcon} />
+          <div className={styles.location}>
+            <p className={styles.mainLocation}>{eventData?.location}</p>
+          </div>
+          <FiClock size={20} className={styles.clockIcon} />
+          <div className={styles.eventDate}>
+            <p className={styles.date}>{eventData?.date}</p>
+            <p className={styles.time}>{eventData?.time}</p>
+          </div>
+        </div>
+      </motion.div>
+    );
+  };
+
   return (
     <>
       <Theme>
@@ -152,7 +185,7 @@ const EventPage = () => {
             )}
           </motion.div>
         }
-        {eventData.is_private && (
+        {eventData?.is_private && (
           <motion.div
             initial={{ opacity: 0, y: 35 }}
             animate={{ opacity: 1, y: 0 }}
@@ -160,74 +193,16 @@ const EventPage = () => {
             transition={{ duration: 0.5 }}
             className={styles.center}
           >
-            <motion.div
-              initial={{ opacity: 0, y: 35 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5 }}
-              className={styles.eventDataContainer}
-            >
-              <div className={styles.eventTopHeader}>
-                <div>
-                  <p className={styles.eventTitle}>{eventData.title}</p>
-                  <p className={styles.eventDescription}>{eventData.description}</p>
-                </div>
-                <div className={styles.headerRightSide}>
-                  <img src={eventData.logo} alt='event' className={styles.eventImage} />
-                </div>
-              </div>
-
-              <div className={styles.otherDetials}>
-                <IoLocationOutline size={20} className={styles.clockIcon} />
-                <div className={styles.location}>
-                  <p className={styles.mainLocation}>{eventData.location}</p>
-                  <p className={styles.subLocation}>{eventData.sub_location}</p>
-                </div>
-                <FiClock size={20} className={styles.clockIcon} />
-                <div className={styles.eventDate}>
-                  <p className={styles.date}>{eventData.date}</p>
-                  <p className={styles.time}>{eventData.time}</p>
-                </div>
-              </div>
-            </motion.div>
+            <EventHeader />
             <p className={styles.privateEventText}>
               This is a private event. Please contact the event organizer for more details.
             </p>
           </motion.div>
         )}
 
-        {!eventData.is_private && formFields.length > 0 ? (
+        {!eventData?.is_private && formFields.length > 0 ? (
           <div className={styles.eventPageContainer}>
-            <motion.div
-              initial={{ opacity: 0, y: 35 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5 }}
-              className={styles.eventDataContainer}
-            >
-              <div className={styles.eventTopHeader}>
-                <div>
-                  <p className={styles.eventTitle}>{eventData.title}</p>
-                  <p className={styles.eventDescription}>{eventData.description}</p>
-                </div>
-                <div className={styles.headerRightSide}>
-                  <img src={eventData.logo} alt='event' className={styles.eventImage} />
-                </div>
-              </div>
-
-              <div className={styles.otherDetials}>
-                <IoLocationOutline size={20} className={styles.clockIcon} />
-                <div className={styles.location}>
-                  <p className={styles.mainLocation}>{eventData.location}</p>
-                  <p className={styles.subLocation}>{eventData.sub_location}</p>
-                </div>
-                <FiClock size={20} className={styles.clockIcon} />
-                <div className={styles.eventDate}>
-                  <p className={styles.date}>{eventData.date}</p>
-                  <p className={styles.time}>{eventData.time}</p>
-                </div>
-              </div>
-            </motion.div>
+            <EventHeader />
             <div className={styles.formContainer}>
               {formNumber === 0 && (
                 <motion.div
@@ -423,7 +398,7 @@ const EventPage = () => {
                           </div>
                         </div>
 
-                        <p className={styles.cardText}>{eventData.title?.toUpperCase()}</p>
+                        <p className={styles.cardText}>{eventData?.title?.toUpperCase()}</p>
                       </div>
                     ))}
                   </motion.div>
