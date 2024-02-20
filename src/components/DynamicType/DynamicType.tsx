@@ -1,10 +1,11 @@
 import { Dispatch } from 'react';
-import { FormData, FormField } from '../../apis/types';
+import { ErrorMessages, FormData, FormField } from '../../apis/types';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
 import { TicketOptions } from '../../pages/app/EventPage/types';
 import InputFIeld from '../../pages/auth/Login/InputFIeld';
 import styles from './DynamicType.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
+
 import Select from 'react-select';
 
 const DynamicType = ({
@@ -17,7 +18,7 @@ const DynamicType = ({
   ticketId,
 }: {
   formFields: FormField[];
-  formErrors: any;
+  formErrors: ErrorMessages;
   formData: FormData;
   onFieldChange: (fieldName: string, fieldValue: string) => void;
   ticketInfo?: TicketOptions;

@@ -163,6 +163,44 @@ const Guests = () => {
           />
         </>
       )}
+      {selectedGuestId && selectedGuestId.type === 'add' && (
+        <dialog className={styles.onClickModal}>
+          <div className={styles.userInfoModalContainer}>
+            <p className={styles.modalHeader}>Add Guest</p>
+            <DynamicType
+              formFields={formFields}
+              formErrors={formErrors}
+              formData={formData}
+              onFieldChange={onFieldChange}
+              ticketInfo={ticketInfo}
+              setTicketId={setTicketId}
+              ticketId={ticketId}
+            />
+
+            <div className={styles.buttons}>
+              <p
+                onClick={() => {
+                  addGuest(eventId, ticketId, formData, setFormErrors, setSelectedGuestId);
+                }}
+                className={styles.button}
+              >
+                Add
+              </p>
+              <p
+                onClick={() => {
+                  setSelectedGuestId({
+                    id: '',
+                    type: '',
+                  });
+                }}
+                className={styles.button}
+              >
+                Cancel
+              </p>
+            </div>
+          </div>
+        </dialog>
+      )}
       {guests && guests.length > 0 ? (
         <>
           {resentTicket && resentTicket.status && (
@@ -242,44 +280,7 @@ const Guests = () => {
               </div>
             </dialog>
           )}
-          {selectedGuestId && selectedGuestId.type === 'add' && (
-            <dialog className={styles.onClickModal}>
-              <div className={styles.userInfoModalContainer}>
-                <p className={styles.modalHeader}>Add Guest</p>
-                <DynamicType
-                  formFields={formFields}
-                  formErrors={formErrors}
-                  formData={formData}
-                  onFieldChange={onFieldChange}
-                  ticketInfo={ticketInfo}
-                  setTicketId={setTicketId}
-                  ticketId={ticketId}
-                />
 
-                <div className={styles.buttons}>
-                  <p
-                    onClick={() => {
-                      addGuest(eventId, ticketId, formData, setFormErrors, setSelectedGuestId);
-                    }}
-                    className={styles.button}
-                  >
-                    Add
-                  </p>
-                  <p
-                    onClick={() => {
-                      setSelectedGuestId({
-                        id: '',
-                        type: '',
-                      });
-                    }}
-                    className={styles.button}
-                  >
-                    Cancel
-                  </p>
-                </div>
-              </div>
-            </dialog>
-          )}
           <div className={styles.guestsContainer}>
             <Header />
 
@@ -327,7 +328,25 @@ const Guests = () => {
         </>
       ) : (
         <div className={styles.center}>
-          <HashLoader color={'#46BF75'} size={50} />
+          {eventId ? (
+            <>
+              <p className={styles.addguetsText}>
+                Add guests to see the list here. You can add guests by clicking on the button below.
+              </p>
+              <SecondaryButton
+                buttonText='Add Guests +'
+                onClick={() => {
+                  setSelectedGuestId({
+                    id: '',
+                    type: 'add',
+                  });
+                  setFormData({});
+                }}
+              />
+            </>
+          ) : (
+            <HashLoader color='#47C97E' size={50} />
+          )}
         </div>
       )}
     </Theme>

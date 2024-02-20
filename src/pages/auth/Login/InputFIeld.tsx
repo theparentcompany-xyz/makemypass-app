@@ -10,7 +10,7 @@ interface FormProps {
   icon: React.ReactNode;
   value?: string;
   required?: boolean;
-  error?: string;
+  error?: string[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   description?: string;
   style?: React.CSSProperties;
@@ -49,7 +49,7 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
             className={styles.errorText}
-          >{`${inputProps.error}`}</motion.p>
+          >{`${inputProps.error.join()}`}</motion.p>
         )}
       </AnimatePresence>
     </motion.div>

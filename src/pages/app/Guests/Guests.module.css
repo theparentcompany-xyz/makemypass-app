@@ -131,8 +131,6 @@
   opacity: 0.6;
 } */
 
-
-
 .modalSubText {
   font-weight: 400;
   font-size: 0.9rem;
@@ -221,4 +219,14 @@
   width: 9.25rem;
 }
 
-
+.addguetsText {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #868686;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  width: 25rem;
+  text-align: center;
+}
