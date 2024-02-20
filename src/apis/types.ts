@@ -40,3 +40,7 @@ export type FormField = {
 export type FormData = {
   [key: string]: string;
 };
+
+export type ErrorMessages = {
+  [key: string]: string[];
+};

@@ -3,7 +3,7 @@ import styles from './EventHeader.module.css';
 import { getEventData, getEventId } from '../../apis/events';
 import { useParams } from 'react-router-dom';
 
-const EventHeader = ({ setRole }: { setRole?: React.Dispatch<React.SetStateAction<string>> }) => {
+const EventHeader = () => {
   const [eventData, setEventData] = useState({
     title: '',
     date: '',
@@ -37,10 +37,6 @@ const EventHeader = ({ setRole }: { setRole?: React.Dispatch<React.SetStateActio
   useEffect(() => {
     if (eventId) getEventData(eventId, setEventData);
   }, [eventId]);
-
-  useEffect(() => {
-    if (setRole) setRole(eventData.role);
-  }, [eventData, setRole]);
 
   return (
     <>

@@ -10,7 +10,6 @@ export const addHosts = async (
   role: string,
   setHostData: Dispatch<React.SetStateAction<hostData>>,
 ) => {
-  console.log(role);
   privateGateway
     .post(makeMyPass.addHost(eventId), {
       host_email: hostMail,

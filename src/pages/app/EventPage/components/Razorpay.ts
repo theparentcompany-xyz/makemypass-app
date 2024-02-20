@@ -25,7 +25,6 @@ export const showRazorpay = async (
       paymentAmount = response.data.response.amount;
     })
     .catch((err) => {
-      console.log(err);
       setFormErrors(err.response.data.message);
     });
 

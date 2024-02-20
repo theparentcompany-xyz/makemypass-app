@@ -36,8 +36,6 @@ const SpinWheel = () => {
     if (eventTitle && !eventId) getEventUUID(eventTitle, setEventId);
 
     if (eventId) listSpinWheelItems(eventId, setSpinWheelData);
-
-    console.log(eventId, spinWheelData);
   }, [eventId]);
 
   useEffect(() => {

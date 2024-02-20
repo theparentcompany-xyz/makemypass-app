@@ -3,16 +3,16 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Dispatch } from 'react';
 import { SelectedGuest } from '../pages/app/Guests/types';
-import { FormData } from './types';
+import { ErrorMessages, FormData } from './types';
 
 export const sentInvite = (eventId: string, ticketId: string) => {
   privateGateway
     .post(makeMyPass.sentInvite(eventId, ticketId))
     .then((response) => {
-      console.log(response);
+      toast.success(response.data.message.general[0] || 'Invite sent successfully');
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(error.response.data.message.general[0] || 'Invite sending failed');
     });
 };
 
@@ -27,7 +27,6 @@ export const shortListUser = (
       is_shortlisted: isShortListed,
     })
     .then((response) => {
-      console.log(response.data);
       toast.success(response.data.message.general[0] || 'User shortlisted successfully');
       setSelectedGuestId(null);
     })
@@ -40,12 +39,11 @@ export const addGuest = (
   eventId: string,
   ticketId: string,
   formData: FormData,
-  setFormErrors: any,
+  setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
 ) => {
   privateGateway
     .post(makeMyPass.sentInvite(eventId, ticketId), formData)
     .then((response) => {
-      console.log(response.data);
       toast.success(response.data.message.general[0] || 'Guest added successfully');
     })
     .catch((error) => {

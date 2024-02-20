@@ -29,7 +29,7 @@ export const listSpinWheelItems = async (eventId: string, setSpinWheelItems: any
           },
         };
       });
-      console.log(updatedItems);
+
       setSpinWheelItems(updatedItems);
     })
     .catch((error) => {

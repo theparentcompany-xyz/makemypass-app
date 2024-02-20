@@ -100,12 +100,7 @@ const ScanQR = () => {
           <div className={styles.scannerOuterContainer}>
             <div className={styles.scanner}>
               <div className={styles.scanCount}>
-                <SecondaryButton
-                  buttonText={`${scanCount} Scans`}
-                  onClick={() => {
-                    console.log('close');
-                  }}
-                />
+                <SecondaryButton buttonText={`${scanCount} Scans`} />
               </div>
               <div className={styles.closeButton}>
                 <SecondaryButton

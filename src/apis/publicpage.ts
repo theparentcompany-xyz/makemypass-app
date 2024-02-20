@@ -3,7 +3,7 @@ import { publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { DiscountData, TicketOptions } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
-import { FormData, FormField } from './types';
+import { ErrorMessages, FormData, FormField } from './types';
 
 export const getTickets = async (
   eventId: string,
@@ -40,9 +40,8 @@ export const submitForm = async (
   setFormNumber?: React.Dispatch<React.SetStateAction<number>>,
   setFormData?: React.Dispatch<React.SetStateAction<FormData>>,
   setAmount?: React.Dispatch<React.SetStateAction<string>>,
-  response?: any,
+  response?: unknown,
 ) => {
-  console.log(data);
   publicGateway
     .post(makeMyPass.submitForm(ticketId), {
       rsvp_data: data,
@@ -67,7 +66,7 @@ export const applyCoupon = async (
   eventId: string,
   couponCode: string,
   setDiscount: React.Dispatch<DiscountData>,
-  formErrors: any,
+  formErrors: ErrorMessages,
 ) => {
   publicGateway
     .post(makeMyPass.validateCoupon(eventId), {
@@ -86,21 +85,16 @@ export const applyCoupon = async (
 };
 
 export const registerUpdateView = async (eventId: string) => {
-  return publicGateway
-    .post(makeMyPass.registerUpdateView(eventId))
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  return publicGateway.post(makeMyPass.registerUpdateView(eventId)).catch((error) => {
+    console.log(error);
+  });
 };
 
 export const validateRsvp = async (
   ticketId: string,
   formData: FormData,
   setFormNumber: React.Dispatch<React.SetStateAction<number>>,
-  setFieldErrors: Dispatch<React.SetStateAction<any>>,
+  setFieldErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
 ) => {
   // Remove empty key-value pairs from formData
   Object.keys(formData).forEach((key) => {
@@ -131,6 +125,6 @@ export const getEventDatas = async (eventId: string, setEventData?: any) => {
       localStorage.setItem('eventData', JSON.stringify(eventData));
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Data');
     });
 };

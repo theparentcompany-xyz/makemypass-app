@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 
@@ -29,6 +30,6 @@ export const getCheckInCount = async (
       setCheckInCount(response.data.response.authorized_count);
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(error.response.data.message.general[0] || 'Error in Fetching Check-In Count');
     });
 };

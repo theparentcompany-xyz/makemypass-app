@@ -14,7 +14,7 @@ import Table from '../../../components/Table/Table';
 import { transformTableData } from '../../../common/commonFunctions';
 import { TableType } from '../../../components/Table/types';
 import { downloadTicket, editSubmissons, resentEventTicket } from '../../../apis/guests';
-import { FormData, FormField } from '../../../apis/types';
+import { ErrorMessages, FormData, FormField } from '../../../apis/types';
 import { getFormFields, getTickets } from '../../../apis/publicpage';
 import DynamicType from '../../../components/DynamicType/DynamicType';
 import ViewGuest from './components/ViewGuest/ViewGuest';
@@ -29,7 +29,7 @@ const Guests = () => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
   const [formFields, setFormFields] = useState<FormField[]>([]);
-  const [formErrors, setFormErrors] = useState<any>({});
+  const [formErrors, setFormErrors] = useState<ErrorMessages>({});
   const [formData, setFormData] = useState<FormData>({});
   const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
   const [ticketId, setTicketId] = useState<string>('');
@@ -146,7 +146,7 @@ const Guests = () => {
     if (formErrors[fieldName]) {
       setFormErrors({
         ...formErrors,
-        [fieldName]: '',
+        [fieldName]: [],
       });
     }
   };

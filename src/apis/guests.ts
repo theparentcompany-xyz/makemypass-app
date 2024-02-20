@@ -3,13 +3,13 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
+import { FormData } from './types';
 
 export const resentEventTicket = async (
   ticketData: ResentTicket,
   setResentTicket: Dispatch<React.SetStateAction<ResentTicket>>,
 ) => {
   const eventId = JSON.parse(localStorage.getItem('eventData')!).event_id;
-  console.log(ticketData.guestId);
   privateGateway
     .post(makeMyPass.resentTicket, {
       client_id: ticketData.guestId,
@@ -30,9 +30,9 @@ export const resentEventTicket = async (
 
 export const editSubmissons = async (
   eventId: string,
-  data: any,
+  data: FormData,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
-  setFormData: Dispatch<React.SetStateAction<any>>,
+  setFormData: Dispatch<React.SetStateAction<FormData>>,
 ) => {
   if (data)
     privateGateway

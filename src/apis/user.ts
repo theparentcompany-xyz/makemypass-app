@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 
@@ -28,6 +29,6 @@ export const getUserInfo = async (
       });
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(error.response.data.message.general[0] || 'Error in Fetching User Info');
     });
 };

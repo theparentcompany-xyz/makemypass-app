@@ -23,4 +23,3 @@ const formatDate = (inputDate: string): string => {
 
 const inputDate: string = '2024-02-18T18:46:56+05:30';
 const formattedDate: string = formatDate(inputDate);
-console.log(formattedDate);
