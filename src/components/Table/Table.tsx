@@ -24,6 +24,7 @@ const RowComponent = React.memo(
 
     return (
       <motion.div
+        key={item.id}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         style={style}

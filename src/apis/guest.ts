@@ -40,11 +40,13 @@ export const addGuest = (
   ticketId: string,
   formData: FormData,
   setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
+  setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
 ) => {
   privateGateway
     .post(makeMyPass.sentInvite(eventId, ticketId), formData)
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Guest added successfully');
+      setSelectedGuestId(null);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Guest adding failed');

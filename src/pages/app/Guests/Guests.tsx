@@ -259,7 +259,7 @@ const Guests = () => {
                 <div className={styles.buttons}>
                   <p
                     onClick={() => {
-                      addGuest(eventId, ticketId, formData, setFormErrors);
+                      addGuest(eventId, ticketId, formData, setFormErrors, setSelectedGuestId);
                     }}
                     className={styles.button}
                   >
