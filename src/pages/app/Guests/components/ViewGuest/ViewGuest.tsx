@@ -1,9 +1,10 @@
 import styles from './ViewGuest.module.css';
 import { FormData, FormField } from '../../../../../apis/types';
 import { SelectedGuest } from '../../types';
-import { Dispatch } from 'react';
+import { Dispatch, useState } from 'react';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { shortListUser } from '../../../../../apis/guest';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const ViewGuest = ({
   formFields,
@@ -16,8 +17,18 @@ const ViewGuest = ({
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;
 }) => {
+  const [confirmClicked, setConfirmClicked] = useState({
+    confirm: false,
+    value: false,
+  });
+
   return (
-    <div className={styles.viewGuestsContainer}>
+    <motion.div
+      initial={{ y: -10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -10, opacity: 0 }}
+      className={styles.viewGuestsContainer}
+    >
       <div className={styles.closeButton}>
         <SecondaryButton
           buttonText='Close'
@@ -52,21 +63,57 @@ const ViewGuest = ({
               )}
             </div>
             <div className={styles.guestActions}>
-              {formData['is_shortlisted'] ? (
+              {!confirmClicked.confirm && formData['is_shortlisted'] ? (
                 <SecondaryButton
                   onClick={() => {
-                    shortListUser(eventId, formData['id'], false, setSelectedGuestId);
+                    setConfirmClicked({
+                      confirm: true,
+                      value: false,
+                    });
                   }}
                   buttonText='Decline'
                 />
               ) : (
-                <SecondaryButton
-                  onClick={() => {
-                    shortListUser(eventId, formData['id'], true, setSelectedGuestId);
-                  }}
-                  buttonText='Accept'
-                />
+                !confirmClicked.confirm && (
+                  <SecondaryButton
+                    onClick={() => {
+                      setConfirmClicked({
+                        confirm: true,
+                        value: true,
+                      });
+                    }}
+                    buttonText='Accept'
+                  />
+                )
               )}
+              <AnimatePresence>
+                {confirmClicked.confirm && (
+                  <motion.div
+                    initial={{ x: -10, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -10, opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className={styles.confirmButton}
+                  >
+                    <SecondaryButton
+                      onClick={() => {
+                        shortListUser(
+                          eventId,
+                          formData['id'],
+                          confirmClicked.value,
+                          setSelectedGuestId,
+                        );
+                      }}
+                      buttonText={confirmClicked.value ? 'Yes, Accept' : 'Yes, Decline'}
+                    />
+                    <p className={styles.alertText}>
+                      {confirmClicked.value
+                        ? 'Are you sure you want to accept this guest?'
+                        : 'Are you sure you want to decline this guest?'}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
@@ -94,7 +141,7 @@ const ViewGuest = ({
           })}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,10 +1,11 @@
+import { AnimatePresence } from 'framer-motion';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import styles from './Theme.module.css';
 
 const Theme = ({ type, children }: { type?: string | undefined; children: React.ReactNode }) => {
   return (
-    <>
+    <AnimatePresence>
       <div className={styles.themeContainer}>
         <div className={styles.grad1}></div>
         <div className={styles.grad2}></div>
@@ -14,7 +15,7 @@ const Theme = ({ type, children }: { type?: string | undefined; children: React.
 
         <Footer />
       </div>
-    </>
+    </AnimatePresence>
   );
 };
 

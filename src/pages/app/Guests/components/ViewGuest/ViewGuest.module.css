@@ -15,7 +15,7 @@
 
   max-width: 30rem;
 
-  top: 50%;
+  top: 25%;
   left: 0;
   right: 0;
   margin: auto;
@@ -158,4 +158,21 @@
   font-size: 0.7rem;
   padding: 0.25rem 0.5rem;
   margin-left: 0.15rem;
+}
+
+.confirmButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.alertText {
+  color: #ff4d4f;
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-top: 0.5rem;
+  max-width: 10rem;
+  text-align: right;
 }
