@@ -221,7 +221,7 @@ const Overview = () => {
             </div>
           </dialog>
         )}
-        {recentRegistrations && recentRegistrations.length > 0 && hostList ? (
+        {recentRegistrations && hostList ? (
           <div className={styles.overviewContainer}>
             <Header />
             <Glance tab='overview' />
@@ -265,22 +265,7 @@ const Overview = () => {
           </div>
         ) : (
           <div className={styles.center}>
-            {eventId ? (
-              <>
-                <p className={styles.addGuestsText}>
-                  It seems like you don't have any guests or hosts yet. Navigate to the guests page
-                  to add.
-                </p>
-                <SecondaryButton
-                  buttonText='Visit Guests Page'
-                  onClick={() => {
-                    navigate(`/${eventTitle}/guests`);
-                  }}
-                />
-              </>
-            ) : (
-              <HashLoader color='#47C97E' size={50} />
-            )}
+            <HashLoader color='#47C97E' size={50} />
           </div>
         )}
       </>

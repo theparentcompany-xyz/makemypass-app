@@ -202,7 +202,7 @@ const Guests = () => {
           </div>
         </dialog>
       )}
-      {guests && guests.length > 0 ? (
+      {guests ? (
         <>
           {resentTicket && resentTicket.status && (
             <dialog className={styles.onClickModal}>
@@ -329,25 +329,7 @@ const Guests = () => {
         </>
       ) : (
         <div className={styles.center}>
-          {eventId ? (
-            <>
-              <p className={styles.addGuestsText}>
-                Add guests to see the list here. You can add guests by clicking on the button below.
-              </p>
-              <SecondaryButton
-                buttonText='Add Guests +'
-                onClick={() => {
-                  setSelectedGuestId({
-                    id: '',
-                    type: 'add',
-                  });
-                  setFormData({});
-                }}
-              />
-            </>
-          ) : (
-            <HashLoader color='#47C97E' size={50} />
-          )}
+          <HashLoader color='#47C97E' size={50} />
         </div>
       )}
     </Theme>

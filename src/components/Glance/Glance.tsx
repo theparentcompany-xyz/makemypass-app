@@ -232,14 +232,16 @@ const Glance = ({ tab }: { tab: string }) => {
                 {tab === 'checkins' || tab === 'inevent' ? 'Check-In at a Glance' : 'At a Glance'}
               </motion.p>
 
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className={styles.lastUpdated}
-              >
-                Last {tab === 'checkins' || tab === 'inevent' ? 'Check-In' : 'Registered'}:&nbsp;
-                {formatDate(lastRegistered)}
-              </motion.p>
+              {lastRegistered && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className={styles.lastUpdated}
+                >
+                  Last {tab === 'checkins' || tab === 'inevent' ? 'Check-In' : 'Registered'}:&nbsp;
+                  {formatDate(lastRegistered)}
+                </motion.p>
+              )}
             </div>
 
             <div className={styles.guestsCount}>
