@@ -3,6 +3,8 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { OptionStyle } from '../pages/app/SpinWheel/types';
 
+/* eslint no-use-before-define: 0 */ // --> OFF
+
 const data = [
   { style: { backgroundColor: '#47C97E', textColor: '#1E2132' } },
   { style: { backgroundColor: '#7662FC', textColor: '#1E2132' } },

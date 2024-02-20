@@ -1,5 +1,5 @@
 import React, { Dispatch, useMemo } from 'react';
-import { ResentTicket } from '../../pages/app/Guests/types';
+import { ResentTicket, SelectedGuest } from '../../pages/app/Guests/types';
 import styles from './Table.module.css';
 import { TableType } from './types';
 import { BsTicketPerforatedFill } from 'react-icons/bs';
@@ -13,7 +13,7 @@ import { hostId } from '../../pages/app/Overview/Overview/types';
 type ItemDataType = {
   filteredData: TableType[];
   setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
-  setSelectedGuestId?: Dispatch<React.SetStateAction<any | null>>;
+  setSelectedGuestId?: React.Dispatch<React.SetStateAction<SelectedGuest | null>>;
   setHostId?: Dispatch<React.SetStateAction<hostId>>;
 };
 
@@ -34,7 +34,7 @@ const RowComponent = React.memo(
           className={styles.rowData}
           onClick={() => {
             if (setSelectedGuestId) {
-              setSelectedGuestId((prevState: any) => ({
+              setSelectedGuestId((prevState) => ({
                 ...prevState,
                 id: item.id,
                 type: 'view',
@@ -75,7 +75,7 @@ const RowComponent = React.memo(
                 <MdEdit
                   onClick={() => {
                     if (setSelectedGuestId) {
-                      setSelectedGuestId((prevState: any) => ({
+                      setSelectedGuestId((prevState) => ({
                         ...prevState,
                         id: item.id,
                         type: 'edit',
@@ -89,7 +89,7 @@ const RowComponent = React.memo(
                 <MdDownload
                   onClick={() => {
                     if (setSelectedGuestId) {
-                      setSelectedGuestId((prevState: any) => ({
+                      setSelectedGuestId((prevState) => ({
                         ...prevState,
                         id: item.id,
                         type: 'download',
@@ -110,7 +110,7 @@ const RowComponent = React.memo(
                 <MdEdit
                   onClick={() => {
                     if (setHostId) {
-                      setHostId((prevState: any) => ({
+                      setHostId((prevState) => ({
                         ...prevState,
                         id: item.id,
                         type: 'edit',
@@ -124,7 +124,7 @@ const RowComponent = React.memo(
                 <MdDelete
                   onClick={() => {
                     if (setHostId) {
-                      setHostId((prevState: any) => ({
+                      setHostId((prevState) => ({
                         ...prevState,
                         id: item.id,
                         type: 'delete',
@@ -155,7 +155,7 @@ const Table = ({
   tableData: TableType[];
   search?: string;
   setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
-  setSelectedGuestId?: Dispatch<React.SetStateAction<any | null>>;
+  setSelectedGuestId?: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   secondaryButton?: React.ReactElement;
   setHostId?: Dispatch<React.SetStateAction<hostId>>;
 }) => {

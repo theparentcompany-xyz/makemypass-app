@@ -3,7 +3,7 @@ import { publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { DiscountData, TicketOptions } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
-import { ErrorMessages, FormData, FormField } from './types';
+import { ErrorMessages, EventDetails, FormData, FormField } from './types';
 
 export const getTickets = async (
   eventId: string,
@@ -113,7 +113,10 @@ export const validateRsvp = async (
     });
 };
 
-export const getEventDatas = async (eventId: string, setEventData?: any) => {
+export const getEventDatas = async (
+  eventId: string,
+  setEventData?: Dispatch<React.SetStateAction<EventDetails | undefined>>,
+) => {
   return publicGateway
     .get(makeMyPass.getEventDatas(eventId))
     .then((response) => {
