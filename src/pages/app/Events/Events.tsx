@@ -53,7 +53,6 @@ const Events = () => {
 
   useEffect(() => {
     const eventName = JSON.parse(localStorage.getItem('eventData')!)?.event_name || '';
-    console.log(eventName);
     if (eventData.role === 'Admin') {
       navigate(`/${eventName.toLowerCase()}/overview/`);
     } else if (eventData.role === 'Volunteer') {
@@ -126,7 +125,6 @@ const Events = () => {
                             whileHover={{ scale: 1.05 }}
                             className={styles.manage}
                             onClick={() => {
-                              console.log(event);
                               handleClick(event.name);
                               getEventRole(event.id);
                             }}

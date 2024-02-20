@@ -172,7 +172,6 @@ const InEventStats = () => {
                   color: borderColor,
                 },
               ];
-              console.log(updatedDailyCount);
               return updatedDailyCount;
             });
 

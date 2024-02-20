@@ -18,7 +18,6 @@ const AddHosts = ({
 }) => {
   const handleRoleChange = (event: any) => {
     const selectedRole = event.value;
-    console.log(selectedRole);
     setHostData((prevState) => ({
       ...prevState!,
       role: selectedRole,
@@ -85,7 +84,6 @@ const AddHosts = ({
               classNamePrefix='select'
               value={roleOptions.filter((role) => role.value === hostData?.role)[0]}
               onChange={(event) => {
-                console.log(event?.value);
                 handleRoleChange(event);
               }}
               name='role'

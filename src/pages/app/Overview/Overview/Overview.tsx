@@ -153,7 +153,6 @@ const Overview = () => {
         role: selectedHost?.role,
         id: selectedHost?.id,
       }));
-      console.log(selectedHost);
       setOpenDeleteModal(true);
     }
   }, [hostId]);
