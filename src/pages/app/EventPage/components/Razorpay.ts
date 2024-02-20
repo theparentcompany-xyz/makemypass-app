@@ -35,9 +35,11 @@ export const showRazorpay = async (
     currency: 'INR',
     name: 'MakeMyPass',
     description: 'Event Registration',
-    image: '/maskable.png',
+    image: '/maskable.webp',
     order_id: paymentId,
     handler: function (response: any) {
+      const audio = new Audio('/gpay.mp3');
+      audio.play();
       submitForm(ticketId, formData, setSuccess, setFormNumber, setFormData, setAmount, response);
     },
     theme: {

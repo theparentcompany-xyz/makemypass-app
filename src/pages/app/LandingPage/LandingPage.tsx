@@ -137,7 +137,7 @@ const LandingPage = () => {
                 Host with Us <span>🚀</span>
               </button>
 
-              <img className={styles.landingImage} src='/app/landingImage.png' />
+              <img className={styles.landingImage} src='/app/landingImage.webp' />
             </div>
           </div>
           <div className={styles.tc}>
