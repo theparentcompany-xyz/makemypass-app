@@ -264,13 +264,15 @@ const Glance = ({ tab }: { tab: string }) => {
                   >
                     <p
                       style={
-                        totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#ffffff' }
+                        totalGuests >= targetGuests && targetGuests > 0
+                          ? { color: '#47c97e' }
+                          : { color: '#ffffff' }
                       }
                     >
                       {totalGuests}
                     </p>
                   </motion.p>
-                  /{targetGuests}
+                  {targetGuests > 0 && ` /${targetGuests}`}
                   {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}
                   <span>&nbsp;unique guests</span>
                 </motion.p>
