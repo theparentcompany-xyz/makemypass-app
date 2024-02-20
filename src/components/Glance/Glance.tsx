@@ -273,7 +273,9 @@ const Glance = ({ tab }: { tab: string }) => {
                     </p>
                   </motion.p>
                   {targetGuests > 0 && ` /${targetGuests}`}
-                  {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}
+                  {totalGuests > targetGuests && targetGuests > 0 && (
+                    <p className={styles.popper}>🎉</p>
+                  )}
                   <span>&nbsp;unique guests</span>
                 </motion.p>
               )}
