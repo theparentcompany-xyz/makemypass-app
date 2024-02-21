@@ -59,7 +59,7 @@
 .weeklyCounts {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-left: -0.5rem;
 }

@@ -43,3 +43,8 @@ export interface ChartData {
   labels: string[];
   datasets: Dataset[];
 }
+
+export interface LineChartProps {
+  data: ChartData;
+  title: string;
+}

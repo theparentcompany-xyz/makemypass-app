@@ -13,6 +13,15 @@ import {
 } from 'chart.js';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { HashLoader } from 'react-spinners';
+import { connectPrivateSocket } from '../../../../services/apiGateway';
+import { makeMyPassSocket } from '../../../../services/urls';
+import { ChartData, AnalyticsData } from './types';
+import Theme from '../../../components/Theme/Theme';
+import Glance from '../../../components/Glance/Glance';
+import Header from '../../../components/EventHeader/EventHeader';
+import { getEventId } from '../../../apis/events';
 
 ChartJS.register(
   CategoryScale,
@@ -28,21 +37,12 @@ ChartJS.register(
 
   ArcElement,
 );
-import { useParams } from 'react-router-dom';
-import { HashLoader } from 'react-spinners';
-import { connectPrivateSocket } from '../../../../services/apiGateway';
-import { makeMyPassSocket } from '../../../../services/urls';
-import { ChartData, AnalyticsData } from './types';
-import Theme from '../../../components/Theme/Theme';
-import Glance from '../../../components/Glance/Glance';
-import Header from '../../../components/EventHeader/EventHeader';
-import { getEventId } from '../../../apis/events';
 
 const Insights = () => {
   const [message, setMessage] = useState<AnalyticsData>();
 
   const [lineData, setLineData] = useState<ChartData>();
-  const [barData, setBarData] = useState<ChartData>();
+  const [lineData2, setLineData2] = useState<ChartData>();
   const [pieData, setPieData] = useState<ChartData>();
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -87,6 +87,7 @@ const Insights = () => {
       }).then((ws) => {
         ws.onmessage = (event) => {
           const lineBarData = JSON.parse(event.data).response;
+
           setMessage(lineBarData);
           setLineData({
             labels: Object.keys(lineBarData?.analytics || {}),
@@ -100,12 +101,12 @@ const Insights = () => {
             ],
           });
 
-          setBarData({
-            labels: Object.keys(lineBarData?.today_category || {}),
+          setLineData2({
+            labels: Object.keys(lineBarData?.daily_analytics || {}),
             datasets: [
               {
-                label: 'Category Count',
-                data: Object.values(lineBarData?.today_category || {}),
+                label: 'Daily Analytics',
+                data: Object.values(lineBarData?.daily_analytics || {}),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
               },
@@ -132,7 +133,7 @@ const Insights = () => {
   return (
     <Theme>
       <>
-        {lineData && barData && pieData ? (
+        {lineData && lineData2 && pieData ? (
           <>
             <div className={styles.insightsOuterContainer}>
               <div className={styles.glanceContainer}>
@@ -184,9 +185,8 @@ const Insights = () => {
                 </div>
 
                 <div className={styles.todayRegistered}>
-                  <div className={styles.graphContainer}>
-                    {barData && <Bar options={options} data={barData} />}
-                  </div>
+                  {lineData2 && <Line options={options} data={lineData2} />}
+                  <div className={styles.graphContainer}></div>
                   <div className={styles.totalRegistered}>
                     <p className={styles.total}>Today Registered</p>
                     <p className={styles.count}>

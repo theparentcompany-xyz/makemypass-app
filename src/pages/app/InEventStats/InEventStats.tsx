@@ -97,6 +97,7 @@ const InEventStats = () => {
   const [barData, setBarData] = useState<ChartData>();
   const [districtData, setDistrictData] = useState<DistrictData>({});
   const [showWelcome, setShowWelcome] = useState(true);
+
   type DailyCount = {
     day: string;
     count: number;
