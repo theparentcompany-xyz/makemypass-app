@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Perks.module.css';
 import Theme from '../../../../../components/Theme/Theme';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
-import { getPerksInfo, getUserPerksInfo } from '../../../../../apis/perks';
+import { getPerksInfo, getUserPerksInfo, updatePerk } from '../../../../../apis/perks';
 import { getEventId } from '../../../../../apis/events';
 import { useParams } from 'react-router';
 import { CgClose } from 'react-icons/cg';
@@ -16,6 +16,7 @@ const Perks = () => {
   const [currentTicketType, setCurrentTicketType] = useState('');
   const [ticketId, setTicketId] = useState('');
   const [trigger, setTrigger] = useState(false);
+  const [selectedPerk, setSelectedPerk] = useState('' as string);
 
   const getLocalEventId = () => {
     if (eventTitle) {
@@ -42,7 +43,9 @@ const Perks = () => {
   useEffect(() => {
     if (trigger) {
       getUserPerksInfo(ticketId);
+      updatePerk(ticketId, currentTicketType, selectedPerk);
       setCurrentTicketType('');
+      setTicketId('');
     }
   }, [trigger]);
 
@@ -52,6 +55,7 @@ const Perks = () => {
         <SectionButton
           onClick={() => {
             setCurrentTicketType(id);
+            setSelectedPerk(perk);
           }}
           buttonText={`${perk}`}
           buttonColor=''

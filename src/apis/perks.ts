@@ -20,11 +20,11 @@ export const getUserPerksInfo = (ticketCode: string) =>
       throw error;
     });
 
-export const updatePerk = (eventId: string, ticketCode: string, userId: string, perkName: string) =>
+export const updatePerk = (ticketId: string, currentTicketType: string, selectedPerk: string) =>
   privateGateway
-    .post(makeMyPass.updatePerk(eventId, ticketCode), {
-      id: userId,
-      perk_name: perkName,
+    .put(makeMyPass.updatePerk(ticketId), {
+      id: currentTicketType,
+      perk_name: selectedPerk,
     })
     .then((response) => response.data)
     .catch((error) => {

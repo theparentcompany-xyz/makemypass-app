@@ -68,8 +68,7 @@ export const makeMyPass = {
   getUserPerksInfo: (ticketCode: string) =>
     makeMyPassURL(`/checkin/get-user-perks-info/${ticketCode}`),
 
-  updatePerk: (eventId: string, ticketCode: string) =>
-    makeMyPassURL(`/checkin/${eventId}/update-perk/${ticketCode}/`),
+  updatePerk: (ticketCode: string) => makeMyPassURL(`/checkin/update-perk/${ticketCode}/`),
 };
 
 export const makeMyPassSocket = {
