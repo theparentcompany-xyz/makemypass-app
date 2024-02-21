@@ -30,8 +30,6 @@ const Glance = ({ tab }: { tab: string }) => {
   const [todayCheckIns, setTodayCheckIns] = useState<number>(0);
   const [lastRegistered, setLastRegistered] = useState<string>('');
 
-  const [firstRender, setFirstRender] = useState<boolean>(true);
-
   useEffect(() => {
     return () => {
       socket?.close();
@@ -41,11 +39,8 @@ const Glance = ({ tab }: { tab: string }) => {
   const [currentTab, setCurrentTab] = useState('overview');
 
   const updateTab = (tab: string) => {
-    setFirstRender(true);
     setCurrentTab(tab);
     navigate(`/${eventTitle}/${tab}/`);
-
-    setFirstRender(true);
   };
 
   const [eventId, setEventId] = useState<string>('');
@@ -86,21 +81,17 @@ const Glance = ({ tab }: { tab: string }) => {
   }, [tab, eventId]);
 
   useEffect(() => {
-    if (!firstRender && totalGuests > 0) {
-      const audio = new Audio('/count.mp3');
-      audio.play();
-    }
-
-    if (firstRender && totalGuests > 0) setFirstRender(false);
-  }, [totalGuests, firstRender]);
-
-  useEffect(() => {
     if (eventId)
       connectPrivateSocket({
         url: backendURL,
       }).then((ws) => {
         ws.onmessage = (event) => {
           const category = JSON.parse(event.data).response.bargraph;
+
+          if (totalGuests > 0 && totalGuests != JSON.parse(event.data).response.total_reg) {
+            const audio = new Audio('/count.mp3');
+            audio.play();
+          }
 
           if (JSON.parse(event.data).response.total_reg) {
             setTotalGuests(Number(JSON.parse(event.data).response.total_reg));

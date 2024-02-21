@@ -1,7 +1,5 @@
 import styles from './EventPage.module.css';
 import Theme from '../../../components/Theme/Theme';
-import { FiClock } from 'react-icons/fi';
-import { IoLocationOutline } from 'react-icons/io5';
 import InputFIeld from '../../auth/Login/InputFIeld';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -23,6 +21,7 @@ import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryBut
 import { EventDetails, FormData, FormField } from '../../../apis/types';
 import { discountedTicketPrice, getIcon } from './constants';
 import DynamicType from '../../../components/DynamicType/DynamicType';
+import EventHeader from './components/EventHeader';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -110,40 +109,6 @@ const EventPage = () => {
     }
   };
 
-  const EventHeader = () => {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 35 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
-        transition={{ duration: 0.5 }}
-        className={styles.eventDataContainer}
-      >
-        <div className={styles.eventTopHeader}>
-          <div>
-            <p className={styles.eventTitle}>{eventData?.title}</p>
-            <p className={styles.eventDescription}>{eventData?.description}</p>
-          </div>
-          <div className={styles.headerRightSide}>
-            <img src={eventData?.logo} alt='event' className={styles.eventImage} />
-          </div>
-        </div>
-
-        <div className={styles.otherDetials}>
-          <IoLocationOutline size={20} className={styles.clockIcon} />
-          <div className={styles.location}>
-            <p className={styles.mainLocation}>{eventData?.location}</p>
-          </div>
-          <FiClock size={20} className={styles.clockIcon} />
-          <div className={styles.eventDate}>
-            <p className={styles.date}>{eventData?.date}</p>
-            <p className={styles.time}>{eventData?.time}</p>
-          </div>
-        </div>
-      </motion.div>
-    );
-  };
-
   return (
     <>
       <Theme>
@@ -193,7 +158,7 @@ const EventPage = () => {
             transition={{ duration: 0.5 }}
             className={styles.center}
           >
-            <EventHeader />
+            <EventHeader eventData={eventData} />
             <p className={styles.privateEventText}>
               This is a private event. Please contact the event organizer for more details.
             </p>
@@ -202,7 +167,7 @@ const EventPage = () => {
 
         {!eventData?.is_private && formFields.length > 0 ? (
           <div className={styles.eventPageContainer}>
-            <EventHeader />
+            <EventHeader eventData={eventData} />
             <div className={styles.formContainer}>
               {formNumber === 0 && (
                 <motion.div
