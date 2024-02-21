@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 import { hostWithUs } from '../../../apis/auth';
 import toast from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
+import { getPublicEvents } from '../../../apis/events';
+import EventHeader from '../EventPage/components/EventHeader';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -16,11 +18,15 @@ const LandingPage = () => {
 
   const [showModal, setShowModal] = useState(false);
 
+  const [events, setEvents] = useState<any[]>([]);
+
   useEffect(() => {
+    getPublicEvents(setEvents);
+
     if (localStorage.getItem('accessToken') && location.pathname === '/') {
       navigate('/events');
     }
-  });
+  }, []);
 
   const handleSubmit = async () => {
     if (!nameRef.current?.value || !emailRef.current?.value || !phoneRef.current?.value) {
@@ -139,6 +145,19 @@ const LandingPage = () => {
 
               <img className={styles.landingImage} src='/app/landingImage.webp' />
             </div>
+          </div>
+
+          <p className={styles.currentHeading}>
+            <span>Our</span> Events
+          </p>
+          <p className={styles.currentEventsTagline}>
+            Listed below are the events that were scaled using Make My Pass. Click on any event to
+            know more.
+          </p>
+          <div className={styles.currentEvents}>
+            {events.map((event, index) => {
+              return <EventHeader eventData={event} key={index} />;
+            })}
           </div>
           <div className={styles.tc}>
             Checkout our&nbsp;

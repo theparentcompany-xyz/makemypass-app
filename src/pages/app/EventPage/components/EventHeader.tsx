@@ -3,8 +3,10 @@ import { EventDetails } from '../../../../apis/types';
 import styles from '../EventPage.module.css';
 import { motion } from 'framer-motion';
 import { FiClock } from 'react-icons/fi';
+import { useNavigate } from 'react-router';
 
 const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => {
+  const navigate = useNavigate();
   return (
     <motion.div
       initial={{ opacity: 0, y: 35 }}
@@ -12,6 +14,9 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.5 }}
       className={styles.eventDataContainer}
+      onClick={() => {
+        navigate(`/${eventData?.name}`);
+      }}
     >
       <div className={styles.eventTopHeader}>
         <div>

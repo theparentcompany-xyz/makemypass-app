@@ -60,6 +60,8 @@ export const makeMyPass = {
 
   shortListUser: (eventId: string, userId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/short-list-user/${userId}`),
+
+  listPublicEvents: makeMyPassURL('/event/list-events/'),
 };
 
 export const makeMyPassSocket = {
