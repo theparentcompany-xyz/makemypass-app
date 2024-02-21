@@ -147,13 +147,17 @@ const LandingPage = () => {
             </div>
           </div>
 
-          <p className={styles.currentHeading}>
-            <span>Our</span> Events
-          </p>
-          <p className={styles.currentEventsTagline}>
-            Listed below are the events that were scaled using Make My Pass. Click on any event to
-            know more.
-          </p>
+          {events && events.length > 0 && (
+            <>
+              <p className={styles.currentHeading}>
+                <span>Our</span> Events
+              </p>
+              <p className={styles.currentEventsTagline}>
+                Listed below are the events that were scaled using Make My Pass. Click on any event
+                to know more.
+              </p>
+            </>
+          )}
           <div className={styles.currentEvents}>
             {events.map((event, index) => {
               return <EventHeader eventData={event} key={index} />;
