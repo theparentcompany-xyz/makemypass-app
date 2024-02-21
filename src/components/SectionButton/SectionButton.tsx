@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 
 type ButtonProps = {
   buttonText: string;
-  icon: JSX.Element;
-  buttonColor: string;
+  icon?: JSX.Element;
+  buttonColor?: string;
   onClick?: () => void; // Add the onClick property to the type definition
 };
 

@@ -24,6 +24,7 @@ import InEventStats from './pages/app/InEventStats/InEventStats';
 import SecureAuthRoutes from '../services/authRoutes';
 import ClaimGifts from './pages/app/ClaimGifts/ClaimGifts';
 import EventPage from './pages/app/EventPage/EventPage';
+import Perks from './pages/app/CheckIns/pages/Perks/Perks';
 
 const RoleChecker = SecureAuthRoutes();
 
@@ -84,6 +85,10 @@ const routes = [
       {
         path: `/:eventTitle/checkins/claimgifts`,
         element: <RoleChecker roles={['Admin', 'Volunteer']} children={<ClaimGifts />} />,
+      },
+      {
+        path: '/:eventTitle/checkins/perks',
+        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<Perks />} />,
       },
       {
         path: '/:eventTitle/spinwheel',
