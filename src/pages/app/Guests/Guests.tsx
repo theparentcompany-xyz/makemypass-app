@@ -120,6 +120,7 @@ const Guests = () => {
       check_in_date: 'check_in_date',
       phone_number: 'phone_number',
       amount: 'amount',
+      is_shortlisted: 'is_shortlisted',
     };
 
     if (guests) {
@@ -161,6 +162,7 @@ const Guests = () => {
             formData={formData}
             setSelectedGuestId={setSelectedGuestId}
             eventId={eventId}
+            setResentTicket={setResentTicket}
           />
         </>
       )}
@@ -233,10 +235,10 @@ const Guests = () => {
                       ...prevState,
                       status: false,
                     }));
-                    setFormData({});
+
                     setSelectedGuestId({
-                      id: '',
-                      type: '',
+                      id: resentTicket.guestId,
+                      type: 'view',
                     });
                   }}
                   className={styles.button}

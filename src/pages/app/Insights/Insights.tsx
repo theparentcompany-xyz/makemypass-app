@@ -11,7 +11,7 @@ import {
   BarElement,
   ArcElement,
 } from 'chart.js';
-import { Line, Bar, Doughnut } from 'react-chartjs-2';
+import { Line, Doughnut } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';

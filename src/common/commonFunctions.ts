@@ -79,3 +79,22 @@ export const formatDate = (dateString: string) => {
 
   return `${getOrdinal(day)} ${month} ${year}`;
 };
+
+export function timeAgo(date: string | number | Date) {
+  const currentDate = new Date().getTime();
+  const timestamp = new Date(date).getTime();
+
+  const timeDifference = currentDate - timestamp;
+  const seconds = Math.floor(timeDifference / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 7) {
+    return `${Math.floor(days / 7)} week${Math.floor(days / 7) > 1 ? 's' : ''} ago`;
+  } else if (days > 0) {
+    return `${days} day${days > 1 ? 's' : ''} ago`;
+  } else if (hours > 0) {
+    return `today`;
+  }
+}

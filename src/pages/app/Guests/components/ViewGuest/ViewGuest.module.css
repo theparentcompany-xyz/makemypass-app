@@ -176,3 +176,32 @@
   max-width: 10rem;
   text-align: right;
 }
+
+.guestActionButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  column-gap: 1rem;
+
+  align-items: center;
+}
+
+.icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  column-gap: 0.25rem;
+  cursor: pointer;
+}
+
+.guestActionButtons span {
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: #d2d4d7;
+  cursor: pointer;
+  transition: 0.3s;
+}

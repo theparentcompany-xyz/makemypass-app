@@ -2,13 +2,12 @@ import React, { Dispatch, useMemo } from 'react';
 import { ResentTicket, SelectedGuest } from '../../pages/app/Guests/types';
 import styles from './Table.module.css';
 import { TableType } from './types';
-import { BsTicketPerforatedFill } from 'react-icons/bs';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MdDelete, MdEdit } from 'react-icons/md';
+import { MdCheckBox, MdCheckBoxOutlineBlank, MdDelete, MdEdit } from 'react-icons/md';
 import { FixedSizeList } from 'react-window';
 import { FaCheck, FaDollarSign } from 'react-icons/fa6';
-import { MdDownload } from 'react-icons/md';
 import { hostId } from '../../pages/app/Overview/Overview/types';
+import { timeAgo } from '../../common/commonFunctions';
 
 type ItemDataType = {
   filteredData: TableType[];
@@ -53,24 +52,9 @@ const RowComponent = React.memo(
         </div>
         <div className={styles.rowData}>
           <p className={styles.rowType}>{item.category}</p>
-          <p className={styles.rowDate}>{item.date}</p>
+          <p className={styles.rowDate}>{timeAgo(item.date)}</p>
           {setResentTicket && (
             <>
-              <div className={styles.icon}>
-                <BsTicketPerforatedFill
-                  onClick={() => {
-                    if (setResentTicket) {
-                      setResentTicket((prevState) => ({
-                        ...prevState,
-                        status: true,
-                        guestId: item.id,
-                        name: item.name,
-                      }));
-                    }
-                  }}
-                  color='#8E8E8E'
-                />
-              </div>
               <div className={styles.icon}>
                 <MdEdit
                   onClick={() => {
@@ -85,21 +69,20 @@ const RowComponent = React.memo(
                   color='#8E8E8E'
                 />
               </div>
-              <div className={styles.icon}>
-                <MdDownload
-                  onClick={() => {
-                    if (setSelectedGuestId) {
-                      setSelectedGuestId((prevState) => ({
-                        ...prevState,
-                        id: item.id,
-                        type: 'download',
-                      }));
-                    }
-                  }}
-                  color='#8E8E8E'
-                />
-              </div>
-              <div className={styles.icon}>
+              {item.is_shortlisted ? (
+                <div className={styles.icon} title='shortlisted'>
+                  <MdCheckBox color='#8E8E8E' />
+                </div>
+              ) : (
+                <div className={styles.icon}>
+                  <MdCheckBoxOutlineBlank
+                    color={item.is_shortlisted === false ? '#D70040' : '#8E8E8E'}
+                    title='not shortlisted'
+                  />
+                </div>
+              )}
+
+              <div title={item.amount?.toString()} className={styles.icon}>
                 <FaDollarSign color={item.amount > 0 ? '#47c97e' : '#8E8E8'} />
               </div>
             </>

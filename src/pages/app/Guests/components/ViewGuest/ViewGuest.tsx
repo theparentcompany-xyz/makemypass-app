@@ -1,21 +1,25 @@
 import styles from './ViewGuest.module.css';
 import { FormData, FormField } from '../../../../../apis/types';
-import { SelectedGuest } from '../../types';
+import { ResentTicket, SelectedGuest } from '../../types';
 import { Dispatch, useState } from 'react';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { shortListUser } from '../../../../../apis/guest';
 import { AnimatePresence, motion } from 'framer-motion';
+import { BsTicketPerforatedFill } from 'react-icons/bs';
+import { MdDownload } from 'react-icons/md';
 
 const ViewGuest = ({
   formFields,
   formData,
   setSelectedGuestId,
   eventId,
+  setResentTicket,
 }: {
   formFields: FormField[];
   formData: FormData;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;
+  setResentTicket: Dispatch<React.SetStateAction<ResentTicket>>;
 }) => {
   const [confirmClicked, setConfirmClicked] = useState({
     confirm: false,
@@ -116,6 +120,39 @@ const ViewGuest = ({
               </AnimatePresence>
             </div>
           </div>
+          <div className={styles.guestActionButtons}>
+            <div
+              className={styles.icon}
+              onClick={() => {
+                if (setResentTicket) {
+                  setResentTicket((prevState) => ({
+                    ...prevState,
+                    status: true,
+                    guestId: formData['id'],
+                    name: formData['name'],
+                  }));
+                }
+              }}
+            >
+              <BsTicketPerforatedFill title='Resend Ticket' color='#8E8E8E' />
+              <span>Resent Ticket</span>
+            </div>
+            <div
+              className={styles.icon}
+              onClick={() => {
+                if (setSelectedGuestId) {
+                  setSelectedGuestId((prevState) => ({
+                    ...prevState,
+                    id: formData['id'],
+                    type: 'download',
+                  }));
+                }
+              }}
+            >
+              <MdDownload color='#8E8E8E' />
+              <span>Download Ticket</span>
+            </div>
+          </div>
         </div>
         <hr className={styles.line} />
         <div className={styles.bottomSection}>
@@ -129,12 +166,14 @@ const ViewGuest = ({
               fieldName
             ) {
               return (
-                <div className={styles.field} key={key}>
-                  <p className={styles.fieldLabel}>{key === 'amount' ? 'Amount' : fieldName}</p>
-                  <p className={styles.fieldData}>
-                    {key === 'amount' && Number(formData[key]) <= 0 ? 'Free' : formData[key]}
-                  </p>
-                </div>
+                formData[key] && (
+                  <div className={styles.field} key={key}>
+                    <p className={styles.fieldLabel}>{key === 'amount' ? 'Amount' : fieldName}</p>
+                    <p className={styles.fieldData}>
+                      {key === 'amount' && Number(formData[key]) <= 0 ? 'Free' : formData[key]}
+                    </p>
+                  </div>
+                )
               );
             }
             return null;
