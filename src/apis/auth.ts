@@ -8,6 +8,9 @@ export const login = async (
   password: string,
   setIsAuthenticated: (arg0: boolean) => void,
   isOtpSent?: boolean,
+  setIsRegistered?: Dispatch<React.SetStateAction<boolean>>,
+  passwordRef?: React.RefObject<HTMLInputElement>,
+  setIsPassword?: Dispatch<React.SetStateAction<boolean>>,
 ) => {
   type LoginData = {
     email: string;
@@ -41,6 +44,14 @@ export const login = async (
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0]);
+      if (error.response.data.statusCode === 1001) {
+        setIsRegistered && setIsRegistered(false);
+        setIsAuthenticated(false);
+        if (passwordRef && passwordRef.current) {
+          passwordRef.current.value = '';
+          setIsPassword && setIsPassword(false);
+        }
+      }
     });
 };
 
@@ -69,7 +80,7 @@ export const generateOTP = async (
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0]);
-      if (setIsRegistered) {
+      if (error.response.data.statusCode === 1001) {
         setIsRegistered(false);
       }
     });
@@ -94,6 +105,7 @@ export const register = async (
   otp: string,
   setIsRegistered: Dispatch<React.SetStateAction<boolean>>,
   setIsOtpSent: Dispatch<React.SetStateAction<boolean>>,
+  setIsAuthenticated: Dispatch<React.SetStateAction<boolean>>,
 ) => {
   publicGateway
     .post(buildVerse.register, {
@@ -102,8 +114,14 @@ export const register = async (
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Registered successfully');
+      localStorage.setItem('accessToken', response.data.response.access_token);
+      localStorage.setItem('refreshToken', response.data.response.refresh_token);
+      localStorage.setItem('userEmail', email.split('@')[0]);
+      setIsAuthenticated(true);
+      onboardUser();
       setIsRegistered(true);
       setIsOtpSent(false);
+      setIsAuthenticated(true);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');

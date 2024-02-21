@@ -28,7 +28,15 @@ const Login = () => {
   const handleSubmit = () => {
     if (isRegistered) {
       if (isPassword && emailRef.current?.value && passwordRef.current?.value)
-        login(emailRef.current?.value, passwordRef.current?.value, setIsAuthenticated);
+        login(
+          emailRef.current?.value,
+          passwordRef.current?.value,
+          setIsAuthenticated,
+          isOtpSent,
+          setIsRegistered,
+          passwordRef,
+          setIsPassword,
+        );
       else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
         login(emailRef.current?.value, otpRef.current?.value, setIsAuthenticated, isOtpSent);
       else if (!isOtpSent && emailRef.current?.value)
@@ -36,7 +44,13 @@ const Login = () => {
     } else {
       if (!isOtpSent && emailRef.current?.value) preRegister(emailRef.current?.value, setIsOtpSent);
       else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
-        register(emailRef.current?.value, otpRef.current?.value, setIsRegistered, setIsOtpSent);
+        register(
+          emailRef.current?.value,
+          otpRef.current?.value,
+          setIsRegistered,
+          setIsOtpSent,
+          setIsAuthenticated,
+        );
     }
   };
 
