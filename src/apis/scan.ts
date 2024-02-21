@@ -5,18 +5,26 @@ import { makeMyPass } from '../../services/urls';
 export const checkInUser = async (
   ticketId: string,
   eventId: string,
-  setMessage: React.Dispatch<React.SetStateAction<string>>,
-  setIsError: React.Dispatch<React.SetStateAction<boolean>>,
+  setMessage?: React.Dispatch<React.SetStateAction<string>>,
+  setIsError?: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   privateGateway
     .post(makeMyPass.checkInUser(ticketId, eventId))
     .then((response) => {
-      setMessage(response.data.message.general[0] || 'Check-In Successful');
-      setIsError(false);
+      if (setMessage && setIsError) {
+        setMessage(response.data.message.general[0] || 'Check-In Successful');
+        setIsError(false);
+      } else {
+        toast.success(response.data.message.general[0] || 'Check-In Successful');
+      }
     })
     .catch((error) => {
-      setMessage(error.response.data.message.general[0] || 'Check-In Failed');
-      setIsError(true);
+      if (setMessage && setIsError) {
+        setMessage(error.response.data.message.general[0] || 'Check-In Failed');
+        setIsError(true);
+      } else {
+        toast.error(error.response.data.message.general[0] || 'Check-In Failed');
+      }
     });
 };
 
