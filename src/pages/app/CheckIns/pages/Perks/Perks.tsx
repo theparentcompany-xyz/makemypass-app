@@ -5,15 +5,13 @@ import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInH
 import { getPerksInfo, getUserPerksInfo, updatePerk } from '../../../../../apis/perks';
 import { getEventId } from '../../../../../apis/events';
 import { useParams } from 'react-router';
-import { CgClose } from 'react-icons/cg';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import toast from 'react-hot-toast';
 
 const Perks = () => {
-  const [tickets, setTickets] = useState([]);
-  const [currentTicketType, setCurrentTicketType] = useState('');
+  const [perks, setPerks] = useState([]);
   const [ticketId, setTicketId] = useState('');
   const [trigger, setTrigger] = useState(false);
   const [selectedPerk, setSelectedPerk] = useState('' as string);
@@ -37,32 +35,15 @@ const Perks = () => {
   const eventId = getLocalEventId();
 
   useEffect(() => {
-    getPerksInfo(eventId, setTickets);
+    getPerksInfo(eventId, setPerks);
   }, []);
 
   useEffect(() => {
     if (trigger) {
       getUserPerksInfo(ticketId);
-      updatePerk(ticketId, currentTicketType, selectedPerk);
-      setCurrentTicketType('');
-      setTicketId('');
+      updatePerk(ticketId, selectedPerk);
     }
   }, [trigger]);
-
-  const renderPerks = (perks: { [s: string]: unknown } | ArrayLike<unknown>, id: string) => {
-    return Object.entries(perks).map(([perk]) => (
-      <div className={styles.perkButton}>
-        <SectionButton
-          onClick={() => {
-            setCurrentTicketType(id);
-            setSelectedPerk(perk);
-          }}
-          buttonText={`${perk}`}
-          buttonColor=''
-        />
-      </div>
-    ));
-  };
 
   return (
     <>
@@ -70,19 +51,21 @@ const Perks = () => {
         <div className={styles.perksContainer}>
           <CheckInHeader buttonType='back' />
           <hr className={styles.line} />
-          {currentTicketType == '' ? (
+          <p className={styles.perksHeading}>Available Perks</p>
+          {selectedPerk == '' ? (
             <div className={styles.listPerksContainer}>
-              {Object.keys(tickets).map((ticketName: any, index: number) => (
-                <div key={index}>
-                  <p className={styles.ticketName}>{ticketName}</p>
-                  <div className={styles.perksButtons}>
-                    {renderPerks(
-                      (tickets[ticketName] as any).perks,
-                      (tickets[ticketName] as any).id,
-                    )}
+              {perks.map((perk) => {
+                return (
+                  <div className={styles.perk}>
+                    <SectionButton
+                      buttonText={perk}
+                      onClick={() => {
+                        setSelectedPerk(perk);
+                      }}
+                    />
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className={styles.scannerContainer}>
@@ -93,7 +76,15 @@ const Perks = () => {
                     <SecondaryButton
                       buttonText='Close'
                       onClick={() => {
-                        setCurrentTicketType('');
+                        setSelectedPerk('');
+                      }}
+                    />
+                  </div>
+                  <div className={styles.closeButton}>
+                    <SecondaryButton
+                      buttonText='Close'
+                      onClick={() => {
+                        setSelectedPerk('');
                       }}
                     />
                   </div>

@@ -5,8 +5,17 @@ export const getPerksInfo = (eventId: string, setPerks: any) =>
   privateGateway
     .get(makeMyPass.getPerksInfo(eventId))
     .then((response) => {
-      console.log(response.data);
-      setPerks(response.data.response);
+      const data = response.data.response;
+      const perkNames = [];
+
+      for (const key in data) {
+        const perks = data[key].perks;
+        for (const perk in perks) {
+          perkNames.push(perk);
+        }
+      }
+      setPerks(perkNames);
+      console.log(perkNames);
     })
     .catch((error) => {
       throw error;
@@ -20,10 +29,9 @@ export const getUserPerksInfo = (ticketCode: string) =>
       throw error;
     });
 
-export const updatePerk = (ticketId: string, currentTicketType: string, selectedPerk: string) =>
+export const updatePerk = (ticketId: string, selectedPerk: string) =>
   privateGateway
     .put(makeMyPass.updatePerk(ticketId), {
-      id: currentTicketType,
       perk_name: selectedPerk,
     })
     .then((response) => response.data)

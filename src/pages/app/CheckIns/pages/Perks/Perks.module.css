@@ -9,34 +9,6 @@
   opacity: 0.1;
 }
 
-.perkName {
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin-top: 1.25rem;
-  font-family: 'Inter', sans-serif;
-  color: white;
-}
-
-.ticketName {
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin-top: 1.25rem;
-  font-family: 'Inter', sans-serif;
-  color: white;
-}
-
-.perksButtons {
-  flex-wrap: wrap;
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 1rem;
-  gap: 1rem;
-}
-
-.perkButton {
-  width: 10rem;
-}
-
 .scannerContainer {
   display: flex;
   flex-direction: column;
@@ -223,4 +195,27 @@
   right: 0;
   bottom: 0;
   z-index: 50;
+}
+
+.perksHeading {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  font-weight: 600;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.listPerksContainer {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 1rem;
+  column-gap: 1rem;
+}
+
+.perk {
+  max-width: 15rem;
 }
