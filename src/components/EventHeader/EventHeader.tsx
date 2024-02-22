@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './EventHeader.module.css';
 import { getEventData, getEventId } from '../../apis/events';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import SectionButton from '../../components/SectionButton/SectionButton';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EventHeader = () => {
   const [eventData, setEventData] = useState({
