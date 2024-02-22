@@ -48,8 +48,6 @@
   justify-content: start;
   align-items: start;
   margin-bottom: 1rem;
-
-  width: 50%;
 }
 
 .cRightSection {
@@ -99,10 +97,11 @@
 }
 
 .wcount {
+  margin-top: 0.25rem;
   color: #c33d7b;
 
   font-family: Inter;
-  font-size: 24px;
+  font-size: 14px;
 }
 
 .live {
@@ -114,7 +113,7 @@
   color: #47c97e;
 
   font-family: Inter;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-style: normal;
   font-weight: 500;
 }
@@ -165,7 +164,7 @@
   padding: 1rem 2rem;
   font-family: 'Inter', sans-serif;
   color: white;
-  width: 56.5%;
+  width: 22.5%;
 }
 
 .todayRegistered {
@@ -225,6 +224,17 @@
   width: 10rem;
 }
 
+.paymentCounts {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1rem 2rem;
+  font-family: 'Inter', sans-serif;
+  color: white;
+  width: 27%;
+  margin: 0 0.5rem;
+}
+
 @media (max-width: 1120px) {
   .registrationCount {
     width: calc(100% - 4rem);
@@ -247,6 +257,13 @@
   }
 
   .pageVisitsCount {
+    margin-top: 1rem;
+
+    width: calc(100% - 4rem);
+    padding: 1rem;
+  }
+
+  .paymentCounts {
     margin-top: 1rem;
 
     width: calc(100% - 4rem);

@@ -183,7 +183,7 @@
 .guestActionButtons {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   row-gap: 0.5rem;
   column-gap: 1rem;

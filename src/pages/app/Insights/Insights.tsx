@@ -322,16 +322,48 @@ const Insights = () => {
                         </p>
                       </div>
                     </div>
-                    <div className={styles.cRightSection}>
-                      <p className={styles.rightSectionHeading}>Registration Cities</p>
+                  </div>
+                </div>
 
-                      <div className={styles.categories}>
-                        {Object.entries(message?.district_percentages || {}).map(([key, value]) => (
-                          <div className={styles.category}>
-                            <p className={styles.categoryName}>{key}</p>
-                            <p className={styles.categoryCount}>{value}</p>
-                          </div>
-                        ))}
+                <div
+                  style={{
+                    borderRadius: '12px',
+                  }}
+                  className={styles.paymentCounts}
+                >
+                  <div className={styles.countSection}>
+                    <div className={styles.cLeftSection}>
+                      <div className={styles.totalRegistered}>
+                        <p className={styles.total}>Payment Details</p>
+                        <p className={styles.count}>
+                          {message?.payment_analytics.total_paid_users} <span>Paid Users</span>
+                        </p>
+                      </div>
+                      <div className={styles.weeklyCounts}>
+                        <div className={styles.weeklyCount}>
+                          <p className={styles.week}>Total Amount</p>
+                          <p className={styles.wcount}>
+                            {message?.payment_analytics.total_amount.toLocaleString('en-IN', {
+                              style: 'currency',
+                              currency: 'INR',
+                            })}
+                          </p>
+                        </div>
+                        <div className={styles.weeklyCount}>
+                          <p className={styles.week}>Withdrawable</p>
+                          <p className={styles.wcount}>
+                            {message?.payment_analytics.total_withdraw.toLocaleString('en-IN', {
+                              style: 'currency',
+                              currency: 'INR',
+                            })}
+                          </p>
+                        </div>
+                      </div>
+                      <div className={styles.liveTraffic}>
+                        <p className={styles.live}>Paid User %</p>
+                        <p className={styles.lcount}>
+                          {message?.payment_analytics.paid_user_percentage}
+                        </p>
                       </div>
                     </div>
                   </div>

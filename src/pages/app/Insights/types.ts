@@ -15,6 +15,12 @@ export type AnalyticsData = {
   district_percentages: {
     [district: string]: string;
   };
+  payment_analytics: {
+    paid_user_percentage: string;
+    total_amount: number;
+    total_paid_users: number;
+    total_withdraw: number;
+  };
   days_left: string;
   event_date: string;
   active_timeframe: {
