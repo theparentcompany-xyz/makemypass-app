@@ -141,62 +141,64 @@ const ViewGuest = ({
               </motion.div>
             </AnimatePresence>
           </div>
-          <div className={styles.guestActionButtons}>
-            <div
-              className={styles.icon}
-              onClick={() => {
-                if (setResentTicket) {
-                  setResentTicket((prevState) => ({
-                    ...prevState,
-                    status: true,
-                    guestId: formData['id'],
-                    name: formData['name'],
-                  }));
-                }
-              }}
-            >
-              <BsTicketPerforatedFill
-                style={{
-                  marginRight: '5px',
-                }}
-                size={20}
-                title='Resend Ticket'
-                color='#8E8E8E'
-              />
-              <span>Resent Ticket</span>
-            </div>
-            <div
-              className={styles.icon}
-              onClick={() => {
-                if (setSelectedGuestId) {
-                  setSelectedGuestId((prevState) => ({
-                    ...prevState,
-                    id: formData['id'],
-                    type: 'download',
-                  }));
-                }
-              }}
-            >
-              <MdDownload size={20} color='#8E8E8E' />
-              <span>Download Ticket</span>
-            </div>
-            {!formData['check_in_date'] && (
+          {formData['is_shortlisted'] && (
+            <div className={styles.guestActionButtons}>
               <div
-                onClick={() => {
-                  checkInUser(formData['ticket_code'], eventId);
-                  setSelectedGuestId((prevState) => ({
-                    ...prevState,
-                    id: '',
-                    type: '',
-                  }));
-                }}
                 className={styles.icon}
+                onClick={() => {
+                  if (setResentTicket) {
+                    setResentTicket((prevState) => ({
+                      ...prevState,
+                      status: true,
+                      guestId: formData['id'],
+                      name: formData['name'],
+                    }));
+                  }
+                }}
               >
-                <FaCheck size={20} color='#8E8E8E' />
-                <span>Check-In User</span>
+                <BsTicketPerforatedFill
+                  style={{
+                    marginRight: '5px',
+                  }}
+                  size={20}
+                  title='Resend Ticket'
+                  color='#8E8E8E'
+                />
+                <span>Resent Ticket</span>
               </div>
-            )}
-          </div>
+              <div
+                className={styles.icon}
+                onClick={() => {
+                  if (setSelectedGuestId) {
+                    setSelectedGuestId((prevState) => ({
+                      ...prevState,
+                      id: formData['id'],
+                      type: 'download',
+                    }));
+                  }
+                }}
+              >
+                <MdDownload size={20} color='#8E8E8E' />
+                <span>Download Ticket</span>
+              </div>
+              {!formData['check_in_date'] && (
+                <div
+                  onClick={() => {
+                    checkInUser(formData['ticket_code'], eventId);
+                    setSelectedGuestId((prevState) => ({
+                      ...prevState,
+                      id: '',
+                      type: '',
+                    }));
+                  }}
+                  className={styles.icon}
+                >
+                  <FaCheck size={20} color='#8E8E8E' />
+                  <span>Check-In User</span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
         <hr className={styles.line} />
         <div className={styles.bottomSection}>
