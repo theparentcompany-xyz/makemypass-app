@@ -240,3 +240,11 @@
   bottom: 0;
   z-index: 50;
 }
+
+.tableButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  row-gap: 1rem;
+  column-gap: 0.25rem;
+}

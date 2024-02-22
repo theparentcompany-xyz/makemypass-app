@@ -21,6 +21,7 @@ import ViewGuest from './components/ViewGuest/ViewGuest';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { TicketOptions } from '../EventPage/types';
 import { addGuest } from '../../../apis/guest';
+import { handleClick } from './components/csvExport';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -314,16 +315,25 @@ const Guests = () => {
                 setResentTicket={setResentTicket}
                 setSelectedGuestId={setSelectedGuestId}
                 secondaryButton={
-                  <SecondaryButton
-                    buttonText='Add Guests +'
-                    onClick={() => {
-                      setSelectedGuestId({
-                        id: '',
-                        type: 'add',
-                      });
-                      setFormData({});
-                    }}
-                  />
+                  <div className={styles.tableButtons}>
+                    <SecondaryButton
+                      buttonText='Add Guests +'
+                      onClick={() => {
+                        setSelectedGuestId({
+                          id: '',
+                          type: 'add',
+                        });
+                        setFormData({});
+                        console.log(guestsTableData);
+                      }}
+                    />
+                    <SecondaryButton
+                      buttonText='CSV'
+                      onClick={() => {
+                        handleClick(guestsTableData, 'Guests CSV');
+                      }}
+                    />
+                  </div>
                 }
               />
             </div>
