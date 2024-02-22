@@ -61,6 +61,14 @@ const EventPage = () => {
   }, [eventTitle, eventId]);
 
   useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo(0, 0);
+    };
+
+    scrollToTop();
+  }, [success]);
+
+  useEffect(() => {
     if (discount.discount_value > 0) {
       setAmount(discountedTicketPrice(Number(amount), discount).toString());
     } else {
