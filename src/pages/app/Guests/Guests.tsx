@@ -23,7 +23,7 @@ import { TicketOptions } from '../EventPage/types';
 import { addGuest } from '../../../apis/guest';
 import { handleClick } from './components/csvExport';
 import { customStyles } from '../EventPage/constants';
-import Select, { PropsValue } from 'react-select';
+import Select from 'react-select';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
