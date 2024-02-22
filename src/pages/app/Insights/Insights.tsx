@@ -343,7 +343,7 @@ const Insights = () => {
                         <div className={styles.weeklyCount}>
                           <p className={styles.week}>Total Amount</p>
                           <p className={styles.wcount}>
-                            {message?.payment_analytics.total_amount.toLocaleString('en-IN', {
+                            {message?.payment_analytics.total_amount?.toLocaleString('en-IN', {
                               style: 'currency',
                               currency: 'INR',
                             })}
@@ -352,7 +352,7 @@ const Insights = () => {
                         <div className={styles.weeklyCount}>
                           <p className={styles.week}>Withdrawable</p>
                           <p className={styles.wcount}>
-                            {message?.payment_analytics.total_withdraw.toLocaleString('en-IN', {
+                            {message?.payment_analytics.total_withdraw?.toLocaleString('en-IN', {
                               style: 'currency',
                               currency: 'INR',
                             })}
