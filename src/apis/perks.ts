@@ -1,3 +1,4 @@
+import { Dispatch } from 'react';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 
@@ -29,12 +30,25 @@ export const getUserPerksInfo = (ticketCode: string) =>
       throw error;
     });
 
-export const updatePerk = (ticketId: string, selectedPerk: string) =>
+export const updatePerk = (
+  ticketId: string,
+  selectedPerk: string,
+  setMessage: Dispatch<React.SetStateAction<string>>,
+  setIsError: Dispatch<React.SetStateAction<boolean>>,
+) =>
   privateGateway
     .put(makeMyPass.updatePerk(ticketId), {
       perk_name: selectedPerk,
     })
-    .then((response) => response.data)
+    .then((response) => {
+      setMessage(response.data.message.general[0]);
+    })
     .catch((error) => {
-      throw error;
+      setIsError(true);
+      setMessage(error.response.data.message.general[0]);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        setMessage('');
+      }, 1500);
     });

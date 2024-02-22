@@ -9,12 +9,15 @@ import SectionButton from '../../../../../components/SectionButton/SectionButton
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import toast from 'react-hot-toast';
+import { CgClose } from 'react-icons/cg';
 
 const Perks = () => {
   const [perks, setPerks] = useState([]);
   const [ticketId, setTicketId] = useState('');
   const [trigger, setTrigger] = useState(false);
   const [selectedPerk, setSelectedPerk] = useState('' as string);
+  const [message, setMessage] = useState('');
+  const [isError, setIsError] = useState(false);
 
   const getLocalEventId = () => {
     if (eventTitle) {
@@ -41,13 +44,44 @@ const Perks = () => {
   useEffect(() => {
     if (trigger) {
       getUserPerksInfo(ticketId);
-      updatePerk(ticketId, selectedPerk);
+      updatePerk(ticketId, selectedPerk, setMessage, setIsError);
     }
   }, [trigger]);
 
   return (
     <>
       <Theme>
+        {message && message.length > 0 && (
+          <>
+            <div className={styles.backgroundBlur}></div>
+            <dialog
+              style={
+                isError
+                  ? {
+                      borderBottom: '3px solid #f71e1e',
+                      background: 'rgba(185, 31, 31, 0.09)',
+                    }
+                  : {
+                      borderBottom: '3px solid #47c97e',
+                      background: 'rgba(31, 185, 31, 0.09)',
+                    }
+              }
+              open
+              className={styles.onClickModal}
+            >
+              <br />
+              <p className={styles.modalSubText}>{message}</p>
+              <SectionButton
+                buttonText='Close'
+                onClick={() => {
+                  setMessage('');
+                }}
+                buttonColor='red'
+                icon={<CgClose />}
+              />
+            </dialog>
+          </>
+        )}
         <div className={styles.perksContainer}>
           <CheckInHeader buttonType='back' />
           <hr className={styles.line} />
@@ -77,6 +111,7 @@ const Perks = () => {
                       buttonText='Close'
                       onClick={() => {
                         setSelectedPerk('');
+                        setTicketId('');
                       }}
                     />
                   </div>
