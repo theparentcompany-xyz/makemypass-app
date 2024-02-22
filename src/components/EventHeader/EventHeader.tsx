@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './EventHeader.module.css';
 import { getEventData, getEventId } from '../../apis/events';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import SectionButton from '../../components/SectionButton/SectionButton';
 
 const EventHeader = () => {
   const [eventData, setEventData] = useState({
@@ -38,13 +39,27 @@ const EventHeader = () => {
     if (eventId) getEventData(eventId, setEventData);
   }, [eventId]);
 
+  const navigate = useNavigate();
+
   return (
     <>
       <div className={styles.headerRow}>
-        <p className={styles.headerText}>
-          <img className={styles.headerImage} src={eventLogo} alt='' />
-          {eventData?.title}
-        </p>
+        <div className={styles.row}>
+          <div className={styles.backButton}>
+            <button
+              onClick={() => {
+                navigate('/events');
+              }}
+              className={styles.goBack}
+            >
+              {'<'}
+            </button>
+          </div>
+          <p className={styles.headerText}>
+            <img className={styles.headerImage} src={eventLogo} alt='' />
+            {eventData?.title}
+          </p>
+        </div>
         <div className='row'>
           <p className={styles.date}>{eventData?.date}</p>
           <img src='/app/live.gif' alt='' className={styles.gif} />
