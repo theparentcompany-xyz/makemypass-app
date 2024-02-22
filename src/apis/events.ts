@@ -4,6 +4,7 @@ import { makeMyPass } from '../../services/urls';
 import { Event } from './types'; // Assuming Event is the type for events
 import { NavigateFunction } from 'react-router';
 import { getEventDatas } from './publicpage';
+import { Dispatch } from 'react';
 
 export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<Event[]>>) => {
   privateGateway
@@ -57,6 +58,21 @@ export const getPublicEvents = async (setEvents: React.Dispatch<React.SetStateAc
     .then((response) => {
       setEvents(response.data.response);
       console.log(response.data.response);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
+export const getCategories = async (
+  eventId: string,
+  setCategories: Dispatch<React.SetStateAction<string[]>>,
+) => {
+  privateGateway
+    .get(makeMyPass.getCategories(eventId))
+    .then((response) => {
+      console.log(response.data.response);
+      setCategories(response.data.response);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');

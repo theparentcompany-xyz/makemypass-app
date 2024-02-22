@@ -7,7 +7,7 @@ import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
 import { useParams } from 'react-router-dom';
 import { GuestsType, ResentTicket, SelectedGuest } from './types';
-import { getEventId } from '../../../apis/events';
+import { getCategories, getEventId } from '../../../apis/events';
 import { RiSearchLine } from 'react-icons/ri';
 import { HashLoader } from 'react-spinners';
 import Table from '../../../components/Table/Table';
@@ -22,6 +22,8 @@ import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryBut
 import { TicketOptions } from '../EventPage/types';
 import { addGuest } from '../../../apis/guest';
 import { handleClick } from './components/csvExport';
+import { customStyles } from '../EventPage/constants';
+import Select, { PropsValue } from 'react-select';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -34,6 +36,8 @@ const Guests = () => {
   const [formData, setFormData] = useState<FormData>({});
   const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
   const [ticketId, setTicketId] = useState<string>('');
+  const [categories, setCategories] = useState<string[]>([]);
+  const [currentCategory, setCurrentCategory] = useState<string>();
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
@@ -99,6 +103,7 @@ const Guests = () => {
   useEffect(() => {
     getFormFields(eventId, setFormFields);
     getTickets(eventId, setTicketInfo);
+    getCategories(eventId, setCategories);
     return () => {
       socket?.close();
     };
@@ -293,8 +298,6 @@ const Guests = () => {
             <div className={styles.guests}>
               <div className={styles.tableHeader}>
                 <p className={styles.tableHeading}>Guests List</p>
-
-                {/* <SecondaryButton buttonText='All Guests ➞' /> */}
               </div>
 
               <div className={styles.searchInput}>
@@ -310,7 +313,11 @@ const Guests = () => {
 
               <Table
                 tableHeading='Recent Guests'
-                tableData={guestsTableData}
+                tableData={
+                  currentCategory
+                    ? guestsTableData.filter((guest) => guest.category === currentCategory)
+                    : guestsTableData
+                }
                 search={searchKeyword}
                 setResentTicket={setResentTicket}
                 setSelectedGuestId={setSelectedGuestId}
@@ -324,7 +331,6 @@ const Guests = () => {
                           type: 'add',
                         });
                         setFormData({});
-                        console.log(guestsTableData);
                       }}
                     />
                     <SecondaryButton
@@ -333,6 +339,21 @@ const Guests = () => {
                         handleClick(guestsTableData, 'Guests CSV');
                       }}
                     />
+                    {categories.length > 0 && (
+                      <Select
+                        className='basic-single'
+                        classNamePrefix='select'
+                        onChange={(selectedOption: { value: string } | null) => {
+                          setCurrentCategory(selectedOption?.value);
+                        }}
+                        name='role'
+                        options={categories.map((category) => ({
+                          value: category,
+                          label: category,
+                        }))}
+                        styles={customStyles}
+                      />
+                    )}
                   </div>
                 }
               />
