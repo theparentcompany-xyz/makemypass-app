@@ -16,7 +16,7 @@ import {
   BarElement,
   ArcElement,
 } from 'chart.js';
-import { Line, Doughnut } from 'react-chartjs-2';
+import { Line, Doughnut, Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import { ChartData } from '../Insights/types';
 import { GuestsType } from '../Guests/types';
@@ -151,9 +151,9 @@ const InEventStats = () => {
       }).then((ws) => {
         ws.onmessage = (event) => {
           const lineData = JSON.parse(event.data).response.time;
-          let barData = JSON.parse(event.data).response.district;
+          const barData = JSON.parse(event.data).response.bargraph;
           setDistrictData(barData);
-
+          console.log(lineData);
           const dates = Object.keys(lineData || {});
           setDailyCount([]);
           const lineDataSet: LineDataSet[] = dates.map((date, index) => {
@@ -185,7 +185,7 @@ const InEventStats = () => {
           });
 
           setLineData({
-            labels: Object.keys(lineData['2024-02-02'] || {}),
+            labels: Object.keys(lineData['2024-02-23'] || {}),
             datasets: lineDataSet,
           });
 
@@ -193,7 +193,7 @@ const InEventStats = () => {
             labels: Object.keys(barData || {}),
             datasets: [
               {
-                label: 'District-Wise Count',
+                label: 'Category-Wise Count',
                 data: Object.values(barData || {}),
                 borderWidth: 1,
                 borderColor: colors,
@@ -330,12 +330,12 @@ const InEventStats = () => {
 
           <div className={styles.todayRegistered}>
             <div className={styles.graphContainer}>
-              {barData && <Doughnut options={doughnutOption} data={barData} />}
+              {barData && <Bar options={doughnutOption} data={barData} />}
             </div>
 
             <div className={styles.totalRegistered}>
               <p className={styles.total}>
-                Top District: {findDistrictWithMostNumber()?.district}&nbsp;
+                Top Category: {findDistrictWithMostNumber()?.district}&nbsp;
                 <span>
                   ({findDistrictWithMostNumber()?.value} <span>guests</span>)
                 </span>
