@@ -346,7 +346,7 @@ const Insights = () => {
                             {message?.payment_analytics.total_amount?.toLocaleString('en-IN', {
                               style: 'currency',
                               currency: 'INR',
-                            })}
+                            }) || '-'}
                           </p>
                         </div>
                         <div className={styles.weeklyCount}>
@@ -355,7 +355,7 @@ const Insights = () => {
                             {message?.payment_analytics.total_withdraw?.toLocaleString('en-IN', {
                               style: 'currency',
                               currency: 'INR',
-                            })}
+                            }) || '-'}
                           </p>
                         </div>
                       </div>
