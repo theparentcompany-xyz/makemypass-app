@@ -293,7 +293,7 @@ const Glance = ({ tab }: { tab: string }) => {
                           totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#ffffff' }
                         }
                       >
-                        {todayCheckIns}
+                        {totalGuests}
                       </p>
                     </motion.p>
                     {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}
