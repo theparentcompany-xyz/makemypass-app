@@ -29,6 +29,7 @@ const Glance = ({ tab }: { tab: string }) => {
   const [targetGuests, setTargetGuests] = useState<number>(0);
   const [todayCheckIns, setTodayCheckIns] = useState<number>(0);
   const [lastRegistered, setLastRegistered] = useState<string>('');
+  console.log(todayCheckIns);
 
   useEffect(() => {
     return () => {
