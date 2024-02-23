@@ -26,6 +26,7 @@ import { getEventId } from '../../../apis/events';
 import Confetti from 'react-confetti';
 import { formatDate } from '../../../common/commonFunctions';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import Glance from '../../../components/Glance/Glance';
 
 ChartJS.register(
   CategoryScale,
@@ -290,7 +291,7 @@ const InEventStats = () => {
 
         <div className={styles.inEventContainer}>
           <Header />
-          {/* <Glance tab='inevent' /> */}
+          <Glance tab='inevent' />
         </div>
 
         <div className={styles.insightsContainer}>
