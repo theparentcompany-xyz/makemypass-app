@@ -54,6 +54,7 @@
 .rowData {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .rowName {
