@@ -291,7 +291,7 @@ const InEventStats = () => {
 
         <div className={styles.inEventContainer}>
           <Header />
-          <Glance tab='inevent' />
+          {/* <Glance tab='inevent' /> */}
         </div>
 
         <div className={styles.insightsContainer}>
