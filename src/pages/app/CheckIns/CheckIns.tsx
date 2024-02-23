@@ -8,6 +8,7 @@ import { BsQrCodeScan } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { IoGiftSharp } from 'react-icons/io5';
 import { SiNextra } from 'react-icons/si';
+import { FaDatabase } from 'react-icons/fa6';
 
 const CheckIns = () => {
   return (
@@ -20,6 +21,13 @@ const CheckIns = () => {
           <hr className={styles.line} />
           <div className={styles.buttons}>
             <div className='row'>
+              <Link to='checkin/'>
+                <SectionButton
+                  buttonText='Check-In Data'
+                  buttonColor='#C33D7B'
+                  icon={<FaDatabase size={25} color='#5B75FB' />}
+                />
+              </Link>
               <Link to='checkin/scan'>
                 <SectionButton
                   buttonText='Scan User'

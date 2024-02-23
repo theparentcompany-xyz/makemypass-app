@@ -336,7 +336,12 @@ const Guests = () => {
                     <SecondaryButton
                       buttonText='CSV'
                       onClick={() => {
-                        handleClick(guestsTableData, 'Guests CSV');
+                        handleClick(
+                          currentCategory
+                            ? guestsTableData.filter((guest) => guest.category === currentCategory)
+                            : guestsTableData,
+                          'Guests CSV',
+                        );
                       }}
                     />
                     {categories.length > 0 && (

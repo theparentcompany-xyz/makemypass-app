@@ -6,12 +6,16 @@ import { useEffect, useState } from 'react';
 import { guests } from './types';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
 import { useParams } from 'react-router-dom';
-import { getEventId } from '../../../../../apis/events';
+import { getCategories, getEventId } from '../../../../../apis/events';
 import { connectPrivateSocket } from '../../../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../../../services/urls';
 import { transformTableData } from '../../../../../common/commonFunctions';
 import { TableType } from '../../../../../components/Table/types';
 import Table from '../../../../../components/Table/Table';
+import { customStyles } from '../../../EventPage/constants';
+import Select from 'react-select';
+import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
+import { handleClick } from '../../../Guests/components/csvExport';
 
 const CheckIn = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<guests[]>([]);
@@ -20,6 +24,9 @@ const CheckIn = () => {
   const [recentTableData, setRecentTableData] = useState<TableType[]>([]);
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
+
+  const [categories, setCategories] = useState<string[]>([]);
+  const [currentCategory, setCurrentCategory] = useState<string>();
 
   useEffect(() => {
     let eventData = JSON.parse(localStorage.getItem('eventData') as string);
@@ -42,26 +49,26 @@ const CheckIn = () => {
   }, [eventTitle]);
 
   useEffect(() => {
-    if (eventId)
-      connectPrivateSocket({
-        url: makeMyPassSocket.listCheckinGuests(eventId),
-      }).then((ws) => {
-        ws.onmessage = (event) => {
-          if (JSON.parse(event.data).response.datas)
-            setRecentRegistrations(JSON.parse(event.data).response.datas);
-          else if (JSON.parse(event.data).response.data) {
-            const newRegistration = JSON.parse(event.data).response.data;
+    if (eventId) getCategories(eventId, setCategories);
+    connectPrivateSocket({
+      url: makeMyPassSocket.listCheckinGuests(eventId),
+    }).then((ws) => {
+      ws.onmessage = (event) => {
+        if (JSON.parse(event.data).response.datas)
+          setRecentRegistrations(JSON.parse(event.data).response.datas);
+        else if (JSON.parse(event.data).response.data) {
+          const newRegistration = JSON.parse(event.data).response.data;
 
-            setRecentRegistrations((prev) => {
-              const updatedRegistrations = [newRegistration, ...prev];
+          setRecentRegistrations((prev) => {
+            const updatedRegistrations = [newRegistration, ...prev];
 
-              return updatedRegistrations;
-            });
-          }
-        };
+            return updatedRegistrations;
+          });
+        }
+      };
 
-        setSocket(ws);
-      });
+      setSocket(ws);
+    });
   }, [eventId]);
 
   useEffect(() => {
@@ -105,7 +112,45 @@ const CheckIn = () => {
           />
         </div>
 
-        <Table tableHeading='Recent CheckIns' tableData={recentTableData} search={searchKeyword} />
+        <Table
+          tableHeading='Recent CheckIns'
+          tableData={
+            currentCategory
+              ? recentTableData.filter((data) => data.category === currentCategory)
+              : recentTableData
+          }
+          search={searchKeyword}
+          secondaryButton={
+            <div className={styles.tableButtons}>
+              <SecondaryButton
+                buttonText='CSV'
+                onClick={() => {
+                  handleClick(
+                    currentCategory
+                      ? recentTableData.filter((data) => data.category === currentCategory)
+                      : recentTableData,
+                    'Guests CSV',
+                  );
+                }}
+              />
+              {categories.length > 0 && (
+                <Select
+                  className='basic-single'
+                  classNamePrefix='select'
+                  onChange={(selectedOption: { value: string } | null) => {
+                    setCurrentCategory(selectedOption?.value);
+                  }}
+                  name='role'
+                  options={categories.map((category) => ({
+                    value: category,
+                    label: category,
+                  }))}
+                  styles={customStyles}
+                />
+              )}
+            </div>
+          }
+        />
       </div>
     </Theme>
   );
