@@ -236,7 +236,7 @@ const Glance = ({ tab }: { tab: string }) => {
             </div>
 
             <div className={styles.guestsCount}>
-              {totalGuests >= 0 && (
+              {totalGuests > 0 && (
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
