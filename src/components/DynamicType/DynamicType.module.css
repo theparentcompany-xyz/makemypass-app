@@ -29,7 +29,8 @@
   overflow: auto;
   overflow-x: hidden;
   margin-top: 2rem;
-  max-height: 60vh;
+  position: relative;
+  z-index: 1000;
 }
 
 .errorText {
