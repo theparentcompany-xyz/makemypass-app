@@ -16,7 +16,7 @@ import {
   BarElement,
   ArcElement,
 } from 'chart.js';
-import { Line, Doughnut, Bar } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import { ChartData } from '../Insights/types';
 import { GuestsType } from '../Guests/types';
