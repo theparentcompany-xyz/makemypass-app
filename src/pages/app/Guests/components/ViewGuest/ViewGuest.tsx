@@ -9,6 +9,7 @@ import { BsTicketPerforatedFill } from 'react-icons/bs';
 import { MdDownload } from 'react-icons/md';
 import { FaCheck } from 'react-icons/fa6';
 import { checkInUser } from '../../../../../apis/scan';
+import { formatDate } from '../../../../../common/commonFunctions';
 
 const ViewGuest = ({
   formFields,
@@ -67,12 +68,12 @@ const ViewGuest = ({
             >
               <div className={styles.field}>
                 <p className={styles.fieldLabel}>Registered</p>
-                <p className={styles.fieldData}>{formData['registered_at']}</p>
+                <p className={styles.fieldData}>{formatDate(formData['registered_at'])}</p>
               </div>
               {formData['check_in_date'] && (
                 <div className={styles.field}>
                   <p className={styles.fieldLabel}>Checked In</p>
-                  <p className={styles.fieldData}>{formData['check_in_date']}</p>
+                  <p className={styles.fieldData}>{formatDate(formData['check_in_date'])}</p>
                 </div>
               )}
             </div>

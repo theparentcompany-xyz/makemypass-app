@@ -124,7 +124,7 @@ const toasterProps = {
     style: {
       backgroundColor: '#1B2725',
       border: '0.5px solid #232A2B',
-      color: '#ffffff',
+      color: '#fdfdfd',
     },
   },
   position: 'bottom-center' as ToastPosition,

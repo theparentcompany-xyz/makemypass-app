@@ -1,5 +1,6 @@
 .scanContainer {
   padding: 0 1.25rem;
+padding-left: 0;
 }
 
 .line {
@@ -357,6 +358,7 @@
 
 .scanContainer {
   padding: 0 1.25rem;
+padding-left: 0;
 }
 
 .line {

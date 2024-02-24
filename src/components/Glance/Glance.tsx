@@ -132,7 +132,7 @@ const Glance = ({ tab }: { tab: string }) => {
                 <>
                   <div>
                     <motion.li
-                      whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                      whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
                       className={styles.tab}
                       onClick={() => updateTab('overview')}
                     >
@@ -144,7 +144,7 @@ const Glance = ({ tab }: { tab: string }) => {
                   </div>
                   <div>
                     <motion.li
-                      whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                      whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
                       className={styles.tab}
                       onClick={() => updateTab('insights')}
                     >
@@ -157,7 +157,7 @@ const Glance = ({ tab }: { tab: string }) => {
                   </div>
                   <div>
                     <motion.li
-                      whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                      whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
                       className={styles.tab}
                       onClick={() => updateTab('guests')}
                     >
@@ -169,7 +169,7 @@ const Glance = ({ tab }: { tab: string }) => {
                   </div>
                   <div>
                     <motion.li
-                      whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                      whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
                       className={styles.tab}
                       onClick={() => updateTab('checkins')}
                     >
@@ -181,7 +181,7 @@ const Glance = ({ tab }: { tab: string }) => {
                   </div>
                   <div>
                     <motion.li
-                      whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                      whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
                       className={styles.tab}
                       onClick={() => updateTab('inevent')}
                     >
@@ -195,7 +195,7 @@ const Glance = ({ tab }: { tab: string }) => {
               )}
               {/* <div>
                 <motion.li
-                  whileHover={{ scale: 1.05, marginRight: 10, color: '#ffffff' }}
+                  whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
                   className={styles.tab}
                   onClick={() => updateTab('spinwheel')}
                 >
@@ -246,7 +246,7 @@ const Glance = ({ tab }: { tab: string }) => {
                     animate={{
                       scale: [1, 1.25, 1],
                       marginRight: [0, 5, 0],
-                      color: ['#47c97e', '#ffffff', '#47c97e'],
+                      color: ['#47c97e', '#fdfdfd', '#47c97e'],
                     }}
                     transition={{
                       duration: 0.75,
@@ -257,7 +257,7 @@ const Glance = ({ tab }: { tab: string }) => {
                       style={
                         totalGuests >= targetGuests && targetGuests > 0
                           ? { color: '#47c97e' }
-                          : { color: '#ffffff' }
+                          : { color: '#fdfdfd' }
                       }
                     >
                       {totalGuests}
@@ -281,7 +281,7 @@ const Glance = ({ tab }: { tab: string }) => {
                       animate={{
                         scale: [1, 1.25, 1],
                         marginRight: [0, 5, 0],
-                        color: ['#47c97e', '#ffffff', '#47c97e'],
+                        color: ['#47c97e', '#fdfdfd', '#47c97e'],
                       }}
                       transition={{
                         duration: 0.75,
@@ -290,7 +290,7 @@ const Glance = ({ tab }: { tab: string }) => {
                     >
                       <p
                         style={
-                          totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#ffffff' }
+                          totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#fdfdfd' }
                         }
                       >
                         {todayCheckIns}

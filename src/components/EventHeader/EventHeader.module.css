@@ -52,7 +52,7 @@
   }
 
   .date {
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 400;
   }
 
@@ -68,7 +68,7 @@
 
   border: none;
 
-  padding: 0.5rem 1.25rem;
+  padding: 0.5rem 0.75rem;
 
   display: flex;
   justify-content: center;
@@ -77,9 +77,6 @@
   color: white;
   align-items: center;
   cursor: pointer;
-
-  min-width: 4rem;
-  width: 100%;
   font-size: 1rem;
   font-family: 'Inter';
 }
