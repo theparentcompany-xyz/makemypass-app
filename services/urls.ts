@@ -71,6 +71,7 @@ export const makeMyPass = {
   updatePerk: (ticketCode: string) => makeMyPassURL(`/checkin/update-perk/${ticketCode}/`),
 
   getCategories: (eventId: string) => makeMyPassURL(`/rsvp/get-form-categories/${eventId}/`),
+  sentPostMail: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/manage-post-event/`),
 };
 
 export const makeMyPassSocket = {
