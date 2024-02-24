@@ -191,6 +191,18 @@ const Glance = ({ tab }: { tab: string }) => {
                       <motion.div layoutId='tab-indicator' className={styles.active} />
                     )}
                   </div>
+                  <div>
+                    <motion.li
+                      whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
+                      className={styles.tab}
+                      onClick={() => updateTab('postevent')}
+                    >
+                      Post-Event
+                    </motion.li>
+                    {currentTab === 'postevent' && (
+                      <motion.div layoutId='tab-indicator' className={styles.active} />
+                    )}
+                  </div>
                 </>
               )}
               {/* <div>
