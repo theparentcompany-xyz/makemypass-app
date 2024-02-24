@@ -10,6 +10,10 @@ import { getEventId } from '../../../apis/events';
 const PostEvent = () => {
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
+  const [openConfirmModal, setConfirmModal] = useState({
+    confirm: false,
+    value: false,
+  });
 
   useEffect(() => {
     let eventData = JSON.parse(localStorage.getItem('eventData') as string);
@@ -33,23 +37,50 @@ const PostEvent = () => {
 
   return (
     <>
+      {openConfirmModal && openConfirmModal.confirm && (
+        <dialog className={styles.onClickModal}>
+          <p className={styles.modalHeader}>Remove Host</p>
+          <p className={styles.modalSubText}>Are you sure you want to sent mails?</p>
+          <div className={styles.buttons}>
+            <p
+              onClick={() => {
+                sentPostEventMail(eventId, openConfirmModal.value);
+                setTimeout(() => {
+                  setConfirmModal({ confirm: false, value: false });
+                }, 1000);
+              }}
+              className={styles.button}
+            >
+              Sent Mails
+            </p>
+            <p
+              onClick={() => {
+                setConfirmModal({ confirm: false, value: false });
+              }}
+              className={styles.button}
+            >
+              Cancel
+            </p>
+          </div>
+        </dialog>
+      )}
       <Theme>
         <p className={styles.text}>Sent Mails</p>
         <div className={styles.postEventContainer}>
-          <div className={styles.button}>
+          <div className={styles.sbutton}>
             <SectionButton
               buttonText='Participant'
               onClick={() => {
-                sentPostEventMail(eventId, true);
+                setConfirmModal({ confirm: true, value: true });
               }}
               icon={<LuMailPlus size={28} color='' />}
             />
           </div>
-          <div className={styles.button}>
+          <div className={styles.sbutton}>
             <SectionButton
               buttonText='Non Participant'
               onClick={() => {
-                sentPostEventMail(eventId, false);
+                setConfirmModal({ confirm: true, value: false });
               }}
               icon={<LuMailX size={28} color='' />}
             />
