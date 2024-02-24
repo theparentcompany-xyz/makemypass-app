@@ -133,7 +133,7 @@ export const hostWithUs = async (name: string, email: string, phone: string) => 
     .post(makeMyPass.hostWithUs, {
       name: name,
       email: email,
-      phone: phone,
+      mobile: phone,
     })
     .then((response) => {
       toast.success(response.data.message.general[0]);
