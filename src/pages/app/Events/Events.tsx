@@ -26,6 +26,7 @@ const Events = () => {
     date: '',
     role: '',
     name: '',
+    logo: '',
   });
 
   useEffect(() => {

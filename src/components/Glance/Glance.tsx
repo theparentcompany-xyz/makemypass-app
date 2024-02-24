@@ -13,6 +13,7 @@ const Glance = ({ tab }: { tab: string }) => {
     date: '',
     role: '',
     name: '',
+    logo: '',
   });
 
   type progressDataType = {
@@ -29,8 +30,6 @@ const Glance = ({ tab }: { tab: string }) => {
   const [targetGuests, setTargetGuests] = useState<number>(0);
   const [todayCheckIns, setTodayCheckIns] = useState<number>(0);
   const [lastRegistered, setLastRegistered] = useState<string>('');
-  console.log(todayCheckIns);
-
   useEffect(() => {
     return () => {
       socket?.close();
@@ -294,7 +293,7 @@ const Glance = ({ tab }: { tab: string }) => {
                           totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#ffffff' }
                         }
                       >
-                        {totalGuests}
+                        {todayCheckIns}
                       </p>
                     </motion.p>
                     {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}

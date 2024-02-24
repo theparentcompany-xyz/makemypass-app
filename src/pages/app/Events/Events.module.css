@@ -124,6 +124,7 @@
 
 .event {
   margin: 1rem;
+  margin-left: 0;
 }
 
 @media (max-width: 720px) {
