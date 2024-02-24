@@ -8,7 +8,12 @@ const Footer = () => {
       <footer>
         <div className={styles.footerContainer}>
           <hr />
-          <div className='row'>
+          <div
+            style={{
+              justifyContent: 'space-between',
+            }}
+            className='row'
+          >
             <a href='https://www.theparentcompany.xyz/' target='_blank' rel='noopener noreferrer'>
               <img className={styles.tpclogo} src='/app/tpc.webp' alt='' />
             </a>

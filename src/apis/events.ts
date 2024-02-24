@@ -38,6 +38,7 @@ export const getEventData = async (
       date: string;
       role: string;
       name: string;
+      logo: string;
     }>
   >,
 ) => {

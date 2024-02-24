@@ -9,14 +9,14 @@ const EventHeader = () => {
     date: '',
     role: '',
     name: '',
+    logo: '',
   });
   const [eventId, setEventId] = useState<string>('');
-  const [eventLogo, setEventLogo] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
   useEffect(() => {
     let eventData = JSON.parse(localStorage.getItem('eventData') as string);
-    setEventLogo(eventData?.logo);
+
     if (!eventData)
       setTimeout(() => {
         eventData = JSON.parse(localStorage.getItem('eventData') as string);
@@ -55,7 +55,7 @@ const EventHeader = () => {
             </button>
           </div>
           <p className={styles.headerText}>
-            <img className={styles.headerImage} src={eventLogo} alt='' />
+            <img className={styles.headerImage} src={eventData.logo} alt='' />
             {eventData?.title}
           </p>
         </div>
