@@ -165,7 +165,13 @@ const Table = ({
 
   return (
     <>
-      <div className={styles.tableOuterContainer}>
+      <motion.div
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        exit={{ opacity: 0 }}
+        className={styles.tableOuterContainer}
+      >
         <div className={styles.tableHeader}>
           <p className={styles.tableHeading}>{tableHeading}</p>
           {secondaryButton && secondaryButton}
@@ -186,7 +192,7 @@ const Table = ({
             </AnimatePresence>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

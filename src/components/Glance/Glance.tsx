@@ -4,7 +4,7 @@ import { connectPrivateSocket } from '../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../services/urls';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getEventData, getEventId } from '../../apis/events';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { formatDate } from '../../common/commonFunctions';
 
 const Glance = ({ tab }: { tab: string }) => {
@@ -123,7 +123,7 @@ const Glance = ({ tab }: { tab: string }) => {
   }, [eventId, backendURL]);
 
   return (
-    <>
+    <AnimatePresence>
       {eventData && eventData.role !== 'Volunteer' && (
         <div className={styles.tabsContainer}>
           <div className={styles.tabs}>
@@ -221,138 +221,152 @@ const Glance = ({ tab }: { tab: string }) => {
           </div>
         </div>
       )}
-      {currentTab &&
-        currentTab != 'insights' &&
-        currentTab != 'spinwheel' &&
-        currentTab != 'claimgifts' && (
-          <div className={styles.glanceContainer}>
-            <div className={styles.glanceHeaderSection}>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className={styles.glanceHeader}
+
+      <AnimatePresence>
+        <div className={styles.glanceContainer}>
+          {currentTab &&
+            currentTab != 'insights' &&
+            currentTab != 'spinwheel' &&
+            currentTab != 'claimgifts' &&
+            currentTab != 'postevent' &&
+            progressData.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                exit={{ opacity: 0 }}
+                className={styles.glanceContainer}
               >
-                {tab === 'checkins' || tab === 'inevent' ? 'Check-In at a Glance' : 'At a Glance'}
-              </motion.p>
-
-              {lastRegistered && (
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className={styles.lastUpdated}
-                >
-                  Last {tab === 'checkins' || tab === 'inevent' ? 'Check-In' : 'Registered'}:&nbsp;
-                  {formatDate(lastRegistered)}
-                </motion.p>
-              )}
-            </div>
-
-            <div className={styles.guestsCount}>
-              {totalGuests > 0 && (
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className={styles.guests}
-                >
-                  <motion.p
-                    animate={{
-                      scale: [1, 1.25, 1],
-                      marginRight: [0, 5, 0],
-                      color: ['#47c97e', '#fdfdfd', '#47c97e'],
-                    }}
-                    transition={{
-                      duration: 0.75,
-                    }}
-                    key={totalGuests}
-                  >
-                    <p
-                      style={
-                        totalGuests >= targetGuests && targetGuests > 0
-                          ? { color: '#47c97e' }
-                          : { color: '#fdfdfd' }
-                      }
-                    >
-                      {totalGuests}
-                    </p>
+                <div className={styles.glanceHeaderSection}>
+                  <motion.p className={styles.glanceHeader}>
+                    {tab === 'checkins' || tab === 'inevent'
+                      ? 'Check-In at a Glance'
+                      : 'At a Glance'}
                   </motion.p>
-                  {targetGuests > 0 && ` /${targetGuests}`}
-                  {totalGuests > targetGuests && targetGuests > 0 && (
-                    <p className={styles.popper}>🎉</p>
-                  )}
-                  <span>&nbsp;unique guests</span>
-                </motion.p>
-              )}
-              {currentTab == 'checkin' ||
-                (currentTab == 'inevent' && totalGuests >= 0 && (
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className={styles.guests}
-                  >
+
+                  {lastRegistered && (
                     <motion.p
-                      animate={{
-                        scale: [1, 1.25, 1],
-                        marginRight: [0, 5, 0],
-                        color: ['#47c97e', '#fdfdfd', '#47c97e'],
-                      }}
-                      transition={{
-                        duration: 0.75,
-                      }}
-                      key={totalGuests}
-                    >
-                      <p
-                        style={
-                          totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#fdfdfd' }
-                        }
-                      >
-                        {todayCheckIns}
-                      </p>
-                    </motion.p>
-                    {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}
-                    <span>&nbsp;today's guests</span>
-                  </motion.p>
-                ))}
-            </div>
-
-            <div className={styles.progresBarGraph}>
-              {progressData.map((data) => (
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${(data.value / totalGuests) * 100}%` }}
-                  key={data.type}
-                  className={styles.progressBar}
-                  style={{
-                    backgroundColor: data.color,
-                    width: `${(data.value / totalGuests) * 100}%`,
-                  }}
-                ></motion.div>
-              ))}
-            </div>
-
-            <div className={styles.progressLabels}>
-              <ul>
-                {progressData.map((data) => (
-                  <>
-                    <motion.li
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      key={data.type}
-                      className={styles.progressLabel}
-                      style={{
-                        color: data.color,
-                      }}
+                      className={styles.lastUpdated}
                     >
-                      <p className={styles.dataCount}>
-                        • {data.value} {data.type.substring(0, 8)}..
-                      </p>
-                    </motion.li>
-                  </>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-    </>
+                      Last {tab === 'checkins' || tab === 'inevent' ? 'Check-In' : 'Registered'}
+                      :&nbsp;
+                      {formatDate(lastRegistered)}
+                    </motion.p>
+                  )}
+                </div>
+
+                <div className={styles.guestsCount}>
+                  {totalGuests > 0 && (
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className={styles.guests}
+                    >
+                      <motion.p
+                        animate={{
+                          scale: [1, 1.25, 1],
+                          marginRight: [0, 5, 0],
+                          color: ['#47c97e', '#fdfdfd', '#47c97e'],
+                        }}
+                        transition={{
+                          duration: 0.75,
+                        }}
+                        key={totalGuests}
+                      >
+                        <p
+                          style={
+                            totalGuests >= targetGuests && targetGuests > 0
+                              ? { color: '#47c97e' }
+                              : { color: '#fdfdfd' }
+                          }
+                        >
+                          {totalGuests}
+                        </p>
+                      </motion.p>
+                      {targetGuests > 0 && ` /${targetGuests}`}
+                      {totalGuests > targetGuests && targetGuests > 0 && (
+                        <p className={styles.popper}>🎉</p>
+                      )}
+                      <span>&nbsp;unique guests</span>
+                    </motion.p>
+                  )}
+                  {currentTab == 'checkin' ||
+                    (currentTab == 'inevent' && totalGuests >= 0 && (
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className={styles.guests}
+                      >
+                        <motion.p
+                          animate={{
+                            scale: [1, 1.25, 1],
+                            marginRight: [0, 5, 0],
+                            color: ['#47c97e', '#fdfdfd', '#47c97e'],
+                          }}
+                          transition={{
+                            duration: 0.75,
+                          }}
+                          key={totalGuests}
+                        >
+                          <p
+                            style={
+                              totalGuests >= targetGuests
+                                ? { color: '#47c97e' }
+                                : { color: '#fdfdfd' }
+                            }
+                          >
+                            {todayCheckIns}
+                          </p>
+                        </motion.p>
+                        {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}
+                        <span>&nbsp;today's guests</span>
+                      </motion.p>
+                    ))}
+                </div>
+
+                <div className={styles.progresBarGraph}>
+                  {progressData.map((data) => (
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${(data.value / totalGuests) * 100}%` }}
+                      key={data.type}
+                      className={styles.progressBar}
+                      style={{
+                        backgroundColor: data.color,
+                        width: `${(data.value / totalGuests) * 100}%`,
+                      }}
+                    ></motion.div>
+                  ))}
+                </div>
+
+                <div className={styles.progressLabels}>
+                  <ul>
+                    {progressData.map((data) => (
+                      <>
+                        <motion.li
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          key={data.type}
+                          className={styles.progressLabel}
+                          style={{
+                            color: data.color,
+                          }}
+                        >
+                          <p className={styles.dataCount}>
+                            • {data.value} {data.type.substring(0, 8)}..
+                          </p>
+                        </motion.li>
+                      </>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            )}
+        </div>
+      </AnimatePresence>
+    </AnimatePresence>
   );
 };
 

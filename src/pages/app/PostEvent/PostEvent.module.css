@@ -1,6 +1,4 @@
 .postEventContainer {
-  padding: 0 1.25rem;
-
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -17,7 +15,6 @@
 }
 
 .text {
-  padding: 0 1.25rem;
   font-size: 1.25rem;
   margin-top: 1rem;
   margin-bottom: 1rem;

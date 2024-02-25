@@ -23,6 +23,7 @@ import { transformTableData } from '../../../../common/commonFunctions';
 import SecondaryButton from '../components/SecondaryButton/SecondaryButton';
 import AddHosts from '../components/SecondaryButton/AddHosts/AddHosts';
 import { addHosts, removeHost, updateHostRole } from '../../../../apis/host';
+import { AnimatePresence } from 'framer-motion';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
@@ -219,7 +220,7 @@ const Overview = () => {
             </div>
           </dialog>
         )}
-        {recentRegistrations && hostList ? (
+        {recentRegistrations && hostList && recentRegistrations.length >= 0 ? (
           <div className={styles.overviewContainer}>
             <Header />
             <Glance tab='overview' />
@@ -250,7 +251,11 @@ const Overview = () => {
               </Link>
             </div>
 
-            <Table tableHeading='Recent Registration' tableData={recentTableData} />
+            <AnimatePresence>
+              {recentTableData.length >= 0 && (
+                <Table tableHeading='Recent Registration' tableData={recentTableData} />
+              )}
+            </AnimatePresence>
 
             <div id='hosts'>
               <Table

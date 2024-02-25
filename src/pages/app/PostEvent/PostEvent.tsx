@@ -6,6 +6,8 @@ import { sentPostEventMail } from '../../../apis/postevent';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { getEventId } from '../../../apis/events';
+import EventHeader from '../EventPage/components/EventHeader';
+import Glance from '../../../components/Glance/Glance';
 
 const PostEvent = () => {
   const [eventId, setEventId] = useState<string>('');
@@ -65,6 +67,7 @@ const PostEvent = () => {
         </dialog>
       )}
       <Theme>
+        <Glance tab='postevent' />
         <p className={styles.text}>Sent Mails</p>
         <div className={styles.postEventContainer}>
           <div className={styles.sbutton}>
