@@ -1,6 +1,12 @@
 .inEventContainer {
   padding: 0 1.25rem;
-padding-left: 0;
+  padding-left: 0;
+}
+
+@media (max-width: 1150px) {
+  .inEventContainer {
+    padding-left: 1.25rem;
+  }
 }
 
 .insightsContainer {

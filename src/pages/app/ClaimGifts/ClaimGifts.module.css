@@ -1,6 +1,12 @@
 .scanContainer {
   padding: 0 1.25rem;
-padding-left: 0;
+  padding-left: 0;
+}
+
+@media (max-width: 1150px) {
+  .scanContainer {
+    padding-left: 1.25rem;
+  }
 }
 
 .line {
@@ -300,7 +306,7 @@ padding-left: 0;
   font-size: 0.8rem;
   font-style: normal;
   font-weight: 500;
- 
+
   padding: 0.5rem 0.75rem;
 
   border-radius: 8px;
@@ -358,7 +364,7 @@ padding-left: 0;
 
 .scanContainer {
   padding: 0 1.25rem;
-padding-left: 0;
+  padding-left: 0;
 }
 
 .line {

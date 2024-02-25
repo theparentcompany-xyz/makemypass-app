@@ -1,9 +1,16 @@
 .guestsContainer {
   padding: 0 1.25rem;
-padding-left: 0;
+  padding-left: 0;
   position: relative;
   height: 80vh;
 }
+
+@media (max-width: 1150px) {
+  .guestsContainer {
+    padding-left: 1.25rem;
+  }
+}
+
 
 .buttons {
   display: flex;

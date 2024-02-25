@@ -185,7 +185,7 @@ const InEventStats = () => {
           });
 
           setLineData({
-            labels: Object.keys(lineData['2024-02-23'] || {}),
+            labels: Object.keys(lineData[dates[0]] || {}),
             datasets: lineDataSet,
           });
 
