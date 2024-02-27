@@ -18,6 +18,7 @@ const LandingPage = () => {
   const [showModal, setShowModal] = useState(false);
 
   const [events, setEvents] = useState<any[]>([]);
+  console.log(events);
 
   useEffect(() => {
     getPublicEvents(setEvents);
@@ -140,7 +141,6 @@ const LandingPage = () => {
             <img src='/app/landing/fsImage.png' alt='' className={styles.fsImage} />
           </div>
           <div className={styles.eventPartnersContainer}>
-            <p className={styles.eventPartnersHeading}>Our Event Partners</p>
             <div className={styles.eventPartners}>
               <img src='/app/landing/sp1.png' alt='' />
               <img src='/app/landing/sp2.png' alt='' />
