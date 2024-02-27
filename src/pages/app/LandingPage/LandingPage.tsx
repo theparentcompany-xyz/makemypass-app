@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Theme from '../../../components/Theme/Theme';
 import styles from './LandingPage.module.css';
 import { useEffect, useRef, useState } from 'react';
@@ -6,7 +6,6 @@ import { hostWithUs } from '../../../apis/auth';
 import toast from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
 import { getPublicEvents } from '../../../apis/events';
-import EventHeader from '../EventPage/components/EventHeader';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -148,6 +147,7 @@ const LandingPage = () => {
               <img src='/app/landing/sp3.png' alt='' />
               <img src='/app/landing/sp4.png' alt='' />
               <img src='/app/landing/sp5.png' alt='' />
+              <img src='/app/landing/sp6.png' alt='' />
             </div>
           </div>
         </div>

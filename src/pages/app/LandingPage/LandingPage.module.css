@@ -206,9 +206,5 @@
   margin-top: 2rem;
   background-color: #222425;
   padding: 1rem;
-}
-
-.eventPartners img {
-  object-fit: contain;
-  width: 5rem;
+  border-radius: 12px;
 }
