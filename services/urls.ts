@@ -14,31 +14,31 @@ export const buildVerse = {
 export const makeMyPass = {
   onboardUser: makeMyPassURL('/onboard-user/'),
   listEvents: makeMyPassURL('/list-events/'),
-  listHosts: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-hosts/`),
+  listHosts: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/list-hosts/`),
   getEventId: (eventName: string) => makeMyPassURL(`/get-event-id/${eventName}/`),
   checkInUser: (ticketCode: string, eventId: string) =>
     makeMyPassURL(`/checkin/${eventId}/register/${ticketCode}/`),
-  getEventData: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/info`),
+  getEventData: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/info`),
   resentTicket: makeMyPassURL('/manage-event/resent-ticket/'),
   checkInCount: (eventId: string) => makeMyPassURL(`/checkin/${eventId}/checkin-count/`),
   editSubmission: (eventId: string, submissionId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/edit-submission/${submissionId}`),
+    makeMyPassURL(`/pre-event/${eventId}/edit-submission/${submissionId}`),
 
   listSpinWheelItems: (eventId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/list-spin-wheel-items/`),
+    makeMyPassURL(`/pre-event/${eventId}/list-spin-wheel-items/`),
   spin: (eventId: string, ticketCode: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/spin/${ticketCode}`),
+    makeMyPassURL(`/pre-event/${eventId}/spin/${ticketCode}`),
   listUserGift: (eventId: string, ticketCode: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/list-user-gift/${ticketCode}`),
+    makeMyPassURL(`/pre-event/${eventId}/list-user-gift/${ticketCode}`),
   claimGift: (eventId: string, ticketCode: string, date: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/claim-gift/${ticketCode}/${date}`),
+    makeMyPassURL(`/pre-event/${eventId}/claim-gift/${ticketCode}/${date}`),
   downloadTicket: (eventId: string, ticketCode: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/download-ticket/${ticketCode}`),
+    makeMyPassURL(`/pre-event/${eventId}/download-ticket/${ticketCode}`),
 
-  addHost: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/add-host/`),
-  updateHostRole: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/update-host-role/`),
+  addHost: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/add-host/`),
+  updateHostRole: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/update-host-role/`),
   removeHost: (eventId: string, hostId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/remove-host/${hostId}`),
+    makeMyPassURL(`/pre-event/${eventId}/remove-host/${hostId}`),
   hostWithUs: makeMyPassURL(`/host-with-us/`),
 
   userInfo: (eventId: string, ticketCode: string) =>
@@ -56,10 +56,10 @@ export const makeMyPass = {
   getEventDatas: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
 
   sentInvite: (eventId: string, ticketId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/sent-invite/${ticketId}`),
+    makeMyPassURL(`/pre-event/${eventId}/sent-invite/${ticketId}`),
 
   shortListUser: (eventId: string, userId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/short-list-user/${userId}`),
+    makeMyPassURL(`/pre-event/${eventId}/short-list-user/${userId}`),
 
   listPublicEvents: makeMyPassURL('/event/list-events/'),
 
@@ -71,7 +71,7 @@ export const makeMyPass = {
   updatePerk: (ticketCode: string) => makeMyPassURL(`/checkin/update-perk/${ticketCode}/`),
 
   getCategories: (eventId: string) => makeMyPassURL(`/rsvp/get-form-categories/${eventId}/`),
-  sentPostMail: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/manage-post-event/`),
+  sentPostMail: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/manage-post-event/`),
 };
 
 export const makeMyPassSocket = {
