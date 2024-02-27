@@ -197,3 +197,18 @@
   padding: 0.75rem 2rem;
   margin-top: 2rem;
 }
+
+.eventPartners {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  background-color: #222425;
+  padding: 1rem;
+}
+
+.eventPartners img {
+  object-fit: contain;
+  width: 5rem;
+}

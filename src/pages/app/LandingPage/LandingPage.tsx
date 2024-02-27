@@ -140,6 +140,16 @@ const LandingPage = () => {
             </div>
             <img src='/app/landing/fsImage.png' alt='' className={styles.fsImage} />
           </div>
+          <div className={styles.eventPartnersContainer}>
+            <p className={styles.eventPartnersHeading}>Our Event Partners</p>
+            <div className={styles.eventPartners}>
+              <img src='/app/landing/sp1.png' alt='' />
+              <img src='/app/landing/sp2.png' alt='' />
+              <img src='/app/landing/sp3.png' alt='' />
+              <img src='/app/landing/sp4.png' alt='' />
+              <img src='/app/landing/sp5.png' alt='' />
+            </div>
+          </div>
         </div>
       </Theme>
     </>
