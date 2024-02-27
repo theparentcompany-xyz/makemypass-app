@@ -1,149 +1,3 @@
-.landingPageContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  padding: 1rem;
-  min-height: 80vh;
-  overflow: hidden;
-  margin: auto;
-}
-
-.roundThing {
-  background: rgba(118, 98, 252, 0.13);
-  display: block;
-  width: 9rem;
-  padding: 0.5rem;
-
-  border-radius: 15px;
-  text-align: center;
-
-  color: #7662fc;
-  font-family: Inter;
-  font-size: 0.8rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 16.767px; /* 113.52% */
-
-  margin: auto;
-  margin-bottom: 0.5rem;
-}
-
-.headingText {
-  text-align: center;
-  font-family: 'Inter', sans-serif;
-}
-
-.mainHeading {
-  color: white;
-  text-align: center;
-  font-family: Inter;
-  font-size: 3.5rem;
-  font-style: normal;
-  line-height: 500px;
-  font-weight: 600;
-  line-height: 57.194px; /* 90.647% */
-}
-
-.mainHeading span {
-  color: #7662fc;
-}
-
-.subHeading {
-  color: rgba(255, 255, 255, 0.75);
-  text-align: center;
-  font-family: Inter;
-  max-width: 35rem;
-  margin: auto;
-  margin-top: 0.5rem;
-  line-height: 1.5rem;
-  font-size: 0.9rem;
-  font-style: normal;
-  font-weight: 400;
-}
-
-.launch {
-  margin-top: 1rerm;
-  display: flex;
-  padding: 4px 11px;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.08);
-
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  border: none;
-
-  padding: 0.5rem 1rem;
-  margin: auto;
-  margin-top: 1rem;
-}
-
-.launchAt {
-  color: rgba(255, 255, 255, 0.75);
-  text-align: center;
-  font-family: Inter;
-  margin: auto;
-  line-height: 1.5rem;
-  font-size: 0.7rem;
-  font-style: normal;
-  font-weight: 400;
-  color: #7662fc;
-}
-
-.landingImage {
-  margin-top: 1rem;
-  width: 85%;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  object-position: center;
-}
-
-@media only screen and (max-width: 768px) {
-  .mainHeading {
-    font-size: 2.5rem;
-    line-height: 1.2;
-  }
-
-  .subHeading {
-    font-size: 0.8rem;
-    line-height: 1.3rem;
-    max-width: 25rem;
-  }
-
-  .launch {
-    padding: 0.3rem 0.8rem;
-  }
-
-  .launchAt {
-    font-size: 0.6rem;
-  }
-
-  .landingImage {
-    margin-top: 0.5rem;
-  }
-}
-
-.tc {
-  color: #a5a5a5;
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  margin-top: 1rem;
-  font-size: 0.8rem;
-
-  text-align: center;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
 .onClickModal {
   display: flex;
   flex-direction: column;
@@ -154,9 +8,8 @@
   background-color: #252525;
   padding: 1rem;
 
-  /* 
   max-width: 20rem;
-  width: 100%; */
+  width: 100%;
 
   margin-bottom: 1rem;
   position: absolute;
@@ -281,38 +134,66 @@
   margin-top: 0.75rem;
 }
 
-.currentEvents {
+.landingPageContainer {
+  font-family: 'CooperLight';
+  color: white;
+  min-height: 100vh;
+}
+
+/* Landing Page CSS */
+
+.firstSection {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.fsHeading {
+  font-size: 4rem;
+  max-width: 28rem;
+  margin-bottom: 1rem;
+}
+
+.fsHeading span {
+  color: #4eff99;
+}
+
+.arrowCircle {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 0.5rem;
   margin-top: 1rem;
 }
 
-.currentHeading {
-  color: white;
-  text-align: center;
-  font-family: Inter;
-  font-size: 2.25rem;
-  font-style: normal;
+.circle {
+  margin-left: -3rem;
+  width: 5.5rem;
+}
+
+.fsImage {
+  width: 100%;
+  max-width: 25rem;
   margin-top: 2rem;
-  font-weight: 600;
 }
 
-.currentEventsTagline {
-  color: rgba(255, 255, 255, 0.75);
-  text-align: center;
-  font-family: Inter;
+.fsSubHeading {
+  font-family: 'Aeonik';
   max-width: 30rem;
-  margin: auto;
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  font-style: normal;
-  font-weight: 400;
+  font-size: 1.1rem;
+  margin-top: 2rem;
 }
 
-.currentHeading span {
-  color: #7662fc;
+.requestDemo {
+  border-radius: 11.059px;
+  border: 0.691px solid #181818;
+  font-family: 'Inter';
+  font-size: 1rem;
+  background: #01f77e;
+  box-shadow: 9.146px 7.622px 0px 0px #000;
+  padding: 0.75rem 2rem;
+  margin-top: 2rem;
 }

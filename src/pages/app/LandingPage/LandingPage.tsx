@@ -123,55 +123,22 @@ const LandingPage = () => {
       </AnimatePresence>
       <Theme type='landing'>
         <div className={styles.landingPageContainer}>
-          <div className={styles.headerSection}>
-            <div className={styles.roundThing}>One Click, One Scan</div>
-            <div className={styles.headingText}>
-              <p className={styles.mainHeading}>
-                <span>Make</span> Your <br /> Passes <span>with Ease</span>
+          <div className={styles.firstSection}>
+            <div className={styles.fsTexts}>
+              <p className={styles.fsHeading}>
+                Exploring the Era! The digital <span>MakeMyPass</span>
               </p>
-              <p className={styles.subHeading}>
-                Streamline your pass experience with Make My Pass, a minimalist app for creating,
-                managing, and sharing digital passes effortlessly.
+              <div className={styles.arrowCircle}>
+                <img className={styles.arrow} src='/app/landing/arrow.png' alt='' />
+                <img className={styles.circle} src='/app/landing/circle.png' alt='' />
+              </div>
+              <p className={styles.fsSubHeading}>
+                The digital era is here and so are we. We are here to make your events digital and
+                accessible to everyone.
               </p>
-
-              <button
-                onClick={() => {
-                  setShowModal(true);
-                }}
-                className={styles.launch}
-              >
-                Host with Us <span>🚀</span>
-              </button>
-
-              <img className={styles.landingImage} src='/app/landingImage.webp' />
+              <button className={styles.requestDemo}>Request Demo</button>
             </div>
-          </div>
-
-          {events && events.length > 0 && (
-            <>
-              <p className={styles.currentHeading}>
-                <span>Our</span> Events
-              </p>
-              <p className={styles.currentEventsTagline}>
-                Listed below are the events that were scaled using Make My Pass. Click on any event
-                to know more.
-              </p>
-            </>
-          )}
-          <div className={styles.currentEvents}>
-            {events.map((event, index) => {
-              return <EventHeader eventData={event} key={index} />;
-            })}
-          </div>
-          <div className={styles.tc}>
-            Checkout our&nbsp;
-            <Link to='/termsandconditions'>
-              <p className={styles.terms}>Terms & Conditions&nbsp; </p>
-            </Link>
-            and&nbsp;
-            <Link to='/privacypolicy'>
-              <p className={styles.privacy}>Privacy Policy</p>
-            </Link>
+            <img src='/app/landing/fsImage.png' alt='' className={styles.fsImage} />
           </div>
         </div>
       </Theme>

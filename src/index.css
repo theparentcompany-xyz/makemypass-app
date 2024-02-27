@@ -56,3 +56,13 @@ input:-webkit-autofill:active {
   transition: background-color 5000s;
   -webkit-text-fill-color: #fff !important;
 }
+
+@font-face {
+  font-family: 'CooperLight';
+  src: url(../src/fonts/CooperLight.ttf);
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url(../src/fonts/Aeonik.otf);
+}
