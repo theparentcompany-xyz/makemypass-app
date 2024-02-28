@@ -348,3 +348,42 @@
   height: 12rem;
   object-fit: cover;
 }
+
+.footerContainer {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.fLogoText {
+  display: flex;
+  justify-content: center;
+  align-items: cen;
+  column-gap: 0.25rem;
+  font-family: 'Aeonik';
+}
+
+.location {
+  font-family: 'Inter';
+  opacity: 0.7;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.otherLinks {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1rem;
+  margin-top: 2rem;
+  font-family: 'Inter';
+  opacity: 0.8;
+  font-size: 0.9rem;
+}

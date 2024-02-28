@@ -283,6 +283,19 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
+          <div className={styles.footerContainer}>
+            <div className={styles.fLogoText}>
+              <img src='/app/logoText.webp' alt='' className={styles.fLogo} />
+              <p className={styles.fText}>MakeMyPass</p>
+            </div>
+            <p className={styles.location}>Thiruvanathapuram, Kerala, India</p>
+            <div className={styles.otherLinks}>
+              <p className={styles.link}>About Us</p>
+              <p className={styles.link}>Contact Us</p>
+              <p className={styles.link}>Privacy Policy</p>
+              <p className={styles.link}>Terms and Conditions</p>
+            </div>
+          </div>
         </div>
       </Theme>
     </>
