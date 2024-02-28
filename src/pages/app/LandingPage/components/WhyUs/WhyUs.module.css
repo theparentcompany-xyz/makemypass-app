@@ -1,0 +1,54 @@
+.thirdSection {
+  margin-top: 2rem;
+  border-radius: 13px;
+  background: rgba(34, 36, 37, 0.8);
+  display: flex;
+  padding: 2rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tsPoints {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 1rem;
+
+  align-items: center;
+}
+
+.tsImg {
+  margin-top: 2rem;
+  max-width: 35rem;
+  width: 100%;
+}
+
+.tsHeading {
+  font-family: 'CooperLight';
+  font-size: 3.25rem;
+  max-width: 25rem;
+}
+
+.tsText {
+  font-family: 'Aeonik';
+  font-size: 1rem;
+  max-width: 25rem;
+}
+
+/* Responsive media queries for mobile devices */
+@media only screen and (max-width: 600px) {
+  .thirdSection {
+    padding: 1rem;
+  }
+
+  .tsHeading {
+    font-size: 3.5rem;
+  }
+
+  .tsText {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+}

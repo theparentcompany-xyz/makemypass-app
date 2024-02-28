@@ -7,18 +7,12 @@ import toast from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
 import { getPublicEvents } from '../../../apis/events';
 import EventPartners from './components/EventPartners/EventPartners';
+import Hero from './components/Hero/Hero';
+import WhyUs from './components/WhyUs/WhyUs';
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const boxShadowVariants = {
-    hover: {
-      boxShadow: '9.146px 7.622px 0px 0px #000',
-      x: '5px',
-      y: '5px',
-    },
-  };
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -132,66 +126,13 @@ const LandingPage = () => {
       </AnimatePresence>
       <Theme type='landing'>
         <div className={styles.landingPageContainer}>
-          <div className={styles.firstSection}>
-            <div className={styles.fsTexts}>
-              <p className={styles.fsHeading}>
-                Exploring the Era! The digital <span>MakeMyPass</span>
-              </p>
-              <div className={styles.arrowCircle}>
-                <motion.div initial={{ x: -100 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-                  <img className={styles.arrow} src='/app/landing/arrow.png' alt='' />
-                </motion.div>
-                <img className={styles.circle} src='/app/landing/circle.png' alt='' />
-              </div>
-              <p className={styles.fsSubHeading}>
-                The digital era is here and so are we. We are here to make your events digital and
-                accessible to everyone.
-              </p>
-              <motion.button
-                className={styles.requestDemo}
-                whileHover='hover'
-                variants={boxShadowVariants}
-                initial={false}
-              >
-                Request Demo
-              </motion.button>
-            </div>
-            <img src='/app/landing/fsImage.png' alt='' className={styles.fsImage} />
-          </div>
+          <Hero />
           <EventPartners />
           <div className={styles.secondSection}>
             <p className={styles.ssText}>Save Your Time Managing Events with Us.</p>
             <img src='/app/landing/ssImg.png' alt='' className={styles.ssImg} />
           </div>
-          <div className={styles.thirdSection}>
-            <div className={styles.tsTexts}>
-              <p className={styles.tsHeading}>Why Us?</p>
-              <div className={styles.tsPoints}>
-                <div className={styles.tsPoint}>
-                  <p className={styles.tsHeading}>5+</p>
-                  <p className={styles.tsText}>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda totam nobis,
-                    rerum quaerat ipsa iste!
-                  </p>
-                </div>
-                <div className={styles.tsPoint}>
-                  <p className={styles.tsHeading}>100+</p>
-                  <p className={styles.tsText}>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda totam nobis,
-                    rerum quaerat ipsa iste!
-                  </p>
-                </div>
-                <div className={styles.tsPoint}>
-                  <p className={styles.tsHeading}>12K+</p>
-                  <p className={styles.tsText}>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda totam nobis,
-                    rerum quaerat ipsa iste!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <img src='/app/landing/tsImg.png' alt='' className={styles.tsImg} />
-          </div>
+          <WhyUs />
           <div className={styles.projectsSection}>
             <div className={styles.projectsHeading}>
               <p className={styles.projectsHeadingText}>Our Projects</p>

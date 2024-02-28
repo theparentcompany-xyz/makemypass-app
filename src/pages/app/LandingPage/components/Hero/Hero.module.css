@@ -1,0 +1,84 @@
+/* Existing code */
+
+.firstSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.fsHeading {
+  font-family: 'CooperLight';
+  font-size: 4rem;
+  max-width: 28rem;
+  margin-bottom: 1rem;
+}
+
+.fsHeading span {
+  color: #01f77e;
+}
+
+.arrowCircle {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.circle {
+  margin-left: -3rem;
+  width: 5rem;
+}
+
+.fsImage {
+  width: 100%;
+  max-width: 25rem;
+  margin-top: 2rem;
+}
+
+.fsSubHeading {
+  font-family: 'Aeonik';
+  max-width: 30rem;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+}
+
+.requestDemo {
+  border-radius: 11.059px;
+  border: 0.691px solid #181818;
+  font-family: 'Inter';
+  font-size: 1rem;
+  background: #01f77e;
+  /* box-shadow: 9.146px 7.622px 0px 0px #000; */
+  padding: 0.75rem 2rem;
+  margin-top: 2rem;
+  font-weight: 600;
+}
+
+/* Media queries for smaller viewports */
+
+@media screen and (max-width: 768px) {
+  .fsHeading {
+    font-size: 4rem;
+    max-width: 20rem;
+  }
+
+  .fsSubHeading {
+    font-size: 1rem;
+    max-width: 25rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .fsHeading {
+    font-size: 3.5rem;
+  }
+
+  .fsSubHeading {
+    font-size: 1.25rem;
+    max-width: 20rem;
+  }
+}
