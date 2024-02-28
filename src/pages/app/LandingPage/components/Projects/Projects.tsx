@@ -18,7 +18,7 @@ const Projects = () => {
         <div className={styles.project}>
           <div className={styles.projectDateDay}>
             <p className={styles.projectDate}>2-3rd Feb 2024</p>
-            <p className={styles.projectDay}>Wednesday</p>
+            <p className={styles.projectDay}>Friday</p>
           </div>
           <div className={styles.projectDetails}>
             <div className={styles.projectTexts}>
@@ -45,8 +45,8 @@ const Projects = () => {
         </div>
         <div className={styles.project}>
           <div className={styles.projectDateDay}>
-            <p className={styles.projectDate}>28th Feb 2024</p>
-            <p className={styles.projectDay}>Wednesday</p>
+            <p className={styles.projectDate}>23rd Feb 2024</p>
+            <p className={styles.projectDay}>Friday</p>
           </div>
           <div className={styles.projectDetails}>
             <div className={styles.projectTexts}>
@@ -72,8 +72,8 @@ const Projects = () => {
         </div>
         <div className={styles.project}>
           <div className={styles.projectDateDay}>
-            <p className={styles.projectDate}>28-29th Feb 2024</p>
-            <p className={styles.projectDay}>Wednesday</p>
+            <p className={styles.projectDate}>23-24th Feb 2024</p>
+            <p className={styles.projectDay}>Friday</p>
           </div>
           <div className={styles.projectDetails}>
             <div className={styles.projectTexts}>
