@@ -46,6 +46,12 @@ const LandingPage = () => {
     }
   };
 
+  const toggleModal = () => {
+    setShowModal(() => {
+      return !showModal;
+    });
+  };
+
   return (
     <>
       <AnimatePresence>
@@ -97,7 +103,7 @@ const LandingPage = () => {
                       ref={phoneRef}
                       value={phoneRef.current?.value}
                       className={styles.input}
-                      type='number'
+                      type='text'
                     />
                   </div>
                 </div>
@@ -111,12 +117,7 @@ const LandingPage = () => {
                   >
                     Host With Us
                   </p>
-                  <p
-                    onClick={() => {
-                      setShowModal(false);
-                    }}
-                    className={styles.button}
-                  >
+                  <p onClick={toggleModal} className={styles.button}>
                     Cancel
                   </p>
                 </div>
@@ -127,7 +128,7 @@ const LandingPage = () => {
       </AnimatePresence>
       <Theme type='landing'>
         <div className={styles.landingPageContainer}>
-          <Hero />
+          <Hero toggleModal={toggleModal} />
           <EventPartners />
           <div className={styles.secondSection}>
             <p className={styles.ssText}>Save Your Time Managing Events with Us.</p>
