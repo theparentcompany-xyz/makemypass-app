@@ -135,7 +135,6 @@
 }
 
 .landingPageContainer {
-  font-family: 'CooperLight';
   color: white;
   min-height: 100vh;
 }
@@ -151,6 +150,7 @@
 }
 
 .fsHeading {
+  font-family: 'CooperLight';
   font-size: 4rem;
   max-width: 28rem;
   margin-bottom: 1rem;
@@ -219,4 +219,60 @@
 
 .eventPartners img {
   margin: 0 1rem;
+}
+
+.secondSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.ssText {
+  font-family: 'CooperLight';
+  font-size: 3.25rem;
+  max-width: 25rem;
+}
+
+.ssImg {
+  width: 100%;
+  max-width: 35rem;
+  margin-top: 2rem;
+}
+
+.thirdSection {
+  margin-top: 2rem;
+  border-radius: 13px;
+  background: rgba(34, 36, 37, 0.8);
+  display: flex;
+  padding: 2rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tsPoints {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 1rem;
+  align-items: center;
+}
+
+.tsImg {
+  max-width: 35rem;
+  width: 100%;
+}
+
+.tsHeading {
+  font-family: 'CooperLight';
+  font-size: 3.25rem;
+  max-width: 25rem;
+}
+
+.tsText {
+  font-family: 'Aeonik';
+  font-size: 1rem;
+  max-width: 25rem;
 }

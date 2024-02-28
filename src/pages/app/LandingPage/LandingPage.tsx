@@ -150,6 +150,39 @@ const LandingPage = () => {
               <img src='/app/landing/sp6.png' alt='' />
             </div>
           </div>
+          <div className={styles.secondSection}>
+            <p className={styles.ssText}>Save Your Time Managing Events with Us.</p>
+            <img src='/app/landing/ssImg.png' alt='' className={styles.ssImg} />
+          </div>
+          <div className={styles.thirdSection}>
+            <div className={styles.tsTexts}>
+              <p className={styles.tsHeading}>Why Us?</p>
+              <div className={styles.tsPoints}>
+                <div className={styles.tsPoint}>
+                  <p className={styles.tsHeading}>5+</p>
+                  <p className={styles.tsText}>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda totam nobis,
+                    rerum quaerat ipsa iste!
+                  </p>
+                </div>
+                <div className={styles.tsPoint}>
+                  <p className={styles.tsHeading}>100+</p>
+                  <p className={styles.tsText}>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda totam nobis,
+                    rerum quaerat ipsa iste!
+                  </p>
+                </div>
+                <div className={styles.tsPoint}>
+                  <p className={styles.tsHeading}>12K+</p>
+                  <p className={styles.tsText}>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda totam nobis,
+                    rerum quaerat ipsa iste!
+                  </p>
+                </div>
+              </div>
+            </div>
+            <img src='/app/landing/tsImg.png' alt='' className={styles.tsImg} />
+          </div>
         </div>
       </Theme>
     </>
