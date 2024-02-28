@@ -3,7 +3,8 @@
 
   padding: 1rem;
   border-radius: 12px;
-  background-color: #222425;
+
+  background: rgba(34, 36, 37, 0.8);
   overflow: hidden;
   white-space: nowrap;
   position: relative;

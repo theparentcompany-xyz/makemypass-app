@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './WhyUs.module.css';
 
 const WhyUs = () => {
