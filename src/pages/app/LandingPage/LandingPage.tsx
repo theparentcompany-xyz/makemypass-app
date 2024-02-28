@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Theme from '../../../components/Theme/Theme';
 import styles from './LandingPage.module.css';
 import { useEffect, useRef, useState } from 'react';
@@ -143,10 +143,12 @@ const LandingPage = () => {
             </div>
             <p className={styles.location}>Thiruvanathapuram, Kerala, India</p>
             <div className={styles.otherLinks}>
-              <p className={styles.link}>About Us</p>
-              <p className={styles.link}>Contact Us</p>
-              <p className={styles.link}>Privacy Policy</p>
-              <p className={styles.link}>Terms and Conditions</p>
+              <Link to='/privacypolicy'>
+                <p className={styles.link}>Privacy Policy</p>
+              </Link>
+              <Link to='/termsandconditions'>
+                <p className={styles.link}>Terms and Conditions</p>
+              </Link>
             </div>
           </div>
         </div>

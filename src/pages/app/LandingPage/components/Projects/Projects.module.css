@@ -91,15 +91,15 @@
   }
 
   .projectDate {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .projectDay {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 
   .projectHeading {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 
   .projectText {
@@ -120,11 +120,11 @@
   }
 
   .projectHeading {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
 
   .projectText {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     max-width: none;
   }
 

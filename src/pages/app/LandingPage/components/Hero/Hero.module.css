@@ -74,11 +74,29 @@
 
 @media screen and (max-width: 576px) {
   .fsHeading {
-    font-size: 3.5rem;
+    font-size: 2.75rem;
   }
 
   .fsSubHeading {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     max-width: 20rem;
+  }
+
+  .arrowCircle {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .arrow {
+    width: 8rem;
+  }
+
+  .circle {
+    margin-left: -3rem;
+    width: 5rem;
   }
 }
