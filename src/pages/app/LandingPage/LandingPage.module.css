@@ -276,3 +276,75 @@
   font-size: 1rem;
   max-width: 25rem;
 }
+
+.projectsSection {
+  margin-top: 2rem;
+}
+
+.projectsHeadingText {
+  font-family: 'CooperLight';
+  font-size: 3.25rem;
+  max-width: 25rem;
+}
+
+.project {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 2rem;
+}
+
+.projectDate {
+  font-family: 'Inter';
+  font-size: 0.9rem;
+  color: white;
+}
+
+.projectDay {
+  font-family: 'Inter';
+  font-size: 0.8rem;
+  color: white;
+  opacity: 0.5;
+}
+
+.projectDetails {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 1rem;
+}
+
+.projectHeading {
+  font-family: 'Inter';
+  font-size: 1.25rem;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.projectText {
+  font-family: 'Aeonik';
+  font-size: 1.1rem;
+  color: white;
+  opacity: 0.8;
+  max-width: 20rem;
+}
+
+.projectImages {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+.projectImage {
+  border-radius: 12px;
+  width: 12rem;
+  height: 12rem;
+  object-fit: cover;
+}

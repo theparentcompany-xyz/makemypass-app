@@ -1,7 +1,7 @@
 .grad1 {
   opacity: 0.5;
   background: radial-gradient(50% 50% at 0% 0%, #7662fc 0%, rgba(118, 98, 252, 0) 100%);
-  
+  background-repeat: repeat;
 
   filter: blur(144.6999969482422px);
 
@@ -12,6 +12,7 @@
 
 .grad2 {
   background: radial-gradient(100% 100% at 0% 80%, #01f77e 0%, rgba(118, 98, 252, 0) 100%);
+  background-repeat: repeat;
 
   opacity: 0.1;
 
@@ -24,6 +25,7 @@
 
 .grad3 {
   background: radial-gradient(50% 50% at 100% 60%, #01f77e 0%, rgba(118, 98, 252, 0) 100%);
+  background-repeat: repeat;
 
   opacity: 0.1;
 
