@@ -1,0 +1,53 @@
+.eventPartnersContainer {
+  margin-top: 3rem;
+
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: #222425;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.eventPartnersContainer:hover .eventPartners {
+  animation-play-state: paused;
+}
+
+.eventPartnersContainer:before,
+.eventPartnersContainer:after {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  content: '';
+  z-index: 2;
+}
+
+.eventPartnersContainer:before {
+  left: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0), #222425);
+}
+
+.eventPartnersContainer:after {
+  right: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), #222425);
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.eventPartners {
+  display: inline-block;
+  animation: 10s slide infinite linear;
+}
+
+.eventPartners img {
+  height: 40px;
+  margin: 0 30px;
+}

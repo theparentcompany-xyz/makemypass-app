@@ -6,6 +6,7 @@ import { hostWithUs } from '../../../apis/auth';
 import toast from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
 import { getPublicEvents } from '../../../apis/events';
+import EventPartners from './components/EventPartners/EventPartners';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -140,16 +141,7 @@ const LandingPage = () => {
             </div>
             <img src='/app/landing/fsImage.png' alt='' className={styles.fsImage} />
           </div>
-          <div className={styles.eventPartnersContainer}>
-            <div className={styles.eventPartners}>
-              <img src='/app/landing/sp1.png' alt='' />
-              <img src='/app/landing/sp2.png' alt='' />
-              <img src='/app/landing/sp3.png' alt='' />
-              <img src='/app/landing/sp4.png' alt='' />
-              <img src='/app/landing/sp5.png' alt='' />
-              <img src='/app/landing/sp6.png' alt='' />
-            </div>
-          </div>
+          <EventPartners />
           <div className={styles.secondSection}>
             <p className={styles.ssText}>Save Your Time Managing Events with Us.</p>
             <img src='/app/landing/ssImg.png' alt='' className={styles.ssImg} />

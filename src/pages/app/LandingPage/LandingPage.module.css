@@ -146,7 +146,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 2rem 0;
+  margin: 4rem 0;
 }
 
 .fsHeading {
@@ -157,7 +157,7 @@
 }
 
 .fsHeading span {
-  color: #4eff99;
+  color: #01f77e;
 }
 
 .arrowCircle {
@@ -196,29 +196,7 @@
   box-shadow: 9.146px 7.622px 0px 0px #000;
   padding: 0.75rem 2rem;
   margin-top: 2rem;
-}
-
-.eventPartnersContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-top: 3rem;
-  background-color: #222425;
-  padding: 1rem;
-  border-radius: 12px;
-}
-
-.eventPartners {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin: 0 2rem;
-}
-
-.eventPartners img {
-  margin: 0 1rem;
+  font-weight: 600;
 }
 
 .secondSection {
