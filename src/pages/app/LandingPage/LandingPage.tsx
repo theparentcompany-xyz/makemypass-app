@@ -128,7 +128,7 @@ const LandingPage = () => {
       </AnimatePresence>
       <Theme type='landing'>
         <div className={styles.landingPageContainer}>
-          <Hero toggleModal={toggleModal} />
+          <Hero />
           <EventPartners />
           <div className={styles.secondSection}>
             <p className={styles.ssText}>Save Your Time Managing Events with Us.</p>

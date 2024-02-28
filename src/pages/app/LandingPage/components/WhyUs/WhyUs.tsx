@@ -7,24 +7,24 @@ const WhyUs = () => {
         <p className={styles.tsHeading}>Why Us?</p>
         <div className={styles.tsPoints}>
           <div className={styles.tsPoint}>
-            <p className={styles.tsHeading}>5+</p>
+            <p className={styles.tsHeading}>3+</p>
             <p className={styles.tsText}>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda totam nobis, rerum
-              quaerat ipsa iste!
+              We have already worked along and scaled 3 events even before the official launch of
+              our platform.
             </p>
           </div>
           <div className={styles.tsPoint}>
-            <p className={styles.tsHeading}>100+</p>
+            <p className={styles.tsHeading}>5000+</p>
             <p className={styles.tsText}>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda totam nobis, rerum
-              quaerat ipsa iste!
+              For the ScaleUp Conclave 2024, we have already registered 6987+ attendees. and checked
+              in over 3394+ attendees.
             </p>
           </div>
           <div className={styles.tsPoint}>
-            <p className={styles.tsHeading}>12K+</p>
+            <p className={styles.tsHeading}>∞ Features</p>
             <p className={styles.tsText}>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda totam nobis, rerum
-              quaerat ipsa iste!
+              We are still in the development phase, try hosting a event with us with custom
+              features and stats.
             </p>
           </div>
         </div>

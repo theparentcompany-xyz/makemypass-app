@@ -1,7 +1,7 @@
 import styles from './Hero.module.css';
 import { motion } from 'framer-motion';
 
-const Hero = ({ toggleModal }: { toggleModal: () => void }) => {
+const Hero = () => {
   const boxShadowVariants = {
     hover: {
       boxShadow: '9.146px 7.622px 0px 0px #000',
@@ -26,16 +26,18 @@ const Hero = ({ toggleModal }: { toggleModal: () => void }) => {
           Streamline your pass experience with Make My Pass, a minimalist app for creating,
           managing, and sharing digital passes effortlessly.
         </p>
-        <motion.button
-          className={styles.requestDemo}
-          whileHover='hover'
-          variants={boxShadowVariants}
-          initial={false}
-          onClick={toggleModal}
-        >
-          Request Demo
-        </motion.button>
+        <a href='https://wa.me/7012679067' target='_blank' rel='noopener noreferrer'>
+          <motion.button
+            className={styles.requestDemo}
+            whileHover='hover'
+            variants={boxShadowVariants}
+            initial={false}
+          >
+            Request Demo
+          </motion.button>
+        </a>
       </div>
+
       <img src='/app/landing/fsImage.png' alt='' className={styles.fsImage} />
     </div>
   );
