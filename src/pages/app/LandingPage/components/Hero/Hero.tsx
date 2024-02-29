@@ -14,7 +14,7 @@ const Hero = () => {
     <div className={styles.firstSection}>
       <div className={styles.fsTexts}>
         <p className={styles.fsHeading}>
-          Exploring the Era! The digital <span>MakeMyPass</span>
+          Elevate Your Event Experience! Explore <span>MakeMyPass!</span>
         </p>
         <div className={styles.arrowCircle}>
           <motion.div initial={{ x: -100 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
@@ -23,8 +23,8 @@ const Hero = () => {
           <img className={styles.circle} src='/app/landing/circle.png' alt='' />
         </div>
         <p className={styles.fsSubHeading}>
-          Streamline your pass experience with Make My Pass, a minimalist app for creating,
-          managing, and sharing digital passes effortlessly.
+          Unforgettable Moments Commence with Tickets in your Digital Grasp. At MakeMyPass,
+          Anticipation Meets Convenience, without the Chaos of Pass Logistics!
         </p>
         <a href='https://wa.me/7012679067' target='_blank' rel='noopener noreferrer'>
           <motion.button

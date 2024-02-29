@@ -8,8 +8,8 @@
 
 .fsHeading {
   font-family: 'CooperLight';
-  font-size: 4rem;
-  max-width: 28rem;
+  font-size: 3.25rem;
+  max-width: 30rem;
   margin-bottom: 1rem;
 }
 
@@ -39,7 +39,7 @@
 
 .fsSubHeading {
   font-family: 'Aeonik';
-  max-width: 30rem;
+  max-width: 28rem;
   font-size: 1.1rem;
   margin-top: 2rem;
 }

@@ -10,22 +10,22 @@ const WhyUs = () => {
             <div className={styles.tsPoint}>
               <p className={styles.tsHeading}>3+</p>
               <p className={styles.tsText}>
-                We have already worked along and scaled 3 events even before the official launch of
-                our platform.
+                Pre-launch, we’ve already hacked the art of event scaling, with 3 milestones checked
+                in our roadmap.
               </p>
             </div>
             <div className={styles.tsPoint}>
               <p className={styles.tsHeading}>5000+</p>
               <p className={styles.tsText}>
-                For the ScaleUp Conclave 2024, we have already registered 6987+ attendees. and
-                checked in over 3394+ attendees.
+                At one of our event, our attendee count soared to an impressive 6987+, with over
+                3394+ checked in and ready.
               </p>
             </div>
             <div className={styles.tsPoint}>
               <p className={styles.tsHeading}>∞ </p>
               <p className={styles.tsText}>
-                We are still in the development phase, try hosting a event with us with custom
-                features and stats.
+                Host with us, as we grow! Manifest your event and customise features and stats to
+                suit your needs!
               </p>
             </div>
           </div>

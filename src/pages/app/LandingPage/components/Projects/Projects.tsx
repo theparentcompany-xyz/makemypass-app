@@ -31,9 +31,8 @@ const Projects = () => {
               <div className={styles.projectTexts}>
                 <p className={styles.projectHeading}>Scale Up Conclave 2024</p>
                 <p className={styles.projectText}>
-                  It is the first edition of an annual celebratory platform that fuses you with
-                  entrepreneurs, investors, professionals, and business enthusiasts for a
-                  comprehensive two-day event.
+                  The debut of an annual spectacle. Uniting entrepreneurs, investors, professionals,
+                  and business enthusiasts at an electrifying two-day extravaganza!
                 </p>
                 <div className={styles.counts}>
                   <p className={styles.countT}>
@@ -73,8 +72,8 @@ const Projects = () => {
               <div className={styles.projectTexts}>
                 <p className={styles.projectHeading}>Permute 2024</p>
                 <p className={styles.projectText}>
-                  PERMUTE is µLearn’s flagship event set for February 23rd at Park Centre,
-                  Technopark, Trivandrum, featuring the unveiling of µLearn 3.0.
+                  μLearn’s flagship soiree, unfolded at Park Centre, Technopark, Trivandrum with the
+                  unveiling of μLearn 3.0, the next phase in its much-awaited evolution.
                 </p>
                 <div className={styles.counts}>
                   <p className={styles.countT}>
@@ -115,8 +114,8 @@ const Projects = () => {
               <div className={styles.projectTexts}>
                 <p className={styles.projectHeading}>In50Hours</p>
                 <p className={styles.projectText}>
-                  In50Hours is a 50-hour hackathon that brings together students, developers, and
-                  entrepreneurs to build and launch a product and get inital funding.
+                  Ideate, Innovate and Attract Investment with students, developers, and
+                  entrepreneurs racing against the clock, ticking down at a 50-hour hackathon.
                 </p>
                 <div className={styles.counts}>
                   <p className={styles.countT}>

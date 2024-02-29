@@ -131,7 +131,7 @@ const LandingPage = () => {
           <Hero />
           <EventPartners />
           <div className={styles.secondSection}>
-            <p className={styles.ssText}>Save Your Time Managing Events with Us.</p>
+            <p className={styles.ssText}>Erase the Hassle with Our Ticketing Magic!</p>
             <img src='/app/landing/ssImg.png' alt='' className={styles.ssImg} />
           </div>
           <WhyUs />
