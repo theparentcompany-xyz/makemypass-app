@@ -6,6 +6,8 @@
   font-family: 'CooperLight';
   font-size: 3.25rem;
   max-width: 25rem;
+
+  margin-bottom: 2rem;
 }
 
 .project {
@@ -13,26 +15,30 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-top: 2rem;
   column-gap: 2rem;
   row-gap: 1rem;
+  max-height: 17rem;
+  height: 100%;
 }
 
 .projectDate {
   font-family: 'Inter';
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: white;
   white-space: nowrap;
+  width: 6rem;
 }
 
 .projectDay {
   font-family: 'Inter';
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: white;
+  margin-top: 0.25rem;
   opacity: 0.5;
 }
 
 .projectDetails {
+  margin-bottom: 2rem;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.04);
   padding: 2rem;
@@ -91,14 +97,6 @@
   .projectsHeadingText {
     font-size: 2.5rem;
     max-width: none;
-  }
-
-  .projectDate {
-    font-size: 1rem;
-  }
-
-  .projectDay {
-    font-size: 0.9rem;
   }
 
   .projectHeading {
@@ -183,4 +181,36 @@
 
 .count {
   color: #01f77e;
+}
+
+.dotted {
+  height: 18rem;
+}
+
+.line {
+  margin-left: 0.45rem;
+  border-left: 2px dashed rgba(255, 255, 255, 0.08);
+  height: 17rem;
+  z-index: 0;
+}
+
+.dot {
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.32);
+  background: #131517;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+@media (max-width: 1110px) {
+  .lineDot {
+    display: none;
+  }
+
+  .project {
+    max-height: none;
+    height: 100%;
+  }
 }

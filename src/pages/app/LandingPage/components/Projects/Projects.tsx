@@ -23,6 +23,10 @@ const Projects = () => {
               <p className={styles.projectDate}>2-3rd Feb 2024</p>
               <p className={styles.projectDay}>Friday</p>
             </div>
+            <div className={styles.lineDot}>
+              <div className={styles.dot}></div>
+              <div className={styles.line}></div>
+            </div>
             <div className={styles.projectDetails}>
               <div className={styles.projectTexts}>
                 <p className={styles.projectHeading}>Scale Up Conclave 2024</p>
@@ -61,6 +65,10 @@ const Projects = () => {
               <p className={styles.projectDate}>23rd Feb 2024</p>
               <p className={styles.projectDay}>Friday</p>
             </div>
+            <div className={styles.lineDot}>
+              <div className={styles.dot}></div>
+              <div className={styles.line}></div>
+            </div>
             <div className={styles.projectDetails}>
               <div className={styles.projectTexts}>
                 <p className={styles.projectHeading}>Permute 2024</p>
@@ -93,6 +101,15 @@ const Projects = () => {
             <div className={styles.projectDateDay}>
               <p className={styles.projectDate}>24th Feb 2024</p>
               <p className={styles.projectDay}>Friday</p>
+            </div>
+            <div className={styles.lineDot}>
+              <div className={styles.dot}></div>
+              <div
+                className={styles.line}
+                style={{
+                  maxHeight: '12rem',
+                }}
+              ></div>
             </div>
             <div className={styles.projectDetails}>
               <div className={styles.projectTexts}>
