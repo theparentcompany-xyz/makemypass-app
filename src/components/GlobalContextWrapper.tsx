@@ -27,7 +27,9 @@ const GlobalContextWrapper = ({ children }: { children: React.ReactNode }) => {
     setEventId(eventData?.event_id);
   }, [eventTitle]);
 
-  return <GlobalContext.Provider value={{ eventId }}>{children}</GlobalContext.Provider>;
+  return (
+    <GlobalContext.Provider value={{ eventId, setEventId }}>{children}</GlobalContext.Provider>
+  );
 };
 
 export default GlobalContextWrapper;

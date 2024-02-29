@@ -55,54 +55,57 @@ const AddHosts = ({
   };
 
   return (
-    <dialog className={styles.onClickModal}>
-      <div className={styles.userInfoModalContainer}>
-        <p className={styles.modalHeader}>Edit Guest</p>
-        <div className={styles.inputContainers}>
-          <div className={styles.inputContainer}>
-            <p className={styles.inputLabel}>Email</p>
+    <>
+      <div className={styles.backgroundBlur}></div>
+      <dialog className={styles.onClickModal}>
+        <div className={styles.userInfoModalContainer}>
+          <p className={styles.modalHeader}>Edit Guest</p>
+          <div className={styles.inputContainers}>
+            <div className={styles.inputContainer}>
+              <p className={styles.inputLabel}>Email</p>
 
-            <input
-              value={hostData?.email}
-              className={styles.input}
-              disabled={hostData.id ? true : false}
-              type='text'
-              onChange={(event) => {
-                setHostData((prevState) => ({
-                  ...prevState!,
-                  email: event.target.value,
-                }));
-              }}
-            />
+              <input
+                value={hostData?.email}
+                className={styles.input}
+                disabled={hostData.id ? true : false}
+                type='text'
+                onChange={(event) => {
+                  setHostData((prevState) => ({
+                    ...prevState!,
+                    email: event.target.value,
+                  }));
+                }}
+              />
+            </div>
+          </div>
+          <div className={styles.dropdownContainer}>
+            <div className={styles.dropdown}>
+              <p className={styles.inputLabel}>Select Role</p>
+              <Select
+                className='basic-single'
+                classNamePrefix='select'
+                value={roleOptions.filter((role) => role.value === hostData?.role)[0]}
+                onChange={(event) => {
+                  handleRoleChange(event);
+                }}
+                name='role'
+                options={roleOptions}
+                styles={customStyles}
+              />
+            </div>
+          </div>
+
+          <div className={styles.buttons}>
+            <p className={styles.button} onClick={onSubmit}>
+              {hostData.id ? 'Edit Host' : 'Add Host'}
+            </p>
+            <p className={styles.button} onClick={onClose}>
+              Cancel
+            </p>
           </div>
         </div>
-        <div className={styles.dropdownContainer}>
-          <div className={styles.dropdown}>
-            <p className={styles.inputLabel}>Select Role</p>
-            <Select
-              className='basic-single'
-              classNamePrefix='select'
-              value={roleOptions.filter((role) => role.value === hostData?.role)[0]}
-              onChange={(event) => {
-                handleRoleChange(event);
-              }}
-              name='role'
-              options={roleOptions}
-              styles={customStyles}
-            />
-          </div>
-        </div>
-
-        <div className={styles.buttons}>
-          <p className={styles.button} onClick={onSubmit}>
-            {hostData.id ? 'Edit Host' : 'Add Host'}
-          </p>
-          <p className={styles.button} onClick={onClose}>
-            Cancel
-          </p>
-        </div>
-      </div>
-    </dialog>
+      </dialog>
+    </>
   );
 };
 

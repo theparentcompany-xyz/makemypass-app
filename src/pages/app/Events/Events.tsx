@@ -7,8 +7,13 @@ import { getEventData, getEventId, getEvents } from '../../../apis/events';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
+import { useContext } from 'react';
+import { GlobalContext } from '../../../contexts/globalContext';
+
 const Events = () => {
   const navigate = useNavigate();
+
+  const { setEventId } = useContext(GlobalContext);
 
   type Event = {
     id: string;
@@ -119,7 +124,12 @@ const Events = () => {
                             className={styles.manage}
                             onClick={() => {
                               handleClick(event.name);
+
                               getEventRole(event.id);
+
+                              if (setEventId) {
+                                setEventId(event.id);
+                              }
                             }}
                           >
                             Manage

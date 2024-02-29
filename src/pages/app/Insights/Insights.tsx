@@ -97,11 +97,11 @@ const Insights = () => {
           });
 
           setPieData({
-            labels: Object.keys(lineBarData.active_timeframe),
+            labels: Object.keys(lineBarData.active_timeframe || {}),
             datasets: [
               {
                 label: 'Active Time',
-                data: Object.values(lineBarData.active_timeframe),
+                data: Object.values(lineBarData.active_timeframe || {}),
                 backgroundColor: ['#FBD85B', '#C33D7B', '#47C97E', '#35A1EB'],
                 borderColor: ['#FBD85B', '#C33D7B', '#47C97E', '#35A1EB'],
               },
@@ -194,7 +194,7 @@ const Insights = () => {
               <div className={styles.insightsContainer}>
                 <div className={styles.pieContainer}>
                   <div className={styles.pieSection}>
-                    {pieData && (
+                    {pieData && pieData.datasets[0].data.length > 0 ? (
                       <Doughnut
                         data={pieData}
                         options={{
@@ -205,57 +205,67 @@ const Insights = () => {
                           },
                         }}
                       />
+                    ) : (
+                      <p className={styles.noData}>No Data to Show</p>
                     )}
                   </div>
                   <div className={styles.timeSection}>
                     <p className={styles.rightSectionHeading}>Active Time</p>
                     <div className={styles.times}>
-                      <div className={styles.time}>
-                        <p
-                          style={{
-                            color: '#FBD85B',
-                          }}
-                          className={styles.line}
-                        >
-                          {message?.active_timeframe.Morning}
-                        </p>
-                        <p className='type'>Morning</p>
-                      </div>
+                      {message?.active_timeframe.Morning && (
+                        <div className={styles.time}>
+                          <p
+                            style={{
+                              color: '#FBD85B',
+                            }}
+                            className={styles.line}
+                          >
+                            {message?.active_timeframe.Morning}
+                          </p>
+                          <p className='type'>Morning</p>
+                        </div>
+                      )}
 
-                      <div className={styles.time}>
-                        <p
-                          style={{
-                            color: '#47C97E',
-                          }}
-                          className={styles.line}
-                        >
-                          {message?.active_timeframe.Afternoon}
-                        </p>
-                        <p className='type'>Afternoon</p>
-                      </div>
+                      {message?.active_timeframe.Afternoon && (
+                        <div className={styles.time}>
+                          <p
+                            style={{
+                              color: '#47C97E',
+                            }}
+                            className={styles.line}
+                          >
+                            {message?.active_timeframe.Afternoon}
+                          </p>
+                          <p className='type'>Afternoon</p>
+                        </div>
+                      )}
 
-                      <div className={styles.time}>
-                        <p
-                          style={{
-                            color: '#35A1EB',
-                          }}
-                          className={styles.line}
-                        >
-                          {message?.active_timeframe.Evening}
-                        </p>
-                        <p className='type'>Evening</p>
-                      </div>
-                      <div className={styles.time}>
-                        <p
-                          style={{
-                            color: '#C33D7B',
-                          }}
-                          className={styles.line}
-                        >
-                          {message?.active_timeframe.Night}
-                        </p>
-                        <p className='type'>Night</p>
-                      </div>
+                      {message?.active_timeframe.Evening && (
+                        <div className={styles.time}>
+                          <p
+                            style={{
+                              color: '#35A1EB',
+                            }}
+                            className={styles.line}
+                          >
+                            {message?.active_timeframe.Evening}
+                          </p>
+                          <p className='type'>Evening</p>
+                        </div>
+                      )}
+                      {message?.active_timeframe.Night && (
+                        <div className={styles.time}>
+                          <p
+                            style={{
+                              color: '#C33D7B',
+                            }}
+                            className={styles.line}
+                          >
+                            {message?.active_timeframe.Night}
+                          </p>
+                          <p className='type'>Night</p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -300,7 +310,8 @@ const Insights = () => {
                         <p className={styles.lcount}>
                           {' '}
                           {message?.page_visit.conversion_rate_vs_page_visit
-                            ? message?.page_visit.conversion_rate_vs_page_visit
+                            ? Math.round(message?.page_visit.conversion_rate_vs_page_visit * 100) /
+                              100
                             : '-'}{' '}
                         </p>
                       </div>
