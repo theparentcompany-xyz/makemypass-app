@@ -1,7 +1,8 @@
 .thirdSection {
   margin-top: 2rem;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
+  /* background: rgba(255, 255, 255, 0.04); */
+  background: rgba(34, 36, 37, 0.8);
   display: flex;
   padding: 2rem;
   justify-content: space-between;
