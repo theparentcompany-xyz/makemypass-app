@@ -111,7 +111,7 @@ const Insights = () => {
 
         setSocket(ws);
       });
-  }, []);
+  }, [eventId]);
 
   return (
     <Theme>

@@ -67,6 +67,7 @@ const DynamicForm = ({
           </div>
         )}
         {formFields?.map((field: FormField) => {
+          const fieldTitle = field.title + (field.required ? '*' : '');
           if (field.type === 'text' || field.type === 'email' || field.type === 'phonenumber') {
             return (
               <InputFIeld
@@ -92,10 +93,7 @@ const DynamicForm = ({
                     marginBottom: '1rem',
                   }}
                 >
-                  <p className={styles.formLabel}>
-                    {field.title}
-                    {field.required && '*'}
-                  </p>
+                  <p className={styles.formLabel}>{fieldTitle}</p>
                   <motion.div
                     variants={variants}
                     transition={{
@@ -121,7 +119,7 @@ const DynamicForm = ({
                           (option: { value: string }) => option.value === formData[field.field_key],
                         )}
                       placeholder={`Select an option`}
-                      isSearchable={false}
+                      isSearchable={true}
                     />
                   </motion.div>
                   <AnimatePresence>
@@ -147,10 +145,7 @@ const DynamicForm = ({
                   marginBottom: '1rem',
                 }}
               >
-                <p className={styles.formLabel}>
-                  {field.title}
-                  {field.required && '*'}
-                </p>
+                <p className={styles.formLabel}>{fieldTitle}</p>
                 <motion.textarea
                   variants={variants}
                   transition={{

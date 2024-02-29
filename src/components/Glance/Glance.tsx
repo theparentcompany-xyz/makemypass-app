@@ -7,6 +7,7 @@ import { getEventData } from '../../apis/events';
 import { AnimatePresence, motion } from 'framer-motion';
 import { formatDate } from '../../common/commonFunctions';
 import { GlobalContext } from '../../contexts/globalContext';
+import PoppingText from './components/PoppingText';
 
 const Glance = ({ tab }: { tab: string }) => {
   const [eventData, setEventData] = useState({
@@ -103,6 +104,14 @@ const Glance = ({ tab }: { tab: string }) => {
       });
   }, [eventId, backendURL]);
 
+  const tabs = {
+    overview: 'Overview',
+    insights: 'Insights',
+    inevent: 'In-Event',
+    checkins: 'Check-Ins',
+    postevent: 'Post Event',
+  };
+
   return (
     <AnimatePresence>
       {eventData && eventData.role !== 'Volunteer' && (
@@ -111,93 +120,22 @@ const Glance = ({ tab }: { tab: string }) => {
             <ol>
               {eventData.role != 'Gamer' && (
                 <>
-                  <div>
-                    <motion.li
-                      whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
-                      className={styles.tab}
-                      onClick={() => updateTab('overview')}
-                    >
-                      Overview
-                    </motion.li>
-                    {currentTab === 'overview' && (
-                      <motion.div layoutId='tab-indicator' className={styles.active} />
-                    )}
-                  </div>
-                  <div>
-                    <motion.li
-                      whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
-                      className={styles.tab}
-                      onClick={() => updateTab('insights')}
-                    >
-                      Insights
-                    </motion.li>
-
-                    {currentTab === 'insights' && (
-                      <motion.div layoutId='tab-indicator' className={styles.active} />
-                    )}
-                  </div>
-                  <div>
-                    <motion.li
-                      whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
-                      className={styles.tab}
-                      onClick={() => updateTab('guests')}
-                    >
-                      Guests
-                    </motion.li>
-                    {currentTab === 'guests' && (
-                      <motion.div layoutId='tab-indicator' className={styles.active} />
-                    )}
-                  </div>
-                  <div>
-                    <motion.li
-                      whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
-                      className={styles.tab}
-                      onClick={() => updateTab('checkins')}
-                    >
-                      Check-In
-                    </motion.li>
-                    {currentTab === 'checkins' && (
-                      <motion.div layoutId='tab-indicator' className={styles.active} />
-                    )}
-                  </div>
-                  <div>
-                    <motion.li
-                      whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
-                      className={styles.tab}
-                      onClick={() => updateTab('inevent')}
-                    >
-                      In-Event
-                    </motion.li>
-                    {currentTab === 'inevent' && (
-                      <motion.div layoutId='tab-indicator' className={styles.active} />
-                    )}
-                  </div>
-                  <div>
-                    <motion.li
-                      whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
-                      className={styles.tab}
-                      onClick={() => updateTab('postevent')}
-                    >
-                      Post-Event
-                    </motion.li>
-                    {currentTab === 'postevent' && (
-                      <motion.div layoutId='tab-indicator' className={styles.active} />
-                    )}
-                  </div>
+                  {Object.keys(tabs).map((tab) => (
+                    <div key={tab}>
+                      <motion.li
+                        whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
+                        className={styles.tab}
+                        onClick={() => updateTab(tab)}
+                      >
+                        {tabs[tab as keyof typeof tabs]}
+                      </motion.li>
+                      {currentTab === tab && (
+                        <motion.div layoutId='tab-indicator' className={styles.active} />
+                      )}
+                    </div>
+                  ))}
                 </>
               )}
-              {/* <div>
-                <motion.li
-                  whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
-                  className={styles.tab}
-                  onClick={() => updateTab('spinwheel')}
-                >
-                  Spin Wheel
-                </motion.li>
-                {currentTab === 'spinwheel' && (
-                  <motion.div layoutId='tab-indicator' className={styles.active} />
-                )}
-              </div> */}
             </ol>
           </div>
         </div>
@@ -245,27 +183,7 @@ const Glance = ({ tab }: { tab: string }) => {
                       animate={{ opacity: 1 }}
                       className={styles.guests}
                     >
-                      <motion.p
-                        animate={{
-                          scale: [1, 1.25, 1],
-                          marginRight: [0, 5, 0],
-                          color: ['#47c97e', '#fdfdfd', '#47c97e'],
-                        }}
-                        transition={{
-                          duration: 0.75,
-                        }}
-                        key={totalGuests}
-                      >
-                        <p
-                          style={
-                            totalGuests >= targetGuests && targetGuests > 0
-                              ? { color: '#47c97e' }
-                              : { color: '#fdfdfd' }
-                          }
-                        >
-                          {totalGuests}
-                        </p>
-                      </motion.p>
+                      <PoppingText totalGuests={totalGuests} targetGuests={targetGuests} />
                       {targetGuests > 0 && ` /${targetGuests}`}
                       {totalGuests > targetGuests && targetGuests > 0 && (
                         <p className={styles.popper}>🎉</p>
@@ -280,27 +198,13 @@ const Glance = ({ tab }: { tab: string }) => {
                         animate={{ opacity: 1 }}
                         className={styles.guests}
                       >
-                        <motion.p
-                          animate={{
-                            scale: [1, 1.25, 1],
-                            marginRight: [0, 5, 0],
-                            color: ['#47c97e', '#fdfdfd', '#47c97e'],
-                          }}
-                          transition={{
-                            duration: 0.75,
-                          }}
-                          key={totalGuests}
-                        >
-                          <p
-                            style={
-                              totalGuests >= targetGuests
-                                ? { color: '#47c97e' }
-                                : { color: '#fdfdfd' }
-                            }
-                          >
-                            {todayCheckIns}
-                          </p>
-                        </motion.p>
+                        {todayCheckIns && (
+                          <PoppingText
+                            totalGuests={totalGuests}
+                            targetGuests={targetGuests}
+                            todayCheckIns={todayCheckIns}
+                          />
+                        )}
                         {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}
                         <span>&nbsp;today's guests</span>
                       </motion.p>

@@ -1,20 +1,27 @@
+import styles from './Guests.module.css';
 import { useContext, useEffect, useState } from 'react';
+import { GlobalContext } from '../../../contexts/globalContext';
+
 import Theme from '../../../components/Theme/Theme';
 import Glance from '../../../components/Glance/Glance';
 import Header from '../../../components/EventHeader/EventHeader';
-import styles from './Guests.module.css';
+
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
-import { GuestsType, ResentTicket, SelectedGuest } from './types';
-import { getCategories } from '../../../apis/events';
-import { RiSearchLine } from 'react-icons/ri';
-import { HashLoader } from 'react-spinners';
-import Table from '../../../components/Table/Table';
-import { transformTableData } from '../../../common/commonFunctions';
-import { TableType } from '../../../components/Table/types';
 import { downloadTicket, editSubmissons, resentEventTicket } from '../../../apis/guests';
 import { ErrorMessages, FormData, FormField } from '../../../apis/types';
 import { getFormFields, getTickets } from '../../../apis/publicpage';
+import { getCategories } from '../../../apis/events';
+import { transformTableData } from '../../../common/commonFunctions';
+
+import { GuestsType, ResentTicket, SelectedGuest } from './types';
+import { TableType } from '../../../components/Table/types';
+
+import { RiSearchLine } from 'react-icons/ri';
+import { HashLoader } from 'react-spinners';
+
+import Table from '../../../components/Table/Table';
+
 import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import ViewGuest from './components/ViewGuest/ViewGuest';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
@@ -23,7 +30,6 @@ import { addGuest } from '../../../apis/guest';
 import { handleClick } from './components/csvExport';
 import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
-import { GlobalContext } from '../../../contexts/globalContext';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
