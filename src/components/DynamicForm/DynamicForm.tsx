@@ -3,12 +3,12 @@ import { ErrorMessages, FormData, FormField } from '../../apis/types';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
 import { TicketOptions } from '../../pages/app/EventPage/types';
 import InputFIeld from '../../pages/auth/Login/InputFIeld';
-import styles from './DynamicType.module.css';
+import styles from './DynamicForm.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import Select from 'react-select';
 
-const DynamicType = ({
+const DynamicForm = ({
   formFields,
   formErrors,
   formData,
@@ -25,6 +25,12 @@ const DynamicType = ({
   setTicketId?: Dispatch<React.SetStateAction<string>>;
   ticketId?: string;
 }) => {
+  const variants = {
+    initial: { opacity: 0, y: -10 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -10 },
+  };
+
   return (
     <>
       <div className={styles.formFields}>
@@ -35,13 +41,7 @@ const DynamicType = ({
             }}
           >
             <p className={styles.formLabel}>Ticket Type</p>
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className={styles.dropdown}
-            >
+            <motion.div className={styles.dropdown}>
               <Select
                 options={Object.keys(ticketInfo).map((key) => ({
                   value: ticketInfo[key].id,
@@ -97,10 +97,10 @@ const DynamicType = ({
                     {field.required && '*'}
                   </p>
                   <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
+                    variants={variants}
+                    transition={{
+                      duration: 0.2,
+                    }}
                     className={styles.dropdown}
                   >
                     <Select
@@ -127,10 +127,10 @@ const DynamicType = ({
                   <AnimatePresence>
                     {formErrors[field.field_key] && (
                       <motion.p
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
+                        variants={variants}
+                        transition={{
+                          duration: 0.2,
+                        }}
                         className={styles.errorText}
                       >
                         {formErrors[field.field_key][0]}
@@ -152,10 +152,10 @@ const DynamicType = ({
                   {field.required && '*'}
                 </p>
                 <motion.textarea
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
+                  variants={variants}
+                  transition={{
+                    duration: 0.2,
+                  }}
                   rows={4}
                   className={styles.textarea}
                   value={formData[field.field_key]}
@@ -167,10 +167,10 @@ const DynamicType = ({
                 <AnimatePresence>
                   {formErrors[field.field_key] && (
                     <motion.p
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2 }}
+                      variants={variants}
+                      transition={{
+                        duration: 0.2,
+                      }}
                       className={styles.errorText}
                     >
                       {formErrors[field.field_key][0]}
@@ -186,4 +186,4 @@ const DynamicType = ({
   );
 };
 
-export default DynamicType;
+export default DynamicForm;

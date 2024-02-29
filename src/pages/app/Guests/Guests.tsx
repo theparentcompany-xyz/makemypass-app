@@ -16,7 +16,7 @@ import { TableType } from '../../../components/Table/types';
 import { downloadTicket, editSubmissons, resentEventTicket } from '../../../apis/guests';
 import { ErrorMessages, FormData, FormField } from '../../../apis/types';
 import { getFormFields, getTickets } from '../../../apis/publicpage';
-import DynamicType from '../../../components/DynamicType/DynamicType';
+import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import ViewGuest from './components/ViewGuest/ViewGuest';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { TicketOptions } from '../EventPage/types';
@@ -176,7 +176,7 @@ const Guests = () => {
         <dialog className={styles.onClickModal}>
           <div className={styles.userInfoModalContainer}>
             <p className={styles.modalHeader}>Add Guest</p>
-            <DynamicType
+            <DynamicForm
               formFields={formFields}
               formErrors={formErrors}
               formData={formData}
@@ -258,7 +258,7 @@ const Guests = () => {
             <dialog className={styles.onClickModal}>
               <div className={styles.userInfoModalContainer}>
                 <p className={styles.modalHeader}>Edit Guest</p>
-                <DynamicType
+                <DynamicForm
                   formFields={formFields}
                   formErrors={formErrors}
                   formData={formData}

@@ -12,6 +12,7 @@ const EventHeader = () => {
     name: '',
     logo: '',
   });
+
   const [eventId, setEventId] = useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
 

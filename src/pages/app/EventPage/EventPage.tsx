@@ -20,7 +20,7 @@ import { showRazorpay } from './components/Razorpay';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { EventDetails, FormData, FormField } from '../../../apis/types';
 import { discountedTicketPrice, getIcon } from './constants';
-import DynamicType from '../../../components/DynamicType/DynamicType';
+import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import EventHeader from './components/EventHeader';
 
 const EventPage = () => {
@@ -191,7 +191,7 @@ const EventPage = () => {
                       Please fill in the form below to register for the event.
                     </p>
                   </div>
-                  <DynamicType
+                  <DynamicForm
                     formFields={formFields}
                     formErrors={formErrors}
                     formData={formData}
