@@ -10,7 +10,6 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import { CgClose } from 'react-icons/cg';
-import { getEventId } from '../../../../../apis/events';
 import { GlobalContext } from '../../../../../contexts/globalContext';
 
 const ScanQR = () => {

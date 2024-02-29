@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import * as React from 'react';
-import { createBrowserRouter, Outlet, RouterProvider, useParams } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/auth/Login/Login';
 import './index.css';
 import LandingPage from './pages/app/LandingPage/LandingPage';
@@ -26,8 +26,6 @@ import ClaimGifts from './pages/app/ClaimGifts/ClaimGifts';
 import EventPage from './pages/app/EventPage/EventPage';
 import Perks from './pages/app/CheckIns/pages/Perks/Perks';
 import PostEvent from './pages/app/PostEvent/PostEvent';
-import { getEventId } from './apis/events';
-import { GlobalContext } from './contexts/globalContext';
 import GlobalContextWrapper from './components/GlobalContextWrapper';
 
 const RoleChecker = SecureAuthRoutes();

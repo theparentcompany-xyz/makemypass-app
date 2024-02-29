@@ -6,7 +6,7 @@ import styles from './Guests.module.css';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
 import { GuestsType, ResentTicket, SelectedGuest } from './types';
-import { getCategories, getEventId } from '../../../apis/events';
+import { getCategories } from '../../../apis/events';
 import { RiSearchLine } from 'react-icons/ri';
 import { HashLoader } from 'react-spinners';
 import Table from '../../../components/Table/Table';
