@@ -12,7 +12,6 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  flex-wrap: wrap;
   align-items: flex-start;
   margin-top: 2rem;
   column-gap: 2rem;
@@ -60,7 +59,7 @@
 
 .projectText {
   font-family: 'Aeonik';
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: white;
   opacity: 0.8;
   max-width: 20rem;
@@ -85,6 +84,10 @@
 /* Responsive media queries for smaller devices */
 
 @media (max-width: 768px) {
+  .project {
+    flex-wrap: wrap;
+  }
+
   .projectsHeadingText {
     font-size: 2.5rem;
     max-width: none;
@@ -157,7 +160,7 @@
 
 .projectImages {
   display: inline-block;
-  animation: 10s slide infinite linear;
+  animation: 18s slide infinite linear;
 }
 
 .projectImage {

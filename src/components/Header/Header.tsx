@@ -57,10 +57,16 @@ const Header = ({ type }: { type?: string | undefined }) => {
           )
         ) : (
           <div className={styles.buttons}>
-            {/* <SecondaryButton buttonText="T&C" />
-                        <SecondaryButton buttonText="Privacy Policy" /> */}
+            <a
+              className={styles.requestDemo}
+              href='http://'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Request Demo
+            </a>
             <Link to='/login'>
-              <SecondaryButton buttonText='Login' />
+              <button className={styles.loginButton}>Login</button>
             </Link>
           </div>
         )}
