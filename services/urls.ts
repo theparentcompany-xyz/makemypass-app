@@ -72,6 +72,9 @@ export const makeMyPass = {
 
   getCategories: (eventId: string) => makeMyPassURL(`/rsvp/get-form-categories/${eventId}/`),
   sentPostMail: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/manage-post-event/`),
+
+  downloadFormSubmission: (eventId: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
 };
 
 export const makeMyPassSocket = {

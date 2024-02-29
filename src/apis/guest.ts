@@ -53,3 +53,19 @@ export const addGuest = (
       setFormErrors(error.response.data.message);
     });
 };
+
+export const downloadFormSubmission = (eventId: string) => {
+  privateGateway
+    .get(makeMyPass.downloadFormSubmission(eventId))
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `form-submission-${eventId}.csv`);
+      document.body.appendChild(link);
+      link.click();
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Form submission download failed');
+    });
+};
