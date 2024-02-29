@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './EventHeader.module.css';
-import { getEventData, getEventId } from '../../apis/events';
-import { useNavigate, useParams } from 'react-router-dom';
+import { getEventData } from '../../apis/events';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { GlobalContext } from '../../contexts/globalContext';
 
 const EventHeader = () => {
   const [eventData, setEventData] = useState({
@@ -13,28 +14,7 @@ const EventHeader = () => {
     logo: '',
   });
 
-  const [eventId, setEventId] = useState<string>('');
-  const { eventTitle } = useParams<{ eventTitle: string }>();
-
-  useEffect(() => {
-    let eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-    if (!eventData)
-      setTimeout(() => {
-        eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-        if (eventData) {
-          if (eventData.event_name !== eventTitle) {
-            localStorage.removeItem('eventData');
-            getEventId(eventTitle ?? '');
-          } else {
-            setEventId(eventData.event_id);
-          }
-        }
-      }, 2000);
-
-    setEventId(eventData?.event_id);
-  }, [eventTitle]);
+  const { eventId } = useContext(GlobalContext);
 
   useEffect(() => {
     if (eventId) getEventData(eventId, setEventData);

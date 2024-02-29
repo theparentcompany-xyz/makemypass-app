@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './Glance.module.css';
 import { connectPrivateSocket } from '../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../services/urls';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getEventData, getEventId } from '../../apis/events';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getEventData } from '../../apis/events';
 import { AnimatePresence, motion } from 'framer-motion';
 import { formatDate } from '../../common/commonFunctions';
+import { GlobalContext } from '../../contexts/globalContext';
 
 const Glance = ({ tab }: { tab: string }) => {
   const [eventData, setEventData] = useState({
@@ -38,37 +39,17 @@ const Glance = ({ tab }: { tab: string }) => {
 
   const [currentTab, setCurrentTab] = useState('overview');
 
+  const { eventId } = useContext(GlobalContext);
+  const { eventTitle } = useParams<{ eventTitle: string }>();
+
   const updateTab = (tab: string) => {
     setCurrentTab(tab);
     navigate(`/${eventTitle}/${tab}/`);
   };
 
-  const [eventId, setEventId] = useState<string>('');
-  const { eventTitle } = useParams<{ eventTitle: string }>();
-
   useEffect(() => {
     if (eventId) getEventData(eventId, setEventData);
   }, [eventId]);
-
-  useEffect(() => {
-    let eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-    if (!eventData)
-      setTimeout(() => {
-        eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-        if (eventData) {
-          if (eventData.event_name !== eventTitle) {
-            localStorage.removeItem('eventData');
-            getEventId(eventTitle ?? '');
-          } else {
-            setEventId(eventData.event_id);
-          }
-        }
-      }, 2000);
-
-    setEventId(eventData?.event_id);
-  }, [eventTitle]);
 
   const [backendURL, setBackendURL] = useState<string>('');
   useEffect(() => {

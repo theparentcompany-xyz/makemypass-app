@@ -3,38 +3,17 @@ import styles from './PostEvent.module.css';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 import { LuMailPlus, LuMailX } from 'react-icons/lu';
 import { sentPostEventMail } from '../../../apis/postevent';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
-import { getEventId } from '../../../apis/events';
+import { useContext, useState } from 'react';
 import Glance from '../../../components/Glance/Glance';
+import { GlobalContext } from '../../../contexts/globalContext';
 
 const PostEvent = () => {
-  const [eventId, setEventId] = useState<string>('');
-  const { eventTitle } = useParams<{ eventTitle: string }>();
   const [openConfirmModal, setConfirmModal] = useState({
     confirm: false,
     value: false,
   });
 
-  useEffect(() => {
-    let eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-    if (!eventData)
-      setTimeout(() => {
-        eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-        if (eventData) {
-          if (eventData.event_name !== eventTitle) {
-            localStorage.removeItem('eventData');
-            getEventId(eventTitle ?? '');
-          } else {
-            setEventId(eventData.event_id);
-          }
-        }
-      }, 2000);
-
-    setEventId(eventData?.event_id);
-  }, [eventTitle]);
+  const { eventId } = useContext(GlobalContext);
 
   return (
     <>

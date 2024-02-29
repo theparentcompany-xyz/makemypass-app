@@ -3,14 +3,15 @@ import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInH
 import styles from './ScanQR.module.css';
 
 import { QrScanner } from '@yudiel/react-qr-scanner';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { checkInUser, getCheckInCount } from '../../../../../apis/scan';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import toast from 'react-hot-toast';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import { CgClose } from 'react-icons/cg';
 import { getEventId } from '../../../../../apis/events';
+import { GlobalContext } from '../../../../../contexts/globalContext';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -20,26 +21,10 @@ const ScanQR = () => {
   const [isError, setIsError] = useState<boolean>(false);
   const [scanCount, setScanCount] = useState<number>(0);
 
-  const getLocalEventId = () => {
-    if (eventTitle) {
-      const eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-      if (eventData) {
-        if (eventData.event_name !== eventTitle) {
-          localStorage.removeItem('eventData');
-          getEventId(eventTitle);
-        } else {
-          return eventData.event_id;
-        }
-      }
-    }
-  };
-
-  const { eventTitle } = useParams<{ eventTitle: string }>();
-  const eventId = getLocalEventId();
+  const { eventId } = useContext(GlobalContext);
 
   useEffect(() => {
-    getCheckInCount(eventId, setScanCount);
+    if (eventId) getCheckInCount(eventId, setScanCount);
     if (ticketId.length > 0 && trigger) {
       checkInUser(ticketId, eventId, setMessage, setIsError);
       setTimeout(() => {
@@ -50,7 +35,7 @@ const ScanQR = () => {
         setMessage('');
       }, 1150);
     }
-  }, [ticketId, trigger]);
+  }, [ticketId, trigger, eventId]);
 
   const navigate = useNavigate();
 

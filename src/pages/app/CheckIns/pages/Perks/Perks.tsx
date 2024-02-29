@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './Perks.module.css';
 import Theme from '../../../../../components/Theme/Theme';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
 import { getPerksInfo, getUserPerksInfo, updatePerk } from '../../../../../apis/perks';
-import { getEventId } from '../../../../../apis/events';
-import { useParams } from 'react-router';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import toast from 'react-hot-toast';
 import { CgClose } from 'react-icons/cg';
+import { GlobalContext } from '../../../../../contexts/globalContext';
 
 const Perks = () => {
   const [perks, setPerks] = useState([]);
@@ -19,27 +18,11 @@ const Perks = () => {
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
 
-  const getLocalEventId = () => {
-    if (eventTitle) {
-      const eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-      if (eventData) {
-        if (eventData.event_name !== eventTitle) {
-          localStorage.removeItem('eventData');
-          getEventId(eventTitle);
-        } else {
-          return eventData.event_id;
-        }
-      }
-    }
-  };
-
-  const { eventTitle } = useParams<{ eventTitle: string }>();
-  const eventId = getLocalEventId();
+  const { eventId } = useContext(GlobalContext);
 
   useEffect(() => {
-    getPerksInfo(eventId, setPerks);
-  }, []);
+    if (eventId) getPerksInfo(eventId, setPerks);
+  }, [eventId]);
 
   useEffect(() => {
     if (trigger) {
@@ -85,7 +68,11 @@ const Perks = () => {
         <div className={styles.perksContainer}>
           <CheckInHeader buttonType='back' />
           <hr className={styles.line} />
-          <p className={styles.perksHeading}>Available Perks</p>
+          {perks.length > 0 ? (
+            <p className={styles.perksHeading}>Available Perks</p>
+          ) : (
+            <p className={styles.perksHeading}>No Perks Available</p>
+          )}
           {selectedPerk == '' ? (
             <div className={styles.listPerksContainer}>
               {perks.map((perk) => {

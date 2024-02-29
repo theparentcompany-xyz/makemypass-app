@@ -12,8 +12,7 @@ import {
   ArcElement,
 } from 'chart.js';
 import { Line, Doughnut } from 'react-chartjs-2';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
@@ -21,7 +20,7 @@ import { ChartData, AnalyticsData } from './types';
 import Theme from '../../../components/Theme/Theme';
 import Glance from '../../../components/Glance/Glance';
 import Header from '../../../components/EventHeader/EventHeader';
-import { getEventId } from '../../../apis/events';
+import { GlobalContext } from '../../../contexts/globalContext';
 
 ChartJS.register(
   CategoryScale,
@@ -47,23 +46,7 @@ const Insights = () => {
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
-  const getLocalEventId = () => {
-    if (eventTitle) {
-      const eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-      if (eventData) {
-        if (eventData.event_name !== eventTitle) {
-          localStorage.removeItem('eventData');
-          getEventId(eventTitle);
-        } else {
-          return eventData.event_id;
-        }
-      }
-    }
-  };
-
-  const { eventTitle } = useParams<{ eventTitle: string }>();
-  const eventId = getLocalEventId();
+  const { eventId } = useContext(GlobalContext);
 
   const options = {
     responsive: true,

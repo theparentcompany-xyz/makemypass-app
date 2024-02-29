@@ -5,7 +5,7 @@ import Glance from '../../../../components/Glance/Glance';
 
 import styles from './Overview.module.css';
 import SectionButton from '../../../../components/SectionButton/SectionButton';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { hostData, hostId, hostList, recentRegistration } from './types';
 
@@ -16,7 +16,6 @@ import { makeMyPassSocket } from '../../../../../services/urls';
 import Theme from '../../../../components/Theme/Theme';
 import { Link, useParams } from 'react-router-dom';
 import Header from '../../../../components/EventHeader/EventHeader';
-import { getEventId } from '../../../../apis/events';
 import Table from '../../../../components/Table/Table';
 import { TableType } from '../../../../components/Table/types';
 import { transformTableData } from '../../../../common/commonFunctions';
@@ -24,6 +23,7 @@ import SecondaryButton from '../components/SecondaryButton/SecondaryButton';
 import AddHosts from '../components/SecondaryButton/AddHosts/AddHosts';
 import { addHosts, removeHost, updateHostRole } from '../../../../apis/host';
 import { AnimatePresence } from 'framer-motion';
+import { GlobalContext } from '../../../../contexts/globalContext';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
@@ -37,8 +37,7 @@ const Overview = () => {
     type: 'edit',
   });
 
-  const [eventId, setEventId] = useState<string>('');
-  const { eventTitle } = useParams<{ eventTitle: string }>();
+  const eventTitle = useParams<{ eventTitle: string }>();
 
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -47,25 +46,7 @@ const Overview = () => {
     role: '',
   });
 
-  useEffect(() => {
-    let eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-    if (!eventData)
-      setTimeout(() => {
-        eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-        if (eventData) {
-          if (eventData.event_name !== eventTitle) {
-            localStorage.removeItem('eventData');
-            getEventId(eventTitle ?? '');
-          } else {
-            setEventId(eventData.event_id);
-          }
-        }
-      }, 2000);
-
-    setEventId(eventData?.event_id);
-  }, [eventTitle]);
+  const { eventId } = useContext(GlobalContext);
 
   useEffect(() => {
     if (eventId && hostList.length === 0) getHosts(eventId, setHostList);

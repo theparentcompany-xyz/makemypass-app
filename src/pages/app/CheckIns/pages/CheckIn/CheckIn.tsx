@@ -2,11 +2,10 @@ import Theme from '../../../../../components/Theme/Theme';
 import Header from '../../../../../components/EventHeader/EventHeader';
 import styles from './CheckIn.module.css';
 import { RiSearchLine } from 'react-icons/ri';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { guests } from './types';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
-import { useParams } from 'react-router-dom';
-import { getCategories, getEventId } from '../../../../../apis/events';
+import { getCategories } from '../../../../../apis/events';
 import { connectPrivateSocket } from '../../../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../../../services/urls';
 import { transformTableData } from '../../../../../common/commonFunctions';
@@ -16,37 +15,18 @@ import { customStyles } from '../../../EventPage/constants';
 import Select from 'react-select';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { handleClick } from '../../../Guests/components/csvExport';
+import { GlobalContext } from '../../../../../contexts/globalContext';
 
 const CheckIn = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<guests[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [recentTableData, setRecentTableData] = useState<TableType[]>([]);
-  const [eventId, setEventId] = useState<string>('');
-  const { eventTitle } = useParams<{ eventTitle: string }>();
 
   const [categories, setCategories] = useState<string[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>();
 
-  useEffect(() => {
-    let eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-    if (!eventData)
-      setTimeout(() => {
-        eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-        if (eventData) {
-          if (eventData.event_name !== eventTitle) {
-            localStorage.removeItem('eventData');
-            getEventId(eventTitle ?? '');
-          } else {
-            setEventId(eventData.event_id);
-          }
-        }
-      }, 2000);
-
-    setEventId(eventData?.event_id);
-  }, [eventTitle]);
+  const { eventId } = useContext(GlobalContext);
 
   useEffect(() => {
     if (eventId) getCategories(eventId, setCategories);

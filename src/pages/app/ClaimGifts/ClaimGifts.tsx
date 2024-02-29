@@ -1,7 +1,6 @@
 import styles from './ClaimGifts.module.css';
 import Theme from '../../../components/Theme/Theme';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { getEventUUID } from '../../../common/commonFunctions';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { QrScanner } from '@yudiel/react-qr-scanner';
@@ -12,6 +11,7 @@ import CheckInHeader from '../CheckIns/components/CheckInHeader/CheckInHeader/Ch
 import SectionButton from '../../../components/SectionButton/SectionButton';
 import { getUserInfo } from '../../../apis/user';
 import UserInfo from '../CheckIns/components/UserInfo/UserInfo';
+import { useParams } from 'react-router';
 
 type UserInfoType = {
   category: string;

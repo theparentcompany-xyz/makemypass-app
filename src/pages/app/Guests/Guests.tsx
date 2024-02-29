@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Theme from '../../../components/Theme/Theme';
 import Glance from '../../../components/Glance/Glance';
 import Header from '../../../components/EventHeader/EventHeader';
 import styles from './Guests.module.css';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
-import { useParams } from 'react-router-dom';
 import { GuestsType, ResentTicket, SelectedGuest } from './types';
 import { getCategories, getEventId } from '../../../apis/events';
 import { RiSearchLine } from 'react-icons/ri';
@@ -24,6 +23,7 @@ import { addGuest } from '../../../apis/guest';
 import { handleClick } from './components/csvExport';
 import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
+import { GlobalContext } from '../../../contexts/globalContext';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -51,29 +51,13 @@ const Guests = () => {
     name: '',
   });
 
-  const getLocalEventId = () => {
-    if (eventTitle) {
-      const eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-      if (eventData) {
-        if (eventData.event_name !== eventTitle) {
-          localStorage.removeItem('eventData');
-          getEventId(eventTitle);
-        } else {
-          return eventData.event_id;
-        }
-      }
-    }
-  };
-
   const getGuestData = () => {
     const selectedGuestData = guests.filter((guest) => guest?.id === selectedGuestId?.id);
     setSelectedGuest(selectedGuestData[0]);
     setFormData(selectedGuestData[0]);
   };
 
-  const { eventTitle } = useParams<{ eventTitle: string }>();
-  const eventId = getLocalEventId();
+  const { eventId } = useContext(GlobalContext);
 
   useEffect(() => {
     if (eventId && !selectedGuestId?.id) {
