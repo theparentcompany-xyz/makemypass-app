@@ -3,8 +3,7 @@
 
   padding: 1rem;
   border-radius: 12px;
-
-  background: rgba(34, 36, 37, 0.8);
+  background: rgba(255, 255, 255, 0.04);
   overflow: hidden;
   white-space: nowrap;
   position: relative;
@@ -26,12 +25,12 @@
 
 .eventPartnersContainer:before {
   left: 0;
-  background: linear-gradient(to left, rgba(255, 255, 255, 0), #222425);
+  background: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.04));
 }
 
 .eventPartnersContainer:after {
   right: 0;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), #222425);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.04));
 }
 
 @keyframes slide {
