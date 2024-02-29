@@ -1,6 +1,6 @@
 .checkInContainer {
   padding: 0 1.25rem;
-padding-left: 0;
+
   min-height: 80vh;
 }
 
@@ -49,8 +49,8 @@ padding-left: 0;
 
 .tableButtons {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: row;
+  justify-content: flex-end;
+  row-gap: 1rem;
   column-gap: 0.25rem;
-  width: 100%;
 }

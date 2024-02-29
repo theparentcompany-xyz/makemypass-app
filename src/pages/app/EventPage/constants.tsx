@@ -9,7 +9,7 @@ export const customStyles = {
   control: (provided: any) => ({
     ...provided,
     border: 'none',
-    backgroundColor: '#2A3533',
+    backgroundColor: 'rgba(255, 255, 255, 0.04)',
     fontFamily: 'Inter, sans-serif',
     fontStyle: 'normal',
     fontWeight: 400,

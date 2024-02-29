@@ -46,6 +46,8 @@ const EventPage = () => {
 
   const navigate = useNavigate();
 
+  const [hasZeroPriceTicket, setHasZeroPriceTicket] = useState(false);
+
   useEffect(() => {
     if (eventTitle) getEventId(eventTitle, navigate);
 
@@ -86,12 +88,22 @@ const EventPage = () => {
   }, [discount]);
 
   useEffect(() => {
-    ticketInfo &&
+    if (ticketInfo) {
       Object.keys(ticketInfo)?.map((ticketType) => {
         if (ticketInfo[ticketType].default_selected) {
           setTicketId(ticketInfo[ticketType].id);
         }
       });
+
+      const responseKeys = Object.keys(ticketInfo);
+      if (responseKeys.length === 1) {
+        const ticketKey = responseKeys[0];
+        const ticket = ticketInfo[ticketKey];
+        if (ticket.price === 0) {
+          setHasZeroPriceTicket(true);
+        }
+      }
+    }
   }, [ticketInfo]);
 
   useEffect(() => {
@@ -396,12 +408,12 @@ const EventPage = () => {
                   whileTap={{ scale: 0.95 }}
                   type='submit'
                   onClick={() => {
-                    if (formNumber === 0) {
+                    if (formNumber === 0 && !hasZeroPriceTicket) {
                       {
                         validateRsvp(ticketId, formData, setFormNumber, setFormErrors);
                       }
                     } else {
-                      if (amount === '0')
+                      if (amount === '0' || hasZeroPriceTicket)
                         submitForm(
                           ticketId,
                           formData,
@@ -425,7 +437,7 @@ const EventPage = () => {
                   }}
                   className={styles.submitButton}
                 >
-                  {formNumber === 0 ? 'Next' : 'Register Now'}
+                  {formNumber === 0 && !hasZeroPriceTicket ? 'Next' : 'Register Now'}
                 </motion.button>
               </div>
             </div>
