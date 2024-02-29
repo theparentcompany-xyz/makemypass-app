@@ -31,6 +31,16 @@ const Projects = () => {
                   entrepreneurs, investors, professionals, and business enthusiasts for a
                   comprehensive two-day event.
                 </p>
+                <div className={styles.counts}>
+                  <p className={styles.countT}>
+                    <span className={styles.count}>6897 </span>
+                    <span className={styles.countText}>Registrations</span>
+                  </p>
+                  <p className={styles.countT}>
+                    <span className={styles.count}>3394 </span>
+                    <span className={styles.countText}>Check-Ins</span>
+                  </p>
+                </div>
               </div>
               <div className={styles.projectImagesContainer}>
                 <div className={styles.projectImages}>
@@ -58,6 +68,12 @@ const Projects = () => {
                   PERMUTE is µLearn’s flagship event set for February 23rd at Park Centre,
                   Technopark, Trivandrum, featuring the unveiling of µLearn 3.0.
                 </p>
+                <div className={styles.counts}>
+                  <p className={styles.countT}>
+                    <span className={styles.count}>120+ </span>
+                    <span className={styles.countText}>Invites Sent via MakeMyPass</span>
+                  </p>
+                </div>
               </div>
               <div className={styles.projectImagesContainer}>
                 <div className={styles.projectImages}>
@@ -85,6 +101,12 @@ const Projects = () => {
                   In50Hours is a 50-hour hackathon that brings together students, developers, and
                   entrepreneurs to build and launch a product and get inital funding.
                 </p>
+                <div className={styles.counts}>
+                  <p className={styles.countT}>
+                    <span className={styles.count}>Paid Event </span>
+                    <span className={styles.countText}>with Razorpay</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>

@@ -168,3 +168,19 @@
   height: 150px;
   object-fit: cover;
 }
+
+.counts {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+
+  font-family: 'Inter';
+  justify-content: flex-start;
+  column-gap: 0.5rem;
+  row-gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.count {
+  color: #01f77e;
+}
