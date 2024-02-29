@@ -44,9 +44,8 @@
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem;
 
-  /* 
-    max-width: 20rem;
-    width: 100%; */
+  max-width: 20rem;
+  width: 100%;
 
   margin-bottom: 1rem;
   position: absolute;

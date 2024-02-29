@@ -1,7 +1,7 @@
 import styles from './Modal.module.css';
 
 const Modal = () => {
-  return <div>Modal</div>;
+  return <></>;
 };
 
 export default Modal;

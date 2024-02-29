@@ -5,14 +5,10 @@ type ButtonProps = {
   buttonText: string;
   icon?: JSX.Element;
   buttonColor?: string;
-  onClick?: () => void; // Add the onClick property to the type definition
+  onClick?: () => void;
 };
 
-const Button = ({
-  buttonText,
-  icon,
-  onClick, // Add the onClick property to the component props
-}: ButtonProps) => {
+const Button = ({ buttonText, icon, onClick }: ButtonProps) => {
   return (
     <>
       <motion.button
