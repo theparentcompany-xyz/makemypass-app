@@ -472,7 +472,7 @@
 
   margin-bottom: 1rem;
   position: absolute;
-  z-index: 100;
+  z-index: 10001;
   backdrop-filter: blur(800px);
 
   top: 50%;
