@@ -42,25 +42,24 @@ export const submitForm = async (
   setAmount?: React.Dispatch<React.SetStateAction<string>>,
   response?: unknown,
 ) => {
-  console.log(ticketId);
-  // publicGateway
-  //   .post(makeMyPass.submitForm(ticketId), {
-  //     rsvp_data: data,
-  //     payment_data: response,
-  //   })
-  //   .then((response) => {
-  //     setSuccess && setSuccess(response.data.response.code);
+  publicGateway
+    .post(makeMyPass.submitForm(ticketId), {
+      rsvp_data: data,
+      payment_data: response,
+    })
+    .then((response) => {
+      setSuccess && setSuccess(response.data.response.code);
 
-  //     setTimeout(() => {
-  //       setSuccess && setSuccess('');
-  //       setFormNumber && setFormNumber(0);
-  //       setFormData && setFormData({});
-  //       setAmount && setAmount('');
-  //     }, 3000);
-  //   })
-  //   .catch(() => {
-  //     toast.error('Error in Registering Event');
-  //   });
+      setTimeout(() => {
+        setSuccess && setSuccess('');
+        setFormNumber && setFormNumber(0);
+        setFormData && setFormData({});
+        setAmount && setAmount('');
+      }, 3000);
+    })
+    .catch(() => {
+      toast.error('Error in Registering Event');
+    });
 };
 
 export const applyCoupon = async (
