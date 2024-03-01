@@ -79,6 +79,7 @@
   font-weight: 500;
   color: #fff;
   font-family: 'Inter', sans-serif;
+  max-width: 12rem;
 }
 
 .eventGuests {
