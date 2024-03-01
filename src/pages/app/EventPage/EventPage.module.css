@@ -1,8 +1,8 @@
 .eventPageContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
 
   padding: 1rem;
@@ -34,7 +34,7 @@
 
 .eventTopHeader {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -59,7 +59,7 @@
 
 .eventDescription {
   margin-top: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   max-width: 27rem;
   font-weight: 400;
   color: #bbbaba;
@@ -535,4 +535,12 @@
   margin-bottom: 1rem;
   max-width: 30rem;
   margin-top: 1rem;
+}
+
+.bannerImg {
+  max-width: 24.5rem;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
 }

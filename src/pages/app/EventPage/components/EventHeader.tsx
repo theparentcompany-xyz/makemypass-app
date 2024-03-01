@@ -19,13 +19,20 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
       }}
     >
       <div className={styles.eventTopHeader}>
+        <img className={styles.bannerImg} src='/app/banner.png' alt='' />
         <div>
           <p className={styles.eventTitle}>{eventData?.title}</p>
-          <p className={styles.eventDescription}>{eventData?.description}</p>
+          <p className={styles.eventDescription}>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident, ullam perferendis
+            vel molestias eligendi nemo, voluptatem, ratione modi nobis iure ab laboriosam magnam
+            aliquam accusantium iusto iste alias enim omnis illum repudiandae doloremque. Illo quae
+            in ipsum eveniet odio sit magni perspiciatis at recusandae, minus dolore fugiat
+            molestiae quaerat ratione?
+          </p>
         </div>
-        <div className={styles.headerRightSide}>
+        {/* <div className={styles.headerRightSide}>
           <img src={eventData?.logo} alt='event' className={styles.eventImage} />
-        </div>
+        </div> */}
       </div>
 
       <div className={styles.otherDetials}>
