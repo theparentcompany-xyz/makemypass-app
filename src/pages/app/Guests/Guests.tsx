@@ -92,13 +92,15 @@ const Guests = () => {
   }, [eventId, selectedGuestId]);
 
   useEffect(() => {
-    getFormFields(eventId, setFormFields);
-    getTickets(eventId, setTicketInfo);
-    getCategories(eventId, setCategories);
+    if (eventId) {
+      getFormFields(eventId, setFormFields);
+      getTickets(eventId, setTicketInfo);
+      getCategories(eventId, setCategories);
+    }
     return () => {
       socket?.close();
     };
-  }, []);
+  }, [eventId]);
 
   useEffect(() => {
     if (selectedGuestId?.id && (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view'))
@@ -169,7 +171,13 @@ const Guests = () => {
       )}
       {selectedGuestId && selectedGuestId.type === 'add' && (
         <dialog className={styles.onClickModal}>
-          <div className={styles.userInfoModalContainer}>
+          <div
+            className={styles.userInfoModalContainer}
+            style={{
+              maxHeight: '40rem',
+              padding: '2rem 0',
+            }}
+          >
             <p className={styles.modalHeader}>Add Guest</p>
             <DynamicForm
               formFields={formFields}
