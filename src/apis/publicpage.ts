@@ -40,6 +40,7 @@ export const submitForm = async (
   setFormNumber?: React.Dispatch<React.SetStateAction<number>>,
   setFormData?: React.Dispatch<React.SetStateAction<FormData>>,
   setAmount?: React.Dispatch<React.SetStateAction<string>>,
+  setFormErrors?: Dispatch<ErrorMessages>,
   response?: unknown,
 ) => {
   publicGateway
@@ -57,8 +58,9 @@ export const submitForm = async (
         setAmount && setAmount('');
       }, 3000);
     })
-    .catch(() => {
+    .catch((error) => {
       toast.error('Error in Registering Event');
+      if (setFormErrors) setFormErrors(error.response.data.message);
     });
 };
 

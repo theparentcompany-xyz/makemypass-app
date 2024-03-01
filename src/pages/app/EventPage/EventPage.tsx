@@ -421,6 +421,7 @@ const EventPage = () => {
                           setFormNumber,
                           setFormData,
                           setAmount,
+                          setFormErrors,
                         );
                       else if (formData) {
                         showRazorpay(
