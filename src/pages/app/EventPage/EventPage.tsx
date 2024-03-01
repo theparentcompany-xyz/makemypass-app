@@ -203,12 +203,14 @@ const EventPage = () => {
                       Please fill in the form below to register for the event.
                     </p>
                   </div>
-                  <DynamicForm
-                    formFields={formFields}
-                    formErrors={formErrors}
-                    formData={formData}
-                    onFieldChange={onFieldChange}
-                  />
+                  {formData && (
+                    <DynamicForm
+                      formFields={formFields}
+                      formErrors={formErrors}
+                      formData={formData}
+                      onFieldChange={onFieldChange}
+                    />
+                  )}
                 </motion.div>
               )}
 

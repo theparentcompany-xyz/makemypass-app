@@ -62,7 +62,6 @@ export const customStyles = {
   placeholder: (provided: any) => ({
     ...provided,
     color: '#9E9E9E',
-    fontStyle: 'italic',
   }),
 
   menu: (provided: any) => ({
@@ -83,12 +82,10 @@ export const customStyles = {
   noOptionsMessage: (provided: any) => ({
     ...provided,
     color: '#9E9E9E',
-    fontStyle: 'italic',
   }),
   loadingMessage: (provided: any) => ({
     ...provided,
     color: '#9E9E9E',
-    fontStyle: 'italic',
   }),
   indicatorSeparator: (provided: any) => ({
     ...provided,

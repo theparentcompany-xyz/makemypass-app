@@ -79,7 +79,7 @@ const DynamicForm = ({
                   onFieldChange(field.field_key, e.target.value)
                 }
                 error={formErrors[field.field_key]}
-                value={formData[field.field_key]}
+                value={formData[field.field_key] || ''}
                 type={field.type}
                 icon={getIcon(field.field_key)}
                 required={field.required}
@@ -192,6 +192,13 @@ const DynamicForm = ({
                     isMulti
                     styles={customStyles}
                     name='colors'
+                    value={
+                      formData[field.field_key]
+                        ? selectValues.filter((option) =>
+                            formData[field.field_key].includes(option.value),
+                          )
+                        : []
+                    }
                     options={selectValues}
                     className='basic-multi-select'
                     classNamePrefix='select'

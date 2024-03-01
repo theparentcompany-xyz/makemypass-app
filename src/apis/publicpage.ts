@@ -56,7 +56,7 @@ export const submitForm = async (
         setFormNumber && setFormNumber(0);
         setFormData && setFormData({});
         setAmount && setAmount('');
-      }, 3000);
+      }, 2000);
     })
     .catch((error) => {
       toast.error('Error in Registering Event');
