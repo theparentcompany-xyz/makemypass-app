@@ -189,7 +189,6 @@ const DynamicForm = ({
                 >
                   <p className={styles.formLabel}>{fieldTitle}</p>
                   <Select
-                    defaultValue={selectValues[0] ?? ''}
                     isMulti
                     styles={customStyles}
                     name='colors'
