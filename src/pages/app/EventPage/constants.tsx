@@ -33,6 +33,87 @@ export const customStyles = {
     fontWeight: 400,
     fontSize: '0.9rem',
   }),
+
+  multiValue: (provided: any) => ({
+    ...provided,
+    backgroundColor: '#323838',
+    borderRadius: '4px',
+    padding: '2px 6px',
+    color: '#fff',
+    fontSize: '1.9rem',
+  }),
+
+  multiValueLabel: (provided: any) => ({
+    ...provided,
+    color: '#fff',
+    fontSize: '0.9rem',
+  }),
+
+  multiValueRemove: (provided: any) => ({
+    ...provided,
+    color: '#fff',
+    fontSize: '0.9rem',
+    ':hover': {
+      backgroundColor: '#323838',
+      color: '#fff',
+    },
+  }),
+
+  placeholder: (provided: any) => ({
+    ...provided,
+    color: '#9E9E9E',
+    fontStyle: 'italic',
+  }),
+
+  menu: (provided: any) => ({
+    ...provided,
+    backgroundColor: 'rgba(255, 255, 255)',
+    fontFamily: 'Inter, sans-serif',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: '0.9rem',
+  }),
+
+  menuList: (provided: any) => ({
+    ...provided,
+    paddingTop: 0,
+    paddingBottom: 0,
+  }),
+
+  noOptionsMessage: (provided: any) => ({
+    ...provided,
+    color: '#9E9E9E',
+    fontStyle: 'italic',
+  }),
+  loadingMessage: (provided: any) => ({
+    ...provided,
+    color: '#9E9E9E',
+    fontStyle: 'italic',
+  }),
+  indicatorSeparator: (provided: any) => ({
+    ...provided,
+    backgroundColor: '#9E9E9E',
+  }),
+  dropdownIndicator: (provided: any) => ({
+    ...provided,
+    color: '#9E9E9E',
+  }),
+  clearIndicator: (provided: any) => ({
+    ...provided,
+    color: '#9E9E9E',
+  }),
+  valueContainer: (provided: any) => ({
+    ...provided,
+    padding: '2px 8px',
+  }),
+  input: (provided: any) => ({
+    ...provided,
+    color: '#fff',
+  }),
+  loadingIndicator: (provided: any) => ({
+    ...provided,
+    color: '#9E9E9E',
+  }),
 };
 
 export const getIcon = (type: string) => {
