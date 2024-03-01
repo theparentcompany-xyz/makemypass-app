@@ -6,8 +6,7 @@ import InputFIeld from '../../pages/auth/Login/InputFIeld';
 import styles from './DynamicForm.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import Select, { GroupBase } from 'react-select';
-import { colourOptions } from './data';
+import Select from 'react-select';
 
 const DynamicForm = ({
   formFields,
