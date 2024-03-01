@@ -115,7 +115,7 @@ const EventPage = () => {
     );
   }, [formFields]);
 
-  const onFieldChange = (fieldName: string, fieldValue: string) => {
+  const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
     setFormData({
       ...formData,
       [fieldName]: fieldValue,
@@ -140,7 +140,7 @@ const EventPage = () => {
             transition={{ duration: 0.5 }}
             className={styles.successMessage}
           >
-            {success && (
+            {!success && (
               <>
                 <div className={styles.backgroundBlur}></div>
                 <dialog

@@ -8,7 +8,7 @@ interface FormProps {
   id: string;
   placeholder: string;
   icon: React.ReactNode;
-  value?: string;
+  value?: string | string[];
   required?: boolean;
   error?: string[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

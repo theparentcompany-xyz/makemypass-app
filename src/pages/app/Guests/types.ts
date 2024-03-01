@@ -11,11 +11,11 @@ export type GuestsType = {
 
 export type ResentTicket = {
   status: boolean;
-  name: string;
-  guestId: string;
+  name: string | string[];
+  guestId: string | string[];
 };
 
 export type SelectedGuest = {
-  id: string;
-  type: string;
+  id: string | string[];
+  type: string | string[];
 };

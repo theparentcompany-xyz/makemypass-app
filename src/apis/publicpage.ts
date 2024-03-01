@@ -66,7 +66,7 @@ export const submitForm = async (
 
 export const applyCoupon = async (
   eventId: string,
-  couponCode: string,
+  couponCode: string | string[],
   setDiscount: React.Dispatch<DiscountData>,
   formErrors: ErrorMessages,
 ) => {

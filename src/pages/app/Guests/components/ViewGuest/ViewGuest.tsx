@@ -10,6 +10,7 @@ import { MdDownload } from 'react-icons/md';
 import { FaCheck } from 'react-icons/fa6';
 import { checkInUser } from '../../../../../apis/scan';
 import { formatDate } from '../../../../../common/commonFunctions';
+import { isArray } from 'chart.js/helpers';
 
 const ViewGuest = ({
   formFields,
@@ -68,12 +69,16 @@ const ViewGuest = ({
             >
               <div className={styles.field}>
                 <p className={styles.fieldLabel}>Registered</p>
-                <p className={styles.fieldData}>{formatDate(formData['registered_at'])}</p>
+                {!isArray(formData['registered_at']) && (
+                  <p className={styles.fieldData}>{formatDate(formData['registered_at'])}</p>
+                )}
               </div>
               {formData['check_in_date'] && (
                 <div className={styles.field}>
                   <p className={styles.fieldLabel}>Checked In</p>
-                  <p className={styles.fieldData}>{formatDate(formData['check_in_date'])}</p>
+                  {!isArray(formData['check_in_date']) && (
+                    <p className={styles.fieldData}>{formatDate(formData['check_in_date'])}</p>
+                  )}
                 </div>
               )}
             </div>
@@ -123,12 +128,13 @@ const ViewGuest = ({
                     />
                     <SecondaryButton
                       onClick={() => {
-                        shortListUser(
-                          eventId,
-                          formData['id'],
-                          confirmClicked.value,
-                          setSelectedGuestId,
-                        );
+                        if (!isArray(formData['id']))
+                          shortListUser(
+                            eventId,
+                            formData['id'],
+                            confirmClicked.value,
+                            setSelectedGuestId,
+                          );
                       }}
                       buttonText={confirmClicked.value ? 'Yes, Accept' : 'Yes, Decline'}
                     />
@@ -185,7 +191,8 @@ const ViewGuest = ({
               {!formData['check_in_date'] && (
                 <div
                   onClick={() => {
-                    checkInUser(formData['ticket_code'], eventId);
+                    if (!isArray(formData['ticket_code']))
+                      checkInUser(formData['ticket_code'], eventId);
                     setSelectedGuestId((prevState) => ({
                       ...prevState,
                       id: '',

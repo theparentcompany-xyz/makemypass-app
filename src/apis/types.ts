@@ -38,7 +38,7 @@ export type FormField = {
 };
 
 export type FormData = {
-  [key: string]: string;
+  [key: string]: string | string[];
 };
 
 export type ErrorMessages = {

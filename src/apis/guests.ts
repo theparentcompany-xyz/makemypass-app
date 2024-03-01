@@ -4,6 +4,7 @@ import { makeMyPass } from '../../services/urls';
 import { ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
 import { FormData } from './types';
+import { isArray } from 'chart.js/helpers';
 
 export const resentEventTicket = async (
   ticketData: ResentTicket,
@@ -34,7 +35,7 @@ export const editSubmissons = async (
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
   setFormData: Dispatch<React.SetStateAction<FormData>>,
 ) => {
-  if (data)
+  if (data && !isArray(data.id))
     privateGateway
       .put(makeMyPass.editSubmission(eventId, data.id), data)
       .then((response) => {

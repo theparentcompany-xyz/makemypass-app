@@ -6,7 +6,7 @@ import InputFIeld from '../../pages/auth/Login/InputFIeld';
 import styles from './DynamicForm.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import Select from 'react-select';
+import Select, { MultiValue } from 'react-select';
 
 const DynamicForm = ({
   formFields,
@@ -20,7 +20,7 @@ const DynamicForm = ({
   formFields: FormField[];
   formErrors: ErrorMessages;
   formData: FormData;
-  onFieldChange: (fieldName: string, fieldValue: string) => void;
+  onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
   ticketInfo?: TicketOptions;
   setTicketId?: Dispatch<React.SetStateAction<string>>;
   ticketId?: string;
@@ -196,6 +196,12 @@ const DynamicForm = ({
                     options={selectValues}
                     className='basic-multi-select'
                     classNamePrefix='select'
+                    onChange={(selectedOption: MultiValue<{ value: string }>) =>
+                      onFieldChange(
+                        field.field_key,
+                        selectedOption.map((option) => option.value),
+                      )
+                    }
                   />
                 </div>
               </>

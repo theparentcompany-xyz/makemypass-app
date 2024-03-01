@@ -30,6 +30,7 @@ import { addGuest } from '../../../apis/guest';
 import { handleClick } from './components/csvExport';
 import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
+import { isArray } from 'chart.js/helpers';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -102,7 +103,11 @@ const Guests = () => {
   useEffect(() => {
     if (selectedGuestId?.id && (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view'))
       getGuestData();
-    else if (selectedGuestId?.id && selectedGuestId.type === 'download')
+    else if (
+      selectedGuestId?.id &&
+      selectedGuestId.type === 'download' &&
+      !isArray(selectedGuestId.id)
+    )
       downloadTicket(eventId, selectedGuestId?.id);
   }, [selectedGuestId]);
 
