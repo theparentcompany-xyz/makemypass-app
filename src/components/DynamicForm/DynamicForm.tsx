@@ -6,7 +6,8 @@ import InputFIeld from '../../pages/auth/Login/InputFIeld';
 import styles from './DynamicForm.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import Select from 'react-select';
+import Select, { GroupBase } from 'react-select';
+import { colourOptions } from './data';
 
 const DynamicForm = ({
   formFields,
@@ -85,7 +86,7 @@ const DynamicForm = ({
                 required={field.required}
               />
             );
-          } else if (field.type === 'dropdown' || field.type === 'checkbox') {
+          } else if (field.type === 'dropdown') {
             return (
               <>
                 <div
@@ -173,6 +174,32 @@ const DynamicForm = ({
                   )}
                 </AnimatePresence>
               </div>
+            );
+          } else if (field.type === 'checkbox') {
+            const selectValues =
+              field.options?.map((option: string) => ({
+                value: option,
+                label: option,
+              })) ?? [];
+            return (
+              <>
+                <div
+                  style={{
+                    marginBottom: '1rem',
+                  }}
+                >
+                  <p className={styles.formLabel}>{fieldTitle}</p>
+                  <Select
+                    defaultValue={selectValues[0] ?? ''}
+                    isMulti
+                    styles={customStyles}
+                    name='colors'
+                    options={selectValues}
+                    className='basic-multi-select'
+                    classNamePrefix='select'
+                  />
+                </div>
+              </>
             );
           }
         })}
