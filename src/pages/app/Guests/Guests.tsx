@@ -139,7 +139,7 @@ const Guests = () => {
     if (selectedGuest) editSubmissons(eventId, formData, setSelectedGuestId, setFormData);
   };
 
-  const onFieldChange = (fieldName: string, fieldValue: string) => {
+  const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
     setFormData({
       ...formData,
       [fieldName]: fieldValue,
