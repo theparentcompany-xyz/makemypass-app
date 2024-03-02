@@ -230,3 +230,11 @@
     flex-wrap: wrap;
   }
 }
+
+.eventDescription p {
+  margin: 1rem 0;
+}
+
+.eventDescription li {
+  margin: 0.5rem 0;
+}
