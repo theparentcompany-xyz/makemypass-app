@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { FaExpandAlt } from 'react-icons/fa';
-import { eventDesc } from './data';
 import { getDay, getMonthAbbreviation } from '../constants';
 
 const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => {
@@ -79,7 +78,7 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
                   <p
                     dangerouslySetInnerHTML={{
                       __html: eventData.description
-                        .substring(0, eventDesc.indexOf('</p>') - 100)
+                        .substring(0, eventData.description.indexOf('</p>') - 100)
                         .concat('...'),
                     }}
                   ></p>

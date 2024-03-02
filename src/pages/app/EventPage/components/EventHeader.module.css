@@ -190,7 +190,7 @@
   font-size: 0.7rem;
   font-weight: 400;
   color: #bbbaba;
-  word-break: break-all;
+  word-wrap: break-all;
   font-family: 'Inter', sans-serif;
 }
 
@@ -242,4 +242,8 @@
 
 .eventDescription li {
   margin: 0.5rem 0;
+}
+
+.eventDescription ul > li > ul {
+  margin-left: 1rem;
 }
