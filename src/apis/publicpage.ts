@@ -3,7 +3,7 @@ import { publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { DiscountData, TicketOptions } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
-import { ErrorMessages, EventDetails, FormData, FormField } from './types';
+import { ErrorMessages, EventDetails, EventHosts, FormData, FormField } from './types';
 
 export const getTickets = async (
   eventId: string,
@@ -132,5 +132,19 @@ export const getEventDatas = async (
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Data');
+    });
+};
+
+export const getEventHosts = async (
+  eventId: string,
+  setHosts?: Dispatch<React.SetStateAction<EventHosts[]>>,
+) => {
+  return publicGateway
+    .get(makeMyPass.listHostedBy(eventId))
+    .then((response) => {
+      if (setHosts) setHosts(response.data.response);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Error in Fetching Hosts');
     });
 };

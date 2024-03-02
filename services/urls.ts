@@ -75,6 +75,8 @@ export const makeMyPass = {
 
   downloadFormSubmission: (eventId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
+
+  listHostedBy: (eventId: string) => makeMyPassURL(`/event/${eventId}/list-event-hosts/`),
 };
 
 export const makeMyPassSocket = {

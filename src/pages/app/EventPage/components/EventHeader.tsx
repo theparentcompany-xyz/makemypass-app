@@ -1,14 +1,23 @@
 import { IoLocationOutline } from 'react-icons/io5';
-import { EventDetails } from '../../../../apis/types';
+import { EventDetails, EventHosts } from '../../../../apis/types';
 import styles from './EventHeader.module.css';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaExpandAlt } from 'react-icons/fa';
 import { getDay, getMonthAbbreviation } from '../constants';
+import { GlobalContext } from '../../../../contexts/globalContext';
+import { getEventHosts } from '../../../../apis/publicpage';
 
 const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => {
   const [showFullDesc, setShowFullDesc] = useState(false);
+  const [eventHosts, setEventHosts] = useState<EventHosts[]>([]);
+
+  const { eventId } = useContext(GlobalContext);
+  useEffect(() => {
+    getEventHosts(eventId, setEventHosts);
+  }, [eventData]);
+
   const navigate = useNavigate();
   return (
     <div className={styles.eventHeaderContainer}>
@@ -24,8 +33,20 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
       >
         <div className={styles.eventTopHeader}>
           <img className={styles.bannerImg} src={eventData?.banner} alt='' />
+
           <div>
             <p className={styles.eventTitle}>{eventData?.title}</p>
+            <div className={styles.hostedBy}>
+              <span>Hosted By:</span>
+              {eventHosts.map((eventHost: EventHosts) => {
+                return (
+                  <div className={styles.eventHost}>
+                    <img src={eventHost.logo} alt='' className={styles.hostLogo} />
+                    <p className={styles.hostName}>{eventHost.name}</p>
+                  </div>
+                );
+              })}
+            </div>
             <div className={styles.eventDatePlace}>
               <div className={styles.eventDate}>
                 <div className={styles.dateBox}>

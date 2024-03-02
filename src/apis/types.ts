@@ -67,3 +67,8 @@ export type EventDetails = {
   end_date: string;
   end_time: string;
 };
+
+export type EventHosts = {
+  name: string;
+  logo: string;
+};

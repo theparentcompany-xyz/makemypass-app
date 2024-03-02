@@ -247,3 +247,25 @@
 .eventDescription ul > li > ul {
   margin-left: 1rem;
 }
+
+.eventHost {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  column-gap: 0.25rem;
+}
+
+.hostedBy {
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  column-gap: 1rem;
+  align-items: center;
+}
+
+.hostLogo {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+}
