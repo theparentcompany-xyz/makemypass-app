@@ -47,6 +47,7 @@ export type ErrorMessages = {
 
 export type EventDetails = {
   id: string;
+  banner: string;
   name: string;
   title: string;
   description: string | null;

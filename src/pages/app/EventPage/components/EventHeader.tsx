@@ -1,52 +1,83 @@
 import { IoLocationOutline } from 'react-icons/io5';
 import { EventDetails } from '../../../../apis/types';
-import styles from '../EventPage.module.css';
+import styles from './EventHeader.module.css';
 import { motion } from 'framer-motion';
-import { FiClock } from 'react-icons/fi';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
+import { FaExpandAlt } from 'react-icons/fa';
 
 const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => {
+  const [showFullDesc, setShowFullDesc] = useState(false);
   const navigate = useNavigate();
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 35 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.5 }}
-      className={styles.eventDataContainer}
-      onClick={() => {
-        navigate(`/${eventData?.name}`);
-      }}
-    >
-      <div className={styles.eventTopHeader}>
-        <img className={styles.bannerImg} src='/app/banner.png' alt='' />
-        <div>
-          <p className={styles.eventTitle}>{eventData?.title}</p>
-          <p className={styles.eventDescription}>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident, ullam perferendis
-            vel molestias eligendi nemo, voluptatem, ratione modi nobis iure ab laboriosam magnam
-            aliquam accusantium iusto iste alias enim omnis illum repudiandae doloremque. Illo quae
-            in ipsum eveniet odio sit magni perspiciatis at recusandae, minus dolore fugiat
-            molestiae quaerat ratione?
-          </p>
+    <div className={styles.eventHeaderContainer}>
+      <motion.div
+        initial={{ opacity: 0, y: 35 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.5 }}
+        className={styles.bannerContainer}
+        onClick={() => {
+          navigate(`/${eventData?.name}`);
+        }}
+      >
+        <div className={styles.eventTopHeader}>
+          <img className={styles.bannerImg} src={eventData?.banner} alt='' />
+          <div>
+            <p className={styles.eventTitle}>{eventData?.title}</p>
+            <div className={styles.eventDatePlace}>
+              <div className={styles.eventDate}>
+                <div className={styles.dateBox}>
+                  <p className={styles.eventMonth}>AUG</p>
+                  <p className={styles.eventDateNum}>19</p>
+                </div>
+                <div className={styles.eventDateTimeText}>
+                  <p className={styles.eventDateText}>Saturday, August 19, 2023</p>
+                  <p className={styles.eventTimeText}>8:30 AM - Aug 20, 7:00 PM GMT+5:30</p>
+                </div>
+              </div>
+              <div className={styles.eventPlace}>
+                <div className={styles.locationBox}>
+                  <IoLocationOutline size={25} className={styles.locationIcon} />
+                </div>
+                <div className={styles.eventDateTimeText}>
+                  <p className={styles.eventDateText}>KMEA Engineering College</p>
+                  <p className={styles.eventTimeText}>Aluva, Kerala</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        {/* <div className={styles.headerRightSide}>
-          <img src={eventData?.logo} alt='event' className={styles.eventImage} />
-        </div> */}
-      </div>
+      </motion.div>
 
-      <div className={styles.otherDetials}>
-        <IoLocationOutline size={20} className={styles.clockIcon} />
-        <div className={styles.location}>
-          <p className={styles.mainLocation}>{eventData?.location}</p>
-        </div>
-        <FiClock size={20} className={styles.clockIcon} />
-        <div className={styles.eventDate}>
-          <p className={styles.date}>{eventData?.date}</p>
-          <p className={styles.time}>{eventData?.time}</p>
-        </div>
+      <div className={styles.eventDescriptionContainer}>
+        {eventData?.description && (
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className={styles.eventDescHeading}>About the Event</p>
+            <motion.p
+              className={styles.eventDescription}
+              initial={{ height: 'fit-content' }}
+              animate={{ height: showFullDesc ? 'fit-content' : '60px' }}
+              transition={{ duration: 0.5 }}
+            >
+              {showFullDesc ? eventData?.description : eventData?.description.slice(0, 200)}
+            </motion.p>
+            <div className={styles.expandIcon}>
+              <FaExpandAlt
+                onClick={() => {
+                  setShowFullDesc((prev) => !prev);
+                }}
+              />
+            </div>
+          </motion.div>
+        )}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
