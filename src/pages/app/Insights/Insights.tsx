@@ -312,7 +312,8 @@ const Insights = () => {
                           {message?.page_visit.conversion_rate_vs_page_visit
                             ? Math.round(message?.page_visit.conversion_rate_vs_page_visit * 100) /
                               100
-                            : '-'}{' '}
+                            : '-'}
+                          %
                         </p>
                       </div>
                     </div>

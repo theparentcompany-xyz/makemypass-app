@@ -190,7 +190,12 @@
   font-size: 0.7rem;
   font-weight: 400;
   color: #bbbaba;
+  word-break: break-all;
   font-family: 'Inter', sans-serif;
+}
+
+.eventTimeText span {
+  word-break: break-all;
 }
 
 .locationBox {

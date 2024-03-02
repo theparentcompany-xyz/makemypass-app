@@ -296,17 +296,23 @@ const InEventStats = () => {
 
         <div className={styles.insightsContainer}>
           <div className={styles.registrationCount}>
-            {lineData && <Line options={options} data={lineData} />}
+            {lineData && lineData.datasets.length > 0 ? (
+              <Line options={options} data={lineData} />
+            ) : (
+              <p className={styles.noData}>No Data Yet, Check Back Later</p>
+            )}
 
-            <div className={styles.countSection}>
-              <div className={styles.totalRegistered}>
-                <p className={styles.total}>Total Check-Ins</p>
-                <p className={styles.count}>
-                  {dailyCount.length > 0 && dailyCount.reduce((a, b) => a + b.count, 0)}
-                  <span> guests</span>
-                </p>
+            {dailyCount.length > 0 && (
+              <div className={styles.countSection}>
+                <div className={styles.totalRegistered}>
+                  <p className={styles.total}>Total Check-Ins</p>
+                  <p className={styles.count}>
+                    {dailyCount.length > 0 && dailyCount.reduce((a, b) => a + b.count, 0)}
+                    <span> guests</span>
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className={styles.countSection}>
               {dailyCount.length > 0 &&
@@ -327,59 +333,62 @@ const InEventStats = () => {
                 ))}
             </div>
           </div>
+          {barData && barData.datasets.length > 0 && barData.datasets[0].data.length > 0 && (
+            <div className={styles.todayRegistered}>
+              <div className={styles.graphContainer}>
+                <>
+                  <Bar options={doughnutOption} data={barData} />
+                  <div className={styles.totalRegistered}>
+                    <p className={styles.total}>
+                      Top Category: {findDistrictWithMostNumber()?.district}&nbsp;
+                      <span>
+                        ({findDistrictWithMostNumber()?.value} <span>guests</span>)
+                      </span>
+                    </p>
+                    <p className={styles.count}></p>
+                  </div>
+                </>
+              </div>
 
-          <div className={styles.todayRegistered}>
-            <div className={styles.graphContainer}>
-              {barData && <Bar options={doughnutOption} data={barData} />}
-            </div>
-
-            <div className={styles.totalRegistered}>
-              <p className={styles.total}>
-                Top Category: {findDistrictWithMostNumber()?.district}&nbsp;
-                <span>
-                  ({findDistrictWithMostNumber()?.value} <span>guests</span>)
-                </span>
-              </p>
-              <p className={styles.count}></p>
-            </div>
-            <div className={styles.districtsCount}>
-              <div className={styles.scrollContainerr}>
-                {Object.keys(districtData)
-                  .sort((a, b) => districtData[b] - districtData[a])
-                  .map((key, index) => (
-                    <div
-                      key={index}
-                      className={styles.district}
-                      style={{ color: colors[index % colors.length] }}
-                    >
-                      {key}: {districtData[key]}
-                    </div>
-                  ))}
+              <div className={styles.districtsCount}>
+                <div className={styles.scrollContainerr}>
+                  {Object.keys(districtData)
+                    .sort((a, b) => districtData[b] - districtData[a])
+                    .map((key, index) => (
+                      <div
+                        key={index}
+                        className={styles.district}
+                        style={{ color: colors[index % colors.length] }}
+                      >
+                        {key}: {districtData[key]}
+                      </div>
+                    ))}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
-        <div className={styles.insightsContainer}>
-          <div
-            style={{
-              borderRadius: '12px',
-            }}
-            className={styles.pageVisitsCount}
-          >
-            <div className={styles.checkInHeader}>
-              <p className={styles.header}>Recent Check-Ins</p>
-              <SecondaryButton
-                onClick={() => {
-                  setShowWelcome(() => !showWelcome);
-                }}
-                buttonText={showWelcome ? 'Hide Card' : 'Show Card'}
-              />
-            </div>
-            <div className={styles.countSection}>
-              <div className={styles.usersContainer}>
-                {guests &&
-                  guests.length > 0 &&
-                  guests.map((guest, index) => (
+
+        {guests && guests.length > 0 && (
+          <div className={styles.insightsContainer}>
+            <div
+              style={{
+                borderRadius: '12px',
+              }}
+              className={styles.pageVisitsCount}
+            >
+              <div className={styles.checkInHeader}>
+                <p className={styles.header}>Recent Check-Ins</p>
+                <SecondaryButton
+                  onClick={() => {
+                    setShowWelcome(() => !showWelcome);
+                  }}
+                  buttonText={showWelcome ? 'Hide Card' : 'Show Card'}
+                />
+              </div>
+              <div className={styles.countSection}>
+                <div className={styles.usersContainer}>
+                  {guests.map((guest, index) => (
                     <div
                       key={index}
                       className={styles.user}
@@ -397,10 +406,11 @@ const InEventStats = () => {
                       <p className={styles.cuserName}>{guest.name}</p>
                     </div>
                   ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </>
     </Theme>
   );

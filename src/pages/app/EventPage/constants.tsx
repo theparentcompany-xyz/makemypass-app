@@ -180,3 +180,15 @@ export const discountedTicketPrice = (ticketPrice: number, discount: DiscountDat
     return discountedPrice;
   }
 };
+
+export const getMonthAbbreviation = (dateString: string) => {
+  const dateObject = new Date(dateString);
+  const monthAbbreviation = dateObject.toLocaleString('default', { month: 'short' }).toUpperCase();
+  return monthAbbreviation;
+};
+
+export const getDay = (dateString: string) => {
+  const dateObject = new Date(dateString);
+  const day = dateObject.getDate();
+  return day;
+};

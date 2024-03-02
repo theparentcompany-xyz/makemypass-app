@@ -12,7 +12,7 @@
 .insightsContainer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: stretch;
   flex-wrap: wrap;
   width: 100%;
@@ -515,4 +515,11 @@
   font-size: 1rem;
   color: #47c97e;
   font-weight: 500;
+}
+
+.noData {
+  opacity: 0.5;
+  margin: auto;
+  text-align: center;
+  font-size: 0.9rem;
 }
