@@ -172,14 +172,14 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
           )}
         </div>
 
-        {/* <div className={styles.googleContainer}>
+        <div className={styles.googleContainer}>
           <div className={styles.locationHeader}>
             <IoLocationOutline size={20} className={styles.locationIcon} />
             <p>Location</p>
           </div>
           <iframe
             style={{ width: '100%' }}
-            src={`http://maps.google.com/maps?q=${eventData?.location.lat},${eventData?.location.lng}&z=16&output=embed`}
+            src={`https://maps.google.com/maps?q=${eventData?.location.lat},${eventData?.location.lng}&z=16&output=embed`}
           ></iframe>
 
           <div className={styles.bottomLocationHeader}>
@@ -187,7 +187,7 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
               <p className={styles.eventDateText}>{eventData?.place}</p>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );
