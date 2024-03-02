@@ -87,7 +87,7 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
           </div>
           <iframe
             style={{ width: '100%' }}
-            src={`https://maps.google.com/maps?q=${eventData?.location.lat},${eventData?.location.lng}&hl=es;z=14&amp;output=embed`}
+            src={`http://maps.google.com/maps?q=${eventData?.location.lat},${eventData?.location.lng}&z=16&output=embed`}
           ></iframe>
 
           <div className={styles.bottomLocationHeader}>
