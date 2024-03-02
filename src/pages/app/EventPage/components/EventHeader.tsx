@@ -28,8 +28,8 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
             <div className={styles.eventDatePlace}>
               <div className={styles.eventDate}>
                 <div className={styles.dateBox}>
-                  <p className={styles.eventMonth}>AUG</p>
-                  <p className={styles.eventDateNum}>19</p>
+                  <p className={styles.eventMonth}>MAR</p>
+                  <p className={styles.eventDateNum}>14</p>
                 </div>
                 <div className={styles.eventDateTimeText}>
                   <p className={styles.eventDateText}>{eventData?.start_date}</p>
@@ -110,24 +110,6 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
                       systems at national scale, a chance to expand your knowledge, and to gain
                       insights to play a crucial role in shaping the future of inclusive digital
                       innovation.
-                    </p>
-
-                    <p>
-                      <strong>Event Details:</strong>
-                    </p>
-                    <p>
-                      <strong>Date:</strong> 14th March, 2024
-                    </p>
-                    <p>
-                      <strong>Location:</strong> Concert hall - Kerala Arts & Crafts Village,
-                      Thiruvananthapuram
-                    </p>
-                    <p>
-                      <strong>Time:</strong> 9:00 AM to 6:00 PM
-                    </p>
-                    <p>
-                      <strong>Google Map:</strong>{' '}
-                      <a href='https://maps.app.goo.gl/ktRQxFSZidAi8yxX8'>View Location</a>
                     </p>
 
                     <p>
