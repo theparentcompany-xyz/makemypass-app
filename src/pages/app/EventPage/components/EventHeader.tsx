@@ -158,7 +158,7 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
                     </ul>
                   </>
                 ) : (
-                  eventData?.description.slice(0, 200)
+                  'Building for Billions - Dawn of DPI is an event hosted by the Sunbird community, bringing together practitioners from diverse backgrounds to share their valuable experiences in building Digital'
                 )}
               </motion.p>
               <div className={styles.expandIcon}>
@@ -172,7 +172,7 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
           )}
         </div>
 
-        <div className={styles.googleContainer}>
+        {/* <div className={styles.googleContainer}>
           <div className={styles.locationHeader}>
             <IoLocationOutline size={20} className={styles.locationIcon} />
             <p>Location</p>
@@ -187,7 +187,7 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
               <p className={styles.eventDateText}>{eventData?.place}</p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
