@@ -34,7 +34,7 @@ const Header = ({ type }: { type?: string | undefined }) => {
                   }}
                   className={styles.userName}
                 >
-                  നമസ്കാരം {userEmail}
+                  Hola, {userEmail}
                   <span className={styles.avatar}>{userEmail?.split('')[0].toUpperCase()}</span>
                 </p>
 
