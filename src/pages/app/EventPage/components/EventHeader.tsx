@@ -51,7 +51,7 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
         </div>
       </motion.div>
 
-      <div className={styles.row1}>
+      <div className={styles.row1} style={showFullDesc ? { flexDirection: 'column' } : {}}>
         <div className={styles.eventDescriptionContainer}>
           {eventData?.description && (
             <motion.div
