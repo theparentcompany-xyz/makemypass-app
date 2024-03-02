@@ -408,7 +408,7 @@
 
   margin-bottom: 1rem;
   position: absolute;
-  z-index: 10001;
+  z-index: 500;
   backdrop-filter: blur(800px);
 
   top: 50%;

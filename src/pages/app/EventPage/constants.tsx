@@ -72,6 +72,8 @@ export const customStyles = {
     fontStyle: 'normal',
     fontWeight: 400,
     fontSize: '0.9rem',
+    zIndex: 10000,
+    position: 'relative',
   }),
 
   menuList: (provided: any) => ({
