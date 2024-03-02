@@ -36,17 +36,19 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
 
           <div>
             <p className={styles.eventTitle}>{eventData?.title}</p>
-            <div className={styles.hostedBy}>
-              <span>Hosted By:</span>
-              {eventHosts.map((eventHost: EventHosts) => {
-                return (
-                  <div className={styles.eventHost}>
-                    <img src={eventHost.logo} alt='' className={styles.hostLogo} />
-                    <p className={styles.hostName}>{eventHost.name}</p>
-                  </div>
-                );
-              })}
-            </div>
+            {eventHosts.length > 0 && (
+              <div className={styles.hostedBy}>
+                <span>Hosted By:</span>
+                {eventHosts.map((eventHost: EventHosts) => {
+                  return (
+                    <div className={styles.eventHost}>
+                      <img src={eventHost.logo} alt='' className={styles.hostLogo} />
+                      <p className={styles.hostName}>{eventHost.name}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             <div className={styles.eventDatePlace}>
               <div className={styles.eventDate}>
                 <div className={styles.dateBox}>
