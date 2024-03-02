@@ -66,3 +66,7 @@ input:-webkit-autofill:active {
   font-family: 'Aeonik';
   src: url(../src/fonts/Aeonik.otf);
 }
+
+iframe {
+  border: none;
+}

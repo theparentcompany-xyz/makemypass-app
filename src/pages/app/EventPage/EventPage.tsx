@@ -197,20 +197,22 @@ const EventPage = () => {
                   transition={{ duration: 0.5 }}
                   className={styles.eventForm}
                 >
-                  <div>
-                    <p className={styles.eventFormTitle}>Registration Form</p>
-                    <p className={styles.eventDescription}>
-                      Please fill in the form below to register for the event.
-                    </p>
+                  <div className={styles.eventFormInnerContainer}>
+                    <div>
+                      <p className={styles.eventFormTitle}>Registration Form</p>
+                      <p className={styles.eventHeaderDescription}>
+                        Please fill in the form below to register for the event.
+                      </p>
+                    </div>
+                    {formData && (
+                      <DynamicForm
+                        formFields={formFields}
+                        formErrors={formErrors}
+                        formData={formData}
+                        onFieldChange={onFieldChange}
+                      />
+                    )}
                   </div>
-                  {formData && (
-                    <DynamicForm
-                      formFields={formFields}
-                      formErrors={formErrors}
-                      formData={formData}
-                      onFieldChange={onFieldChange}
-                    />
-                  )}
                 </motion.div>
               )}
 

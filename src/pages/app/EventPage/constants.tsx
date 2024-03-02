@@ -14,6 +14,7 @@ export const customStyles = {
     fontStyle: 'normal',
     fontWeight: 400,
     fontSize: '0.9rem',
+    maxWidth: '25rem',
   }),
 
   group: (provided: any) => ({

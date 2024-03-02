@@ -54,8 +54,16 @@ export type EventDetails = {
   date: string;
   logo: string;
   time: string;
-  location: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
   registered_members_count: number;
   is_private: boolean;
   shortlist: boolean;
+  place: string;
+  start_time: string;
+  start_date: string;
+  end_date: string;
+  end_time: string;
 };

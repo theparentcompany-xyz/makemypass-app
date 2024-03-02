@@ -32,8 +32,10 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
                   <p className={styles.eventDateNum}>19</p>
                 </div>
                 <div className={styles.eventDateTimeText}>
-                  <p className={styles.eventDateText}>Saturday, August 19, 2023</p>
-                  <p className={styles.eventTimeText}>8:30 AM - Aug 20, 7:00 PM GMT+5:30</p>
+                  <p className={styles.eventDateText}>{eventData?.start_date}</p>
+                  <p className={styles.eventTimeText}>
+                    {eventData?.start_time} - {eventData?.end_time} {eventData?.end_date}
+                  </p>
                 </div>
               </div>
               <div className={styles.eventPlace}>
@@ -41,8 +43,7 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
                   <IoLocationOutline size={25} className={styles.locationIcon} />
                 </div>
                 <div className={styles.eventDateTimeText}>
-                  <p className={styles.eventDateText}>KMEA Engineering College</p>
-                  <p className={styles.eventTimeText}>Aluva, Kerala</p>
+                  <p className={styles.eventDateText}>{eventData?.place}</p>
                 </div>
               </div>
             </div>
@@ -50,32 +51,51 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
         </div>
       </motion.div>
 
-      <div className={styles.eventDescriptionContainer}>
-        {eventData?.description && (
-          <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.5 }}
-          >
-            <p className={styles.eventDescHeading}>About the Event</p>
-            <motion.p
-              className={styles.eventDescription}
-              initial={{ height: 'fit-content' }}
-              animate={{ height: showFullDesc ? 'fit-content' : '60px' }}
+      <div className={styles.row1}>
+        <div className={styles.eventDescriptionContainer}>
+          {eventData?.description && (
+            <motion.div
+              initial={{ opacity: 0, y: 35 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
             >
-              {showFullDesc ? eventData?.description : eventData?.description.slice(0, 200)}
-            </motion.p>
-            <div className={styles.expandIcon}>
-              <FaExpandAlt
-                onClick={() => {
-                  setShowFullDesc((prev) => !prev);
-                }}
-              />
+              <p className={styles.eventDescHeading}>About the Event</p>
+              <motion.p
+                className={styles.eventDescription}
+                initial={{ height: 'fit-content' }}
+                animate={{ height: showFullDesc ? 'fit-content' : '60px' }}
+                transition={{ duration: 0.5 }}
+              >
+                {showFullDesc ? eventData?.description : eventData?.description.slice(0, 200)}
+              </motion.p>
+              <div className={styles.expandIcon}>
+                <FaExpandAlt
+                  onClick={() => {
+                    setShowFullDesc((prev) => !prev);
+                  }}
+                />
+              </div>
+            </motion.div>
+          )}
+        </div>
+
+        <div className={styles.googleContainer}>
+          <div className={styles.locationHeader}>
+            <IoLocationOutline size={20} className={styles.locationIcon} />
+            <p>Location</p>
+          </div>
+          <iframe
+            style={{ width: '100%' }}
+            src={`https://maps.google.com/maps?q=${eventData?.location.lat},${eventData?.location.lng}&hl=es;z=14&amp;output=embed`}
+          ></iframe>
+
+          <div className={styles.bottomLocationHeader}>
+            <div className={styles.eventDateTimeText}>
+              <p className={styles.eventDateText}>{eventData?.place}</p>
             </div>
-          </motion.div>
-        )}
+          </div>
+        </div>
       </div>
     </div>
   );
