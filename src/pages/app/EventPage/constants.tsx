@@ -29,10 +29,14 @@ export const customStyles = {
   option: (provided: any) => ({
     ...provided,
     fontFamily: 'Inter, sans-serif',
-    color: '#000',
+    backgroundColor: 'rgba(33, 35, 37, 0.03)',
+    color: '#ffffff',
     fontStyle: 'normal',
     fontWeight: 400,
     fontSize: '0.9rem',
+    ':hover': {
+      backgroundColor: ' rgba(147, 149, 151, 0.13);',
+    },
   }),
 
   multiValue: (provided: any) => ({
@@ -67,7 +71,9 @@ export const customStyles = {
 
   menu: (provided: any) => ({
     ...provided,
-    backgroundColor: 'rgba(255, 255, 255)',
+    border: '1px solid rgba(255, 255, 255, 0.08)',
+    backgroundColor: 'rgba(255, 255, 255, 0.04)',
+    color: '#fff',
     fontFamily: 'Inter, sans-serif',
     fontStyle: 'normal',
     fontWeight: 400,
