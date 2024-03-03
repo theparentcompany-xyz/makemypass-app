@@ -17,16 +17,16 @@
   max-width: 38rem;
 }
 
+.formContainer {
+  overflow-y: auto;
+  max-height: 81vh;
+}
+
 .eventHeaderDescription {
   margin-top: 0.25rem;
   opacity: 0.8;
   font-size: 0.9rem;
   width: 100%;
-}
-
-.formContainer {
-  overflow-y: auto;
-  max-height: 81vh;
 }
 
 .eventDataContainer,
@@ -488,5 +488,24 @@
 @media screen and (max-width: 1130px) {
   .eventPageContainer {
     flex-wrap: wrap;
+  }
+
+  .eventForm {
+    max-width: 32rem;
+    width: 100%;
+  }
+
+  .eventPageContainer {
+    height: 100%;
+  }
+
+  .eventHeaderContainer {
+    position: relative;
+    max-width: 32rem;
+  }
+
+  .formContainer {
+    overflow: auto;
+    max-height: 100%;
   }
 }
