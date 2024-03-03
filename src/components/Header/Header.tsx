@@ -23,52 +23,55 @@ const Header = ({ type }: { type?: string | undefined }) => {
             <span className={styles.logo}>MakeMyPass</span>
           </div>
         </Link>
+        {type != 'eventForm' && (
+          <>
+            {type != 'landing' ? (
+              isAuthenticated ? (
+                <>
+                  <div className='row'>
+                    <p
+                      onClick={() => {
+                        setOpenSettings(!openSettings);
+                      }}
+                      className={styles.userName}
+                    >
+                      Hello, {userEmail}
+                      <span className={styles.avatar}>{userEmail?.split('')[0].toUpperCase()}</span>
+                    </p>
 
-        {type != 'landing' ? (
-          isAuthenticated ? (
-            <>
-              <div className='row'>
-                <p
-                  onClick={() => {
-                    setOpenSettings(!openSettings);
-                  }}
-                  className={styles.userName}
+                    <Link to='/login'>
+                      <SecondaryButton
+                        buttonText='Logout'
+                        onClick={() => {
+                          localStorage.clear();
+                        }}
+                      />
+                    </Link>
+                  </div>
+                </>
+              ) : (
+                <div className={styles.buttons}>
+                  <Link to='/login'>
+                    <SecondaryButton buttonText='Login' />
+                  </Link>
+                </div>
+              )
+            ) : (
+              <div className={styles.buttons}>
+                <a
+                  className={styles.requestDemo}
+                  href='https://wa.me/7012679067'
+                  target='_blank'
+                  rel='noopener noreferrer'
                 >
-                  Hello, {userEmail}
-                  <span className={styles.avatar}>{userEmail?.split('')[0].toUpperCase()}</span>
-                </p>
-
+                  Request Demo
+                </a>
                 <Link to='/login'>
-                  <SecondaryButton
-                    buttonText='Logout'
-                    onClick={() => {
-                      localStorage.clear();
-                    }}
-                  />
+                  <button className={styles.loginButton}>Login</button>
                 </Link>
               </div>
-            </>
-          ) : (
-            <div className={styles.buttons}>
-              <Link to='/login'>
-                <SecondaryButton buttonText='Login' />
-              </Link>
-            </div>
-          )
-        ) : (
-          <div className={styles.buttons}>
-            <a
-              className={styles.requestDemo}
-              href='https://wa.me/7012679067'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              Request Demo
-            </a>
-            <Link to='/login'>
-              <button className={styles.loginButton}>Login</button>
-            </Link>
-          </div>
+            )}
+          </>
         )}
       </div>
     </header>

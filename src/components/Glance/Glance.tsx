@@ -241,7 +241,7 @@ const Glance = ({ tab }: { tab: string }) => {
                           }}
                         >
                           <p className={styles.dataCount}>
-                            • {data.value} {data.type.substring(0, 8)}..
+                            • ({data.value}) {data.type.substring(0, 8)}..
                           </p>
                         </motion.li>
                       </>

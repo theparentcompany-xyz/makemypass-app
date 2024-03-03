@@ -131,7 +131,7 @@ const EventPage = () => {
 
   return (
     <>
-      <Theme>
+      <Theme type='eventForm'>
         {
           <motion.div
             initial={{ opacity: 0, y: 35 }}
@@ -187,7 +187,9 @@ const EventPage = () => {
 
         {!eventData?.is_private && formFields.length > 0 ? (
           <div className={styles.eventPageContainer}>
-            <EventHeader eventData={eventData} />
+            <div className={styles.eventHeaderContainer}>
+              <EventHeader eventData={eventData} />
+            </div>
             <div className={styles.formContainer}>
               {formNumber === 0 && (
                 <motion.div

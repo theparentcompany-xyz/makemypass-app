@@ -32,8 +32,7 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
         }}
       >
         <div className={styles.eventTopHeader}>
-          <img className={styles.bannerImg} src={eventData?.banner} alt='' />
-
+          {eventData?.banner && <img className={styles.bannerImg} src={eventData?.banner} alt='' />}
           <div>
             <p className={styles.eventTitle}>{eventData?.title}</p>
             {eventHosts.length > 0 && (
@@ -80,8 +79,8 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
       </motion.div>
 
       <div className={styles.row1} style={showFullDesc ? { flexDirection: 'column' } : {}}>
-        <div className={styles.eventDescriptionContainer}>
-          {eventData?.description && (
+        {eventData?.description && (
+          <div className={styles.eventDescriptionContainer}>
             <motion.div
               initial={{ opacity: 0, y: 35 }}
               animate={{ opacity: 1, y: 0 }}
@@ -115,25 +114,27 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
                 />
               </div>
             </motion.div>
-          )}
-        </div>
-
-        <div className={styles.googleContainer}>
-          <div className={styles.locationHeader}>
-            <IoLocationOutline size={20} className={styles.locationIcon} />
-            <p>Location</p>
           </div>
-          <iframe
-            style={{ width: '100%' }}
-            src={`https://maps.google.com/maps?q=${eventData?.location?.lat},${eventData?.location?.lng}&z=16&output=embed`}
-          ></iframe>
+        )}
 
-          <div className={styles.bottomLocationHeader}>
-            <div className={styles.eventDateTimeText}>
-              <p className={styles.eventDateText}>{eventData?.place}</p>
+        {eventData?.location && (
+          <div className={styles.googleContainer}>
+            <div className={styles.locationHeader}>
+              <IoLocationOutline size={20} className={styles.locationIcon} />
+              <p>Location</p>
+            </div>
+            <iframe
+              style={{ width: '100%' }}
+              src={`https://maps.google.com/maps?q=${eventData?.location?.lat},${eventData?.location?.lng}&z=16&output=embed`}
+            ></iframe>
+
+            <div className={styles.bottomLocationHeader}>
+              <div className={styles.eventDateTimeText}>
+                <p className={styles.eventDateText}>{eventData?.place}</p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
