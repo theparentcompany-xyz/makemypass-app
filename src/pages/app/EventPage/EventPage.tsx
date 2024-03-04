@@ -140,7 +140,7 @@ const EventPage = () => {
             transition={{ duration: 0.5 }}
             className={styles.successMessage}
           >
-            {success && (
+            {success && eventData?.shortlist && (
               <>
                 <div className={styles.backgroundBlur}></div>
                 <dialog
