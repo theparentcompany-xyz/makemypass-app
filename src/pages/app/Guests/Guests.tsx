@@ -359,7 +359,20 @@ const Guests = () => {
                           value: category,
                           label: category,
                         }))}
-                        styles={customStyles}
+                        styles={{
+                          ...customStyles,
+                          menu: (provided: any) => ({
+                            ...provided,
+                            border: '1px solid rgba(255, 255, 255, 0.08)',
+                            backgroundColor: '#1C2222',
+                            color: '#fff',
+                            fontFamily: 'Inter, sans-serif',
+                            fontStyle: 'normal',
+                            fontWeight: 400,
+                            fontSize: '0.9rem',
+                            zIndex: 1000,
+                          }),
+                        }}
                       />
                     )}
                   </div>
