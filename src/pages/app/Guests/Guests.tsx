@@ -176,7 +176,7 @@ const Guests = () => {
             className={styles.userInfoModalContainer}
             style={{
               maxHeight: '40rem',
-              padding: '2rem 0',
+              padding: '1rem 0',
             }}
           >
             <p className={styles.modalHeader}>Add Guest</p>
