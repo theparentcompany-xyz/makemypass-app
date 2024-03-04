@@ -39,7 +39,15 @@ export const showRazorpay = async (
     handler: function (response: any) {
       const audio = new Audio('/gpay.mp3');
       audio.play();
-      submitForm(ticketId, formData, setSuccess, setFormNumber, setFormData, setAmount, response);
+      submitForm({
+        ticketId,
+        formData,
+        setSuccess,
+        setFormNumber,
+        setFormData,
+        setAmount,
+        response,
+      });
     },
     theme: {
       color: '#00FF82',

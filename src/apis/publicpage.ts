@@ -33,19 +33,28 @@ export const getFormFields = async (
     });
 };
 
-export const submitForm = async (
-  ticketId: string,
-  data: FormData,
-  setSuccess?: React.Dispatch<React.SetStateAction<string>>,
-  setFormNumber?: React.Dispatch<React.SetStateAction<number>>,
-  setFormData?: React.Dispatch<React.SetStateAction<FormData>>,
-  setAmount?: React.Dispatch<React.SetStateAction<string>>,
-  setFormErrors?: Dispatch<ErrorMessages>,
-  response?: unknown,
-) => {
+export const submitForm = async ({
+  ticketId,
+  formData,
+  setSuccess,
+  setFormNumber,
+  setFormData,
+  setAmount,
+  setFormErrors,
+  response,
+}: {
+  ticketId: string;
+  formData: FormData;
+  setSuccess?: React.Dispatch<React.SetStateAction<string>>;
+  setFormNumber?: React.Dispatch<React.SetStateAction<number>>;
+  setFormData?: React.Dispatch<React.SetStateAction<FormData>>;
+  setAmount?: React.Dispatch<React.SetStateAction<string>>;
+  setFormErrors?: Dispatch<ErrorMessages>;
+  response?: unknown;
+}) => {
   publicGateway
     .post(makeMyPass.submitForm(ticketId), {
-      rsvp_data: data,
+      rsvp_data: formData,
       payment_data: response,
     })
     .then((response) => {
