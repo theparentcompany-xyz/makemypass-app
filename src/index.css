@@ -2,11 +2,14 @@
   padding: 0;
   margin: 0;
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #282828 #333333;
 }
 
 ::-webkit-scrollbar {
   width: 5px;
-  height: 5px; /* Add this line */
+  height: 5px;
+  /* Add this line */
   margin: 1rem;
   border-radius: 8px;
 }
