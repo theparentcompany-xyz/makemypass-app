@@ -164,7 +164,9 @@ const EventPage = () => {
                     Your registration for the event has been successful. You will receive a
                     confirmation email shortly.
                   </p>
-                  {success && <p className={styles.ticketCode}>You're Ticket Code is: {success}</p>}
+                  {success && !eventData?.shortlist && (
+                    <p className={styles.ticketCode}>You're Ticket Code is: {success}</p>
+                  )}
                 </dialog>
               </>
             )}
