@@ -31,6 +31,7 @@ import { handleClick } from './components/csvExport';
 import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
 import { isArray } from 'chart.js/helpers';
+import Modal from '../../../components/Modal/Modal';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -170,12 +171,12 @@ const Guests = () => {
         </>
       )}
       {selectedGuestId && selectedGuestId.type === 'add' && (
-        <dialog className={styles.onClickModal}>
+        <Modal>
           <div
             className={styles.userInfoModalContainer}
             style={{
               maxHeight: '40rem',
-              padding: '2rem 0',
+              padding: '1rem 0',
             }}
           >
             <p className={styles.modalHeader}>Add Guest</p>
@@ -211,7 +212,7 @@ const Guests = () => {
               </p>
             </div>
           </div>
-        </dialog>
+        </Modal>
       )}
       {guests ? (
         <>

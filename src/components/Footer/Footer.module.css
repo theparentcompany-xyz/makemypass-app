@@ -1,19 +1,9 @@
-footer {
-  z-index: 5;
-}
-
 .footerContainer {
   margin: auto;
   max-width: 73rem;
   display: flex;
   flex-direction: column;
   justify-content: end;
-
-  /* position: absolute;
-
-    bottom: 0rem;
-    left: 0;
-    right: 0; */
 
   width: 100%;
 }

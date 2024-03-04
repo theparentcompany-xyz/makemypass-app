@@ -116,7 +116,7 @@
   z-index: 100;
   backdrop-filter: blur(800px);
 
-  top: 50%;
+  top: 40%;
   left: 0;
   right: 0;
   margin: auto;
@@ -141,6 +141,12 @@
   transform: scale(0.9);
   opacity: 0.6;
 } */
+
+.userInfoModalContainer {
+  max-height: 40rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
 .modalSubText {
   font-weight: 400;

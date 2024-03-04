@@ -1,28 +1,31 @@
-import { useParams } from 'react-router';
 import { getEventId } from '../apis/events';
 import { GlobalContext } from '../contexts/globalContext';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const GlobalContextWrapper = ({ children }: { children: React.ReactNode }) => {
   const [eventId, setEventId] = React.useState<string>('');
-  const { eventTitle } = useParams<{ eventTitle: string }>();
+  let url = window.location.href;
 
-  React.useEffect(() => {
+  let parts = url.split('/');
+  let eventTitle = parts[3];
+
+  useEffect(() => {
     let eventData = JSON.parse(localStorage.getItem('eventData') as string);
 
-    if (!eventData)
+    if (eventData) {
+      if (eventData.event_name !== eventTitle) {
+        localStorage.removeItem('eventData');
+        getEventId(eventTitle ?? '');
+      } else {
+        setEventId(eventData.event_id);
+      }
+    } else {
+      getEventId(eventTitle ?? '');
       setTimeout(() => {
         eventData = JSON.parse(localStorage.getItem('eventData') as string);
-
-        if (eventData) {
-          if (eventData.event_name !== eventTitle) {
-            localStorage.removeItem('eventData');
-            getEventId(eventTitle ?? '');
-          } else {
-            setEventId(eventData.event_id);
-          }
-        }
-      }, 2000);
+        setEventId(eventData?.event_id);
+      }, 100);
+    }
 
     setEventId(eventData?.event_id);
   }, [eventTitle]);
