@@ -7,8 +7,8 @@
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
   /* Add this line */
   margin: 1rem;
   border-radius: 8px;
