@@ -59,7 +59,6 @@ const routes = [
         path: '/events',
         element: <Events />,
       },
-
       {
         path: '/:eventTitle/overview',
         element: <RoleChecker roles={['Admin']} children={<Overview />} />,
