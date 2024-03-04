@@ -15,8 +15,8 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
 
   const { eventId } = useContext(GlobalContext);
   useEffect(() => {
-    getEventHosts(eventId, setEventHosts);
-  }, [eventData]);
+    if (eventId) getEventHosts(eventId, setEventHosts);
+  }, [eventData, eventId]);
 
   const navigate = useNavigate();
   return (
