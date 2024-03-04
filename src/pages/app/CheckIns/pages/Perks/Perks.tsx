@@ -9,6 +9,7 @@ import { QrScanner } from '@yudiel/react-qr-scanner';
 import toast from 'react-hot-toast';
 import { CgClose } from 'react-icons/cg';
 import { GlobalContext } from '../../../../../contexts/globalContext';
+import Modal from '../../../../../components/Modal/Modal';
 
 const Perks = () => {
   const [perks, setPerks] = useState([]);
@@ -36,8 +37,7 @@ const Perks = () => {
       <Theme>
         {message && message.length > 0 && (
           <>
-            <div className={styles.backgroundBlur}></div>
-            <dialog
+            <Modal
               style={
                 isError
                   ? {
@@ -49,8 +49,6 @@ const Perks = () => {
                       background: 'rgba(31, 185, 31, 0.09)',
                     }
               }
-              open
-              className={styles.onClickModal}
             >
               <br />
               <p className={styles.modalSubText}>{message}</p>
@@ -62,7 +60,7 @@ const Perks = () => {
                 buttonColor='red'
                 icon={<CgClose />}
               />
-            </dialog>
+            </Modal>
           </>
         )}
         <div className={styles.perksContainer}>

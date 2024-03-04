@@ -1,6 +1,6 @@
 .perksContainer {
   padding: 0 1.25rem;
-padding-left: 0;
+  padding-left: 0;
 }
 
 .line {
@@ -145,34 +145,6 @@ padding-left: 0;
   }
 }
 
-.onClickModal {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border: none;
-  border-radius: 12px;
-  padding: 1rem;
-
-  max-width: 20rem;
-
-  margin-bottom: 1rem;
-  position: absolute;
-  z-index: 100;
-  backdrop-filter: blur(800px);
-
-  top: 50%;
-  left: 0;
-  right: 0;
-  margin: auto;
-  transform: translateY(-50%);
-
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  color: white;
-
-  text-align: center;
-}
-
 .modalHeader {
   font-family: 'Inter';
   font-weight: 600;
@@ -184,18 +156,7 @@ padding-left: 0;
   font-family: 'Inter';
   font-weight: 400;
   font-size: 1rem;
-  /* margin-top: 0.25rem; */
   margin-bottom: 1rem;
-}
-
-.backgroundBlur {
-  backdrop-filter: blur(3px);
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 50;
 }
 
 .perksHeading {
