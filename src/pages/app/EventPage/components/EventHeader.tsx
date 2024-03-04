@@ -14,7 +14,9 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
   const [eventHosts, setEventHosts] = useState<EventHosts[]>([]);
 
   const { eventId } = useContext(GlobalContext);
+
   useEffect(() => {
+    console.log(eventId);
     if (eventId) getEventHosts(eventId, setEventHosts);
   }, [eventData, eventId]);
 

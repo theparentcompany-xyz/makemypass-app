@@ -1,15 +1,14 @@
+import { Outlet, useParams } from 'react-router';
 import { getEventId } from '../apis/events';
 import { GlobalContext } from '../contexts/globalContext';
 import React, { useEffect } from 'react';
 
-const GlobalContextWrapper = ({ children }: { children: React.ReactNode }) => {
+const GlobalContextWrapper = () => {
   const [eventId, setEventId] = React.useState<string>('');
-  let url = window.location.href;
-
-  let parts = url.split('/');
-  let eventTitle = parts[3];
+  const { eventTitle } = useParams<{ eventTitle: string }>();
 
   useEffect(() => {
+    if (!eventTitle) return;
     let eventData = JSON.parse(localStorage.getItem('eventData') as string);
 
     if (eventData) {
@@ -33,7 +32,9 @@ const GlobalContextWrapper = ({ children }: { children: React.ReactNode }) => {
   }, [eventTitle]);
 
   return (
-    <GlobalContext.Provider value={{ eventId, setEventId }}>{children}</GlobalContext.Provider>
+    <GlobalContext.Provider value={{ eventId, setEventId }}>
+      <Outlet />
+    </GlobalContext.Provider>
   );
 };
 

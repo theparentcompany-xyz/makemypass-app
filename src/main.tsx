@@ -32,90 +32,96 @@ const RoleChecker = SecureAuthRoutes();
 
 const routes = [
   {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/termsandconditions',
-    element: <TermsConditions />,
-  },
-  {
-    path: '/privacypolicy',
-    element: <PrivacyPolicy />,
-  },
-  {
     path: '/',
-    element: <LandingPage />,
-  },
-  {
-    path: '/home',
-    element: <LandingPage />,
-  },
-  {
-    path: '/',
-    element: <AuthCheck />,
+    element: <GlobalContextWrapper />,
     children: [
       {
-        path: '/events',
-        element: <Events />,
+        path: '/login',
+        element: <Login />,
       },
       {
-        path: '/:eventTitle/overview',
-        element: <RoleChecker roles={['Admin']} children={<Overview />} />,
+        path: '/termsandconditions',
+        element: <TermsConditions />,
       },
       {
-        path: '/:eventTitle/insights',
-        element: <RoleChecker roles={['Admin']} children={<Insights />} />,
+        path: '/privacypolicy',
+        element: <PrivacyPolicy />,
       },
       {
-        path: '/:eventTitle/guests',
-        element: <RoleChecker roles={['Admin']} children={<Guests />} />,
+        path: '/',
+        element: <LandingPage />,
       },
       {
-        path: '/:eventTitle/checkins',
-        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<CheckIns />} />,
+        path: '/home',
+        element: <LandingPage />,
       },
       {
-        path: '/:eventTitle/checkins/checkin',
-        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<CheckIn />} />,
+        path: '/',
+        element: <AuthCheck />,
+        children: [
+          {
+            path: '/events',
+            element: <Events />,
+          },
+          {
+            path: '/:eventTitle/overview',
+            element: <RoleChecker roles={['Admin']} children={<Overview />} />,
+          },
+          {
+            path: '/:eventTitle/insights',
+            element: <RoleChecker roles={['Admin']} children={<Insights />} />,
+          },
+          {
+            path: '/:eventTitle/guests',
+            element: <RoleChecker roles={['Admin']} children={<Guests />} />,
+          },
+          {
+            path: '/:eventTitle/checkins',
+            element: <RoleChecker roles={['Admin', 'Volunteer']} children={<CheckIns />} />,
+          },
+          {
+            path: '/:eventTitle/checkins/checkin',
+            element: <RoleChecker roles={['Admin', 'Volunteer']} children={<CheckIn />} />,
+          },
+          {
+            path: '/:eventTitle/checkins/checkin/scan',
+            element: <RoleChecker roles={['Admin', 'Volunteer']} children={<ScanQR />} />,
+          },
+          {
+            path: `/:eventTitle/checkins/claimgifts`,
+            element: <RoleChecker roles={['Admin', 'Volunteer']} children={<ClaimGifts />} />,
+          },
+          {
+            path: '/:eventTitle/checkins/perks',
+            element: <RoleChecker roles={['Admin', 'Volunteer']} children={<Perks />} />,
+          },
+          {
+            path: '/:eventTitle/spinwheel',
+            element: <RoleChecker roles={['Admin', 'Gamer']} children={<SpinWheel />} />,
+          },
+          {
+            path: '/:eventTitle/inevent',
+            element: <RoleChecker roles={['Admin', 'Volunteer']} children={<InEventStats />} />,
+          },
+          {
+            path: '/:eventTitle/postevent',
+            element: <RoleChecker roles={['Admin', 'Volunteer']} children={<PostEvent />} />,
+          },
+        ],
       },
       {
-        path: '/:eventTitle/checkins/checkin/scan',
-        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<ScanQR />} />,
+        path: '/404',
+        element: <FourNotFour />,
       },
       {
-        path: `/:eventTitle/checkins/claimgifts`,
-        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<ClaimGifts />} />,
+        path: '/:eventTitle',
+        element: <EventPage />,
       },
       {
-        path: '/:eventTitle/checkins/perks',
-        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<Perks />} />,
-      },
-      {
-        path: '/:eventTitle/spinwheel',
-        element: <RoleChecker roles={['Admin', 'Gamer']} children={<SpinWheel />} />,
-      },
-      {
-        path: '/:eventTitle/inevent',
-        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<InEventStats />} />,
-      },
-      {
-        path: '/:eventTitle/postevent',
-        element: <RoleChecker roles={['Admin', 'Volunteer']} children={<PostEvent />} />,
+        path: '*',
+        element: <FourNotFour />,
       },
     ],
-  },
-  {
-    path: '/404',
-    element: <FourNotFour />,
-  },
-  {
-    path: '/:eventTitle',
-    element: <EventPage />,
-  },
-  {
-    path: '*',
-    element: <FourNotFour />,
   },
 ];
 
@@ -137,9 +143,8 @@ const toasterProps = {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <GlobalContextWrapper>
-      <RouterProvider router={router} />
-    </GlobalContextWrapper>
+    <RouterProvider router={router} />
+
     <Toaster {...toasterProps} />
   </React.StrictMode>,
 );

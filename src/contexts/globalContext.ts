@@ -1,7 +1,7 @@
 import { Dispatch, createContext } from 'react';
 
 interface GlobalContextProps {
-  eventId: string;
+  eventId: string | undefined;
   setEventId?: Dispatch<React.SetStateAction<string>>;
 }
 
