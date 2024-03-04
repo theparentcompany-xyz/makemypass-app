@@ -23,6 +23,8 @@ const Events = () => {
     date: string;
     day: string;
     name: string;
+    start_day: string;
+    start_date: string;
   };
 
   const [events, setEvents] = useState([] as Event[]);
@@ -90,8 +92,7 @@ const Events = () => {
                     transition={{ duration: 0.5 }}
                     className={styles.eventDate}
                   >
-                    <p className={styles.date}>{event.date}</p>
-                    <p className={styles.day}>{event.day}</p>
+                    <p className={styles.date}>{event?.start_date}</p>
                   </motion.div>
 
                   <div>
