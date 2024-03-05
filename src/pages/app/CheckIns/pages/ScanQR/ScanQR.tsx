@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import { CgClose } from 'react-icons/cg';
 import { GlobalContext } from '../../../../../contexts/globalContext';
+import Modal from '../../../../../components/Modal/Modal';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -44,20 +45,19 @@ const ScanQR = () => {
         {message && message.length > 0 && (
           <>
             <div className={styles.backgroundBlur}></div>
-            <dialog
+            <Modal
               style={
                 isError
                   ? {
-                      borderBottom: '3px solid #f71e1e',
-                      background: 'rgba(185, 31, 31, 0.09)',
-                    }
+                    borderBottom: '3px solid #f71e1e',
+                    background: 'rgba(185, 31, 31, 0.09)',
+                  }
                   : {
-                      borderBottom: '3px solid #47c97e',
-                      background: 'rgba(31, 185, 31, 0.09)',
-                    }
+                    borderBottom: '3px solid #47c97e',
+                    background: 'rgba(31, 185, 31, 0.09)',
+                  }
               }
-              open
-              className={styles.onClickModal}
+
             >
               <br />
               <p className={styles.modalSubText}>{message}</p>
@@ -69,7 +69,7 @@ const ScanQR = () => {
                 buttonColor='red'
                 icon={<CgClose />}
               />
-            </dialog>
+            </Modal>
           </>
         )}
 
