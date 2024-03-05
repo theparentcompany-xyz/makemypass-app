@@ -217,7 +217,7 @@ const Guests = () => {
       {guests ? (
         <>
           {resentTicket && resentTicket.status && (
-            <dialog className={styles.onClickModal}>
+            <Modal>
               <p className={styles.modalHeader}>Resend Ticket</p>
               <p className={styles.modalSubText}>
                 Are you sure to resent ticket to{' '}
@@ -256,10 +256,10 @@ const Guests = () => {
                   Cancel
                 </p>
               </div>
-            </dialog>
+            </Modal>
           )}
           {selectedGuestId && selectedGuestId.type === 'edit' && (
-            <dialog className={styles.onClickModal}>
+            <Modal>
               <div className={styles.userInfoModalContainer}>
                 <p className={styles.modalHeader}>Edit Guest</p>
                 <DynamicForm
@@ -291,7 +291,7 @@ const Guests = () => {
                   </p>
                 </div>
               </div>
-            </dialog>
+            </Modal>
           )}
 
           <div className={styles.guestsContainer}>
