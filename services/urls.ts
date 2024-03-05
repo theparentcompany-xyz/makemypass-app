@@ -49,7 +49,8 @@ export const makeMyPass = {
   submitForm: (eventId: string) => makeMyPassURL(`/rsvp/submit/${eventId}/`),
 
   createPayment: (ticketId: string) => makeMyPassURL(`/rsvp/create-order/${ticketId}/`),
-  validateCoupon: (eventId: string) => makeMyPassURL(`/rsvp/apply-coupon-code/${eventId}/`),
+  validateCoupon: (eventId: string, couponCode: string) =>
+    makeMyPassURL(`/rsvp/apply-coupon-code/${eventId}/?coupon_code=${couponCode}`),
 
   registerUpdateView: (eventId: string) => makeMyPassURL(`/register-update-view/${eventId}/`),
   validateRsvp: (ticketId: string) => makeMyPassURL(`/rsvp/validate-rsvp/${ticketId}/`),
@@ -77,6 +78,8 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
 
   listHostedBy: (eventId: string) => makeMyPassURL(`/event/${eventId}/list-event-hosts/`),
+
+  getCouponInfo: (eventId: string) => makeMyPassURL(`/rsvp/get-coupon-info/${eventId}/`),
 };
 
 export const makeMyPassSocket = {

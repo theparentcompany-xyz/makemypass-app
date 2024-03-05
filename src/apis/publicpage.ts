@@ -1,9 +1,10 @@
 import toast from 'react-hot-toast';
 import { publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { DiscountData, TicketOptions } from '../pages/app/EventPage/types';
+import { CouponData, DiscountData, TicketOptions } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
 import { ErrorMessages, EventDetails, EventHosts, FormData, FormField } from './types';
+import { isArray } from 'chart.js/helpers';
 
 export const getTickets = async (
   eventId: string,
@@ -36,26 +37,31 @@ export const getFormFields = async (
 export const submitForm = async ({
   ticketId,
   formData,
+  coupon,
   setSuccess,
   setFormNumber,
   setFormData,
   setAmount,
   setFormErrors,
   response,
+  setCoupon,
 }: {
   ticketId: string;
   formData: FormData;
+  coupon: CouponData;
   setSuccess?: React.Dispatch<React.SetStateAction<string>>;
   setFormNumber?: React.Dispatch<React.SetStateAction<number>>;
   setFormData?: React.Dispatch<React.SetStateAction<FormData>>;
   setAmount?: React.Dispatch<React.SetStateAction<string>>;
   setFormErrors?: Dispatch<ErrorMessages>;
   response?: unknown;
+  setCoupon?: React.Dispatch<CouponData>;
 }) => {
   publicGateway
     .post(makeMyPass.submitForm(ticketId), {
       rsvp_data: formData,
       payment_data: response,
+      coupon_code: coupon.value,
     })
     .then((response) => {
       setSuccess && setSuccess(response.data.response.code);
@@ -66,6 +72,8 @@ export const submitForm = async ({
         setFormData && setFormData({});
         setAmount && setAmount('');
       }, 2000);
+
+      setCoupon && setCoupon({ coupon: '', description: '' });
     })
     .catch((error) => {
       toast.error('Error in Registering Event');
@@ -77,22 +85,21 @@ export const applyCoupon = async (
   eventId: string,
   couponCode: string | string[],
   setDiscount: React.Dispatch<DiscountData>,
-  formErrors: ErrorMessages,
+  setCoupon: React.Dispatch<CouponData>,
 ) => {
-  publicGateway
-    .post(makeMyPass.validateCoupon(eventId), {
-      coupon_code: couponCode,
-    })
-    .then((response) => {
-      setDiscount(response.data.response);
-    })
-    .catch((error) => {
-      formErrors['coupon_code'] = error.response.data.message.coupon_code[0];
-      setDiscount({
-        discount_value: 0,
-        discount_type: 'error',
+  if (!isArray(couponCode))
+    publicGateway
+      .post(makeMyPass.validateCoupon(eventId, couponCode))
+      .then((response) => {
+        setDiscount(response.data.response);
+      })
+      .catch((error) => {
+        setCoupon(error.response.data.message.coupon_key);
+        setDiscount({
+          discount_value: 0,
+          discount_type: 'error',
+        });
       });
-    });
 };
 
 export const registerUpdateView = async (eventId: string) => {
@@ -155,5 +162,16 @@ export const getEventHosts = async (
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Error in Fetching Hosts');
+    });
+};
+
+export const getCouponInfo = async (eventId: string, setCoupon: React.Dispatch<CouponData>) => {
+  publicGateway
+    .get(makeMyPass.getCouponInfo(eventId))
+    .then((response) => {
+      setCoupon(response.data.response);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Error in Fetching Coupon Info');
     });
 };

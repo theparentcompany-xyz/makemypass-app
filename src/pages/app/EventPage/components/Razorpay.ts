@@ -1,15 +1,18 @@
 import { publicGateway } from '../../../../../services/apiGateway';
 import { makeMyPass } from '../../../../../services/urls';
 import { submitForm } from '../../../../apis/publicpage';
+import { CouponData } from '../types';
 
 export const showRazorpay = async (
   ticketId: string,
   formData: any,
+  coupon: CouponData,
   setFormErrors: any,
   setSuccess: React.Dispatch<React.SetStateAction<string>>,
   setFormNumber: React.Dispatch<React.SetStateAction<number>>,
   setFormData: React.Dispatch<React.SetStateAction<any>>,
   setAmount: React.Dispatch<React.SetStateAction<string>>,
+  setCoupon: React.Dispatch<CouponData>,
 ) => {
   const script = document.createElement('script');
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';
@@ -42,11 +45,13 @@ export const showRazorpay = async (
       submitForm({
         ticketId,
         formData,
+        coupon,
         setSuccess,
         setFormNumber,
         setFormData,
         setAmount,
         response,
+        setCoupon,
       });
     },
     theme: {

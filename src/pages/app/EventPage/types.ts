@@ -28,3 +28,10 @@ export type DiscountData = {
   discount_type: string;
   discount_value: number;
 };
+
+export type CouponData = {
+  coupon: string;
+  description: string;
+  value?: string;
+  error?: string;
+};

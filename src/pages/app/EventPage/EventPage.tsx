@@ -7,6 +7,7 @@ import { HashLoader } from 'react-spinners';
 import { getEventId } from '../../../apis/events';
 import {
   applyCoupon,
+  getCouponInfo,
   getEventDatas,
   getFormFields,
   getTickets,
@@ -14,7 +15,7 @@ import {
   submitForm,
   validateRsvp,
 } from '../../../apis/publicpage';
-import { DiscountData, TicketOptions } from './types';
+import { CouponData, DiscountData, TicketOptions } from './types';
 import { motion } from 'framer-motion';
 import { showRazorpay } from './components/Razorpay';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
@@ -44,6 +45,11 @@ const EventPage = () => {
     discount_value: 0,
   });
 
+  const [coupon, setCoupon] = useState<CouponData>({
+    coupon: '',
+    description: '',
+  });
+
   const navigate = useNavigate();
 
   const [hasZeroPriceTicket, setHasZeroPriceTicket] = useState(false);
@@ -54,6 +60,7 @@ const EventPage = () => {
     setTimeout(() => {
       setEventId(JSON.parse(localStorage.getItem('eventData') || '{}').event_id);
       if (eventId) {
+        getCouponInfo(eventId, setCoupon);
         getTickets(eventId, setTicketInfo);
         getFormFields(eventId, setFormFields);
         getEventDatas(eventId, setEventData);
@@ -222,81 +229,73 @@ const EventPage = () => {
 
               {ticketInfo && formNumber === 1 && (
                 <>
-                  {formFields?.map((field: any) => {
-                    return (
-                      field.type === 'apicoupon' && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 35 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.5 }}
-                          className={`${styles.row} ${styles.ticketType}`}
+                  {coupon.coupon && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 35 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.5 }}
+                      className={`${styles.row} ${styles.ticketType}`}
+                      style={{
+                        marginTop: '0rem',
+                        border:
+                          discount.discount_value > 0 ? '2px solid #46BF75' : '2px solid #2A3533',
+                      }}
+                    >
+                      <InputFIeld
+                        name='coupon_code'
+                        placeholder='Coupon Code'
+                        id='coupon_code'
+                        key='coupon_code'
+                        error={[coupon.error ?? '']}
+                        onChange={(e) => {
+                          setCoupon({
+                            ...coupon,
+                            error: '',
+                            value: e.target.value,
+                          });
+                        }}
+                        type='text'
+                        icon={getIcon('coupon_code')}
+                        required={true}
+                        description={coupon.description}
+                        style={{
+                          marginTop: '-1rem',
+                          border:
+                            discount.discount_value > 0 ? '2px solid #46BF75' : '2px solid #2A3533',
+                        }}
+                      />
+                      {discount.discount_type && discount.discount_value > 0 && (
+                        <p
                           style={{
-                            marginTop: '0rem',
-                            border:
-                              discount.discount_value > 0
-                                ? '2px solid #46BF75'
-                                : '2px solid #2A3533',
+                            marginTop: '-1.75rem',
                           }}
+                          className={styles.discountText}
                         >
-                          <InputFIeld
-                            name={field.field_key}
-                            placeholder={field.title}
-                            id={field.id}
-                            key={field.id}
-                            error={formErrors[field.field_key]}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                              onFieldChange(field.field_key, e.target.value)
-                            }
-                            type='text'
-                            icon={getIcon(field.field_key)}
-                            required={field.required}
-                            description={field.description}
-                            style={{
-                              marginTop: '-1rem',
-                              border:
-                                discount.discount_value > 0
-                                  ? '2px solid #46BF75'
-                                  : '2px solid #2A3533',
-                            }}
-                          />
-                          {discount.discount_type && discount.discount_value > 0 && (
-                            <p
-                              style={{
-                                marginTop: '-1.75rem',
-                              }}
-                              className={styles.discountText}
-                            >
-                              {discount.discount_type.toLowerCase() === 'percentage'
-                                ? `${discount.discount_value}% discount applied`
-                                : `${discount.discount_value} ${ticketInfo[Object.keys(ticketInfo)[0]].currency} discount applied`}
-                            </p>
-                          )}
+                          {discount.discount_type.toLowerCase() === 'percentage'
+                            ? `${discount.discount_value}% discount applied`
+                            : `${discount.discount_value} ${ticketInfo[Object.keys(ticketInfo)[0]].currency} discount applied`}
+                        </p>
+                      )}
 
-                          <div>
-                            <SecondaryButton
-                              onClick={() => {
-                                if (formData[field.field_key])
-                                  applyCoupon(
-                                    eventId,
-                                    formData[field.field_key],
-                                    setDiscount,
-                                    formErrors,
-                                  );
-                                else {
-                                  setFormErrors({
-                                    ...formErrors,
-                                    [field.field_key]: 'Please enter a valid coupon code',
-                                  });
-                                }
-                              }}
-                              buttonText='Validate Code'
-                            />
-                          </div>
-                        </motion.div>
-                      )
-                    );
-                  })}
+                      <div>
+                        <SecondaryButton
+                          onClick={() => {
+                            if (coupon.value)
+                              applyCoupon(eventId, coupon.value, setDiscount, setCoupon);
+                            else {
+                              setCoupon({
+                                ...coupon,
+                                error: 'Please enter a coupon code',
+                              });
+                            }
+                          }}
+                          buttonText='Validate Code'
+                        />
+                      </div>
+                    </motion.div>
+                  )}
+
                   <motion.div
                     initial={{ opacity: 0, y: 35 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -425,21 +424,25 @@ const EventPage = () => {
                         submitForm({
                           ticketId,
                           formData,
+                          coupon,
                           setSuccess,
                           setFormNumber,
                           setFormData,
                           setAmount,
                           setFormErrors,
+                          setCoupon,
                         });
                       else if (formData) {
                         showRazorpay(
                           ticketId,
                           formData,
+                          coupon,
                           setFormErrors,
                           setSuccess,
                           setFormNumber,
                           setFormData,
                           setAmount,
+                          setCoupon,
                         );
                       }
                     }
