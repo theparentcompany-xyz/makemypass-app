@@ -200,7 +200,7 @@ const EventPage = () => {
                   transition={{ duration: 0.5 }}
                   className={styles.eventForm}
                 >
-                  <div className={styles.eventFormInnerContainer}>
+                  <div className={styles.eventFormInnerContainer} id='formFields'>
                     <div>
                       <p className={styles.eventFormTitle}>Registration Form</p>
                       <p className={styles.eventHeaderDescription}>

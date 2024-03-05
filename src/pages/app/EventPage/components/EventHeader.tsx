@@ -76,6 +76,9 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
                 </div>
               </div>
             </div>
+            <a href='#formFields'>
+              <button className={styles.registerButton}>Register Now!</button>
+            </a>
           </div>
         </div>
       </motion.div>
