@@ -131,7 +131,7 @@ const EventPage = () => {
 
   return (
     <>
-      <Theme type='eventForms'>
+      <Theme type='eventForm'>
         {
           <motion.div
             initial={{ opacity: 0, y: 35 }}
