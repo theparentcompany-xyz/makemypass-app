@@ -24,6 +24,7 @@ import AddHosts from '../components/SecondaryButton/AddHosts/AddHosts';
 import { addHosts, removeHost, updateHostRole } from '../../../../apis/host';
 import { AnimatePresence } from 'framer-motion';
 import { GlobalContext } from '../../../../contexts/globalContext';
+import Modal from '../../../../components/Modal/Modal';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
@@ -168,7 +169,7 @@ const Overview = () => {
           />
         )}
         {openDeleteModal && (
-          <dialog className={styles.onClickModal}>
+          <Modal>
             <p className={styles.modalHeader}>Remove Host</p>
             <p className={styles.modalSubText}>
               Are you sure you want to delete&nbsp;
@@ -199,7 +200,7 @@ const Overview = () => {
                 Cancel
               </p>
             </div>
-          </dialog>
+          </Modal>
         )}
         {recentRegistrations && hostList && recentRegistrations.length >= 0 ? (
           <div className={styles.overviewContainer}>
