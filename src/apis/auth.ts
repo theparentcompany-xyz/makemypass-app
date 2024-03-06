@@ -43,8 +43,7 @@ export const login = async (
       onboardUser();
     })
     .catch((error) => {
-      console.log(error.response);
-      // toast.error(error.response.data);
+      toast.error(error.response.data.message.general[0]);
       if (error.response.data.statusCode === 1001) {
         setIsRegistered && setIsRegistered(false);
         setIsAuthenticated(false);

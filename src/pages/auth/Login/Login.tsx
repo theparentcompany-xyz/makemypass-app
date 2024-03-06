@@ -140,9 +140,11 @@ const Login = () => {
                     if (!isPassword) {
                       setIsOtpSent(false);
                       setIsPassword(true);
+                      setIsRegistered(true);
                     } else {
                       setIsOtpSent(false);
                       setIsPassword(false);
+                      setIsRegistered(true);
                     }
                   }}
                 >
