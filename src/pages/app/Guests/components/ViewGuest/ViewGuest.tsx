@@ -90,7 +90,29 @@ const ViewGuest = ({
                 className={styles.guestActions}
               >
                 <div className={styles.confirmButton}>
-                  {!confirmClicked.confirm && formData['is_shortlisted'] ? (
+                  {!confirmClicked.confirm && formData['is_shortlisted'] === null ? (
+                    <>
+                      <SecondaryButton
+                        onClick={() => {
+                          setConfirmClicked({
+                            confirm: true,
+                            value: false,
+                          });
+                        }}
+                        buttonText='Decline'
+                      />
+
+                      <SecondaryButton
+                        onClick={() => {
+                          setConfirmClicked({
+                            confirm: true,
+                            value: true,
+                          });
+                        }}
+                        buttonText='Accept'
+                      />
+                    </>
+                  ) : !confirmClicked.confirm && formData['is_shortlisted'] ? (
                     <SecondaryButton
                       onClick={() => {
                         setConfirmClicked({
