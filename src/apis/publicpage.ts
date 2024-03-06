@@ -3,7 +3,7 @@ import { publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { CouponData, DiscountData, TicketOptions } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
-import { ErrorMessages, EventDetails, EventHosts, FormData, FormField } from './types';
+import { ErrorMessages, EventDetails, FormData, FormField } from './types';
 import { isArray } from 'chart.js/helpers';
 
 export const getTickets = async (
