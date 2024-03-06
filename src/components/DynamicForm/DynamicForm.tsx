@@ -174,7 +174,7 @@ const DynamicForm = ({
                 </AnimatePresence>
               </div>
             );
-          } else if (field.type === 'checkbox') {
+          } else if (field.type === 'multiselect') {
             const selectValues =
               field.options?.map((option: string) => ({
                 value: option,
@@ -211,6 +211,34 @@ const DynamicForm = ({
                   />
                 </div>
               </>
+            );
+          } else if (field.type === 'radio') {
+            return (
+              <div
+                style={{
+                  marginBottom: '1rem',
+                }}
+              >
+                <p className={styles.formLabel}>{fieldTitle}</p>
+                <div className={styles.radioContainer}>
+                  {field.options?.map((option: string) => (
+                    <div key={option} className={styles.radio}>
+                      <input
+                        type='radio'
+                        id={option}
+                        name={field.field_key}
+                        value={option}
+                        checked={formData[field.field_key] === option}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          onFieldChange(field.field_key, e.target.value)
+                        }
+                        className={styles.radioInput}
+                      />
+                      <label htmlFor={option}>{option}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
             );
           }
         })}

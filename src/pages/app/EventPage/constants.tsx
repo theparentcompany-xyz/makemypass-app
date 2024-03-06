@@ -37,6 +37,7 @@ export const customStyles = {
     ':hover': {
       backgroundColor: ' rgba(147, 149, 151, 0.13);',
     },
+    maxWidth: '24rem',
   }),
 
   multiValue: (provided: any) => ({

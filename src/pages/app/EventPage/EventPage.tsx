@@ -114,6 +114,7 @@ const EventPage = () => {
   }, [ticketInfo]);
 
   useEffect(() => {
+    console.log('formFields', formFields);
     setFormData(
       formFields.reduce((data: any, field: any) => {
         data[field.field_key] = '';
