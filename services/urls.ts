@@ -9,6 +9,7 @@ export const buildVerse = {
   generateOTP: buildVerseURL('/generate-otp/'),
   preRegister: buildVerseURL('/pre-register/'),
   register: buildVerseURL('/register/'),
+  updateProfile: buildVerseURL('/update-profile/'),
 };
 
 export const makeMyPass = {
