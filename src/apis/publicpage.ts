@@ -151,20 +151,6 @@ export const getEventDatas = async (
     });
 };
 
-export const getEventHosts = async (
-  eventId: string,
-  setHosts?: Dispatch<React.SetStateAction<EventHosts[]>>,
-) => {
-  return publicGateway
-    .get(makeMyPass.listHostedBy(eventId))
-    .then((response) => {
-      if (setHosts) setHosts(response.data.response);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Fetching Hosts');
-    });
-};
-
 export const getCouponInfo = async (eventId: string, setCoupon: React.Dispatch<CouponData>) => {
   publicGateway
     .get(makeMyPass.getCouponInfo(eventId))

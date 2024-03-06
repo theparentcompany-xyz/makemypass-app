@@ -3,22 +3,12 @@ import { EventDetails, EventHosts } from '../../../../apis/types';
 import styles from './EventHeader.module.css';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaExpandAlt } from 'react-icons/fa';
 import { getDay, getMonthAbbreviation } from '../constants';
-import { GlobalContext } from '../../../../contexts/globalContext';
-import { getEventHosts } from '../../../../apis/publicpage';
 
 const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => {
   const [showFullDesc, setShowFullDesc] = useState(false);
-  const [eventHosts, setEventHosts] = useState<EventHosts[]>([]);
-
-  const { eventId } = useContext(GlobalContext);
-
-  useEffect(() => {
-    console.log(eventId);
-    if (eventId) getEventHosts(eventId, setEventHosts);
-  }, [eventData, eventId]);
 
   const navigate = useNavigate();
   return (
@@ -37,13 +27,13 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
           {eventData?.banner && <img className={styles.bannerImg} src={eventData?.banner} alt='' />}
           <div>
             <p className={styles.eventTitle}>{eventData?.title}</p>
-            {eventHosts.length > 0 && (
+            {eventData?.hosts && eventData?.hosts.length > 0 && (
               <div className={styles.hostedBy}>
                 <span>Hosted By:</span>
-                {eventHosts.map((eventHost: EventHosts) => {
+                {eventData.hosts.map((eventHost: EventHosts) => {
                   return (
                     <div className={styles.eventHost}>
-                      <img src={eventHost.logo} alt='' className={styles.hostLogo} />
+                      <img src={eventHost.profile_pic} alt='' className={styles.hostLogo} />
                       <p className={styles.hostName}>{eventHost.name}</p>
                     </div>
                   );

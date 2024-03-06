@@ -56,6 +56,7 @@ export type EventDetails = {
   date: string;
   logo: string;
   time: string;
+  hosts: EventHosts[];
   location: {
     lat: number;
     lng: number;
@@ -71,6 +72,7 @@ export type EventDetails = {
 };
 
 export type EventHosts = {
+  profile_pic: string;
+  id: string;
   name: string;
-  logo: string;
 };
