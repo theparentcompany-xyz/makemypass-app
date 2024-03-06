@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
-import { makeMyPass } from '../../services/urls';
+import { buildVerse, makeMyPass } from '../../services/urls';
 
 type UserInfoType = {
   category: string;
@@ -30,5 +30,16 @@ export const getUserInfo = async (
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Error in Fetching User Info');
+    });
+};
+
+export const updateProfile = async ({ data }: { [k: string]: FormDataEntryValue }) => {
+  return privateGateway
+    .put(buildVerse.updateProfile, data)
+    .then(() => {
+      toast.success('Profile Updated Successfully');
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Error in Updating Profile');
     });
 };

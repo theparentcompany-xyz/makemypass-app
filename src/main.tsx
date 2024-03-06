@@ -27,6 +27,7 @@ import EventPage from './pages/app/EventPage/EventPage';
 import Perks from './pages/app/CheckIns/pages/Perks/Perks';
 import PostEvent from './pages/app/PostEvent/PostEvent';
 import GlobalContextWrapper from './components/GlobalContextWrapper';
+import ProfilePage from './pages/app/ProfilePage/ProfilePage';
 
 const RoleChecker = SecureAuthRoutes();
 
@@ -54,6 +55,11 @@ const routes = [
       {
         path: '/home',
         element: <LandingPage />,
+      },
+
+      {
+        path: '/profile',
+        element: <ProfilePage />,
       },
       {
         path: '/',

@@ -34,6 +34,7 @@ export type AnalyticsData = {
     yesterday: number | null;
     this_week: number | null;
     conversion_rate_vs_page_visit: number | null;
+    total_unique: number | null;
   };
 };
 
