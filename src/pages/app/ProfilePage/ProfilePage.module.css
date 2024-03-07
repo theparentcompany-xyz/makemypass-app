@@ -12,6 +12,13 @@
   font-family: 'Inter', sans-serif;
 }
 
+.profilePageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
 .profileForm {
   display: flex;
   flex-direction: column;
@@ -41,4 +48,3 @@
   opacity: 0.8;
   margin-bottom: 0.25rem;
 }
-
