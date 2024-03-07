@@ -32,7 +32,6 @@ import ViewGuest from './components/ViewGuest/ViewGuest';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { TicketOptions } from '../EventPage/types';
 import { addGuest } from '../../../apis/guest';
-import { handleClick } from './components/csvExport';
 import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
 import { isArray } from 'chart.js/helpers';
