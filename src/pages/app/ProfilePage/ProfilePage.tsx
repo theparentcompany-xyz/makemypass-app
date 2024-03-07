@@ -14,8 +14,7 @@ const ProfilePage = () => {
   const handleUpdateProfile = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-    const data = Object.fromEntries(formData.entries());
-    setUserData({ data, token })
+    setUserData({ formData, token })
   }
 
 
@@ -35,16 +34,16 @@ const ProfilePage = () => {
               <input type='text' id='name' name='name' autoComplete="off" />
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor='profile_pic'>Profile Picture</label>
-              <input type='file' id='profile_pic' name='profile_pic' />
-            </div>
-            <div className={styles.formGroup}>
               <label htmlFor='password'>Password</label>
               <input type='password' id='password' name='password' />
             </div>
+            <div className={styles.formGroup}>
+              <label htmlFor='profile_pic'>Profile Picture</label>
+              <input type='file' id='profile_pic' name='profile_pic' />
+            </div>
             <SecondaryButton buttonText='Update Details' type='submit' />
             <div className={styles.formGroup}>
-              <label>All the fields are optional</label>
+              <label className={styles.optional}>All fields are optional</label>
             </div>
 
           </form>
