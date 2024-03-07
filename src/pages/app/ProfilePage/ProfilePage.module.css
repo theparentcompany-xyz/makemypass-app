@@ -48,3 +48,9 @@
   opacity: 0.8;
   margin-bottom: 0.25rem;
 }
+
+.optional {
+  font-size: 0.8rem;
+  opacity: 0.5 !important;
+
+}
