@@ -12,6 +12,7 @@ import SectionButton from '../../../components/SectionButton/SectionButton';
 import { getUserInfo } from '../../../apis/user';
 import UserInfo from '../CheckIns/components/UserInfo/UserInfo';
 import { useParams } from 'react-router';
+import Modal from '../../../components/Modal/Modal';
 
 type UserInfoType = {
   category: string;
@@ -84,7 +85,7 @@ const ClaimGifts = () => {
   return (
     <Theme>
       {openConfirm && (
-        <dialog className={styles.onClickModal}>
+        <Modal>
           <p className={styles.modalHeader}>Claim Gift</p>
           <p className={styles.modalSubText}>Are you sure you want to claim&nbsp;</p>
           <div className={styles.buttons}>
@@ -105,7 +106,7 @@ const ClaimGifts = () => {
               Cancel
             </p>
           </div>
-        </dialog>
+        </Modal>
       )}
       <div className={styles.scanContainer}>
         <CheckInHeader buttonType='back' />
@@ -131,13 +132,13 @@ const ClaimGifts = () => {
                           style={
                             item.type === 'claimed'
                               ? {
-                                  color: '#47c97e',
-                                  backgroundColor: 'rgba(71, 201, 126, 0.1)',
-                                }
+                                color: '#47c97e',
+                                backgroundColor: 'rgba(71, 201, 126, 0.1)',
+                              }
                               : {
-                                  color: '#F44336',
-                                  backgroundColor: 'rgba(244, 67, 54, 0.1)',
-                                }
+                                color: '#F44336',
+                                backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                              }
                           }
                           className={styles.status}
                         >

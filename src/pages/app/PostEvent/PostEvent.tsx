@@ -6,6 +6,7 @@ import { sentPostEventMail } from '../../../apis/postevent';
 import { useContext, useState } from 'react';
 import Glance from '../../../components/Glance/Glance';
 import { GlobalContext } from '../../../contexts/globalContext';
+import Modal from '../../../components/Modal/Modal';
 
 const PostEvent = () => {
   const [openConfirmModal, setConfirmModal] = useState({
@@ -18,7 +19,7 @@ const PostEvent = () => {
   return (
     <>
       {openConfirmModal && openConfirmModal.confirm && (
-        <dialog className={styles.onClickModal}>
+        <Modal>
           <p className={styles.modalHeader}>Remove Host</p>
           <p className={styles.modalSubText}>Are you sure you want to sent mails?</p>
           <div className={styles.buttons}>
@@ -42,7 +43,7 @@ const PostEvent = () => {
               Cancel
             </p>
           </div>
-        </dialog>
+        </Modal>
       )}
       <Theme>
         <Glance tab='postevent' />

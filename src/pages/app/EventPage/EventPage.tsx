@@ -23,6 +23,7 @@ import { EventDetails, FormData, FormField } from '../../../apis/types';
 import { discountedTicketPrice, getIcon } from './constants';
 import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import EventHeader from './components/EventHeader';
+import Modal from '../../../components/Modal/Modal';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -139,7 +140,7 @@ const EventPage = () => {
 
   return (
     <>
-      <Theme type='eventForms'>
+      <Theme type='eventForm'>
         {
           <motion.div
             initial={{ opacity: 0, y: 35 }}
@@ -151,13 +152,11 @@ const EventPage = () => {
             {success && (
               <>
                 <div className={styles.backgroundBlur}></div>
-                <dialog
+                <Modal
                   style={{
                     borderBottom: '3px solid #47c97e',
                     background: 'rgba(31, 185, 31, 0.09)',
                   }}
-                  open
-                  className={styles.onClickModal}
                 >
                   <button
                     onClick={() => {
@@ -175,7 +174,7 @@ const EventPage = () => {
                   {success && !eventData?.shortlist && (
                     <p className={styles.ticketCode}>You're Ticket Code is: {success}</p>
                   )}
-                </dialog>
+                </Modal>
               </>
             )}
           </motion.div>
