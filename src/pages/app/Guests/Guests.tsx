@@ -8,7 +8,12 @@ import Header from '../../../components/EventHeader/EventHeader';
 
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
-import { downloadTicket, editSubmissons, resentEventTicket } from '../../../apis/guests';
+import {
+  downloadCSVData,
+  downloadTicket,
+  editSubmissons,
+  resentEventTicket,
+} from '../../../apis/guests';
 import { ErrorMessages, FormData, FormField } from '../../../apis/types';
 import { getFormFields, getTickets } from '../../../apis/publicpage';
 import { getCategories } from '../../../apis/events';
@@ -343,12 +348,13 @@ const Guests = () => {
                     <SecondaryButton
                       buttonText='CSV'
                       onClick={() => {
-                        handleClick(
-                          currentCategory
-                            ? guestsTableData.filter((guest) => guest.category === currentCategory)
-                            : guestsTableData,
-                          'Guests CSV',
-                        );
+                        // handleClick(
+                        //   currentCategory
+                        //     ? guestsTableData.filter((guest) => guest.category === currentCategory)
+                        //     : guestsTableData,
+                        //   'Guests CSV',
+                        // );
+                        downloadCSVData(eventId);
                       }}
                     />
                     {categories.length > 0 && (

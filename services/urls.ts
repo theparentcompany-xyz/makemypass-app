@@ -79,6 +79,9 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
 
   getCouponInfo: (eventId: string) => makeMyPassURL(`/rsvp/get-coupon-info/${eventId}/`),
+
+  downloadCSV: (eventId: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
 };
 
 export const makeMyPassSocket = {
