@@ -43,3 +43,15 @@ export const updateProfile = async ({ data }: { [k: string]: FormDataEntryValue 
       toast.error(error.response.data.message.general[0] || 'Error in Updating Profile');
     });
 };
+
+export const setUserData = async ({ data, token }: { data: { [k: string]: FormDataEntryValue }, token: string }) => {
+  console.log(data, token);
+  return privateGateway
+    .post(buildVerse.setUserData(token), data)
+    .then(() => {
+      toast.success('Profile Updated Successfully');
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Error in Updating Profile');
+    });
+}
