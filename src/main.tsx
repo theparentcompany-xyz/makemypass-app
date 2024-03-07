@@ -58,7 +58,7 @@ const routes = [
       },
 
       {
-        path: '/profile',
+        path: '/set-profile',
         element: <ProfilePage />,
       },
       {
