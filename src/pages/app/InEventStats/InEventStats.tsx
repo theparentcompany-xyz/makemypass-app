@@ -51,6 +51,12 @@ const InEventStats = () => {
         position: 'top' as const,
       },
     },
+    scales: {
+      y: {
+        beginAtZero: true,
+        precision: 0,
+      },
+    },
   };
 
   const doughnutOption = {

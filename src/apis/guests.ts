@@ -51,12 +51,15 @@ export const editSubmissons = async (
   }
 };
 
-export const downloadTicket = async (eventId: string, ticketCode: string) => {
+export const downloadTicket = async (eventId: string, ticketCode: string, name: string) => {
   privateGateway
     .get(makeMyPass.downloadTicket(eventId, ticketCode))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Ticket downloaded successfully');
-      window.open(response.data.response.image, '_blank');
+      const link = document.createElement('a');
+      link.href = response.data.image; // Assuming the response contains the URL of the image
+      link.download = `${name}.png`; // Set the desired file name
+      link.click();
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');

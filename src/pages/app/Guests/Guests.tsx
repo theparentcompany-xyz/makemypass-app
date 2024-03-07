@@ -32,6 +32,7 @@ import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
 import { isArray } from 'chart.js/helpers';
 import Modal from '../../../components/Modal/Modal';
+import toast from 'react-hot-toast';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -111,7 +112,9 @@ const Guests = () => {
       selectedGuestId.type === 'download' &&
       !isArray(selectedGuestId.id)
     )
-      downloadTicket(eventId, selectedGuestId?.id);
+      if (selectedGuestId.id && selectedGuest?.name)
+        downloadTicket(eventId, selectedGuestId?.id, selectedGuest?.name);
+      else toast.error('Ticket download failed');
   }, [selectedGuestId]);
 
   useEffect(() => {

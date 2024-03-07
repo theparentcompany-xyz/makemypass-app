@@ -55,6 +55,14 @@ const Insights = () => {
         position: 'top' as const,
       },
     },
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+    ticks: {
+      precision: 0,
+    },
   };
 
   useEffect(() => {
@@ -279,23 +287,26 @@ const Insights = () => {
                   <div className={styles.countSection}>
                     <div className={styles.cLeftSection}>
                       <div className={styles.totalRegistered}>
-                        <div>
-                          <p className={styles.total}>Page Visits</p>
-                          <p className={styles.count}>
-                            {message?.page_visit.total ? message?.page_visit.total : '-'}{' '}
-                            <span>Visits</span>
-                          </p>
-                        </div>
-                        <div>
-                          <p className={styles.total}>Unique Visits</p>
-                          <p className={styles.count}>
-                            {message?.page_visit.total_unique
-                              ? message?.page_visit.total_unique
-                              : '-'}{' '}
-                            <span>Visits</span>
-                          </p>
+                        <div className='row'>
+                          <div>
+                            <p className={styles.total}>Page Visits</p>
+                            <p className={styles.count}>
+                              {message?.page_visit.total ? message?.page_visit.total : '-'}{' '}
+                              <span>Visits</span>
+                            </p>
+                          </div>
+                          <div>
+                            <p className={styles.total}>Unique Visits</p>
+                            <p className={styles.count}>
+                              {message?.page_visit.total_unique
+                                ? message?.page_visit.total_unique
+                                : '-'}{' '}
+                              <span>Visits</span>
+                            </p>
+                          </div>
                         </div>
                       </div>
+
                       <div className={styles.weeklyCounts}>
                         <div className={styles.weeklyCount}>
                           <p className={styles.week}>Yesterday</p>
