@@ -1,0 +1,106 @@
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 2;
+
+  &:hover {
+    color: #47c97e;
+  }
+}
+
+.tickachu {
+  max-height: 8rem;
+}
+
+.modalTexts {
+  color: white;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  max-width: 20rem;
+  width: 75%;
+  text-align: left;
+}
+
+.modalContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+}
+
+.modalSubText {
+  color: #4eff99;
+  font-family: Inter;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28.73px; /* 106.169% */
+
+  text-align: left;
+}
+
+.modalText {
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.1rem;
+  opacity: 0.5;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.25rem;
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+
+.ticketCode {
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0.7;
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+}
+
+.ticketCode span {
+  color: #4eff99;
+  opacity: 1;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+
+  font-size: 0.8rem;
+  cursor: pointer;
+  z-index: 2;
+
+  padding: 0.25rem 0.75rem;
+
+  &:hover {
+    color: #47c97e;
+  }
+}
+
+@media screen and (max-width: 590px) {
+  .modalTexts {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    max-width: none;
+    width: 100%;
+    text-align: left;
+  }
+
+  .modalSubText,
+  .ticketCode,
+  .modalText {
+    text-align: center;
+  }
+}

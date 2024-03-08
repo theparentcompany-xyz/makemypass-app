@@ -70,14 +70,14 @@ const RowComponent = React.memo(
                 />
               </div>
               {item.is_shortlisted ? (
-                <div className={styles.icon} title='shortlisted'>
+                <div className={styles.icon} title='Shortlisted'>
                   <MdCheckBox color='#8E8E8E' />
                 </div>
               ) : (
                 <div className={styles.icon}>
                   <MdCheckBoxOutlineBlank
                     color={item.is_shortlisted === false ? '#D70040' : '#8E8E8E'}
-                    title='not shortlisted'
+                    title='Not Shortlisted'
                   />
                 </div>
               )}

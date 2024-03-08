@@ -22,8 +22,8 @@ import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryBut
 import { EventDetails, FormData, FormField } from '../../../apis/types';
 import { discountedTicketPrice, getIcon } from './constants';
 import DynamicForm from '../../../components/DynamicForm/DynamicForm';
-import EventHeader from './components/EventHeader';
-import Modal from '../../../components/Modal/Modal';
+import EventHeader from './components/EventHeader/EventHeader';
+import SuccessModal from './components/SuccessModal/SuccessModal';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -115,7 +115,6 @@ const EventPage = () => {
   }, [ticketInfo]);
 
   useEffect(() => {
-    console.log('formFields', formFields);
     setFormData(
       formFields.reduce((data: any, field: any) => {
         data[field.field_key] = '';
@@ -141,44 +140,11 @@ const EventPage = () => {
   return (
     <>
       <Theme type='eventForm'>
-        {
-          <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.5 }}
-            className={styles.successMessage}
-          >
-            {success && (
-              <>
-                <div className={styles.backgroundBlur}></div>
-                <Modal
-                  style={{
-                    borderBottom: '3px solid #47c97e',
-                    background: 'rgba(31, 185, 31, 0.09)',
-                  }}
-                >
-                  <button
-                    onClick={() => {
-                      setSuccess('');
-                    }}
-                    className={styles.closeButton}
-                  >
-                    X
-                  </button>
-                  <p className={styles.modalSubText}>Registration Successful</p>
-                  <p className={styles.modalText}>
-                    Your registration for the event has been successful. You will receive a
-                    confirmation email shortly.
-                  </p>
-                  {success && !eventData?.shortlist && (
-                    <p className={styles.ticketCode}>You're Ticket Code is: {success}</p>
-                  )}
-                </Modal>
-              </>
-            )}
-          </motion.div>
-        }
+        <SuccessModal
+          success={success}
+          setSuccess={setSuccess}
+          hasShortlisting={eventData?.shortlist}
+        />
         {eventData?.is_private && (
           <motion.div
             initial={{ opacity: 0, y: 35 }}
