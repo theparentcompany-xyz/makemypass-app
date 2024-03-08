@@ -25,6 +25,7 @@ import { addHosts, removeHost, updateHostRole } from '../../../../apis/host';
 import { AnimatePresence } from 'framer-motion';
 import { GlobalContext } from '../../../../contexts/globalContext';
 import Modal from '../../../../components/Modal/Modal';
+import toast from 'react-hot-toast';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
@@ -152,6 +153,17 @@ const Overview = () => {
     if (hostData.id) updateHostRole(eventId, hostData.id, hostData.role, setHostData);
     setOpenAddModal(false);
   };
+  const hostValidate: () => boolean = () => {
+    if (!hostData.email) {
+      toast.error('Email is required');
+      return false;
+    }
+    if (!hostData.role) {
+      toast.error('Role is required');
+      return false;
+    }
+    return true;
+  }
 
   return (
     <Theme>
@@ -161,10 +173,13 @@ const Overview = () => {
             hostData={hostData}
             setHostData={setHostData}
             onSubmit={() => {
-              onSubmit();
+              if (hostValidate()) {
+                onSubmit();
+              }
             }}
             onClose={() => {
               setOpenAddModal(false);
+              setHostData({ email: '', role: '' });
             }}
           />
         )}
