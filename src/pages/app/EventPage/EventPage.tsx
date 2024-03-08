@@ -23,6 +23,8 @@ import EventHeader from './components/EventHeader/EventHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
 import CouponForm from './components/CouponForm/CouponForm';
 
+import { Helmet } from 'react-helmet';
+
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
@@ -138,6 +140,20 @@ const EventPage = () => {
 
   return (
     <>
+      {console.log(eventData)}
+      <Helmet>
+        <meta charSet='utf-8' />
+        <title>{eventData?.title}</title>
+        <meta name='title' content='MakeMyPass' />
+        <meta
+          name='description'
+          content={
+            eventData?.description
+              ? eventData?.description
+              : 'Don not miss out! Register now for this event to learn, network and more. Click the link below to get started.'
+          }
+        />
+      </Helmet>
       <Theme type='eventForm'>
         <SuccessModal
           success={success}
