@@ -1,8 +1,7 @@
 import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { Event } from './types'; // Assuming Event is the type for events
-import { NavigateFunction } from 'react-router';
+import { Event } from './types';
 import { getEventDatas } from './publicpage';
 import { Dispatch } from 'react';
 
@@ -17,16 +16,18 @@ export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<E
     });
 };
 
-export const getEventId = async (eventName: string, navigate?: NavigateFunction) => {
+export const getEventId = async (
+  eventName: string,
+  setHasEvent?: Dispatch<React.SetStateAction<boolean>>,
+) => {
   privateGateway
     .get(makeMyPass.getEventId(eventName))
     .then((response) => {
       localStorage.setItem('eventData', JSON.stringify(response.data.response));
       getEventDatas(response.data.response.event_id);
     })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-      navigate && navigate('/404');
+    .catch(() => {
+      setHasEvent && setHasEvent(false);
     });
 };
 
