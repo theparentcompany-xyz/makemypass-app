@@ -44,10 +44,10 @@ export const updateProfile = async ({ data }: { [k: string]: FormDataEntryValue 
     });
 };
 
-export const setUserData = async ({ data, token }: { data: { [k: string]: FormDataEntryValue }, token: string }) => {
-  console.log(data, token);
+export const setUserData = async ({ formData, token }: { formData: FormData, token: string }) => {
+  console.log(formData, token);
   return privateGateway
-    .post(buildVerse.setUserData(token), data)
+    .post(buildVerse.setUserData(token), formData)
     .then(() => {
       toast.success('Profile Updated Successfully');
     })
