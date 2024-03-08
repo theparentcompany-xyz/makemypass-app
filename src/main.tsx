@@ -7,25 +7,24 @@ import './index.css';
 import LandingPage from './pages/app/LandingPage/LandingPage';
 import { Toaster, ToastPosition } from 'react-hot-toast';
 
-const Insights = React.lazy(() => import('./pages/app/Insights/Insights'));
-const Overview = React.lazy(() => import('./pages/app/Overview/Overview/Overview'));
-const Events = React.lazy(() => import('./pages/app/Events/Events'));
-const AuthCheck = React.lazy(() => import('./components/AuthCheck/AuthCheck'));
-const Guests = React.lazy(() => import('./pages/app/Guests/Guests'));
-const TermsConditions = React.lazy(() => import('./pages/app/TermsCondictions/TermsConditions'));
-const PrivacyPolicy = React.lazy(() => import('./pages/app/PrivacyPolicy/PrivacyPolicy'));
-const FourNotFour = React.lazy(() => import('./pages/FourNotFour/FourNotFour'));
-const CheckIns = React.lazy(() => import('./pages/app/CheckIns/CheckIns'));
-const CheckIn = React.lazy(() => import('./pages/app/CheckIns/pages/CheckIn/CheckIn'));
-const ScanQR = React.lazy(() => import('./pages/app/CheckIns/pages/ScanQR/ScanQR'));
-const SpinWheel = React.lazy(() => import('./pages/app/SpinWheel/SpinWheel'));
-const InEventStats = React.lazy(() => import('./pages/app/InEventStats/InEventStats'));
-
-const ClaimGifts = React.lazy(() => import('./pages/app/ClaimGifts/ClaimGifts'));
-const EventPage = React.lazy(() => import('./pages/app/EventPage/EventPage'));
-const Perks = React.lazy(() => import('./pages/app/CheckIns/pages/Perks/Perks'));
-const PostEvent = React.lazy(() => import('./pages/app/PostEvent/PostEvent'));
-const ProfilePage = React.lazy(() => import('./pages/app/ProfilePage/ProfilePage'));
+import Insights from './pages/app/Insights/Insights';
+import Overview from './pages/app/Overview/Overview/Overview';
+import Events from './pages/app/Events/Events';
+import AuthCheck from './components/AuthCheck/AuthCheck';
+import Guests from './pages/app/Guests/Guests';
+import TermsConditions from './pages/app/TermsCondictions/TermsConditions';
+import PrivacyPolicy from './pages/app/PrivacyPolicy/PrivacyPolicy';
+import FourNotFour from './pages/FourNotFour/FourNotFour';
+import CheckIns from './pages/app/CheckIns/CheckIns';
+import CheckIn from './pages/app/CheckIns/pages/CheckIn/CheckIn';
+import ScanQR from './pages/app/CheckIns/pages/ScanQR/ScanQR';
+import SpinWheel from './pages/app/SpinWheel/SpinWheel';
+import InEventStats from './pages/app/InEventStats/InEventStats';
+import ClaimGifts from './pages/app/ClaimGifts/ClaimGifts';
+import EventPage from './pages/app/EventPage/EventPage';
+import Perks from './pages/app/CheckIns/pages/Perks/Perks';
+import PostEvent from './pages/app/PostEvent/PostEvent';
+import ProfilePage from './pages/app/ProfilePage/ProfilePage';
 
 import SecureAuthRoutes from '../services/authRoutes';
 
