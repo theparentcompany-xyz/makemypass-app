@@ -21,6 +21,9 @@ export type AnalyticsData = {
     total_paid_users: number;
     total_withdraw: number;
   };
+  organisation_percentages: {
+    [organisation: string]: string;
+  };
   days_left: string;
   event_date: string;
   active_timeframe: {

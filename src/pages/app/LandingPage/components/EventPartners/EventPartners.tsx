@@ -9,7 +9,16 @@ const EventPartners = () => {
         <img className={styles.logos} src='/app/landing/sp3.png' alt='' />
         <img className={styles.logos} src='/app/landing/sp4.png' alt='' />
         <img className={styles.logos} src='/app/landing/sp5.png' alt='' />
-        <img className={styles.logos} src='/app/landing/sp6.png' alt='' />
+        <img
+          className={styles.logos}
+          style={{
+            height: '45px',
+          }}
+          src='/app/landing/sp6.png'
+          alt=''
+        />
+        <img className={styles.logos} src='/app/landing/sp7.png' alt='' />
+        <img className={styles.logos} src='/app/landing/sp8.png' alt='' />
       </div>
       <div className={styles.eventPartners}>
         <img className={styles.logos} src='/app/landing/sp1.png' alt='' />
@@ -17,7 +26,16 @@ const EventPartners = () => {
         <img className={styles.logos} src='/app/landing/sp3.png' alt='' />
         <img className={styles.logos} src='/app/landing/sp4.png' alt='' />
         <img className={styles.logos} src='/app/landing/sp5.png' alt='' />
-        <img className={styles.logos} src='/app/landing/sp6.png' alt='' />
+        <img
+          className={styles.logos}
+          style={{
+            height: '45px',
+          }}
+          src='/app/landing/sp6.png'
+          alt=''
+        />
+        <img className={styles.logos} src='/app/landing/sp7.png' alt='' />
+        <img className={styles.logos} src='/app/landing/sp8.png' alt='' />
       </div>
     </div>
   );

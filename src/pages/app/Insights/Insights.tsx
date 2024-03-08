@@ -37,31 +37,12 @@ ChartJS.register(
   ArcElement,
 );
 
-const colors = [
-  'rgb(71, 201, 126)',
-  'rgb(251, 216, 91)',
-  'rgb(53, 161, 235)',
-  'rgb(53, 161, 235)',
-  'rgb(195, 61, 123)',
-  'rgb(210, 212, 215)',
-  'rgb(203, 62, 62)',
-  'rgb(200, 62, 203)',
-  'rgb(158, 62, 203)',
-  'rgb(65, 62, 203)',
-  'rgb(203, 96, 62)',
-  'rgb(62, 203, 203)',
-  'rgb(62, 203, 76)',
-  'rgb(225, 57, 57)',
-];
-
 const Insights = () => {
   const [message, setMessage] = useState<AnalyticsData>();
 
   const [lineData, setLineData] = useState<ChartData>();
   const [lineData2, setLineData2] = useState<ChartData>();
   const [pieData, setPieData] = useState<ChartData>();
-
-  const [organizationData, setOrganizationData] = useState<ChartData>();
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
@@ -84,15 +65,6 @@ const Insights = () => {
     },
   };
 
-  const barOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  };
-
   useEffect(() => {
     return () => {
       socket?.close();
@@ -108,18 +80,6 @@ const Insights = () => {
           const lineBarData = JSON.parse(event.data).response;
 
           setMessage(lineBarData);
-
-          setOrganizationData({
-            labels: Object.keys(lineBarData?.organisation_percentages || {}),
-            datasets: [
-              {
-                label: 'Organization Analytics',
-                data: Object.values(lineBarData?.organisation_percentages || {}),
-                borderColor: colors,
-                backgroundColor: colors,
-              },
-            ],
-          });
 
           setLineData({
             labels: Object.keys(lineBarData?.analytics || {}),
@@ -218,24 +178,41 @@ const Insights = () => {
 
                 <div className={styles.todayRegistered}>
                   {lineData2 && <Line options={options} data={lineData2} />}
-                  <div className={styles.graphContainer}></div>
-                  <div className={styles.totalRegistered}>
-                    <p className={styles.total}>Today Registered</p>
-                    <p className={styles.count}>
-                      {message?.today_reg} <span>guests</span>
-                    </p>
-                  </div>
-                  <div className={styles.weeklyCounts}>
-                    {Object.entries(message?.today_category || {}).map(([key, value]) => (
-                      <div className={styles.weeklyCount}>
-                        <p className={styles.week}>{key.substring(0, 8)}..</p>
-                        <p className={styles.wcount}>{value}</p>
+                  <div className={styles.countSection}>
+                    <div className={styles.cLeftSection}>
+                      <div className={styles.totalRegistered}>
+                        <p className={styles.total}>Today Registered</p>
+                        <p className={styles.count}>
+                          {message?.today_reg} <span>guests</span>
+                        </p>
                       </div>
-                    ))}
-                  </div>
-                  <div className={styles.liveTraffic}>
-                    <p className={styles.live}>Event Date</p>
-                    <p className={styles.lcount}>{message?.event_date}</p>
+                      <div className={styles.weeklyCounts}>
+                        {Object.entries(message?.today_category || {}).map(([key, value]) => (
+                          <div className={styles.weeklyCount}>
+                            <p className={styles.week}>{key.substring(0, 8)}..</p>
+                            <p className={styles.wcount}>{value}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <div className={styles.liveTraffic}>
+                        <p className={styles.live}>Event Date</p>
+                        <p className={styles.lcount}>{message?.event_date}</p>
+                      </div>
+                    </div>
+                    <div className={styles.cRightSection}>
+                      <p className={styles.rightSectionHeading}>Organization Counts %</p>
+
+                      <div className={styles.categories}>
+                        {Object.entries(message?.organisation_percentages || {}).map(
+                          ([key, value]) => (
+                            <div className={styles.category}>
+                              <p className={styles.categoryName}>{key}</p>
+                              <p className={styles.categoryCount}>{value}</p>
+                            </div>
+                          ),
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -382,20 +359,8 @@ const Insights = () => {
                     </div>
                   </div>
                 </div>
-                <div
-                  style={{
-                    borderRadius: '12px',
-                  }}
-                  className={styles.paymentCounts}
-                >
-                  <div className={styles.countSection}>
-                    <div className={styles.cLeftSection}>
-                      {organizationData && <Bar options={barOptions} data={organizationData} />}
-                    </div>
-                  </div>
-                </div>
 
-                {/* <div
+                <div
                   style={{
                     borderRadius: '12px',
                   }}
@@ -437,7 +402,7 @@ const Insights = () => {
                       </div>
                     </div>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
           </>
