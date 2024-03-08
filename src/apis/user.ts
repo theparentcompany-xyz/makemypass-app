@@ -33,9 +33,13 @@ export const getUserInfo = async (
     });
 };
 
-export const updateProfile = async ({ data }: { [k: string]: FormDataEntryValue }) => {
+export const updateProfile = async ({ data }: { [k: string]: FormData }) => {
   return privateGateway
-    .put(buildVerse.updateProfile, data)
+    .put(buildVerse.updateProfile, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     .then(() => {
       toast.success('Profile Updated Successfully');
     })
@@ -44,14 +48,18 @@ export const updateProfile = async ({ data }: { [k: string]: FormDataEntryValue 
     });
 };
 
-export const setUserData = async ({ formData, token }: { formData: FormData, token: string }) => {
+export const setUserData = async ({ formData, token }: { formData: FormData; token: string }) => {
   console.log(formData, token);
   return privateGateway
-    .post(buildVerse.setUserData(token), formData)
+    .post(buildVerse.setUserData(token), formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     .then(() => {
       toast.success('Profile Updated Successfully');
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Error in Updating Profile');
     });
-}
+};
