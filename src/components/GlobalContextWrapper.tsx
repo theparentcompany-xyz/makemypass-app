@@ -2,6 +2,7 @@ import { Outlet, useParams } from 'react-router';
 import { getEventId } from '../apis/events';
 import { GlobalContext } from '../contexts/globalContext';
 import React, { Suspense, useEffect } from 'react';
+import Loader from './Loader';
 
 const GlobalContextWrapper = () => {
   const [eventId, setEventId] = React.useState<string>('');
@@ -33,7 +34,7 @@ const GlobalContextWrapper = () => {
 
   return (
     <GlobalContext.Provider value={{ eventId, setEventId }}>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
     </GlobalContext.Provider>
