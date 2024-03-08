@@ -11,7 +11,7 @@ import {
   BarElement,
   ArcElement,
 } from 'chart.js';
-import { Line, Doughnut } from 'react-chartjs-2';
+import { Line, Doughnut, Bar } from 'react-chartjs-2';
 import { useContext, useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
@@ -37,12 +37,31 @@ ChartJS.register(
   ArcElement,
 );
 
+const colors = [
+  'rgb(71, 201, 126)',
+  'rgb(251, 216, 91)',
+  'rgb(53, 161, 235)',
+  'rgb(53, 161, 235)',
+  'rgb(195, 61, 123)',
+  'rgb(210, 212, 215)',
+  'rgb(203, 62, 62)',
+  'rgb(200, 62, 203)',
+  'rgb(158, 62, 203)',
+  'rgb(65, 62, 203)',
+  'rgb(203, 96, 62)',
+  'rgb(62, 203, 203)',
+  'rgb(62, 203, 76)',
+  'rgb(225, 57, 57)',
+];
+
 const Insights = () => {
   const [message, setMessage] = useState<AnalyticsData>();
 
   const [lineData, setLineData] = useState<ChartData>();
   const [lineData2, setLineData2] = useState<ChartData>();
   const [pieData, setPieData] = useState<ChartData>();
+
+  const [organizationData, setOrganizationData] = useState<ChartData>();
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
@@ -65,6 +84,15 @@ const Insights = () => {
     },
   };
 
+  const barOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+
   useEffect(() => {
     return () => {
       socket?.close();
@@ -80,6 +108,19 @@ const Insights = () => {
           const lineBarData = JSON.parse(event.data).response;
 
           setMessage(lineBarData);
+
+          setOrganizationData({
+            labels: Object.keys(lineBarData?.organisation_percentages || {}),
+            datasets: [
+              {
+                label: 'Organization Analytics',
+                data: Object.values(lineBarData?.organisation_percentages || {}),
+                borderColor: colors,
+                backgroundColor: colors,
+              },
+            ],
+          });
+
           setLineData({
             labels: Object.keys(lineBarData?.analytics || {}),
             datasets: [
@@ -341,8 +382,20 @@ const Insights = () => {
                     </div>
                   </div>
                 </div>
-
                 <div
+                  style={{
+                    borderRadius: '12px',
+                  }}
+                  className={styles.paymentCounts}
+                >
+                  <div className={styles.countSection}>
+                    <div className={styles.cLeftSection}>
+                      {organizationData && <Bar options={barOptions} data={organizationData} />}
+                    </div>
+                  </div>
+                </div>
+
+                {/* <div
                   style={{
                     borderRadius: '12px',
                   }}
@@ -384,7 +437,7 @@ const Insights = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </>
