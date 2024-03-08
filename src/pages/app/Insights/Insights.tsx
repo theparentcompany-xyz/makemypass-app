@@ -199,18 +199,6 @@ const Insights = () => {
                         <p className={styles.lcount}>{message?.event_date}</p>
                       </div>
                     </div>
-                    <div className={styles.cRightSection}>
-                      <p className={styles.rightSectionHeading}>Organization Counts</p>
-
-                      <div className={styles.categories}>
-                        {Object.entries(message?.organisation_count || {}).map(([key, value]) => (
-                          <div className={styles.category}>
-                            <p className={styles.categoryName}>{key}</p>
-                            <p className={styles.categoryCount}>{value}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -399,6 +387,19 @@ const Insights = () => {
                         </p>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                <div className={styles.categorySection}>
+                  <p className={styles.rightSectionHeading}>Organization Counts</p>
+
+                  <div className={styles.categories}>
+                    {Object.entries(message?.organisation_count || {}).map(([key, value]) => (
+                      <div className={styles.category}>
+                        <p className={styles.categoryName}>{key}</p>
+                        <p className={styles.categoryCount}>{value}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

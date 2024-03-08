@@ -55,6 +55,10 @@
   width: 50%;
 }
 
+.categorySection {
+  margin-top: 1rem;
+}
+
 .weeklyCounts {
   display: flex;
   flex-direction: row;
@@ -157,11 +161,11 @@
 
 .categoryName {
   color: rgba(255, 255, 255, 0.79);
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .categoryCount {
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 /* Next Box */
@@ -245,6 +249,16 @@
   color: white;
   width: 26%;
   margin: 0 0.5rem;
+}
+
+.categorySection {
+  margin: 1rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1rem 2rem;
+  font-family: 'Inter', sans-serif;
+  color: white;
 }
 
 @media (max-width: 1120px) {
