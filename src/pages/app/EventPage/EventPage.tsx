@@ -144,7 +144,8 @@ const EventPage = () => {
       <Helmet>
         <meta charSet='utf-8' />
         <title>{eventData?.title}</title>
-        <meta name='title' content='MakeMyPass' />
+        <link rel='shortcut icon' href={eventData.logo} type='image/x-icon' />
+        <meta name='title' content={eventData?.title} />
         <meta
           name='description'
           content={
