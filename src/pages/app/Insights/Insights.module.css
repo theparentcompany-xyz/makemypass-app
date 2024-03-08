@@ -142,6 +142,10 @@
 
   padding-right: 1rem;
   overflow: auto;
+
+  max-height: 12rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .category {
