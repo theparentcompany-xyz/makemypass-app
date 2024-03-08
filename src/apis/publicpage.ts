@@ -4,7 +4,6 @@ import { makeMyPass } from '../../services/urls';
 import { CouponData, DiscountData, TicketOptions } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
 import { ErrorMessages, EventDetails, FormData, FormField } from './types';
-import { isArray } from 'chart.js/helpers';
 
 export const getTickets = async (
   eventId: string,
@@ -83,18 +82,21 @@ export const submitForm = async ({
 
 export const applyCoupon = async (
   eventId: string,
-  couponCode: string | string[],
+  couponData: CouponData,
   setDiscount: React.Dispatch<DiscountData>,
   setCoupon: React.Dispatch<CouponData>,
 ) => {
-  if (!isArray(couponCode))
+  if (couponData.value)
     publicGateway
-      .post(makeMyPass.validateCoupon(eventId, couponCode))
+      .post(makeMyPass.validateCoupon(eventId, couponData.value))
       .then((response) => {
         setDiscount(response.data.response);
       })
       .catch((error) => {
-        setCoupon(error.response.data.message.coupon_key);
+        setCoupon({
+          ...couponData,
+          error: error.response.data.message.general[0] || 'Invalid Coupon',
+        });
         setDiscount({
           discount_value: 0,
           discount_type: 'error',
