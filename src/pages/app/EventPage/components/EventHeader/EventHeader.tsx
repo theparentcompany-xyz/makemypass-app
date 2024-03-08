@@ -1,4 +1,4 @@
-import { IoLocationOutline } from 'react-icons/io5';
+import { IoContract, IoLocationOutline } from 'react-icons/io5';
 import { EventDetails, EventHosts } from '../../../../../apis/types';
 import styles from './EventHeader.module.css';
 import { motion } from 'framer-motion';
@@ -81,6 +81,9 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
+              style={{
+                padding: '2rem',
+              }}
             >
               <p className={styles.eventDescHeading}>About the Event</p>
               <motion.p
@@ -95,18 +98,27 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
                   <p
                     dangerouslySetInnerHTML={{
                       __html: eventData.description
-                        .substring(0, eventData.description.indexOf('</p>') - 100)
+                        .substring(0, eventData.description.indexOf('</p>') - 60)
                         .concat('...'),
                     }}
                   ></p>
                 )}
               </motion.p>
               <div className={styles.expandIcon}>
-                <FaExpandAlt
-                  onClick={() => {
-                    setShowFullDesc((prev) => !prev);
-                  }}
-                />
+                {!showFullDesc ? (
+                  <FaExpandAlt
+                    onClick={() => {
+                      setShowFullDesc((prev) => !prev);
+                    }}
+                  />
+                ) : (
+                  <IoContract
+                    size={20}
+                    onClick={() => {
+                      setShowFullDesc((prev) => !prev);
+                    }}
+                  />
+                )}
               </div>
             </motion.div>
           </div>
