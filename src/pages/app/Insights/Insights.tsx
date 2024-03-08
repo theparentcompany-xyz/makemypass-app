@@ -200,10 +200,10 @@ const Insights = () => {
                       </div>
                     </div>
                     <div className={styles.cRightSection}>
-                      <p className={styles.rightSectionHeading}>Organization Counts %</p>
+                      <p className={styles.rightSectionHeading}>Organization Counts</p>
 
                       <div className={styles.categories}>
-                        {Object.entries(message?.organisation_percentages || {}).map(
+                        {Object.entries(message?.organisation_count || {}).map(
                           ([key, value]) => (
                             <div className={styles.category}>
                               <p className={styles.categoryName}>{key}</p>
@@ -351,7 +351,7 @@ const Insights = () => {
                           {' '}
                           {message?.page_visit.conversion_rate_vs_page_visit
                             ? Math.round(message?.page_visit.conversion_rate_vs_page_visit * 100) /
-                              100
+                            100
                             : '-'}
                           %
                         </p>
