@@ -21,7 +21,7 @@ export type AnalyticsData = {
     total_paid_users: number;
     total_withdraw: number;
   };
-  organisation_percentages: {
+  organisation_count: {
     [organisation: string]: string;
   };
   days_left: string;
