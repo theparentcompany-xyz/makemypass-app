@@ -32,6 +32,7 @@ const Glance = ({ tab }: { tab: string }) => {
   const [targetGuests, setTargetGuests] = useState<number>(0);
   const [todayCheckIns, setTodayCheckIns] = useState<number>(0);
   const [lastRegistered, setLastRegistered] = useState<string>('');
+  const [shortlistedCount, setShortlistedCount] = useState<number>(0);
   useEffect(() => {
     return () => {
       socket?.close();
@@ -79,6 +80,7 @@ const Glance = ({ tab }: { tab: string }) => {
             setTotalGuests(Number(JSON.parse(event.data).response.total_reg));
             setTargetGuests(Number(JSON.parse(event.data).response.target_reg));
             setLastRegistered(JSON.parse(event.data).response.last_registered_at);
+            setShortlistedCount(Number(JSON.parse(event.data).response.shortlisted_count));
           } else {
             setTotalGuests(Number(JSON.parse(event.data).response.total_checkin));
             setTargetGuests(Number(JSON.parse(event.data).response.total_registration));
@@ -210,6 +212,18 @@ const Glance = ({ tab }: { tab: string }) => {
                         <span>&nbsp;today's guests</span>
                       </motion.p>
                     ))}
+
+                  {(currentTab == 'overview' || currentTab == 'guests') && (
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className={styles.guests}
+                    >
+                      {shortlistedCount}
+
+                      <span>&nbsp;shortlisted</span>
+                    </motion.p>
+                  )}
                 </div>
 
                 <div className={styles.progresBarGraph}>
