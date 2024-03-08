@@ -38,7 +38,7 @@ const Overview = () => {
     type: 'edit',
   });
 
-  const eventTitle = useParams<{ eventTitle: string }>();
+  const { eventTitle } = useParams<{ eventTitle: string }>();
 
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);

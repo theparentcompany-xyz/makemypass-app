@@ -184,6 +184,7 @@ export const discountedTicketPrice = (ticketPrice: number, discount: DiscountDat
   if (discountedPrice < 0) return 0;
   else {
     if (isNaN(discountedPrice)) return 0;
+
     return discountedPrice;
   }
 };

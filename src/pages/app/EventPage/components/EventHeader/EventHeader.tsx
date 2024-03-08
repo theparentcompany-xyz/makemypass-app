@@ -98,7 +98,7 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
                   <p
                     dangerouslySetInnerHTML={{
                       __html: eventData.description
-                        .substring(0, eventData.description.indexOf('</p>') - 60)
+                        .substring(0, eventData.description.indexOf('</p>') - 150)
                         .concat('...'),
                     }}
                   ></p>
