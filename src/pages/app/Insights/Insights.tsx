@@ -11,7 +11,7 @@ import {
   BarElement,
   ArcElement,
 } from 'chart.js';
-import { Line, Doughnut, Bar } from 'react-chartjs-2';
+import { Line, Doughnut } from 'react-chartjs-2';
 import { useContext, useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 import { connectPrivateSocket } from '../../../../services/apiGateway';

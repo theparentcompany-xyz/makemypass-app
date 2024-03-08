@@ -1,7 +1,7 @@
 import React, { Dispatch, useMemo } from 'react';
 import { ResentTicket, SelectedGuest } from '../../pages/app/Guests/types';
 import styles from './Table.module.css';
-import { TableType } from './types';
+import { TabType, TableType } from './types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdDelete, MdEdit } from 'react-icons/md';
 import { FixedSizeList } from 'react-window';
@@ -14,13 +14,14 @@ type ItemDataType = {
   setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
   setSelectedGuestId?: React.Dispatch<React.SetStateAction<SelectedGuest | null>>;
   setHostId?: Dispatch<React.SetStateAction<hostId>>;
+  categoryColorMapping: TabType;
 };
 
 const RowComponent = React.memo(
   ({ index, style, data }: { index: number; style: React.CSSProperties; data: ItemDataType }) => {
-    const { filteredData, setResentTicket, setSelectedGuestId, setHostId } = data;
+    const { filteredData, setResentTicket, setSelectedGuestId, setHostId, categoryColorMapping } =
+      data;
     const item = filteredData[index];
-
     return (
       <motion.div
         key={item.id}
@@ -51,7 +52,15 @@ const RowComponent = React.memo(
           )}
         </div>
         <div className={styles.rowData}>
-          <p className={styles.rowType}>{item.category}</p>
+          <p
+            className={styles.rowType}
+            style={{
+              backgroundColor: categoryColorMapping[item.category].backgroundColor ?? '',
+              color: categoryColorMapping[item.category].color ?? '',
+            }}
+          >
+            {item.category}
+          </p>
           <p className={styles.rowDate}>{timeAgo(item.date)}</p>
           {setResentTicket && (
             <>
@@ -142,6 +151,34 @@ const Table = ({
   secondaryButton?: React.ReactElement;
   setHostId?: Dispatch<React.SetStateAction<hostId>>;
 }) => {
+  const categoryColors = ['#47C97E', '#7662FC', '#C33D7B', '#FBD85B', '#5B75FB', '#D2D4D7'];
+
+  const rgbaArray = [
+    'rgba(7, 164, 96, 0.13)',
+    'rgba(118, 98, 252, 0.13)',
+    'rgba(195, 61, 123, 0.13)',
+    'rgba(251, 216, 91, 0.13)',
+    'rgba(91, 117, 251, 0.13)',
+    'rgba(147, 149, 151, 0.13)',
+  ];
+
+  const categoryColorMapping = useMemo(() => {
+    const categoryColorMap: TabType = {};
+
+    tableData.forEach((item) => {
+      if (item.category) {
+        if (!categoryColorMap[item.category]) {
+          categoryColorMap[item.category] = {
+            color: categoryColors.pop() ?? '',
+            backgroundColor: rgbaArray.pop() ?? '',
+          };
+        }
+      }
+    });
+
+    return categoryColorMap;
+  }, [tableData]);
+
   const filteredData = useMemo(() => {
     let keyword = '';
     if (search) keyword = search.toLowerCase();
@@ -159,6 +196,7 @@ const Table = ({
       setResentTicket,
       setSelectedGuestId,
       setHostId,
+      categoryColorMapping,
     }),
     [filteredData, setResentTicket, setSelectedGuestId, setHostId],
   );

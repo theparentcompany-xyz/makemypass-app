@@ -9,3 +9,10 @@ export type TableType = {
   category: string;
   date: string;
 };
+
+export type TabType = {
+  [key: string]: {
+    backgroundColor: string;
+    color: string;
+  };
+};

@@ -347,12 +347,6 @@ const Guests = () => {
                     <SecondaryButton
                       buttonText='CSV'
                       onClick={() => {
-                        // handleClick(
-                        //   currentCategory
-                        //     ? guestsTableData.filter((guest) => guest.category === currentCategory)
-                        //     : guestsTableData,
-                        //   'Guests CSV',
-                        // );
                         downloadCSVData(eventId);
                       }}
                     />
