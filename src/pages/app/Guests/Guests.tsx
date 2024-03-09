@@ -163,11 +163,18 @@ const Guests = () => {
     }
   };
 
+  const onClose = () => {
+    setSelectedGuestId({
+      id: '',
+      type: '',
+    });
+  };
+
   return (
     <Theme>
       {selectedGuestId && formData && selectedGuestId.id && selectedGuestId.type == 'view' && (
         <>
-          <div className={styles.backgroundBlur}></div>
+          <div onClick={onClose} className={styles.backgroundBlur}></div>
           <ViewGuest
             formFields={formFields}
             formData={formData}
@@ -178,7 +185,7 @@ const Guests = () => {
         </>
       )}
       {selectedGuestId && selectedGuestId.type === 'add' && (
-        <Modal>
+        <Modal onClose={onClose}>
           <div
             className={styles.userInfoModalContainer}
             style={{
@@ -224,7 +231,7 @@ const Guests = () => {
       {guests ? (
         <>
           {resentTicket && resentTicket.status && (
-            <Modal>
+            <Modal onClose={onClose}>
               <p className={styles.modalHeader}>Resend Ticket</p>
               <p className={styles.modalSubText}>
                 Are you sure to resent ticket to{' '}
@@ -266,7 +273,7 @@ const Guests = () => {
             </Modal>
           )}
           {selectedGuestId && selectedGuestId.type === 'edit' && (
-            <Modal>
+            <Modal onClose={onClose}>
               <div className={styles.userInfoModalContainer}>
                 <p className={styles.modalHeader}>Edit Guest</p>
                 <DynamicForm
@@ -358,10 +365,16 @@ const Guests = () => {
                           setCurrentCategory(selectedOption?.value);
                         }}
                         name='role'
-                        options={categories.map((category) => ({
-                          value: category,
-                          label: category,
-                        }))}
+                        options={[
+                          ...categories.map((category) => ({
+                            value: category,
+                            label: category,
+                          })),
+                          {
+                            value: '',
+                            label: 'All',
+                          },
+                        ]}
                         styles={{
                           ...customStyles,
                           menu: (provided: any) => ({

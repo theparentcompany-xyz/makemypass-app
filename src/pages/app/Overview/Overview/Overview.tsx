@@ -163,7 +163,7 @@ const Overview = () => {
       return false;
     }
     return true;
-  }
+  };
 
   return (
     <Theme>
@@ -184,7 +184,11 @@ const Overview = () => {
           />
         )}
         {openDeleteModal && (
-          <Modal>
+          <Modal
+            onClose={() => {
+              setOpenDeleteModal(false);
+            }}
+          >
             <p className={styles.modalHeader}>Remove Host</p>
             <p className={styles.modalSubText}>
               Are you sure you want to delete&nbsp;

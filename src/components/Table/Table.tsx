@@ -32,6 +32,7 @@ const RowComponent = React.memo(
       >
         <div
           className={styles.rowData}
+          style={{ cursor: setSelectedGuestId ? 'pointer' : 'default' }}
           onClick={() => {
             if (setSelectedGuestId) {
               setSelectedGuestId((prevState) => ({

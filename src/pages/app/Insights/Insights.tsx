@@ -109,7 +109,7 @@ const Insights = () => {
             labels: Object.keys(lineBarData.active_timeframe || {}),
             datasets: [
               {
-                label: 'Active Time',
+                label: 'Registration Time',
                 data: Object.values(lineBarData.active_timeframe || {}),
                 backgroundColor: ['#FBD85B', '#C33D7B', '#47C97E', '#35A1EB'],
                 borderColor: ['#FBD85B', '#C33D7B', '#47C97E', '#35A1EB'],
@@ -222,7 +222,7 @@ const Insights = () => {
                     )}
                   </div>
                   <div className={styles.timeSection}>
-                    <p className={styles.rightSectionHeading}>Active Time</p>
+                    <p className={styles.rightSectionHeading}>Registration Time</p>
                     <div className={styles.times}>
                       {message?.active_timeframe.Morning && (
                         <div className={styles.time}>

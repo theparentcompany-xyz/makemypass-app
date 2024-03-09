@@ -8,6 +8,10 @@ import p1 from '../../images/p1.webp';
 import p2 from '../../images/p2.webp';
 import p3 from '../../images/p3.webp';
 
+import in1 from '../../images/in1.webp';
+import in2 from '../../images/in2.webp';
+import in3 from '../../images/in3.webp';
+
 const Projects = () => {
   return (
     <>
@@ -122,6 +126,18 @@ const Projects = () => {
                     <span className={styles.count}>Paid Event </span>
                     <span className={styles.countText}>with Razorpay</span>
                   </p>
+                </div>
+              </div>
+              <div className={styles.projectImagesContainer}>
+                <div className={styles.projectImages}>
+                  <img src={in1} alt='' className={styles.projectImage} />
+                  <img src={in2} alt='' className={styles.projectImage} />
+                  <img src={in3} alt='' className={styles.projectImage} />
+                </div>
+                <div className={styles.projectImages}>
+                  <img src={in1} alt='' className={styles.projectImage} />
+                  <img src={in2} alt='' className={styles.projectImage} />
+                  <img src={in3} alt='' className={styles.projectImage} />
                 </div>
               </div>
             </div>
