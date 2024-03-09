@@ -49,7 +49,6 @@ export const updateProfile = async ({ data }: { [k: string]: FormData }) => {
 };
 
 export const setUserData = async ({ formData, token }: { formData: FormData; token: string }) => {
-  console.log(formData, token);
   return privateGateway
     .post(buildVerse.setUserData(token), formData, {
       headers: {

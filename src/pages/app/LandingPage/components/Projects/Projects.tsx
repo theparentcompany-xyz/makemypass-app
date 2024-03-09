@@ -11,12 +11,72 @@ import p3 from '../../images/p3.webp';
 import in1 from '../../images/in1.webp';
 import in2 from '../../images/in2.webp';
 import in3 from '../../images/in3.webp';
+import { PubllicEvent } from './types';
+import { formatDate } from '../../../../../common/commonFunctions';
+import { IoLocationOutline } from 'react-icons/io5';
 
-const Projects = () => {
+const Projects = ({ events }: { events: PubllicEvent[] }) => {
   return (
     <>
       <div className={styles.grad2}></div>
       <div className={styles.grad3}></div>
+      <div className={styles.projectsSection}>
+        <div className={styles.projectsHeading}>
+          <p className={styles.projectsHeadingText}>Upcoming Events</p>
+        </div>
+        {events.map(
+          (event) =>
+            new Date(event.start_date) > new Date() && (
+              <div className={styles.projectsListing}>
+                <div className={styles.project}>
+                  <div className={styles.projectDateDay}>
+                    <p className={styles.projectDate}>{formatDate(event.start_date)}</p>
+                    <p className={styles.projectDay}>
+                      {new Date(event.start_date).toLocaleString('en-us', { weekday: 'long' })}
+                    </p>
+                  </div>
+                  <div className={styles.lineDot}>
+                    <div className={styles.dot}></div>
+                    <div
+                      style={{
+                        height: '9rem',
+                      }}
+                      className={styles.line}
+                    ></div>
+                  </div>
+                  <div className={styles.projectDetails}>
+                    <div className={styles.projectTexts}>
+                      <p className={styles.projectHeading}>{event.title}</p>
+                      <p
+                        className={styles.projectText}
+                        dangerouslySetInnerHTML={{
+                          __html: event.description.substring(0, 150) + '...',
+                        }}
+                      ></p>
+                    </div>
+                    <div className={styles.eventDatePlace}>
+                      <div className={styles.eventPlace}>
+                        <div className={styles.locationBox}>
+                          <IoLocationOutline size={25} className={styles.locationIcon} />
+                        </div>
+                        <div className={styles.eventDateTimeText}>
+                          <p className={styles.eventDateText}>{event?.place}</p>
+                        </div>
+                      </div>
+                      <a
+                        href={`https://makemypass.com/${event.name}`}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        <button className={styles.registerButton}>Register Now!</button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ),
+        )}
+      </div>
       <div className={styles.projectsSection}>
         <div className={styles.projectsHeading}>
           <p className={styles.projectsHeadingText}>Our Projects</p>

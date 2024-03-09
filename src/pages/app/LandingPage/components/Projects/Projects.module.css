@@ -214,3 +214,70 @@
     height: 100%;
   }
 }
+
+.location {
+  max-width: 12rem;
+  font-size: 0.85rem;
+  margin-right: 1rem;
+}
+
+.eventDateText {
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  max-width: 15rem;
+}
+
+.time {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #bbbaba;
+  font-family: 'Inter', sans-serif;
+}
+
+.clockIcon {
+  margin-right: 0.25rem;
+  color: #bbbaba;
+}
+
+.eventPlace {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+}
+
+.locationBox {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 2.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+}
+
+.locationIcon {
+  padding: 0.25rem 0.5rem;
+  color: #ffffff;
+}
+
+.registerButton {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem;
+  width: 100%;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}

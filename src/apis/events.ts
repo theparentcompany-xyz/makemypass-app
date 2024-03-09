@@ -4,6 +4,7 @@ import { makeMyPass } from '../../services/urls';
 import { Event } from './types';
 import { getEventDatas } from './publicpage';
 import { Dispatch } from 'react';
+import { PubllicEvent } from '../pages/app/LandingPage/components/Projects/types';
 
 export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<Event[]>>) => {
   privateGateway
@@ -54,12 +55,13 @@ export const getEventData = async (
     });
 };
 
-export const getPublicEvents = async (setEvents: React.Dispatch<React.SetStateAction<Event[]>>) => {
+export const getPublicEvents = async (
+  setEvents: React.Dispatch<React.SetStateAction<PubllicEvent[]>>,
+) => {
   publicGateway
     .get(makeMyPass.listPublicEvents)
     .then((response) => {
       setEvents(response.data.response);
-      console.log(response.data.response);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
@@ -73,7 +75,6 @@ export const getCategories = async (
   privateGateway
     .get(makeMyPass.getCategories(eventId))
     .then((response) => {
-      console.log(response.data.response);
       setCategories(response.data.response);
     })
     .catch((error) => {

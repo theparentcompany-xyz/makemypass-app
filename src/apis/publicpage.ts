@@ -106,7 +106,7 @@ export const applyCoupon = async (
 
 export const registerUpdateView = async (eventId: string) => {
   return publicGateway.post(makeMyPass.registerUpdateView(eventId)).catch((error) => {
-    console.log(error);
+    toast.error(error.response.data.message.general[0] || 'Error in Registering Event');
   });
 };
 
@@ -141,7 +141,6 @@ export const getEventDatas = async (
     .get(makeMyPass.getEventDatas(eventId))
     .then((response) => {
       if (setEventData) setEventData(response.data.response);
-      console.log(response.data.response);
 
       const eventData = JSON.parse(localStorage.getItem('eventData') || '{}');
       eventData['logo'] = response.data.response['logo'];

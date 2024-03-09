@@ -10,6 +10,7 @@ import EventPartners from './components/EventPartners/EventPartners';
 import Hero from './components/Hero/Hero';
 import WhyUs from './components/WhyUs/WhyUs';
 import Projects from './components/Projects/Projects';
+import { PubllicEvent } from './components/Projects/types';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -21,8 +22,7 @@ const LandingPage = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const [events, setEvents] = useState<any[]>([]);
-  console.log(events);
+  const [events, setEvents] = useState<PubllicEvent[]>([]);
 
   useEffect(() => {
     getPublicEvents(setEvents);
@@ -139,7 +139,7 @@ const LandingPage = () => {
             />
           </div>
           <WhyUs />
-          <Projects />
+          <Projects events={events} />
           <div className={styles.footerContainer}>
             <div className={styles.fLogoText}>
               <img src='/app/logoText.webp' alt='' className={styles.fLogo} />

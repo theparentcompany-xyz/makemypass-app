@@ -16,7 +16,6 @@ export const getPerksInfo = (eventId: string, setPerks: any) =>
         }
       }
       setPerks(perkNames);
-      console.log(perkNames);
     })
     .catch((error) => {
       throw error;

@@ -9,7 +9,6 @@ const PoppingText = ({
   targetGuests: number;
   todayCheckIns?: number;
 }) => {
-  console.log(todayCheckIns && todayCheckIns >= 0);
   return (
     <motion.p
       animate={{
