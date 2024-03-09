@@ -79,7 +79,6 @@ const EventPage = () => {
   }, [success]);
 
   useEffect(() => {
-    console.log(discount);
     if (discount.discount_value > 0) {
       setAmount(discountedTicketPrice(Number(amount), discount).toString());
     } else {
@@ -142,7 +141,6 @@ const EventPage = () => {
     <>
       {hasEvent ? (
         <>
-          {console.log(eventData)}
           <Helmet>
             <meta charSet='utf-8' />
             <title>{eventData?.title}</title>

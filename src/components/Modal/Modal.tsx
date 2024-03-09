@@ -3,7 +3,7 @@ import styles from './Modal.module.css';
 type ModalProps = {
   children: React.ReactNode;
   style?: React.CSSProperties;
-  onClose: () => void;
+  onClose?: () => void;
 };
 
 const Modal = ({ children, onClose, ...inputProps }: ModalProps) => {

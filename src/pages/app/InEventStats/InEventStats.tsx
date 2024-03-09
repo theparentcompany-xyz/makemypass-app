@@ -159,7 +159,6 @@ const InEventStats = () => {
           const lineData = JSON.parse(event.data).response.time;
           const barData = JSON.parse(event.data).response.bargraph;
           setDistrictData(barData);
-          console.log(lineData);
           const dates = Object.keys(lineData || {});
           setDailyCount([]);
           const lineDataSet: LineDataSet[] = dates.map((date, index) => {

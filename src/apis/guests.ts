@@ -70,7 +70,6 @@ export const downloadCSVData = async (eventId: string) => {
   privateGateway
     .get(makeMyPass.downloadCSV(eventId))
     .then((response) => {
-      console.log(response);
       const csvData = response.data;
       const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
       const encodedUri = encodeURI(csvContent);

@@ -80,7 +80,6 @@ export const generateOTP = async (
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0]);
-      console.log(error);
       if (error.response.data.statusCode === 1001) {
         setIsRegistered(false);
       }
