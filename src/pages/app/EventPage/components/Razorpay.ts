@@ -31,7 +31,7 @@ export const showRazorpay = async (
       setFormErrors(err.response.data.message);
     });
 
-  var options = {
+  const options = {
     key_id: import.meta.env.VITE_APP_PUBLIC_KEY,
     amount: paymentAmount,
     currency: 'INR',
@@ -59,6 +59,6 @@ export const showRazorpay = async (
     },
   };
 
-  var rzp1 = new (window as any).Razorpay(options);
+  const rzp1 = new (window as any).Razorpay(options);
   rzp1.open();
 };

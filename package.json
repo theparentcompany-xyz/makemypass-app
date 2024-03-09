@@ -11,9 +11,7 @@
     "lint:fix": "eslint --fix src/**/*.{js,jsx,ts,tsx,json}",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx,css,md,json,scss} --config ./.prettierrc",
     "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    "analyze-bundle": "webpack-bundle-analyzer"
+    "predeploy": "npm run build"
   },
   "dependencies": {
     "@types/react-router": "^5.1.20",
@@ -33,8 +31,7 @@
     "react-router-dom": "^6.21.2",
     "react-select": "^5.8.0",
     "react-spinners": "^0.13.8",
-    "react-window": "^1.8.10",
-    "webpack-bundle-analyzer": "^4.10.1"
+    "react-window": "^1.8.10"
   },
   "devDependencies": {
     "@types/google-map-react": "^2.1.10",
