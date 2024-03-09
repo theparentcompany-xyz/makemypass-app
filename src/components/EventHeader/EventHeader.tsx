@@ -43,13 +43,17 @@ const EventHeader = () => {
               </button>
             </div>
             <p className={styles.headerText}>
-              <img className={styles.headerImage} src={eventData.logo} alt='' />
+              <img
+                className={styles.headerImage}
+                src={eventData.logo}
+                alt='Event logo for the dashboarod'
+              />
               {eventData?.title}
             </p>
           </div>
           <div className='row'>
             <p className={styles.date}>{eventData?.date}</p>
-            <img src='/app/live.gif' alt='' className={styles.gif} />
+            <img src='/app/live.gif' alt='Live indicator gif' className={styles.gif} />
           </div>
         </motion.div>
       )}

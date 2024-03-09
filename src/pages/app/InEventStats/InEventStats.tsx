@@ -284,7 +284,11 @@ const InEventStats = () => {
                 open
                 className={styles.welcomeContainer}
               >
-                <img src='/app/welcome.webp' alt='' className={styles.image} />
+                <img
+                  src='/app/welcome.webp'
+                  alt='welcome image with confetti for card '
+                  className={styles.image}
+                />
                 <div className={styles.welcomeText}>
                   <p className={styles.userType}>{newUser?.category}</p>
                   <p className={styles.userName}>{newUser?.name}</p>

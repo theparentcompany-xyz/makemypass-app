@@ -19,7 +19,7 @@ const Header = ({ type }: { type?: string | undefined }) => {
       <div className={styles.headerComponent}>
         <Link to='/home'>
           <div className={styles.mainLogo}>
-            <img src='/app/logoText.webp' alt='' className={styles.header} />
+            <img src='/app/logoText.webp' alt='makemypass brand logo' className={styles.header} />
             <span className={styles.logo}>MakeMyPass</span>
           </div>
         </Link>

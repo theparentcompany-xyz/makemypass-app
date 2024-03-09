@@ -51,14 +51,38 @@ const Projects = () => {
               </div>
               <div className={styles.projectImagesContainer}>
                 <div className={styles.projectImages}>
-                  <img src={sup1} alt='' className={styles.projectImage} />
-                  <img src={sup2} alt='' className={styles.projectImage} />
-                  <img src={sup3} alt='' className={styles.projectImage} />
+                  <img
+                    src={sup1}
+                    alt='group of students infornt of makemypass welcome screen at scaleup conclave 2024'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={sup2}
+                    alt='students using makemypass application for seamless checkin process at scaleup conclave 2024'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={sup3}
+                    alt='closeup shot of scanning the makemypass ticket using the qr scanner'
+                    className={styles.projectImage}
+                  />
                 </div>
                 <div className={styles.projectImages}>
-                  <img src={sup1} alt='' className={styles.projectImage} />
-                  <img src={sup2} alt='' className={styles.projectImage} />
-                  <img src={sup3} alt='' className={styles.projectImage} />
+                  <img
+                    src={sup1}
+                    alt='group of students infornt of makemypass welcome screen at scaleup conclave 2024'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={sup2}
+                    alt='students using makemypass application for seamless checkin process at scaleup conclave 2024'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={sup3}
+                    alt='closeup shot of scanning the makemypass ticket using the qr scanner'
+                    className={styles.projectImage}
+                  />
                 </div>
               </div>
             </div>
@@ -88,14 +112,38 @@ const Projects = () => {
               </div>
               <div className={styles.projectImagesContainer}>
                 <div className={styles.projectImages}>
-                  <img src={p1} alt='' className={styles.projectImage} />
-                  <img src={p2} alt='' className={styles.projectImage} />
-                  <img src={p3} alt='' className={styles.projectImage} />
+                  <img
+                    src={p1}
+                    alt='team makemypass being recognized as the ticketing partner for permute 2024'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={p2}
+                    alt='a glimpse of people who checkedin using makemypass tickets'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={p3}
+                    alt='a shot showing a studnet showing his makemypass ticket'
+                    className={styles.projectImage}
+                  />
                 </div>
                 <div className={styles.projectImages}>
-                  <img src={p1} alt='' className={styles.projectImage} />
-                  <img src={p2} alt='' className={styles.projectImage} />
-                  <img src={p3} alt='' className={styles.projectImage} />
+                  <img
+                    src={p1}
+                    alt='team makemypass being recognized as the ticketing partner for permute 2024'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={p2}
+                    alt='a glimpse of people who checkedin using makemypass tickets'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={p3}
+                    alt='a shot showing a studnet showing his makemypass ticket'
+                    className={styles.projectImage}
+                  />
                 </div>
               </div>
             </div>
@@ -130,14 +178,38 @@ const Projects = () => {
               </div>
               <div className={styles.projectImagesContainer}>
                 <div className={styles.projectImages}>
-                  <img src={in1} alt='' className={styles.projectImage} />
-                  <img src={in2} alt='' className={styles.projectImage} />
-                  <img src={in3} alt='' className={styles.projectImage} />
+                  <img
+                    src={in1}
+                    alt='deepu s nath speaking after checkin using makemypass at in50hours'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={in2}
+                    alt='group photo of people who have used makemypass at in50hours'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={in3}
+                    alt='people who have used makemypass at in50hours'
+                    className={styles.projectImage}
+                  />
                 </div>
                 <div className={styles.projectImages}>
-                  <img src={in1} alt='' className={styles.projectImage} />
-                  <img src={in2} alt='' className={styles.projectImage} />
-                  <img src={in3} alt='' className={styles.projectImage} />
+                  <img
+                    src={in1}
+                    alt='deepu s nath speaking after checkin using makemypass at in50hours'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={in2}
+                    alt='group photo of people who have used makemypass at in50hours'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={in3}
+                    alt='people who have used makemypass at in50hours'
+                    className={styles.projectImage}
+                  />
                 </div>
               </div>
             </div>
