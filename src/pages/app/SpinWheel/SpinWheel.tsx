@@ -81,7 +81,11 @@ const SpinWheel = () => {
               open
               className={styles.congratzContainer}
             >
-              <img src='/app/congrats.webp' alt='' className={styles.image} />
+              <img
+                src='/app/congrats.webp'
+                alt='congratulation image for winning the spinwheel game'
+                className={styles.image}
+              />
               <div className={styles.welcomeText}>
                 <p className={styles.youWon}>You Won</p>
                 <p className={styles.prize}>{spinWheelData && spinWheelData[prizeNumber].option}</p>

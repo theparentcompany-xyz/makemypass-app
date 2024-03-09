@@ -181,7 +181,7 @@ const Login = () => {
                 duration: 0.5,
               }}
               src='/app/mascot.webp'
-              alt=''
+              alt='tickachu mascot'
               className={styles.mascot}
             />
           </div>
