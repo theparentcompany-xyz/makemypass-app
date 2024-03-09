@@ -132,7 +132,11 @@ const LandingPage = () => {
           <EventPartners />
           <div className={styles.secondSection}>
             <p className={styles.ssText}>Erase the Hassle with Our Ticketing Magic!</p>
-            <img src='/app/landing/ssImg.png' alt='' className={styles.ssImg} />
+            <img
+              src='/app/landing/ssImg.png'
+              alt='image showing the table ui of makemypass'
+              className={styles.ssImg}
+            />
           </div>
           <WhyUs />
           <Projects />

@@ -24,7 +24,13 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
         }}
       >
         <div className={styles.eventTopHeader}>
-          {eventData?.banner && <img className={styles.bannerImg} src={eventData?.banner} alt='' />}
+          {eventData?.banner && (
+            <img
+              className={styles.bannerImg}
+              src={eventData?.banner}
+              alt='banner image depecting event information'
+            />
+          )}
           <div>
             <p className={styles.eventTitle}>{eventData?.title}</p>
             {eventData?.hosts && eventData?.hosts.length > 0 && (
@@ -33,7 +39,11 @@ const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => 
                 {eventData.hosts.map((eventHost: EventHosts) => {
                   return (
                     <div className={styles.eventHost}>
-                      <img src={eventHost.profile_pic} alt='' className={styles.hostLogo} />
+                      <img
+                        src={eventHost.profile_pic}
+                        alt='host logo'
+                        className={styles.hostLogo}
+                      />
                       <p className={styles.hostName}>{eventHost.name}</p>
                     </div>
                   );

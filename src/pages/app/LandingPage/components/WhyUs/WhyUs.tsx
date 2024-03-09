@@ -30,7 +30,11 @@ const WhyUs = () => {
             </div>
           </div>
         </div>
-        <img src='/app/landing/tsImg.png' alt='' className={styles.tsImg} />
+        <img
+          src='/app/landing/tsImg.png'
+          alt='the insights dashboard of makemypass.com alongisde the realtime overview page of makemypass.com'
+          className={styles.tsImg}
+        />
       </div>
     </>
   );

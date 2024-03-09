@@ -108,7 +108,7 @@ const Events = () => {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.5 }}
                           src={event.logo || '/maskable.webp'}
-                          alt=''
+                          alt='event logo depicting event information'
                           className={styles.eventImage}
                         />
                         <div className={styles.eventDetails}>

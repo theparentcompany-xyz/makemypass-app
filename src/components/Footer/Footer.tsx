@@ -15,7 +15,7 @@ const Footer = () => {
             className='row'
           >
             <a href='https://www.theparentcompany.xyz/' target='_blank' rel='noopener noreferrer'>
-              <img className={styles.tpclogo} src='/app/tpc.webp' alt='' />
+              <img className={styles.tpclogo} src='/app/tpc.webp' alt='the parent company logo' />
             </a>
             <div className={styles.socialIcons}>
               <a
