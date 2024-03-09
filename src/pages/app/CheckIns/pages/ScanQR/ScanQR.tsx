@@ -49,15 +49,14 @@ const ScanQR = () => {
               style={
                 isError
                   ? {
-                    borderBottom: '3px solid #f71e1e',
-                    background: 'rgba(185, 31, 31, 0.09)',
-                  }
+                      borderBottom: '3px solid #f71e1e',
+                      background: 'rgba(185, 31, 31, 0.09)',
+                    }
                   : {
-                    borderBottom: '3px solid #47c97e',
-                    background: 'rgba(31, 185, 31, 0.09)',
-                  }
+                      borderBottom: '3px solid #47c97e',
+                      background: 'rgba(31, 185, 31, 0.09)',
+                    }
               }
-
             >
               <br />
               <p className={styles.modalSubText}>{message}</p>

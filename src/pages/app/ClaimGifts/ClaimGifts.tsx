@@ -132,13 +132,13 @@ const ClaimGifts = () => {
                           style={
                             item.type === 'claimed'
                               ? {
-                                color: '#47c97e',
-                                backgroundColor: 'rgba(71, 201, 126, 0.1)',
-                              }
+                                  color: '#47c97e',
+                                  backgroundColor: 'rgba(71, 201, 126, 0.1)',
+                                }
                               : {
-                                color: '#F44336',
-                                backgroundColor: 'rgba(244, 67, 54, 0.1)',
-                              }
+                                  color: '#F44336',
+                                  backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                                }
                           }
                           className={styles.status}
                         >
