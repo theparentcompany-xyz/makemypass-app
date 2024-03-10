@@ -31,6 +31,67 @@ const DynamicForm = ({
     exit: { opacity: 0, y: -10 },
   };
 
+  const validateCondition = (field: FormField) => {
+    let valid = true;
+
+    if (field.condition) {
+      field.condition.forEach((condition) => {
+        const fieldName = formFields
+          .find((field) => field.id === condition.field)
+          ?.field_key.toLowerCase();
+
+        const fieldValue = fieldName ? formData[fieldName] : undefined;
+
+        if (condition.operator === 'empty' && !fieldValue) {
+          valid = true;
+        } else if (fieldValue) {
+          switch (condition.operator) {
+            case '=':
+              valid = fieldValue === condition.value;
+              break;
+            case '!=':
+              valid = fieldValue !== condition.value;
+              break;
+            case '>=':
+              valid = Number(fieldValue) >= Number(condition.value);
+              break;
+            case '>':
+              valid = Number(fieldValue) > Number(condition.value);
+              break;
+            case 'in':
+              if (Array.isArray(fieldValue)) {
+                valid = fieldValue.includes(condition.value);
+              } else valid = condition.value.includes(fieldValue);
+              break;
+            case 'not in':
+              if (Array.isArray(fieldValue)) {
+                valid = !fieldValue.includes(condition.value);
+              } else valid = !condition.value.includes(fieldValue);
+              break;
+            case 'empty':
+              valid = fieldValue === '';
+              break;
+            case 'not empty':
+              valid = fieldValue !== '';
+              break;
+            default:
+              valid = true;
+              break;
+          }
+        } else {
+          valid = false;
+        }
+
+        if (!valid) {
+          const currentField = field.field_key;
+          delete formData[currentField];
+        }
+      });
+    }
+
+    return valid;
+  };
+
   return (
     <>
       <div className={styles.formFields}>
@@ -68,6 +129,7 @@ const DynamicForm = ({
         )}
         {formFields?.map((field: FormField) => {
           const fieldTitle = field.title + (field.required ? '*' : '');
+          if (!validateCondition(field)) return null;
           if (field.type === 'text' || field.type === 'email' || field.type === 'phonenumber') {
             return (
               <InputFIeld
@@ -85,7 +147,7 @@ const DynamicForm = ({
                 required={field.required}
               />
             );
-          } else if (field.type === 'dropdown') {
+          } else if (field.type === 'singleselect') {
             return (
               <>
                 <div

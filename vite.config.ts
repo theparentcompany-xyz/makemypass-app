@@ -1,6 +1,7 @@
 import million from 'million/compiler';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig, type PluginOption } from 'vite';
+import { visualizer } from 'rollup-plugin-visualizer'; // Import the 'visualizer' plugin
 
 export default defineConfig({
   plugins: [
@@ -11,5 +12,6 @@ export default defineConfig({
       },
     }),
     react(),
+    visualizer() as PluginOption,
   ],
 });
