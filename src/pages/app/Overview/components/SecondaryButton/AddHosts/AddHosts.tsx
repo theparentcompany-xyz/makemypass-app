@@ -56,7 +56,7 @@ const AddHosts = ({
   };
 
   return (
-    <Modal>
+    <Modal onClose={onClose}>
       <div className={styles.userInfoModalContainer}>
         <p className={styles.modalHeader}>Edit Guest</p>
         <div className={styles.inputContainers}>
