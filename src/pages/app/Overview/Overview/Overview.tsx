@@ -176,6 +176,7 @@ const Overview = () => {
               if (hostValidate()) {
                 onSubmit();
               }
+              setHostData({ email: '', role: '' });
             }}
             onClose={() => {
               setOpenAddModal(false);
