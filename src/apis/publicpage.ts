@@ -4,6 +4,7 @@ import { makeMyPass } from '../../services/urls';
 import { CouponData, DiscountData, TicketOptions } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
 import { ErrorMessages, EventDetails, FormDataType, FormField } from './types';
+import { isArray } from 'chart.js/helpers';
 
 export const getTickets = async (
   eventId: string,
@@ -61,7 +62,10 @@ export const submitForm = async ({
   const backendFormData = new FormData();
 
   Object.keys(formData).forEach((key) => {
-    const value = JSON.stringify(formData[key]);
+    let value = formData[key];
+    if (isArray(value)) {
+      value = JSON.stringify(value);
+    }
     backendFormData.append(key, value);
   });
 
