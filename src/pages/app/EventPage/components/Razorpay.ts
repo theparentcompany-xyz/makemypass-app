@@ -26,7 +26,7 @@ export const showRazorpay = async (
   backendFormData.append('tickets', JSON.stringify([ticketId]));
   Object.keys(formData).forEach((key) => {
     if (formData[key]) {
-      backendFormData.append(key, formData[key]);
+      if (formData[key].length > 0) backendFormData.append(key, formData[key]);
     }
   });
 
