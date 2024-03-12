@@ -3,7 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
-import { FormData } from './types';
+import { FormDataType } from './types';
 import { isArray } from 'chart.js/helpers';
 
 export const resentEventTicket = async (
@@ -31,9 +31,9 @@ export const resentEventTicket = async (
 
 export const editSubmissons = async (
   eventId: string,
-  data: FormData,
+  data: FormDataType,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
-  setFormData: Dispatch<React.SetStateAction<FormData>>,
+  setFormData: Dispatch<React.SetStateAction<FormDataType>>,
 ) => {
   if (data && !isArray(data.id))
     privateGateway

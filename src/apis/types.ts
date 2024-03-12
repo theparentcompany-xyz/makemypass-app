@@ -44,7 +44,7 @@ export type FormField = {
   }[];
 };
 
-export type FormData = {
+export type FormDataType = {
   [key: string]: string | string[];
 };
 

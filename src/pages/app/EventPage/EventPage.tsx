@@ -16,7 +16,7 @@ import {
 import { CouponData, DiscountData, TicketOptions } from './types';
 import { motion } from 'framer-motion';
 import { showRazorpay } from './components/Razorpay';
-import { EventDetails, FormData, FormField } from '../../../apis/types';
+import { EventDetails, FormDataType, FormField } from '../../../apis/types';
 import { discountedTicketPrice } from './constants';
 import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import EventHeader from './components/EventHeader/EventHeader';
@@ -36,7 +36,7 @@ const EventPage = () => {
   const [formErrors, setFormErrors] = useState<any>({});
   const [eventId, setEventId] = useState<string>('');
 
-  const [formData, setFormData] = useState<FormData>({});
+  const [formData, setFormData] = useState<FormDataType>({});
   const [amount, setAmount] = useState<string>('');
   const [success, setSuccess] = useState<string>('');
 
@@ -249,7 +249,7 @@ const EventPage = () => {
                       onClick={() => {
                         if (formNumber === 0 && !hasZeroPriceTicket) {
                           {
-                            validateRsvp(ticketId, formData, setFormNumber, setFormErrors);
+                            validateRsvp(eventId, formData, setFormNumber, setFormErrors);
                           }
                         } else {
                           if (amount === '0' || hasZeroPriceTicket)

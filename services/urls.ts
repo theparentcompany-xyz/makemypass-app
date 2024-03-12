@@ -55,7 +55,7 @@ export const makeMyPass = {
     makeMyPassURL(`/rsvp/apply-coupon-code/${eventId}/?coupon_code=${couponCode}`),
 
   registerUpdateView: (eventId: string) => makeMyPassURL(`/register-update-view/${eventId}/`),
-  validateRsvp: (ticketId: string) => makeMyPassURL(`/rsvp/validate-rsvp/${ticketId}/`),
+  validateRsvp: (eventId: string) => makeMyPassURL(`/rsvp/${eventId}/validate-rsvp/`),
   getEventDatas: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
 
   sentInvite: (eventId: string, ticketId: string) =>
