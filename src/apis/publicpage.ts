@@ -66,7 +66,7 @@ export const submitForm = async ({
     if (isArray(value)) {
       value = JSON.stringify(value);
     }
-    backendFormData.append(key, value);
+    if (value.length > 0) backendFormData.append(key, value);
   });
 
   if (response) backendFormData.append('payment_data', JSON.stringify(response));
@@ -144,7 +144,7 @@ export const validateRsvp = async (
   const payloadFormData = new FormData();
   Object.keys(formData).forEach((key) => {
     const value = JSON.stringify(formData[key]);
-    payloadFormData.append(key, value);
+    if (value.length > 0) payloadFormData.append(key, value);
   });
 
   return publicGateway
