@@ -14,7 +14,7 @@ import {
   editSubmissons,
   resentEventTicket,
 } from '../../../apis/guests';
-import { ErrorMessages, FormData, FormField } from '../../../apis/types';
+import { ErrorMessages, FormDataType, FormField } from '../../../apis/types';
 import { getFormFields, getTickets } from '../../../apis/publicpage';
 import { getCategories } from '../../../apis/events';
 import { transformTableData } from '../../../common/commonFunctions';
@@ -46,7 +46,7 @@ const Guests = () => {
 
   const [formFields, setFormFields] = useState<FormField[]>([]);
   const [formErrors, setFormErrors] = useState<ErrorMessages>({});
-  const [formData, setFormData] = useState<FormData>({});
+  const [formData, setFormData] = useState<FormDataType>({});
   const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
   const [ticketId, setTicketId] = useState<string>('');
   const [categories, setCategories] = useState<string[]>([]);

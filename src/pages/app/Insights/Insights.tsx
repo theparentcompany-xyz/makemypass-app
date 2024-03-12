@@ -111,8 +111,8 @@ const Insights = () => {
               {
                 label: 'Registration Time',
                 data: Object.values(lineBarData.active_timeframe || {}),
-                backgroundColor: ['#FBD85B', '#C33D7B', '#47C97E', '#35A1EB'],
-                borderColor: ['#FBD85B', '#C33D7B', '#47C97E', '#35A1EB'],
+                backgroundColor: ['#C33D7B', '#47C97E', '#FBD85B', '#35A1EB'],
+                borderColor: ['#C33D7B', '#47C97E', '#FBD85B', '#35A1EB'],
               },
             ],
           });

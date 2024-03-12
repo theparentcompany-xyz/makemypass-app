@@ -3,7 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
-import { FormData } from './types';
+import { FormDataType } from './types';
 import { isArray } from 'chart.js/helpers';
 
 export const resentEventTicket = async (
@@ -31,9 +31,9 @@ export const resentEventTicket = async (
 
 export const editSubmissons = async (
   eventId: string,
-  data: FormData,
+  data: FormDataType,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
-  setFormData: Dispatch<React.SetStateAction<FormData>>,
+  setFormData: Dispatch<React.SetStateAction<FormDataType>>,
 ) => {
   if (data && !isArray(data.id))
     privateGateway
@@ -56,9 +56,11 @@ export const downloadTicket = async (eventId: string, ticketCode: string, name: 
     .get(makeMyPass.downloadTicket(eventId, ticketCode))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Ticket downloaded successfully');
+      console.log(response.data.response.image);
       const link = document.createElement('a');
-      link.href = response.data.image; // Assuming the response contains the URL of the image
-      link.download = `${name}.png`; // Set the desired file name
+      link.href = response.data.response.image;
+      link.download = `${name}.png`;
+      document.body.appendChild(link);
       link.click();
     })
     .catch((error) => {

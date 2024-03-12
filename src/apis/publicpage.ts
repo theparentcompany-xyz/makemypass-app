@@ -3,7 +3,8 @@ import { publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { CouponData, DiscountData, TicketOptions } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
-import { ErrorMessages, EventDetails, FormData, FormField } from './types';
+import { ErrorMessages, EventDetails, FormDataType, FormField } from './types';
+import { isArray } from 'chart.js/helpers';
 
 export const getTickets = async (
   eventId: string,
@@ -34,6 +35,7 @@ export const getFormFields = async (
 };
 
 export const submitForm = async ({
+  eventId,
   ticketId,
   formData,
   coupon,
@@ -45,22 +47,38 @@ export const submitForm = async ({
   response,
   setCoupon,
 }: {
+  eventId: string;
   ticketId: string;
-  formData: FormData;
+  formData: FormDataType;
   coupon: CouponData;
   setSuccess?: React.Dispatch<React.SetStateAction<string>>;
   setFormNumber?: React.Dispatch<React.SetStateAction<number>>;
-  setFormData?: React.Dispatch<React.SetStateAction<FormData>>;
+  setFormData?: React.Dispatch<React.SetStateAction<FormDataType>>;
   setAmount?: React.Dispatch<React.SetStateAction<string>>;
   setFormErrors?: Dispatch<ErrorMessages>;
   response?: unknown;
   setCoupon?: React.Dispatch<CouponData>;
 }) => {
+  const backendFormData = new FormData();
+
+  Object.keys(formData).forEach((key) => {
+    let value = formData[key];
+    if (isArray(value)) {
+      value = JSON.stringify(value);
+    }
+    if (value.length > 0) backendFormData.append(key, value);
+  });
+
+  if (response) backendFormData.append('payment_data', JSON.stringify(response));
+  if (coupon.value) backendFormData.append('coupon_code', coupon.value?.toString());
+
+  backendFormData.append('tickets', JSON.stringify([ticketId]));
+
   publicGateway
-    .post(makeMyPass.submitForm(ticketId), {
-      rsvp_data: formData,
-      payment_data: response,
-      coupon_code: coupon.value,
+    .post(makeMyPass.submitForm(eventId), backendFormData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     })
     .then((response) => {
       setSuccess && setSuccess(response.data.response.code);
@@ -111,8 +129,8 @@ export const registerUpdateView = async (eventId: string) => {
 };
 
 export const validateRsvp = async (
-  ticketId: string,
-  formData: FormData,
+  eventId: string,
+  formData: FormDataType,
   setFormNumber: React.Dispatch<React.SetStateAction<number>>,
   setFieldErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
 ) => {
@@ -123,8 +141,18 @@ export const validateRsvp = async (
     }
   });
 
+  const payloadFormData = new FormData();
+  Object.keys(formData).forEach((key) => {
+    const value = JSON.stringify(formData[key]);
+    if (value.length > 0) payloadFormData.append(key, value);
+  });
+
   return publicGateway
-    .post(makeMyPass.validateRsvp(ticketId), formData)
+    .post(makeMyPass.validateRsvp(eventId), formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     .then(() => {
       setFormNumber(1);
     })

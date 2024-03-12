@@ -1,5 +1,5 @@
 import styles from './ViewGuest.module.css';
-import { FormData, FormField } from '../../../../../apis/types';
+import { FormDataType, FormField } from '../../../../../apis/types';
 import { ResentTicket, SelectedGuest } from '../../types';
 import { Dispatch, useState } from 'react';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
@@ -20,7 +20,7 @@ const ViewGuest = ({
   setResentTicket,
 }: {
   formFields: FormField[];
-  formData: FormData;
+  formData: FormDataType;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;
   setResentTicket: Dispatch<React.SetStateAction<ResentTicket>>;
@@ -208,7 +208,7 @@ const ViewGuest = ({
                 }}
               >
                 <MdDownload size={20} color='#8E8E8E' />
-                <span>Download Ticket</span>
+                <span>View Ticket</span>
               </div>
               {!formData['check_in_date'] && (
                 <div
@@ -233,7 +233,7 @@ const ViewGuest = ({
         <hr className={styles.line} />
         <div className={styles.bottomSection}>
           {Object.keys(formData).map((key: string) => {
-            let fieldName = formFields.find((field) => field.field_key === key)?.title;
+            const fieldName = formFields.find((field) => field.field_key === key)?.title;
             if (
               key !== 'name' &&
               key !== 'email' &&

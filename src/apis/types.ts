@@ -37,9 +37,14 @@ export type FormField = {
     url: string;
     method: string;
   };
+  condition?: {
+    field: string;
+    value: string;
+    operator: string;
+  }[];
 };
 
-export type FormData = {
+export type FormDataType = {
   [key: string]: string | string[];
 };
 
