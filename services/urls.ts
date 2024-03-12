@@ -48,14 +48,14 @@ export const makeMyPass = {
 
   getTicketInfo: (eventId: string) => makeMyPassURL(`/rsvp/get-tickets-info/${eventId}/`),
   getFormFields: (evenid: string) => makeMyPassURL(`/rsvp/get-form-fields/${evenid}/`),
-  submitForm: (eventId: string) => makeMyPassURL(`/rsvp/submit/${eventId}/`),
+  submitForm: (eventId: string) => makeMyPassURL(`/rsvp/${eventId}/submit/`),
 
-  createPayment: (ticketId: string) => makeMyPassURL(`/rsvp/create-order/${ticketId}/`),
+  createPayment: (eventId: string) => makeMyPassURL(`/rsvp/${eventId}/create-order/`),
   validateCoupon: (eventId: string, couponCode: string) =>
     makeMyPassURL(`/rsvp/apply-coupon-code/${eventId}/?coupon_code=${couponCode}`),
 
   registerUpdateView: (eventId: string) => makeMyPassURL(`/register-update-view/${eventId}/`),
-  validateRsvp: (ticketId: string) => makeMyPassURL(`/rsvp/validate-rsvp/${ticketId}/`),
+  validateRsvp: (eventId: string) => makeMyPassURL(`/rsvp/${eventId}/validate-rsvp/`),
   getEventDatas: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
 
   sentInvite: (eventId: string, ticketId: string) =>

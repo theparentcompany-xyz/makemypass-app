@@ -3,7 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Dispatch } from 'react';
 import { SelectedGuest } from '../pages/app/Guests/types';
-import { ErrorMessages, FormData } from './types';
+import { ErrorMessages, FormDataType } from './types';
 
 export const sentInvite = (eventId: string, ticketId: string) => {
   privateGateway
@@ -38,7 +38,7 @@ export const shortListUser = (
 export const addGuest = (
   eventId: string,
   ticketId: string,
-  formData: FormData,
+  formData: FormDataType,
   setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
 ) => {

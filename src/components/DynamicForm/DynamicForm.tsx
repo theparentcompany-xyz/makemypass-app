@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { ErrorMessages, FormData, FormField } from '../../apis/types';
+import { ErrorMessages, FormDataType, FormField } from '../../apis/types';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
 import { TicketOptions } from '../../pages/app/EventPage/types';
 import InputFIeld from '../../pages/auth/Login/InputFIeld';
@@ -19,7 +19,7 @@ const DynamicForm = ({
 }: {
   formFields: FormField[];
   formErrors: ErrorMessages;
-  formData: FormData;
+  formData: FormDataType;
   onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
   ticketInfo?: TicketOptions;
   setTicketId?: Dispatch<React.SetStateAction<string>>;
