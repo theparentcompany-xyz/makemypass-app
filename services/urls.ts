@@ -46,16 +46,16 @@ export const makeMyPass = {
   userInfo: (eventId: string, ticketCode: string) =>
     makeMyPassURL(`/checkin/${eventId}/user-info/${ticketCode}`),
 
-  getTicketInfo: (eventId: string) => makeMyPassURL(`/rsvp/get-tickets-info/${eventId}/`),
-  getFormFields: (evenid: string) => makeMyPassURL(`/rsvp/get-form-fields/${evenid}/`),
-  submitForm: (eventId: string) => makeMyPassURL(`/rsvp/${eventId}/submit/`),
+  getTicketInfo: (eventId: string) => makeMyPassURL(`/public-form/get-tickets-info/${eventId}/`),
+  getFormFields: (evenid: string) => makeMyPassURL(`/public-form/get-form-fields/${evenid}/`),
+  submitForm: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/submit/`),
 
-  createPayment: (eventId: string) => makeMyPassURL(`/rsvp/${eventId}/create-order/`),
+  createPayment: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/create-order/`),
   validateCoupon: (eventId: string, couponCode: string) =>
-    makeMyPassURL(`/rsvp/apply-coupon-code/${eventId}/?coupon_code=${couponCode}`),
+    makeMyPassURL(`/public-form/apply-coupon-code/${eventId}/?coupon_code=${couponCode}`),
 
   registerUpdateView: (eventId: string) => makeMyPassURL(`/register-update-view/${eventId}/`),
-  validateRsvp: (eventId: string) => makeMyPassURL(`/rsvp/${eventId}/validate-rsvp/`),
+  validateRsvp: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/validate-rsvp/`),
   getEventDatas: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
 
   sentInvite: (eventId: string, ticketId: string) =>
@@ -73,13 +73,13 @@ export const makeMyPass = {
 
   updatePerk: (ticketCode: string) => makeMyPassURL(`/checkin/update-perk/${ticketCode}/`),
 
-  getCategories: (eventId: string) => makeMyPassURL(`/rsvp/get-form-categories/${eventId}/`),
+  getCategories: (eventId: string) => makeMyPassURL(`/public-form/get-form-categories/${eventId}/`),
   sentPostMail: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/manage-post-event/`),
 
   downloadFormSubmission: (eventId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
 
-  getCouponInfo: (eventId: string) => makeMyPassURL(`/rsvp/get-coupon-info/${eventId}/`),
+  getCouponInfo: (eventId: string) => makeMyPassURL(`/public-form/get-coupon-info/${eventId}/`),
 
   downloadCSV: (eventId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
