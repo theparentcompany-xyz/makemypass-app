@@ -4,6 +4,7 @@ import { hostData } from '../../../Overview/types';
 
 import Select from 'react-select';
 import roleOptions from './data';
+import Slider from '../../../../../../components/SliderButton/Slider';
 import Modal from '../../../../../../components/Modal/Modal';
 
 const AddHosts = ({
@@ -90,6 +91,21 @@ const AddHosts = ({
               name='role'
               options={roleOptions}
               styles={customStyles}
+            />
+          </div>
+        </div>
+        <div className={styles.inputContainers}>
+          <div className={styles.inputContainer}>
+            <Slider
+              checked={!hostData?.is_private}
+              onChange={() => {
+                setHostData((prevState) => ({
+                  ...prevState!,
+                  is_private: !hostData.is_private,
+                }))
+
+              }}
+              text='Do you want to make this host public?'
             />
           </div>
         </div>
