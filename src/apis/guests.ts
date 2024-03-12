@@ -83,3 +83,50 @@ export const downloadCSVData = async (eventId: string) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
     });
 };
+
+export const getCsvTemplate = (eventId: string) => {
+  privateGateway
+    .get(makeMyPass.downloadCSVTemplate(eventId))
+    .then((response) => {
+      const csvData = response.data;
+      const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'template.csv');
+      document.body.appendChild(link);
+      link.click();
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Something went wrong');
+    })
+}
+
+
+export const getFileStatus = (eventId: string) => {
+  privateGateway
+    .get(makeMyPass.getFileStatus(eventId))
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Something went wrong');
+    });
+}
+
+export const uploadFile = (eventId: string, file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  privateGateway
+    .post(makeMyPass.uploadFile(eventId), formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((response) => {
+      toast.success(response.data.message.general[0] || 'File uploaded successfully');
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Something went wrong');
+    });
+}
