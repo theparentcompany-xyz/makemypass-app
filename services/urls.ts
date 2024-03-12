@@ -58,6 +58,17 @@ export const makeMyPass = {
   validateRsvp: (eventId: string) => makeMyPassURL(`/rsvp/${eventId}/validate-rsvp/`),
   getEventDatas: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
 
+  CSVdata: (event_id: string) =>
+    makeMyPassURL(`/event/${event_id}/csv/`),
+  downloadCSVTemplate: (event_id: string) =>
+    makeMyPassURL(`/event/${event_id}/download-csv-template/`),
+
+  getFileStatus: (eventId: string) =>
+    makeMyPassURL(`/event/${eventId}/list-file-status/`),
+
+
+  uploadFile: (eventId: string) =>
+    makeMyPassURL(`/event/${eventId}/csv/`),
   sentInvite: (eventId: string, ticketId: string) =>
     makeMyPassURL(`/pre-event/${eventId}/sent-invite/${ticketId}`),
 
