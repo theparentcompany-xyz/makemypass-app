@@ -8,12 +8,14 @@ export const addHosts = async (
   eventId: string,
   hostMail: string,
   role: string,
+  is_private: boolean,
   setHostData: Dispatch<React.SetStateAction<hostData>>,
 ) => {
   privateGateway
     .post(makeMyPass.addHost(eventId), {
       host_email: hostMail,
       role: role,
+      is_private: is_private,
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Host addedd successfully');
@@ -21,6 +23,7 @@ export const addHosts = async (
         email: '',
         role: '',
         id: '',
+        is_private: true,
       });
     })
 
@@ -33,12 +36,14 @@ export const updateHostRole = async (
   eventId: string,
   hostId: string,
   role: string,
+  is_private: boolean,
   setHostData: Dispatch<React.SetStateAction<hostData>>,
 ) => {
   privateGateway
     .put(makeMyPass.updateHostRole(eventId), {
       host_id: hostId,
       role: role,
+      is_private: is_private,
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Host added successfully');
@@ -46,6 +51,7 @@ export const updateHostRole = async (
         email: '',
         role: '',
         id: '',
+        is_private: true,
       });
     })
     .catch((error) => {
