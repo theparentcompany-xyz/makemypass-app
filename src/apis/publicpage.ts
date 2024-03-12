@@ -34,6 +34,7 @@ export const getFormFields = async (
 };
 
 export const submitForm = async ({
+  eventId,
   ticketId,
   formData,
   coupon,
@@ -45,6 +46,7 @@ export const submitForm = async ({
   response,
   setCoupon,
 }: {
+  eventId: string;
   ticketId: string;
   formData: FormDataType;
   coupon: CouponData;
@@ -56,11 +58,23 @@ export const submitForm = async ({
   response?: unknown;
   setCoupon?: React.Dispatch<CouponData>;
 }) => {
+  const backendFormData = new FormData();
+
+  Object.keys(formData).forEach((key) => {
+    const value = JSON.stringify(formData[key]);
+    backendFormData.append(key, value);
+  });
+
+  if (response) backendFormData.append('payment_data', JSON.stringify(response));
+  if (coupon.value) backendFormData.append('coupon_code', coupon.value?.toString());
+
+  backendFormData.append('tickets', JSON.stringify([ticketId]));
+
   publicGateway
-    .post(makeMyPass.submitForm(ticketId), {
-      rsvp_data: formData,
-      payment_data: response,
-      coupon_code: coupon.value,
+    .post(makeMyPass.submitForm(eventId), backendFormData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     })
     .then((response) => {
       setSuccess && setSuccess(response.data.response.code);

@@ -4,6 +4,7 @@ import { submitForm } from '../../../../apis/publicpage';
 import { CouponData } from '../types';
 
 export const showRazorpay = async (
+  eventId: string,
   ticketId: string,
   formData: any,
   coupon: CouponData,
@@ -43,6 +44,7 @@ export const showRazorpay = async (
       const audio = new Audio('/gpay.mp3');
       audio.play();
       submitForm({
+        eventId,
         ticketId,
         formData,
         coupon,

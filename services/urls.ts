@@ -48,7 +48,7 @@ export const makeMyPass = {
 
   getTicketInfo: (eventId: string) => makeMyPassURL(`/rsvp/get-tickets-info/${eventId}/`),
   getFormFields: (evenid: string) => makeMyPassURL(`/rsvp/get-form-fields/${evenid}/`),
-  submitForm: (eventId: string) => makeMyPassURL(`/rsvp/submit/${eventId}/`),
+  submitForm: (eventId: string) => makeMyPassURL(`/rsvp/${eventId}/submit/`),
 
   createPayment: (ticketId: string) => makeMyPassURL(`/rsvp/create-order/${ticketId}/`),
   validateCoupon: (eventId: string, couponCode: string) =>

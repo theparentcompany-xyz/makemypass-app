@@ -254,6 +254,7 @@ const EventPage = () => {
                         } else {
                           if (amount === '0' || hasZeroPriceTicket)
                             submitForm({
+                              eventId,
                               ticketId,
                               formData,
                               coupon,
@@ -266,6 +267,7 @@ const EventPage = () => {
                             });
                           else if (formData) {
                             showRazorpay(
+                              eventId,
                               ticketId,
                               formData,
                               coupon,
