@@ -37,6 +37,7 @@ import Select from 'react-select';
 import { isArray } from 'chart.js/helpers';
 import Modal from '../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
+// import { useNavigate } from 'react-router';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -63,6 +64,8 @@ const Guests = () => {
     guestId: '',
     name: '',
   });
+
+  // const navigate = useNavigate();
 
   const getGuestData = () => {
     const selectedGuestData = guests.filter((guest) => guest?.id === selectedGuestId?.id);
@@ -341,6 +344,13 @@ const Guests = () => {
                 setSelectedGuestId={setSelectedGuestId}
                 secondaryButton={
                   <div className={styles.tableButtons}>
+                    {/* <SecondaryButton
+                      buttonText='Get Bulk Import +'
+                      onClick={() => {
+                        navigate('./bulk-import');
+                        setFormData({});
+                      }}
+                    /> */}
                     <SecondaryButton
                       buttonText='Add Guests +'
                       onClick={() => {
