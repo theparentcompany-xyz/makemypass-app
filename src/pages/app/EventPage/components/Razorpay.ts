@@ -22,8 +22,20 @@ export const showRazorpay = async (
   let paymentId: string = '';
   let paymentAmount: string = '';
 
+  const backendFormData = new FormData();
+  backendFormData.append('tickets', JSON.stringify([ticketId]));
+  Object.keys(formData).forEach((key) => {
+    if (formData[key]) {
+      backendFormData.append(key, formData[key]);
+    }
+  });
+
   await publicGateway
-    .post(makeMyPass.createPayment(ticketId), formData)
+    .post(makeMyPass.createPayment(eventId), backendFormData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     .then((response) => {
       paymentId = response.data.response.id;
       paymentAmount = response.data.response.amount;
