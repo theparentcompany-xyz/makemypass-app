@@ -208,7 +208,7 @@ const ViewGuest = ({
                 }}
               >
                 <MdDownload size={20} color='#8E8E8E' />
-                <span>Download Ticket</span>
+                <span>View Ticket</span>
               </div>
               {!formData['check_in_date'] && (
                 <div

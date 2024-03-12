@@ -56,9 +56,11 @@ export const downloadTicket = async (eventId: string, ticketCode: string, name: 
     .get(makeMyPass.downloadTicket(eventId, ticketCode))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Ticket downloaded successfully');
+      console.log(response.data.response.image);
       const link = document.createElement('a');
-      link.href = response.data.image; // Assuming the response contains the URL of the image
-      link.download = `${name}.png`; // Set the desired file name
+      link.href = response.data.response.image;
+      link.download = `${name}.png`;
+      document.body.appendChild(link);
       link.click();
     })
     .catch((error) => {
