@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type Event = {
   id: string;
   title: string;
