@@ -27,10 +27,36 @@ export type User = {
   category: string;
 };
 
-export type FormField = {
+export type FormDataType = {
+  [key: string]: string | string[];
+};
+
+export type ErrorMessages = {
+  [key: string]: string[];
+};
+
+export type EventHosts = {
+  profile_pic: string;
+  id: string;
+  name: string;
+};
+
+interface LocationType {
+  lat: number;
+  lng: number;
+}
+
+interface HostType {
+  id: string;
+  name: string;
+  profile_pic: string;
+}
+
+export type FormFieldType = {
   id: string;
   type: string;
   title: string;
+  unique: boolean;
   required: boolean;
   field_key: string;
   options?: string[];
@@ -45,13 +71,42 @@ export type FormField = {
   }[];
 };
 
-export type FormDataType = {
-  [key: string]: string | string[];
-};
+export interface TicketType {
+  id: string;
+  price: number;
+  perks: any; // You can define a proper type for perks if needed
+  slots_left: number | null;
+  default_selected: boolean;
+  platform_fee: number;
+  platform_fee_from_user: boolean;
+  currency: string;
+}
 
-export type ErrorMessages = {
-  [key: string]: string[];
-};
+interface CouponType {
+  status: boolean;
+}
+
+export interface EventType {
+  id: string;
+  name: string;
+  title: string;
+  description: string;
+  start_date: string;
+  end_date: string;
+  start_time: string;
+  end_time: string;
+  logo: string;
+  banner: string;
+  location: LocationType;
+  place: string;
+  hosts: HostType[];
+  form: FormFieldType[];
+  tickets: {
+    [key: string]: TicketType;
+  };
+  shortlist: boolean;
+  coupon: CouponType;
+}
 
 export type EventDetails = {
   id: string;
@@ -75,10 +130,4 @@ export type EventDetails = {
   start_date: string;
   end_date: string;
   end_time: string;
-};
-
-export type EventHosts = {
-  profile_pic: string;
-  id: string;
-  name: string;
 };

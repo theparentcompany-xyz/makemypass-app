@@ -1,5 +1,5 @@
 import styles from './ViewGuest.module.css';
-import { FormDataType, FormField } from '../../../../../apis/types';
+import { FormDataType, FormFieldType } from '../../../../../apis/types';
 import { ResentTicket, SelectedGuest } from '../../types';
 import { Dispatch, useState } from 'react';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
@@ -19,7 +19,7 @@ const ViewGuest = ({
   eventId,
   setResentTicket,
 }: {
-  formFields: FormField[];
+  formFields: FormFieldType[];
   formData: FormDataType;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;

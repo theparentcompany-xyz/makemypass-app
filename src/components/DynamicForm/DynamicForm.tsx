@@ -1,7 +1,6 @@
 import { Dispatch } from 'react';
-import { ErrorMessages, FormDataType, FormField } from '../../apis/types';
+import { ErrorMessages, FormDataType, FormFieldType, TicketType } from '../../apis/types';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
-import { TicketOptions } from '../../pages/app/EventPage/types';
 import InputFIeld from '../../pages/auth/Login/InputFIeld';
 import styles from './DynamicForm.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -17,11 +16,11 @@ const DynamicForm = ({
   setTicketId,
   ticketId,
 }: {
-  formFields: FormField[];
+  formFields: FormFieldType[];
   formErrors: ErrorMessages;
   formData: FormDataType;
   onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
-  ticketInfo?: TicketOptions;
+  ticketInfo?: { [key: string]: TicketType };
   setTicketId?: Dispatch<React.SetStateAction<string>>;
   ticketId?: string;
 }) => {
@@ -31,7 +30,7 @@ const DynamicForm = ({
     exit: { opacity: 0, y: -10 },
   };
 
-  const validateCondition = (field: FormField) => {
+  const validateCondition = (field: FormFieldType) => {
     let valid = true;
 
     if (field.condition) {
@@ -127,7 +126,7 @@ const DynamicForm = ({
             </motion.div>
           </div>
         )}
-        {formFields?.map((field: FormField) => {
+        {formFields?.map((field: FormFieldType) => {
           const fieldTitle = field.title + (field.required ? '*' : '');
           if (!validateCondition(field)) return null;
           if (field.type === 'text' || field.type === 'email' || field.type === 'phonenumber') {

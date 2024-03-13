@@ -5,18 +5,15 @@ import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 import { getEventId } from '../../../apis/events';
 import {
-  getCouponInfo,
-  getEventDatas,
-  getFormFields,
-  getTickets,
+  getEventInfo,
   registerUpdateView,
   submitForm,
   validateRsvp,
 } from '../../../apis/publicpage';
-import { CouponData, DiscountData, TicketOptions } from './types';
+import { CouponData, DiscountData } from './types';
 import { motion } from 'framer-motion';
 import { showRazorpay } from './components/Razorpay';
-import { EventDetails, FormDataType, FormField } from '../../../apis/types';
+import { EventType, FormDataType } from '../../../apis/types';
 import { discountedTicketPrice } from './constants';
 import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import EventHeader from './components/EventHeader/EventHeader';
@@ -28,11 +25,9 @@ import FourNotFour from '../../FourNotFour/FourNotFour';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
-  const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
 
-  const [formFields, setFormFields] = useState<FormField[]>([]);
   const [ticketId, setTicketId] = useState<string>('');
-  const [eventData, setEventData] = useState<EventDetails>();
+  const [eventData, setEventData] = useState<EventType>();
   const [formErrors, setFormErrors] = useState<any>({});
   const [eventId, setEventId] = useState<string>('');
 
@@ -48,12 +43,14 @@ const EventPage = () => {
     discount_value: 0,
   });
 
+  const [hasZeroPriceTicket, setHasZeroPriceTicket] = useState(false);
+
   const [coupon, setCoupon] = useState<CouponData>({
     coupon: '',
     description: '',
+    value: '',
+    error: '',
   });
-
-  const [hasZeroPriceTicket, setHasZeroPriceTicket] = useState(false);
 
   useEffect(() => {
     if (eventTitle) getEventId(eventTitle, setHasEvent);
@@ -61,10 +58,7 @@ const EventPage = () => {
     setTimeout(() => {
       setEventId(JSON.parse(localStorage.getItem('eventData') || '{}').event_id);
       if (eventId) {
-        getCouponInfo(eventId, setCoupon);
-        getTickets(eventId, setTicketInfo);
-        getFormFields(eventId, setFormFields);
-        getEventDatas(eventId, setEventData);
+        getEventInfo(eventId, setEventData);
         registerUpdateView(eventId);
       }
     }, 1000);
@@ -82,11 +76,11 @@ const EventPage = () => {
     if (discount.discount_value > 0) {
       setAmount(discountedTicketPrice(Number(amount), discount).toString());
     } else {
-      if (ticketInfo && ticketId) {
+      if (eventData?.tickets && ticketId) {
         let ticketPrice = 0;
-        Object.keys(ticketInfo)?.map((ticketType) => {
-          if (ticketInfo[ticketType].id === ticketId) {
-            ticketPrice = ticketInfo[ticketType].price;
+        Object.keys(eventData?.tickets)?.map((ticketType) => {
+          if (eventData?.tickets[ticketType].id === ticketId) {
+            ticketPrice = eventData?.tickets[ticketType].price;
           }
         });
 
@@ -96,32 +90,32 @@ const EventPage = () => {
   }, [discount]);
 
   useEffect(() => {
-    if (ticketInfo) {
-      Object.keys(ticketInfo)?.map((ticketType) => {
-        if (ticketInfo[ticketType].default_selected) {
-          setTicketId(ticketInfo[ticketType].id);
+    if (eventData?.tickets) {
+      Object.keys(eventData?.tickets)?.map((ticketType) => {
+        if (eventData?.tickets[ticketType].default_selected) {
+          setTicketId(eventData?.tickets[ticketType].id);
         }
       });
 
-      const responseKeys = Object.keys(ticketInfo);
+      const responseKeys = Object.keys(eventData?.tickets);
       if (responseKeys.length === 1) {
         const ticketKey = responseKeys[0];
-        const ticket = ticketInfo[ticketKey];
+        const ticket = eventData?.tickets[ticketKey];
         if (ticket.price === 0) {
           setHasZeroPriceTicket(true);
         }
       }
     }
-  }, [ticketInfo]);
+  }, [eventData?.tickets]);
 
   useEffect(() => {
     setFormData(
-      formFields.reduce((data: any, field: any) => {
+      eventData?.form.reduce((data: any, field: any) => {
         data[field.field_key] = '';
         return data;
       }, {}),
     );
-  }, [formFields]);
+  }, [eventData?.form]);
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
     setFormData({
@@ -165,7 +159,7 @@ const EventPage = () => {
               setSuccess={setSuccess}
               hasShortlisting={eventData?.shortlist}
             />
-            {eventData?.is_private && (
+            {eventData?.form && (
               <motion.div
                 initial={{ opacity: 0, y: 35 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -180,7 +174,7 @@ const EventPage = () => {
               </motion.div>
             )}
 
-            {!eventData?.is_private && formFields.length > 0 ? (
+            {!eventData?.form && eventData && eventData?.form.length > 0 ? (
               <div className={styles.eventPageContainer}>
                 <div className={styles.eventHeaderContainer}>
                   <EventHeader eventData={eventData} />
@@ -201,9 +195,9 @@ const EventPage = () => {
                             Please fill in the form below to register for the event.
                           </p>
                         </div>
-                        {formData && (
+                        {formData && eventData && (
                           <DynamicForm
-                            formFields={formFields}
+                            formFields={eventData.form}
                             formErrors={formErrors}
                             formData={formData}
                             onFieldChange={onFieldChange}
@@ -213,9 +207,9 @@ const EventPage = () => {
                     </motion.div>
                   )}
 
-                  {ticketInfo && formNumber === 1 && (
+                  {eventData.tickets && formNumber === 1 && (
                     <CouponForm
-                      ticketInfo={ticketInfo}
+                      ticketInfo={eventData.tickets}
                       setTicketId={setTicketId}
                       ticketId={ticketId}
                       eventId={eventId}

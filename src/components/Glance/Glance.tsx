@@ -112,7 +112,7 @@ const Glance = ({ tab }: { tab: string }) => {
     guests: 'Guests',
     inevent: 'In-Event',
     checkins: 'Check-Ins',
-    postevent: 'Post Event',
+    
   };
 
   return (

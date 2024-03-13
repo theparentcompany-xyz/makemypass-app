@@ -14,8 +14,7 @@ import {
   editSubmissons,
   resentEventTicket,
 } from '../../../apis/guests';
-import { ErrorMessages, FormDataType, FormField } from '../../../apis/types';
-import { getFormFields, getTickets } from '../../../apis/publicpage';
+import { ErrorMessages, FormDataType, FormFieldType } from '../../../apis/types';
 import { getCategories } from '../../../apis/events';
 import { transformTableData } from '../../../common/commonFunctions';
 
@@ -30,13 +29,13 @@ import Table from '../../../components/Table/Table';
 import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import ViewGuest from './components/ViewGuest/ViewGuest';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import { TicketOptions } from '../EventPage/types';
 import { addGuest } from '../../../apis/guest';
 import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
 import { isArray } from 'chart.js/helpers';
 import Modal from '../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
+import { getFormFields, getTickets } from '../../../apis/publicpage';
 // import { useNavigate } from 'react-router';
 
 const Guests = () => {
@@ -45,10 +44,10 @@ const Guests = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
-  const [formFields, setFormFields] = useState<FormField[]>([]);
+  const [formFields, setFormFields] = useState<FormFieldType[]>([]);
   const [formErrors, setFormErrors] = useState<ErrorMessages>({});
   const [formData, setFormData] = useState<FormDataType>({});
-  const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
+  const [ticketInfo, setTicketInfo] = useState<{}>();
   const [ticketId, setTicketId] = useState<string>('');
   const [categories, setCategories] = useState<string[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>();

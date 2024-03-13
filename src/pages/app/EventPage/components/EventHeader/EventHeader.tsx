@@ -1,5 +1,5 @@
 import { IoContract, IoLocationOutline } from 'react-icons/io5';
-import { EventDetails, EventHosts } from '../../../../../apis/types';
+import {  EventHosts, EventType } from '../../../../../apis/types';
 import styles from './EventHeader.module.css';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { FaExpandAlt } from 'react-icons/fa';
 import { getDay, getMonthAbbreviation } from '../../constants';
 
-const EventHeader = ({ eventData }: { eventData: EventDetails | undefined }) => {
+const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
   const [showFullDesc, setShowFullDesc] = useState(false);
 
   const navigate = useNavigate();

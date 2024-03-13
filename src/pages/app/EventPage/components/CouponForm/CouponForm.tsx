@@ -1,6 +1,6 @@
 import React from 'react';
-import { CouponData, DiscountData, TicketOptions } from '../../types';
-import { EventDetails } from '../../../../../apis/types';
+import { CouponData, DiscountData } from '../../types';
+import { EventType, TicketType } from '../../../../../apis/types';
 import styles from './CouponForm.module.css';
 import { discountedTicketPrice, getIcon } from '../../constants';
 import InputFIeld from '../../../../auth/Login/InputFIeld';
@@ -20,14 +20,14 @@ const CouponForm = ({
   setCoupon,
   coupon,
 }: {
-  ticketInfo: TicketOptions;
+  ticketInfo: { [key: string]: TicketType };
   setTicketId: React.Dispatch<React.SetStateAction<string>>;
   ticketId: string;
   eventId: string;
   discount: DiscountData;
   setDiscount: React.Dispatch<React.SetStateAction<DiscountData>>;
   setAmount: React.Dispatch<React.SetStateAction<string>>;
-  eventData: EventDetails | undefined;
+  eventData: EventType | undefined;
   setCoupon: React.Dispatch<React.SetStateAction<CouponData>>;
   coupon: CouponData;
 }) => {

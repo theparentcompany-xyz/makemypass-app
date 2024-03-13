@@ -46,8 +46,10 @@ export const makeMyPass = {
   userInfo: (eventId: string, ticketCode: string) =>
     makeMyPassURL(`/checkin/${eventId}/user-info/${ticketCode}`),
 
+  getEventDatas: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
   getTicketInfo: (eventId: string) => makeMyPassURL(`/public-form/get-tickets-info/${eventId}/`),
   getFormFields: (evenid: string) => makeMyPassURL(`/public-form/get-form-fields/${evenid}/`),
+  getEventInfo: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/info/`),
   submitForm: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/submit/`),
 
   createPayment: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/create-order/`),
@@ -56,19 +58,13 @@ export const makeMyPass = {
 
   registerUpdateView: (eventId: string) => makeMyPassURL(`/register-update-view/${eventId}/`),
   validateRsvp: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/validate-rsvp/`),
-  getEventDatas: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
-
-  CSVdata: (event_id: string) =>
-    makeMyPassURL(`/event/${event_id}/csv/`),
+  CSVdata: (event_id: string) => makeMyPassURL(`/event/${event_id}/csv/`),
   downloadCSVTemplate: (event_id: string) =>
     makeMyPassURL(`/event/${event_id}/download-csv-template/`),
 
-  getFileStatus: (eventId: string) =>
-    makeMyPassURL(`/event/${eventId}/list-file-status/`),
+  getFileStatus: (eventId: string) => makeMyPassURL(`/event/${eventId}/list-file-status/`),
 
-
-  uploadFile: (eventId: string) =>
-    makeMyPassURL(`/event/${eventId}/csv/`),
+  uploadFile: (eventId: string) => makeMyPassURL(`/event/${eventId}/csv/`),
   sentInvite: (eventId: string, ticketId: string) =>
     makeMyPassURL(`/pre-event/${eventId}/sent-invite/${ticketId}`),
 
@@ -89,8 +85,6 @@ export const makeMyPass = {
 
   downloadFormSubmission: (eventId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
-
-  getCouponInfo: (eventId: string) => makeMyPassURL(`/public-form/get-coupon-info/${eventId}/`),
 
   downloadCSV: (eventId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),

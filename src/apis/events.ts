@@ -2,9 +2,9 @@ import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Event } from './types';
-import { getEventDatas } from './publicpage';
 import { Dispatch } from 'react';
 import { PubllicEvent } from '../pages/app/LandingPage/components/Projects/types';
+import { getEventDatas } from './publicpage';
 
 export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<Event[]>>) => {
   privateGateway
