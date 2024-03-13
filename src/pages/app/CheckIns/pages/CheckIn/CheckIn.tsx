@@ -29,26 +29,27 @@ const CheckIn = () => {
   const { eventId } = useContext(GlobalContext);
 
   useEffect(() => {
-    if (eventId) getCategories(eventId, setCategories);
-    connectPrivateSocket({
-      url: makeMyPassSocket.listCheckinGuests(eventId),
-    }).then((ws) => {
-      ws.onmessage = (event) => {
-        if (JSON.parse(event.data).response.datas)
-          setRecentRegistrations(JSON.parse(event.data).response.datas);
-        else if (JSON.parse(event.data).response.data) {
-          const newRegistration = JSON.parse(event.data).response.data;
+    if (eventId) {
+      getCategories(eventId, setCategories);
+      connectPrivateSocket({
+        url: makeMyPassSocket.listCheckinGuests(eventId),
+      }).then((ws) => {
+        ws.onmessage = (event) => {
+          if (JSON.parse(event.data).response.datas)
+            setRecentRegistrations(JSON.parse(event.data).response.datas);
+          else if (JSON.parse(event.data).response.data) {
+            const newRegistration = JSON.parse(event.data).response.data;
 
-          setRecentRegistrations((prev) => {
-            const updatedRegistrations = [newRegistration, ...prev];
+            setRecentRegistrations((prev) => {
+              const updatedRegistrations = [newRegistration, ...prev];
+              return updatedRegistrations;
+            });
+          }
+        };
 
-            return updatedRegistrations;
-          });
-        }
-      };
-
-      setSocket(ws);
-    });
+        setSocket(ws);
+      });
+    }
   }, [eventId]);
 
   useEffect(() => {

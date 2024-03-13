@@ -46,6 +46,7 @@ const Overview = () => {
   const [hostData, setHostData] = useState<hostData>({
     email: '',
     role: '',
+    is_private: true,
   });
 
   const { eventId } = useContext(GlobalContext);
@@ -105,10 +106,14 @@ const Overview = () => {
       name: 'name',
       email: 'email',
       role: 'category',
+      is_private: 'is_private',
       id: 'id',
     };
     if (hostList) {
-      const transformedHostList = transformTableData(hostListMapping, hostList);
+      const transformedHostList = transformTableData(hostListMapping, hostList.map((host) => ({
+        ...host,
+        is_private: `${host.is_private}`,
+      })));
       setHostListTableData(transformedHostList as unknown as TableType[]);
     }
   }, [hostList]);
@@ -122,6 +127,7 @@ const Overview = () => {
         email: selectedHost?.email,
         role: selectedHost?.role,
         id: selectedHost?.id,
+        is_private: selectedHost?.is_private || true,
       }));
 
       setOpenAddModal(true);
@@ -134,6 +140,7 @@ const Overview = () => {
         ...prevState!,
         email: selectedHost?.email,
         role: selectedHost?.role,
+        is_private: selectedHost?.is_private || true,
         id: selectedHost?.id,
       }));
       setOpenDeleteModal(true);
@@ -149,8 +156,8 @@ const Overview = () => {
   };
 
   const onSubmit = () => {
-    if (!hostData.id) addHosts(eventId, hostData.email, hostData.role, setHostData);
-    if (hostData.id) updateHostRole(eventId, hostData.id, hostData.role, setHostData);
+    if (!hostData.id) addHosts(eventId, hostData.email, hostData.role, hostData.is_private, setHostData);
+    if (hostData.id) updateHostRole(eventId, hostData.id, hostData.role, hostData.is_private, setHostData);
     setOpenAddModal(false);
   };
   const hostValidate: () => boolean = () => {
@@ -176,10 +183,11 @@ const Overview = () => {
               if (hostValidate()) {
                 onSubmit();
               }
+              setHostData({ email: '', role: '', is_private: true });
             }}
             onClose={() => {
               setOpenAddModal(false);
-              setHostData({ email: '', role: '' });
+              setHostData({ email: '', role: '', is_private: true });
             }}
           />
         )}

@@ -10,7 +10,7 @@
 
   max-width: 26rem;
   margin-bottom: 1rem;
-  position: absolute;
+  position: fixed;
   z-index: 100;
   backdrop-filter: blur(800px);
 

@@ -14,12 +14,14 @@ export type hostList = {
   name: string;
   email: string;
   role: string;
+  is_private: boolean;
 };
 
 export type hostData = {
   email: string;
   role: string;
   id?: string;
+  is_private: boolean;
 };
 
 export type hostId = {

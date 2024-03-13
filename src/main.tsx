@@ -29,6 +29,7 @@ import ProfilePage from './pages/app/ProfilePage/ProfilePage';
 import SecureAuthRoutes from '../services/authRoutes';
 
 import GlobalContextWrapper from './components/GlobalContextWrapper';
+import GuestBulkImport from './pages/app/Guests/pages/GuestBulkImport/GuestBulkImport';
 
 const RoleChecker = SecureAuthRoutes();
 
@@ -81,6 +82,10 @@ const routes = [
           {
             path: '/:eventTitle/guests',
             element: <RoleChecker roles={['Admin']} children={<Guests />} />,
+          },
+          {
+            path: '/:eventTitle/guests/bulk-import',
+            element: <RoleChecker roles={['Admin']} children={< GuestBulkImport />} />,
           },
           {
             path: '/:eventTitle/checkins',
