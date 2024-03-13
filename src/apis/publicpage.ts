@@ -60,7 +60,7 @@ export const submitForm = async ({
         setFormNumber && setFormNumber(0);
         setFormData && setFormData({});
         setAmount && setAmount('');
-      }, 2000);
+      }, 4000);
 
       setCoupon && setCoupon({ coupon: '', description: '' });
     })
