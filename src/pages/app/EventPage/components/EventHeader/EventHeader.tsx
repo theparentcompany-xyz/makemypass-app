@@ -1,5 +1,5 @@
 import { IoContract, IoLocationOutline } from 'react-icons/io5';
-import {  EventHosts, EventType } from '../../../../../apis/types';
+import { EventHosts, EventType } from '../../../../../apis/types';
 import styles from './EventHeader.module.css';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
@@ -39,11 +39,13 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                 {eventData.hosts.map((eventHost: EventHosts) => {
                   return (
                     <div className={styles.eventHost}>
-                      <img
-                        src={eventHost.profile_pic}
-                        alt='host logo'
-                        className={styles.hostLogo}
-                      />
+                      {eventHost.profile_pic && (
+                        <img
+                          src={eventHost.profile_pic}
+                          alt='host logo'
+                          className={styles.hostLogo}
+                        />
+                      )}
                       <p className={styles.hostName}>{eventHost.name}</p>
                     </div>
                   );

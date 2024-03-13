@@ -159,7 +159,7 @@ const EventPage = () => {
               setSuccess={setSuccess}
               hasShortlisting={eventData?.shortlist}
             />
-            {!eventData?.form && (
+            {eventData?.err_message && (
               <motion.div
                 initial={{ opacity: 0, y: 35 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -168,13 +168,11 @@ const EventPage = () => {
                 className={styles.center}
               >
                 <EventHeader eventData={eventData} />
-                <p className={styles.privateEventText}>
-                  This is a private event. Please contact the event organizer for more details.
-                </p>
+                <p className={styles.privateEventText}>{eventData?.err_message}</p>
               </motion.div>
             )}
 
-            {eventData && eventData?.form.length > 0 ? (
+            {eventData && eventData?.form?.length > 0 ? (
               <div className={styles.eventPageContainer}>
                 <div className={styles.eventHeaderContainer}>
                   <EventHeader eventData={eventData} />

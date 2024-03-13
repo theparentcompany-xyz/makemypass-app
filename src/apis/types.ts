@@ -87,6 +87,7 @@ interface CouponType {
 }
 
 export interface EventType {
+  err_message: ReactNode;
   id: string;
   name: string;
   title: string;
