@@ -159,7 +159,7 @@ const EventPage = () => {
               setSuccess={setSuccess}
               hasShortlisting={eventData?.shortlist}
             />
-            {eventData?.form && (
+            {!eventData?.form && (
               <motion.div
                 initial={{ opacity: 0, y: 35 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -174,7 +174,7 @@ const EventPage = () => {
               </motion.div>
             )}
 
-            {!eventData?.form && eventData && eventData?.form.length > 0 ? (
+            {eventData && eventData?.form.length > 0 ? (
               <div className={styles.eventPageContainer}>
                 <div className={styles.eventHeaderContainer}>
                   <EventHeader eventData={eventData} />
