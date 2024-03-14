@@ -263,8 +263,8 @@ const InEventStats = () => {
     <Theme>
       <>
         <div className={styles.makemypassbranding}>
-          <div className={`row ${styles.backgroundBrand}`}>
-            <img src='/app/logoText.webp' alt='makemypass logo' />
+          <div className={`${styles.backgroundBrand}`}>
+            <img src='/app/mmpcolor.png' alt='makemypass logo' />
             <p className={styles.logoText}>MakeMyPass</p>
           </div>
         </div>

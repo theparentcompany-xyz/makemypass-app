@@ -530,7 +530,6 @@
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
-  margin-bottom: 1rem;
 
   position: fixed;
   bottom: 0;
@@ -541,11 +540,26 @@
 .logoText {
   color: white;
   font-family: 'Aeonik';
+  padding: 0.5rem;
+  margin-left: -0.75rem;
+  margin-bottom: 0rem;
 }
 
 .backgroundBrand {
-  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px 12px 0 0;
   border: 1px solid #1b2725;
   background: #1b2725;
-  padding: 0.5rem;
+  border: 2px solid #4f5554;
+  border-bottom: 0;
+
+  box-shadow: 0px 0px 20px 20px #1b2725;
+}
+
+.backgroundBrand img {
+  width: 5rem;
+  margin-bottom: -0.5rem;
 }
