@@ -83,7 +83,6 @@ const InEventStats = () => {
     'rgb(71, 201, 126)',
     'rgb(251, 216, 91)',
     'rgb(53, 161, 235)',
-    'rgb(53, 161, 235)',
     'rgb(195, 61, 123)',
     'rgb(210, 212, 215)',
     'rgb(203, 62, 62)',
@@ -367,17 +366,11 @@ const InEventStats = () => {
 
               <div className={styles.districtsCount}>
                 <div className={styles.scrollContainerr}>
-                  {Object.keys(districtData)
-                    .sort((a, b) => districtData[b] - districtData[a])
-                    .map((key, index) => (
-                      <div
-                        key={index}
-                        className={styles.district}
-                        style={{ color: colors[index % colors.length] }}
-                      >
-                        {key}: {districtData[key]}
-                      </div>
-                    ))}
+                  {Object.keys(districtData).map((key, index) => (
+                    <div key={index} className={styles.district} style={{ color: colors[index] }}>
+                      {key}: {districtData[key]}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
