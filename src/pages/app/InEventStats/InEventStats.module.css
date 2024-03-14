@@ -523,3 +523,29 @@
   text-align: center;
   font-size: 0.9rem;
 }
+
+.makemypassbranding {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.logoText {
+  color: white;
+  font-family: 'Aeonik';
+}
+
+.backgroundBrand {
+  border-radius: 12px;
+  border: 1px solid #1b2725;
+  background: #1b2725;
+  padding: 0.5rem;
+}
