@@ -11,6 +11,11 @@ import p3 from '../../images/p3.webp';
 import in1 from '../../images/in1.webp';
 import in2 from '../../images/in2.webp';
 import in3 from '../../images/in3.webp';
+
+import dd1 from '../../images/dd1.webp';
+import dd2 from '../../images/dd2.webp';
+import dd3 from '../../images/dd3.webp';
+
 import { PubllicEvent } from './types';
 import { formatDate } from '../../../../../common/commonFunctions';
 import { IoLocationOutline } from 'react-icons/io5';
@@ -21,9 +26,13 @@ const Projects = ({ events }: { events: PubllicEvent[] }) => {
       <div className={styles.grad2}></div>
       <div className={styles.grad3}></div>
       <div className={styles.projectsSection}>
-        <div className={styles.projectsHeading}>
-          <p className={styles.projectsHeadingText}>Upcoming Events</p>
-        </div>
+        {events.filter((event) => {
+          return event && new Date(event.start_date) > new Date();
+        }).length > 0 && (
+          <div className={styles.projectsHeading}>
+            <p className={styles.projectsHeadingText}>Upcoming Events</p>
+          </div>
+        )}
         {events.map(
           (event) =>
             new Date(event.start_date) > new Date() && (
@@ -215,12 +224,7 @@ const Projects = ({ events }: { events: PubllicEvent[] }) => {
             </div>
             <div className={styles.lineDot}>
               <div className={styles.dot}></div>
-              <div
-                className={styles.line}
-                style={{
-                  maxHeight: '12rem',
-                }}
-              ></div>
+              <div className={styles.line}></div>
             </div>
             <div className={styles.projectDetails}>
               <div className={styles.projectTexts}>
@@ -267,6 +271,67 @@ const Projects = ({ events }: { events: PubllicEvent[] }) => {
                   />
                   <img
                     src={in3}
+                    alt='people who have used makemypass at in50hours'
+                    className={styles.projectImage}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.project}>
+            <div className={styles.projectDateDay}>
+              <p className={styles.projectDate}>14th March 2024</p>
+              <p className={styles.projectDay}>Thursday</p>
+            </div>
+            <div className={styles.lineDot}>
+              <div className={styles.dot}></div>
+              <div
+                className={styles.line}
+                style={{
+                  maxHeight: '12rem',
+                }}
+              ></div>
+            </div>
+            <div className={styles.projectDetails}>
+              <div className={styles.projectTexts}>
+                <p className={styles.projectHeading}>Dawn Of DPI</p>
+                <p className={styles.projectText}>
+                  Bringing together practitioners from diverse backgrounds to share their valuable
+                  experiences in building Digital Public Goods (DPGs) and Digital Public
+                  Infrastructure (DPI) using Open-Source technology.
+                </p>
+              </div>
+              <div className={styles.projectImagesContainer}>
+                <div className={styles.projectImages}>
+                  <img
+                    src={dd1}
+                    alt='deepu s nath speaking after checkin using makemypass at in50hours'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={dd2}
+                    alt='group photo of people who have used makemypass at in50hours'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={dd3}
+                    alt='people who have used makemypass at in50hours'
+                    className={styles.projectImage}
+                  />
+                </div>
+                <div className={styles.projectImages}>
+                  <img
+                    src={dd1}
+                    alt='deepu s nath speaking after checkin using makemypass at in50hours'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={dd2}
+                    alt='group photo of people who have used makemypass at in50hours'
+                    className={styles.projectImage}
+                  />
+                  <img
+                    src={dd3}
                     alt='people who have used makemypass at in50hours'
                     className={styles.projectImage}
                   />
