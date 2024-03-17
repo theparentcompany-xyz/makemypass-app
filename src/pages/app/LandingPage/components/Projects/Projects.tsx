@@ -300,6 +300,12 @@ const Projects = ({ events }: { events: PubllicEvent[] }) => {
                   experiences in building Digital Public Goods (DPGs) and Digital Public
                   Infrastructure (DPI) using Open-Source technology.
                 </p>
+                <div className={styles.counts}>
+                  <p className={styles.countT}>
+                    <span className={styles.countText}>MakeMyPass </span>
+                    <span className={styles.count}>is now National 🎉</span>
+                  </p>
+                </div>
               </div>
               <div className={styles.projectImagesContainer}>
                 <div className={styles.projectImages}>
