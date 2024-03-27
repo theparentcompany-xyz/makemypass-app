@@ -8,6 +8,7 @@ export type TableType = {
   email: string;
   category: string;
   date: string;
+  is_private: string;
 };
 
 export type TabType = {
