@@ -254,10 +254,10 @@ const DynamicForm = ({
                     styles={customStyles}
                     name='colors'
                     value={
-                      formData[field.field_key]
+                      Array.isArray(formData[field.field_key])
                         ? selectValues.filter((option) =>
-                            formData[field.field_key].includes(option.value),
-                          )
+                          (formData[field.field_key] as string[]).includes(option.value),
+                        )
                         : []
                     }
                     options={selectValues}
@@ -299,6 +299,28 @@ const DynamicForm = ({
                     </div>
                   ))}
                 </div>
+              </div>
+            );
+          } else if (field.type === 'file') {
+            return (
+              <div
+                style={{
+                  marginBottom: '1rem',
+                }}
+                className={styles.fileInputContainer}
+              >
+                <p className={styles.formLabel}>{fieldTitle}</p>
+                <input
+                  type='file'
+                  id={field.field_key}
+                  name={field.title}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    console
+                    onFieldChange(field.field_key, e.target.value)
+                  }
+                  }
+                  className={styles.fileInput}
+                />
               </div>
             );
           }
