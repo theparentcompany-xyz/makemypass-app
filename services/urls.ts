@@ -38,7 +38,7 @@ export const makeMyPass = {
     makeMyPassURL(`/pre-event/${eventId}/download-ticket/${ticketCode}`),
 
   addHost: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/add-host/`),
-  updateHostRole: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/update-host-role/`),
+  updateHostRole: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/edit-host/`),
   removeHost: (eventId: string, hostId: string) =>
     makeMyPassURL(`/pre-event/${eventId}/remove-host/${hostId}`),
   hostWithUs: makeMyPassURL(`/host-with-us/`),
@@ -88,6 +88,15 @@ export const makeMyPass = {
 
   downloadCSV: (eventId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
+
+  getPostEventFields: (eventId: string) =>
+    makeMyPassURL(`/post-event/get-post-event-fields/${eventId}/`),
+  submitFeedback: (eventId: string) =>
+    makeMyPassURL(`/post-event/submit-feedback/${eventId}/`),
+  getPostEventCategories: (eventId: string) =>
+    makeMyPassURL(`/post-event/get-post-event-categories/${eventId}/`),
+  getFeedback: (eventId: string) =>
+    makeMyPassURL(`/post-event/list-feedbacks/${eventId}/`),
 };
 
 export const makeMyPassSocket = {
