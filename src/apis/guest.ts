@@ -43,7 +43,11 @@ export const addGuest = (
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
 ) => {
   privateGateway
-    .post(makeMyPass.sentInvite(eventId, ticketId), formData)
+    .post(makeMyPass.sentInvite(eventId, ticketId), formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Guest added successfully');
       setSelectedGuestId(null);
