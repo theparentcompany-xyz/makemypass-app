@@ -3,6 +3,8 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  z-index: 0;
+  position: relative;
 }
 
 .headerText {

@@ -84,3 +84,43 @@ header {
 .requestDemo {
   font-size: 0.9rem;
 }
+
+/* Settings CSS */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdownContent {
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+
+  background: #212729;
+  color: white;
+  min-width: 160px;
+  z-index: 100;
+  font-size: 0.8rem;
+  font-family: 'Inter', sans-serif;
+
+  border-radius: 8px 0 8px 8px;
+}
+
+.link {
+  padding: 12px 26px;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 0.5rem;
+  background: #212729;
+}
+
+.dropdownContent:hover {
+  background-color: #2d3436;
+}
+
+.dropdown:hover .dropdownContent {
+  display: block;
+}
