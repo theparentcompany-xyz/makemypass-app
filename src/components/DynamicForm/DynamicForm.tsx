@@ -57,21 +57,33 @@ const DynamicForm = ({
             case '>':
               valid = Number(fieldValue) > Number(condition.value);
               break;
+            case '<':
+              valid = Number(fieldValue) < Number(condition.value);
+              break;
+            case '<=':
+              valid = Number(fieldValue) <= Number(condition.value);
+              break;
             case 'in':
               if (Array.isArray(fieldValue)) {
-                valid = fieldValue?.includes(condition.value);
-              } else valid = condition.value?.includes(fieldValue);
+                valid = fieldValue.includes(condition.value);
+              } else valid = condition.value.includes(fieldValue);
               break;
             case 'not in':
               if (Array.isArray(fieldValue)) {
-                valid = !fieldValue?.includes(condition.value);
-              } else valid = !condition.value?.includes(fieldValue);
+                valid = !fieldValue.includes(condition.value);
+              } else valid = !condition.value.includes(fieldValue);
               break;
             case 'empty':
               valid = fieldValue === '';
               break;
             case 'not empty':
               valid = fieldValue !== '';
+              break;
+            case 'contains':
+              let lowerFieldValue = '';
+              if (typeof fieldValue === 'string' && typeof condition.value === 'string')
+                lowerFieldValue = fieldValue.toLocaleLowerCase();
+              valid = lowerFieldValue.includes(condition.value.toLocaleLowerCase());
               break;
             default:
               valid = true;
@@ -256,7 +268,7 @@ const DynamicForm = ({
                     value={
                       Array.isArray(formData[field.field_key])
                         ? selectValues.filter((option) =>
-                            (formData[field.field_key] as string[])?.includes(option.value),
+                            (formData[field.field_key] as string[]).includes(option.value),
                           )
                         : []
                     }
@@ -438,10 +450,10 @@ const DynamicForm = ({
                           id={option}
                           name={field.field_key}
                           value={option}
-                          checked={(formData[field.field_key] as string[])?.includes(option)}
+                          checked={(formData[field.field_key] as string[]).includes(option)}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             const value = e.target.value;
-                            if ((formData[field.field_key] as string[])?.includes(value)) {
+                            if ((formData[field.field_key] as string[]).includes(value)) {
                               const newValues = (formData[field.field_key] as string[]).filter(
                                 (val) => val !== value,
                               );
