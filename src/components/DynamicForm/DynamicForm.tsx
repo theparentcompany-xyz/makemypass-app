@@ -256,8 +256,8 @@ const DynamicForm = ({
                     value={
                       Array.isArray(formData[field.field_key])
                         ? selectValues.filter((option) =>
-                          (formData[field.field_key] as string[]).includes(option.value),
-                        )
+                            (formData[field.field_key] as string[]).includes(option.value),
+                          )
                         : []
                     }
                     options={selectValues}
@@ -315,12 +315,110 @@ const DynamicForm = ({
                   id={field.field_key}
                   name={field.title}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    console
-                    onFieldChange(field.field_key, e.target.value)
-                  }
-                  }
+                    console;
+                    onFieldChange(field.field_key, e.target.value);
+                  }}
                   className={styles.fileInput}
                 />
+              </div>
+            );
+          } else if (field.type === 'date') {
+            return (
+              <div
+                style={{
+                  marginBottom: '1rem',
+                }}
+              >
+                <p className={styles.formLabel}>{fieldTitle}</p>
+                <input
+                  type='date'
+                  id={field.field_key}
+                  name={field.title}
+                  value={formData[field.field_key]}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange(field.field_key, e.target.value)
+                  }
+                  className={styles.dateInput}
+                />
+              </div>
+            );
+          } else if (field.type === 'datetime') {
+            return (
+              <div
+                style={{
+                  marginBottom: '1rem',
+                }}
+              >
+                <p className={styles.formLabel}>{fieldTitle}</p>
+                <input
+                  type='datetime-local'
+                  id={field.field_key}
+                  name={field.title}
+                  value={formData[field.field_key]}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange(field.field_key, e.target.value)
+                  }
+                  className={styles.dateInput}
+                />
+              </div>
+            );
+          } else if (field.type === 'time') {
+            return (
+              <div
+                style={{
+                  marginBottom: '1rem',
+                }}
+              >
+                <p className={styles.formLabel}>{fieldTitle}</p>
+                <input
+                  type='time'
+                  id={field.field_key}
+                  name={field.title}
+                  value={formData[field.field_key]}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange(field.field_key, e.target.value)
+                  }
+                  className={styles.dateInput}
+                />
+              </div>
+            );
+          } else if (field.type === 'number') {
+            return (
+              <div
+                style={{
+                  marginBottom: '1rem',
+                }}
+              >
+                <p className={styles.formLabel}>{fieldTitle}</p>
+                <input
+                  type='number'
+                  id={field.field_key}
+                  name={field.title}
+                  value={formData[field.field_key]}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange(field.field_key, e.target.value)
+                  }
+                  className={styles.dateInput}
+                />
+              </div>
+            );
+          } else if (field.type === 'rating') {
+            return (
+              <div
+                style={{
+                  marginBottom: '1rem',
+                }}
+              >
+                <p className={styles.formLabel}>{fieldTitle}</p>
+                {[...Array(5)].map((_, index) => (
+                  <span
+                    key={index}
+                    className={`${styles.star} ${index < Number(formData[field.field_key]) ? styles.selected : ''}`}
+                    onClick={() => onFieldChange(field.field_key, String(index + 1))}
+                  >
+                    {index < Number(formData[field.field_key]) ? '★' : '☆'}
+                  </span>
+                ))}
               </div>
             );
           }
