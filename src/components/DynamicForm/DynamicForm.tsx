@@ -420,6 +420,53 @@ const DynamicForm = ({
                 ))}
               </div>
             );
+          } else if (field.type === 'checkbox') {
+            return (
+              <div
+                style={{
+                  marginBottom: '1rem',
+                }}
+              >
+                <p className={styles.formLabel}>{fieldTitle}</p>
+                <div className={styles.checkboxContainer}>
+                  {field.options?.map((option: string) => (
+                    <>
+                      {console.log(field.field_key)}
+                      <div key={option} className={styles.checkbox}>
+                        <input
+                          type='checkbox'
+                          id={option}
+                          name={field.field_key}
+                          value={option}
+                          checked={(formData[field.field_key] as string[]).includes(option)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            const value = e.target.value;
+                            if ((formData[field.field_key] as string[]).includes(value)) {
+                              const newValues = (formData[field.field_key] as string[]).filter(
+                                (val) => val !== value,
+                              );
+                              console.log(field.field_key, newValues);
+                              onFieldChange(field.field_key, newValues);
+                            } else {
+                              console.log(field.field_key, [
+                                ...(formData[field.field_key] as string[]),
+                                value,
+                              ]);
+                              onFieldChange(field.field_key, [
+                                ...(formData[field.field_key] as string[]),
+                                value,
+                              ]);
+                            }
+                          }}
+                          className={styles.checkboxInput}
+                        />
+                        <label htmlFor={option}>{option}</label>
+                      </div>
+                    </>
+                  ))}
+                </div>
+              </div>
+            );
           }
         })}
       </div>

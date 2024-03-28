@@ -118,6 +118,7 @@ const EventPage = () => {
   }, [eventData?.form]);
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
+    console.log('fieldName', fieldName);
     setFormData({
       ...formData,
       [fieldName]: fieldValue,

@@ -114,13 +114,14 @@ export const validateRsvp = async (
   });
 
   const payloadFormData = new FormData();
+
   Object.keys(formData).forEach((key) => {
     const value = JSON.stringify(formData[key]);
     if (value.length > 0) payloadFormData.append(key, value);
   });
 
   return publicGateway
-    .post(makeMyPass.validateRsvp(eventId), formData, {
+    .post(makeMyPass.validateRsvp(eventId), payloadFormData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
