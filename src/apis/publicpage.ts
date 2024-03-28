@@ -4,7 +4,6 @@ import { makeMyPass } from '../../services/urls';
 import { CouponData, DiscountData, TicketOptions } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
 import { ErrorMessages, EventDetails, EventType, FormDataType, FormFieldType } from './types';
-import { isArray } from 'chart.js/helpers';
 
 export const submitForm = async ({
   eventId,
@@ -34,10 +33,10 @@ export const submitForm = async ({
   const backendFormData = new FormData();
 
   Object.keys(formData).forEach((key) => {
-    let value = formData[key];
-    if (isArray(value)) {
-      value = JSON.stringify(value);
-    }
+    let value = Array.isArray(formData[key])
+      ? JSON.stringify(formData[key])
+      : formData[key].toString();
+
     if (value.length > 0) backendFormData.append(key, value);
   });
 
@@ -116,7 +115,10 @@ export const validateRsvp = async (
   const payloadFormData = new FormData();
 
   Object.keys(formData).forEach((key) => {
-    const value = JSON.stringify(formData[key]);
+    const value = Array.isArray(formData[key])
+      ? JSON.stringify(formData[key])
+      : formData[key].toString();
+
     if (value.length > 0) payloadFormData.append(key, value);
   });
 

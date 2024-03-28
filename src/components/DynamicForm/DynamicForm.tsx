@@ -59,13 +59,13 @@ const DynamicForm = ({
               break;
             case 'in':
               if (Array.isArray(fieldValue)) {
-                valid = fieldValue.includes(condition.value);
-              } else valid = condition.value.includes(fieldValue);
+                valid = fieldValue?.includes(condition.value);
+              } else valid = condition.value?.includes(fieldValue);
               break;
             case 'not in':
               if (Array.isArray(fieldValue)) {
-                valid = !fieldValue.includes(condition.value);
-              } else valid = !condition.value.includes(fieldValue);
+                valid = !fieldValue?.includes(condition.value);
+              } else valid = !condition.value?.includes(fieldValue);
               break;
             case 'empty':
               valid = fieldValue === '';
@@ -256,7 +256,7 @@ const DynamicForm = ({
                     value={
                       Array.isArray(formData[field.field_key])
                         ? selectValues.filter((option) =>
-                            (formData[field.field_key] as string[]).includes(option.value),
+                            (formData[field.field_key] as string[])?.includes(option.value),
                           )
                         : []
                     }
@@ -438,10 +438,10 @@ const DynamicForm = ({
                           id={option}
                           name={field.field_key}
                           value={option}
-                          checked={(formData[field.field_key] as string[]).includes(option)}
+                          checked={(formData[field.field_key] as string[])?.includes(option)}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             const value = e.target.value;
-                            if ((formData[field.field_key] as string[]).includes(value)) {
+                            if ((formData[field.field_key] as string[])?.includes(value)) {
                               const newValues = (formData[field.field_key] as string[]).filter(
                                 (val) => val !== value,
                               );
