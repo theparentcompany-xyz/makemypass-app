@@ -1,7 +1,9 @@
+import { formatDate } from '../../common/commonFunctions';
 import styles from './Table.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; tableData: any[] }) => {
+  console.log(tableData);
   return (
     <>
       <motion.div
@@ -18,8 +20,8 @@ const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; table
         <div className={styles.tableContainer}>
           <div className={styles.table}>
             <AnimatePresence>
-              {tableData.length > 0 ? (
-                tableData.map((data) => (
+              {tableData?.length > 0 ? (
+                tableData.map((data, index) => (
                   <div
                     className={styles.rowData}
                     style={{
@@ -34,8 +36,14 @@ const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; table
                         justifyContent: 'flex-start',
                       }}
                     >
-                      <p className={styles.rowName}>{data.name} </p>
-                      <p className={styles.rowEmail}>"{data.opinion}"</p>
+                      <p className={styles.rowName}>{data.name || index + 1} </p>
+                      <p className={styles.rowEmail}>
+                        {data.opinion || formatDate(data.created_at)}
+                      </p>
+                      <p className={styles.rowEmail}>
+                        {data.opinion || formatDate(data.updated_at)}
+                      </p>
+                      <p className={styles.rowType}>{data.status}</p>
                     </div>
                   </div>
                 ))

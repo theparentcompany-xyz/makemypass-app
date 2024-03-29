@@ -11,17 +11,15 @@ import { TicketOptions } from '../../../EventPage/types';
 import Select from 'react-select';
 import { motion } from 'framer-motion';
 import { SiMicrosoftexcel } from 'react-icons/si';
-import Table from '../../../../../components/Table/Table';
-// import { TableType } from '../../../../../components/Table/types';
-// import { transformTableData } from '../../../../../common/commonFunctions';
 import { getFileStatus, uploadFile } from '../../../../../apis/guests';
-// import Modal from '../../../components/Modal/Modal';
-// import toast from 'react-hot-toast';
+import { FileType } from '../../../../../apis/types';
+import GenericTable from '../../../../../components/Table/GenericTable';
 
 const GuestBulkImport = () => {
   const { eventId } = useContext(GlobalContext);
   const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
   const [ticketId, setTicketId] = useState<string>('');
+  const [fileStatus, setFileStatus] = useState<FileType[]>([]);
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -40,7 +38,7 @@ const GuestBulkImport = () => {
   useEffect(() => {
     if (eventId) {
       getTickets(eventId, setTicketInfo);
-      getFileStatus(eventId);
+      getFileStatus(eventId, setFileStatus);
     }
   }, [eventId]);
 
@@ -106,7 +104,7 @@ const GuestBulkImport = () => {
           </section>
         </div>
         <div className='uploadHistory'>
-          <Table tableHeading='Upload History' tableData={[]}></Table>
+          <GenericTable tableData={fileStatus} tableHeading='Upload Histoyr' />
         </div>
       </div>
     </Theme>
