@@ -23,11 +23,19 @@ export const showRazorpay = async (
   let paymentAmount: string = '';
 
   const backendFormData = new FormData();
+
   backendFormData.append('tickets', JSON.stringify([ticketId]));
+
   Object.keys(formData).forEach((key) => {
-    if (formData[key]) {
-      if (formData[key].length > 0) backendFormData.append(key, formData[key]);
-    }
+    let value = formData[key];
+
+    if (key !== 'customfile')
+      value = Array.isArray(formData[key])
+        ? JSON.stringify(formData[key])
+        : formData[key].toString();
+
+    if (typeof value === 'string' && value.length > 0) backendFormData.append(key, value);
+    else if (value instanceof Blob) backendFormData.append(key, value);
   });
 
   await publicGateway

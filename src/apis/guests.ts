@@ -117,9 +117,10 @@ export const getFileStatus = (
     });
 };
 
-export const uploadFile = (eventId: string, file: File) => {
+export const uploadFile = (eventId: string, file: File, ticketId: string) => {
   const formData = new FormData();
   formData.append('file', file);
+  formData.append('ticket_ids', JSON.stringify([ticketId]));
   privateGateway
     .post(makeMyPass.uploadFile(eventId), formData, {
       headers: {
