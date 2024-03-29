@@ -102,8 +102,7 @@ const AddHosts = ({
                 setHostData((prevState) => ({
                   ...prevState!,
                   is_private: !hostData.is_private,
-                }))
-
+                }));
               }}
               text='Do you want to make this host public?'
             />

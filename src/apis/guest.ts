@@ -46,7 +46,7 @@ export const addGuest = (
     .post(makeMyPass.sentInvite(eventId, ticketId), formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
-      }
+      },
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Guest added successfully');

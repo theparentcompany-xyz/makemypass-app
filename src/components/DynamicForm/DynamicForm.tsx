@@ -85,6 +85,12 @@ const DynamicForm = ({
                 lowerFieldValue = fieldValue.toLocaleLowerCase();
               valid = lowerFieldValue.includes(condition.value.toLocaleLowerCase());
               break;
+            case 'not contains':
+              let lowerFieldValueNot = '';
+              if (typeof fieldValue === 'string' && typeof condition.value === 'string')
+                lowerFieldValueNot = fieldValue.toLocaleLowerCase();
+              valid = !lowerFieldValueNot.includes(condition.value.toLocaleLowerCase());
+              break;
             default:
               valid = true;
               break;

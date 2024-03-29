@@ -110,10 +110,13 @@ const Overview = () => {
       id: 'id',
     };
     if (hostList) {
-      const transformedHostList = transformTableData(hostListMapping, hostList.map((host) => ({
-        ...host,
-        is_private: `${host.is_private}`,
-      })));
+      const transformedHostList = transformTableData(
+        hostListMapping,
+        hostList.map((host) => ({
+          ...host,
+          is_private: `${host.is_private}`,
+        })),
+      );
       setHostListTableData(transformedHostList as unknown as TableType[]);
     }
   }, [hostList]);
@@ -156,8 +159,10 @@ const Overview = () => {
   };
 
   const onSubmit = () => {
-    if (!hostData.id) addHosts(eventId, hostData.email, hostData.role, hostData.is_private, setHostData);
-    if (hostData.id) updateHostRole(eventId, hostData.id, hostData.role, hostData.is_private, setHostData);
+    if (!hostData.id)
+      addHosts(eventId, hostData.email, hostData.role, hostData.is_private, setHostData);
+    if (hostData.id)
+      updateHostRole(eventId, hostData.id, hostData.role, hostData.is_private, setHostData);
     setOpenAddModal(false);
   };
   const hostValidate: () => boolean = () => {

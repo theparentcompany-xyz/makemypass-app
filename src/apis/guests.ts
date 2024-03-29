@@ -101,9 +101,8 @@ export const getCsvTemplate = (eventId: string) => {
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
-    })
-}
-
+    });
+};
 
 export const getFileStatus = (eventId: string) => {
   privateGateway
@@ -114,7 +113,7 @@ export const getFileStatus = (eventId: string) => {
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
     });
-}
+};
 
 export const uploadFile = (eventId: string, file: File) => {
   const formData = new FormData();
@@ -131,4 +130,4 @@ export const uploadFile = (eventId: string, file: File) => {
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
     });
-}
+};

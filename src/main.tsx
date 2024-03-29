@@ -87,7 +87,7 @@ const routes = [
           },
           {
             path: '/:eventTitle/guests/bulk-import',
-            element: <RoleChecker roles={['Admin']} children={< GuestBulkImport />} />,
+            element: <RoleChecker roles={['Admin']} children={<GuestBulkImport />} />,
           },
           {
             path: '/:eventTitle/checkins',
@@ -123,8 +123,8 @@ const routes = [
           },
           {
             path: '/:eventTitle/feedback',
-            element: <RoleChecker roles={['Admin', 'Volunteer']} children={<EventFeedback />} />
-          }
+            element: <RoleChecker roles={['Admin', 'Volunteer']} children={<EventFeedback />} />,
+          },
         ],
       },
       {
