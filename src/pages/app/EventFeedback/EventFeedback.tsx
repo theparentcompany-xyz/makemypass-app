@@ -4,7 +4,8 @@ import { GlobalContext } from '../../../contexts/globalContext';
 import Theme from '../../../components/Theme/Theme';
 import Header from '../../../components/EventHeader/EventHeader';
 import Glance from '../../../components/Glance/Glance';
-import Table from '../../../components/Table/Table';
+import GenericTable from '../../../components/Table/GenericTable';
+import styles from './EventFeedback.module.css';
 
 const EventFeedback = () => {
   const { eventId } = useContext(GlobalContext);
@@ -14,15 +15,17 @@ const EventFeedback = () => {
   useEffect(() => {
     if (eventId) {
       getFeedback(eventId, setFeedback);
-      console.log(feedback);
     }
   }, [eventId]);
 
   return (
     <Theme>
-      <Header />
-      <Glance tab='feedback' />
-      <Table tableHeading='Feedback' tableData={[]} />
+      <div className={styles.feedbackContainer}>
+        <Header />
+        <Glance tab='feedback' />
+
+        <GenericTable tableHeading='Feedbacks Recevied' tableData={feedback} />
+      </div>
     </Theme>
   );
 };
