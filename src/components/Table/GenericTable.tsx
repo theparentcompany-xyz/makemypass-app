@@ -40,10 +40,10 @@ const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; table
                       <p className={styles.rowEmail}>
                         {data.opinion || formatDate(data.created_at)}
                       </p>
-                      <p className={styles.rowEmail}>
-                        {data.opinion || formatDate(data.updated_at)}
-                      </p>
-                      <p className={styles.rowType}>{data.status}</p>
+                      {data.updated_at && (
+                        <p className={styles.rowEmail}>{formatDate(data.updated_at)}</p>
+                      )}
+                      {data.status && <p className={styles.rowType}>{data.status}</p>}
                     </div>
                   </div>
                 ))
