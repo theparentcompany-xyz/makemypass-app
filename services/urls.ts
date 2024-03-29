@@ -55,8 +55,6 @@ export const makeMyPass = {
   createPayment: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/create-order/`),
   validateCoupon: (eventId: string, couponCode: string) =>
     makeMyPassURL(`/public-form/apply-coupon-code/${eventId}/?coupon_code=${couponCode}`),
-
-  registerUpdateView: (eventId: string) => makeMyPassURL(`/register-update-view/${eventId}/`),
   validateRsvp: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/validate-rsvp/`),
   CSVdata: (event_id: string) => makeMyPassURL(`/event/${event_id}/csv/`),
   downloadCSVTemplate: (event_id: string) =>
@@ -91,12 +89,10 @@ export const makeMyPass = {
 
   getPostEventFields: (eventId: string) =>
     makeMyPassURL(`/post-event/get-post-event-fields/${eventId}/`),
-  submitFeedback: (eventId: string) =>
-    makeMyPassURL(`/post-event/submit-feedback/${eventId}/`),
+  submitFeedback: (eventId: string) => makeMyPassURL(`/post-event/submit-feedback/${eventId}/`),
   getPostEventCategories: (eventId: string) =>
     makeMyPassURL(`/post-event/get-post-event-categories/${eventId}/`),
-  getFeedback: (eventId: string) =>
-    makeMyPassURL(`/post-event/list-feedbacks/${eventId}/`),
+  getFeedback: (eventId: string) => makeMyPassURL(`/post-event/list-feedbacks/${eventId}/`),
 };
 
 export const makeMyPassSocket = {

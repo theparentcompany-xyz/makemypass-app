@@ -43,11 +43,12 @@ export const getPostEventCategories = (eventId: string) => {
     });
 };
 
-export const getFeedback = (eventId: string) => {
+export const getFeedback = (eventId: string, setFeedback: any) => {
   privateGateway
     .get(makeMyPass.getFeedback(eventId))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Feedback fetched successfully');
+      setFeedback(response.data.response);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Feedback fetching failed');

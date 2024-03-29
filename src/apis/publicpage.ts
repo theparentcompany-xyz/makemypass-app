@@ -93,12 +93,6 @@ export const applyCoupon = async (
       });
 };
 
-export const registerUpdateView = async (eventId: string) => {
-  return publicGateway.post(makeMyPass.registerUpdateView(eventId)).catch((error) => {
-    toast.error(error.response.data.message.general[0] || 'Error in Registering Event');
-  });
-};
-
 export const validateRsvp = async (
   eventId: string,
   formData: FormDataType,

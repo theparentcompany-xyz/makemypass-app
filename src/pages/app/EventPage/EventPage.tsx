@@ -4,12 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 import { getEventId } from '../../../apis/events';
-import {
-  getEventInfo,
-  registerUpdateView,
-  submitForm,
-  validateRsvp,
-} from '../../../apis/publicpage';
+import { getEventInfo, submitForm, validateRsvp } from '../../../apis/publicpage';
 import { CouponData, DiscountData } from './types';
 import { motion } from 'framer-motion';
 import { showRazorpay } from './components/Razorpay';
@@ -59,7 +54,6 @@ const EventPage = () => {
       setEventId(JSON.parse(localStorage.getItem('eventData') || '{}').event_id);
       if (eventId) {
         getEventInfo(eventId, setEventData);
-        registerUpdateView(eventId);
       }
     }, 1000);
   }, [eventTitle, eventId]);

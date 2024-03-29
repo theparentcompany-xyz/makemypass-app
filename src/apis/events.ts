@@ -21,15 +21,18 @@ export const getEventId = async (
   eventName: string,
   setHasEvent?: Dispatch<React.SetStateAction<boolean>>,
 ) => {
-  privateGateway
-    .get(makeMyPass.getEventId(eventName))
-    .then((response) => {
-      localStorage.setItem('eventData', JSON.stringify(response.data.response));
-      getEventDatas(response.data.response.event_id);
-    })
-    .catch(() => {
-      setHasEvent && setHasEvent(false);
-    });
+  const localData = localStorage.getItem('eventData');
+
+  if (!localData)
+    privateGateway
+      .get(makeMyPass.getEventId(eventName))
+      .then((response) => {
+        localStorage.setItem('eventData', JSON.stringify(response.data.response));
+        getEventDatas(response.data.response.event_id);
+      })
+      .catch(() => {
+        setHasEvent && setHasEvent(false);
+      });
 };
 
 export const getEventData = async (

@@ -39,9 +39,7 @@ const EventPage = () => {
     setTimeout(() => {
       setEventId(JSON.parse(localStorage.getItem('eventData') || '{}').event_id);
       if (eventId) {
-        // getFormFields(eventId, setFormFields);
         getEventDatas(eventId, setEventData);
-        // registerUpdateView(eventId);
       }
     }, 1000);
   }, [eventTitle, eventId]);
