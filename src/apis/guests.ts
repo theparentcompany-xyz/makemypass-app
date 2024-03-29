@@ -3,7 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
-import { FormDataType } from './types';
+import { FileType, FormDataType } from './types';
 import { isArray } from 'chart.js/helpers';
 
 export const resentEventTicket = async (
@@ -56,7 +56,6 @@ export const downloadTicket = async (eventId: string, ticketCode: string, name: 
     .get(makeMyPass.downloadTicket(eventId, ticketCode))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Ticket downloaded successfully');
-      console.log(response.data.response.image);
       const link = document.createElement('a');
       link.href = response.data.response.image;
       link.download = `${name}.png`;
@@ -104,11 +103,14 @@ export const getCsvTemplate = (eventId: string) => {
     });
 };
 
-export const getFileStatus = (eventId: string) => {
+export const getFileStatus = (
+  eventId: string,
+  setFileStatus: Dispatch<React.SetStateAction<FileType[]>>,
+) => {
   privateGateway
     .get(makeMyPass.getFileStatus(eventId))
     .then((response) => {
-      console.log(response.data);
+      setFileStatus(response.data.response.files);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');

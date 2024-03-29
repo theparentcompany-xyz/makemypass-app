@@ -112,6 +112,7 @@ const Glance = ({ tab }: { tab: string }) => {
     guests: 'Guests',
     inevent: 'In-Event',
     checkins: 'Check-Ins',
+    feedback: 'Feedbacks',
   };
 
   return (
@@ -150,6 +151,7 @@ const Glance = ({ tab }: { tab: string }) => {
             currentTab != 'spinwheel' &&
             currentTab != 'claimgifts' &&
             currentTab != 'postevent' &&
+            currentTab != 'feedback' &&
             progressData.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: -50 }}

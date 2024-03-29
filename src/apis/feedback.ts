@@ -48,7 +48,8 @@ export const getFeedback = (eventId: string, setFeedback: any) => {
     .get(makeMyPass.getFeedback(eventId))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Feedback fetched successfully');
-      setFeedback(response.data.response);
+      setFeedback(response.data.response.feedbacks);
+      console.log(response.data.response.feedbacks);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Feedback fetching failed');
