@@ -1,9 +1,9 @@
 import styles from './EventPage.module.css';
 import Theme from '../../../components/Theme/Theme';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
-import { getEventId } from '../../../apis/events';
+// import { getEventId } from '../../../apis/events';
 import { getEventInfo, submitForm, validateRsvp } from '../../../apis/publicpage';
 import { CouponData, DiscountData } from './types';
 import { motion } from 'framer-motion';
@@ -14,7 +14,7 @@ import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import EventHeader from './components/EventHeader/EventHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
 import CouponForm from './components/CouponForm/CouponForm';
-
+import { GlobalContext } from '../../../contexts/globalContext';
 import { Helmet } from 'react-helmet';
 import FourNotFour from '../../FourNotFour/FourNotFour';
 
@@ -24,19 +24,26 @@ const EventPage = () => {
   const [ticketId, setTicketId] = useState<string>('');
   const [eventData, setEventData] = useState<EventType>();
   const [formErrors, setFormErrors] = useState<any>({});
-  const [eventId, setEventId] = useState<string>('');
+  // const [eventId, setEventId] = useState<string>('');
 
   const [formData, setFormData] = useState<FormDataType>({});
   const [amount, setAmount] = useState<string>('');
   const [success, setSuccess] = useState<string>('');
 
   const [formNumber, setFormNumber] = useState<number>(0);
-  const [hasEvent, setHasEvent] = useState<boolean>(true);
+  // const [hasEvent, setHasEvent] = useState<boolean>(true);
 
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
     discount_value: 0,
   });
+
+  const { eventId, setEventId, hasEvent } = useContext(GlobalContext);
+  if (!setEventId) {
+    throw new Error("setEventId is undefined");
+  }
+
+  console.log(eventId, hasEvent)
 
   const [hasZeroPriceTicket, setHasZeroPriceTicket] = useState(false);
 
@@ -48,8 +55,6 @@ const EventPage = () => {
   });
 
   useEffect(() => {
-    if (eventTitle) getEventId(eventTitle, setHasEvent);
-
     setTimeout(() => {
       setEventId(JSON.parse(localStorage.getItem('eventData') || '{}').event_id);
       if (eventId) {
