@@ -130,7 +130,7 @@ const Overview = () => {
         email: selectedHost?.email,
         role: selectedHost?.role,
         id: selectedHost?.id,
-        is_private: selectedHost?.is_private || true,
+        is_private: selectedHost?.is_private,
       }));
 
       setOpenAddModal(true);
@@ -143,7 +143,7 @@ const Overview = () => {
         ...prevState!,
         email: selectedHost?.email,
         role: selectedHost?.role,
-        is_private: selectedHost?.is_private || true,
+        is_private: selectedHost?.is_private,
         id: selectedHost?.id,
       }));
       setOpenDeleteModal(true);
