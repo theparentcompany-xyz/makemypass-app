@@ -33,11 +33,15 @@ export const submitForm = async ({
   const backendFormData = new FormData();
 
   Object.keys(formData).forEach((key) => {
-    let value = Array.isArray(formData[key])
-      ? JSON.stringify(formData[key])
-      : formData[key].toString();
+    let value = formData[key];
 
-    if (value.length > 0) backendFormData.append(key, value);
+    if (key !== 'customfile')
+      value = Array.isArray(formData[key])
+        ? JSON.stringify(formData[key])
+        : formData[key].toString();
+
+    if (typeof value === 'string' && value.length > 0) backendFormData.append(key, value);
+    else if (value instanceof Blob) backendFormData.append(key, value);
   });
 
   if (response) backendFormData.append('payment_data', JSON.stringify(response));
@@ -109,11 +113,15 @@ export const validateRsvp = async (
   const payloadFormData = new FormData();
 
   Object.keys(formData).forEach((key) => {
-    const value = Array.isArray(formData[key])
-      ? JSON.stringify(formData[key])
-      : formData[key].toString();
+    let value = formData[key];
 
-    if (value.length > 0) payloadFormData.append(key, value);
+    if (key !== 'customfile')
+      value = Array.isArray(formData[key])
+        ? JSON.stringify(formData[key])
+        : formData[key].toString();
+
+    if (typeof value === 'string' && value.length > 0) payloadFormData.append(key, value);
+    else if (value instanceof Blob) payloadFormData.append(key, value);
   });
 
   return publicGateway

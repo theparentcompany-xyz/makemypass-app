@@ -36,7 +36,6 @@ import { isArray } from 'chart.js/helpers';
 import Modal from '../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
 import { getFormFields, getTickets } from '../../../apis/publicpage';
-// import { useNavigate } from 'react-router';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);

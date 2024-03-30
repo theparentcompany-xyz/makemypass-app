@@ -30,7 +30,7 @@ const GuestBulkImport = () => {
   useEffect(() => {
     if (acceptedFiles.length > 0) {
       acceptedFiles.forEach((file: File) => {
-        uploadFile(eventId, file);
+        uploadFile(eventId, file, ticketId);
       });
     }
   }, [acceptedFiles]);
