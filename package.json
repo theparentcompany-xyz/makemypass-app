@@ -32,6 +32,7 @@
     "react-router-dom": "^6.21.2",
     "react-select": "^5.8.0",
     "react-spinners": "^0.13.8",
+    "react-voice-visualizer": "^1.8.1",
     "react-window": "^1.8.10"
   },
   "devDependencies": {
