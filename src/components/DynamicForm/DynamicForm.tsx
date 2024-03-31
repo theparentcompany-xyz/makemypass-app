@@ -4,9 +4,10 @@ import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
 import InputFIeld from '../../pages/auth/Login/InputFIeld';
 import styles from './DynamicForm.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import { postAudio } from '../../apis/publicpage';
 import Select, { MultiValue } from 'react-select';
-
+import AudioRecorder from './components/AudioRecorder/AudioRecorder';
+import { EventType } from '../../apis/types';
 const DynamicForm = ({
   formFields,
   formErrors,
@@ -15,6 +16,7 @@ const DynamicForm = ({
   ticketInfo,
   setTicketId,
   ticketId,
+  eventData
 }: {
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
@@ -23,6 +25,7 @@ const DynamicForm = ({
   ticketInfo?: { [key: string]: TicketType };
   setTicketId?: Dispatch<React.SetStateAction<string>>;
   ticketId?: string;
+  eventData?: EventType;
 }) => {
   const variants = {
     initial: { opacity: 0, y: -10 },
@@ -109,9 +112,20 @@ const DynamicForm = ({
     return valid;
   };
 
+  const handleAudioSubmit = (recordedBlob: Blob | null) => {
+    if (recordedBlob && eventData?.id) {
+      postAudio(eventData?.id, recordedBlob);
+    }
+  };
+
   return (
     <>
       <div className={styles.formFields}>
+        {eventData?.parse_audio &&
+          < AudioRecorder
+            handleSubmit={handleAudioSubmit}
+          />
+        }
         {ticketInfo && (
           <div
             style={{
@@ -274,8 +288,8 @@ const DynamicForm = ({
                     value={
                       Array.isArray(formData[field.field_key])
                         ? selectValues.filter((option) =>
-                            (formData[field.field_key] as string[])?.includes(option.value),
-                          )
+                          (formData[field.field_key] as string[])?.includes(option.value),
+                        )
                         : []
                     }
                     options={selectValues}
