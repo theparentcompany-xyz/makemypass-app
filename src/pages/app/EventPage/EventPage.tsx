@@ -199,6 +199,7 @@ const EventPage = () => {
                             formErrors={formErrors}
                             formData={formData}
                             onFieldChange={onFieldChange}
+                            eventData={eventData}
                           />
                         )}
                       </div>
