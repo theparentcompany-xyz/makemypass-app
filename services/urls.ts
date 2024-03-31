@@ -93,6 +93,7 @@ export const makeMyPass = {
   getPostEventCategories: (eventId: string) =>
     makeMyPassURL(`/post-event/get-post-event-categories/${eventId}/`),
   getFeedback: (eventId: string) => makeMyPassURL(`/post-event/list-feedback/${eventId}/`),
+  parseFromAudio: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/parse-from-audio/`),
 };
 
 export const makeMyPassSocket = {
