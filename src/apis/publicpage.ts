@@ -4,6 +4,7 @@ import { makeMyPass } from '../../services/urls';
 import { CouponData, DiscountData, TicketOptions } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
 import { ErrorMessages, EventDetails, EventType, FormDataType, FormFieldType } from './types';
+import { convertWebmToWav } from './helpers';
 
 export const submitForm = async ({
   eventId,
@@ -199,3 +200,23 @@ export const getEventDatas = async (
       toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Data');
     });
 };
+
+
+export const postAudio = async (eventId: string, recordedBlob: Blob) => {
+  const form = new FormData();
+  const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.mp3', { type: 'audio/mp3' });
+  form.append('file', file);
+  publicGateway
+    .post(makeMyPass.parseFromAudio(eventId), form, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error(error.response.data.message.general[0]);
+    });
+}
+
