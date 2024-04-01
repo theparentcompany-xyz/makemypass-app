@@ -1,0 +1,42 @@
+.container {
+    border-radius: 10px;
+    padding: 20px;
+    width: 80%;
+    justify-self: center;
+    margin-bottom: 30px;
+
+}
+
+.status {
+    margin-bottom: 10px;
+    color: #a4a4a4;
+}
+
+.button {
+    padding: 10px;
+    margin-right: 10px;
+    background-color: #1b2725ca;
+    color: #a4a4a487;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-family: 'Inter';
+}
+
+.button:hover {
+    background-color: #1b2725;
+    color: #a4a4a4;
+}
+
+.audio {
+    width: 100%;
+    font-size: 0.875rem;
+    font-family: 'Inter';
+}
+
+.visualizer {
+    width: 100%;
+    height: 100%;
+    margin: 20px;
+}

@@ -8,6 +8,8 @@ const GlobalContextWrapper = () => {
   const [eventId, setEventId] = React.useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
+  const [hasEvent, setHasEvent] = React.useState<boolean>(true);
+
   useEffect(() => {
     if (!eventTitle) return;
     let eventData = JSON.parse(localStorage.getItem('eventData') as string);
@@ -15,16 +17,16 @@ const GlobalContextWrapper = () => {
     if (eventData) {
       if (eventData.event_name !== eventTitle) {
         localStorage.removeItem('eventData');
-        getEventId(eventTitle ?? '');
+        getEventId(eventTitle ?? '', setHasEvent);
         setTimeout(() => {
           eventData = JSON.parse(localStorage.getItem('eventData') as string);
-          setEventId(eventData?.event_id);
+          setEventId(eventData?.event_id,);
         }, 100);
       } else {
         setEventId(eventData.event_id);
       }
     } else {
-      getEventId(eventTitle ?? '');
+      getEventId(eventTitle ?? '', setHasEvent);
       setTimeout(() => {
         eventData = JSON.parse(localStorage.getItem('eventData') as string);
         setEventId(eventData?.event_id);
@@ -33,7 +35,7 @@ const GlobalContextWrapper = () => {
   }, [eventTitle]);
 
   return (
-    <GlobalContext.Provider value={{ eventId, setEventId }}>
+    <GlobalContext.Provider value={{ eventId, setEventId, hasEvent }}>
       <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>

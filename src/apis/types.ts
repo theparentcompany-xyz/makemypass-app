@@ -109,6 +109,7 @@ export interface EventType {
   };
   shortlist: boolean;
   coupon: CouponType;
+  parse_audio?: boolean;
 }
 
 export type EventDetails = {
