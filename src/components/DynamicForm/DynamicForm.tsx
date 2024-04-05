@@ -347,9 +347,10 @@ const DynamicForm = ({
                   id={field.field_key}
                   name={field.title}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onFieldChange(field.field_key, e.target.files?.[0] as any);
+                    onFieldChange(field.field_key, e.target.files as any);
                   }}
                   className={styles.fileInput}
+                  multiple
                 />
               </div>
             );
