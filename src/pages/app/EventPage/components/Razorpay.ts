@@ -5,7 +5,7 @@ import { CouponData } from '../types';
 
 export const showRazorpay = async (
   eventId: string,
-  ticketId: string,
+  ticketIds: string[],
   formData: any,
   coupon: CouponData,
   setFormErrors: any,
@@ -24,18 +24,22 @@ export const showRazorpay = async (
 
   const backendFormData = new FormData();
 
-  backendFormData.append('tickets', JSON.stringify([ticketId]));
+  ticketIds.forEach(ticketId => {
+    backendFormData.append('tickets[]', ticketId);
+  })
 
   Object.keys(formData).forEach((key) => {
     let value = formData[key];
 
-    if (key !== 'customfile')
+    if (!(value instanceof FileList))
       value = Array.isArray(formData[key])
         ? JSON.stringify(formData[key])
         : formData[key].toString();
 
     if (typeof value === 'string' && value.length > 0) backendFormData.append(key, value);
-    else if (value instanceof Blob) backendFormData.append(key, value);
+    else if (value instanceof FileList) {
+      Array.from(value).forEach((value) => backendFormData.append(key + '[]', value));
+    }
   });
 
   await publicGateway
@@ -65,7 +69,7 @@ export const showRazorpay = async (
       audio.play();
       submitForm({
         eventId,
-        ticketId,
+        ticketIds,
         formData,
         coupon,
         setSuccess,
