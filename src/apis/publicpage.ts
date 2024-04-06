@@ -8,7 +8,7 @@ import { convertWebmToWav } from './helpers';
 
 export const submitForm = async ({
   eventId,
-  ticketId,
+  ticketIds,
   formData,
   coupon,
   setSuccess,
@@ -20,7 +20,7 @@ export const submitForm = async ({
   setCoupon,
 }: {
   eventId: string;
-  ticketId: string;
+  ticketIds: string[];
   formData: FormDataType;
   coupon: CouponData;
   setSuccess?: React.Dispatch<React.SetStateAction<string>>;
@@ -36,19 +36,27 @@ export const submitForm = async ({
   Object.keys(formData).forEach((key) => {
     let value = formData[key];
 
-    if (key !== 'customfile')
-      value = Array.isArray(formData[key])
-        ? JSON.stringify(formData[key])
-        : formData[key].toString();
+    if (!(value instanceof FileList)) {
+      if (Array.isArray(value) && value.length > 0) {
+        value.forEach((value) => backendFormData.append(key + '[]', value));
+      }
+      else {
+        value = formData[key].toString()
+      }
+    }
 
-    if (typeof value === 'string' && value.length > 0) backendFormData.append(key, value);
-    else if (value instanceof Blob) backendFormData.append(key, value);
+
+    if (typeof value === 'string' && value.length > 0) {
+      backendFormData.append(key, value);
+    }
+    else if (value instanceof FileList) {
+      Array.from(value).forEach((value) => backendFormData.append(key + '[]', value));
+    }
   });
 
   if (response) backendFormData.append('payment_data', JSON.stringify(response));
   if (coupon.value) backendFormData.append('coupon_code', coupon.value?.toString());
-
-  backendFormData.append('tickets', JSON.stringify([ticketId]));
+  ticketIds.forEach((ticketId) => backendFormData.append('tickets[]', ticketId));
 
   publicGateway
     .post(makeMyPass.submitForm(eventId), backendFormData, {
@@ -111,19 +119,29 @@ export const validateRsvp = async (
     }
   });
 
+
   const payloadFormData = new FormData();
 
   Object.keys(formData).forEach((key) => {
     let value = formData[key];
 
-    if (key !== 'customfile')
-      value = Array.isArray(formData[key])
-        ? JSON.stringify(formData[key])
-        : formData[key].toString();
+    if (!(value instanceof FileList)) {
+      if (Array.isArray(value) && value.length > 0) {
+        value.forEach((value) => payloadFormData.append(key + '[]', value));
+      }
+      else {
+        value = formData[key].toString()
+      }
+    }
 
-    if (typeof value === 'string' && value.length > 0) payloadFormData.append(key, value);
-    else if (value instanceof Blob) payloadFormData.append(key, value);
+    if (typeof value === 'string' && value.length > 0) {
+      payloadFormData.append(key, value);
+    }
+    else if (value instanceof FileList) {
+      Array.from(value).forEach((value) => payloadFormData.append(key + '[]', value));
+    }
   });
+
 
   return publicGateway
     .post(makeMyPass.validateRsvp(eventId), payloadFormData, {

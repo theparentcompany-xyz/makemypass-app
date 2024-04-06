@@ -21,7 +21,7 @@ import FourNotFour from '../../FourNotFour/FourNotFour';
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
-  const [ticketId, setTicketId] = useState<string>('');
+  const [ticketIds, setTicketIds] = useState<string[]>([]);
   const [eventData, setEventData] = useState<EventType>();
   const [formErrors, setFormErrors] = useState<any>({});
   // const [eventId, setEventId] = useState<string>('');
@@ -75,11 +75,11 @@ const EventPage = () => {
     if (discount.discount_value > 0) {
       setAmount(discountedTicketPrice(Number(amount), discount).toString());
     } else {
-      if (eventData?.tickets && ticketId) {
+      if (eventData?.tickets && ticketIds) {
         let ticketPrice = 0;
         Object.keys(eventData?.tickets)?.map((ticketType) => {
-          if (eventData?.tickets[ticketType].id === ticketId) {
-            ticketPrice = eventData?.tickets[ticketType].price;
+          if (ticketIds.includes(eventData?.tickets[ticketType].id)) {
+            ticketPrice += eventData?.tickets[ticketType].price;
           }
         });
 
@@ -92,7 +92,8 @@ const EventPage = () => {
     if (eventData?.tickets) {
       Object.keys(eventData?.tickets)?.map((ticketType) => {
         if (eventData?.tickets[ticketType].default_selected) {
-          setTicketId(eventData?.tickets[ticketType].id);
+          setTicketIds([eventData?.tickets[ticketType].id]);
+          setAmount(eventData?.tickets[ticketType].price.toString());
         }
       });
 
@@ -117,7 +118,7 @@ const EventPage = () => {
   }, [eventData?.form]);
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
-    console.log('fieldName', fieldName);
+    console.log('fieldName', fieldName, fieldValue);
     setFormData({
       ...formData,
       [fieldName]: fieldValue,
@@ -130,7 +131,7 @@ const EventPage = () => {
       });
     }
   };
-
+  console.log(ticketIds, amount)
   return (
     <>
       {hasEvent ? (
@@ -206,11 +207,11 @@ const EventPage = () => {
                     </motion.div>
                   )}
 
-                  {eventData.tickets && formNumber === 1 && (
+                  {(eventData.tickets || eventData.select_multi_ticket) && formNumber === 1 && (
                     <CouponForm
                       ticketInfo={eventData.tickets}
-                      setTicketId={setTicketId}
-                      ticketId={ticketId}
+                      setTicketIds={setTicketIds}
+                      ticketIds={ticketIds}
                       eventId={eventId}
                       discount={discount}
                       setDiscount={setDiscount}
@@ -248,7 +249,7 @@ const EventPage = () => {
                           if (amount === '0' || hasZeroPriceTicket)
                             submitForm({
                               eventId,
-                              ticketId,
+                              ticketIds,
                               formData,
                               coupon,
                               setSuccess,
@@ -261,7 +262,7 @@ const EventPage = () => {
                           else if (formData) {
                             showRazorpay(
                               eventId,
-                              ticketId,
+                              ticketIds,
                               formData,
                               coupon,
                               setFormErrors,
@@ -276,7 +277,7 @@ const EventPage = () => {
                       }}
                       className={styles.submitButton}
                     >
-                      {formNumber === 0 && !hasZeroPriceTicket ? 'Next' : 'Register Now'}
+                      {formNumber === 0 && !(hasZeroPriceTicket || eventData?.select_multi_ticket) ? 'Next' : 'Register Now'}
                     </motion.button>
                   </div>
                 </div>

@@ -110,6 +110,7 @@ export interface EventType {
   shortlist: boolean;
   coupon: CouponType;
   parse_audio?: boolean;
+  select_multi_ticket?: boolean;
 }
 
 export type EventDetails = {
