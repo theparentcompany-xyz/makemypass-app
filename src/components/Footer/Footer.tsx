@@ -12,7 +12,7 @@ const Footer = () => {
             style={{
               justifyContent: 'space-between',
             }}
-            className='row'
+            className={styles.row}
           >
             <a href='https://www.theparentcompany.xyz/' target='_blank' rel='noopener noreferrer'>
               <img className={styles.tpclogo} src='/app/tpc.webp' alt='the parent company logo' />

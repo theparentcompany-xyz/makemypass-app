@@ -4,13 +4,20 @@
   display: flex;
   flex-direction: column;
   justify-content: end;
-
   width: 100%;
 }
 
 .footerContainer hr {
   color: #a4a4a4;
   opacity: 0.1;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 2;
+  justify-content: 'space-between',
 }
 
 .socialIcons {
@@ -20,7 +27,6 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: end;
-
   column-gap: 0.5rem;
 }
 
