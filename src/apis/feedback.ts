@@ -28,10 +28,6 @@ export const getPostEventFields = (
     });
 };
 
-// export const addFeedback = (eventId: string, formData: FormDataType, setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>) => {
-
-// }
-
 export const getPostEventCategories = (eventId: string) => {
   publicGateway
     .get(makeMyPass.getPostEventCategories(eventId))
@@ -47,7 +43,6 @@ export const getFeedback = (eventId: string, setFeedback: any) => {
   privateGateway
     .get(makeMyPass.getFeedback(eventId))
     .then((response) => {
-      toast.success(response.data.message.general[0] || 'Feedback fetched successfully');
       setFeedback(response.data.response.feedbacks);
       console.log(response.data.response.feedbacks);
     })
