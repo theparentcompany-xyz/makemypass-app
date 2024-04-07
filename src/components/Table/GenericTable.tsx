@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { downloadFile, uploadFile } from '../../apis/guests';
+import { downloadFile } from '../../apis/guests';
 import { formatDate } from '../../common/commonFunctions';
 import { GlobalContext } from '../../contexts/globalContext';
 import styles from './Table.module.css';
