@@ -28,10 +28,6 @@ export const getPostEventFields = (
     });
 };
 
-// export const addFeedback = (eventId: string, formData: FormDataType, setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>) => {
-
-// }
-
 export const getPostEventCategories = (eventId: string) => {
   publicGateway
     .get(makeMyPass.getPostEventCategories(eventId))

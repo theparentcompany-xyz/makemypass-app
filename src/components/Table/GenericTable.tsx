@@ -1,9 +1,24 @@
+import { useContext } from 'react';
+import { downloadFile } from '../../apis/guests';
 import { formatDate } from '../../common/commonFunctions';
+import { GlobalContext } from '../../contexts/globalContext';
 import styles from './Table.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; tableData: any[] }) => {
-  console.log(tableData);
+  const formattedKeys =
+    tableData.length > 0
+      ? Object.keys(tableData[0]).map((key) => {
+          const formattedKey = key
+            .split('_')
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+          return formattedKey;
+        })
+      : [];
+
+  const { eventId } = useContext(GlobalContext);
+
   return (
     <>
       <motion.div
@@ -18,55 +33,51 @@ const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; table
         </div>
 
         <div className={styles.tableContainer}>
-          <div className={styles.table}>
-            <AnimatePresence>
-              {tableData?.length > 0 ? (
-                tableData.map((data, index) => (
-                  <div
-                    className={styles.rowData}
-                    style={{
-                      padding: '0.25rem',
-                    }}
-                  >
-                    <div
-                      key={data.name}
-                      className={styles.row}
-                      style={{
-                        paddingBottom: '0.5rem',
-                        justifyContent: 'flex-start',
-                      }}
-                    >
-                      <p className={styles.rowName}>{data.name || index + 1} </p>
-                      <p className={styles.rowEmail}>
-                        {data.opinion || formatDate(data.created_at)}
-                      </p>
-                      {data.updated_at && (
-                        <p className={styles.rowEmail}>{formatDate(data.updated_at)}</p>
+          <AnimatePresence>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  {formattedKeys.map((key) =>
+                    key.includes('Id') || key.includes('id') ? null : (
+                      <th className={styles.rowName}>{key}</th>
+                    ),
+                  )}
+                </tr>
+              </thead>
+              <tbody>
+                {tableData?.length > 0 &&
+                  tableData.map((data) => (
+                    <tr key={data.name} className={styles.tableRow}>
+                      {Object.keys(data).map((key) =>
+                        key.includes('id') || key.includes('Id') ? null : (
+                          <>
+                            <td className={styles.rowName}>
+                              {typeof data[key] == 'string' && !isNaN(new Date(data[key]).getTime())
+                                ? formatDate(data[key])
+                                : data[key]}
+                            </td>
+                          </>
+                        ),
                       )}
-                      {data.status && <p className={styles.rowType}>{data.status}</p>}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div
-                  className={styles.rowData}
-                  style={{
-                    padding: '0.25rem',
-                  }}
-                >
-                  <div
-                    className={styles.row}
-                    style={{
-                      paddingBottom: '0.5rem',
-                      justifyContent: 'flex-start',
-                    }}
-                  >
-                    <p className={styles.rowName}>No Data to Show </p>
-                  </div>
-                </div>
-              )}
-            </AnimatePresence>
-          </div>
+                      <td
+                        onClick={() => {
+                          downloadFile(eventId, data.file_id, 'uploaded');
+                        }}
+                      >
+                        Uploaded
+                      </td>
+                      <td
+                        onClick={() => {
+                          downloadFile(eventId, data.file_id, 'processed');
+                        }}
+                      >
+                        Processed
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </AnimatePresence>
         </div>
       </motion.div>
     </>

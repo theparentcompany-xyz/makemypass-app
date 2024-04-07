@@ -5,17 +5,6 @@ import { Dispatch } from 'react';
 import { SelectedGuest } from '../pages/app/Guests/types';
 import { ErrorMessages, FormDataType } from './types';
 
-export const sentInvite = (eventId: string, ticketId: string) => {
-  privateGateway
-    .post(makeMyPass.sentInvite(eventId, ticketId))
-    .then((response) => {
-      toast.success(response.data.message.general[0] || 'Invite sent successfully');
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Invite sending failed');
-    });
-};
-
 export const shortListUser = (
   eventId: string,
   userId: string,
@@ -42,8 +31,9 @@ export const addGuest = (
   setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
 ) => {
+  formData['tickets[]'] = ticketId;
   privateGateway
-    .post(makeMyPass.sentInvite(eventId, ticketId), formData, {
+    .post(makeMyPass.sentInvite(eventId), formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

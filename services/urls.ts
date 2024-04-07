@@ -63,8 +63,7 @@ export const makeMyPass = {
   getFileStatus: (eventId: string) => makeMyPassURL(`/event/${eventId}/list-file-status/`),
 
   uploadFile: (eventId: string) => makeMyPassURL(`/event/${eventId}/csv/`),
-  sentInvite: (eventId: string, ticketId: string) =>
-    makeMyPassURL(`/pre-event/${eventId}/sent-invite/${ticketId}`),
+  sentInvite: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/sent-invite/`),
 
   shortListUser: (eventId: string, userId: string) =>
     makeMyPassURL(`/pre-event/${eventId}/short-list-user/${userId}`),
@@ -94,6 +93,9 @@ export const makeMyPass = {
     makeMyPassURL(`/post-event/get-post-event-categories/${eventId}/`),
   getFeedback: (eventId: string) => makeMyPassURL(`/post-event/list-feedback/${eventId}/`),
   parseFromAudio: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/parse-from-audio/`),
+
+  downloadBulkUploadCSV: (eventId: string, fileId: string, fileType: string) =>
+    makeMyPassURL(`/event/${eventId}/download_file/${fileId}/?file_type=${fileType}`),
 };
 
 export const makeMyPassSocket = {

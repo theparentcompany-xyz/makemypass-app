@@ -16,7 +16,7 @@ const DynamicForm = ({
   ticketInfo,
   setTicketId,
   ticketId,
-  eventData
+  eventData,
 }: {
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
@@ -121,11 +121,7 @@ const DynamicForm = ({
   return (
     <>
       <div className={styles.formFields}>
-        {eventData?.parse_audio &&
-          < AudioRecorder
-            handleSubmit={handleAudioSubmit}
-          />
-        }
+        {eventData?.parse_audio && <AudioRecorder handleSubmit={handleAudioSubmit} />}
         {ticketInfo && (
           <div
             style={{
@@ -288,8 +284,8 @@ const DynamicForm = ({
                     value={
                       Array.isArray(formData[field.field_key])
                         ? selectValues.filter((option) =>
-                          (formData[field.field_key] as string[])?.includes(option.value),
-                        )
+                            (formData[field.field_key] as string[])?.includes(option.value),
+                          )
                         : []
                     }
                     options={selectValues}
@@ -334,6 +330,7 @@ const DynamicForm = ({
               </div>
             );
           } else if (field.type === 'file') {
+            console.log(field.property?.extension_types.join(',') ?? '');
             return (
               <div
                 style={{
@@ -345,6 +342,7 @@ const DynamicForm = ({
                 <input
                   type='file'
                   id={field.field_key}
+                  accept={field.property?.extension_types.join(',') ?? ''}
                   name={field.title}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     onFieldChange(field.field_key, e.target.files as any);
@@ -478,13 +476,9 @@ const DynamicForm = ({
                               const newValues = (formData[field.field_key] as string[]).filter(
                                 (val) => val !== value,
                               );
-                              console.log(field.field_key, newValues);
+
                               onFieldChange(field.field_key, newValues);
                             } else {
-                              console.log(field.field_key, [
-                                ...(formData[field.field_key] as string[]),
-                                value,
-                              ]);
                               onFieldChange(field.field_key, [
                                 ...(formData[field.field_key] as string[]),
                                 value,

@@ -24,17 +24,19 @@ export const showRazorpay = async (
 
   const backendFormData = new FormData();
 
-  ticketIds.forEach(ticketId => {
+  ticketIds.forEach((ticketId) => {
     backendFormData.append('tickets[]', ticketId);
-  })
+  });
 
   Object.keys(formData).forEach((key) => {
     let value = formData[key];
 
     if (!(value instanceof FileList))
-      value = Array.isArray(formData[key])
-        ? JSON.stringify(formData[key])
-        : formData[key].toString();
+      if (Array.isArray(formData[key])) {
+        formData[key].forEach((value: string) => backendFormData.append(key + '[]', value));
+      } else {
+        value = formData[key];
+      }
 
     if (typeof value === 'string' && value.length > 0) backendFormData.append(key, value);
     else if (value instanceof FileList) {

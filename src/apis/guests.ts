@@ -134,3 +134,21 @@ export const uploadFile = (eventId: string, file: File, ticketId: string) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
     });
 };
+
+export const downloadFile = async (eventId: string, fileId: string, fileType: string) => {
+  privateGateway
+    .get(makeMyPass.downloadBulkUploadCSV(eventId, fileId, fileType))
+    .then((response) => {
+      const csvData = response.data;
+      const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `${fileType}.csv`);
+      document.body.appendChild(link);
+      link.click();
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Something went wrong');
+    });
+};

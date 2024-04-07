@@ -66,6 +66,11 @@ export type FormFieldType = {
     url: string;
     method: string;
   };
+  property?: {
+    file_size: number;
+    extension_types: string[];
+    max_no_of_files: number;
+  };
   condition?: {
     field: string;
     value: string;
