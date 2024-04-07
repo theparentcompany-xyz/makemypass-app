@@ -42,8 +42,9 @@ export const addGuest = (
   setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
 ) => {
+  formData['tickets[]'] = ticketId;
   privateGateway
-    .post(makeMyPass.sentInvite(eventId, ticketId), formData, {
+    .post(makeMyPass.sentInvite(eventId), formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

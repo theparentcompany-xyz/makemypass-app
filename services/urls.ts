@@ -63,8 +63,7 @@ export const makeMyPass = {
   getFileStatus: (eventId: string) => makeMyPassURL(`/event/${eventId}/list-file-status/`),
 
   uploadFile: (eventId: string) => makeMyPassURL(`/event/${eventId}/csv/`),
-  sentInvite: (eventId: string, ticketId: string) =>
-    makeMyPassURL(`/pre-event/${eventId}/sent-invite/${ticketId}`),
+  sentInvite: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/sent-invite/`),
 
   shortListUser: (eventId: string, userId: string) =>
     makeMyPassURL(`/pre-event/${eventId}/short-list-user/${userId}`),
