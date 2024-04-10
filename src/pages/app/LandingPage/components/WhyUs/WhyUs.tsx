@@ -31,7 +31,7 @@ const WhyUs = () => {
           </div>
         </div>
         <img
-          src='/app/landing/tsImg.png'
+          src='/app/landing/tsImg.webp'
           alt='the insights dashboard of makemypass.com alongisde the realtime overview page of makemypass.com'
           className={styles.tsImg}
         />

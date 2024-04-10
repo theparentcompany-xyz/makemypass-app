@@ -18,9 +18,9 @@ const Hero = () => {
         </p>
         <div className={styles.arrowCircle}>
           <motion.div initial={{ x: -100 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-            <img className={styles.arrow} src='/app/landing/arrow.png' alt='white color arrow' />
+            <img className={styles.arrow} src='/app/landing/arrow.webp' alt='white color arrow' />
           </motion.div>
-          <img className={styles.circle} src='/app/landing/circle.png' alt='white color circle' />
+          <img className={styles.circle} src='/app/landing/circle.webp' alt='white color circle' />
         </div>
         <p className={styles.fsSubHeading}>
           Unforgettable Moments Commence with Tickets in your Digital Grasp. At MakeMyPass,
@@ -39,7 +39,7 @@ const Hero = () => {
       </div>
 
       <img
-        src='/app/landing/fsImage.png'
+        src='/app/landing/fsImage.webp'
         alt='features of makemypass.com'
         className={styles.fsImage}
       />

@@ -133,7 +133,7 @@ const LandingPage = () => {
           <div className={styles.secondSection}>
             <p className={styles.ssText}>Erase the Hassle with Our Ticketing Magic!</p>
             <img
-              src='/app/landing/ssImg.png'
+              src='/app/landing/ssImg.webp'
               alt='image showing the table ui of makemypass'
               className={styles.ssImg}
             />
