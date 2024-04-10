@@ -40,15 +40,15 @@ const EventPage = () => {
 
   const { eventId, setEventId, hasEvent } = useContext(GlobalContext);
   if (!setEventId) {
-    throw new Error("setEventId is undefined");
+    throw new Error('setEventId is undefined');
   }
 
-  console.log(eventId, hasEvent)
+  console.log(eventId, hasEvent);
 
   const [hasZeroPriceTicket, setHasZeroPriceTicket] = useState(false);
 
   const [coupon, setCoupon] = useState<CouponData>({
-    coupon: '',
+    status: '',
     description: '',
     value: '',
     error: '',
@@ -62,6 +62,10 @@ const EventPage = () => {
       }
     }, 1000);
   }, [eventTitle, eventId]);
+
+  useEffect(() => {
+    if (eventData?.coupon) setCoupon(eventData?.coupon);
+  }, [eventData]);
 
   useEffect(() => {
     const scrollToTop = () => {
@@ -131,7 +135,7 @@ const EventPage = () => {
       });
     }
   };
-  console.log(ticketIds, amount)
+  console.log(ticketIds, amount);
   return (
     <>
       {hasEvent ? (
@@ -277,7 +281,9 @@ const EventPage = () => {
                       }}
                       className={styles.submitButton}
                     >
-                      {formNumber === 0 && !(hasZeroPriceTicket || eventData?.select_multi_ticket) ? 'Next' : 'Register Now'}
+                      {formNumber === 0 && !(hasZeroPriceTicket || eventData?.select_multi_ticket)
+                        ? 'Next'
+                        : 'Register Now'}
                     </motion.button>
                   </div>
                 </div>

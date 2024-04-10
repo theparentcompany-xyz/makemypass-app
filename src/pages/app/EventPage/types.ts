@@ -12,7 +12,7 @@ export type DiscountData = {
 };
 
 export type CouponData = {
-  coupon: string;
+  status: string;
   description: string;
   value?: string;
   error?: string;

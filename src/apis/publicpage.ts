@@ -39,17 +39,14 @@ export const submitForm = async ({
     if (!(value instanceof FileList)) {
       if (Array.isArray(value) && value.length > 0) {
         value.forEach((value) => backendFormData.append(key + '[]', value));
-      }
-      else {
-        value = formData[key].toString()
+      } else {
+        value = formData[key].toString();
       }
     }
-
 
     if (typeof value === 'string' && value.length > 0) {
       backendFormData.append(key, value);
-    }
-    else if (value instanceof FileList) {
+    } else if (value instanceof FileList) {
       Array.from(value).forEach((value) => backendFormData.append(key + '[]', value));
     }
   });
@@ -74,7 +71,7 @@ export const submitForm = async ({
         setAmount && setAmount('');
       }, 4000);
 
-      setCoupon && setCoupon({ coupon: '', description: '' });
+      setCoupon && setCoupon({ status: '', description: '' });
     })
     .catch((error) => {
       toast.error('Error in Registering Event');
@@ -119,7 +116,6 @@ export const validateRsvp = async (
     }
   });
 
-
   const payloadFormData = new FormData();
 
   Object.keys(formData).forEach((key) => {
@@ -128,20 +124,17 @@ export const validateRsvp = async (
     if (!(value instanceof FileList)) {
       if (Array.isArray(value) && value.length > 0) {
         value.forEach((value) => payloadFormData.append(key + '[]', value));
-      }
-      else {
-        value = formData[key].toString()
+      } else {
+        value = formData[key].toString();
       }
     }
 
     if (typeof value === 'string' && value.length > 0) {
       payloadFormData.append(key, value);
-    }
-    else if (value instanceof FileList) {
+    } else if (value instanceof FileList) {
       Array.from(value).forEach((value) => payloadFormData.append(key + '[]', value));
     }
   });
-
 
   return publicGateway
     .post(makeMyPass.validateRsvp(eventId), payloadFormData, {
@@ -219,16 +212,17 @@ export const getEventDatas = async (
     });
 };
 
-
 export const postAudio = async (eventId: string, recordedBlob: Blob) => {
   const form = new FormData();
-  const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.mp3', { type: 'audio/mp3' });
+  const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.mp3', {
+    type: 'audio/mp3',
+  });
   form.append('file', file);
   publicGateway
     .post(makeMyPass.parseFromAudio(eventId), form, {
       headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+        'Content-Type': 'multipart/form-data',
+      },
     })
     .then((response) => {
       console.log(response.data);
@@ -236,5 +230,4 @@ export const postAudio = async (eventId: string, recordedBlob: Blob) => {
     .catch((error) => {
       console.error(error.response.data.message.general[0]);
     });
-}
-
+};

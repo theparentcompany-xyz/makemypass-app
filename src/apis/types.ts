@@ -90,7 +90,10 @@ export interface TicketType {
 }
 
 interface CouponType {
-  status: boolean;
+  status: string;
+  description: string;
+  value?: string;
+  error?: string;
 }
 
 export interface EventType {

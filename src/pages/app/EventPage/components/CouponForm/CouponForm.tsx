@@ -31,13 +31,10 @@ const CouponForm = ({
   setCoupon: React.Dispatch<React.SetStateAction<CouponData>>;
   coupon: CouponData;
 }) => {
-
-
-
-
+  console.log(coupon);
   return (
     <>
-      {coupon.coupon && (
+      {coupon.status && (
         <motion.div
           initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
@@ -122,46 +119,56 @@ const CouponForm = ({
             key={ticketType}
             onClick={() => {
               if (eventData?.select_multi_ticket) {
-                let newTicketIds = []  //temporary variable to store new ticket ids for amount updation
+                let newTicketIds = []; //temporary variable to store new ticket ids for amount updation
 
                 if (ticketIds.includes(ticketInfo[ticketType].id)) {
                   setTicketIds(ticketIds.filter((id) => id !== ticketInfo[ticketType].id));
                   newTicketIds = ticketIds.filter((id) => id !== ticketInfo[ticketType].id);
-                }
-                else {
+                } else {
                   setTicketIds([...ticketIds, ticketInfo[ticketType].id]);
-                  newTicketIds = [...ticketIds, ticketInfo[ticketType].id]
+                  newTicketIds = [...ticketIds, ticketInfo[ticketType].id];
                 }
                 if (discount.discount_value > 0) {
                   const amount = newTicketIds.reduce((acc, id) => {
-                    return (acc + discountedTicketPrice(Object.values(ticketInfo).filter(ticktype => ticktype.id === id)[0].price, discount))
-                  }, 0)
-                  setAmount(amount.toString())
-                }
-                else {
+                    return (
+                      acc +
+                      discountedTicketPrice(
+                        Object.values(ticketInfo).filter((ticktype) => ticktype.id === id)[0].price,
+                        discount,
+                      )
+                    );
+                  }, 0);
+                  setAmount(amount.toString());
+                } else {
                   const amount = newTicketIds.reduce((acc, id) => {
-                    return (acc + (Number(Object.values(ticketInfo).filter(ticktype => ticktype.id === id)[0].price)))
-                  }, 0)
+                    return (
+                      acc +
+                      Number(
+                        Object.values(ticketInfo).filter((ticktype) => ticktype.id === id)[0].price,
+                      )
+                    );
+                  }, 0);
                   setAmount(amount.toString());
                 }
-              }
-              else {
+              } else {
                 setTicketIds([ticketInfo[ticketType].id]);
                 if (discount.discount_value > 0)
                   setAmount(
-                    discountedTicketPrice(Number(ticketInfo[ticketType].price), discount).toString(),
+                    discountedTicketPrice(
+                      Number(ticketInfo[ticketType].price),
+                      discount,
+                    ).toString(),
                   );
                 else {
                   setAmount(ticketInfo[ticketType].price.toString());
                 }
               }
-
-
             }}
             className={styles.ticketType}
             style={{
-              border:
-                ticketIds.includes(ticketInfo[ticketType].id) ? '2px solid #FFFFFF' : '2px solid #2A3533',
+              border: ticketIds.includes(ticketInfo[ticketType].id)
+                ? '2px solid #FFFFFF'
+                : '2px solid #2A3533',
             }}
           >
             <div className={styles.passText}>
