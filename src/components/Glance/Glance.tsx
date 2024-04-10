@@ -72,7 +72,7 @@ const Glance = ({ tab }: { tab: string }) => {
           const category = JSON.parse(event.data).response.bargraph;
 
           if (totalGuests > 0 && totalGuests != JSON.parse(event.data).response.total_reg) {
-            const audio = new Audio('/count.mp3');
+            const audio = new Audio('/sounds/count.mp3');
             audio.play();
           }
 

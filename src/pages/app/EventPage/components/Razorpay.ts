@@ -64,10 +64,10 @@ export const showRazorpay = async (
     currency: 'INR',
     name: 'MakeMyPass',
     description: 'Event Registration',
-    image: '/maskable.webp',
+    image: '/pwa/maskable.webp',
     order_id: paymentId,
     handler: function (response: any) {
-      const audio = new Audio('/gpay.mp3');
+      const audio = new Audio('/sounds/gpay.mp3');
       audio.play();
       submitForm({
         eventId,

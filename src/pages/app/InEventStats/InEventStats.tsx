@@ -144,7 +144,7 @@ const InEventStats = () => {
 
   useEffect(() => {
     if (newUser && newUser.name) {
-      const audio = new Audio('/count.mp3');
+      const audio = new Audio('/sounds/count.mp3');
       audio.play();
     }
   }, [newUser]);
