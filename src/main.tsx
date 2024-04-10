@@ -32,6 +32,7 @@ import GlobalContextWrapper from './components/GlobalContextWrapper';
 import GuestBulkImport from './pages/app/Guests/pages/GuestBulkImport/GuestBulkImport';
 import Feedback from './pages/app/Feedback/Feedback';
 import EventFeedback from './pages/app/EventFeedback/EventFeedback';
+import CreateEvent from './pages/app/CreateEvent/CreateEvent';
 
 const RoleChecker = SecureAuthRoutes();
 
@@ -124,6 +125,10 @@ const routes = [
           {
             path: '/:eventTitle/feedback',
             element: <RoleChecker roles={['Admin', 'Volunteer']} children={<EventFeedback />} />,
+          },
+          {
+            path: '/create-event',
+            element: <CreateEvent />,
           },
         ],
       },
