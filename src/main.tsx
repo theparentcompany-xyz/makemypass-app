@@ -33,6 +33,7 @@ import GuestBulkImport from './pages/app/Guests/pages/GuestBulkImport/GuestBulkI
 import Feedback from './pages/app/Feedback/Feedback';
 import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 import CreateEvent from './pages/app/CreateEvent/CreateEvent';
+import EventGlance from './pages/app/EventGlance/EventGlance';
 
 const RoleChecker = SecureAuthRoutes();
 
@@ -129,6 +130,10 @@ const routes = [
           {
             path: '/create-event',
             element: <CreateEvent />,
+          },
+          {
+            path: '/:eventTitle/manage',
+            element: <RoleChecker roles={['Admin', 'Volunteer']} children={<EventGlance />} />,
           },
         ],
       },

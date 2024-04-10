@@ -108,6 +108,7 @@ const Glance = ({ tab }: { tab: string }) => {
 
   const tabs = {
     overview: 'Overview',
+    manage: 'Events Page',
     insights: 'Insights',
     guests: 'Guests',
     inevent: 'In-Event',
@@ -152,6 +153,7 @@ const Glance = ({ tab }: { tab: string }) => {
             currentTab != 'claimgifts' &&
             currentTab != 'postevent' &&
             currentTab != 'feedback' &&
+            currentTab != 'manage' &&
             progressData.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: -50 }}

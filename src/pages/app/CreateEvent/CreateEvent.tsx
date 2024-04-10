@@ -3,7 +3,6 @@ import Theme from '../../../components/Theme/Theme';
 import { GrLocation } from 'react-icons/gr';
 
 import banner from './banner.png';
-import { useState } from 'react';
 import { TbUserCheck } from 'react-icons/tb';
 import { BiArrowToTop } from 'react-icons/bi';
 import { LuPencil } from 'react-icons/lu';
