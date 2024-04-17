@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { Event } from './types';
+import { Event, EventType } from './types';
 import { Dispatch } from 'react';
 import { PubllicEvent } from '../pages/app/LandingPage/components/Projects/types';
 import { getEventDatas } from './publicpage';
@@ -84,3 +84,29 @@ export const getCategories = async (
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };
+
+
+export const createEvent = (eventTitle: string) => {
+  privateGateway
+    .post(makeMyPass.createEvent, {
+      title: eventTitle
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+}
+
+export const getEvent = (eventId: string, setEventTitle?: Dispatch<React.SetStateAction<string>>, setEventData?: Dispatch<React.SetStateAction<EventType | undefined>>) => {
+  privateGateway
+    .get(makeMyPass.getEvent(eventId))
+    .then((response) => {
+      setEventData && setEventData(response.data.response);
+      setEventTitle && setEventTitle(response.data.response.title);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+}
