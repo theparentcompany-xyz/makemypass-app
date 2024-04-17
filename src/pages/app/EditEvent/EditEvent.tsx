@@ -1,8 +1,7 @@
 import styles from './EditEvent.module.css';
 import Theme from '../../../components/Theme/Theme';
 import { GrLocation } from 'react-icons/gr';
-import { createEvent, getEvent } from '../../../apis/events';
-import banner from './banner.png';
+import { getEvent } from '../../../apis/events';
 import { TbUserCheck } from 'react-icons/tb';
 import { BiArrowToTop } from 'react-icons/bi';
 import { LuPencil } from 'react-icons/lu';
