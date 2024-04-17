@@ -62,16 +62,14 @@ export const submitForm = async ({
       },
     })
     .then((response) => {
-      setSuccess && setSuccess(response.data.response.code);
-
-      setTimeout(() => {
-        setSuccess && setSuccess('');
-        setFormNumber && setFormNumber(0);
-        setFormData && setFormData({});
-        setAmount && setAmount('');
-      }, 4000);
-
-      setCoupon && setCoupon({ status: '', description: '' });
+      // setSuccess && setSuccess(response.data.response.code);
+      // setTimeout(() => {
+      //   setSuccess && setSuccess('');
+      //   setFormNumber && setFormNumber(0);
+      //   setFormData && setFormData({});
+      //   setAmount && setAmount('');
+      // }, 4000);
+      // setCoupon && setCoupon({ status: '', description: '' });
     })
     .catch((error) => {
       toast.error('Error in Registering Event');

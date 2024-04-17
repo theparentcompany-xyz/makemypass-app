@@ -250,33 +250,18 @@ const EventPage = () => {
                             validateRsvp(eventId, formData, setFormNumber, setFormErrors);
                           }
                         } else {
-                          if (amount === '0' || hasZeroPriceTicket)
-                            submitForm({
-                              eventId,
-                              ticketIds,
-                              formData,
-                              coupon,
-                              setSuccess,
-                              setFormNumber,
-                              setFormData,
-                              setAmount,
-                              setFormErrors,
-                              setCoupon,
-                            });
-                          else if (formData) {
-                            showRazorpay(
-                              eventId,
-                              ticketIds,
-                              formData,
-                              coupon,
-                              setFormErrors,
-                              setSuccess,
-                              setFormNumber,
-                              setFormData,
-                              setAmount,
-                              setCoupon,
-                            );
-                          }
+                          submitForm({
+                            eventId,
+                            ticketIds,
+                            formData,
+                            coupon,
+                            setSuccess,
+                            setFormNumber,
+                            setFormData,
+                            setAmount,
+                            setFormErrors,
+                            setCoupon,
+                          });
                         }
                       }}
                       className={styles.submitButton}
