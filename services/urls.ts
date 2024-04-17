@@ -50,6 +50,7 @@ export const makeMyPass = {
   getTicketInfo: (eventId: string) => makeMyPassURL(`/public-form/get-tickets-info/${eventId}/`),
   getFormFields: (evenid: string) => makeMyPassURL(`/public-form/get-form-fields/${evenid}/`),
   getEventInfo: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/info/`),
+  validatePayment: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/validate-payment/`),
   submitForm: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/submit/`),
 
   createPayment: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/create-order/`),
@@ -96,7 +97,6 @@ export const makeMyPass = {
 
   downloadBulkUploadCSV: (eventId: string, fileId: string, fileType: string) =>
     makeMyPassURL(`/event/${eventId}/download_file/${fileId}/?file_type=${fileType}/`),
-
 
   createEvent: makeMyPassURL(`/manage-event/create-event/`),
 

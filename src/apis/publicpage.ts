@@ -31,6 +31,10 @@ export const submitForm = async ({
   response?: unknown;
   setCoupon?: React.Dispatch<CouponData>;
 }) => {
+  const script = document.createElement('script');
+  script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+  document.body.appendChild(script);
+
   const backendFormData = new FormData();
 
   Object.keys(formData).forEach((key) => {
@@ -62,17 +66,69 @@ export const submitForm = async ({
       },
     })
     .then((response) => {
-      // setSuccess && setSuccess(response.data.response.code);
-      // setTimeout(() => {
-      //   setSuccess && setSuccess('');
-      //   setFormNumber && setFormNumber(0);
-      //   setFormData && setFormData({});
-      //   setAmount && setAmount('');
-      // }, 4000);
-      // setCoupon && setCoupon({ status: '', description: '' });
+      if (response.data.response.gateway_type) {
+        console.log(response.data.response);
+
+        let paymentId: string = response.data.response.id;
+        let paymentAmount: string = response.data.response.amount;
+
+        const options = {
+          key_id: response.data.response.gateway_key,
+          amount: paymentAmount,
+          currency: response.data.response.currency,
+          name: 'MakeMyPass',
+          description: 'Event Registration',
+          image: '/pwa/maskable.webp',
+          order_id: paymentId,
+          handler: function (response: any) {
+            const audio = new Audio('/sounds/gpay.mp3');
+            audio.play();
+
+            publicGateway
+              .post(makeMyPass.validatePayment(eventId), {
+                payment_data: response,
+              })
+              .then((response) => {
+                setSuccess && setSuccess(response.data.response.code);
+
+                setTimeout(() => {
+                  setSuccess && setSuccess('');
+                  setFormNumber && setFormNumber(0);
+                  setFormData && setFormData({});
+                  setAmount && setAmount('');
+                }, 4000);
+
+                setCoupon && setCoupon({ status: '', description: '' });
+              })
+              .catch((error) => {
+                toast.error(
+                  error.response.data.message.general[0] || 'Error in Validating Payment',
+                );
+              });
+          },
+          theme: {
+            color: '#00FF82',
+          },
+        };
+
+        const rzp1 = new (window as any).Razorpay(options);
+        rzp1.open();
+      } else {
+        setSuccess && setSuccess(response.data.response.code);
+
+        setTimeout(() => {
+          setSuccess && setSuccess('');
+          setFormNumber && setFormNumber(0);
+          setFormData && setFormData({});
+          setAmount && setAmount('');
+        }, 4000);
+
+        setCoupon && setCoupon({ status: '', description: '' });
+      }
     })
     .catch((error) => {
       toast.error('Error in Registering Event');
+      console.log(error);
       if (setFormErrors) setFormErrors(error.response.data.message);
     });
 };
@@ -196,7 +252,7 @@ export const getEventDatas = async (
   setEventData?: Dispatch<React.SetStateAction<EventDetails | undefined>>,
 ) => {
   return publicGateway
-    .get(makeMyPass.getEvent(eventId))
+    .get(makeMyPass.getEventDatas(eventId))
     .then((response) => {
       if (setEventData) setEventData(response.data.response);
 
@@ -212,8 +268,8 @@ export const getEventDatas = async (
 
 export const postAudio = async (eventId: string, recordedBlob: Blob) => {
   const form = new FormData();
-  const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.wav', {
-    type: 'audio/wav',
+  const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.mp3', {
+    type: 'audio/mp3',
   });
   form.append('file', file);
   publicGateway

@@ -14,60 +14,59 @@ import { EventType } from '../../../apis/types';
 
 const CreateEvent = () => {
   const { eventId, hasEvent } = useContext(GlobalContext);
-  const [eventTitle, setEventTitle] = useState("");
+  const [eventTitle, setEventTitle] = useState('');
   const [eventData, setEventData] = useState<EventType>();
-  const [selectedColor, setSelectedColor] = useState("#00753B");
+  const [selectedColor, setSelectedColor] = useState('#00753B');
   useEffect(() => {
-    if (eventId)
-      getEvent(eventId, setEventTitle, setEventData);
-  }, [eventId])
+    if (eventId) getEvent(eventId, setEventTitle, setEventData);
+  }, [eventId]);
   const submitCreateEvent = () => {
-    console.log(eventTitle);
-
-    // if (eventTitle) {
-    //   createEvent(eventTitle);
-    // }
-    getEvent("0fbd6882-02f8-4299-9e8c-5010390a7685")
-  }
-  console.log(eventData)
+    getEvent(eventId);
+  };
+  console.log(eventData);
 
   return (
     <>
-
-      {hasEvent ?
-        (<Theme>
+      {hasEvent ? (
+        <Theme>
           {eventData ? (
             <div className={styles.createEventContainer}>
               <div className={styles.rightSideContainer}>
                 <div className={styles.bannerContainer}>
-                  {
-                    eventData?.banner ? (
-                      <img src={eventData?.banner} alt='' className={styles.banner} />
-                    ) : (
-                      <svg height="250" width="100%" className={styles.banner} >
-                        {
-                          eventTitle && (
-                            <>
-                              <rect width="100%" height="100%" fill={selectedColor} className={styles.banner} />
-                              <text x="40%" y="70%" fill="white" className={styles.svgText}>{eventTitle[0]?.toUpperCase()}</text>
-                            </>
-                          )
-                        }
-                      </svg>
-                    )
-                  }
+                  {eventData?.banner ? (
+                    <img src={eventData?.banner} alt='' className={styles.banner} />
+                  ) : (
+                    <svg height='250' width='100%' className={styles.banner}>
+                      {eventTitle && (
+                        <>
+                          <rect
+                            width='100%'
+                            height='100%'
+                            fill={selectedColor}
+                            className={styles.banner}
+                          />
+                          <text x='40%' y='70%' fill='white' className={styles.svgText}>
+                            {eventTitle[0]?.toUpperCase()}
+                          </text>
+                        </>
+                      )}
+                    </svg>
+                  )}
                 </div>
                 <div className={styles.descriptionContainer}>
                   <p className={styles.eventHeading}>About Event</p>
-                  <p className={styles.description}>
-                    {eventData.description || "No Description"}
-                  </p>
+                  <p className={styles.description}>{eventData.description || 'No Description'}</p>
                 </div>
               </div>
 
               <div className={styles.leftSideContainer}>
                 <div className={styles.container}>
-                  <textarea placeholder='Event Name' className={styles.inputEventName} onChange={(e) => setEventTitle(e.target.value)} value={eventTitle} />
+                  <textarea
+                    placeholder='Event Name'
+                    className={styles.inputEventName}
+                    onChange={(e) => setEventTitle(e.target.value)}
+                    value={eventTitle}
+                  />
                   <div className={styles.timezoneContainer}>
                     <div className={styles.dateTimeContainer}>
                       <div>
@@ -111,31 +110,39 @@ const CreateEvent = () => {
                         Capacity
                       </label>
                       <div>
-                        <input type='number' className={styles.capcityInput} placeholder='Unlimited' />
+                        <input
+                          type='number'
+                          className={styles.capcityInput}
+                          placeholder='Unlimited'
+                        />
                         <LuPencil size={15} color='#949597' />
                       </div>
                     </div>
                   </div>
                   <div className={styles.backgroundOption}>
-                    <input type='color' className={styles.backgroundColorInput} value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)} />
+                    <input
+                      type='color'
+                      className={styles.backgroundColorInput}
+                      value={selectedColor}
+                      onChange={(e) => setSelectedColor(e.target.value)}
+                    />
                     <label>Background Color</label>
                   </div>
-                  <button className={styles.createButton} onClick={submitCreateEvent}>Edit Event</button>
+                  <button className={styles.createButton} onClick={submitCreateEvent}>
+                    Edit Event
+                  </button>
                 </div>
               </div>
             </div>
-
           ) : (
             <div className={styles.center}>
               <HashLoader color={'#46BF75'} size={50} />
             </div>
           )}
         </Theme>
-        ) :
+      ) : (
         <FourNotFour />
-      }
-
-
+      )}
     </>
   );
 };

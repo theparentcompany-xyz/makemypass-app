@@ -7,7 +7,7 @@ import { HashLoader } from 'react-spinners';
 import { getEventInfo, submitForm, validateRsvp } from '../../../apis/publicpage';
 import { CouponData, DiscountData } from './types';
 import { motion } from 'framer-motion';
-import { showRazorpay } from './components/Razorpay';
+// import { showRazorpay } from './components/Razorpay';
 import { EventType, FormDataType } from '../../../apis/types';
 import { discountedTicketPrice } from './constants';
 import DynamicForm from '../../../components/DynamicForm/DynamicForm';
