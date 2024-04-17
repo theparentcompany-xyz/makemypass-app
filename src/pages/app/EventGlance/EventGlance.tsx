@@ -3,7 +3,6 @@ import Theme from '../../../components/Theme/Theme';
 import styles from './EventGlance.module.css';
 import Glance from '../../../components/Glance/Glance';
 import { IoLocationOutline } from 'react-icons/io5';
-import banner from './banner.png';
 import { HiUserGroup } from 'react-icons/hi2';
 import { FaWrench } from 'react-icons/fa6';
 import { BsQrCodeScan } from 'react-icons/bs';
@@ -19,8 +18,7 @@ import { GlobalContext } from '../../../contexts/globalContext';
 import { EventType } from '../../../apis/types';
 import { getEvent } from '../../../apis/events';
 import FourNotFour from '../../FourNotFour/FourNotFour';
-import { HashLoader } from 'react-spinners';
-import { formatDate } from '../../../common/commonFunctions';
+//import { HashLoader } from 'react-spinners';
 
 const EventGlance = () => {
   const { eventId, hasEvent } = useContext(GlobalContext);
@@ -32,7 +30,7 @@ const EventGlance = () => {
   }, [eventId])
   const [selectedMail, setSelectedMail] = useState("")
 
-  const hardcodedData = {
+  /*const hardcodedData = {
     title: 'Grand Tech Adventure : CodeStorm',
     hosts: [
       { name: 'Host 1', profile_pic: 'https://via.placeholder.com/30' },
@@ -43,7 +41,7 @@ const EventGlance = () => {
     end_time: '12:00 PM',
     end_date: '2022-01-01',
     place: 'Hardcoded Event Place',
-  };
+  };*/
   const navigate = useNavigate();
 
   const selectValues = [{ value: "Going", label: "Going" }, { value: "Invited", label: "Invited" }, { value: "Maybe", label: "Maybe" }, { value: "Not Going", label: "Not Going" }]
