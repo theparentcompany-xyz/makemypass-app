@@ -9,8 +9,8 @@ type ModalProps = {
 const Modal = ({ children, onClose, ...inputProps }: ModalProps) => {
   return (
     <>
-      <div onClick={onClose} className={styles.backgroundBlur}></div>
-      <dialog {...inputProps} className={styles.onClickModal}>
+      <div onClick={onClose} className={styles.backgroundBlur} ></div>
+      <dialog {...inputProps} className={styles.onClickModal} style={inputProps.style}>
         {children}
       </dialog>
     </>

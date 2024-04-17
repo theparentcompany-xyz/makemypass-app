@@ -95,7 +95,12 @@ export const makeMyPass = {
   parseFromAudio: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/parse-from-audio/`),
 
   downloadBulkUploadCSV: (eventId: string, fileId: string, fileType: string) =>
-    makeMyPassURL(`/event/${eventId}/download_file/${fileId}/?file_type=${fileType}`),
+    makeMyPassURL(`/event/${eventId}/download_file/${fileId}/?file_type=${fileType}/`),
+
+
+  createEvent: makeMyPassURL(`/manage-event/create-event/`),
+
+  getEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/get-event/`),
 };
 
 export const makeMyPassSocket = {

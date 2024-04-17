@@ -34,6 +34,7 @@ import Feedback from './pages/app/Feedback/Feedback';
 import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 import CreateEvent from './pages/app/CreateEvent/CreateEvent';
 import EventGlance from './pages/app/EventGlance/EventGlance';
+import EditEvent from './pages/app/EditEvent/EditEvent';
 
 const RoleChecker = SecureAuthRoutes();
 
@@ -134,6 +135,10 @@ const routes = [
           {
             path: '/:eventTitle/manage',
             element: <RoleChecker roles={['Admin', 'Volunteer']} children={<EventGlance />} />,
+          },
+          {
+            path: '/:eventTitle/manage/edit-event',
+            element: <RoleChecker roles={['Admin', 'Volunteer']} children={<EditEvent />} />,
           },
         ],
       },
