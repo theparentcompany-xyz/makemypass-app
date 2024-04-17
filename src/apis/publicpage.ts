@@ -198,7 +198,7 @@ export const getEventDatas = async (
   setEventData?: Dispatch<React.SetStateAction<EventDetails | undefined>>,
 ) => {
   return publicGateway
-    .get(makeMyPass.getEventDatas(eventId))
+    .get(makeMyPass.getEvent(eventId))
     .then((response) => {
       if (setEventData) setEventData(response.data.response);
 
@@ -214,8 +214,8 @@ export const getEventDatas = async (
 
 export const postAudio = async (eventId: string, recordedBlob: Blob) => {
   const form = new FormData();
-  const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.mp3', {
-    type: 'audio/mp3',
+  const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.wav', {
+    type: 'audio/wav',
   });
   form.append('file', file);
   publicGateway
