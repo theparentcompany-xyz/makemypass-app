@@ -22,7 +22,7 @@ export const makeMyPass = {
     makeMyPassURL(`/checkin/${eventId}/register/${ticketCode}/`),
   getEventData: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/info`),
   resentTicket: makeMyPassURL('/pre-event/resent-ticket/'),
-  checkInCount: (eventId: string) => makeMyPassURL(`/checkin/${eventId}/checkin-count/`),
+  checkInCount: (eventId: string) => makeMyPassURL(`/analytics/${eventId}/checkin-count/`),
   editSubmission: (eventId: string, submissionId: string) =>
     makeMyPassURL(`/pre-event/${eventId}/edit-submission/${submissionId}`),
 
@@ -101,8 +101,8 @@ export const makeMyPass = {
 export const makeMyPassSocket = {
   recentRegistrations: (eventId: string) => `pre-event/${eventId}/recent-registrations/`,
 
-  analytics: (eventId: string) => `pre-event/${eventId}/analytics/`,
-  registerCounts: (eventId: string) => `pre-event/${eventId}/register-count/`,
+  analytics: (eventId: string) => `analytics/${eventId}/insights/`,
+  registerCounts: (eventId: string) => `analytics/${eventId}/register-count/`,
   checkInCounts: (eventId: string) => `checkin/${eventId}/count/`,
 
   listGuests: (eventId: string) => `pre-event/${eventId}/list-guests/`,
