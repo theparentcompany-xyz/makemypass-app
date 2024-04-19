@@ -83,9 +83,15 @@ const Header = ({ type }: { type?: string | undefined }) => {
                   >
                     Request Demo
                   </a>
-                  <Link to='/login'>
-                    <button className={styles.loginButton}>Login</button>
-                  </Link>
+                  {!isAuthenticated ? (
+                    <Link to='/login'>
+                      <button className={styles.loginButton}>Login</button>
+                    </Link>
+                  ) : (
+                    <Link to='/events'>
+                      <button className={styles.loginButton}>Dashboard</button>
+                    </Link>
+                  )}
                 </div>
               )}
             </>

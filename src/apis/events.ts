@@ -47,15 +47,18 @@ export const getEventData = async (
     }>
   >,
 ) => {
-  privateGateway
-    .get(makeMyPass.getEventData(eventId))
-    .then((response) => {
-      setEventData(response.data.response);
-      localStorage.setItem('role', response.data.response.role);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-    });
+  const role = localStorage.getItem('role');
+
+  if (!role)
+    privateGateway
+      .get(makeMyPass.getEventData(eventId))
+      .then((response) => {
+        setEventData(response.data.response);
+        localStorage.setItem('role', response.data.response.role);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+      });
 };
 
 export const getPublicEvents = async (
@@ -85,11 +88,10 @@ export const getCategories = async (
     });
 };
 
-
 export const createEvent = (eventTitle: string) => {
   privateGateway
     .post(makeMyPass.createEvent, {
-      title: eventTitle
+      title: eventTitle,
     })
     .then((response) => {
       console.log(response);
@@ -97,9 +99,13 @@ export const createEvent = (eventTitle: string) => {
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
-}
+};
 
-export const getEvent = (eventId: string, setEventTitle?: Dispatch<React.SetStateAction<string>>, setEventData?: Dispatch<React.SetStateAction<EventType | undefined>>) => {
+export const getEvent = (
+  eventId: string,
+  setEventTitle?: Dispatch<React.SetStateAction<string>>,
+  setEventData?: Dispatch<React.SetStateAction<EventType | undefined>>,
+) => {
   privateGateway
     .get(makeMyPass.getEvent(eventId))
     .then((response) => {
@@ -109,4 +115,4 @@ export const getEvent = (eventId: string, setEventTitle?: Dispatch<React.SetStat
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
-}
+};

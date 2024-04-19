@@ -67,8 +67,6 @@ export const submitForm = async ({
     })
     .then((response) => {
       if (response.data.response.gateway_type) {
-        console.log(response.data.response);
-
         let paymentId: string = response.data.response.id;
         let paymentAmount: string = response.data.response.amount;
 
@@ -85,9 +83,7 @@ export const submitForm = async ({
             audio.play();
 
             publicGateway
-              .post(makeMyPass.validatePayment(eventId), {
-                payment_data: response,
-              })
+              .post(makeMyPass.validatePayment(eventId), response)
               .then((response) => {
                 setSuccess && setSuccess(response.data.response.code);
 
@@ -96,7 +92,7 @@ export const submitForm = async ({
                   setFormNumber && setFormNumber(0);
                   setFormData && setFormData({});
                   setAmount && setAmount('');
-                }, 4000);
+                }, 2000);
 
                 setCoupon && setCoupon({ status: '', description: '' });
               })
