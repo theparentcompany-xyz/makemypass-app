@@ -48,7 +48,6 @@ export const getEventData = async (
   >,
 ) => {
   const role = localStorage.getItem('role');
-  console.log('Ivadae Ethiopia');
   if (!role)
     privateGateway
       .get(makeMyPass.getEventData(eventId))

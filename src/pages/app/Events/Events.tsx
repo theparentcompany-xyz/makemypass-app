@@ -56,7 +56,6 @@ const Events = () => {
   };
 
   const getEventRole = (eventId: string) => {
-    console.log('eventId', eventId);
     getEventData(eventId, setEventData);
   };
 
