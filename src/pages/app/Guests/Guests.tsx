@@ -50,6 +50,7 @@ const Guests = () => {
   const [ticketId, setTicketId] = useState<string>('');
   const [categories, setCategories] = useState<string[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>();
+  const [cashInHand, setCashInHand] = useState(false);
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
@@ -171,6 +172,13 @@ const Guests = () => {
     });
   };
 
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      cash_in_hand: cashInHand.toString(),
+    });
+  }, [cashInHand]);
+
   return (
     <Theme>
       {selectedGuestId && formData && selectedGuestId.id && selectedGuestId.type == 'view' && (
@@ -200,6 +208,8 @@ const Guests = () => {
               formErrors={formErrors}
               formData={formData}
               onFieldChange={onFieldChange}
+              setCashInHand={setCashInHand}
+              cashInHand={cashInHand}
               ticketInfo={ticketInfo}
               setTicketId={setTicketId}
               ticketId={ticketId}
@@ -282,6 +292,11 @@ const Guests = () => {
                   formErrors={formErrors}
                   formData={formData}
                   onFieldChange={onFieldChange}
+                  setCashInHand={setCashInHand}
+                  cashInHand={cashInHand}
+                  ticketInfo={ticketInfo}
+                  setTicketId={setTicketId}
+                  ticketId={ticketId}
                 />
 
                 <div className={styles.buttons}>

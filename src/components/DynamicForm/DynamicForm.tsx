@@ -17,11 +17,15 @@ const DynamicForm = ({
   setTicketId,
   ticketId,
   eventData,
+  setCashInHand,
+  cashInHand,
 }: {
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
   formData: FormDataType;
   onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
+  setCashInHand: React.Dispatch<React.SetStateAction<boolean>>;
+  cashInHand: boolean;
   ticketInfo?: { [key: string]: TicketType };
   setTicketId?: Dispatch<React.SetStateAction<string>>;
   ticketId?: string;
@@ -122,6 +126,45 @@ const DynamicForm = ({
     <>
       <div className={styles.formFields}>
         {eventData?.parse_audio && <AudioRecorder handleSubmit={handleAudioSubmit} />}
+        <div
+          style={{
+            marginBottom: '1rem',
+          }}
+        >
+          <p className={styles.formLabel}>Cash In Hand*</p>
+          <div className={styles.checkboxContainer}>
+            <>
+              <div className={styles.checkbox}>
+                <input
+                  type='radio'
+                  id='is_cash_in_hand'
+                  name='is_cash_in_hand'
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    if (setCashInHand) setCashInHand(e.target.checked);
+                    onFieldChange('is_cash_in_hand', e.target.checked ? 'true' : 'false');
+                  }}
+                  value={cashInHand.toString()}
+                  className={styles.checkboxInput}
+                />
+                <label>Yes</label>
+              </div>
+              <div className={styles.checkbox}>
+                <input
+                  type='radio'
+                  id='is_cash_in_hand'
+                  name='is_cash_in_hand'
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setCashInHand(e.target.checked);
+                    onFieldChange('is_cash_in_hand', e.target.checked ? 'false' : 'true');
+                  }}
+                  value={cashInHand.toString()}
+                  className={styles.checkboxInput}
+                />
+                <label>No</label>
+              </div>
+            </>
+          </div>
+        </div>
         {ticketInfo && (
           <div
             style={{
