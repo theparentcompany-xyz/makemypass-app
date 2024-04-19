@@ -9,7 +9,7 @@
   justify-content: space-between;
   font-family: 'Inter', sans-serif;
   color: #d7d7d7;
-
+  height: 100%;
   padding-bottom: 1rem;
 }
 
@@ -307,6 +307,11 @@ input[type='color']::-webkit-color-swatch {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
+  transition: all 0.3s;
+}
+
+.createButton:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .timezoneContainer {
@@ -367,4 +372,34 @@ input[type='color']::-webkit-color-swatch {
 
 .inputEventName:focus {
   outline: none;
+}
+
+.inputContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.inputContainer h1 {
+  font-weight: 600;
+  font-size: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.eventInput {
+  margin-top: 3.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
 }
