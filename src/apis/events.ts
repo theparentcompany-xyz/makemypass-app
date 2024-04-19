@@ -48,7 +48,7 @@ export const getEventData = async (
   >,
 ) => {
   const role = localStorage.getItem('role');
-
+  console.log('Ivadae Ethiopia');
   if (!role)
     privateGateway
       .get(makeMyPass.getEventData(eventId))
@@ -111,6 +111,20 @@ export const getEvent = (
     .then((response) => {
       setEventData && setEventData(response.data.response);
       setEventTitle && setEventTitle(response.data.response.title);
+      console.log(response.data);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
+export const editEvent = (eventId: string, eventTitle: string) => {
+  privateGateway
+    .post(makeMyPass.editEvent(eventId), {
+      title: eventTitle,
+    })
+    .then((response) => {
+      console.log(response);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');

@@ -17,13 +17,14 @@ const CreateEvent = () => {
   const [eventTitle, setEventTitle] = useState('');
   const [eventData, setEventData] = useState<EventType>();
   const [selectedColor, setSelectedColor] = useState('#00753B');
+
   useEffect(() => {
     if (eventId) getEvent(eventId, setEventTitle, setEventData);
   }, [eventId]);
-  const submitCreateEvent = () => {
+
+  const submitEditEvent = () => {
     getEvent(eventId);
   };
-  console.log(eventData);
 
   return (
     <>
@@ -55,7 +56,10 @@ const CreateEvent = () => {
                 </div>
                 <div className={styles.descriptionContainer}>
                   <p className={styles.eventHeading}>About Event</p>
-                  <p className={styles.description}>{eventData.description || 'No Description'}</p>
+                  <p
+                    className={styles.description}
+                    dangerouslySetInnerHTML={{ __html: eventData?.description || '' }}
+                  ></p>
                 </div>
               </div>
 
@@ -128,7 +132,7 @@ const CreateEvent = () => {
                     />
                     <label>Background Color</label>
                   </div>
-                  <button className={styles.createButton} onClick={submitCreateEvent}>
+                  <button className={styles.createButton} onClick={submitEditEvent}>
                     Edit Event
                   </button>
                 </div>

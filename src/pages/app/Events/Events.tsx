@@ -56,6 +56,7 @@ const Events = () => {
   };
 
   const getEventRole = (eventId: string) => {
+    console.log('eventId', eventId);
     getEventData(eventId, setEventData);
   };
 
@@ -139,11 +140,6 @@ const Events = () => {
                         </div>
                       </div>
                     </motion.div>
-
-                    {/* <button className={styles.create}>
-                      <FaPlus size={15} />
-                      Create New Event
-                    </button> */}
                   </div>
                 </div>
               ))}

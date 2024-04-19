@@ -101,6 +101,8 @@ export const makeMyPass = {
   createEvent: makeMyPassURL(`/manage-event/create-event/`),
 
   getEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/get-event/`),
+
+  editEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/edit-event/`),
 };
 
 export const makeMyPassSocket = {

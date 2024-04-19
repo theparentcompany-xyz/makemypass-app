@@ -22,56 +22,41 @@ import FourNotFour from '../../FourNotFour/FourNotFour';
 
 const EventGlance = () => {
   const { eventId, hasEvent } = useContext(GlobalContext);
-  const [eventTitle, setEventTitle] = useState("");
-  const [eventData, setEventData] = useState<EventType>()
+  const [eventTitle, setEventTitle] = useState('');
+  const [eventData, setEventData] = useState<EventType>();
   useEffect(() => {
-    if (eventId)
-      getEvent(eventId, setEventTitle, setEventData);
-  }, [eventId])
-  const [selectedMail, setSelectedMail] = useState("")
+    if (eventId) getEvent(eventId, setEventTitle, setEventData);
+  }, [eventId]);
+  const [selectedMail, setSelectedMail] = useState('');
 
-  /*const hardcodedData = {
-    title: 'Grand Tech Adventure : CodeStorm',
-    hosts: [
-      { name: 'Host 1', profile_pic: 'https://via.placeholder.com/30' },
-      { name: 'Host 2', profile_pic: 'https://via.placeholder.com/30' },
-    ],
-    start_date: '2022-01-01',
-    start_time: '10:00 AM',
-    end_time: '12:00 PM',
-    end_date: '2022-01-01',
-    place: 'Hardcoded Event Place',
-  };*/
   const navigate = useNavigate();
 
-  const selectValues = [{ value: "Going", label: "Going" }, { value: "Invited", label: "Invited" }, { value: "Maybe", label: "Maybe" }, { value: "Not Going", label: "Not Going" }]
-  const [selectedMulti, setSelectedMulti] = useState<MultiValue<{ value: string }>>([])
-
+  const selectValues = [
+    { value: 'Going', label: 'Going' },
+    { value: 'Invited', label: 'Invited' },
+    { value: 'Maybe', label: 'Maybe' },
+    { value: 'Not Going', label: 'Not Going' },
+  ];
+  const [selectedMulti, setSelectedMulti] = useState<MultiValue<{ value: string }>>([]);
 
   return (
     <>
       {hasEvent ? (
         <Theme>
-
           <div className={styles.eventGlanceContainer}>
             <div className={styles.glanceContainer}>
               <Glance tab='manage' />
             </div>
             {selectedMail && (
-              <Modal
-
-                onClose={() => setSelectedMail('')}
-              >
-                <div className={styles.modalHeader}>
-                  Update Reminder Email
-                </div>
+              <Modal onClose={() => setSelectedMail('')}>
+                <div className={styles.modalHeader}>Update Reminder Email</div>
                 <div className={styles.modalSubText}>
                   <div className={styles.inputContainers}>
                     <div className={styles.inputContainer}>
                       <p className={styles.inputLabel}>When should the reminder go out?</p>
                       <input
-                        type="datetime-local"
-                        placeholder="Enter Email"
+                        type='datetime-local'
+                        placeholder='Enter Email'
                         className={styles.input}
                       />
                       <p className={styles.inputSubText}>X hours before the event</p>
@@ -85,75 +70,66 @@ const EventGlance = () => {
                         styles={customStyles}
                         name='colors'
                         value={selectedMulti}
-                        options={selectValues.filter(elem => !(elem.value in selectedMulti))}
+                        options={selectValues.filter((elem) => !(elem.value in selectedMulti))}
                         className={styles['basic-multi-select']}
                         classNamePrefix='select'
                         onChange={(selectedOption: MultiValue<{ value: string }>) => {
-                          console.log(selectedOption)
-                          setSelectedMulti(selectedOption)
+                          console.log(selectedOption);
+                          setSelectedMulti(selectedOption);
                         }}
                       />
                     </div>
                     <div className={styles.inputContainer}>
                       <p className={styles.inputLabel}>Subject</p>
-                      <input
-                        type="text"
-                        placeholder="Enter Subject"
-                        className={styles.input}
-                      />
-
-
+                      <input type='text' placeholder='Enter Subject' className={styles.input} />
                     </div>
 
                     <div className={styles.inputContainer}>
                       <p className={styles.inputLabel}>Body</p>
 
-                      <textarea
-                        placeholder="Enter Email Body"
-                        className={styles.textarea}
-                      />
+                      <textarea placeholder='Enter Email Body' className={styles.textarea} />
                     </div>
                   </div>
                 </div>
 
                 <div className={styles.buttonContainer}>
                   <button className={styles.button}>Update Reminder</button>
-                  <button className={styles.button} >Send Now</button>
-                  <button className={styles.button} onClick={() => setSelectedMail('')}>Cancel</button>
+                  <button className={styles.button}>Send Now</button>
+                  <button className={styles.button} onClick={() => setSelectedMail('')}>
+                    Cancel
+                  </button>
                 </div>
-
-
               </Modal>
             )}
             <div className={styles.eventGlance}>
               <div className={styles.bannerContainer}>
-                {
-                  eventData?.banner ? (
-                    <img src={eventData?.banner} alt='' className={styles.banner} />
-                  ) : (
-                    <svg height="250" width="100%" className={styles.banner} >
-                      {
-                        eventTitle && (
-                          <>
-                            <rect width="100%" height="100%" fill='#00753B' className={styles.banner} />
-                            <text x="40%" y="70%" fill="white" className={styles.svgText}>{eventTitle[0]?.toUpperCase()}</text>
-                          </>
-                        )
-                      }
-                    </svg>
-                  )
-                }
+                {eventData?.banner ? (
+                  <img src={eventData?.banner} alt='' className={styles.banner} />
+                ) : (
+                  <svg height='250' width='100%' className={styles.banner}>
+                    {eventTitle && (
+                      <>
+                        <rect width='100%' height='100%' fill='#00753B' className={styles.banner} />
+                        <text x='40%' y='70%' fill='white' className={styles.svgText}>
+                          {eventTitle[0]?.toUpperCase()}
+                        </text>
+                      </>
+                    )}
+                  </svg>
+                )}
 
                 <div>
                   <div className={styles.headingTexts}>
                     <p className={styles.eventTitle}>{eventData?.title}</p>
-                    <p className={styles.hostedByText}>{ }</p>
+                    <p className={styles.hostedByText}>{}</p>
                   </div>
 
                   <div className={styles.eventDatePlace}>
                     <div className={styles.eventDate}>
                       <div className={styles.dateBox}>
-                        <p className={styles.eventMonth}>{getMonthAbbreviation(eventData?.start_date ?? '')}</p>
+                        <p className={styles.eventMonth}>
+                          {getMonthAbbreviation(eventData?.start_date ?? '')}
+                        </p>
                         <p className={styles.eventDateNum}>{getDay(eventData?.start_date ?? '')}</p>
                       </div>
                       <div className={styles.eventDateTimeText}>
@@ -176,7 +152,12 @@ const EventGlance = () => {
                     </div>
                     <div className={styles.buttons}>
                       <button className={styles.shareEventButton}>Share Event</button>
-                      <button className={styles.editEventButton} onClick={() => navigate('./edit-event')}>Edit Event</button>
+                      <button
+                        className={styles.editEventButton}
+                        onClick={() => navigate('./edit-event')}
+                      >
+                        Edit Event
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -218,7 +199,14 @@ const EventGlance = () => {
                         </p>
                       </div>
                     </div>
-                    <LuPencil color='#939597' size={20} className={styles.scheduleIcon} onClick={() => { setSelectedMail("assas") }} />
+                    <LuPencil
+                      color='#939597'
+                      size={20}
+                      className={styles.scheduleIcon}
+                      onClick={() => {
+                        setSelectedMail('assas');
+                      }}
+                    />
                   </div>
                   <div className={styles.scheduleBox}>
                     <div className='row'>
@@ -248,7 +236,6 @@ const EventGlance = () => {
               </div>
             </div>
           </div>
-
         </Theme>
       ) : (
         <FourNotFour />
