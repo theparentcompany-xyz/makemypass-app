@@ -49,7 +49,7 @@ const SuccessModal = ({
                   </p>
                   {success && !hasShortlisting && (
                     <p className={styles.ticketCode}>
-                      Your Ticket Code: <span>SU123456{success}</span>
+                      Your Ticket Code: <span>{success}</span>
                     </p>
                   )}
                 </div>
