@@ -92,7 +92,7 @@ export const submitForm = async ({
                   setFormNumber && setFormNumber(0);
                   setFormData && setFormData({});
                   setAmount && setAmount('');
-                }, 2000);
+                }, 5000);
 
                 setCoupon && setCoupon({ status: '', description: '' });
               })
@@ -117,7 +117,7 @@ export const submitForm = async ({
           setFormNumber && setFormNumber(0);
           setFormData && setFormData({});
           setAmount && setAmount('');
-        }, 4000);
+        }, 5000);
 
         setCoupon && setCoupon({ status: '', description: '' });
       }

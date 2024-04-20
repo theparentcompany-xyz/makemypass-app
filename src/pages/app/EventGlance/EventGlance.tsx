@@ -8,7 +8,7 @@ import { FaWrench } from 'react-icons/fa6';
 import { BsQrCodeScan } from 'react-icons/bs';
 import { useNavigate } from 'react-router';
 import SectionButton from '../../../components/SectionButton/SectionButton';
-import { LuClock, LuPencil } from 'react-icons/lu';
+// import { LuClock, LuPencil } from 'react-icons/lu';
 import { useContext, useEffect, useState } from 'react';
 import Modal from '../../../components/Modal/Modal';
 import Select from 'react-select';
@@ -18,6 +18,7 @@ import { GlobalContext } from '../../../contexts/globalContext';
 import { EventType } from '../../../apis/types';
 import { getEvent } from '../../../apis/events';
 import FourNotFour from '../../FourNotFour/FourNotFour';
+import { Link } from 'react-router-dom';
 //import { HashLoader } from 'react-spinners';
 
 const EventGlance = () => {
@@ -30,6 +31,8 @@ const EventGlance = () => {
   const [selectedMail, setSelectedMail] = useState('');
 
   const navigate = useNavigate();
+
+  const eventName = localStorage.getItem('eventName');
 
   const selectValues = [
     { value: 'Going', label: 'Going' },
@@ -147,7 +150,6 @@ const EventGlance = () => {
                       </div>
                       <div className={styles.eventDateTimeText}>
                         <p className={styles.eventDateText}>{eventData?.place}</p>
-                        <p className={styles.eventTimeText}>Aluva, Kerala</p>
                       </div>
                     </div>
                     <div className={styles.buttons}>
@@ -164,26 +166,32 @@ const EventGlance = () => {
               </div>
 
               <div className={styles.sectionButtons}>
-                <SectionButton
-                  buttonText='Guest List'
-                  buttonColor='#7662FC'
-                  icon={<HiUserGroup size={25} color='#7662FC' />}
-                />
+                <Link to={`/${eventName}/guests`}>
+                  <SectionButton
+                    buttonText='Guest List'
+                    buttonColor='#7662FC'
+                    icon={<HiUserGroup size={25} color='#7662FC' />}
+                  />
+                </Link>
 
-                <SectionButton
-                  buttonText='Host List'
-                  buttonColor='#C33D7B'
-                  icon={<FaWrench size={25} color='#C33D7B' />}
-                />
+                <Link to={`/${eventName}/overview/#hosts`}>
+                  <SectionButton
+                    buttonText='Host List'
+                    buttonColor='#C33D7B'
+                    icon={<FaWrench size={25} color='#C33D7B' />}
+                  />
+                </Link>
 
-                <SectionButton
-                  buttonText='Check In'
-                  buttonColor='#5B75FB'
-                  icon={<BsQrCodeScan size={25} color='#5B75FB' />}
-                />
+                <Link to={`/${eventName}/checkins/`}>
+                  <SectionButton
+                    buttonText='Check In'
+                    buttonColor='#5B75FB'
+                    icon={<BsQrCodeScan size={25} color='#5B75FB' />}
+                  />
+                </Link>
               </div>
 
-              <div className={styles.sendMailsContainer}>
+              {/* <div className={styles.sendMailsContainer}>
                 <div className={styles.sendMailsText}>
                   <p className={styles.sendMailsHeading}>Send Mails</p>
                   <p className={styles.sendMailsSubHeading}>Send Mails to participants </p>
@@ -233,7 +241,7 @@ const EventGlance = () => {
                     <LuPencil color='#939597' size={20} className={styles.scheduleIcon} />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </Theme>

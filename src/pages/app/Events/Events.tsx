@@ -68,8 +68,6 @@ const Events = () => {
       navigate(`/${eventName.toLowerCase()}/checkins/`);
     } else if (eventData.current_user_role === 'Gamer') {
       navigate(`/${eventName.toLowerCase()}/spinwheel/`);
-    } else {
-      console.log('Pani Pali');
     }
   }, [eventData]);
 
