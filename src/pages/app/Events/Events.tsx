@@ -31,7 +31,7 @@ const Events = () => {
   const [eventData, setEventData] = useState({
     title: '',
     date: '',
-    role: '',
+    current_user_role: '',
     name: '',
     logo: '',
   });
@@ -56,17 +56,20 @@ const Events = () => {
   };
 
   const getEventRole = (eventId: string) => {
+    console.log('Event ID:', eventId);
     getEventData(eventId, setEventData);
   };
 
   useEffect(() => {
     const eventName = JSON.parse(localStorage.getItem('eventData')!)?.event_name || '';
-    if (eventData.role === 'Admin') {
+    if (eventData.current_user_role === 'Admin') {
       navigate(`/${eventName.toLowerCase()}/overview/`);
-    } else if (eventData.role === 'Volunteer') {
+    } else if (eventData.current_user_role === 'Volunteer') {
       navigate(`/${eventName.toLowerCase()}/checkins/`);
-    } else if (eventData.role === 'Gamer') {
+    } else if (eventData.current_user_role === 'Gamer') {
       navigate(`/${eventName.toLowerCase()}/spinwheel/`);
+    } else {
+      console.log('Pani Pali');
     }
   }, [eventData]);
 

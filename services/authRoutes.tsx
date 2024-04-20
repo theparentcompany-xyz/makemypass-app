@@ -15,7 +15,7 @@ let localRoles = 'Viewer';
 
 function SecureAuthRoutes() {
   const hasRoleNoFetch = (roles: Roles[]) => {
-    localRoles = localStorage.getItem('role') || '';
+    localRoles = localStorage.getItem('current_user_role') || '';
     return roles.some((role) => localRoles.includes(role));
   };
   const Func: FC<AuthRoutesProps> = ({

@@ -13,7 +13,7 @@ const Glance = ({ tab }: { tab: string }) => {
   const [eventData, setEventData] = useState({
     title: '',
     date: '',
-    role: '',
+    current_user_role: '',
     name: '',
     logo: '',
   });
@@ -118,11 +118,11 @@ const Glance = ({ tab }: { tab: string }) => {
 
   return (
     <AnimatePresence>
-      {eventData && eventData.role !== 'Volunteer' && (
+      {eventData && eventData.current_user_role !== 'Volunteer' && (
         <div className={styles.tabsContainer}>
           <div className={styles.tabs}>
             <ol>
-              {eventData.role != 'Gamer' && (
+              {eventData.current_user_role != 'Gamer' && (
                 <>
                   {Object.keys(tabs).map((tab) => (
                     <div key={tab}>

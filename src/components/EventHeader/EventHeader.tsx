@@ -9,7 +9,7 @@ const EventHeader = () => {
   const [eventData, setEventData] = useState({
     title: '',
     date: '',
-    role: '',
+    current_user_role: '',
     name: '',
     logo: '',
   });

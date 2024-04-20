@@ -247,14 +247,16 @@ export const getEventDatas = async (
   eventId: string,
   setEventData?: Dispatch<React.SetStateAction<EventDetails | undefined>>,
 ) => {
-  return publicGateway
-    .get(makeMyPass.getEventDatas(eventId))
+  return privateGateway
+    .get(makeMyPass.getEvent(eventId))
     .then((response) => {
       if (setEventData) setEventData(response.data.response);
 
       const eventData = JSON.parse(localStorage.getItem('eventData') || '{}');
       eventData['logo'] = response.data.response['logo'];
       eventData['is_private'] = response.data.response['is_private'];
+      eventData['current_user_role'] = response.data.response['current_user_role'];
+
       localStorage.setItem('eventData', JSON.stringify(eventData));
     })
     .catch((error) => {

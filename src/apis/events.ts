@@ -27,6 +27,7 @@ export const getEventId = async (
     privateGateway
       .get(makeMyPass.getEventId(eventName))
       .then((response) => {
+        console.log(response.data.response);
         localStorage.setItem('eventData', JSON.stringify(response.data.response));
         getEventDatas(response.data.response.event_id);
       })
@@ -41,23 +42,25 @@ export const getEventData = async (
     React.SetStateAction<{
       title: string;
       date: string;
-      role: string;
+      current_user_role: string;
       name: string;
       logo: string;
     }>
   >,
 ) => {
-  const role = localStorage.getItem('role');
-  if (!role)
-    privateGateway
-      .get(makeMyPass.getEventData(eventId))
-      .then((response) => {
-        setEventData(response.data.response);
-        localStorage.setItem('role', response.data.response.role);
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-      });
+  const role = localStorage.getItem('current_user_role');
+  console.log('Role:', role);
+  if (!role) console.log('Event ID123:', eventId);
+  privateGateway
+    .get(makeMyPass.getEvent(eventId))
+    .then((response) => {
+      console.log(response.data.response);
+      setEventData(response.data.response);
+      localStorage.setItem('current_user_role', response.data.response.current_user_role);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
 };
 
 export const getPublicEvents = async (
