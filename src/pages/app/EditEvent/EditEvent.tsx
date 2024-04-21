@@ -22,9 +22,9 @@ const CreateEvent = () => {
     if (eventId) getEvent(eventId, setEventTitle, setEventData);
   }, [eventId]);
 
-  const submitEditEvent = () => {
-    getEvent(eventId);
-  };
+  // const submitEditEvent = () => {
+  //   getEvent(eventId);
+  // };
 
   return (
     <>
