@@ -49,7 +49,6 @@ export const getEventData = async (
   >,
 ) => {
   const role = localStorage.getItem('current_user_role');
-  console.log('Role:', role);
   if (!role) console.log('Event ID123:', eventId);
   privateGateway
     .get(makeMyPass.getEvent(eventId))

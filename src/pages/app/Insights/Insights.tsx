@@ -390,18 +390,20 @@ const Insights = () => {
                   </div>
                 </div>
 
-                <div className={styles.categorySection}>
-                  <p className={styles.rightSectionHeading}>Organization Counts</p>
+                {Object.entries(message?.organisation_count || {}).length > 0 && (
+                  <div className={styles.categorySection}>
+                    <p className={styles.rightSectionHeading}>Organization Counts</p>
 
-                  <div className={styles.categories}>
-                    {Object.entries(message?.organisation_count || {}).map(([key, value]) => (
-                      <div className={styles.category}>
-                        <p className={styles.categoryName}>{key}</p>
-                        <p className={styles.categoryCount}>{value}</p>
-                      </div>
-                    ))}
+                    <div className={styles.categories}>
+                      {Object.entries(message?.organisation_count || {}).map(([key, value]) => (
+                        <div className={styles.category}>
+                          <p className={styles.categoryName}>{key}</p>
+                          <p className={styles.categoryCount}>{value}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </>
