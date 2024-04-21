@@ -19,6 +19,7 @@ import { getEvent } from '../../../apis/events';
 import FourNotFour from '../../FourNotFour/FourNotFour';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import EventHeader from '../../../components/EventHeader/EventHeader';
 //import { HashLoader } from 'react-spinners';
 
 const EventGlance = () => {
@@ -44,6 +45,7 @@ const EventGlance = () => {
     <>
       {hasEvent ? (
         <Theme>
+          <EventHeader />
           <div className={styles.eventGlanceContainer}>
             <div className={styles.glanceContainer}>
               <Glance tab='manage' />
