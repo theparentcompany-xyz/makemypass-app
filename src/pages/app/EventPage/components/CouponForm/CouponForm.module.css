@@ -38,8 +38,17 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: #4eff99;
-  max-width: 8rem;
   line-height: 1.75rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.ticketTypeDescription {
+  font-size: 0.8rem;
+  max-width: 16rem;
+  width: 100%;
+  font-weight: 400;
+  color: #fff;
+  opacity: 0.8;
   font-family: 'Inter', sans-serif;
 }
 
@@ -54,7 +63,7 @@
 
 .passText {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   column-gap: 0.25rem;
   justify-content: space-between;

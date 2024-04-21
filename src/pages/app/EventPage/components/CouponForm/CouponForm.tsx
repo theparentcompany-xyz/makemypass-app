@@ -173,7 +173,7 @@ const CouponForm = ({
           >
             <div className={styles.passText}>
               <p className={styles.ticketTypeTitle}>{ticketType?.toUpperCase()}</p>
-
+              <p className={styles.ticketTypeDescription}>{ticketInfo[ticketType].description}</p>
               <div className={styles.perks}>
                 {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
                   <div key={perk} className={styles.perk}>

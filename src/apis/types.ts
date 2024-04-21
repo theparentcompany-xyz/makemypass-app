@@ -80,6 +80,7 @@ export type FormFieldType = {
 };
 
 export interface TicketType {
+  description: ReactNode;
   id: string;
   price: number;
   perks: any; // You can define a proper type for perks if needed
