@@ -6,7 +6,6 @@ import { IoLocationOutline } from 'react-icons/io5';
 import { HiUserGroup } from 'react-icons/hi2';
 import { FaWrench } from 'react-icons/fa6';
 import { BsQrCodeScan } from 'react-icons/bs';
-import { useNavigate } from 'react-router';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 // import { LuClock, LuPencil } from 'react-icons/lu';
 import { useContext, useEffect, useState } from 'react';
@@ -30,8 +29,6 @@ const EventGlance = () => {
     if (eventId) getEvent(eventId, setEventTitle, setEventData);
   }, [eventId]);
   const [selectedMail, setSelectedMail] = useState('');
-
-  const navigate = useNavigate();
 
   const eventName = localStorage.getItem('eventName');
 
