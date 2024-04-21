@@ -19,6 +19,7 @@ import { EventType } from '../../../apis/types';
 import { getEvent } from '../../../apis/events';
 import FourNotFour from '../../FourNotFour/FourNotFour';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 //import { HashLoader } from 'react-spinners';
 
 const EventGlance = () => {
@@ -153,12 +154,15 @@ const EventGlance = () => {
                       </div>
                     </div>
                     <div className={styles.buttons}>
-                      <button className={styles.shareEventButton}>Share Event</button>
                       <button
-                        className={styles.editEventButton}
-                        onClick={() => navigate('./edit-event')}
+                        onClick={() => {
+                          const eventLink = `https://makemypass.com/${eventName}`;
+                          navigator.clipboard.writeText(eventLink);
+                          toast.success('Event link copied to clipboard');
+                        }}
+                        className={styles.shareEventButton}
                       >
-                        Edit Event
+                        Share Event
                       </button>
                     </div>
                   </div>

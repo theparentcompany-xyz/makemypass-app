@@ -217,6 +217,7 @@ const DynamicForm = ({
                 type={field.type}
                 icon={getIcon(field.field_key)}
                 required={field.required}
+                description={field.description}
               />
             );
           } else if (field.type === 'singleselect') {
@@ -372,6 +373,19 @@ const DynamicForm = ({
                     </div>
                   ))}
                 </div>
+                <AnimatePresence>
+                  {formErrors[field.field_key] && (
+                    <motion.p
+                      variants={variants}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={styles.errorText}
+                    >
+                      {formErrors[field.field_key][0]}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
               </div>
             );
           } else if (field.type === 'file') {
@@ -537,6 +551,19 @@ const DynamicForm = ({
                     </>
                   ))}
                 </div>
+                <AnimatePresence>
+                  {formErrors[field.field_key] && (
+                    <motion.p
+                      variants={variants}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={styles.errorText}
+                    >
+                      {formErrors[field.field_key][0]}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
               </div>
             );
           }

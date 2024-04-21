@@ -61,6 +61,7 @@ export type FormFieldType = {
   unique: boolean;
   required: boolean;
   field_key: string;
+  description?: string;
   options?: string[];
   integration?: {
     url: string;

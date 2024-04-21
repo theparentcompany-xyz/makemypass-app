@@ -132,9 +132,6 @@ const CreateEvent = () => {
                     />
                     <label>Background Color</label>
                   </div>
-                  <button className={styles.createButton} onClick={submitEditEvent}>
-                    Edit Event
-                  </button>
                 </div>
               </div>
             </div>
