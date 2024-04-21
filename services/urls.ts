@@ -16,10 +16,10 @@ export const buildVerse = {
 export const makeMyPass = {
   onboardUser: makeMyPassURL('/onboard-user/'),
   listEvents: makeMyPassURL('/list-events/'),
-  listHosts: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/list-hosts/`),
+  listHosts: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-hosts/`),
   getEventId: (eventName: string) => makeMyPassURL(`/get-event-id/${eventName}/`),
   checkInUser: (ticketCode: string, eventId: string) =>
-    makeMyPassURL(`/checkin/${eventId}/register/${ticketCode}/`),
+    makeMyPassURL(`/scan-guest/${eventId}/register/${ticketCode}/`),
   resentTicket: makeMyPassURL('/pre-event/resent-ticket/'),
   checkInCount: (eventId: string) => makeMyPassURL(`/analytics/${eventId}/checkin-count/`),
   editSubmission: (eventId: string, submissionId: string) =>
@@ -36,14 +36,14 @@ export const makeMyPass = {
   downloadTicket: (eventId: string, ticketCode: string) =>
     makeMyPassURL(`/pre-event/${eventId}/download-ticket/${ticketCode}`),
 
-  addHost: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/add-host/`),
-  updateHostRole: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/edit-host/`),
+  addHost: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/add-host/`),
+  updateHostRole: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/edit-host/`),
   removeHost: (eventId: string, hostId: string) =>
-    makeMyPassURL(`/pre-event/${eventId}/remove-host/${hostId}`),
+    makeMyPassURL(`/manage-event/${eventId}/remove-host/${hostId}`),
   hostWithUs: makeMyPassURL(`/host-with-us/`),
 
   userInfo: (eventId: string, ticketCode: string) =>
-    makeMyPassURL(`/checkin/${eventId}/user-info/${ticketCode}`),
+    makeMyPassURL(`/scan-guest/${eventId}/user-info/${ticketCode}`),
 
   getEventDatas: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
   getTicketInfo: (eventId: string) => makeMyPassURL(`/public-form/get-tickets-info/${eventId}/`),
@@ -63,17 +63,17 @@ export const makeMyPass = {
   getFileStatus: (eventId: string) => makeMyPassURL(`/event/${eventId}/list-file-status/`),
 
   uploadFile: (eventId: string) => makeMyPassURL(`/event/${eventId}/csv/`),
-  sentInvite: (eventId: string) => makeMyPassURL(`/pre-event/${eventId}/sent-invite/`),
+  sentInvite: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/sent-invite/`),
 
   shortListUser: (eventId: string, userId: string) =>
-    makeMyPassURL(`/pre-event/${eventId}/short-list-user/${userId}`),
+    makeMyPassURL(`/manage-guest/${eventId}/short-list-user/${userId}`),
 
   listPublicEvents: makeMyPassURL('/event/list-events/'),
 
-  getPerksInfo: (eventId: string) => makeMyPassURL(`/checkin/get-perks-info/${eventId}/`),
+  getPerksInfo: (eventId: string) => makeMyPassURL(`/scan-guest/get-perks-info/${eventId}/`),
 
   getUserPerksInfo: (ticketCode: string) =>
-    makeMyPassURL(`/checkin/get-user-perks-info/${ticketCode}`),
+    makeMyPassURL(`/manage-guest/get-user-perks-info/${ticketCode}`),
 
   updatePerk: (ticketCode: string) => makeMyPassURL(`/checkin/update-perk/${ticketCode}/`),
 
@@ -87,11 +87,11 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
 
   getPostEventFields: (eventId: string) =>
-    makeMyPassURL(`/post-event/get-post-event-fields/${eventId}/`),
-  submitFeedback: (eventId: string) => makeMyPassURL(`/post-event/submit-feedback/${eventId}/`),
+    makeMyPassURL(`/feedback/get-post-event-fields/${eventId}/`),
+  submitFeedback: (eventId: string) => makeMyPassURL(`/feedback/submit-feedback/${eventId}/`),
   getPostEventCategories: (eventId: string) =>
-    makeMyPassURL(`/post-event/get-post-event-categories/${eventId}/`),
-  getFeedback: (eventId: string) => makeMyPassURL(`/post-event/list-feedback/${eventId}/`),
+    makeMyPassURL(`/feedback/get-post-event-categories/${eventId}/`),
+  getFeedback: (eventId: string) => makeMyPassURL(`/feedback/list-feedback/${eventId}/`),
   parseFromAudio: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/parse-from-audio/`),
 
   downloadBulkUploadCSV: (eventId: string, fileId: string, fileType: string) =>
@@ -111,8 +111,8 @@ export const makeMyPassSocket = {
   registerCounts: (eventId: string) => `analytics/${eventId}/register-count/`,
   checkInCounts: (eventId: string) => `checkin/${eventId}/count/`,
 
-  listGuests: (eventId: string) => `pre-event/${eventId}/list-guests/`,
-  listCheckinGuests: (eventId: string) => `checkin/${eventId}/list-guests/`,
+  listGuests: (eventId: string) => `manage-guest/${eventId}/recent-guests/`,
+  listCheckinGuests: (eventId: string) => `manage-guests/${eventId}/list-guests/`,
 
-  checkInAnalytics: (eventId: string) => `checkin/${eventId}/checkin-analytics/`,
+  checkInAnalytics: (eventId: string) => `analytics/${eventId}/checkin-analytics/`,
 };
