@@ -175,7 +175,7 @@ const Guests = () => {
   useEffect(() => {
     setFormData({
       ...formData,
-      cash_in_hand: cashInHand.toString(),
+      is_cash_in_hand: cashInHand.toString(),
     });
   }, [cashInHand]);
 

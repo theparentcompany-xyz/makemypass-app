@@ -126,6 +126,47 @@ const DynamicForm = ({
     <>
       <div className={styles.formFields}>
         {eventData?.parse_audio && <AudioRecorder handleSubmit={handleAudioSubmit} />}
+
+        {ticketInfo && (
+          <div
+            style={{
+              marginBottom: '1rem',
+            }}
+          >
+            <p className={styles.formLabel}>Ticket Type</p>
+            <motion.div className={styles.dropdown}>
+              <Select
+                options={Object.keys(ticketInfo).map((key) => ({
+                  value: ticketInfo[key].id,
+                  label: key,
+                }))}
+                styles={customStyles}
+                onChange={(selectedOption: { value: string } | null) => {
+                  setTicketId && setTicketId(selectedOption?.value || '');
+
+                  Object.keys(ticketInfo).map((key) => {
+                    if (ticketInfo[key].id === selectedOption?.value) {
+                      if (ticketInfo[key].price > 0) {
+                        setCashInHand && setCashInHand(true);
+                      }
+                    }
+                  });
+                }}
+                value={
+                  ticketInfo &&
+                  Object.keys(ticketInfo)
+                    .map((key) => ({
+                      value: ticketInfo[key].id,
+                      label: key,
+                    }))
+                    .filter((option: { value: string }) => option.value === ticketId)
+                }
+                placeholder={`Select an option`}
+                isSearchable={false}
+              />
+            </motion.div>
+          </div>
+        )}
         {cashInHand && (
           <div
             style={{
@@ -165,38 +206,6 @@ const DynamicForm = ({
                 </div>
               </>
             </div>
-          </div>
-        )}
-        {ticketInfo && (
-          <div
-            style={{
-              marginBottom: '1rem',
-            }}
-          >
-            <p className={styles.formLabel}>Ticket Type</p>
-            <motion.div className={styles.dropdown}>
-              <Select
-                options={Object.keys(ticketInfo).map((key) => ({
-                  value: ticketInfo[key].id,
-                  label: key,
-                }))}
-                styles={customStyles}
-                onChange={(selectedOption: { value: string } | null) =>
-                  setTicketId && setTicketId(selectedOption?.value || '')
-                }
-                value={
-                  ticketInfo &&
-                  Object.keys(ticketInfo)
-                    .map((key) => ({
-                      value: ticketInfo[key].id,
-                      label: key,
-                    }))
-                    .filter((option: { value: string }) => option.value === ticketId)
-                }
-                placeholder={`Select an option`}
-                isSearchable={false}
-              />
-            </motion.div>
           </div>
         )}
         {formFields?.map((field: FormFieldType) => {
