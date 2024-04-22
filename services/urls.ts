@@ -70,6 +70,9 @@ export const makeMyPass = {
 
   listPublicEvents: makeMyPassURL('/manage-event/list-events/'),
 
+  validateSentInvitePayment: (eventId: string) =>
+    makeMyPassURL(`/manage-guest/${eventId}/validate-sent-invite-payment/`),
+
   getPerksInfo: (eventId: string) => makeMyPassURL(`/scan-guest/get-perks-info/${eventId}/`),
 
   getUserPerksInfo: (ticketCode: string) =>

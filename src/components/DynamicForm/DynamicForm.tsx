@@ -148,6 +148,8 @@ const DynamicForm = ({
                     if (ticketInfo[key].id === selectedOption?.value) {
                       if (ticketInfo[key].price > 0) {
                         setCashInHand && setCashInHand(true);
+                      } else {
+                        setCashInHand && setCashInHand(false);
                       }
                     }
                   });
