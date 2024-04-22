@@ -16,76 +16,16 @@ import dd1 from '../../images/dd1.webp';
 import dd2 from '../../images/dd2.webp';
 import dd3 from '../../images/dd3.webp';
 
-import { PubllicEvent } from './types';
-import { formatDate } from '../../../../../common/commonFunctions';
-import { IoLocationOutline } from 'react-icons/io5';
+// import { PubllicEvent } from './types';
+// import { formatDate } from '../../../../../common/commonFunctions';
+// import { IoLocationOutline } from 'react-icons/io5';
 
-const Projects = ({ events }: { events: PubllicEvent[] }) => {
+const Projects = () => {
   return (
     <>
       <div className={styles.grad2}></div>
       <div className={styles.grad3}></div>
-      <div className={styles.projectsSection}>
-        {events.filter((event) => {
-          return event && new Date(event.start_date) > new Date();
-        }).length > 0 && (
-          <div className={styles.projectsHeading}>
-            <p className={styles.projectsHeadingText}>Upcoming Events</p>
-          </div>
-        )}
-        {events.map(
-          (event) =>
-            new Date(event.start_date) > new Date() && (
-              <div className={styles.projectsListing}>
-                <div className={styles.project}>
-                  <div className={styles.projectDateDay}>
-                    <p className={styles.projectDate}>{formatDate(event.start_date)}</p>
-                    <p className={styles.projectDay}>
-                      {new Date(event.start_date).toLocaleString('en-us', { weekday: 'long' })}
-                    </p>
-                  </div>
-                  <div className={styles.lineDot}>
-                    <div className={styles.dot}></div>
-                    <div
-                      style={{
-                        height: '9rem',
-                      }}
-                      className={styles.line}
-                    ></div>
-                  </div>
-                  <div className={styles.projectDetails}>
-                    <div className={styles.projectTexts}>
-                      <p className={styles.projectHeading}>{event.title}</p>
-                      <p
-                        className={styles.projectText}
-                        dangerouslySetInnerHTML={{
-                          __html: event.description.substring(0, 150) + '...',
-                        }}
-                      ></p>
-                    </div>
-                    <div className={styles.eventDatePlace}>
-                      <div className={styles.eventPlace}>
-                        <div className={styles.locationBox}>
-                          <IoLocationOutline size={25} className={styles.locationIcon} />
-                        </div>
-                        <div className={styles.eventDateTimeText}>
-                          <p className={styles.eventDateText}>{event?.place}</p>
-                        </div>
-                      </div>
-                      <a
-                        href={`https://makemypass.com/${event.name}`}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                      >
-                        <button className={styles.registerButton}>Register Now!</button>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ),
-        )}
-      </div>
+
       <div className={styles.projectsSection}>
         <div className={styles.projectsHeading}>
           <p className={styles.projectsHeadingText}>Our Projects</p>

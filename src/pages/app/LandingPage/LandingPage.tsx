@@ -5,12 +5,12 @@ import { useEffect, useRef, useState } from 'react';
 import { hostWithUs } from '../../../apis/auth';
 import toast from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
-import { getPublicEvents } from '../../../apis/events';
+// import { getPublicEvents } from '../../../apis/events';
 import EventPartners from './components/EventPartners/EventPartners';
 import Hero from './components/Hero/Hero';
 import WhyUs from './components/WhyUs/WhyUs';
 import Projects from './components/Projects/Projects';
-import { PubllicEvent } from './components/Projects/types';
+// import { PubllicEvent } from './components/Projects/types';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -22,10 +22,10 @@ const LandingPage = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const [events, setEvents] = useState<PubllicEvent[]>([]);
+  // const [events, setEvents] = useState<PubllicEvent[]>([]);
 
   useEffect(() => {
-    getPublicEvents(setEvents);
+    // getPublicEvents(setEvents);
 
     if (localStorage.getItem('accessToken') && location.pathname === '/') {
       navigate('/events');
@@ -139,7 +139,7 @@ const LandingPage = () => {
             />
           </div>
           <WhyUs />
-          <Projects events={events} />
+          <Projects />
           <div className={styles.footerContainer}>
             <div className={styles.fLogoText}>
               <img src='/app/logoText.webp' alt='' className={styles.fLogo} />
