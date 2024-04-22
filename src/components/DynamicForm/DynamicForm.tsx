@@ -281,6 +281,7 @@ const DynamicForm = ({
                 }}
               >
                 <p className={styles.formLabel}>{fieldTitle}</p>
+                <p className={styles.fieldDescription}>{field.description}</p>
                 <motion.textarea
                   variants={variants}
                   transition={{
