@@ -61,7 +61,7 @@ const Events = () => {
 
   useEffect(() => {
     const eventName = JSON.parse(localStorage.getItem('eventData')!)?.event_name || '';
-    if (eventData.current_user_role === 'Admin') {
+    if (eventData.current_user_role === 'Admin' || eventData.current_user_role === 'Owner') {
       navigate(`/${eventName.toLowerCase()}/overview/`);
     } else if (eventData.current_user_role === 'Volunteer') {
       navigate(`/${eventName.toLowerCase()}/checkins/`);
