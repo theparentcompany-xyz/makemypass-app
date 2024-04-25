@@ -3,6 +3,7 @@ import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton
 import styles from './Scanner.module.css';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import toast from 'react-hot-toast';
+import { Dispatch } from 'react';
 
 const Scanner = ({
   ticketId,
@@ -11,8 +12,8 @@ const Scanner = ({
   setTrigger,
   scanCount,
 }: {
-  ticketId: string;
-  setTicketId: (ticketId: string) => void;
+  ticketId: string | undefined;
+  setTicketId: Dispatch<React.SetStateAction<string>> | undefined;
   trigger: boolean;
   setTrigger: (trigger: boolean) => void;
   scanCount: number;
@@ -39,13 +40,16 @@ const Scanner = ({
               backgroundColor: '#000',
             }}
             onResult={(result) => {
-              setTicketId(result.getText());
+              if (setTicketId) {
+                setTicketId(result.getText());
+              }
 
               if (result.getText().length > 0 && result.getText() !== ticketId) {
                 setTrigger(true);
               }
             }}
             onError={(error) => {
+              console.log(error);
               toast.error(error.message);
             }}
           />
@@ -60,7 +64,7 @@ const Scanner = ({
           placeholder='Enter Ticket Code'
           value={ticketId}
           onChange={(e) => {
-            setTicketId(e.target.value);
+            if (setTicketId) setTicketId(e.target.value);
 
             if (trigger) {
               setTrigger(false);
@@ -68,7 +72,7 @@ const Scanner = ({
           }}
         />
         <SecondaryButton
-          buttonText='Check In'
+          buttonText='Continue'
           onClick={() => {
             setTrigger(true);
           }}

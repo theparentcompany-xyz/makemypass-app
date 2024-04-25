@@ -2,12 +2,8 @@ import Theme from '../../../../../components/Theme/Theme';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
 import styles from './ScanQR.module.css';
 
-import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useContext, useEffect, useState } from 'react';
 import { checkInUser, getCheckInCount } from '../../../../../apis/scan';
-import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
-import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import { CgClose } from 'react-icons/cg';
 import { GlobalContext } from '../../../../../contexts/globalContext';
@@ -52,8 +48,6 @@ const ScanQR = () => {
     if (eventId) {
     }
   }, []);
-
-  const navigate = useNavigate();
 
   return (
     <>

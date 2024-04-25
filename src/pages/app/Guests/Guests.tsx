@@ -51,6 +51,7 @@ const Guests = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>();
   const [cashInHand, setCashInHand] = useState(false);
+  const [ticketCode, setTicketCode] = useState<string>('');
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
@@ -179,6 +180,15 @@ const Guests = () => {
     });
   }, [cashInHand]);
 
+  useEffect(() => {
+    if (ticketCode.length > 0) {
+      setFormData({
+        ...formData,
+        ticket_code: ticketCode,
+      });
+    }
+  }, [ticketCode]);
+
   return (
     <Theme>
       {selectedGuestId && formData && selectedGuestId.id && selectedGuestId.type == 'view' && (
@@ -213,6 +223,8 @@ const Guests = () => {
               ticketInfo={ticketInfo}
               setTicketId={setTicketId}
               ticketId={ticketId}
+              ticketCode={ticketCode}
+              setTicketCode={setTicketCode}
             />
 
             <div className={styles.buttons}>
