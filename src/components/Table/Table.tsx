@@ -35,6 +35,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className={styles.row}
+            style={!item.team_id ? { marginLeft: '0' } : {}}
           >
             <div
               className={styles.rowData}
@@ -50,7 +51,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
               }}
             >
               <p className={styles.rowName}>
-                <span>•</span>
+                {item.team_id && <span>•</span>}
                 {item.name}
               </p>
               <p className={styles.rowEmail}>{item.email.split('@')[0]}</p>
