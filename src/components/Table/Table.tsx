@@ -56,8 +56,8 @@ const RowComponent = React.memo(
           <p
             className={styles.rowType}
             style={{
-              backgroundColor: categoryColorMapping[item.category].backgroundColor ?? '',
-              color: categoryColorMapping[item.category].color ?? '',
+              backgroundColor: categoryColorMapping[item.category]?.backgroundColor ?? '',
+              color: categoryColorMapping[item.category]?.color ?? '',
             }}
           >
             {item.category}
