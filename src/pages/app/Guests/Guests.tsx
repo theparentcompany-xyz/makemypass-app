@@ -135,6 +135,7 @@ const Guests = () => {
       phone_number: 'phone_number',
       amount: 'amount',
       is_shortlisted: 'is_shortlisted',
+      team_id: 'team_id',
     };
 
     if (guests) {
@@ -369,13 +370,6 @@ const Guests = () => {
                 setSelectedGuestId={setSelectedGuestId}
                 secondaryButton={
                   <div className={styles.tableButtons}>
-                    {/* <SecondaryButton
-                      buttonText='Get Bulk Import +'
-                      onClick={() => {
-                        navigate('./bulk-import');
-                        setFormData({});
-                      }}
-                    /> */}
                     <SecondaryButton
                       buttonText='Add Guests +'
                       onClick={() => {

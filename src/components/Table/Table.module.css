@@ -49,6 +49,27 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+
+  padding: 0.5rem 0;
+}
+
+.row span {
+  margin-right: 0.25rem;
+}
+
+.tableRowData .row {
+  margin-left: 1rem;
+}
+
+.tableRowData .row:first-child {
+  margin-left: 0;
+}
+
+.tableRowData .row:first-child span {
+  display: none;
+}
+
+.tableRowData .row:last-child {
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 

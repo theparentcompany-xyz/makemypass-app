@@ -10,130 +10,141 @@ import { hostId } from '../../pages/app/Overview/Overview/types';
 import { timeAgo } from '../../common/commonFunctions';
 
 type ItemDataType = {
-  filteredData: TableType[];
+  groupByTeam: {
+    [key: string]: TableType[];
+  };
   setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
   setSelectedGuestId?: React.Dispatch<React.SetStateAction<SelectedGuest | null>>;
   setHostId?: Dispatch<React.SetStateAction<hostId>>;
   categoryColorMapping: TabType;
 };
 
-const RowComponent = React.memo(
-  ({ index, style, data }: { index: number; style: React.CSSProperties; data: ItemDataType }) => {
-    const { filteredData, setResentTicket, setSelectedGuestId, setHostId, categoryColorMapping } =
-      data;
-    const item = filteredData[index];
-    return (
-      <motion.div
-        key={item.id}
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        style={style}
-        className={styles.row}
-      >
-        <div
-          className={styles.rowData}
-          style={{ cursor: setSelectedGuestId ? 'pointer' : 'default' }}
-          onClick={() => {
-            if (setSelectedGuestId) {
-              setSelectedGuestId((prevState) => ({
-                ...prevState,
-                id: item.id,
-                type: 'view',
-              }));
-            }
-          }}
-        >
-          <p className={styles.rowName}>{item.name}</p>
-          <p className={styles.rowEmail}>{item.email.split('@')[0]}</p>
-          <p className={styles.rowEmail}>{item.phone_number}</p>
-          {item.check_in_date && (
-            <div className={styles.icon}>
-              <FaCheck color='white' size={12} />
-            </div>
-          )}
-        </div>
-        <div className={styles.rowData}>
-          <p
-            className={styles.rowType}
-            style={{
-              backgroundColor: categoryColorMapping[item.category]?.backgroundColor ?? '',
-              color: categoryColorMapping[item.category]?.color ?? '',
-            }}
+const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDataType }) => {
+  const { groupByTeam, setResentTicket, setSelectedGuestId, setHostId, categoryColorMapping } =
+    data;
+  const item = groupByTeam;
+  const teamId = Object.keys(item)[index];
+  const team = item[teamId];
+
+  return (
+    <div className={styles.tableRow}>
+      <div className={styles.tableRowData}>
+        {team.map((item) => (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={styles.row}
           >
-            {item.category}
-          </p>
-          <p className={styles.rowDate}>{timeAgo(item.date)}</p>
-          {setResentTicket && (
-            <>
-              <div className={styles.icon}>
-                <MdEdit
-                  onClick={() => {
-                    if (setSelectedGuestId) {
-                      setSelectedGuestId((prevState) => ({
-                        ...prevState,
-                        id: item.id,
-                        type: 'edit',
-                      }));
-                    }
-                  }}
-                  color='#8E8E8E'
-                />
-              </div>
-              {item.is_shortlisted ? (
-                <div className={styles.icon} title='Shortlisted'>
-                  <MdCheckBox color='#8E8E8E' />
-                </div>
-              ) : (
+            <div
+              className={styles.rowData}
+              style={{ cursor: setSelectedGuestId ? 'pointer' : 'default' }}
+              onClick={() => {
+                if (setSelectedGuestId) {
+                  setSelectedGuestId((prevState) => ({
+                    ...prevState,
+                    id: item.id,
+                    type: 'view',
+                  }));
+                }
+              }}
+            >
+              <p className={styles.rowName}>
+                <span>•</span>
+                {item.name}
+              </p>
+              <p className={styles.rowEmail}>{item.email.split('@')[0]}</p>
+              <p className={styles.rowEmail}>{item.phone_number}</p>
+              {item.check_in_date && (
                 <div className={styles.icon}>
-                  <MdCheckBoxOutlineBlank
-                    color={item.is_shortlisted === false ? '#D70040' : '#8E8E8E'}
-                    title='Not Shortlisted'
-                  />
+                  <FaCheck color='white' size={12} />
                 </div>
               )}
+            </div>
+            <div className={styles.rowData}>
+              <p
+                className={styles.rowType}
+                style={{
+                  backgroundColor: categoryColorMapping[item.category]?.backgroundColor ?? '',
+                  color: categoryColorMapping[item.category]?.color ?? '',
+                }}
+              >
+                {item.category}
+              </p>
+              <p className={styles.rowDate}>{timeAgo(item.date)}</p>
+              {setResentTicket && (
+                <>
+                  <div className={styles.icon}>
+                    <MdEdit
+                      onClick={() => {
+                        if (setSelectedGuestId) {
+                          setSelectedGuestId((prevState) => ({
+                            ...prevState,
+                            id: item.id,
+                            type: 'edit',
+                          }));
+                        }
+                      }}
+                      color='#8E8E8E'
+                    />
+                  </div>
+                  {item.is_shortlisted ? (
+                    <div className={styles.icon} title='Shortlisted'>
+                      <MdCheckBox color='#8E8E8E' />
+                    </div>
+                  ) : (
+                    <div className={styles.icon}>
+                      <MdCheckBoxOutlineBlank
+                        color={item.is_shortlisted === false ? '#D70040' : '#8E8E8E'}
+                        title='Not Shortlisted'
+                      />
+                    </div>
+                  )}
 
-              <div title={item.amount?.toString()} className={styles.icon}>
-                <FaDollarSign color={item.amount > 0 ? '#47c97e' : '#8E8E8'} />
-              </div>
-            </>
-          )}
-          {setHostId && (
-            <>
-              <div className={styles.icon}>
-                <MdEdit
-                  onClick={() => {
-                    if (setHostId) {
-                      setHostId((prevState) => ({
-                        ...prevState,
-                        id: item.id,
-                        type: 'edit',
-                      }));
-                    }
-                  }}
-                  color='#8E8E8E'
-                />
-              </div>
-              <div className={styles.icon}>
-                <MdDelete
-                  onClick={() => {
-                    if (setHostId) {
-                      setHostId((prevState) => ({
-                        ...prevState,
-                        id: item.id,
-                        type: 'delete',
-                      }));
-                    }
-                  }}
-                  color='#8E8E8E'
-                />
-              </div>
-            </>
-          )}
-        </div>
-      </motion.div>
-    );
-  },
-);
+                  <div title={item.amount?.toString()} className={styles.icon}>
+                    <FaDollarSign color={item.amount > 0 ? '#47c97e' : '#8E8E8'} />
+                  </div>
+                </>
+              )}
+              {setHostId && (
+                <>
+                  <div className={styles.icon}>
+                    <MdEdit
+                      onClick={() => {
+                        if (setHostId) {
+                          setHostId((prevState) => ({
+                            ...prevState,
+                            id: item.id,
+                            type: 'edit',
+                          }));
+                        }
+                      }}
+                      color='#8E8E8E'
+                    />
+                  </div>
+                  <div className={styles.icon}>
+                    <MdDelete
+                      onClick={() => {
+                        if (setHostId) {
+                          setHostId((prevState) => ({
+                            ...prevState,
+                            id: item.id,
+                            type: 'delete',
+                          }));
+                        }
+                      }}
+                      color='#8E8E8E'
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+});
 
 const Table = ({
   tableHeading,
@@ -191,15 +202,24 @@ const Table = ({
     );
   }, [tableData, search]);
 
+  const groupBy = (filteredData: TableType[], key: string) => {
+    return filteredData.reduce((result: { [key: string]: TableType[] }, currentValue) => {
+      (result[currentValue[key]] = result[currentValue[key]] || []).push(currentValue);
+      return result;
+    }, {});
+  };
+
+  const groupByTeam = groupBy(filteredData, 'team_id');
+
   const itemData: ItemDataType = useMemo(
     () => ({
-      filteredData,
+      groupByTeam,
       setResentTicket,
       setSelectedGuestId,
       setHostId,
       categoryColorMapping,
     }),
-    [filteredData, setResentTicket, setSelectedGuestId, setHostId],
+    [groupByTeam, setResentTicket, setSelectedGuestId, setHostId],
   );
 
   return (
@@ -222,7 +242,7 @@ const Table = ({
               <FixedSizeList
                 height={filteredData.length > 15 ? 550 : filteredData.length * 35}
                 width='100%'
-                itemCount={filteredData.length}
+                itemCount={Object.keys(groupByTeam).length}
                 itemSize={35} // Adjust based on row height
                 itemData={itemData}
               >

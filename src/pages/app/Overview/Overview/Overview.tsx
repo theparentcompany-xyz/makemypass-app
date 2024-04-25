@@ -90,6 +90,7 @@ const Overview = () => {
       email: 'email',
       category: 'category',
       registered_at: 'date',
+      team_id: 'team_id',
     };
 
     if (recentRegistrations) {
