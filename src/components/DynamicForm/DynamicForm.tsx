@@ -401,7 +401,6 @@ const DynamicForm = ({
               </div>
             );
           } else if (field.type === 'file') {
-            console.log(field.property?.extension_types.join(',') ?? '');
             return (
               <div
                 style={{
@@ -533,7 +532,6 @@ const DynamicForm = ({
                 <div className={styles.checkboxContainer}>
                   {field.options?.map((option: string) => (
                     <>
-                      {console.log(field.field_key)}
                       <div key={option} className={styles.checkbox}>
                         <input
                           type='checkbox'

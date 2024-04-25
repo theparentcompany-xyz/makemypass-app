@@ -31,7 +31,6 @@ const CouponForm = ({
   setCoupon: React.Dispatch<React.SetStateAction<CouponData>>;
   coupon: CouponData;
 }) => {
-  console.log(coupon);
   return (
     <>
       {coupon.status && (

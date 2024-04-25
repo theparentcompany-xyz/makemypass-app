@@ -124,7 +124,6 @@ export const submitForm = async ({
     })
     .catch((error) => {
       toast.error('Error in Registering Event');
-      console.log(error);
       if (setFormErrors) setFormErrors(error.response.data.message);
     });
 };
@@ -275,9 +274,6 @@ export const postAudio = async (eventId: string, recordedBlob: Blob) => {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    })
-    .then((response) => {
-      console.log(response.data);
     })
     .catch((error) => {
       console.error(error.response.data.message.general[0]);

@@ -27,7 +27,6 @@ export const getEventId = async (
     privateGateway
       .get(makeMyPass.getEventId(eventName))
       .then((response) => {
-        console.log(response.data.response);
         localStorage.setItem('eventData', JSON.stringify(response.data.response));
         getEventDatas(response.data.response.event_id);
       })
@@ -48,12 +47,9 @@ export const getEventData = async (
     }>
   >,
 ) => {
-  const role = localStorage.getItem('current_user_role');
-  if (!role) console.log('Event ID123:', eventId);
   privateGateway
     .get(makeMyPass.getEvent(eventId))
     .then((response) => {
-      console.log(response.data.response);
       setEventData(response.data.response);
       localStorage.setItem('current_user_role', response.data.response.current_user_role);
     })
@@ -94,9 +90,6 @@ export const createEvent = (eventTitle: string) => {
     .post(makeMyPass.createEvent, {
       title: eventTitle,
     })
-    .then((response) => {
-      console.log(response);
-    })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
@@ -112,7 +105,6 @@ export const getEvent = (
     .then((response) => {
       setEventData && setEventData(response.data.response);
       setEventTitle && setEventTitle(response.data.response.title);
-      console.log(response.data);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
@@ -123,9 +115,6 @@ export const editEvent = (eventId: string, eventTitle: string) => {
   privateGateway
     .post(makeMyPass.editEvent(eventId), {
       title: eventTitle,
-    })
-    .then((response) => {
-      console.log(response);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');

@@ -77,7 +77,6 @@ const EventGlance = () => {
                         className={styles['basic-multi-select']}
                         classNamePrefix='select'
                         onChange={(selectedOption: MultiValue<{ value: string }>) => {
-                          console.log(selectedOption);
                           setSelectedMulti(selectedOption);
                         }}
                       />

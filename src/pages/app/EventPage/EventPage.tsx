@@ -43,8 +43,6 @@ const EventPage = () => {
     throw new Error('setEventId is undefined');
   }
 
-  console.log(eventId, hasEvent);
-
   const [hasZeroPriceTicket, setHasZeroPriceTicket] = useState(false);
 
   const [coupon, setCoupon] = useState<CouponData>({
@@ -122,7 +120,6 @@ const EventPage = () => {
   }, [eventData?.form]);
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
-    console.log('fieldName', fieldName, fieldValue);
     setFormData({
       ...formData,
       [fieldName]: fieldValue,
@@ -135,7 +132,6 @@ const EventPage = () => {
       });
     }
   };
-  console.log(ticketIds, amount);
   return (
     <>
       {hasEvent ? (
