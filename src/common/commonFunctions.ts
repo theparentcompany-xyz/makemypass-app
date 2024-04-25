@@ -98,3 +98,31 @@ export function timeAgo(date: string | number | Date) {
     return `today`;
   }
 }
+export const getCurrentTimezone = () => {
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const date = new Date();
+  const offset = date.getTimezoneOffset();
+  const hours = offset / 60;
+  const sign = hours < 0 ? '+' : '-';
+  const absOffset = Math.abs(hours);
+  const formattedHourOffset = `${Math.floor(absOffset)}`.padStart(2, '0');
+  const formattedMinuteOffset = `${Math.round((absOffset % 1) * 60)}`.padStart(2, '0');
+  const gmtString = `GMT ${sign}${formattedHourOffset}:${formattedMinuteOffset}`;
+  return { zoneName: timezone, offset: gmtString };
+};
+
+
+
+//this function was made to send a converted date to backend
+export function convertDate(date: Date | undefined) {
+  if (!date) return undefined
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const ampm = Number(hours) >= 12 ? 'PM' : 'AM';
+  const formattedHours = String(Number(hours) % 12 || 12).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${formattedHours}:${minutes} ${ampm}`;
+}
