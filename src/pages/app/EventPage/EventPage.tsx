@@ -1,6 +1,6 @@
 import styles from './EventPage.module.css';
 import Theme from '../../../components/Theme/Theme';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 // import { getEventId } from '../../../apis/events';
@@ -65,6 +65,9 @@ const EventPage = () => {
     if (eventData?.coupon) setCoupon(eventData?.coupon);
   }, [eventData]);
 
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
   useEffect(() => {
     const scrollToTop = () => {
       window.scrollTo(0, 0);
@@ -113,7 +116,7 @@ const EventPage = () => {
   useEffect(() => {
     setFormData(
       eventData?.form.reduce((data: any, field: any) => {
-        data[field.field_key] = '';
+        data[field.field_key] = searchParams.get(field.field_key) || '';
         return data;
       }, {}),
     );
