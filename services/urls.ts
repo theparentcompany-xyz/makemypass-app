@@ -109,7 +109,7 @@ export const makeMyPass = {
 };
 
 export const makeMyPassSocket = {
-  recentRegistrations: (eventId: string) => `manage-guests/${eventId}/recent-registrations/`,
+  recentRegistrations: (eventId: string) => `manage-guest/${eventId}/recent-registrations/`,
 
   analytics: (eventId: string) => `analytics/${eventId}/insights/`,
   registerCounts: (eventId: string) => `analytics/${eventId}/register-count/`,

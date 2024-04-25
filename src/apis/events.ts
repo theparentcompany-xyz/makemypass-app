@@ -28,7 +28,8 @@ export const getEventId = async (
       .get(makeMyPass.getEventId(eventName))
       .then((response) => {
         localStorage.setItem('eventData', JSON.stringify(response.data.response));
-        getEventDatas(response.data.response.event_id);
+
+        if (localStorage.getItem('accessToken')) getEventDatas(response.data.response.event_id);
       })
       .catch(() => {
         setHasEvent && setHasEvent(false);
