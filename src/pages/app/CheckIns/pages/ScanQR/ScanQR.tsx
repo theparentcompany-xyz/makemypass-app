@@ -16,6 +16,7 @@ import { EventType, TicketType } from '../../../../../apis/types';
 import { getEventInfo } from '../../../../../apis/publicpage';
 import Loader from '../../../../../components/Loader';
 import MultipleTicket from './components/MultipleTicket';
+import Scanner from '../../../../../components/Scanner/Scanner';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -27,12 +28,12 @@ const ScanQR = () => {
   const [isTicketSelected, setIsTicketSelected] = useState<boolean>(false);
   const [selectedTicket, setSelectedTicket] = useState<TicketType>();
   const { eventId } = useContext(GlobalContext);
-  const [eventData, setEventData] = useState<EventType>()
+  const [eventData, setEventData] = useState<EventType>();
 
   useEffect(() => {
     if (eventId) {
       getCheckInCount(eventId, setScanCount);
-      getEventInfo(eventId, setEventData)
+      getEventInfo(eventId, setEventData);
     }
 
     if (ticketId.length > 0 && trigger) {
@@ -45,20 +46,16 @@ const ScanQR = () => {
         setMessage('');
       }, 1150);
     }
-
-
   }, [trigger, eventId]);
 
   useEffect(() => {
     if (eventId) {
-
     }
-  }, [])
+  }, []);
 
   const navigate = useNavigate();
 
   return (
-
     <>
       {eventData ? (
         <Theme>
@@ -85,13 +82,13 @@ const ScanQR = () => {
                     style={
                       isError
                         ? {
-                          borderBottom: '3px solid #f71e1e',
-                          background: 'rgba(185, 31, 31, 0.09)',
-                        }
+                            borderBottom: '3px solid #f71e1e',
+                            background: 'rgba(185, 31, 31, 0.09)',
+                          }
                         : {
-                          borderBottom: '3px solid #47c97e',
-                          background: 'rgba(31, 185, 31, 0.09)',
-                        }
+                            borderBottom: '3px solid #47c97e',
+                            background: 'rgba(31, 185, 31, 0.09)',
+                          }
                     }
                   >
                     <br />
@@ -114,65 +111,15 @@ const ScanQR = () => {
                 <hr className={styles.line} />
               </div>
 
-              <div className={styles.scannerContainer}>
-                <p className={styles.scanHeader}>Scan QR Code Below</p>
-                <div className={styles.scannerOuterContainer}>
-                  <div className={styles.scanner}>
-                    <div className={styles.scanCount}>
-                      <SecondaryButton buttonText={`${scanCount} Scans`} />
-                    </div>
-                    <div className={styles.closeButton}>
-                      <SecondaryButton
-                        buttonText='Close'
-                        onClick={() => {
-                          navigate(-1);
-                        }}
-                      />
-                    </div>
-                    <QrScanner
-                      containerStyle={{
-                        backgroundColor: '#000',
-                      }}
-                      onResult={(result) => {
-                        setTicketId(result.getText());
-
-                        if (result.getText().length > 0 && result.getText() !== ticketId) {
-                          setTrigger(true);
-                        }
-                      }}
-                      onError={(error) => {
-                        toast.error(error.message);
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div className={styles.inputContainer}>
-                  <br />
-                  <p className={styles.inputText}>Or Enter Code Below</p>
-                  <input
-                    className={styles.input}
-                    placeholder='Enter Ticket Code'
-                    value={ticketId}
-                    onChange={(e) => {
-                      setTicketId(e.target.value);
-
-                      if (trigger) {
-                        setTrigger(false);
-                      }
-                    }}
-                  />
-                  <SecondaryButton
-                    buttonText='Check In'
-                    onClick={() => {
-                      setTrigger(true);
-                    }}
-                  />
-                </div>
-              </div>
+              <Scanner
+                ticketId={ticketId}
+                setTicketId={setTicketId}
+                trigger={trigger}
+                setTrigger={setTrigger}
+                scanCount={scanCount}
+              />
             </>
           )}
-
         </Theme>
       ) : (
         <Loader />
