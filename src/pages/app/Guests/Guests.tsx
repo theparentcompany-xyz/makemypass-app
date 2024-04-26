@@ -135,7 +135,7 @@ const Guests = () => {
       check_in_date: 'check_in_date',
       phone_number: 'phone_number',
       amount: 'amount',
-      is_shortlisted: 'is_shortlisted',
+      is_approved: 'is_approved',
       team_id: 'team_id',
     };
 

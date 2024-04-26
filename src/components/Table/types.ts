@@ -1,5 +1,5 @@
 export type TableType = {
-  is_shortlisted: any;
+  is_approved: any;
   amount: number;
   check_in_date: string;
   phone_number: string;

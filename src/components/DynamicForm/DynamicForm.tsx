@@ -1,4 +1,4 @@
-import { Dispatch, useState } from 'react';
+import { Dispatch } from 'react';
 import { ErrorMessages, FormDataType, FormFieldType, TicketType } from '../../apis/types';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
 import InputFIeld from '../../pages/auth/Login/InputFIeld';
