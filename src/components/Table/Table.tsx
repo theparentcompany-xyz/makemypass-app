@@ -63,15 +63,17 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
               )}
             </div>
             <div className={styles.rowData}>
-              <p
-                className={styles.rowType}
-                style={{
-                  backgroundColor: categoryColorMapping[item.category]?.backgroundColor ?? '',
-                  color: categoryColorMapping[item.category]?.color ?? '',
-                }}
-              >
-                {item.category}
-              </p>
+              {item.category && (
+                <p
+                  className={styles.rowType}
+                  style={{
+                    backgroundColor: categoryColorMapping[item.category]?.backgroundColor ?? '',
+                    color: categoryColorMapping[item.category]?.color ?? '',
+                  }}
+                >
+                  {item.category}
+                </p>
+              )}
               <p className={styles.rowDate}>{timeAgo(item.date)}</p>
               {setResentTicket && (
                 <>

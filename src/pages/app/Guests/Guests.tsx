@@ -52,6 +52,7 @@ const Guests = () => {
   const [currentCategory, setCurrentCategory] = useState<string>();
   const [cashInHand, setCashInHand] = useState(false);
   const [ticketCode, setTicketCode] = useState<string>('');
+  const [showScanner, setShowScanner] = useState<boolean>(false);
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
@@ -226,29 +227,33 @@ const Guests = () => {
               ticketId={ticketId}
               ticketCode={ticketCode}
               setTicketCode={setTicketCode}
+              showScanner={showScanner}
+              setShowScanner={setShowScanner}
             />
 
-            <div className={styles.buttons}>
-              <p
-                onClick={() => {
-                  addGuest(eventId, ticketId, formData, setFormErrors, setSelectedGuestId);
-                }}
-                className={styles.button}
-              >
-                Add
-              </p>
-              <p
-                onClick={() => {
-                  setSelectedGuestId({
-                    id: '',
-                    type: '',
-                  });
-                }}
-                className={styles.button}
-              >
-                Cancel
-              </p>
-            </div>
+            {!showScanner && (
+              <div className={styles.buttons}>
+                <p
+                  onClick={() => {
+                    addGuest(eventId, ticketId, formData, setFormErrors, setSelectedGuestId);
+                  }}
+                  className={styles.button}
+                >
+                  Add
+                </p>
+                <p
+                  onClick={() => {
+                    setSelectedGuestId({
+                      id: '',
+                      type: '',
+                    });
+                  }}
+                  className={styles.button}
+                >
+                  Cancel
+                </p>
+              </div>
+            )}
           </div>
         </Modal>
       )}
@@ -312,27 +317,29 @@ const Guests = () => {
                   ticketId={ticketId}
                 />
 
-                <div className={styles.buttons}>
-                  <p
-                    onClick={() => {
-                      handleSubmissionEdit();
-                    }}
-                    className={styles.button}
-                  >
-                    Edit
-                  </p>
-                  <p
-                    onClick={() => {
-                      setSelectedGuestId({
-                        id: '',
-                        type: '',
-                      });
-                    }}
-                    className={styles.button}
-                  >
-                    Cancel
-                  </p>
-                </div>
+                {!showScanner && (
+                  <div className={styles.buttons}>
+                    <p
+                      onClick={() => {
+                        handleSubmissionEdit();
+                      }}
+                      className={styles.button}
+                    >
+                      Edit
+                    </p>
+                    <p
+                      onClick={() => {
+                        setSelectedGuestId({
+                          id: '',
+                          type: '',
+                        });
+                      }}
+                      className={styles.button}
+                    >
+                      Cancel
+                    </p>
+                  </div>
+                )}
               </div>
             </Modal>
           )}
