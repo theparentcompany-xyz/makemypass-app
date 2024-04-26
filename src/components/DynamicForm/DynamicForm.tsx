@@ -252,7 +252,7 @@ const DynamicForm = ({
           </div>
         )}
 
-        <hr className={styles.line} />
+        {/* <hr className={styles.line} /> */}
 
         {!showScanner &&
           formFields?.map((field: FormFieldType) => {
