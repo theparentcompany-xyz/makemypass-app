@@ -90,6 +90,12 @@ export const createEvent = (eventTitle: string) => {
   privateGateway
     .post(makeMyPass.createEvent, {
       title: eventTitle,
+    }).then((response) => {
+      toast.success(response.data.message.general[0] || 'Event Created Successfully');
+      setTimeout(() => {
+        window.location.href = `/${eventTitle.toLowerCase().replace(/\s/g, '-')}/manage`;
+      }, 1000)
+
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
@@ -112,10 +118,15 @@ export const getEvent = (
     });
 };
 
-export const editEvent = (eventId: string, eventTitle: string) => {
+export const editEvent = (eventId: string, eventData: Object) => {
   privateGateway
-    .post(makeMyPass.editEvent(eventId), {
-      title: eventTitle,
+    .patch(makeMyPass.editEvent(eventId), eventData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    })
+    .then((response) => {
+      toast.success(response.data.message.general[0] || 'Event Updated Successfully');
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');

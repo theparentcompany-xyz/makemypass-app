@@ -1,0 +1,39 @@
+.pac-container:after {
+    /* Disclaimer: not needed to show 'powered by Google' if also a Google Map is shown */
+
+    background-image: none !important;
+    height: 0px;
+    gap: 0px;
+    background-color: #131818 !important;
+}
+
+
+
+.pac-container {
+    margin-top: 0.3rem;
+    font-family: 'Inter', sans-serif;
+    background-color: transparent !important;
+    border-radius: 8px;
+    border: none;
+}
+
+.pac-item {
+    border: 1px solid #1d2020cf !important;
+    background-color: #131818 !important;
+    font-family: 'Inter', sans-serif;
+    color: #d7d7d778;
+}
+
+.pac-item:first-child {
+    border-radius: 6px 6px 0 0;
+
+}
+
+.pac-item:last-child {
+    border-radius: 0 0 6px 6px;
+}
+
+.pac-item-query {
+    color: #d7d7d7;
+    font-family: 'Inter', sans-serif;
+}

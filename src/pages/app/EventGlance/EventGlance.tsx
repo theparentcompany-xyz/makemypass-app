@@ -17,7 +17,7 @@ import { GlobalContext } from '../../../contexts/globalContext';
 import { EventType } from '../../../apis/types';
 import { getEvent } from '../../../apis/events';
 import FourNotFour from '../../FourNotFour/FourNotFour';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import EventHeader from '../../../components/EventHeader/EventHeader';
 //import { HashLoader } from 'react-spinners';
@@ -32,7 +32,7 @@ const EventGlance = () => {
   const [selectedMail, setSelectedMail] = useState('');
 
   const eventName = localStorage.getItem('eventName');
-
+  const navigate = useNavigate();
   const selectValues = [
     { value: 'Going', label: 'Going' },
     { value: 'Invited', label: 'Invited' },
@@ -123,7 +123,7 @@ const EventGlance = () => {
                 <div>
                   <div className={styles.headingTexts}>
                     <p className={styles.eventTitle}>{eventData?.title}</p>
-                    <p className={styles.hostedByText}>{}</p>
+                    <p className={styles.hostedByText}>{ }</p>
                   </div>
 
                   <div className={styles.eventDatePlace}>
@@ -139,7 +139,7 @@ const EventGlance = () => {
                         <p className={styles.eventTimeText}>
                           {eventData?.start_time} - {eventData?.end_time}
                           {', '}
-                          {eventData?.end_date.substring(eventData?.end_date.indexOf(',') + 1)}
+                          {eventData?.end_date?.substring(eventData?.end_date?.indexOf(',') + 1)}
                         </p>
                       </div>
                     </div>
@@ -161,6 +161,12 @@ const EventGlance = () => {
                         className={styles.shareEventButton}
                       >
                         Share Event
+                      </button>
+                      <button
+                        onClick={() => navigate('./edit-event')}
+                        className={styles.editEventButton}
+                      >
+                        Edit Event
                       </button>
                     </div>
                   </div>
