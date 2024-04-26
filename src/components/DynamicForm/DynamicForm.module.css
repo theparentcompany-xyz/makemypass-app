@@ -249,3 +249,14 @@ input {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
+
+.line {
+  margin: auto;
+  width: 95%;
+  height: 2px;
+  background: #a4a4a4;
+  opacity: 0.2;
+  border: none;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}

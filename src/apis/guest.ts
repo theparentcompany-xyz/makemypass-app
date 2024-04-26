@@ -13,7 +13,7 @@ export const shortListUser = (
 ) => {
   privateGateway
     .post(makeMyPass.shortListUser(eventId, userId), {
-      is_shortlisted: isShortListed,
+      is_approved: isShortListed,
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'User shortlisted successfully');

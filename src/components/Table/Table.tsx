@@ -63,15 +63,17 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
               )}
             </div>
             <div className={styles.rowData}>
-              <p
-                className={styles.rowType}
-                style={{
-                  backgroundColor: categoryColorMapping[item.category]?.backgroundColor ?? '',
-                  color: categoryColorMapping[item.category]?.color ?? '',
-                }}
-              >
-                {item.category}
-              </p>
+              {item.category && (
+                <p
+                  className={styles.rowType}
+                  style={{
+                    backgroundColor: categoryColorMapping[item.category]?.backgroundColor ?? '',
+                    color: categoryColorMapping[item.category]?.color ?? '',
+                  }}
+                >
+                  {item.category}
+                </p>
+              )}
               <p className={styles.rowDate}>{timeAgo(item.date)}</p>
               {setResentTicket && (
                 <>
@@ -89,14 +91,14 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
                       color='#8E8E8E'
                     />
                   </div>
-                  {item.is_shortlisted ? (
+                  {item.is_approved ? (
                     <div className={styles.icon} title='Shortlisted'>
                       <MdCheckBox color='#8E8E8E' />
                     </div>
                   ) : (
                     <div className={styles.icon}>
                       <MdCheckBoxOutlineBlank
-                        color={item.is_shortlisted === false ? '#D70040' : '#8E8E8E'}
+                        color={item.is_approved === false ? '#D70040' : '#8E8E8E'}
                         title='Not Shortlisted'
                       />
                     </div>

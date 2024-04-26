@@ -54,7 +54,7 @@ const ViewGuest = ({
                   {formData['name']}{' '}
                   <span className={styles.rowType}>{formData['ticket_code']}</span>
                 </span>
-                {formData['is_shortlisted'] && <span className={styles.rowType}>Shortlisted</span>}
+                {formData['is_approved'] && <span className={styles.rowType}>Shortlisted</span>}
               </p>
               <p className={styles.emailAddress}>{formData['email']}</p>
             </div>
@@ -90,7 +90,7 @@ const ViewGuest = ({
                 className={styles.guestActions}
               >
                 <div className={styles.confirmButton}>
-                  {!confirmClicked.confirm && formData['is_shortlisted'] === null ? (
+                  {!confirmClicked.confirm && formData['is_approved'] === null ? (
                     <>
                       <SecondaryButton
                         onClick={() => {
@@ -112,7 +112,7 @@ const ViewGuest = ({
                         buttonText='Accept'
                       />
                     </>
-                  ) : !confirmClicked.confirm && formData['is_shortlisted'] ? (
+                  ) : !confirmClicked.confirm && formData['is_approved'] ? (
                     <SecondaryButton
                       onClick={() => {
                         setConfirmClicked({
@@ -170,7 +170,7 @@ const ViewGuest = ({
               </motion.div>
             </AnimatePresence>
           </div>
-          {formData['is_shortlisted'] && (
+          {formData['is_approved'] && (
             <div className={styles.guestActionButtons}>
               <div
                 className={styles.icon}

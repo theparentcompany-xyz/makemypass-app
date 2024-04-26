@@ -65,7 +65,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                   <p className={styles.eventTimeText}>
                     {eventData?.start_time} - {eventData?.end_time}
                     {', '}
-                    {eventData?.end_date.substring(eventData?.end_date.indexOf(',') + 1)}
+                    {eventData?.end_date?.substring(eventData?.end_date.indexOf(',') + 1)}
                   </p>
                 </div>
               </div>
@@ -109,7 +109,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                 ) : (
                   <p
                     dangerouslySetInnerHTML={{
-                      __html: eventData.description.substring(0, 150).concat('...'),
+                      __html: eventData?.description?.substring(0, 150).concat('...'),
                     }}
                   ></p>
                 )}

@@ -1,4 +1,4 @@
-import { Dispatch, useState } from 'react';
+import { Dispatch } from 'react';
 import { ErrorMessages, FormDataType, FormFieldType, TicketType } from '../../apis/types';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
 import InputFIeld from '../../pages/auth/Login/InputFIeld';
@@ -22,6 +22,8 @@ const DynamicForm = ({
   cashInHand,
   ticketCode,
   setTicketCode,
+  showScanner,
+  setShowScanner,
 }: {
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
@@ -35,14 +37,14 @@ const DynamicForm = ({
   eventData?: EventType;
   ticketCode?: string;
   setTicketCode?: Dispatch<React.SetStateAction<string>>;
+  showScanner?: boolean;
+  setShowScanner?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const variants = {
     initial: { opacity: 0, y: -10 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -10 },
   };
-
-  const [showScanner, setShowScanner] = useState<boolean>(false);
 
   const validateCondition = (field: FormFieldType) => {
     let valid = true;
@@ -197,7 +199,7 @@ const DynamicForm = ({
                 />
                 <button
                   onClick={() => {
-                    setShowScanner(true);
+                    if (setShowScanner) setShowScanner(true);
                   }}
                   className={styles.scanTicketCodeButton}
                 >
@@ -249,6 +251,8 @@ const DynamicForm = ({
             </div>
           </div>
         )}
+
+        <hr className={styles.line} />
 
         {!showScanner &&
           formFields?.map((field: FormFieldType) => {
@@ -626,7 +630,9 @@ const DynamicForm = ({
             ticketId={ticketCode}
             setTicketId={setTicketCode}
             trigger={true}
-            setTrigger={() => setShowScanner(false)}
+            setTrigger={() => {
+              if (setShowScanner) setShowScanner(false);
+            }}
             scanCount={0}
           />
         )}

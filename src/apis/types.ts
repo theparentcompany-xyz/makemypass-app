@@ -106,6 +106,10 @@ export interface EventType {
   description: string;
   start_date: string;
   end_date: string;
+  reg_start_date: string;
+  reg_end_date: string;
+  event_start_date: string;
+  event_end_date: string;
   start_time: string;
   end_time: string;
   logo: string;
@@ -121,6 +125,11 @@ export interface EventType {
   coupon: CouponType;
   parse_audio?: boolean;
   select_multi_ticket?: boolean;
+  capacity?: number;
+  is_private: boolean;
+  is_online: boolean;
+  approval_required: boolean;
+  status: string;
 }
 
 export type EventDetails = {
