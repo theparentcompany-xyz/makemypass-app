@@ -46,7 +46,7 @@ export const makeMyPass = {
     makeMyPassURL(`/scan-guest/${eventId}/user-info/${ticketCode}`),
 
   getEventDatas: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
-  getTicketInfo: (eventId: string) => makeMyPassURL(`/manage-ticket/get-tickets-info/${eventId}/`),
+  getTicketInfo: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/list-tickets/`),
   getFormFields: (evenid: string) => makeMyPassURL(`/manage-event/get-form-fields/${evenid}/`),
   getEventInfo: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/info/`),
   validatePayment: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/validate-payment/`),
