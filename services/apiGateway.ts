@@ -114,7 +114,7 @@ privateGateway.interceptors.response.use(
 export const connectPrivateSocket = ({ url }: { url: string }): Promise<WebSocket> => {
   const baseURL = (import.meta.env.VITE_WEBSOCKET_URL as string) + 'makemypass/';
 
-  let wsUrl = `${baseURL}${url}?Authorization=Bearer ${localStorage.getItem('accessToken')}`;
+  let wsUrl = `${baseURL}${url}?Authorization=Bearer ${localStorage.getItem('accessToken')}&timezone=${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
 
   return new Promise((resolve) => {
     const ws = new WebSocket(wsUrl);
@@ -130,7 +130,7 @@ export const connectPrivateSocket = ({ url }: { url: string }): Promise<WebSocke
 
           localStorage.setItem('accessToken', response.data.response.access_token);
 
-          wsUrl = `${url}?Authorization=Bearer ${response.data.response.access_token}`;
+          wsUrl = `${url}?Authorization=Bearer ${response.data.response.access_token}&timezone=${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
 
           const ws = new WebSocket(wsUrl);
 
