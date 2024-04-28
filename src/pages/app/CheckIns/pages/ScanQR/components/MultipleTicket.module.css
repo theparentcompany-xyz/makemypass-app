@@ -1,24 +1,24 @@
 .multipleTicketContainer {
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    row-gap: 1rem;
-    column-gap: 1rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 1rem;
+  column-gap: 1rem;
 }
 
 .multipleTicketItem {
-    max-width: 15rem;
+  max-width: 15rem;
 }
 
 @media (width<=600px) {
-    .multipleTicketContainer {
-        justify-content: center;
-    }
+  .multipleTicketContainer {
+    justify-content: center;
+  }
 
-    .multipleTicketItem {
-        max-width: 15rem;
-    }
+  .multipleTicketItem {
+    max-width: 15rem;
+  }
 }

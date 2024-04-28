@@ -9,7 +9,7 @@ interface GlobalContextProps {
 
 export const GlobalContext = createContext<GlobalContextProps>({
   eventId: '',
-  setEventId: () => { },
+  setEventId: () => {},
   hasEvent: true,
-  setHasEvent: () => { },
+  setHasEvent: () => {},
 });

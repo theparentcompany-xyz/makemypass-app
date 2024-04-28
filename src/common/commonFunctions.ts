@@ -111,11 +111,9 @@ export const getCurrentTimezone = () => {
   return { zoneName: timezone, offset: gmtString };
 };
 
-
-
 //this function was made to send a converted date to backend
 export function convertDate(date: Date | undefined) {
-  if (!date) return undefined
+  if (!date) return undefined;
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');

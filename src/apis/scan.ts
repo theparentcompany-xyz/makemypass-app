@@ -12,7 +12,7 @@ export const checkInUser = async (
 ) => {
   privateGateway
     .post(makeMyPass.checkInUser(ticketId, eventId), {
-      ticket_id: selectedTicket?.id
+      ticket_id: selectedTicket?.id,
     })
     .then((response) => {
       if (setMessage && setIsError) {

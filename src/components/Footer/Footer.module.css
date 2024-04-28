@@ -17,7 +17,7 @@
   flex-direction: row;
   align-items: center;
   z-index: 1;
-  justify-content: 'space-between',
+  justify-content: 'space-between';
 }
 
 .socialIcons {

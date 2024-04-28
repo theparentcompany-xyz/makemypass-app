@@ -9,12 +9,12 @@ const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; table
   const formattedKeys =
     tableData.length > 0
       ? Object.keys(tableData[0]).map((key) => {
-        const formattedKey = key
-          .split('_')
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ');
-        return formattedKey;
-      })
+          const formattedKey = key
+            .split('_')
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+          return formattedKey;
+        })
       : [];
 
   const { eventId } = useContext(GlobalContext);

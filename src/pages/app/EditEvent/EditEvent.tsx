@@ -4,7 +4,7 @@ import { customStyles } from '../EventPage/constants';
 import { GrLocation } from 'react-icons/gr';
 import { getEvent, editEvent } from '../../../apis/events';
 import { TbUserCheck, TbWorld } from 'react-icons/tb';
-import { TbMailStar } from "react-icons/tb";
+import { TbMailStar } from 'react-icons/tb';
 import { BiArrowToTop } from 'react-icons/bi';
 import { LuPencil } from 'react-icons/lu';
 import { FiGlobe } from 'react-icons/fi';
@@ -19,9 +19,7 @@ import { Autocomplete, GoogleMap, useLoadScript, Libraries, MarkerF } from '@rea
 import Editor from './components/Editor';
 import Select from 'react-select';
 
-
-
-import './google.css'
+import './google.css';
 const libraries: Libraries = ['places'];
 
 const EditEvent = () => {
@@ -41,17 +39,14 @@ const EditEvent = () => {
   const selectOptions = [
     { value: '1', label: 'Draft' },
     { value: '2', label: 'Published' },
-    { value: '3', label: 'Completed' }
-  ]
+    { value: '3', label: 'Completed' },
+  ];
   const timezone = getCurrentTimezone();
 
-
   const dateForDateTimeLocal = (date: Date | undefined) =>
-    date ?
-      new Date(date.getTime() + date.getTimezoneOffset() * -60 * 1000)
-        .toISOString()
-        .slice(0, 19) : undefined;
-
+    date
+      ? new Date(date.getTime() + date.getTimezoneOffset() * -60 * 1000).toISOString().slice(0, 19)
+      : undefined;
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GMAPS_API_KEY as string,
@@ -67,7 +62,10 @@ const EditEvent = () => {
       const place = autocompleteRef.current.getPlace();
       setPlaceName(place.name || '');
       if (place.geometry) {
-        setLocation({ lat: place.geometry.location?.lat() || 0, lng: place.geometry.location?.lng() || 0 });
+        setLocation({
+          lat: place.geometry.location?.lat() || 0,
+          lng: place.geometry.location?.lng() || 0,
+        });
       } else {
         console.log('No location available for the selected place');
       }
@@ -85,7 +83,7 @@ const EditEvent = () => {
       zoomControl: true,
       mapTypeControl: true,
     }),
-    []
+    [],
   );
 
   const onSubmit = () => {
@@ -95,18 +93,25 @@ const EditEvent = () => {
 
     if (eventTitle !== eventData?.title) changedData['title'] = eventTitle;
     if (newDescription !== eventData?.description) changedData['description'] = newDescription;
-    if (convertDate(eventDate?.start) !== fetchedEvent?.event_start_date) changedData['event_start_date'] = convertDate(eventDate?.start);
-    if (convertDate(eventDate?.end) !== fetchedEvent?.event_end_date) changedData['event_end_date'] = convertDate(eventDate?.end);
-    if (convertDate(regDate?.start) !== fetchedEvent?.reg_start_date) changedData['reg_start_date'] = convertDate(regDate?.start);
-    if (convertDate(regDate?.end) !== fetchedEvent?.reg_end_date) changedData['reg_end_date'] = convertDate(regDate?.end);
+    if (convertDate(eventDate?.start) !== fetchedEvent?.event_start_date)
+      changedData['event_start_date'] = convertDate(eventDate?.start);
+    if (convertDate(eventDate?.end) !== fetchedEvent?.event_end_date)
+      changedData['event_end_date'] = convertDate(eventDate?.end);
+    if (convertDate(regDate?.start) !== fetchedEvent?.reg_start_date)
+      changedData['reg_start_date'] = convertDate(regDate?.start);
+    if (convertDate(regDate?.end) !== fetchedEvent?.reg_end_date)
+      changedData['reg_end_date'] = convertDate(regDate?.end);
     if (placeName && placeName !== fetchedEvent?.place) changedData['place'] = placeName;
-    if (location?.lat !== fetchedEvent?.location?.lat || location?.lng !== fetchedEvent?.location?.lng) changedData['location'] = location;
+    if (
+      location?.lat !== fetchedEvent?.location?.lat ||
+      location?.lng !== fetchedEvent?.location?.lng
+    )
+      changedData['location'] = location;
     if (logo) changedData['logo'] = logo;
     if (banner) changedData['banner'] = banner;
 
     editEvent(eventId, changedData);
-
-  }
+  };
 
   useEffect(() => {
     if (eventId) getEvent(eventId, setEventTitle, setEventData);
@@ -120,15 +125,14 @@ const EditEvent = () => {
       setEventDate({
         start: eventData.event_start_date ? new Date(eventData?.event_start_date) : undefined,
         end: eventData.event_end_date ? new Date(eventData?.event_end_date) : undefined,
-      })
+      });
       setRegDate({
         start: eventData.reg_start_date ? new Date(eventData?.reg_start_date) : undefined,
         end: eventData.reg_end_date ? new Date(eventData?.reg_end_date) : undefined,
-      })
+      });
     }
-    console.log(eventData)
+    console.log(eventData);
   }, [eventData]);
-
 
   return (
     <>
@@ -141,35 +145,29 @@ const EditEvent = () => {
                   {eventData?.banner ? (
                     <img src={eventData?.banner} alt='' className={styles.banner} />
                   ) : (
-                    < >
-                    
-                    <input type="file" className={styles.fileUpload} accept='image/*' onChange={(e) => setBanner(e.target.files ? e.target.files[0] : null)} />
-                    {banner?.name ?
-                    ( 
-                      <img src={URL.createObjectURL(banner)} 
-                            alt='' 
-                            className={styles.banner} />
-                      ):(
-                      <svg height='250' width='100%' className={styles.banner}>
-                      {eventTitle && (
-                        <>
-                          <rect
-                            width='100%'
-                            height='100%'
-                            className={styles.banner}
-                          />
-                          <text x='25%' y='50%' fill='white' className={styles.svgText}>
-                            No Banner. Click Here to Upload
-                          </text>
-                          
-                        </>
+                    <>
+                      <input
+                        type='file'
+                        className={styles.fileUpload}
+                        accept='image/*'
+                        onChange={(e) => setBanner(e.target.files ? e.target.files[0] : null)}
+                      />
+                      {banner?.name ? (
+                        <img src={URL.createObjectURL(banner)} alt='' className={styles.banner} />
+                      ) : (
+                        <svg height='250' width='100%' className={styles.banner}>
+                          {eventTitle && (
+                            <>
+                              <rect width='100%' height='100%' className={styles.banner} />
+                              <text x='25%' y='50%' fill='white' className={styles.svgText}>
+                                No Banner. Click Here to Upload
+                              </text>
+                            </>
+                          )}
+                        </svg>
                       )}
-                    </svg>
-                    )}
-                      
                     </>
                   )}
-
                 </div>
                 <div className={styles.descriptionContainer}>
                   <p className={styles.eventHeading}>About Event</p>
@@ -178,7 +176,10 @@ const EditEvent = () => {
                     dangerouslySetInnerHTML={{ __html: eventData?.description || '' }}
                   ></p> */}
                   <br />
-                  <Editor description={eventData?.description || ''} setNewDescription={setNewDescription} />
+                  <Editor
+                    description={eventData?.description || ''}
+                    setNewDescription={setNewDescription}
+                  />
                 </div>
               </div>
 
@@ -201,7 +202,7 @@ const EditEvent = () => {
                         zIndex: 1000,
                       }),
                     }}
-                    onChange={(selectedOption: { value: string, label: string } | null) =>
+                    onChange={(selectedOption: { value: string; label: string } | null) =>
                       setEventData({ ...eventData, status: selectedOption?.label || '' })
                     }
                     value={selectOptions.filter((option) => option.label === eventData?.status)}
@@ -231,33 +232,61 @@ const EditEvent = () => {
                       <div className={styles.dateTimeContainer}>
                         <div>
                           <label>Event Start</label>
-                          <input type='datetime-local' className={styles.dateInput}
-                            value={(dateForDateTimeLocal(eventDate?.start))}
-                            onChange={(e) =>{ setEventDate({ end: eventDate?.end!, start: e.target.value? new Date(e.target.value): undefined })
-                                              console.log(e.target.value)} }
+                          <input
+                            type='datetime-local'
+                            className={styles.dateInput}
+                            value={dateForDateTimeLocal(eventDate?.start)}
+                            onChange={(e) => {
+                              setEventDate({
+                                end: eventDate?.end!,
+                                start: e.target.value ? new Date(e.target.value) : undefined,
+                              });
+                              console.log(e.target.value);
+                            }}
                           />
                         </div>
                         <div>
                           <label>Event End</label>
-                          <input type='datetime-local' className={styles.dateInput}
-                            value={(dateForDateTimeLocal(eventDate?.end))}
-                            onChange={(e) => setEventDate({ start: eventDate?.start!, end: e.target.value? new Date(e.target.value): undefined })}
+                          <input
+                            type='datetime-local'
+                            className={styles.dateInput}
+                            value={dateForDateTimeLocal(eventDate?.end)}
+                            onChange={(e) =>
+                              setEventDate({
+                                start: eventDate?.start!,
+                                end: e.target.value ? new Date(e.target.value) : undefined,
+                              })
+                            }
                           />
                         </div>
                       </div>
                       <div className={styles.dateTimeContainer}>
                         <div>
                           <label>Registration Start</label>
-                          <input type='datetime-local' className={styles.dateInput}
-                            value={(dateForDateTimeLocal(regDate?.start))}
-                            onChange={(e) => setRegDate({ end: regDate?.end!, start: e.target.value? new Date(e.target.value): undefined  })}
+                          <input
+                            type='datetime-local'
+                            className={styles.dateInput}
+                            value={dateForDateTimeLocal(regDate?.start)}
+                            onChange={(e) =>
+                              setRegDate({
+                                end: regDate?.end!,
+                                start: e.target.value ? new Date(e.target.value) : undefined,
+                              })
+                            }
                           />
                         </div>
                         <div>
                           <label>Registration End</label>
-                          <input type='datetime-local' className={styles.dateInput}
-                            value={(dateForDateTimeLocal(regDate?.end))}
-                            onChange={(e) => setRegDate({ start: regDate?.start!, end: e.target.value? new Date(e.target.value): undefined })}
+                          <input
+                            type='datetime-local'
+                            className={styles.dateInput}
+                            value={dateForDateTimeLocal(regDate?.end)}
+                            onChange={(e) =>
+                              setRegDate({
+                                start: regDate?.start!,
+                                end: e.target.value ? new Date(e.target.value) : undefined,
+                              })
+                            }
                           />
                         </div>
                       </div>
@@ -271,13 +300,17 @@ const EditEvent = () => {
                     </span>
                   </div>
                   <GoogleMap
-                    mapContainerStyle={{ height: '400px', width: '100%', borderRadius: '12px 12px 0 0' }}
+                    mapContainerStyle={{
+                      height: '400px',
+                      width: '100%',
+                      borderRadius: '12px 12px 0 0',
+                    }}
                     zoom={14}
                     center={location ?? { lat: 0, lng: 0 }}
                     options={mapOptions}
                     onClick={onMapClick}
                   >
-                    {location &&
+                    {location && (
                       <MarkerF
                         position={location}
                         icon={{
@@ -285,14 +318,13 @@ const EditEvent = () => {
                           scaledSize: new google.maps.Size(40, 52),
                         }}
                       />
-                    }
+                    )}
                   </GoogleMap>
 
                   <div className={styles.eventLocation}>
                     <GrLocation size={20} color='#949597' />
                     <div className={styles.locationContainer}>
-
-                      <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged} >
+                      <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
                         <input
                           type='text'
                           placeholder='Add Event Location'
@@ -312,9 +344,13 @@ const EditEvent = () => {
                       </label>
                       <Slider
                         checked={eventData.approval_required}
-                        text={""}
-                        onChange={() => setEventData({ ...eventData, approval_required: !eventData.approval_required })}
-
+                        text={''}
+                        onChange={() =>
+                          setEventData({
+                            ...eventData,
+                            approval_required: !eventData.approval_required,
+                          })
+                        }
                       />
                     </div>
                     <div className={styles.option}>
@@ -323,9 +359,10 @@ const EditEvent = () => {
                       </label>
                       <Slider
                         checked={eventData.is_private}
-                        text={""}
-                        onChange={() => setEventData({ ...eventData, is_private: !eventData.is_private })}
-
+                        text={''}
+                        onChange={() =>
+                          setEventData({ ...eventData, is_private: !eventData.is_private })
+                        }
                       />
                     </div>
                     <div className={styles.option}>
@@ -334,9 +371,10 @@ const EditEvent = () => {
                       </label>
                       <Slider
                         checked={eventData.is_online}
-                        text={""}
-                        onChange={() => setEventData({ ...eventData, is_online: !eventData.is_online })}
-
+                        text={''}
+                        onChange={() =>
+                          setEventData({ ...eventData, is_online: !eventData.is_online })
+                        }
                       />
                     </div>
                     <div className={styles.option}>
@@ -351,7 +389,9 @@ const EditEvent = () => {
                           className={styles.capcityInput}
                           placeholder='Unlimited'
                           value={eventData?.capacity}
-                          onChange={(e) => setEventData({ ...eventData, capacity: Number(e.target.value) })}
+                          onChange={(e) =>
+                            setEventData({ ...eventData, capacity: Number(e.target.value) })
+                          }
                         />
                         <LuPencil size={15} color='#949597' />
                       </div>
@@ -370,36 +410,41 @@ const EditEvent = () => {
                   <div className={styles.uploadLogoContainer}>
                     <div>
                       {logo ? (
-                        <img src={URL.createObjectURL(logo)} alt='Uploaded Image' className={styles.noImage} />
+                        <img
+                          src={URL.createObjectURL(logo)}
+                          alt='Uploaded Image'
+                          className={styles.noImage}
+                        />
+                      ) : eventData?.logo ? (
+                        <img src={eventData.logo} className={styles.noImage} />
                       ) : (
-                        eventData?.logo ? (
-                          <img src={eventData.logo} className={styles.noImage} />
-
-                        ) : (
-                          <div className={styles.noImage}></div>
-                        )
+                        <div className={styles.noImage}></div>
                       )}
-
                     </div>
                     <div className={styles.uploadLogo}>
                       <p>Upload {eventData?.logo ? 'New' : ''} Logo</p>
                       <p className={styles.logoName}>{logo?.name}</p>
                     </div>
-                    <input type="file" className={styles.fileUpload} accept='image/*' onChange={(e) => setLogo(e.target.files ? e.target.files[0] : null)} />
+                    <input
+                      type='file'
+                      className={styles.fileUpload}
+                      accept='image/*'
+                      onChange={(e) => setLogo(e.target.files ? e.target.files[0] : null)}
+                    />
                     <div className={styles.pencil}>
                       <LuPencil size={15} color='#949597' />
                     </div>
                   </div>
 
                   <div className={styles.buttonContainer}>
-                    <button className={styles.createButton} onClick={() => history.back()}>Cancel</button>
-                    <button className={styles.createButton} onClick={onSubmit}>Save</button>
+                    <button className={styles.createButton} onClick={() => history.back()}>
+                      Cancel
+                    </button>
+                    <button className={styles.createButton} onClick={onSubmit}>
+                      Save
+                    </button>
                   </div>
-
                 </div>
-
-
-
               </div>
             </div>
           ) : (

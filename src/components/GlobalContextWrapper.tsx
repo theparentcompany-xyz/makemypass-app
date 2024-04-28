@@ -20,7 +20,7 @@ const GlobalContextWrapper = () => {
         getEventId(eventTitle ?? '', setHasEvent);
         setTimeout(() => {
           eventData = JSON.parse(localStorage.getItem('eventData') as string);
-          setEventId(eventData?.event_id,);
+          setEventId(eventData?.event_id);
         }, 100);
       } else {
         setEventId(eventData.event_id);

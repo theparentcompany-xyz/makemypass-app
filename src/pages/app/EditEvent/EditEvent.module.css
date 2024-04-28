@@ -189,7 +189,6 @@
   display: flex;
   flex-direction: column;
   width: 25rem;
-
 }
 
 .dateInput {
@@ -220,7 +219,6 @@
   padding: 1rem;
 }
 
-
 .inputLocation {
   border-radius: 8px;
   border: none;
@@ -238,7 +236,6 @@
 
 .locationContainer {
   width: 100%;
-
 }
 
 .subText {
@@ -406,16 +403,13 @@ input[type='color']::-webkit-color-swatch {
 
   row-gap: 0.5rem;
   column-gap: 0.5rem;
-
 }
 
 @media screen and (max-width: 768px) {
   .timezoneContainer {
     flex-wrap: wrap-reverse;
   }
-
 }
-
 
 .timezone {
   max-width: 10rem;
@@ -435,12 +429,10 @@ input[type='color']::-webkit-color-swatch {
   flex-direction: column;
 }
 
-
 @media screen and (max-width: 768px) {
   .timezone {
     padding-left: 1.5rem;
   }
-
 }
 
 .center {
@@ -462,14 +454,12 @@ input[type='color']::-webkit-color-swatch {
   font-size: 1rem;
 
   position: relative;
-
 }
 
 @media screen and (max-width: 435px) {
   .svgText {
     transform: translateX(-2rem);
   }
-  
 }
 
 .buttonContainer {
@@ -499,19 +489,19 @@ input[type='color']::-webkit-color-swatch {
 }
 
 .fileUpload {
-  opacity: 0.0;
+  opacity: 0;
 
   /* IE 8 */
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
 
   /* IE 5-7 */
   filter: alpha(opacity=0);
 
   /* Netscape or and older firefox browsers */
-  -moz-opacity: 0.0;
+  -moz-opacity: 0;
 
   /* older Safari browsers */
-  -khtml-opacity: 0.0;
+  -khtml-opacity: 0;
 
   position: absolute;
   top: 0;
@@ -529,16 +519,14 @@ input[type='color']::-webkit-color-swatch {
   cursor: pointer;
 }
 
-.uploadLogoContainer:hover>.pencil {
+.uploadLogoContainer:hover > .pencil {
   transform: scale(1.1);
 }
-
 
 .uploadLogo {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-
 }
 
 .uploadLogo p {
