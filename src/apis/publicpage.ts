@@ -218,7 +218,7 @@ export const getTickets = async (
   eventId: string,
   setTicketInfo: React.Dispatch<React.SetStateAction<TicketOptions | undefined>>,
 ) => {
-  publicGateway
+  privateGateway
     .get(makeMyPass.getTicketInfo(eventId))
     .then((response) => {
       setTicketInfo(response.data.response);
