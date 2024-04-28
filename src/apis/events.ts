@@ -39,7 +39,6 @@ export const getEventId = async (eventName: string, navigate?: NavigateFunction)
               response.data.response.current_user_role === 'Admin' ||
               response.data.response.current_user_role === 'Owner'
             ) {
-              console.log('Admin Adhada Pattikalae!!!');
               navigate(`/${eventName.toLowerCase()}/overview/`);
             } else if (response.data.response.current_user_role === 'Volunteer') {
               navigate(`/${eventName.toLowerCase()}/checkins/`);

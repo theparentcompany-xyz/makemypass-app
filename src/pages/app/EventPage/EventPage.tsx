@@ -16,7 +16,6 @@ import SuccessModal from './components/SuccessModal/SuccessModal';
 import CouponForm from './components/CouponForm/CouponForm';
 import { GlobalContext } from '../../../contexts/globalContext';
 import { Helmet } from 'react-helmet';
-import FourNotFour from '../../FourNotFour/FourNotFour';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -38,7 +37,7 @@ const EventPage = () => {
     discount_value: 0,
   });
 
-  const { eventId, setEventId, hasEvent } = useContext(GlobalContext);
+  const { eventId, setEventId } = useContext(GlobalContext);
   if (!setEventId) {
     throw new Error('setEventId is undefined');
   }
@@ -137,151 +136,141 @@ const EventPage = () => {
   };
   return (
     <>
-      {hasEvent ? (
-        <>
-          <Helmet>
-            <meta charSet='utf-8' />
-            <title>{eventData?.title}</title>
-            <link
-              rel='shortcut icon'
-              href={eventData?.logo ?? '/favicon.ico'}
-              type='image/x-icon'
-            />
-            <meta name='title' content={eventData?.title} />
-            <meta
-              name='description'
-              content={
-                eventData?.description
-                  ? eventData?.description
-                  : 'Don not miss out! Register now for this event to learn, network and more. Click the link below to get started.'
-              }
-            />
-          </Helmet>
-          <Theme type='eventForm'>
-            <SuccessModal
-              success={success}
-              setSuccess={setSuccess}
-              hasShortlisting={eventData?.shortlist}
-            />
-            {eventData?.err_message && (
-              <motion.div
-                initial={{ opacity: 0, y: 35 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.5 }}
-                className={styles.center}
-              >
-                <EventHeader eventData={eventData} />
-                <p className={styles.privateEventText}>{eventData?.err_message}</p>
-              </motion.div>
-            )}
+      <Helmet>
+        <meta charSet='utf-8' />
+        <title>{eventData?.title}</title>
+        <link rel='shortcut icon' href={eventData?.logo ?? '/favicon.ico'} type='image/x-icon' />
+        <meta name='title' content={eventData?.title} />
+        <meta
+          name='description'
+          content={
+            eventData?.description
+              ? eventData?.description
+              : 'Don not miss out! Register now for this event to learn, network and more. Click the link below to get started.'
+          }
+        />
+      </Helmet>
+      <Theme type='eventForm'>
+        <SuccessModal
+          success={success}
+          setSuccess={setSuccess}
+          hasShortlisting={eventData?.shortlist}
+        />
+        {eventData?.err_message && (
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5 }}
+            className={styles.center}
+          >
+            <EventHeader eventData={eventData} />
+            <p className={styles.privateEventText}>{eventData?.err_message}</p>
+          </motion.div>
+        )}
 
-            {eventData && eventData?.form?.length > 0 ? (
-              <div className={styles.eventPageContainer}>
-                <div className={styles.eventHeaderContainer}>
-                  <EventHeader eventData={eventData} />
-                </div>
-                <div className={styles.formContainer}>
-                  {formNumber === 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 35 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.5 }}
-                      className={styles.eventForm}
-                    >
-                      <div className={styles.eventFormInnerContainer} id='formFields'>
-                        <div>
-                          <p className={styles.eventFormTitle}>Registration Form</p>
-                          <p className={styles.eventHeaderDescription}>
-                            Please fill in the form below to register for the event.
-                          </p>
-                        </div>
-                        {formData && eventData && (
-                          <DynamicForm
-                            formFields={eventData.form}
-                            formErrors={formErrors}
-                            formData={formData}
-                            onFieldChange={onFieldChange}
-                            eventData={eventData}
-                          />
-                        )}
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {(eventData.tickets || eventData.select_multi_ticket) && formNumber === 1 && (
-                    <CouponForm
-                      ticketInfo={eventData.tickets}
-                      setTicketIds={setTicketIds}
-                      ticketIds={ticketIds}
-                      eventId={eventId}
-                      discount={discount}
-                      setDiscount={setDiscount}
-                      setAmount={setAmount}
-                      eventData={eventData}
-                      setCoupon={setCoupon}
-                      coupon={coupon}
-                    />
-                  )}
-
-                  <div className={styles.buttons}>
-                    {formNumber > 0 && (
-                      <div
-                        onClick={() => {
-                          setFormNumber((prevState) => {
-                            return prevState - 1;
-                          });
-                        }}
-                        className={styles.backButton}
-                      >
-                        <p>Back</p>
-                      </div>
+        {eventData && eventData?.form?.length > 0 ? (
+          <div className={styles.eventPageContainer}>
+            <div className={styles.eventHeaderContainer}>
+              <EventHeader eventData={eventData} />
+            </div>
+            <div className={styles.formContainer}>
+              {formNumber === 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 35 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.5 }}
+                  className={styles.eventForm}
+                >
+                  <div className={styles.eventFormInnerContainer} id='formFields'>
+                    <div>
+                      <p className={styles.eventFormTitle}>Registration Form</p>
+                      <p className={styles.eventHeaderDescription}>
+                        Please fill in the form below to register for the event.
+                      </p>
+                    </div>
+                    {formData && eventData && (
+                      <DynamicForm
+                        formFields={eventData.form}
+                        formErrors={formErrors}
+                        formData={formData}
+                        onFieldChange={onFieldChange}
+                        eventData={eventData}
+                      />
                     )}
-                    <motion.button
-                      initial={{ opacity: 0, y: 35 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      whileTap={{ scale: 0.95 }}
-                      type='submit'
-                      onClick={() => {
-                        if (formNumber === 0 && !hasZeroPriceTicket) {
-                          {
-                            validateRsvp(eventId, formData, setFormNumber, setFormErrors);
-                          }
-                        } else {
-                          submitForm({
-                            eventId,
-                            ticketIds,
-                            formData,
-                            coupon,
-                            setSuccess,
-                            setFormNumber,
-                            setFormData,
-                            setAmount,
-                            setFormErrors,
-                            setCoupon,
-                          });
-                        }
-                      }}
-                      className={styles.submitButton}
-                    >
-                      {formNumber === 0 && !(hasZeroPriceTicket || eventData?.select_multi_ticket)
-                        ? 'Next'
-                        : 'Register Now'}
-                    </motion.button>
                   </div>
-                </div>
+                </motion.div>
+              )}
+
+              {(eventData.tickets || eventData.select_multi_ticket) && formNumber === 1 && (
+                <CouponForm
+                  ticketInfo={eventData.tickets}
+                  setTicketIds={setTicketIds}
+                  ticketIds={ticketIds}
+                  eventId={eventId}
+                  discount={discount}
+                  setDiscount={setDiscount}
+                  setAmount={setAmount}
+                  eventData={eventData}
+                  setCoupon={setCoupon}
+                  coupon={coupon}
+                />
+              )}
+
+              <div className={styles.buttons}>
+                {formNumber > 0 && (
+                  <div
+                    onClick={() => {
+                      setFormNumber((prevState) => {
+                        return prevState - 1;
+                      });
+                    }}
+                    className={styles.backButton}
+                  >
+                    <p>Back</p>
+                  </div>
+                )}
+                <motion.button
+                  initial={{ opacity: 0, y: 35 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileTap={{ scale: 0.95 }}
+                  type='submit'
+                  onClick={() => {
+                    if (formNumber === 0 && !hasZeroPriceTicket) {
+                      {
+                        validateRsvp(eventId, formData, setFormNumber, setFormErrors);
+                      }
+                    } else {
+                      submitForm({
+                        eventId,
+                        ticketIds,
+                        formData,
+                        coupon,
+                        setSuccess,
+                        setFormNumber,
+                        setFormData,
+                        setAmount,
+                        setFormErrors,
+                        setCoupon,
+                      });
+                    }
+                  }}
+                  className={styles.submitButton}
+                >
+                  {formNumber === 0 && !(hasZeroPriceTicket || eventData?.select_multi_ticket)
+                    ? 'Next'
+                    : 'Register Now'}
+                </motion.button>
               </div>
-            ) : (
-              <div className={styles.center}>
-                <HashLoader color={'#46BF75'} size={50} />
-              </div>
-            )}
-          </Theme>
-        </>
-      ) : (
-        <FourNotFour />
-      )}
+            </div>
+          </div>
+        ) : (
+          <div className={styles.center}>
+            <HashLoader color={'#46BF75'} size={50} />
+          </div>
+        )}
+      </Theme>
     </>
   );
 };

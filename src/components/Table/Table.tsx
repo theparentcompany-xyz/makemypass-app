@@ -54,7 +54,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
                 {item.team_id && <span>•</span>}
                 {item.name}
               </p>
-              <p className={styles.rowEmail}>{item.email.split('@')[0]}</p>
+              <p className={styles.rowEmail}>{item.email?.split('@')[0]}</p>
               <p className={styles.rowEmail}>{item.phone_number}</p>
               {item.check_in_date && (
                 <div className={styles.icon}>
