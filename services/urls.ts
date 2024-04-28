@@ -13,8 +13,7 @@ export const makeMyPass = {
   createEvent: makeMyPassURL(`/manage-event/create-event/`),
 
   getEventId: (eventName: string) => makeMyPassURL(`/manage-event/get-event-id/${eventName}/`),
-  getEventInfo: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
-  getPublicFormInfo: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/info/`),
+  getEventInfo: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/info/`),
   getEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/get-event/`),
   editEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/edit-event/`),
 
