@@ -9,6 +9,7 @@ import Select, { MultiValue } from 'react-select';
 import AudioRecorder from './components/AudioRecorder/AudioRecorder';
 import { EventType } from '../../apis/types';
 import Scanner from '../Scanner/Scanner';
+import { SelectedGuest } from '../../pages/app/Guests/types';
 const DynamicForm = ({
   formFields,
   formErrors,
@@ -24,6 +25,7 @@ const DynamicForm = ({
   setTicketCode,
   showScanner,
   setShowScanner,
+  selectedGuestId,
 }: {
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
@@ -39,6 +41,7 @@ const DynamicForm = ({
   setTicketCode?: Dispatch<React.SetStateAction<string>>;
   showScanner?: boolean;
   setShowScanner?: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedGuestId?: SelectedGuest;
 }) => {
   const variants = {
     initial: { opacity: 0, y: -10 },
@@ -136,7 +139,7 @@ const DynamicForm = ({
       <div className={styles.formFields}>
         {eventData?.parse_audio && <AudioRecorder handleSubmit={handleAudioSubmit} />}
 
-        {ticketInfo && !showScanner && (
+        {selectedGuestId?.type !== 'edit' && ticketInfo && !showScanner && (
           <>
             <div
               style={{
@@ -210,7 +213,7 @@ const DynamicForm = ({
           </>
         )}
 
-        {cashInHand && !showScanner && (
+        {selectedGuestId?.type !== 'edit' && cashInHand && !showScanner && (
           <div
             style={{
               marginBottom: '1rem',

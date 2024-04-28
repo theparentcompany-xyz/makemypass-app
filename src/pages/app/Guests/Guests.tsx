@@ -229,6 +229,7 @@ const Guests = () => {
               setTicketCode={setTicketCode}
               showScanner={showScanner}
               setShowScanner={setShowScanner}
+              selectedGuestId={selectedGuestId}
             />
 
             {!showScanner && (
@@ -315,6 +316,7 @@ const Guests = () => {
                   ticketInfo={ticketInfo}
                   setTicketId={setTicketId}
                   ticketId={ticketId}
+                  selectedGuestId={selectedGuestId}
                 />
 
                 {!showScanner && (
