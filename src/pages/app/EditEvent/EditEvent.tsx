@@ -221,14 +221,15 @@ const EditEvent = () => {
                           <label>Event Start</label>
                           <input type='datetime-local' className={styles.dateInput}
                             value={(dateForDateTimeLocal(eventDate?.start))}
-                            onChange={(e) => setEventDate({ end: eventDate?.end!, start: new Date(e.target.value) })}
+                            onChange={(e) =>{ setEventDate({ end: eventDate?.end!, start: e.target.value? new Date(e.target.value): undefined })
+                                              console.log(e.target.value)} }
                           />
                         </div>
                         <div>
                           <label>Event End</label>
                           <input type='datetime-local' className={styles.dateInput}
                             value={(dateForDateTimeLocal(eventDate?.end))}
-                            onChange={(e) => setEventDate({ start: eventDate?.start!, end: new Date(e.target.value) })}
+                            onChange={(e) => setEventDate({ start: eventDate?.start!, end: e.target.value? new Date(e.target.value): undefined })}
                           />
                         </div>
                       </div>
@@ -237,14 +238,14 @@ const EditEvent = () => {
                           <label>Registration Start</label>
                           <input type='datetime-local' className={styles.dateInput}
                             value={(dateForDateTimeLocal(regDate?.start))}
-                            onChange={(e) => setRegDate({ end: regDate?.end!, start: new Date(e.target.value) })}
+                            onChange={(e) => setRegDate({ end: regDate?.end!, start: e.target.value? new Date(e.target.value): undefined  })}
                           />
                         </div>
                         <div>
                           <label>Registration End</label>
                           <input type='datetime-local' className={styles.dateInput}
                             value={(dateForDateTimeLocal(regDate?.end))}
-                            onChange={(e) => setRegDate({ start: regDate?.start!, end: new Date(e.target.value) })}
+                            onChange={(e) => setRegDate({ start: regDate?.start!, end: e.target.value? new Date(e.target.value): undefined })}
                           />
                         </div>
                       </div>
