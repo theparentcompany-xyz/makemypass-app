@@ -109,15 +109,23 @@ const EventGlance = () => {
                   <img src={eventData?.banner} alt='' className={styles.banner} />
                 ) : (
                   <svg height='250' width='100%' className={styles.banner}>
-                    {eventTitle && (
-                      <>
-                        <rect width='100%' height='100%' fill='#00753B' className={styles.banner} />
-                        <text x='40%' y='70%' fill='white' className={styles.svgText}>
-                          {eventTitle[0]?.toUpperCase()}
-                        </text>
-                      </>
-                    )}
-                  </svg>
+                      {eventTitle && (
+                        <>
+                          <rect
+                            width='100%'
+                            height='100%'
+                            className={styles.banner}
+                          />
+                          <text x='40%' y='50%' fill='white' className={styles.svgText}>
+                            No Banner.
+                          </text>
+                          <text x='10%' y='60%' fill='white' className={styles.svgText}>
+                          Please Edit Event Details to add a banner
+                          </text>
+                          
+                        </>
+                      )}
+                    </svg>
                 )}
 
                 <div>
