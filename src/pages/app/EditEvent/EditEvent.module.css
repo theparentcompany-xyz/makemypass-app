@@ -62,12 +62,14 @@
   max-width: 35rem;
   width: 100%;
 
+  position: relative;
 }
 
 .banner {
   max-width: 35rem;
   width: 100%;
   border-radius: 7px;
+  fill: #d8ffff11;
 }
 
 .descriptionContainer {
@@ -375,6 +377,22 @@ input[type='color']::-webkit-color-swatch {
 .createButton:hover {
   transform: scale(1.05);
 }
+.deleteButton {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-right: auto;
+}
+
+.deleteButton:hover {
+  transform: scale(1.05);
+}
 
 .timezoneContainer {
   display: flex;
@@ -441,10 +459,17 @@ input[type='color']::-webkit-color-swatch {
   color: #fff;
   font-weight: 500;
   font-family: 'Inter', sans-serif;
-  font-size: 10rem;
+  font-size: 1rem;
 
   position: relative;
 
+}
+
+@media screen and (max-width: 435px) {
+  .svgText {
+    transform: translateX(-2rem);
+  }
+  
 }
 
 .buttonContainer {
