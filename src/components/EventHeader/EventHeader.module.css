@@ -21,6 +21,14 @@
   height: 3rem;
   margin-right: 0.5rem;
   border-radius: 50%;
+
+  background-color: #262e2e;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  color: #fff;
+  font-size: 1.25rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .date {
