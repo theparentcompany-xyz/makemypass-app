@@ -118,7 +118,7 @@ export const getEvent = (
     });
 };
 
-export const editEvent = (eventId: string, eventData: Object) => {
+export const editEvent = (eventId: string, eventData: object) => {
   privateGateway
     .patch(makeMyPass.editEvent(eventId), eventData, {
       headers: {

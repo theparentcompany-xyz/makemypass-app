@@ -64,47 +64,50 @@ const Glance = ({ tab }: { tab: string }) => {
   }, [tab, eventId]);
 
   useEffect(() => {
-    if (eventId)
-      connectPrivateSocket({
-        url: backendURL,
-      }).then((ws) => {
-        ws.onmessage = (event) => {
-          const category = JSON.parse(event.data).response.bargraph;
+    connectPrivateSocket({
+      url: backendURL,
+    }).then((ws) => {
+      ws.onmessage = (event) => {
+        const category = JSON.parse(event.data).response.bargraph;
+        console.log(category);
+        if (totalGuests > 0 && totalGuests != JSON.parse(event.data).response.total_reg) {
+          const audio = new Audio('/sounds/count.mp3');
+          audio.play();
+        }
 
-          if (totalGuests > 0 && totalGuests != JSON.parse(event.data).response.total_reg) {
-            const audio = new Audio('/sounds/count.mp3');
-            audio.play();
-          }
+        if (JSON.parse(event.data).response.total_reg) {
+          // setTotalGuests(Number(JSON.parse(event.data).response.total_reg));
+          setTargetGuests(Number(JSON.parse(event.data).response.target_reg));
+          setLastRegistered(JSON.parse(event.data).response.last_registered_at);
+          setShortlistedCount(Number(JSON.parse(event.data).response.shortlisted_count));
+        } else {
+          // setTotalGuests(Number(JSON.parse(event.data).response.total_checkin));
+          setTargetGuests(Number(JSON.parse(event.data).response.total_registration));
+          setTodayCheckIns(Number(JSON.parse(event.data).response.today_checkin));
+          setLastRegistered(JSON.parse(event.data).response.last_checkin_at);
+        }
 
-          if (JSON.parse(event.data).response.total_reg) {
-            setTotalGuests(Number(JSON.parse(event.data).response.total_reg));
-            setTargetGuests(Number(JSON.parse(event.data).response.target_reg));
-            setLastRegistered(JSON.parse(event.data).response.last_registered_at);
-            setShortlistedCount(Number(JSON.parse(event.data).response.shortlisted_count));
-          } else {
-            setTotalGuests(Number(JSON.parse(event.data).response.total_checkin));
-            setTargetGuests(Number(JSON.parse(event.data).response.total_registration));
-            setTodayCheckIns(Number(JSON.parse(event.data).response.today_checkin));
-            setLastRegistered(JSON.parse(event.data).response.last_checkin_at);
-          }
+        const newStrucure: progressDataType = [];
+        const colors = ['#47C97E', '#7662FC', '#C33D7B', '#FBD85B', '#5B75FB', '#D2D4D7'];
 
-          const newStrucure: progressDataType = [];
-          const colors = ['#47C97E', '#7662FC', '#C33D7B', '#FBD85B', '#5B75FB', '#D2D4D7'];
+        let total = 0;
 
-          for (const [key, value] of Object.entries(category)) {
-            newStrucure.push({
-              type: key,
-              color: colors.pop(),
-              value: Number(value),
-            });
-          }
+        for (const [key, value] of Object.entries(category)) {
+          newStrucure.push({
+            type: key,
+            color: colors.pop(),
+            value: Number(value),
+          });
 
-          setprogressData(newStrucure);
-        };
+          total += Number(value);
+        }
+        setTotalGuests(total);
+        setprogressData(newStrucure);
+      };
 
-        setSocket(ws);
-      });
-  }, [eventId, backendURL]);
+      setSocket(ws);
+    });
+  }, [eventId, backendURL, totalGuests]);
 
   const tabs = {
     overview: 'Overview',
