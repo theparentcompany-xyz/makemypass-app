@@ -40,7 +40,7 @@ export const updateHostRole = async (
   setHostData: Dispatch<React.SetStateAction<hostData>>,
 ) => {
   privateGateway
-    .put(makeMyPass.updateHostRole(eventId), {
+    .put(makeMyPass.editHost(eventId), {
       host_id: hostId,
       role: role,
       is_private: is_private,

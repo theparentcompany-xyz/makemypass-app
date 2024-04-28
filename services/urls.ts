@@ -6,12 +6,15 @@ const makeMyPassURL = buildURL('/makemypass');
 export const makeMyPass = {
   //Event Management
   onboardUser: makeMyPassURL('/onboard-user/'),
+
   listEvents: makeMyPassURL('/list-events/'),
-  getEventId: (eventName: string) => makeMyPassURL(`/manage-event/get-event-id/${eventName}/`),
-  getEventDatas: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
-  getEventInfo: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/info/`),
-  listPublicEvents: makeMyPassURL('/manage-event/list-events/'),
+  listPublicEvents: makeMyPassURL('/manage-event/list-events/'), //unused
+
   createEvent: makeMyPassURL(`/manage-event/create-event/`),
+
+  getEventId: (eventName: string) => makeMyPassURL(`/manage-event/get-event-id/${eventName}/`),
+  getEventInfo: (eventId: string) => makeMyPassURL(`/event/${eventId}/info/`),
+  getPublicFormInfo: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/info/`),
   getEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/get-event/`),
   editEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/edit-event/`),
 
@@ -37,7 +40,7 @@ export const makeMyPass = {
   // Host Management
   listHosts: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-hosts/`),
   addHost: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/add-host/`),
-  updateHostRole: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/edit-host/`),
+  editHost: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/edit-host/`),
   removeHost: (eventId: string, hostId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/remove-host/${hostId}`),
   hostWithUs: makeMyPassURL(`/host-with-us/`),
