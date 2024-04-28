@@ -72,7 +72,6 @@ privateGateway.interceptors.response.use(
           refresh_token: localStorage.getItem('refreshToken'),
         });
         localStorage.setItem('accessToken', response.data.response.access_token);
-        // Retry the original request
         const { config } = error;
         config.headers['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
         return await new Promise((resolve, reject) => {
