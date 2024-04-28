@@ -33,7 +33,7 @@ const EditEvent = () => {
   const [eventDate, setEventDate] = useState<{ start: Date | undefined; end: Date | undefined }>();
   const [regDate, setRegDate] = useState<{ start: Date | undefined; end: Date | undefined }>();
   const [placeName, setPlaceName] = useState('');
-  const [selectedColor] = useState('#00753B');
+  const [banner, setBanner] = useState<File | null>(null);
 
   const [location, setLocation] = useState<google.maps.LatLngLiteral | null>(null);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
@@ -102,6 +102,7 @@ const EditEvent = () => {
     if (placeName && placeName !== fetchedEvent?.place) changedData['place'] = placeName;
     if (location?.lat !== fetchedEvent?.location?.lat || location?.lng !== fetchedEvent?.location?.lng) changedData['location'] = location;
     if (logo) changedData['logo'] = logo;
+    if (banner) changedData['banner'] = banner;
 
     editEvent(eventId, changedData);
 
@@ -140,24 +141,35 @@ const EditEvent = () => {
                   {eventData?.banner ? (
                     <img src={eventData?.banner} alt='' className={styles.banner} />
                   ) : (
-                    <>
+                    < >
+                    
+                    <input type="file" className={styles.fileUpload} accept='image/*' onChange={(e) => setBanner(e.target.files ? e.target.files[0] : null)} />
+                    {banner?.name ?
+                    ( 
+                      <img src={URL.createObjectURL(banner)} 
+                            alt='' 
+                            className={styles.banner} />
+                      ):(
                       <svg height='250' width='100%' className={styles.banner}>
-                        {eventTitle && (
-                          <>
-                            <rect
-                              width='100%'
-                              height='100%'
-                              fill={selectedColor}
-                              className={styles.banner}
-                            />
-                            <text x='40%' y='70%' fill='white' className={styles.svgText}>
-                              {eventTitle[0]?.toUpperCase()}
-                            </text>
-                          </>
-                        )}
-                      </svg>
+                      {eventTitle && (
+                        <>
+                          <rect
+                            width='100%'
+                            height='100%'
+                            className={styles.banner}
+                          />
+                          <text x='25%' y='50%' fill='white' className={styles.svgText}>
+                            No Banner. Click Here to Upload
+                          </text>
+                          
+                        </>
+                      )}
+                    </svg>
+                    )}
+                      
                     </>
                   )}
+
                 </div>
                 <div className={styles.descriptionContainer}>
                   <p className={styles.eventHeading}>About Event</p>
@@ -221,14 +233,15 @@ const EditEvent = () => {
                           <label>Event Start</label>
                           <input type='datetime-local' className={styles.dateInput}
                             value={(dateForDateTimeLocal(eventDate?.start))}
-                            onChange={(e) => setEventDate({ end: eventDate?.end!, start: new Date(e.target.value) })}
+                            onChange={(e) =>{ setEventDate({ end: eventDate?.end!, start: e.target.value? new Date(e.target.value): undefined })
+                                              console.log(e.target.value)} }
                           />
                         </div>
                         <div>
                           <label>Event End</label>
                           <input type='datetime-local' className={styles.dateInput}
                             value={(dateForDateTimeLocal(eventDate?.end))}
-                            onChange={(e) => setEventDate({ start: eventDate?.start!, end: new Date(e.target.value) })}
+                            onChange={(e) => setEventDate({ start: eventDate?.start!, end: e.target.value? new Date(e.target.value): undefined })}
                           />
                         </div>
                       </div>
@@ -237,14 +250,14 @@ const EditEvent = () => {
                           <label>Registration Start</label>
                           <input type='datetime-local' className={styles.dateInput}
                             value={(dateForDateTimeLocal(regDate?.start))}
-                            onChange={(e) => setRegDate({ end: regDate?.end!, start: new Date(e.target.value) })}
+                            onChange={(e) => setRegDate({ end: regDate?.end!, start: e.target.value? new Date(e.target.value): undefined  })}
                           />
                         </div>
                         <div>
                           <label>Registration End</label>
                           <input type='datetime-local' className={styles.dateInput}
                             value={(dateForDateTimeLocal(regDate?.end))}
-                            onChange={(e) => setRegDate({ start: regDate?.start!, end: new Date(e.target.value) })}
+                            onChange={(e) => setRegDate({ start: regDate?.start!, end: e.target.value? new Date(e.target.value): undefined })}
                           />
                         </div>
                       </div>
