@@ -1,9 +1,8 @@
 import toast from 'react-hot-toast';
-import { privateGateway, publicGateway } from '../../services/apiGateway';
+import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Event, EventType } from './types';
 import { Dispatch } from 'react';
-import { PubllicEvent } from '../pages/app/LandingPage/components/Projects/types';
 import { getEventDatas } from './publicpage';
 
 export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<Event[]>>) => {
@@ -59,18 +58,19 @@ export const getEventData = async (
     });
 };
 
-export const getPublicEvents = async (
-  setEvents: React.Dispatch<React.SetStateAction<PubllicEvent[]>>,
-) => {
-  publicGateway
-    .get(makeMyPass.listPublicEvents)
-    .then((response) => {
-      setEvents(response.data.response);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-    });
-};
+//Api for Loading Home Page Events
+// export const getPublicEvents = async (
+//   setEvents: React.Dispatch<React.SetStateAction<PubllicEvent[]>>,
+// ) => {
+//   publicGateway
+//     .get(makeMyPass.listPublicEvents)
+//     .then((response) => {
+//       setEvents(response.data.response);
+//     })
+//     .catch((error) => {
+//       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+//     });
+// };
 
 export const getCategories = async (
   eventId: string,
@@ -90,12 +90,12 @@ export const createEvent = (eventTitle: string) => {
   privateGateway
     .post(makeMyPass.createEvent, {
       title: eventTitle,
-    }).then((response) => {
+    })
+    .then((response) => {
       toast.success(response.data.message.general[0] || 'Event Created Successfully');
       setTimeout(() => {
         window.location.href = `/${eventTitle.toLowerCase().replace(/\s/g, '-')}/manage`;
-      }, 1000)
-
+      }, 1000);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
@@ -123,7 +123,7 @@ export const editEvent = (eventId: string, eventData: Object) => {
     .patch(makeMyPass.editEvent(eventId), eventData, {
       headers: {
         'Content-Type': 'multipart/form-data',
-      }
+      },
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Event Updated Successfully');
