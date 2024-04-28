@@ -3,18 +3,17 @@ import styles from './Events.module.css';
 import { GoPeople } from 'react-icons/go';
 import { BsArrowRight } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
-import { getEventData, getEventId, getEvents } from '../../../apis/events';
-import { useNavigate } from 'react-router-dom';
+import { getEventId, getEvents } from '../../../apis/events';
+
 import { motion } from 'framer-motion';
 
 import { useContext } from 'react';
 import { GlobalContext } from '../../../contexts/globalContext';
+import { useNavigate } from 'react-router';
 
 const Events = () => {
+  const { setEventId, currentUserRole } = useContext(GlobalContext);
   const navigate = useNavigate();
-
-  const { setEventId } = useContext(GlobalContext);
-
   type Event = {
     id: string;
     title: string;
@@ -28,45 +27,31 @@ const Events = () => {
   };
 
   const [events, setEvents] = useState([] as Event[]);
-  const [eventData, setEventData] = useState({
-    title: '',
-    date: '',
-    current_user_role: '',
-    name: '',
-    logo: '',
-  });
 
   useEffect(() => {
     getEvents(setEvents);
   }, []);
 
   const handleClick = (eventName: string) => {
-    const currentEvent = localStorage.getItem('eventData');
-    if (currentEvent) {
-      const eventData = JSON.parse(currentEvent);
-      if (eventData.event_name !== eventName?.trim().toLowerCase()) {
+    const localEventData = JSON.parse(localStorage.getItem('eventData')!);
+
+    if (localEventData) {
+      if (localEventData.event_name !== eventName?.trim().toLowerCase()) {
         localStorage.removeItem('eventData');
-        getEventId(eventName?.toLowerCase());
+        getEventId(eventName?.toLowerCase(), navigate);
+      } else {
+        if (currentUserRole.includes('Admin') || currentUserRole.includes('Owner')) {
+          navigate(`/${eventName.toLowerCase()}/overview/`);
+        } else if (currentUserRole.includes('Volunteer')) {
+          navigate(`/${eventName.toLowerCase()}/checkins/`);
+        } else if (currentUserRole.includes('Gamer')) {
+          navigate(`/${eventName.toLowerCase()}/spinwheel/`);
+        }
       }
     } else {
-      getEventId(eventName?.toLowerCase());
+      getEventId(eventName?.toLowerCase(), navigate);
     }
   };
-
-  const getEventRole = (eventId: string) => {
-    getEventData(eventId, setEventData);
-  };
-
-  useEffect(() => {
-    const eventName = JSON.parse(localStorage.getItem('eventData')!)?.event_name || '';
-    if (eventData.current_user_role === 'Admin' || eventData.current_user_role === 'Owner') {
-      navigate(`/${eventName.toLowerCase()}/overview/`);
-    } else if (eventData.current_user_role === 'Volunteer') {
-      navigate(`/${eventName.toLowerCase()}/checkins/`);
-    } else if (eventData.current_user_role === 'Gamer') {
-      navigate(`/${eventName.toLowerCase()}/spinwheel/`);
-    }
-  }, [eventData]);
 
   return (
     <>
@@ -129,8 +114,6 @@ const Events = () => {
                             className={styles.manage}
                             onClick={() => {
                               handleClick(event.name);
-
-                              getEventRole(event.id);
 
                               if (setEventId) {
                                 setEventId(event.id);

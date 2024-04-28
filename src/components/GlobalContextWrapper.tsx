@@ -8,7 +8,6 @@ const GlobalContextWrapper = () => {
   const [eventId, setEventId] = React.useState<string>('');
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
-  const [hasEvent, setHasEvent] = React.useState<boolean>(true);
   const [currentUserRole, setCurrentUserRole] = React.useState<string[]>([]);
 
   useEffect(() => {
@@ -18,7 +17,7 @@ const GlobalContextWrapper = () => {
     if (eventData) {
       if (eventData.event_name !== eventTitle) {
         localStorage.removeItem('eventData');
-        getEventId(eventTitle ?? '', setHasEvent);
+        getEventId(eventTitle ?? '');
         setTimeout(() => {
           eventData = JSON.parse(localStorage.getItem('eventData') as string);
           setEventId(eventData?.event_id);
@@ -29,7 +28,7 @@ const GlobalContextWrapper = () => {
         setCurrentUserRole([eventData?.current_user_role]);
       }
     } else {
-      getEventId(eventTitle ?? '', setHasEvent);
+      getEventId(eventTitle ?? '');
       setTimeout(() => {
         eventData = JSON.parse(localStorage.getItem('eventData') as string);
         setEventId(eventData?.event_id);
@@ -39,7 +38,7 @@ const GlobalContextWrapper = () => {
   }, [eventTitle]);
 
   return (
-    <GlobalContext.Provider value={{ eventId, setEventId, hasEvent, currentUserRole }}>
+    <GlobalContext.Provider value={{ eventId, setEventId, currentUserRole }}>
       <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>

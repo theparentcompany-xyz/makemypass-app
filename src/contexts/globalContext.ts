@@ -10,7 +10,7 @@ interface GlobalContextProps {
 
 export const GlobalContext = createContext<GlobalContextProps>({
   eventId: '',
-  currentUserRole: [],
+  currentUserRole: JSON.parse(localStorage.getItem('eventData')!).current_user_role as string[],
   setEventId: () => {},
   hasEvent: true,
   setHasEvent: () => {},

@@ -3,7 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Event, EventType } from './types';
 import { Dispatch } from 'react';
-import { getEventDatas } from './publicpage';
+import { NavigateFunction } from 'react-router';
 
 export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<Event[]>>) => {
   privateGateway
@@ -16,22 +16,45 @@ export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<E
     });
 };
 
-export const getEventId = async (
-  eventName: string,
-  setHasEvent?: Dispatch<React.SetStateAction<boolean>>,
-) => {
+export const getEventId = async (eventName: string, navigate?: NavigateFunction) => {
   const localData = localStorage.getItem('eventData');
-
   if (!localData)
     privateGateway
       .get(makeMyPass.getEventId(eventName))
       .then((response) => {
-        localStorage.setItem('eventData', JSON.stringify(response.data.response));
+        privateGateway
+          .get(makeMyPass.getEvent(response.data.response.event_id))
+          .then((response) => {
+            const eventData = {
+              title: response.data.response.title,
+              date: response.data.response.date,
+              current_user_role: response.data.response.current_user_role,
+              event_name: response.data.response.name,
+              logo: response.data.response.logo,
+              event_id: response.data.response.id,
+            };
 
-        if (localStorage.getItem('accessToken')) getEventDatas(response.data.response.event_id);
+            if (!navigate) return;
+            if (
+              response.data.response.current_user_role === 'Admin' ||
+              response.data.response.current_user_role === 'Owner'
+            ) {
+              console.log('Admin Adhada Pattikalae!!!');
+              navigate(`/${eventName.toLowerCase()}/overview/`);
+            } else if (response.data.response.current_user_role === 'Volunteer') {
+              navigate(`/${eventName.toLowerCase()}/checkins/`);
+            } else if (response.data.response.current_user_role === 'Gamer') {
+              navigate(`/${eventName.toLowerCase()}/spinwheel/`);
+            }
+
+            localStorage.setItem('eventData', JSON.stringify(eventData));
+          })
+          .catch((error) => {
+            toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Data');
+          });
       })
       .catch(() => {
-        setHasEvent && setHasEvent(false);
+        toast.error('Event Not Found');
       });
 };
 

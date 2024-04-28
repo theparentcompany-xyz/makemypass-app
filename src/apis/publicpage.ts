@@ -3,7 +3,7 @@ import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { CouponData, DiscountData, TicketOptions } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
-import { ErrorMessages, EventDetails, EventType, FormDataType, FormFieldType } from './types';
+import { ErrorMessages, EventType, FormDataType, FormFieldType } from './types';
 import { convertWebmToWav } from './helpers';
 
 export const submitForm = async ({
@@ -67,8 +67,8 @@ export const submitForm = async ({
     })
     .then((response) => {
       if (response.data.response.gateway_type) {
-        let paymentId: string = response.data.response.id;
-        let paymentAmount: string = response.data.response.amount;
+        const paymentId: string = response.data.response.id;
+        const paymentAmount: string = response.data.response.amount;
 
         const options = {
           key_id: response.data.response.gateway_key,
@@ -239,27 +239,6 @@ export const getFormFields = async (
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Error in Fetching Form Fields');
-    });
-};
-
-export const getEventDatas = async (
-  eventId: string,
-  setEventData?: Dispatch<React.SetStateAction<EventDetails | undefined>>,
-) => {
-  return privateGateway
-    .get(makeMyPass.getEvent(eventId))
-    .then((response) => {
-      if (setEventData) setEventData(response.data.response);
-
-      const eventData = JSON.parse(localStorage.getItem('eventData') || '{}');
-      eventData['logo'] = response.data.response['logo'];
-      eventData['is_private'] = response.data.response['is_private'];
-      eventData['current_user_role'] = response.data.response['current_user_role'];
-
-      localStorage.setItem('eventData', JSON.stringify(eventData));
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Data');
     });
 };
 

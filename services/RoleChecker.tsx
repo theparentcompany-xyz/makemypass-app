@@ -19,7 +19,6 @@ const RoleChecker = ({
 }) => {
   const { currentUserRole } = useContext(GlobalContext);
 
-  console.log('currentUserRole', currentUserRole);
   const hasRoleNoFetch = (roles: Roles[]) => {
     return roles.some((role) => currentUserRole.includes(role));
   };
