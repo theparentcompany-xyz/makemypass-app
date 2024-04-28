@@ -51,7 +51,6 @@ export const getEventData = async (
     .get(makeMyPass.getEvent(eventId))
     .then((response) => {
       setEventData(response.data.response);
-      localStorage.setItem('current_user_role', response.data.response.current_user_role);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');

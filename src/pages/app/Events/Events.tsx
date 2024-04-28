@@ -47,11 +47,9 @@ const Events = () => {
       if (eventData.event_name !== eventName?.trim().toLowerCase()) {
         localStorage.removeItem('eventData');
         getEventId(eventName?.toLowerCase());
-        localStorage.setItem('eventName', eventName?.toLowerCase());
       }
     } else {
       getEventId(eventName?.toLowerCase());
-      localStorage.setItem('eventName', eventName?.toLowerCase());
     }
   };
 

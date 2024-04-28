@@ -31,7 +31,7 @@ const EventGlance = () => {
   }, [eventId]);
   const [selectedMail, setSelectedMail] = useState('');
 
-  const eventName = localStorage.getItem('eventName');
+  const eventName = JSON.parse(localStorage.getItem('eventData')!).event_name;
   const navigate = useNavigate();
   const selectValues = [
     { value: 'Going', label: 'Going' },

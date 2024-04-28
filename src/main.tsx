@@ -26,7 +26,7 @@ import Perks from './pages/app/CheckIns/pages/Perks/Perks';
 import PostEvent from './pages/app/PostEvent/PostEvent';
 import ProfilePage from './pages/app/ProfilePage/ProfilePage';
 
-import SecureAuthRoutes from '../services/authRoutes';
+import RoleChecker from '../services/RoleChecker';
 
 import GlobalContextWrapper from './components/GlobalContextWrapper';
 import GuestBulkImport from './pages/app/Guests/pages/GuestBulkImport/GuestBulkImport';
@@ -35,8 +35,6 @@ import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 import CreateEvent from './pages/app/CreateEvent/CreateEvent';
 import EventGlance from './pages/app/EventGlance/EventGlance';
 import EditEvent from './pages/app/EditEvent/EditEvent';
-
-const RoleChecker = SecureAuthRoutes();
 
 const routes = [
   {
