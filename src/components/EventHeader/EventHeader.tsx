@@ -43,11 +43,15 @@ const EventHeader = () => {
               </button>
             </div>
             <p className={styles.headerText}>
-              <img
-                className={styles.headerImage}
-                src={eventData.logo}
-                alt='Event logo for the dashboarod'
-              />
+              {eventData.logo ? (
+                <img
+                  className={styles.headerImage}
+                  src={eventData.logo}
+                  alt='Event logo for the dashboarod'
+                />
+              ) : (
+                <div className={styles.headerImage}>{eventData.title.charAt(0).toUpperCase()}</div>
+              )}
               {eventData?.title}
             </p>
           </div>

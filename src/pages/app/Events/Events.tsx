@@ -103,14 +103,20 @@ const Events = () => {
                       className={styles.eventCard}
                     >
                       <div className={styles.innerCard}>
-                        <motion.img
-                          initial={{ opacity: 0, y: 50 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.5 }}
-                          src={event.logo || '/pwa/maskable.webp'}
-                          alt='event logo depicting event information'
-                          className={styles.eventImage}
-                        />
+                        {event.logo ? (
+                          <motion.img
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
+                            src={event.logo}
+                            alt='event logo depicting event information'
+                            className={styles.eventImage}
+                          />
+                        ) : (
+                          <div className={styles.eventImage}>
+                            {event.title.charAt(0).toUpperCase()}
+                          </div>
+                        )}
                         <div className={styles.eventDetails}>
                           <p className={styles.eventName}>{event.title}</p>
                           <p className={styles.eventGuests}>
