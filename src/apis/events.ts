@@ -63,6 +63,21 @@ export const getEventId = async (
       .catch(() => {
         toast.error('Event Not Found');
       });
+  else {
+    const eventData = JSON.parse(localData);
+    console.log('Event Data from Local Storage: ', eventData);
+    setEventId && setEventId(eventData.event_id);
+    setCurrentUserRole && setCurrentUserRole([eventData.current_user_role]);
+
+    if (!navigate) return;
+    if (eventData.current_user_role === 'Admin' || eventData.current_user_role === 'Owner') {
+      navigate(`/${eventName.toLowerCase()}/overview/`);
+    } else if (eventData.current_user_role === 'Volunteer') {
+      navigate(`/${eventName.toLowerCase()}/checkins/`);
+    } else if (eventData.current_user_role === 'Gamer') {
+      navigate(`/${eventName.toLowerCase()}/spinwheel/`);
+    }
+  }
 };
 
 export const getEventData = async (

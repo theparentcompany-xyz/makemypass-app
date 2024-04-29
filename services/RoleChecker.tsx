@@ -17,9 +17,14 @@ const RoleChecker = ({
   toastTitle?: string;
   toastDescription?: string;
 }) => {
-  const { currentUserRole } = useContext(GlobalContext);
+  let { currentUserRole } = useContext(GlobalContext);
+
+  if (currentUserRole.length === 0) {
+    currentUserRole = [JSON.parse(localStorage.getItem('eventData')!).current_user_role];
+  }
 
   const hasRoleNoFetch = (roles: Roles[]) => {
+    console.log('Current User Role: ', currentUserRole);
     return roles.some((role) => currentUserRole.includes(role));
   };
 
