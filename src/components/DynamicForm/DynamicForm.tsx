@@ -151,7 +151,7 @@ const DynamicForm = ({
                 <Select
                   options={Object.keys(ticketInfo).map((key) => ({
                     value: ticketInfo[key].id,
-                    label: key,
+                    label: `${ticketInfo[key].title} - ${ticketInfo[key].currency} ${ticketInfo[key].price}`,
                   }))}
                   styles={customStyles}
                   onChange={(selectedOption: { value: string } | null) => {
@@ -172,7 +172,7 @@ const DynamicForm = ({
                     Object.keys(ticketInfo)
                       .map((key) => ({
                         value: ticketInfo[key].id,
-                        label: key,
+                        label: `${ticketInfo[key].title} - ${ticketInfo[key].currency} ${ticketInfo[key].price}`,
                       }))
                       .filter((option: { value: string }) => option.value === ticketId)
                   }

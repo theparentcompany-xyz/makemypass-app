@@ -242,7 +242,7 @@ const Insights = () => {
                         <div className={styles.time}>
                           <p
                             style={{
-                              color: '#47C97E',
+                              color: '#35A1EB',
                             }}
                             className={styles.line}
                           >
@@ -256,7 +256,7 @@ const Insights = () => {
                         <div className={styles.time}>
                           <p
                             style={{
-                              color: '#35A1EB',
+                              color: '#47C97E',
                             }}
                             className={styles.line}
                           >

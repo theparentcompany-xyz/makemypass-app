@@ -221,7 +221,7 @@ export const getTickets = async (
   privateGateway
     .get(makeMyPass.getTicketInfo(eventId))
     .then((response) => {
-      setTicketInfo(response.data.response);
+      setTicketInfo(response.data.response.tickets);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Error in Fetching Tickets');

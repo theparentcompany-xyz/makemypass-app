@@ -80,6 +80,7 @@ export type FormFieldType = {
 };
 
 export interface TicketType {
+  [x: string]: any;
   description: ReactNode;
   id: string;
   price: number;
