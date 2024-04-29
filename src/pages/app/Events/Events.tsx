@@ -35,29 +35,6 @@ const Events = () => {
   }, []);
 
   const handleClick = (eventName: string) => {
-    // const localEventData = JSON.parse(localStorage.getItem('eventData')!);
-
-    // if (localEventData) {
-    //   console.log('Has Local Event Data');
-    //   if (localEventData.event_name !== eventName?.trim().toLowerCase()) {
-    //     localStorage.removeItem('eventData');
-    //     getEventId(eventName?.toLowerCase(), navigate);
-    //   } else {
-    //     if (currentUserRole.includes('Admin') || currentUserRole.includes('Owner')) {
-    //       navigate(`/${eventName.toLowerCase()}/overview/`);
-    //     } else if (currentUserRole.includes('Volunteer')) {
-    //       navigate(`/${eventName.toLowerCase()}/checkins/`);
-    //     } else if (currentUserRole.includes('Gamer')) {
-    //       navigate(`/${eventName.toLowerCase()}/spinwheel/`);
-    //     }
-    //   }
-    // } else {
-    //   console.log('No Local Event Data');
-    //   getEventId(eventName?.toLowerCase(), navigate);
-    // }
-
-    console.log(eventName?.toLowerCase());
-
     getEventId(eventName?.toLowerCase(), navigate);
   };
 

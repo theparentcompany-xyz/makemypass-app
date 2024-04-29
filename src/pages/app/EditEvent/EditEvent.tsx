@@ -66,8 +66,6 @@ const EditEvent = () => {
           lat: place.geometry.location?.lat() || 0,
           lng: place.geometry.location?.lng() || 0,
         });
-      } else {
-        console.log('No location available for the selected place');
       }
     }
   };
@@ -131,7 +129,6 @@ const EditEvent = () => {
         end: eventData.reg_end_date ? new Date(eventData?.reg_end_date) : undefined,
       });
     }
-    console.log(eventData);
   }, [eventData]);
 
   return (
@@ -241,7 +238,6 @@ const EditEvent = () => {
                                 end: eventDate?.end!,
                                 start: e.target.value ? new Date(e.target.value) : undefined,
                               });
-                              console.log(e.target.value);
                             }}
                           />
                         </div>

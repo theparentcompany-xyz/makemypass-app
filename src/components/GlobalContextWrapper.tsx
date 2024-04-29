@@ -20,16 +20,12 @@ const GlobalContextWrapper = () => {
       if (eventData.event_name !== eventTitle) {
         localStorage.removeItem('eventData');
         getEventId(eventTitle, navigate, setEventId, setCurrentUserRole);
-        console.log('Event Data Mismatch at GCW');
       } else {
         setEventId(eventData.event_id);
         setCurrentUserRole([eventData?.current_user_role]);
-        console.log('GCW Role: ', eventData?.current_user_role);
-        console.log('Event Data Match at GCW');
       }
     } else {
       getEventId(eventTitle, navigate, setEventId, setCurrentUserRole);
-      console.log('No Event Data at GCW');
     }
   }, [eventTitle]);
 

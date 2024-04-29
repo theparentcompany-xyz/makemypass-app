@@ -65,7 +65,6 @@ export const getEventId = async (
       });
   else {
     const eventData = JSON.parse(localData);
-    console.log('Event Data from Local Storage: ', eventData);
     setEventId && setEventId(eventData.event_id);
     setCurrentUserRole && setCurrentUserRole([eventData.current_user_role]);
 
