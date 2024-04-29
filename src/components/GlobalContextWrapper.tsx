@@ -1,4 +1,4 @@
-import { Outlet, useParams } from 'react-router';
+import { Outlet, useNavigate, useParams } from 'react-router';
 import { getEventId } from '../apis/events';
 import { GlobalContext } from '../contexts/globalContext';
 import React, { Suspense, useEffect } from 'react';
@@ -9,31 +9,23 @@ const GlobalContextWrapper = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
   const [currentUserRole, setCurrentUserRole] = React.useState<string[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!eventTitle) return;
-    let eventData = JSON.parse(localStorage.getItem('eventData') as string);
+
+    const eventData = JSON.parse(localStorage.getItem('eventData') as string);
 
     if (eventData) {
       if (eventData.event_name !== eventTitle) {
         localStorage.removeItem('eventData');
-        getEventId(eventTitle ?? '');
-        setTimeout(() => {
-          eventData = JSON.parse(localStorage.getItem('eventData') as string);
-          setEventId(eventData?.event_id);
-          setCurrentUserRole([eventData?.current_user_role]);
-        }, 100);
+        getEventId(eventTitle, navigate, setEventId, setCurrentUserRole);
       } else {
         setEventId(eventData.event_id);
         setCurrentUserRole([eventData?.current_user_role]);
       }
     } else {
-      getEventId(eventTitle ?? '');
-      setTimeout(() => {
-        eventData = JSON.parse(localStorage.getItem('eventData') as string);
-        setEventId(eventData?.event_id);
-        setCurrentUserRole([eventData?.current_user_role]);
-      }, 100);
+      getEventId(eventTitle, navigate, setEventId, setCurrentUserRole);
     }
   }, [eventTitle]);
 

@@ -16,7 +16,12 @@ export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<E
     });
 };
 
-export const getEventId = async (eventName: string, navigate?: NavigateFunction) => {
+export const getEventId = async (
+  eventName: string,
+  navigate?: NavigateFunction,
+  setEventId?: React.Dispatch<React.SetStateAction<string>>,
+  setCurrentUserRole?: React.Dispatch<React.SetStateAction<string[]>>,
+) => {
   const localData = localStorage.getItem('eventData');
   if (!localData)
     privateGateway
@@ -33,6 +38,9 @@ export const getEventId = async (eventName: string, navigate?: NavigateFunction)
               logo: response.data.response.logo,
               event_id: response.data.response.id,
             };
+
+            setEventId && setEventId(response.data.response.id);
+            setCurrentUserRole && setCurrentUserRole([response.data.response.current_user_role]);
 
             if (!navigate) return;
             if (
