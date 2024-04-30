@@ -5,7 +5,7 @@ import Glance from '../../../../components/Glance/Glance';
 
 import styles from './Overview.module.css';
 import SectionButton from '../../../../components/SectionButton/SectionButton';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { hostData, hostId, hostList, recentRegistration } from './types';
 
@@ -23,7 +23,6 @@ import SecondaryButton from '../components/SecondaryButton/SecondaryButton';
 import AddHosts from '../components/SecondaryButton/AddHosts/AddHosts';
 import { addHosts, removeHost, updateHostRole } from '../../../../apis/host';
 import { AnimatePresence } from 'framer-motion';
-import { GlobalContext } from '../../../../contexts/globalContext';
 import Modal from '../../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
 
@@ -49,7 +48,7 @@ const Overview = () => {
     is_private: true,
   });
 
-  const { eventId } = useContext(GlobalContext);
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
 
   useEffect(() => {
     if (eventId && hostList.length === 0) getHosts(eventId, setHostList);

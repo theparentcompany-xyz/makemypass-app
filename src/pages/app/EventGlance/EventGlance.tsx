@@ -8,12 +8,11 @@ import { FaWrench } from 'react-icons/fa6';
 import { BsQrCodeScan } from 'react-icons/bs';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 // import { LuClock, LuPencil } from 'react-icons/lu';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '../../../components/Modal/Modal';
 import Select from 'react-select';
 import { MultiValue } from 'react-select';
 import { customStyles, getDay, getMonthAbbreviation } from '../EventPage/constants';
-import { GlobalContext } from '../../../contexts/globalContext';
 import { EventType } from '../../../apis/types';
 import { getEvent } from '../../../apis/events';
 import { Link, useNavigate } from 'react-router-dom';
@@ -21,7 +20,7 @@ import toast from 'react-hot-toast';
 import EventHeader from '../../../components/EventHeader/EventHeader';
 
 const EventGlance = () => {
-  const { eventId } = useContext(GlobalContext);
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
   const [eventTitle, setEventTitle] = useState('');
   const [eventData, setEventData] = useState<EventType>();
   useEffect(() => {

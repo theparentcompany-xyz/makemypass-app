@@ -6,14 +6,9 @@ import { useEffect, useState } from 'react';
 import { getEventId, getEvents } from '../../../apis/events';
 
 import { motion } from 'framer-motion';
-
-import { useContext } from 'react';
-import { GlobalContext } from '../../../contexts/globalContext';
 import { useNavigate } from 'react-router';
 
 const Events = () => {
-  const { setEventId } = useContext(GlobalContext);
-  // let { currentUserRole } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   type Event = {
@@ -99,10 +94,6 @@ const Events = () => {
                             className={styles.manage}
                             onClick={() => {
                               handleClick(event.name);
-
-                              if (setEventId) {
-                                setEventId(event.id);
-                              }
                             }}
                           >
                             Manage

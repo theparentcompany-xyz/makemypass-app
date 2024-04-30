@@ -1,7 +1,5 @@
-import { useContext } from 'react';
 import { downloadFile } from '../../apis/guests';
 import { formatDate } from '../../common/commonFunctions';
-import { GlobalContext } from '../../contexts/globalContext';
 import styles from './Table.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -17,7 +15,7 @@ const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; table
         })
       : [];
 
-  const { eventId } = useContext(GlobalContext);
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
 
   return (
     <>

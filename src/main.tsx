@@ -18,20 +18,18 @@ import FourNotFour from './pages/FourNotFour/FourNotFour';
 import CheckIns from './pages/app/CheckIns/CheckIns';
 import CheckIn from './pages/app/CheckIns/pages/CheckIn/CheckIn';
 import ScanQR from './pages/app/CheckIns/pages/ScanQR/ScanQR';
-import SpinWheel from './pages/app/SpinWheel/SpinWheel';
+// import SpinWheel from './pages/app/SpinWheel/SpinWheel';
 import InEventStats from './pages/app/InEventStats/InEventStats';
-import ClaimGifts from './pages/app/ClaimGifts/ClaimGifts';
+// import ClaimGifts from './pages/app/ClaimGifts/ClaimGifts';
 import EventPage from './pages/app/EventPage/EventPage';
-import Perks from './pages/app/CheckIns/pages/Perks/Perks';
+// import Perks from './pages/app/CheckIns/pages/Perks/Perks';
 import PostEvent from './pages/app/PostEvent/PostEvent';
 import ProfilePage from './pages/app/ProfilePage/ProfilePage';
 
 import RoleChecker from '../services/RoleChecker';
-
-// import GlobalContextWrapper from './components/GlobalContextWrapper';
 import GuestBulkImport from './pages/app/Guests/pages/GuestBulkImport/GuestBulkImport';
 import Feedback from './pages/app/Feedback/Feedback';
-import EventFeedback from './pages/app/EventFeedback/EventFeedback';
+// import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 import CreateEvent from './pages/app/CreateEvent/CreateEvent';
 import EventGlance from './pages/app/EventGlance/EventGlance';
 import EditEvent from './pages/app/EditEvent/EditEvent';
@@ -98,18 +96,18 @@ const routes = [
         path: '/:eventTitle/checkins/checkin/scan',
         element: <RoleChecker roles={['Admin', 'Owner', 'Volunteer']} children={<ScanQR />} />,
       },
-      {
-        path: `/:eventTitle/checkins/claimgifts`,
-        element: <RoleChecker roles={['Admin', 'Owner', 'Volunteer']} children={<ClaimGifts />} />,
-      },
-      {
-        path: '/:eventTitle/checkins/perks',
-        element: <RoleChecker roles={['Admin', 'Owner', 'Volunteer']} children={<Perks />} />,
-      },
-      {
-        path: '/:eventTitle/spinwheel',
-        element: <RoleChecker roles={['Admin', 'Owner', 'Gamer']} children={<SpinWheel />} />,
-      },
+      // {
+      //   path: `/:eventTitle/checkins/claimgifts`,
+      //   element: <RoleChecker roles={['Admin', 'Owner', 'Volunteer']} children={<ClaimGifts />} />,
+      // },
+      // {
+      //   path: '/:eventTitle/checkins/perks',
+      //   element: <RoleChecker roles={['Admin', 'Owner', 'Volunteer']} children={<Perks />} />,
+      // },
+      // {
+      //   path: '/:eventTitle/spinwheel',
+      //   element: <RoleChecker roles={['Admin', 'Owner', 'Gamer']} children={<SpinWheel />} />,
+      // },
       {
         path: '/:eventTitle/inevent',
         element: (
@@ -120,12 +118,12 @@ const routes = [
         path: '/:eventTitle/postevent',
         element: <RoleChecker roles={['Admin', 'Owner', 'Volunteer']} children={<PostEvent />} />,
       },
-      {
-        path: '/:eventTitle/feedback',
-        element: (
-          <RoleChecker roles={['Admin', 'Owner', 'Volunteer']} children={<EventFeedback />} />
-        ),
-      },
+      // {
+      //   path: '/:eventTitle/feedback',
+      //   element: (
+      //     <RoleChecker roles={['Admin', 'Owner', 'Volunteer']} children={<EventFeedback />} />
+      //   ),
+      // },
       {
         path: '/create-event',
         element: <CreateEvent />,

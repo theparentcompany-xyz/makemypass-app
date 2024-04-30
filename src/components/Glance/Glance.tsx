@@ -1,22 +1,15 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Glance.module.css';
 import { connectPrivateSocket } from '../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../services/urls';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getEventData } from '../../apis/events';
 import { AnimatePresence, motion } from 'framer-motion';
 import { formatDate } from '../../common/commonFunctions';
-import { GlobalContext } from '../../contexts/globalContext';
+
 import PoppingText from './components/PoppingText';
 
 const Glance = ({ tab }: { tab: string }) => {
-  const [eventData, setEventData] = useState({
-    title: '',
-    date: '',
-    current_user_role: '',
-    name: '',
-    logo: '',
-  });
+  const eventData = JSON.parse(localStorage.getItem('eventData')!);
 
   type progressDataType = {
     type: string;
@@ -41,17 +34,13 @@ const Glance = ({ tab }: { tab: string }) => {
 
   const [currentTab, setCurrentTab] = useState('overview');
 
-  const { eventId } = useContext(GlobalContext);
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
   const updateTab = (tab: string) => {
     setCurrentTab(tab);
     navigate(`/${eventTitle}/${tab}/`);
   };
-
-  useEffect(() => {
-    if (eventId) getEventData(eventId, setEventData);
-  }, [eventId]);
 
   const [backendURL, setBackendURL] = useState<string>('');
   useEffect(() => {
@@ -115,7 +104,7 @@ const Glance = ({ tab }: { tab: string }) => {
     guests: 'Guests',
     inevent: 'In-Event',
     checkins: 'Check-Ins',
-    feedback: 'Feedbacks',
+    // feedback: 'Feedbacks',
   };
 
   return (

@@ -2,11 +2,10 @@ import Theme from '../../../../../components/Theme/Theme';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
 import styles from './ScanQR.module.css';
 
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { checkInUser, getCheckInCount } from '../../../../../apis/scan';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import { CgClose } from 'react-icons/cg';
-import { GlobalContext } from '../../../../../contexts/globalContext';
 import Modal from '../../../../../components/Modal/Modal';
 import { EventType, TicketType } from '../../../../../apis/types';
 import { getEventInfo } from '../../../../../apis/publicpage';
@@ -23,8 +22,8 @@ const ScanQR = () => {
   const [scanCount, setScanCount] = useState<number>(0);
   const [isTicketSelected, setIsTicketSelected] = useState<boolean>(false);
   const [selectedTicket, setSelectedTicket] = useState<TicketType>();
-  const { eventId } = useContext(GlobalContext);
   const [eventData, setEventData] = useState<EventType>();
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
 
   useEffect(() => {
     if (eventId) {

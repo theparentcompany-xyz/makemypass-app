@@ -2,7 +2,7 @@ import Theme from '../../../../../components/Theme/Theme';
 import Header from '../../../../../components/EventHeader/EventHeader';
 import styles from './CheckIn.module.css';
 import { RiSearchLine } from 'react-icons/ri';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { guests } from './types';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
 import { getCategories } from '../../../../../apis/events';
@@ -15,7 +15,6 @@ import { customStyles } from '../../../EventPage/constants';
 import Select from 'react-select';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { handleClick } from '../../../Guests/components/csvExport';
-import { GlobalContext } from '../../../../../contexts/globalContext';
 
 const CheckIn = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<guests[]>([]);
@@ -26,7 +25,7 @@ const CheckIn = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>();
 
-  const { eventId } = useContext(GlobalContext);
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
 
   useEffect(() => {
     if (eventId) {

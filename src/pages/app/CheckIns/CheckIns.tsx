@@ -6,8 +6,8 @@ import styles from './CheckIns.module.css';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 import { BsQrCodeScan } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import { IoGiftSharp } from 'react-icons/io5';
-import { SiNextra } from 'react-icons/si';
+// import { IoGiftSharp } from 'react-icons/io5';
+// import { SiNextra } from 'react-icons/si';
 
 const CheckIns = () => {
   return (
@@ -27,7 +27,7 @@ const CheckIns = () => {
                   icon={<BsQrCodeScan size={25} color='#5B75FB' />}
                 />
               </Link>
-              <Link to='claimgifts'>
+              {/* <Link to='claimgifts'>
                 <SectionButton
                   buttonText='Claim Gifts'
                   buttonColor='#C33D7B'
@@ -40,7 +40,7 @@ const CheckIns = () => {
                   buttonColor='#C33D7B'
                   icon={<SiNextra size={25} color='#5B75FB' />}
                 />
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 // ! POSTPONDED: Feature not available in the current version
 // * This feature is not available in the current version of the app
 
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Perks.module.css';
 import Theme from '../../../../../components/Theme/Theme';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
@@ -11,7 +11,6 @@ import SecondaryButton from '../../../Overview/components/SecondaryButton/Second
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import toast from 'react-hot-toast';
 import { CgClose } from 'react-icons/cg';
-import { GlobalContext } from '../../../../../contexts/globalContext';
 import Modal from '../../../../../components/Modal/Modal';
 
 const Perks = () => {
@@ -22,7 +21,7 @@ const Perks = () => {
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
 
-  const { eventId } = useContext(GlobalContext);
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
 
   useEffect(() => {
     // if (eventId) getPerksInfo(eventId, setPerks);

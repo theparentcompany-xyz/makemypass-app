@@ -12,7 +12,7 @@ import {
   ArcElement,
 } from 'chart.js';
 import { Line, Doughnut } from 'react-chartjs-2';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
@@ -20,7 +20,6 @@ import { ChartData, AnalyticsData } from './types';
 import Theme from '../../../components/Theme/Theme';
 import Glance from '../../../components/Glance/Glance';
 import Header from '../../../components/EventHeader/EventHeader';
-import { GlobalContext } from '../../../contexts/globalContext';
 
 ChartJS.register(
   CategoryScale,
@@ -46,7 +45,7 @@ const Insights = () => {
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
-  const { eventId } = useContext(GlobalContext);
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
 
   const options = {
     responsive: true,

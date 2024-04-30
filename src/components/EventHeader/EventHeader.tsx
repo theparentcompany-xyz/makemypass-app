@@ -1,24 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
 import styles from './EventHeader.module.css';
-import { getEventData } from '../../apis/events';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { GlobalContext } from '../../contexts/globalContext';
 
 const EventHeader = () => {
-  const [eventData, setEventData] = useState({
-    title: '',
-    date: '',
-    current_user_role: '',
-    name: '',
-    logo: '',
-  });
-
-  const { eventId } = useContext(GlobalContext);
-
-  useEffect(() => {
-    if (eventId) getEventData(eventId, setEventData);
-  }, [eventId]);
+  const eventData = JSON.parse(localStorage.getItem('eventData')!);
 
   const navigate = useNavigate();
 

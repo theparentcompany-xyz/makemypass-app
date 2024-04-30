@@ -1,6 +1,5 @@
 import styles from './Guests.module.css';
-import { useContext, useEffect, useState } from 'react';
-import { GlobalContext } from '../../../contexts/globalContext';
+import { useEffect, useState } from 'react';
 
 import Theme from '../../../components/Theme/Theme';
 import Glance from '../../../components/Glance/Glance';
@@ -74,7 +73,7 @@ const Guests = () => {
     setFormData(selectedGuestData[0]);
   };
 
-  const { eventId } = useContext(GlobalContext);
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
 
   useEffect(() => {
     if (eventId && !selectedGuestId?.id) {

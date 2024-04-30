@@ -3,9 +3,8 @@ import styles from './PostEvent.module.css';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 import { LuMailPlus, LuMailX } from 'react-icons/lu';
 import { sentPostEventMail } from '../../../apis/postevent';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import Glance from '../../../components/Glance/Glance';
-import { GlobalContext } from '../../../contexts/globalContext';
 import Modal from '../../../components/Modal/Modal';
 
 const PostEvent = () => {
@@ -14,7 +13,7 @@ const PostEvent = () => {
     value: false,
   });
 
-  const { eventId } = useContext(GlobalContext);
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
 
   return (
     <>

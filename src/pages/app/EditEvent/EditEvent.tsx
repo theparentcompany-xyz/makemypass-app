@@ -8,9 +8,7 @@ import { TbMailStar } from 'react-icons/tb';
 import { BiArrowToTop } from 'react-icons/bi';
 import { LuPencil } from 'react-icons/lu';
 import { FiGlobe } from 'react-icons/fi';
-import { useContext, useEffect, useRef, useState, useMemo } from 'react';
-import { GlobalContext } from '../../../contexts/globalContext';
-import FourNotFour from '../../FourNotFour/FourNotFour';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { HashLoader } from 'react-spinners';
 import { EventType } from '../../../apis/types';
 import Slider from '../../../components/SliderButton/Slider';
@@ -23,7 +21,7 @@ import './google.css';
 const libraries: Libraries = ['places'];
 
 const EditEvent = () => {
-  const { eventId, hasEvent } = useContext(GlobalContext);
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
   const [eventTitle, setEventTitle] = useState('');
   const [fetchedEvent, setFetchedEvent] = useState<EventType>();
   const [eventData, setEventData] = useState<EventType>();
@@ -133,325 +131,321 @@ const EditEvent = () => {
 
   return (
     <>
-      {hasEvent ? (
-        <Theme>
-          {eventData && isLoaded ? (
-            <div className={styles.createEventContainer}>
-              <div className={styles.rightSideContainer}>
-                <div className={styles.bannerContainer}>
-                  {eventData?.banner ? (
-                    <img src={eventData?.banner} alt='' className={styles.banner} />
-                  ) : (
-                    <>
-                      <input
-                        type='file'
-                        className={styles.fileUpload}
-                        accept='image/*'
-                        onChange={(e) => setBanner(e.target.files ? e.target.files[0] : null)}
-                      />
-                      {banner?.name ? (
-                        <img src={URL.createObjectURL(banner)} alt='' className={styles.banner} />
-                      ) : (
-                        <svg height='250' width='100%' className={styles.banner}>
-                          {eventTitle && (
-                            <>
-                              <rect width='100%' height='100%' className={styles.banner} />
-                              <text x='25%' y='50%' fill='white' className={styles.svgText}>
-                                No Banner. Click Here to Upload
-                              </text>
-                            </>
-                          )}
-                        </svg>
-                      )}
-                    </>
-                  )}
-                </div>
-                <div className={styles.descriptionContainer}>
-                  <p className={styles.eventHeading}>About Event</p>
-                  {/* <p
+      <Theme>
+        {eventData && isLoaded ? (
+          <div className={styles.createEventContainer}>
+            <div className={styles.rightSideContainer}>
+              <div className={styles.bannerContainer}>
+                {eventData?.banner ? (
+                  <img src={eventData?.banner} alt='' className={styles.banner} />
+                ) : (
+                  <>
+                    <input
+                      type='file'
+                      className={styles.fileUpload}
+                      accept='image/*'
+                      onChange={(e) => setBanner(e.target.files ? e.target.files[0] : null)}
+                    />
+                    {banner?.name ? (
+                      <img src={URL.createObjectURL(banner)} alt='' className={styles.banner} />
+                    ) : (
+                      <svg height='250' width='100%' className={styles.banner}>
+                        {eventTitle && (
+                          <>
+                            <rect width='100%' height='100%' className={styles.banner} />
+                            <text x='25%' y='50%' fill='white' className={styles.svgText}>
+                              No Banner. Click Here to Upload
+                            </text>
+                          </>
+                        )}
+                      </svg>
+                    )}
+                  </>
+                )}
+              </div>
+              <div className={styles.descriptionContainer}>
+                <p className={styles.eventHeading}>About Event</p>
+                {/* <p
                     className={styles.description}
                     dangerouslySetInnerHTML={{ __html: eventData?.description || '' }}
                   ></p> */}
-                  <br />
-                  <Editor
-                    description={eventData?.description || ''}
-                    setNewDescription={setNewDescription}
+                <br />
+                <Editor
+                  description={eventData?.description || ''}
+                  setNewDescription={setNewDescription}
+                />
+              </div>
+            </div>
+
+            <div className={styles.leftSideContainer}>
+              <div className={styles.container}>
+                <Select
+                  options={selectOptions}
+                  className={styles.selectDropdown}
+                  styles={{
+                    ...customStyles,
+                    menu: (provided: any) => ({
+                      ...provided,
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      backgroundColor: '#1C2222',
+                      color: '#fff',
+                      fontFamily: 'Inter, sans-serif',
+                      fontStyle: 'normal',
+                      fontWeight: 400,
+                      fontSize: '0.9rem',
+                      zIndex: 1000,
+                    }),
+                  }}
+                  onChange={(selectedOption: { value: string; label: string } | null) =>
+                    setEventData({ ...eventData, status: selectedOption?.label || '' })
+                  }
+                  value={selectOptions.filter((option) => option.label === eventData?.status)}
+                  placeholder={`Select an option`}
+                  isSearchable={false}
+                />
+
+                <textarea
+                  placeholder='Event Name'
+                  className={styles.inputEventName}
+                  onChange={(e) => setEventTitle(e.target.value)}
+                  value={eventTitle}
+                />
+                <div className={styles.urlContainer}>
+                  <label>Public URL: makemypass.com/</label>
+                  <input
+                    type='text'
+                    className={styles.urlInput}
+                    placeholder='event-url'
+                    value={eventData?.name}
+                    onChange={(e) => setEventData({ ...eventData, name: e.target.value })}
                   />
                 </div>
-              </div>
 
-              <div className={styles.leftSideContainer}>
-                <div className={styles.container}>
-                  <Select
-                    options={selectOptions}
-                    className={styles.selectDropdown}
-                    styles={{
-                      ...customStyles,
-                      menu: (provided: any) => ({
-                        ...provided,
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
-                        backgroundColor: '#1C2222',
-                        color: '#fff',
-                        fontFamily: 'Inter, sans-serif',
-                        fontStyle: 'normal',
-                        fontWeight: 400,
-                        fontSize: '0.9rem',
-                        zIndex: 1000,
-                      }),
-                    }}
-                    onChange={(selectedOption: { value: string; label: string } | null) =>
-                      setEventData({ ...eventData, status: selectedOption?.label || '' })
-                    }
-                    value={selectOptions.filter((option) => option.label === eventData?.status)}
-                    placeholder={`Select an option`}
-                    isSearchable={false}
-                  />
-
-                  <textarea
-                    placeholder='Event Name'
-                    className={styles.inputEventName}
-                    onChange={(e) => setEventTitle(e.target.value)}
-                    value={eventTitle}
-                  />
-                  <div className={styles.urlContainer}>
-                    <label>Public URL: makemypass.com/</label>
-                    <input
-                      type='text'
-                      className={styles.urlInput}
-                      placeholder='event-url'
-                      value={eventData?.name}
-                      onChange={(e) => setEventData({ ...eventData, name: e.target.value })}
-                    />
-                  </div>
-
-                  <div className={styles.timezoneContainer}>
-                    <div className={styles.dateTimeParentContainer}>
-                      <div className={styles.dateTimeContainer}>
-                        <div>
-                          <label>Event Start</label>
-                          <input
-                            type='datetime-local'
-                            className={styles.dateInput}
-                            value={dateForDateTimeLocal(eventDate?.start)}
-                            onChange={(e) => {
-                              setEventDate({
-                                end: eventDate?.end!,
-                                start: e.target.value ? new Date(e.target.value) : undefined,
-                              });
-                            }}
-                          />
-                        </div>
-                        <div>
-                          <label>Event End</label>
-                          <input
-                            type='datetime-local'
-                            className={styles.dateInput}
-                            value={dateForDateTimeLocal(eventDate?.end)}
-                            onChange={(e) =>
-                              setEventDate({
-                                start: eventDate?.start!,
-                                end: e.target.value ? new Date(e.target.value) : undefined,
-                              })
-                            }
-                          />
-                        </div>
-                      </div>
-                      <div className={styles.dateTimeContainer}>
-                        <div>
-                          <label>Registration Start</label>
-                          <input
-                            type='datetime-local'
-                            className={styles.dateInput}
-                            value={dateForDateTimeLocal(regDate?.start)}
-                            onChange={(e) =>
-                              setRegDate({
-                                end: regDate?.end!,
-                                start: e.target.value ? new Date(e.target.value) : undefined,
-                              })
-                            }
-                          />
-                        </div>
-                        <div>
-                          <label>Registration End</label>
-                          <input
-                            type='datetime-local'
-                            className={styles.dateInput}
-                            value={dateForDateTimeLocal(regDate?.end)}
-                            onChange={(e) =>
-                              setRegDate({
-                                start: regDate?.start!,
-                                end: e.target.value ? new Date(e.target.value) : undefined,
-                              })
-                            }
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <span className={styles.timezone}>
-                      <FiGlobe size={20} color='#949597' />
-                      <br />
-                      {timezone?.offset}
-                      <br />
-                      {timezone?.zoneName}
-                    </span>
-                  </div>
-                  <GoogleMap
-                    mapContainerStyle={{
-                      height: '400px',
-                      width: '100%',
-                      borderRadius: '12px 12px 0 0',
-                    }}
-                    zoom={14}
-                    center={location ?? { lat: 0, lng: 0 }}
-                    options={mapOptions}
-                    onClick={onMapClick}
-                  >
-                    {location && (
-                      <MarkerF
-                        position={location}
-                        icon={{
-                          url: 'https://makemypass.com/app/mascot.webp',
-                          scaledSize: new google.maps.Size(40, 52),
-                        }}
-                      />
-                    )}
-                  </GoogleMap>
-
-                  <div className={styles.eventLocation}>
-                    <GrLocation size={20} color='#949597' />
-                    <div className={styles.locationContainer}>
-                      <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                        <input
-                          type='text'
-                          placeholder='Add Event Location'
-                          className={styles.inputLocation}
-                          value={placeName}
-                          onChange={(e) => setPlaceName(e.target.value)}
-                        />
-                      </Autocomplete>
-                      <p className={styles.subText}>Offline location </p>
-                    </div>
-                  </div>
-                  <p className={styles.eventOptions}>Event Options</p>
-                  <div className={styles.optionsContainer}>
-                    <div className={styles.option}>
-                      <label>
-                        <TbUserCheck size={20} color='#949597' /> Require Approval
-                      </label>
-                      <Slider
-                        checked={eventData.approval_required}
-                        text={''}
-                        onChange={() =>
-                          setEventData({
-                            ...eventData,
-                            approval_required: !eventData.approval_required,
-                          })
-                        }
-                      />
-                    </div>
-                    <div className={styles.option}>
-                      <label>
-                        <TbMailStar size={20} color='#949597' /> Invite Only
-                      </label>
-                      <Slider
-                        checked={eventData.is_private}
-                        text={''}
-                        onChange={() =>
-                          setEventData({ ...eventData, is_private: !eventData.is_private })
-                        }
-                      />
-                    </div>
-                    <div className={styles.option}>
-                      <label>
-                        <TbWorld size={20} color='#949597' /> Online Event
-                      </label>
-                      <Slider
-                        checked={eventData.is_online}
-                        text={''}
-                        onChange={() =>
-                          setEventData({ ...eventData, is_online: !eventData.is_online })
-                        }
-                      />
-                    </div>
-                    <div className={styles.option}>
-                      <label>
-                        {' '}
-                        <BiArrowToTop size={20} color='#949597' />
-                        Capacity
-                      </label>
+                <div className={styles.timezoneContainer}>
+                  <div className={styles.dateTimeParentContainer}>
+                    <div className={styles.dateTimeContainer}>
                       <div>
+                        <label>Event Start</label>
                         <input
-                          type='number'
-                          className={styles.capcityInput}
-                          placeholder='Unlimited'
-                          value={eventData?.capacity}
+                          type='datetime-local'
+                          className={styles.dateInput}
+                          value={dateForDateTimeLocal(eventDate?.start)}
+                          onChange={(e) => {
+                            setEventDate({
+                              end: eventDate?.end!,
+                              start: e.target.value ? new Date(e.target.value) : undefined,
+                            });
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label>Event End</label>
+                        <input
+                          type='datetime-local'
+                          className={styles.dateInput}
+                          value={dateForDateTimeLocal(eventDate?.end)}
                           onChange={(e) =>
-                            setEventData({ ...eventData, capacity: Number(e.target.value) })
+                            setEventDate({
+                              start: eventDate?.start!,
+                              end: e.target.value ? new Date(e.target.value) : undefined,
+                            })
                           }
                         />
-                        <LuPencil size={15} color='#949597' />
+                      </div>
+                    </div>
+                    <div className={styles.dateTimeContainer}>
+                      <div>
+                        <label>Registration Start</label>
+                        <input
+                          type='datetime-local'
+                          className={styles.dateInput}
+                          value={dateForDateTimeLocal(regDate?.start)}
+                          onChange={(e) =>
+                            setRegDate({
+                              end: regDate?.end!,
+                              start: e.target.value ? new Date(e.target.value) : undefined,
+                            })
+                          }
+                        />
+                      </div>
+                      <div>
+                        <label>Registration End</label>
+                        <input
+                          type='datetime-local'
+                          className={styles.dateInput}
+                          value={dateForDateTimeLocal(regDate?.end)}
+                          onChange={(e) =>
+                            setRegDate({
+                              start: regDate?.start!,
+                              end: e.target.value ? new Date(e.target.value) : undefined,
+                            })
+                          }
+                        />
                       </div>
                     </div>
                   </div>
-                  <div className={styles.backgroundOption}>
-                    {/* <input
+                  <span className={styles.timezone}>
+                    <FiGlobe size={20} color='#949597' />
+                    <br />
+                    {timezone?.offset}
+                    <br />
+                    {timezone?.zoneName}
+                  </span>
+                </div>
+                <GoogleMap
+                  mapContainerStyle={{
+                    height: '400px',
+                    width: '100%',
+                    borderRadius: '12px 12px 0 0',
+                  }}
+                  zoom={14}
+                  center={location ?? { lat: 0, lng: 0 }}
+                  options={mapOptions}
+                  onClick={onMapClick}
+                >
+                  {location && (
+                    <MarkerF
+                      position={location}
+                      icon={{
+                        url: 'https://makemypass.com/app/mascot.webp',
+                        scaledSize: new google.maps.Size(40, 52),
+                      }}
+                    />
+                  )}
+                </GoogleMap>
+
+                <div className={styles.eventLocation}>
+                  <GrLocation size={20} color='#949597' />
+                  <div className={styles.locationContainer}>
+                    <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                      <input
+                        type='text'
+                        placeholder='Add Event Location'
+                        className={styles.inputLocation}
+                        value={placeName}
+                        onChange={(e) => setPlaceName(e.target.value)}
+                      />
+                    </Autocomplete>
+                    <p className={styles.subText}>Offline location </p>
+                  </div>
+                </div>
+                <p className={styles.eventOptions}>Event Options</p>
+                <div className={styles.optionsContainer}>
+                  <div className={styles.option}>
+                    <label>
+                      <TbUserCheck size={20} color='#949597' /> Require Approval
+                    </label>
+                    <Slider
+                      checked={eventData.approval_required}
+                      text={''}
+                      onChange={() =>
+                        setEventData({
+                          ...eventData,
+                          approval_required: !eventData.approval_required,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className={styles.option}>
+                    <label>
+                      <TbMailStar size={20} color='#949597' /> Invite Only
+                    </label>
+                    <Slider
+                      checked={eventData.is_private}
+                      text={''}
+                      onChange={() =>
+                        setEventData({ ...eventData, is_private: !eventData.is_private })
+                      }
+                    />
+                  </div>
+                  <div className={styles.option}>
+                    <label>
+                      <TbWorld size={20} color='#949597' /> Online Event
+                    </label>
+                    <Slider
+                      checked={eventData.is_online}
+                      text={''}
+                      onChange={() =>
+                        setEventData({ ...eventData, is_online: !eventData.is_online })
+                      }
+                    />
+                  </div>
+                  <div className={styles.option}>
+                    <label>
+                      {' '}
+                      <BiArrowToTop size={20} color='#949597' />
+                      Capacity
+                    </label>
+                    <div>
+                      <input
+                        type='number'
+                        className={styles.capcityInput}
+                        placeholder='Unlimited'
+                        value={eventData?.capacity}
+                        onChange={(e) =>
+                          setEventData({ ...eventData, capacity: Number(e.target.value) })
+                        }
+                      />
+                      <LuPencil size={15} color='#949597' />
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.backgroundOption}>
+                  {/* <input
                       type='color'
                       className={styles.backgroundColorInput}
                       value={selectedColor}
                       onChange={(e) => setSelectedColor(e.target.value)}
                     />
                     <label>Background Color</label> */}
-                  </div>
+                </div>
 
-                  <div className={styles.uploadLogoContainer}>
-                    <div>
-                      {logo ? (
-                        <img
-                          src={URL.createObjectURL(logo)}
-                          alt='Uploaded Image'
-                          className={styles.noImage}
-                        />
-                      ) : eventData?.logo ? (
-                        <img src={eventData.logo} className={styles.noImage} />
-                      ) : (
-                        <div className={styles.noImage}></div>
-                      )}
-                    </div>
-                    <div className={styles.uploadLogo}>
-                      <p>Upload {eventData?.logo ? 'New' : ''} Logo</p>
-                      <p className={styles.logoName}>{logo?.name}</p>
-                    </div>
-                    <input
-                      type='file'
-                      className={styles.fileUpload}
-                      accept='image/*'
-                      onChange={(e) => setLogo(e.target.files ? e.target.files[0] : null)}
-                    />
-                    <div className={styles.pencil}>
-                      <LuPencil size={15} color='#949597' />
-                    </div>
+                <div className={styles.uploadLogoContainer}>
+                  <div>
+                    {logo ? (
+                      <img
+                        src={URL.createObjectURL(logo)}
+                        alt='Uploaded Image'
+                        className={styles.noImage}
+                      />
+                    ) : eventData?.logo ? (
+                      <img src={eventData.logo} className={styles.noImage} />
+                    ) : (
+                      <div className={styles.noImage}></div>
+                    )}
                   </div>
+                  <div className={styles.uploadLogo}>
+                    <p>Upload {eventData?.logo ? 'New' : ''} Logo</p>
+                    <p className={styles.logoName}>{logo?.name}</p>
+                  </div>
+                  <input
+                    type='file'
+                    className={styles.fileUpload}
+                    accept='image/*'
+                    onChange={(e) => setLogo(e.target.files ? e.target.files[0] : null)}
+                  />
+                  <div className={styles.pencil}>
+                    <LuPencil size={15} color='#949597' />
+                  </div>
+                </div>
 
-                  <div className={styles.buttonContainer}>
-                    <button className={styles.createButton} onClick={() => history.back()}>
-                      Cancel
-                    </button>
-                    <button className={styles.createButton} onClick={onSubmit}>
-                      Save
-                    </button>
-                  </div>
+                <div className={styles.buttonContainer}>
+                  <button className={styles.createButton} onClick={() => history.back()}>
+                    Cancel
+                  </button>
+                  <button className={styles.createButton} onClick={onSubmit}>
+                    Save
+                  </button>
                 </div>
               </div>
             </div>
-          ) : (
-            <div className={styles.center}>
-              <HashLoader color={'#46BF75'} size={50} />
-            </div>
-          )}
-        </Theme>
-      ) : (
-        <FourNotFour />
-      )}
+          </div>
+        ) : (
+          <div className={styles.center}>
+            <HashLoader color={'#46BF75'} size={50} />
+          </div>
+        )}
+      </Theme>
     </>
   );
 };

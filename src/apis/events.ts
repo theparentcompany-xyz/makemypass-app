@@ -32,7 +32,7 @@ export const getEventId = async (
       .then((response) => {
         if (accessToken)
           privateGateway
-            .get(makeMyPass.getEvent(response.data.response.event_id))
+            .get(makeMyPass.getEvent(response.data.response.id))
             .then((response) => {
               const eventData = {
                 title: response.data.response.title,
@@ -63,9 +63,6 @@ export const getEventId = async (
             .catch((error) => {
               toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Data');
             });
-        else {
-          localStorage.setItem('formEventData', JSON.stringify(response.data.response));
-        }
       })
       .catch(() => {
         toast.error('Event Not Found');

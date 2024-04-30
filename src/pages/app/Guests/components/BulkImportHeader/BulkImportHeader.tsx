@@ -3,11 +3,9 @@ import styles from './BulkImportHeader.module.css';
 import { PiFileCsv } from 'react-icons/pi';
 import { getCsvTemplate } from '../../../../../apis/guests';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
-import { GlobalContext } from '../../../../../contexts/globalContext';
-import { useContext } from 'react';
 
 const BulkImportHeader = ({ buttonType }: { buttonType?: string }) => {
-  const { eventId } = useContext(GlobalContext);
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
   const navigate = useNavigate();
   return (
     <>

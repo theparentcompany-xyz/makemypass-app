@@ -1,6 +1,5 @@
 import styles from './GuestBulkImport.module.css';
-import { useContext, useEffect, useState } from 'react';
-import { GlobalContext } from '../../../../../contexts/globalContext';
+import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Theme from '../../../../../components/Theme/Theme';
 import BulkImportHeader from '../../components/BulkImportHeader/BulkImportHeader';
@@ -16,7 +15,7 @@ import { FileType } from '../../../../../apis/types';
 import GenericTable from '../../../../../components/Table/GenericTable';
 
 const GuestBulkImport = () => {
-  const { eventId } = useContext(GlobalContext);
+  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
   const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
   const [ticketId, setTicketId] = useState<string>('');
   const [fileStatus, setFileStatus] = useState<FileType[]>([]);
