@@ -1,15 +1,33 @@
 import Theme from '../../../components/Theme/Theme';
 import styles from './Events.module.css';
 import { GoPeople } from 'react-icons/go';
-import { BsArrowRight } from 'react-icons/bs';
+import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import { getEventId, getEvents } from '../../../apis/events';
 
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
+import RightClickMenu from './RightClickMenu';
+// import RightClickMenu from './Menu';
 
 const Events = () => {
+  interface Position {
+    x: number;
+    y: number;
+  }
+
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState<Position>({ x: 0, y: 0 });
+
+  const handleButtonClick = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+    setIsMenuOpen(true);
+    setMenuPosition({ x: event.clientX, y: event.clientY });
+  };
+
+  const handleMenuClose = () => {
+    setIsMenuOpen(false);
+  };
 
   type Event = {
     id: string;
@@ -32,6 +50,22 @@ const Events = () => {
   const handleClick = (eventName: string) => {
     getEventId(eventName?.toLowerCase(), navigate);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const isMenuClicked = target.closest('.right-click-menu');
+      if (!isMenuClicked) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -81,7 +115,21 @@ const Events = () => {
                           </div>
                         )}
                         <div className={styles.eventDetails}>
-                          <p className={styles.eventName}>{event.title}</p>
+                          <div className={styles.eventDetailsHeader}>
+                            <p className={styles.eventName}>{event.title}</p>
+                            <BsThreeDots
+                              onClick={(e: React.MouseEvent<SVGElement, MouseEvent>) => {
+                                handleButtonClick(e);
+                              }}
+                              size={15}
+                              color='#ffffff'
+                            />
+                          </div>
+                          <RightClickMenu
+                            isOpen={isMenuOpen}
+                            position={menuPosition}
+                            onClose={handleMenuClose}
+                          />
                           <p className={styles.eventGuests}>
                             <span>
                               <GoPeople color='a4a4a4' />
