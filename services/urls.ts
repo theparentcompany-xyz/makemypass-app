@@ -78,7 +78,8 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-event/${eventId}/download_file/${fileId}/?file_type=${fileType}/`),
 
   //Payment and Coupons
-  validatePayment: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/validate-payment/`),
+  validatePayment: makeMyPassURL(`/public-form/validate-payment/`),
+
   createPayment: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/create-order/`),
   validateCoupon: (eventId: string, couponCode: string) =>
     makeMyPassURL(`/public-form/apply-coupon-code/${eventId}/?coupon_code=${couponCode}`),

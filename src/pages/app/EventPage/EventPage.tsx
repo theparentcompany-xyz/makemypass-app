@@ -23,7 +23,7 @@ const EventPage = () => {
   const [ticketIds, setTicketIds] = useState<string[]>([]);
   const [eventData, setEventData] = useState<EventType>();
   const [formErrors, setFormErrors] = useState<any>({});
-  // const [eventId, setEventId] = useState<string>('');
+  const [eventId, setEventId] = useState<string>('');
 
   const [formData, setFormData] = useState<FormDataType>({});
   const [amount, setAmount] = useState<string>('');
@@ -37,10 +37,10 @@ const EventPage = () => {
     discount_value: 0,
   });
 
-  const { eventId, setEventId } = useContext(GlobalContext);
-  if (!setEventId) {
-    throw new Error('setEventId is undefined');
-  }
+  // const { eventId, setEventId } = useContext(GlobalContext);
+  // if (!setEventId) {
+  //   throw new Error('setEventId is undefined');
+  // }
 
   const [hasZeroPriceTicket, setHasZeroPriceTicket] = useState(false);
 
@@ -53,7 +53,7 @@ const EventPage = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setEventId(JSON.parse(localStorage.getItem('eventData') || '{}').event_id);
+      setEventId(JSON.parse(localStorage.getItem('formEventData') || '{}').event_id);
       if (eventId) {
         getEventInfo(eventId, setEventData);
       }
@@ -239,6 +239,7 @@ const EventPage = () => {
                   onClick={() => {
                     if (formNumber === 0 && !hasZeroPriceTicket) {
                       {
+                        console.log('event id', eventId);
                         validateRsvp(eventId, formData, setFormNumber, setFormErrors);
                       }
                     } else {

@@ -23,42 +23,49 @@ export const getEventId = async (
   setCurrentUserRole?: React.Dispatch<React.SetStateAction<string[]>>,
 ) => {
   const localData = localStorage.getItem('eventData');
+
+  const accessToken = localStorage.getItem('accessToken');
+
   if (!localData)
     privateGateway
       .get(makeMyPass.getEventId(eventName))
       .then((response) => {
-        privateGateway
-          .get(makeMyPass.getEvent(response.data.response.event_id))
-          .then((response) => {
-            const eventData = {
-              title: response.data.response.title,
-              date: response.data.response.date,
-              current_user_role: response.data.response.current_user_role,
-              event_name: response.data.response.name,
-              logo: response.data.response.logo,
-              event_id: response.data.response.id,
-            };
+        if (accessToken)
+          privateGateway
+            .get(makeMyPass.getEvent(response.data.response.event_id))
+            .then((response) => {
+              const eventData = {
+                title: response.data.response.title,
+                date: response.data.response.date,
+                current_user_role: response.data.response.current_user_role,
+                event_name: response.data.response.name,
+                logo: response.data.response.logo,
+                event_id: response.data.response.id,
+              };
 
-            setEventId && setEventId(response.data.response.id);
-            setCurrentUserRole && setCurrentUserRole([response.data.response.current_user_role]);
+              setEventId && setEventId(response.data.response.id);
+              setCurrentUserRole && setCurrentUserRole([response.data.response.current_user_role]);
 
-            if (!navigate) return;
-            if (
-              response.data.response.current_user_role === 'Admin' ||
-              response.data.response.current_user_role === 'Owner'
-            ) {
-              navigate(`/${eventName.toLowerCase()}/overview/`);
-            } else if (response.data.response.current_user_role === 'Volunteer') {
-              navigate(`/${eventName.toLowerCase()}/checkins/`);
-            } else if (response.data.response.current_user_role === 'Gamer') {
-              navigate(`/${eventName.toLowerCase()}/spinwheel/`);
-            }
+              if (!navigate) return;
+              if (
+                response.data.response.current_user_role === 'Admin' ||
+                response.data.response.current_user_role === 'Owner'
+              ) {
+                navigate(`/${eventName.toLowerCase()}/overview/`);
+              } else if (response.data.response.current_user_role === 'Volunteer') {
+                navigate(`/${eventName.toLowerCase()}/checkins/`);
+              } else if (response.data.response.current_user_role === 'Gamer') {
+                navigate(`/${eventName.toLowerCase()}/spinwheel/`);
+              }
 
-            localStorage.setItem('eventData', JSON.stringify(eventData));
-          })
-          .catch((error) => {
-            toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Data');
-          });
+              localStorage.setItem('eventData', JSON.stringify(eventData));
+            })
+            .catch((error) => {
+              toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Data');
+            });
+        else {
+          localStorage.setItem('formEventData', JSON.stringify(response.data.response));
+        }
       })
       .catch(() => {
         toast.error('Event Not Found');

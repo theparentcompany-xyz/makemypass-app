@@ -83,7 +83,10 @@ export const submitForm = async ({
             audio.play();
 
             publicGateway
-              .post(makeMyPass.validatePayment(eventId), response)
+              .post(makeMyPass.validatePayment, {
+                order_id: response.razorpay_order_id,
+                payment_id: response.razorpay_payment_id,
+              })
               .then((response) => {
                 setSuccess && setSuccess(response.data.response.code);
 
