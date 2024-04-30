@@ -174,6 +174,9 @@ export const editEvent = (eventId: string, eventData: object) => {
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Event Updated Successfully');
+      setTimeout(() => {
+        window.location.href = `/${response.data.response.name}/manage`;
+      }, 1000);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
