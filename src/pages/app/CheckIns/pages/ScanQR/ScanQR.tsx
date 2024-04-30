@@ -7,8 +7,7 @@ import { checkInUser, getCheckInCount } from '../../../../../apis/scan';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import { CgClose } from 'react-icons/cg';
 import Modal from '../../../../../components/Modal/Modal';
-import { EventType, TicketType } from '../../../../../apis/types';
-import { getEventInfo } from '../../../../../apis/publicpage';
+import { TicketType } from '../../../../../apis/types';
 import Loader from '../../../../../components/Loader';
 import MultipleTicket from './components/MultipleTicket';
 import Scanner from '../../../../../components/Scanner/Scanner';
@@ -22,13 +21,14 @@ const ScanQR = () => {
   const [scanCount, setScanCount] = useState<number>(0);
   const [isTicketSelected, setIsTicketSelected] = useState<boolean>(false);
   const [selectedTicket, setSelectedTicket] = useState<TicketType>();
-  const [eventData, setEventData] = useState<EventType>();
-  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
+
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
+
+  const eventData = JSON.parse(sessionStorage.getItem('eventData')!);
 
   useEffect(() => {
     if (eventId) {
       getCheckInCount(eventId, setScanCount);
-      getEventInfo(eventId, setEventData);
     }
 
     if (ticketId.length > 0 && trigger) {

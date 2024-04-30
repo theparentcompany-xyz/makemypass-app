@@ -73,7 +73,7 @@ const Guests = () => {
     setFormData(selectedGuestData[0]);
   };
 
-  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
   useEffect(() => {
     if (eventId && !selectedGuestId?.id) {

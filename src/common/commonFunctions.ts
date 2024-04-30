@@ -23,11 +23,11 @@ export const transformTableData = (
 };
 
 export const getEventUUID = (eventTitle: string, setEventId: Dispatch<SetStateAction<string>>) => {
-  let eventData = JSON.parse(localStorage.getItem('eventData') as string);
+  let eventData = JSON.parse(sessionStorage.getItem('eventData') as string);
 
   if (!eventData)
     setTimeout(() => {
-      eventData = JSON.parse(localStorage.getItem('eventData') as string);
+      eventData = JSON.parse(sessionStorage.getItem('eventData') as string);
 
       if (eventData) {
         if (eventData.event_name !== eventTitle) {

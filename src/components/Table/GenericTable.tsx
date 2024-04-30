@@ -15,7 +15,7 @@ const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; table
         })
       : [];
 
-  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
   return (
     <>

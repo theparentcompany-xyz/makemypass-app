@@ -15,7 +15,7 @@ import { FileType } from '../../../../../apis/types';
 import GenericTable from '../../../../../components/Table/GenericTable';
 
 const GuestBulkImport = () => {
-  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
   const [ticketId, setTicketId] = useState<string>('');
   const [fileStatus, setFileStatus] = useState<FileType[]>([]);

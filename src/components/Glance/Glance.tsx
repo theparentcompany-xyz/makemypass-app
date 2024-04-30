@@ -9,7 +9,7 @@ import { formatDate } from '../../common/commonFunctions';
 import PoppingText from './components/PoppingText';
 
 const Glance = ({ tab }: { tab: string }) => {
-  const eventData = JSON.parse(localStorage.getItem('eventData')!);
+  const eventData = JSON.parse(sessionStorage.getItem('eventData')!);
 
   type progressDataType = {
     type: string;
@@ -34,7 +34,7 @@ const Glance = ({ tab }: { tab: string }) => {
 
   const [currentTab, setCurrentTab] = useState('overview');
 
-  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
   const updateTab = (tab: string) => {

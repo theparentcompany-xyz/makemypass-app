@@ -15,7 +15,7 @@ const RoleChecker = ({
   toastTitle?: string;
   toastDescription?: string;
 }) => {
-  const currentUserRole = [JSON.parse(localStorage.getItem('eventData')!).current_user_role];
+  const currentUserRole = [JSON.parse(sessionStorage.getItem('eventData')!).current_user_role];
 
   const hasRoleNoFetch = (roles: Roles[]) => {
     return roles.some((role) => currentUserRole.includes(role));

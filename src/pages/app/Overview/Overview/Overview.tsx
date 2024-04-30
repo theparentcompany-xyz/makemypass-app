@@ -48,7 +48,7 @@ const Overview = () => {
     is_private: true,
   });
 
-  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
   useEffect(() => {
     if (eventId && hostList.length === 0) getHosts(eventId, setHostList);

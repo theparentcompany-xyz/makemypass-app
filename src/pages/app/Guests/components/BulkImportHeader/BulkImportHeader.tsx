@@ -5,7 +5,7 @@ import { getCsvTemplate } from '../../../../../apis/guests';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 
 const BulkImportHeader = ({ buttonType }: { buttonType?: string }) => {
-  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const navigate = useNavigate();
   return (
     <>

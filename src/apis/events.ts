@@ -22,7 +22,7 @@ export const getEventId = async (
   setEventId?: React.Dispatch<React.SetStateAction<string>>,
   setCurrentUserRole?: React.Dispatch<React.SetStateAction<string[]>>,
 ) => {
-  const localData = localStorage.getItem('eventData');
+  const localData = sessionStorage.getItem('eventData');
 
   const accessToken = localStorage.getItem('accessToken');
 
@@ -58,7 +58,8 @@ export const getEventId = async (
                 navigate(`/${eventName.toLowerCase()}/spinwheel/`);
               }
 
-              localStorage.setItem('eventData', JSON.stringify(eventData));
+              // localStorage.setItem('eventData', JSON.stringify(eventData));
+              sessionStorage.setItem('eventData', JSON.stringify(eventData));
             })
             .catch((error) => {
               toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Data');

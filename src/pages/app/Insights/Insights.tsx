@@ -45,7 +45,7 @@ const Insights = () => {
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
-  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
   const options = {
     responsive: true,

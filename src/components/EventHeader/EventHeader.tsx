@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const EventHeader = () => {
-  const eventData = JSON.parse(localStorage.getItem('eventData')!);
+  const eventData = JSON.parse(sessionStorage.getItem('eventData')!);
 
   const navigate = useNavigate();
 

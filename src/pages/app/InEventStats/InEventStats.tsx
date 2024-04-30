@@ -114,7 +114,7 @@ const InEventStats = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
   const getLocalEventId = () => {
     if (eventTitle) {
-      const eventData = JSON.parse(localStorage.getItem('eventData') as string);
+      const eventData = JSON.parse(sessionStorage.getItem('eventData') as string);
 
       if (eventData) {
         if (eventData.event_name !== eventTitle) {

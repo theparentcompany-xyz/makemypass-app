@@ -10,7 +10,7 @@ export const resentEventTicket = async (
   ticketData: ResentTicket,
   setResentTicket: Dispatch<React.SetStateAction<ResentTicket>>,
 ) => {
-  const eventId = JSON.parse(localStorage.getItem('eventData')!).event_id;
+  const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   privateGateway
     .post(makeMyPass.resentTicket, {
       client_id: ticketData.guestId,

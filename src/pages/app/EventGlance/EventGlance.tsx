@@ -20,7 +20,7 @@ import toast from 'react-hot-toast';
 import EventHeader from '../../../components/EventHeader/EventHeader';
 
 const EventGlance = () => {
-  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [eventTitle, setEventTitle] = useState('');
   const [eventData, setEventData] = useState<EventType>();
   useEffect(() => {
@@ -28,7 +28,7 @@ const EventGlance = () => {
   }, [eventId]);
   const [selectedMail, setSelectedMail] = useState('');
 
-  const eventName = JSON.parse(localStorage.getItem('eventData')!).event_name;
+  const eventName = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
   const navigate = useNavigate();
   const selectValues = [
     { value: 'Going', label: 'Going' },

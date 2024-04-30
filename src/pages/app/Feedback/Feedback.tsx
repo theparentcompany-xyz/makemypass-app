@@ -25,7 +25,7 @@ const EventPage = () => {
     description: '',
   });
 
-  const eventData = JSON.parse(localStorage.getItem('eventData') || '{}');
+  const eventData = JSON.parse(sessionStorage.getItem('eventData') || '{}');
 
   const [formData, setFormData] = useState<FormDataType>({});
   const [success, setSuccess] = useState<string>('');
@@ -36,7 +36,7 @@ const EventPage = () => {
     if (eventTitle) getEventId(eventTitle);
 
     setTimeout(() => {
-      setEventId(JSON.parse(localStorage.getItem('eventData') || '{}').event_id);
+      setEventId(JSON.parse(sessionStorage.getItem('eventData') || '{}').event_id);
       if (eventId) {
         // getEventDatas(eventId, setEventData);
       }
