@@ -91,13 +91,13 @@ const EditEvent = () => {
 
     if (eventTitle !== eventData?.title) changedData['title'] = eventTitle;
     if (newDescription !== eventData?.description) changedData['description'] = newDescription;
-    if (convertDate(eventDate?.start) !== fetchedEvent?.event_start_date)
+    if (convertDate(eventDate?.start) != fetchedEvent?.event_start_date)
       changedData['event_start_date'] = convertDate(eventDate?.start);
-    if (convertDate(eventDate?.end) !== fetchedEvent?.event_end_date)
+    if (convertDate(eventDate?.end) != fetchedEvent?.event_end_date)
       changedData['event_end_date'] = convertDate(eventDate?.end);
-    if (convertDate(regDate?.start) !== fetchedEvent?.reg_start_date)
+    if (convertDate(regDate?.start) != fetchedEvent?.reg_start_date)
       changedData['reg_start_date'] = convertDate(regDate?.start);
-    if (convertDate(regDate?.end) !== fetchedEvent?.reg_end_date)
+    if (convertDate(regDate?.end) != fetchedEvent?.reg_end_date)
       changedData['reg_end_date'] = convertDate(regDate?.end);
     if (placeName && placeName !== fetchedEvent?.place) changedData['place'] = placeName;
     if (
@@ -107,7 +107,7 @@ const EditEvent = () => {
       changedData['location'] = location;
     if (logo) changedData['logo'] = logo;
     if (banner) changedData['banner'] = banner;
-
+    if (eventData?.capacity == undefined) changedData['capacity'] = 'null';
     editEvent(eventId, changedData);
   };
 
