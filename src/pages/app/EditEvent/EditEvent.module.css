@@ -378,7 +378,7 @@ input[type='color']::-webkit-color-swatch {
   padding: 0.5rem 1rem;
   border-radius: 8px;
   border: none;
-  background: rgba(255, 255, 255, 0.04);
+  background: #d11a29ba;
   color: #fff;
   font-size: 1rem;
   font-weight: 500;
