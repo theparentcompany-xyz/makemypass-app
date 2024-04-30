@@ -179,3 +179,15 @@ export const editEvent = (eventId: string, eventData: object) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };
+
+export const duplicateEvent = async (eventId: string) => {
+  privateGateway
+    .get(makeMyPass.getCategories(eventId))
+    .then((response) => {
+      toast.success('Event Duplicated Successfually');
+      console.log(response.data.response);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};

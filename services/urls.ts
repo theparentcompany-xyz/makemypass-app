@@ -16,6 +16,7 @@ export const makeMyPass = {
   getEventInfo: (eventName: string) => makeMyPassURL(`/public-form/${eventName}/info/`),
   getEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/get-event/`),
   editEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/edit-event/`),
+  duplicateEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/duplicate-event/`),
 
   // Guest and TicketManagement
   checkInUser: (ticketCode: string, eventId: string) =>

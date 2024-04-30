@@ -3,11 +3,12 @@ import styles from './Events.module.css';
 import { GoPeople } from 'react-icons/go';
 import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
-import { getEventId, getEvents } from '../../../apis/events';
+import { duplicateEvent, getEventId, getEvents } from '../../../apis/events';
 
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
 import RightClickMenu from './RightClickMenu';
+import Modal from '../../../components/Modal/Modal';
 // import RightClickMenu from './Menu';
 
 const Events = () => {
@@ -19,6 +20,8 @@ const Events = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState<Position>({ x: 0, y: 0 });
+  const [showModal, setShowModal] = useState(false);
+  const [duplicateEventId, setDuplicateEventId] = useState<string>('');
 
   const handleButtonClick = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
     setIsMenuOpen(true);
@@ -51,25 +54,40 @@ const Events = () => {
     getEventId(eventName?.toLowerCase(), navigate);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      const isMenuClicked = target.closest('.right-click-menu');
-      if (!isMenuClicked) {
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  const onModalClose = () => {
+    setShowModal(false);
+  };
 
   return (
     <>
       <Theme>
+        {showModal && (
+          <Modal onClose={onModalClose}>
+            <p className={styles.modalHeader}>Remove Host</p>
+            <p className={styles.modalSubText}>
+              Are you sure you want to create a duplicate event ?
+            </p>
+            <div className={styles.buttons}>
+              <p
+                onClick={() => {
+                  duplicateEvent(duplicateEventId);
+                  setShowModal(false);
+                }}
+                className={styles.button}
+              >
+                Create Event
+              </p>
+              <p
+                onClick={() => {
+                  setShowModal(false);
+                }}
+                className={styles.button}
+              >
+                Cancel
+              </p>
+            </div>
+          </Modal>
+        )}
         <div className={styles.homeContainer}>
           <div>
             <motion.p
@@ -120,16 +138,20 @@ const Events = () => {
                             <BsThreeDots
                               onClick={(e: React.MouseEvent<SVGElement, MouseEvent>) => {
                                 handleButtonClick(e);
+                                setDuplicateEventId(event?.id);
                               }}
                               size={15}
                               color='#ffffff'
                             />
                           </div>
-                          <RightClickMenu
-                            isOpen={isMenuOpen}
-                            position={menuPosition}
-                            onClose={handleMenuClose}
-                          />
+                          {isMenuOpen && (
+                            <RightClickMenu
+                              isOpen={isMenuOpen}
+                              position={menuPosition}
+                              onClose={handleMenuClose}
+                              setShowModal={setShowModal}
+                            />
+                          )}
                           <p className={styles.eventGuests}>
                             <span>
                               <GoPeople color='a4a4a4' />

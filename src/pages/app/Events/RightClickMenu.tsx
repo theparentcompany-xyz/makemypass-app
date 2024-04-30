@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Events.module.css';
 
 // RightClickMenu component
@@ -11,13 +11,30 @@ interface RightClickMenuProps {
   isOpen: boolean;
   position: Position;
   onClose: () => void;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const RightClickMenu: React.FC<RightClickMenuProps> = ({ isOpen, position, onClose }) => {
-  const handleOptionClick = (option: string) => {
-    console.log(`Selected option: ${option}`);
-    onClose();
-  };
+const RightClickMenu: React.FC<RightClickMenuProps> = ({
+  isOpen,
+  position,
+  onClose,
+  setShowModal,
+}) => {
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const isMenuClicked = target.closest('.rightClickMenu');
+      if (isMenuClicked) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   if (!isOpen) {
     return null;
@@ -33,7 +50,14 @@ const RightClickMenu: React.FC<RightClickMenuProps> = ({ isOpen, position, onClo
       }}
     >
       <ul>
-        <li onClick={() => handleOptionClick('Option 1')}>Duplicate Event</li>
+        <li
+          onClick={() => {
+            setShowModal(true);
+            onClose();
+          }}
+        >
+          Duplicate Event
+        </li>
       </ul>
     </div>
   );
