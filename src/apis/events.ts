@@ -180,6 +180,20 @@ export const editEvent = (eventId: string, eventData: object) => {
     });
 };
 
+export const deleteEvent = (eventId: string) => {
+  privateGateway
+    .delete(makeMyPass.deleteEvent(eventId))
+    .then((response) => {
+      toast.success(response.data.message.general[0] || 'Event Deleted Successfully');
+      setTimeout(() => {
+        window.location.href = '/events';
+      }, 1000);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    }); 
+};
+
 export const duplicateEvent = async (eventId: string) => {
   privateGateway
     .post(makeMyPass.duplicateEvent(eventId))
