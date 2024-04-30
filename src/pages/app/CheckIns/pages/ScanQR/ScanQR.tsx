@@ -44,11 +44,6 @@ const ScanQR = () => {
     }
   }, [trigger, eventId]);
 
-  useEffect(() => {
-    if (eventId) {
-    }
-  }, []);
-
   return (
     <>
       {eventData ? (

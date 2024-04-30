@@ -30,7 +30,7 @@ const DynamicForm = ({
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
   formData: FormDataType;
-  onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
+  onFieldChange: (fieldName: string, fieldValue: string | string[] | FileList) => void;
   setCashInHand?: React.Dispatch<React.SetStateAction<boolean>>;
   cashInHand?: boolean;
   ticketInfo?: { [key: string]: TicketType };
@@ -99,16 +99,16 @@ const DynamicForm = ({
               valid = fieldValue !== '';
               break;
             case 'contains':
-              let lowerFieldValue = '';
               if (typeof fieldValue === 'string' && typeof condition.value === 'string')
-                lowerFieldValue = fieldValue.toLocaleLowerCase();
-              valid = lowerFieldValue?.includes(condition.value.toLocaleLowerCase());
+                valid = fieldValue
+                  .toLocaleLowerCase()
+                  ?.includes(condition.value.toLocaleLowerCase());
               break;
             case 'not contains':
-              let lowerFieldValueNot = '';
               if (typeof fieldValue === 'string' && typeof condition.value === 'string')
-                lowerFieldValueNot = fieldValue.toLocaleLowerCase();
-              valid = !lowerFieldValueNot?.includes(condition.value.toLocaleLowerCase());
+                valid = !fieldValue
+                  .toLocaleLowerCase()
+                  ?.includes(condition.value.toLocaleLowerCase());
               break;
             default:
               valid = true;
@@ -464,7 +464,7 @@ const DynamicForm = ({
                     accept={field.property?.extension_types.join(',') ?? ''}
                     name={field.title}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      onFieldChange(field.field_key, e.target.files as any);
+                      if (e.target.files) onFieldChange(field.field_key, e.target.files);
                     }}
                     className={styles.fileInput}
                     multiple

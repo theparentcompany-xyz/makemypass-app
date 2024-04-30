@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { OptionStyle } from '../pages/app/SpinWheel/types';
 
+// ! POSTPONDED: Feature not available in the current version
+// * This feature is not available in the current version of the app
 /* eslint no-use-before-define: 0 */ // --> OFF
 
 const data = [
@@ -38,7 +41,6 @@ export const listSpinWheelItems = async (eventId: string, setSpinWheelItems: any
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };
-
 export const listUserGifts = async (eventId: string, ticketCode: string, setGifts?: any) => {
   privateGateway
     .get(makeMyPass.listUserGift(eventId, ticketCode))

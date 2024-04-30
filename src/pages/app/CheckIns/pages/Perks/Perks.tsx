@@ -1,4 +1,4 @@
-// ! DEPRECATED: Feature not available in the current version
+// ! POSTPONDED: Feature not available in the current version
 // * This feature is not available in the current version of the app
 
 import { useContext, useEffect, useState } from 'react';

@@ -3,8 +3,21 @@ import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { CouponData, DiscountData, TicketOptions } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
-import { ErrorMessages, EventType, FormDataType, FormFieldType } from './types';
+import {
+  ErrorMessages,
+  EventType,
+  FormDataType,
+  FormFieldType,
+  RazorpayPaymentDetails,
+} from './types';
 import { convertWebmToWav } from './helpers';
+
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Razorpay: any;
+  }
+}
 
 export const submitForm = async ({
   eventId,
@@ -78,7 +91,7 @@ export const submitForm = async ({
           description: 'Event Registration',
           image: '/pwa/maskable.webp',
           order_id: paymentId,
-          handler: function (response: any) {
+          handler: function (response: RazorpayPaymentDetails) {
             const audio = new Audio('/sounds/gpay.mp3');
             audio.play();
 
@@ -110,7 +123,7 @@ export const submitForm = async ({
           },
         };
 
-        const rzp1 = new (window as any).Razorpay(options);
+        const rzp1 = new window.Razorpay(options);
         rzp1.open();
       } else {
         setSuccess && setSuccess(response.data.response.code);

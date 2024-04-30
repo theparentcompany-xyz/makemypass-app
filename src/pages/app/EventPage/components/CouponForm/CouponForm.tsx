@@ -8,6 +8,10 @@ import SecondaryButton from '../../../Overview/components/SecondaryButton/Second
 import { motion } from 'framer-motion';
 import { applyCoupon } from '../../../../../apis/publicpage';
 
+// ! POSTPONDED: Feature not available in the current version
+// * This feature is not available in the current version of the app
+/* eslint no-use-before-define: 0 */ // --> OFF
+
 const CouponForm = ({
   ticketInfo,
   setTicketIds,

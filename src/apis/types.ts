@@ -80,11 +80,13 @@ export type FormFieldType = {
 };
 
 export interface TicketType {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [x: string]: any;
   description: ReactNode;
   id: string;
   price: number;
-  perks: any; // You can define a proper type for perks if needed
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  perks: any;
   slots_left: number | null;
   default_selected: boolean;
   platform_fee: number;
@@ -175,3 +177,5 @@ export type PaymentDetails<T extends string> = {
   order_id: string;
   signature: string;
 };
+
+export type RazorpayPaymentDetails = PaymentDetails<'razorpay'>;
