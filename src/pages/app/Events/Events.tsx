@@ -135,14 +135,14 @@ const Events = () => {
                         <div className={styles.eventDetails}>
                           <div className={styles.eventDetailsHeader}>
                             <p className={styles.eventName}>{event.title}</p>
-                            <BsThreeDots
+                            {/* <BsThreeDots
                               onClick={(e: React.MouseEvent<SVGElement, MouseEvent>) => {
                                 handleButtonClick(e);
                                 setDuplicateEventId(event?.id);
                               }}
                               size={15}
                               color='#ffffff'
-                            />
+                            /> */}
                           </div>
                           {isMenuOpen && (
                             <RightClickMenu
