@@ -70,7 +70,11 @@ export const addGuest = (
             audio.play();
 
             publicGateway
-              .post(makeMyPass.validateSentInvitePayment(eventId), response)
+              .post(makeMyPass.validatePayment, {
+                order_id: response.razorpay_order_id,
+                payment_id: response.razorpay_payment_id,
+                payment_signature: response.razorpay_signature,
+              })
               .then(() => {
                 setTimeout(() => {
                   setSelectedGuestId(null);

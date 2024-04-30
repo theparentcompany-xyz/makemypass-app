@@ -4,10 +4,9 @@ import { IoCallOutline } from 'react-icons/io5';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { RiCoupon3Line } from 'react-icons/ri';
 import { DiscountData } from './types';
-import { StylesConfig } from 'react-select';
 
-export const customStyles: StylesConfig<unknown, boolean> = {
-  control: (provided) => ({
+export const customStyles = {
+  control: (provided: any) => ({
     ...provided,
     border: 'none',
     backgroundColor: 'rgba(255, 255, 255, 0.04)',
@@ -18,28 +17,31 @@ export const customStyles: StylesConfig<unknown, boolean> = {
     maxWidth: '25rem',
     minWidth: '10rem',
   }),
-  group: (provided) => ({
+
+  group: (provided: any) => ({
     ...provided,
     paddingTop: 0,
   }),
-  singleValue: (provided) => ({
-    ...provided,
+
+  singleValue: (base: any) => ({
+    ...base,
     color: '#fff',
   }),
-  option: (provided, state) => ({
+  option: (provided: any) => ({
     ...provided,
     fontFamily: 'Inter, sans-serif',
-    backgroundColor: state.isSelected ? 'rgba(147, 149, 151, 0.13)' : 'rgba(33, 35, 37, 0.03)',
+    backgroundColor: 'rgba(33, 35, 37, 0.03)',
     color: '#ffffff',
     fontStyle: 'normal',
     fontWeight: 400,
     fontSize: '0.9rem',
     ':hover': {
-      backgroundColor: 'rgba(147, 149, 151, 0.13)',
+      backgroundColor: ' rgba(147, 149, 151, 0.13);',
     },
     maxWidth: '24rem',
   }),
-  multiValue: (provided) => ({
+
+  multiValue: (provided: any) => ({
     ...provided,
     backgroundColor: '#323838',
     borderRadius: '4px',
@@ -47,12 +49,14 @@ export const customStyles: StylesConfig<unknown, boolean> = {
     color: '#fff',
     fontSize: '1.9rem',
   }),
-  multiValueLabel: (provided) => ({
+
+  multiValueLabel: (provided: any) => ({
     ...provided,
     color: '#fff',
     fontSize: '0.9rem',
   }),
-  multiValueRemove: (provided) => ({
+
+  multiValueRemove: (provided: any) => ({
     ...provided,
     color: '#fff',
     fontSize: '0.9rem',
@@ -61,11 +65,13 @@ export const customStyles: StylesConfig<unknown, boolean> = {
       color: '#fff',
     },
   }),
-  placeholder: (provided) => ({
+
+  placeholder: (provided: any) => ({
     ...provided,
     color: '#9E9E9E',
   }),
-  menu: (provided) => ({
+
+  menu: (provided: any) => ({
     ...provided,
     border: '1px solid rgba(255, 255, 255, 0.08)',
     backgroundColor: 'rgba(255, 255, 255, 0.04)',
@@ -77,40 +83,42 @@ export const customStyles: StylesConfig<unknown, boolean> = {
     zIndex: 10000,
     position: 'relative',
   }),
-  menuList: (provided) => ({
+
+  menuList: (provided: any) => ({
     ...provided,
     paddingTop: 0,
     paddingBottom: 0,
   }),
-  noOptionsMessage: (provided) => ({
+
+  noOptionsMessage: (provided: any) => ({
     ...provided,
     color: '#9E9E9E',
   }),
-  loadingMessage: (provided) => ({
+  loadingMessage: (provided: any) => ({
     ...provided,
     color: '#9E9E9E',
   }),
-  indicatorSeparator: (provided) => ({
+  indicatorSeparator: (provided: any) => ({
     ...provided,
     backgroundColor: '#9E9E9E',
   }),
-  dropdownIndicator: (provided) => ({
+  dropdownIndicator: (provided: any) => ({
     ...provided,
     color: '#9E9E9E',
   }),
-  clearIndicator: (provided) => ({
+  clearIndicator: (provided: any) => ({
     ...provided,
     color: '#9E9E9E',
   }),
-  valueContainer: (provided) => ({
+  valueContainer: (provided: any) => ({
     ...provided,
     padding: '2px 8px',
   }),
-  input: (provided) => ({
+  input: (provided: any) => ({
     ...provided,
     color: '#fff',
   }),
-  loadingIndicator: (provided) => ({
+  loadingIndicator: (provided: any) => ({
     ...provided,
     color: '#9E9E9E',
   }),

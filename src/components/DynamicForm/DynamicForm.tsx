@@ -30,7 +30,7 @@ const DynamicForm = ({
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
   formData: FormDataType;
-  onFieldChange: (fieldName: string, fieldValue: string | string[] | FileList) => void;
+  onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
   setCashInHand?: React.Dispatch<React.SetStateAction<boolean>>;
   cashInHand?: boolean;
   ticketInfo?: { [key: string]: TicketType };
@@ -464,7 +464,7 @@ const DynamicForm = ({
                     accept={field.property?.extension_types.join(',') ?? ''}
                     name={field.title}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      if (e.target.files) onFieldChange(field.field_key, e.target.files);
+                      if (e.target.files) onFieldChange(field.field_key, e.target.files as any);
                     }}
                     className={styles.fileInput}
                     multiple
