@@ -99,10 +99,10 @@ const Glance = ({ tab }: { tab: string }) => {
 
   const tabs = {
     overview: 'Overview',
-    manage: 'Events Page',
     insights: 'Insights',
     guests: 'Guests',
     inevent: 'In-Event',
+    manage: 'Events Page',
     checkins: 'Check-Ins',
     // feedback: 'Feedbacks',
   };

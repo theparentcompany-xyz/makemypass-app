@@ -23,10 +23,9 @@ export const getEventId = async (
   setCurrentUserRole?: React.Dispatch<React.SetStateAction<string[]>>,
 ) => {
   const localData = sessionStorage.getItem('eventData');
-
   const accessToken = localStorage.getItem('accessToken');
 
-  if (!localData)
+  if (!localData || JSON.parse(localData).event_name !== eventName)
     privateGateway
       .get(makeMyPass.getEventId(eventName))
       .then((response) => {

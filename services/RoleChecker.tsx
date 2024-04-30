@@ -1,6 +1,7 @@
 import toast from 'react-hot-toast';
 import { Roles } from './types';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { getEventId } from '../src/apis/events';
 
 const RoleChecker = ({
   redirectPath,
@@ -16,6 +17,13 @@ const RoleChecker = ({
   toastDescription?: string;
 }) => {
   const currentUserRole = [JSON.parse(sessionStorage.getItem('eventData')!).current_user_role];
+  const currentTitle = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
+  const navigate = useNavigate();
+  const { eventTitle } = useParams();
+
+  if (eventTitle && eventTitle !== currentTitle) {
+    getEventId(eventTitle, navigate);
+  }
 
   const hasRoleNoFetch = (roles: Roles[]) => {
     return roles.some((role) => currentUserRole.includes(role));

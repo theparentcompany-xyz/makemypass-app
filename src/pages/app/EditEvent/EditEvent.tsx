@@ -21,7 +21,7 @@ import './google.css';
 const libraries: Libraries = ['places'];
 
 const EditEvent = () => {
-  const { event_id: eventId } = JSON.parse(localStorage.getItem('eventData')!);
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [eventTitle, setEventTitle] = useState('');
   const [fetchedEvent, setFetchedEvent] = useState<EventType>();
   const [eventData, setEventData] = useState<EventType>();
