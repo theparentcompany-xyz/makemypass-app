@@ -16,15 +16,14 @@ const RoleChecker = ({
   toastTitle?: string;
   toastDescription?: string;
 }) => {
-  const currentTitle = JSON.parse(sessionStorage.getItem('eventData')!)?.event_name;
+  const currentTitle = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
+  const currentUserRole = [JSON.parse(sessionStorage.getItem('eventData')!).current_user_role];
   const { eventTitle } = useParams();
   const navigate = useNavigate();
 
-  if (eventTitle || eventTitle !== currentTitle) {
-    if (eventTitle) getEventId(eventTitle, navigate);
+  if (eventTitle && eventTitle !== currentTitle) {
+    getEventId(eventTitle, navigate);
   }
-
-  const currentUserRole = [JSON.parse(sessionStorage.getItem('eventData')!)?.current_user_role];
 
   const hasRoleNoFetch = (roles: Roles[]) => {
     return roles.some((role) => currentUserRole.includes(role));
