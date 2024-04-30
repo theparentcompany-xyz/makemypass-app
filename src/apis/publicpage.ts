@@ -216,11 +216,11 @@ export const validateRsvp = async (
 };
 
 export const getEventInfo = async (
-  eventId: string,
+  eventTitle: string,
   setEventData: Dispatch<React.SetStateAction<EventType | undefined>>,
 ) => {
   privateGateway
-    .get(makeMyPass.getEventInfo(eventId))
+    .get(makeMyPass.getEventInfo(eventTitle))
     .then((response) => {
       setEventData(response.data.response);
       return response.data.response;

@@ -22,7 +22,6 @@ const EventPage = () => {
   const [ticketIds, setTicketIds] = useState<string[]>([]);
   const [eventData, setEventData] = useState<EventType>();
   const [formErrors, setFormErrors] = useState<any>({});
-  const [eventId, setEventId] = useState<string>('');
 
   const [formData, setFormData] = useState<FormDataType>({});
   const [amount, setAmount] = useState<string>('');
@@ -36,11 +35,6 @@ const EventPage = () => {
     discount_value: 0,
   });
 
-  // const { eventId, setEventId } = useContext(GlobalContext);
-  // if (!setEventId) {
-  //   throw new Error('setEventId is undefined');
-  // }
-
   const [hasZeroPriceTicket, setHasZeroPriceTicket] = useState(false);
 
   const [coupon, setCoupon] = useState<CouponData>({
@@ -51,13 +45,8 @@ const EventPage = () => {
   });
 
   useEffect(() => {
-    setTimeout(() => {
-      setEventId(JSON.parse(localStorage.getItem('formEventData') || '{}').event_id);
-      if (eventId) {
-        getEventInfo(eventId, setEventData);
-      }
-    }, 1000);
-  }, [eventTitle, eventId]);
+    if (eventTitle) getEventInfo(eventTitle, setEventData);
+  }, [eventTitle]);
 
   useEffect(() => {
     if (eventData?.coupon) setCoupon(eventData?.coupon);
@@ -207,7 +196,7 @@ const EventPage = () => {
                   ticketInfo={eventData.tickets}
                   setTicketIds={setTicketIds}
                   ticketIds={ticketIds}
-                  eventId={eventId}
+                  eventId={eventData.id}
                   discount={discount}
                   setDiscount={setDiscount}
                   setAmount={setAmount}
@@ -238,12 +227,12 @@ const EventPage = () => {
                   onClick={() => {
                     if (formNumber === 0 && !hasZeroPriceTicket) {
                       {
-                        console.log('event id', eventId);
-                        validateRsvp(eventId, formData, setFormNumber, setFormErrors);
+                        console.log('event id', eventData.id);
+                        validateRsvp(eventData.id, formData, setFormNumber, setFormErrors);
                       }
                     } else {
                       submitForm({
-                        eventId,
+                        eventId: eventData.id,
                         ticketIds,
                         formData,
                         coupon,
