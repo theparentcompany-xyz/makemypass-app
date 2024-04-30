@@ -1,5 +1,12 @@
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    webkitAudioContext: any;
+  }
+}
+
 export const convertWebmToWav = async (webmBlob: Blob): Promise<Blob> => {
-  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+  const audioContext = new window.AudioContext() || window.webkitAudioContext();
   const audioBuffer = await audioContext.decodeAudioData(await webmBlob.arrayBuffer());
 
   const numberOfChannels = audioBuffer.numberOfChannels;

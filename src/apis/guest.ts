@@ -3,7 +3,7 @@ import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Dispatch } from 'react';
 import { SelectedGuest } from '../pages/app/Guests/types';
-import { ErrorMessages, FormDataType } from './types';
+import { ErrorMessages, FormDataType, PaymentDetails } from './types';
 
 export const shortListUser = (
   eventId: string,
@@ -23,6 +23,13 @@ export const shortListUser = (
       toast.error(error.response.data.message.general[0] || 'User shortlisting failed');
     });
 };
+
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Razorpay: any;
+  }
+}
 
 export const addGuest = (
   eventId: string,
@@ -46,9 +53,9 @@ export const addGuest = (
     .then((response) => {
       if (response.data.response.gateway_type) {
         toast.success('Complete Payment to add guest');
-        let paymentId: string = response.data.response.id;
-        let paymentAmount: string = response.data.response.amount;
-
+        const paymentId: string = response.data.response.id;
+        const paymentAmount: string = response.data.response.amount;
+        type RazorpayPaymentDetails = PaymentDetails<'razorpay'>;
         const options = {
           key_id: response.data.response.gateway_key,
           amount: paymentAmount,
@@ -57,7 +64,8 @@ export const addGuest = (
           description: 'Event Registration',
           image: '/pwa/maskable.webp',
           order_id: paymentId,
-          handler: function (response: any) {
+          handler: function (response: RazorpayPaymentDetails) {
+            console.log(response);
             const audio = new Audio('/sounds/gpay.mp3');
             audio.play();
 
@@ -66,7 +74,7 @@ export const addGuest = (
               .then(() => {
                 setTimeout(() => {
                   setSelectedGuestId(null);
-                  toast.success(response.data.message.general[0] || 'Guest added successfully');
+                  toast.success('Guest added successfully');
                 }, 2000);
               })
               .catch((error) => {
@@ -80,7 +88,8 @@ export const addGuest = (
           },
         };
 
-        const rzp1 = new (window as any).Razorpay(options);
+        const rzp1 = new window.Razorpay(options);
+
         rzp1.open();
       } else {
         toast.success(response.data.message.general[0] || 'Guest added successfully');

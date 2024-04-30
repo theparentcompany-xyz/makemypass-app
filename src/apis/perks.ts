@@ -2,24 +2,25 @@ import { Dispatch } from 'react';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 
-export const getPerksInfo = (eventId: string, setPerks: any) =>
-  privateGateway
-    .get(makeMyPass.getPerksInfo(eventId))
-    .then((response) => {
-      const data = response.data.response;
-      const perkNames = [];
+// export const getPerksInfo = (eventId: string, setPerks: any) =>
+//   privateGateway
+//     .get(makeMyPass.getPerksInfo(eventId))
+//     .then((response) => {
+//       const data = response.data.response;
+//       const perkNames = [];
 
-      for (const key in data) {
-        const perks = data[key].perks;
-        for (const perk in perks) {
-          perkNames.push(perk);
-        }
-      }
-      setPerks(perkNames);
-    })
-    .catch((error) => {
-      throw error;
-    });
+//       for (const key in data) {
+//         const perks = data[key].perks;
+//         for (const perk in perks) {
+//           perkNames.push(perk);
+//         }
+//       }
+//       console.log(perkNames);
+//       setPerks(perkNames);
+//     })
+//     .catch((error) => {
+//       throw error;
+//     });
 
 export const getUserPerksInfo = (ticketCode: string) =>
   privateGateway

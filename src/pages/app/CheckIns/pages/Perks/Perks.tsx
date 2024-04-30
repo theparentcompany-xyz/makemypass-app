@@ -1,8 +1,11 @@
+// ! DEPRECATED: Feature not available in the current version
+// * This feature is not available in the current version of the app
+
 import { useContext, useEffect, useState } from 'react';
 import styles from './Perks.module.css';
 import Theme from '../../../../../components/Theme/Theme';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
-import { getPerksInfo, getUserPerksInfo, updatePerk } from '../../../../../apis/perks';
+import { getUserPerksInfo, updatePerk } from '../../../../../apis/perks';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { QrScanner } from '@yudiel/react-qr-scanner';
@@ -22,7 +25,8 @@ const Perks = () => {
   const { eventId } = useContext(GlobalContext);
 
   useEffect(() => {
-    if (eventId) getPerksInfo(eventId, setPerks);
+    // if (eventId) getPerksInfo(eventId, setPerks);
+    setPerks([]);
   }, [eventId]);
 
   useEffect(() => {

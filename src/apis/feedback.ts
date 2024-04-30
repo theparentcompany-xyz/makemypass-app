@@ -39,16 +39,17 @@ export const getPostEventCategories = (eventId: string) => {
     });
 };
 
-export const getFeedback = (eventId: string, setFeedback: any) => {
-  privateGateway
-    .get(makeMyPass.getFeedback(eventId))
-    .then((response) => {
-      setFeedback(response.data.response.feedbacks);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Feedback fetching failed');
-    });
-};
+// ! ERROR: API returns 400 Bad Request (Event Not Found)
+// export const getFeedback = (eventId: string, setFeedback: any) => {
+//   privateGateway
+//     .get(makeMyPass.getFeedback(eventId))
+//     .then((response) => {
+//       setFeedback(response.data.response.feedbacks);
+//     })
+//     .catch((error) => {
+//       toast.error(error.response.data.message.general[0] || 'Feedback fetching failed');
+//     });
+// };
 
 export const submitFeedback = (
   eventId: string,

@@ -167,3 +167,11 @@ export type FileType = {
   created_at: string;
   updated_at: string;
 };
+
+export type PaymentDetails<T extends string> = {
+  [key in `${T}_${string}`]: string;
+} & {
+  payment_id: string;
+  order_id: string;
+  signature: string;
+};
