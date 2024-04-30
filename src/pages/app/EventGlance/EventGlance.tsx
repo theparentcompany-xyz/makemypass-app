@@ -127,17 +127,17 @@ const EventGlance = () => {
 
                 <div className={styles.eventDatePlace}>
                   <div className={styles.eventDate}>
-                    <div className={styles.dateBox}>
-                      <p className={styles.eventMonth}>
-                        {getMonthAbbreviation(eventData?.event_start_date ?? '')}
-                      </p>
-                      <p className={styles.eventDateNum}>
-                        {getDay(eventData?.event_start_date ?? '')}
-                      </p>
-                    </div>
-                    <div className={styles.eventDateTimeText}>
-                      {eventData?.event_start_date && eventData?.event_end_date && (
-                        <>
+                    {eventData?.event_start_date && (
+                      <>
+                        <div className={styles.dateBox}>
+                          <p className={styles.eventMonth}>
+                            {getMonthAbbreviation(eventData?.event_start_date)}
+                          </p>
+                          <p className={styles.eventDateNum}>
+                            {getDay(eventData?.event_start_date)}
+                          </p>
+                        </div>
+                        <div className={styles.eventDateTimeText}>
                           <p className={styles.eventDateText}>
                             {new Date(eventData?.event_start_date).toLocaleDateString([], {
                               weekday: 'long',
@@ -152,20 +152,24 @@ const EventGlance = () => {
                               minute: '2-digit',
                             })}{' '}
                             -{' '}
-                            {new Date(eventData?.event_end_date).toLocaleTimeString([], {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                            {', '}
-                            {new Date(eventData?.event_end_date).toLocaleDateString([], {
-                              month: 'long',
-                              day: 'numeric',
-                              year: 'numeric',
-                            })}
+                            {eventData?.event_end_date && (
+                              <>
+                                {new Date(eventData?.event_end_date).toLocaleTimeString([], {
+                                  hour: '2-digit',
+                                  minute: '2-digit',
+                                })}
+                                {', '}
+                                {new Date(eventData?.event_end_date).toLocaleDateString([], {
+                                  month: 'long',
+                                  day: 'numeric',
+                                  year: 'numeric',
+                                })}
+                              </>
+                            )}
                           </p>
-                        </>
-                      )}
-                    </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className={styles.eventPlace}>
                     <div className={styles.locationBox}>

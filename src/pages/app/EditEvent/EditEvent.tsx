@@ -315,44 +315,46 @@ const EditEvent = () => {
                     </span>
                   </div>
                   {!eventData.is_online && (
-                    <GoogleMap
-                      mapContainerStyle={{
-                        height: '400px',
-                        width: '100%',
-                        borderRadius: '12px 12px 0 0',
-                      }}
-                      zoom={14}
-                      center={location ?? { lat: 0, lng: 0 }}
-                      options={mapOptions}
-                      onClick={onMapClick}
-                    >
-                      {location && (
-                        <MarkerF
-                          position={location}
-                          icon={{
-                            url: 'https://makemypass.com/app/mascot.webp',
-                            scaledSize: new google.maps.Size(40, 52),
-                          }}
-                        />
-                      )}
-                    </GoogleMap>
-                  )}
+                    <>
+                      <GoogleMap
+                        mapContainerStyle={{
+                          height: '400px',
+                          width: '100%',
+                          borderRadius: '12px 12px 0 0',
+                        }}
+                        zoom={14}
+                        center={location ?? { lat: 0, lng: 0 }}
+                        options={mapOptions}
+                        onClick={onMapClick}
+                      >
+                        {location && (
+                          <MarkerF
+                            position={location}
+                            icon={{
+                              url: 'https://makemypass.com/app/mascot.webp',
+                              scaledSize: new google.maps.Size(40, 52),
+                            }}
+                          />
+                        )}
+                      </GoogleMap>
 
-                  <div className={styles.eventLocation}>
-                    <GrLocation size={20} color='#949597' />
-                    <div className={styles.locationContainer}>
-                      <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                        <input
-                          type='text'
-                          placeholder='Add Event Location'
-                          className={styles.inputLocation}
-                          value={placeName}
-                          onChange={(e) => setPlaceName(e.target.value)}
-                        />
-                      </Autocomplete>
-                      <p className={styles.subText}>Offline location </p>
-                    </div>
-                  </div>
+                      <div className={styles.eventLocation}>
+                        <GrLocation size={20} color='#949597' />
+                        <div className={styles.locationContainer}>
+                          <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                            <input
+                              type='text'
+                              placeholder='Add Event Location'
+                              className={styles.inputLocation}
+                              value={placeName}
+                              onChange={(e) => setPlaceName(e.target.value)}
+                            />
+                          </Autocomplete>
+                          <p className={styles.subText}>Offline location </p>
+                        </div>
+                      </div>
+                    </>
+                  )}
                   <p className={styles.eventOptions}>Event Options</p>
                   <div className={styles.optionsContainer}>
                     <div className={styles.option}>
