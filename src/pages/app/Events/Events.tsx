@@ -64,7 +64,7 @@ const Events = () => {
       <Theme>
         {showModal && (
           <Modal onClose={onModalClose}>
-            <p className={styles.modalHeader}>Remove Host</p>
+            <p className={styles.modalHeader}>Create Duplicate</p>
             <p className={styles.modalSubText}>
               Are you sure you want to create a duplicate event ?
             </p>
