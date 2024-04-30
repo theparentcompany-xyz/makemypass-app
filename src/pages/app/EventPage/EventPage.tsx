@@ -1,7 +1,7 @@
 import styles from './EventPage.module.css';
 import Theme from '../../../components/Theme/Theme';
 import { useLocation, useParams } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 // import { getEventId } from '../../../apis/events';
 import { getEventInfo, submitForm, validateRsvp } from '../../../apis/publicpage';
@@ -14,7 +14,6 @@ import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import EventHeader from './components/EventHeader/EventHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
 import CouponForm from './components/CouponForm/CouponForm';
-import { GlobalContext } from '../../../contexts/globalContext';
 import { Helmet } from 'react-helmet';
 
 const EventPage = () => {
