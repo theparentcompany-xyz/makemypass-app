@@ -26,7 +26,6 @@ const RoleChecker = ({
   }
 
   const hasRoleNoFetch = (roles: Roles[]) => {
-    console.log(currentUserRole);
     return roles.some((role) => currentUserRole.includes(role));
   };
 
