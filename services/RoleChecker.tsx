@@ -30,14 +30,9 @@ const RoleChecker = ({
   };
 
   if (hasRoleNoFetch(roles)) {
+    console.log('Authorized');
     return children;
   } else {
-    if (toast) {
-      toast.error(
-        `${toastTitle || 'Unauthorized'}: ${toastDescription || 'You are not authorized to view this page keeta'}`,
-      );
-    }
-
     return redirectPath ? redirectPath : <Navigate to='/login' replace={true} />;
   }
 };
