@@ -349,7 +349,7 @@ const DynamicForm = ({
                     }}
                     rows={4}
                     className={styles.textarea}
-                    value={formData[field.field_key]}
+                    value={formData[field.field_key] || ''}
                     placeholder={`Enter your ${field.title}`}
                     onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                       onFieldChange(field.field_key, e.target.value)
