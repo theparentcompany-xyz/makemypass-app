@@ -101,7 +101,7 @@ export const submitForm = async ({
                 payment_id: response.razorpay_payment_id,
               })
               .then((response) => {
-                setSuccess && setSuccess(response.data.response.code);
+                setSuccess && setSuccess(response.data.response.code || 'Will be Informed Later');
 
                 setTimeout(() => {
                   setSuccess && setSuccess('');
@@ -126,7 +126,7 @@ export const submitForm = async ({
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
       } else {
-        setSuccess && setSuccess(response.data.response.code);
+        setSuccess && setSuccess(response.data.response.code || 'Will be Informed Later');
 
         setTimeout(() => {
           setSuccess && setSuccess('');

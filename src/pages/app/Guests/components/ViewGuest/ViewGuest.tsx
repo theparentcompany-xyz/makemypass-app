@@ -112,7 +112,9 @@ const ViewGuest = ({
                         buttonText='Accept'
                       />
                     </>
-                  ) : !confirmClicked.confirm && formData['is_approved'] ? (
+                  ) : !confirmClicked.confirm &&
+                    formData['is_approved'] &&
+                    formData['check_in_date'] === null ? (
                     <SecondaryButton
                       onClick={() => {
                         setConfirmClicked({
@@ -123,7 +125,8 @@ const ViewGuest = ({
                       buttonText='Decline'
                     />
                   ) : (
-                    !confirmClicked.confirm && (
+                    !confirmClicked.confirm &&
+                    formData['check_in_date'] === null && (
                       <SecondaryButton
                         onClick={() => {
                           setConfirmClicked({

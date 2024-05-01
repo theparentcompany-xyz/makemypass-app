@@ -105,13 +105,18 @@ const Insights = () => {
           });
 
           setPieData({
-            labels: Object.keys(lineBarData.active_timeframe || {}),
+            labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
             datasets: [
               {
                 label: 'Registration Time',
-                data: Object.values(lineBarData.active_timeframe || {}),
-                backgroundColor: ['#C33D7B', '#47C97E', '#FBD85B', '#35A1EB'],
-                borderColor: ['#C33D7B', '#47C97E', '#FBD85B', '#35A1EB'],
+                data: [
+                  lineBarData.active_timeframe.Morning || 0,
+                  lineBarData.active_timeframe.Afternoon || 0,
+                  lineBarData.active_timeframe.Evening || 0,
+                  lineBarData.active_timeframe.Night || 0,
+                ],
+                backgroundColor: ['#35A1EB', '#47C97E', '#FBD85B', '#C33D7B'],
+                borderColor: ['#35A1EB', '#47C97E', '#FBD85B', '#C33D7B'],
               },
             ],
           });
@@ -227,7 +232,7 @@ const Insights = () => {
                         <div className={styles.time}>
                           <p
                             style={{
-                              color: '#FBD85B',
+                              color: '#35A1EB',
                             }}
                             className={styles.line}
                           >
@@ -241,7 +246,7 @@ const Insights = () => {
                         <div className={styles.time}>
                           <p
                             style={{
-                              color: '#35A1EB',
+                              color: '#47C97E',
                             }}
                             className={styles.line}
                           >
@@ -255,7 +260,7 @@ const Insights = () => {
                         <div className={styles.time}>
                           <p
                             style={{
-                              color: '#47C97E',
+                              color: '#FBD85B',
                             }}
                             className={styles.line}
                           >

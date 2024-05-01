@@ -150,7 +150,7 @@ const Guests = () => {
   };
 
   const handleSubmissionEdit = () => {
-    if (selectedGuest) editSubmissons(eventId, formData, setSelectedGuestId, setFormData);
+    if (selectedGuest) editSubmissons(eventId, formData, setSelectedGuestId, setFormData, setFormErrors);
   };
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
