@@ -12,7 +12,7 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 import Select from 'react-select';
 import { customStyles } from '../EventPage/constants';
 import { useEffect, useState } from 'react';
-import { getForm } from '../../../apis/formbuilder';
+import { getForm, updateForm } from '../../../apis/formbuilder';
 import { Field } from './types';
 
 const categories = ['Attendee', 'Speaker', 'Sponsor', 'Exhibitor', 'Staff'];
@@ -107,13 +107,15 @@ const FormBuilder = () => {
                       <div className={styles.row}>
                         <div className={styles.row1}>
                           <RxDragHandleDots2 size={25} color='#606264' />
-                          <p className={styles.customFieldLabel}>{selectedField.title}</p>
+                          <p className={styles.customFieldLabel}>
+                            {formFields[Number(field)].title}
+                          </p>
                         </div>
                         <div className={styles.expandedRight}>
                           <div className={styles.requiredCheckbox}>
                             Required
                             <Slider
-                              checked={selectedField.required}
+                              checked={formFields[Number(field)].required}
                               text={''}
                               onChange={() => {}}
                             />
@@ -123,13 +125,37 @@ const FormBuilder = () => {
                       </div>
 
                       <div className={styles.customFieldName}>
-                        <input type='text' placeholder='Field Name' value={selectedField.title} />
+                        <input
+                          type='text'
+                          placeholder='Field Name'
+                          value={formFields[Number(field)].title}
+                          onChange={(event) => {
+                            setFormFields([
+                              ...formFields.slice(0, Number(field)),
+                              {
+                                ...formFields[Number(field)],
+                                title: event.target.value,
+                              },
+                              ...formFields.slice(Number(field) + 1),
+                            ]);
+                          }}
+                        />
                       </div>
                       <div className={styles.customFieldName}>
                         <input
                           type='text'
                           placeholder='Add Some help text.'
-                          value={selectedField.description || ''}
+                          value={formFields[Number(field)].description || ''}
+                          onChange={(event) => {
+                            setFormFields([
+                              ...formFields.slice(0, Number(field)),
+                              {
+                                ...formFields[Number(field)],
+                                description: event.target.value,
+                              },
+                              ...formFields.slice(Number(field) + 1),
+                            ]);
+                          }}
                         />
                       </div>
 
@@ -339,6 +365,14 @@ const FormBuilder = () => {
                 <button className={styles.addQuestionButton}>
                   <span>+</span>
                   {''}Add Question
+                </button>
+                <button
+                  onClick={() => {
+                    updateForm(event_id, formFields);
+                  }}
+                  className={styles.addQuestionButton}
+                >
+                  Save Form
                 </button>
               </div>
             </div>

@@ -100,6 +100,7 @@ export const makeMyPass = {
 
   //FormBuilder
   formBuilderGetForm: (eventId: string) => makeMyPassURL(`/form-builder/${eventId}/get-form/`),
+  formBuilderUpdateForm: (eventId: string) => makeMyPassURL(`/form-builder/${eventId}/update-form/`),
 };
 
 export const makeMyPassSocket = {
