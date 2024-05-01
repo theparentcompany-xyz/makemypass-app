@@ -3,7 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
-import { FileType, FormDataType } from './types';
+import { ErrorMessages, FileType, FormDataType } from './types';
 import { isArray } from 'chart.js/helpers';
 
 export const resentEventTicket = async (
@@ -34,6 +34,7 @@ export const editSubmissons = async (
   data: FormDataType,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
   setFormData: Dispatch<React.SetStateAction<FormDataType>>,
+  setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
 ) => {
   if (data && !isArray(data.id))
     privateGateway
@@ -44,6 +45,7 @@ export const editSubmissons = async (
         setFormData({});
       })
       .catch((error) => {
+        setFormErrors(error.response.data.response)
         toast.error(error.response.data.message.general[0] || 'Something went wrong');
       });
   else {
