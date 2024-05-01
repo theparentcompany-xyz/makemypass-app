@@ -16,8 +16,8 @@ const RoleChecker = ({
   toastTitle?: string;
   toastDescription?: string;
 }) => {
-  const currentTitle = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
-  const currentUserRole = [JSON.parse(sessionStorage.getItem('eventData')!).current_user_role];
+  const currentTitle = JSON.parse(sessionStorage.getItem('eventData')!)?.event_name;
+  const currentUserRole = [JSON.parse(sessionStorage.getItem('eventData')!)?.current_user_role];
   const { eventTitle } = useParams();
   const navigate = useNavigate();
 
