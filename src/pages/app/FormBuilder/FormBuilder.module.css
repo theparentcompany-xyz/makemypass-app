@@ -1,0 +1,85 @@
+.image {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: #47c97e;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.requiredHeading {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  column-gap: 0.5rem;
+}
+
+.requiredFields {
+  margin-top: 1rem;
+}
+
+.requiredField {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  column-gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.requiredField div {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  width: 10rem;
+}
+
+.customFieldsHeading {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  column-gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.customFields {
+  margin-top: 2rem;
+}
+
+.customField {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+
+  padding: 0.75rem 1rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  column-gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-right: 1rem;
+}
+
+.customFieldType {
+  display: flex;
+  color: #606264;
+  align-items: center;
+  column-gap: 0.25rem;
+  width: 10rem;
+}

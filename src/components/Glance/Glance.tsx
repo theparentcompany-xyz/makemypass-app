@@ -104,6 +104,7 @@ const Glance = ({ tab }: { tab: string }) => {
     insights: 'Insights',
     guests: 'Guests',
     inevent: 'In-Event',
+    formbuilder: 'Form Builder',
     manage: 'Events Page',
     checkins: 'Check-Ins',
     // feedback: 'Feedbacks',
