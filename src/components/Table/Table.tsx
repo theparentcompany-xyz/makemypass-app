@@ -222,7 +222,7 @@ const Table = ({
       setHostId,
       categoryColorMapping,
     }),
-    [groupByTeam, setResentTicket, setSelectedGuestId, setHostId],
+    [groupByTeam, setResentTicket, setSelectedGuestId, setHostId, categoryColorMapping],
   );
 
   return (
@@ -243,7 +243,9 @@ const Table = ({
           <div className={styles.table}>
             <AnimatePresence>
               <FixedSizeList
-                height={filteredData.length > 15 ? 550 : filteredData.length * 35}
+                height={
+                  Object.keys(groupByTeam).length > 15 ? 550 : filteredData.length * 35
+                }
                 width='100%'
                 itemCount={Object.keys(groupByTeam).length}
                 itemSize={35} // Adjust based on row height
