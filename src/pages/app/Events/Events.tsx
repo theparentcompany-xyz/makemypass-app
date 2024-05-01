@@ -1,37 +1,36 @@
 import Theme from '../../../components/Theme/Theme';
 import styles from './Events.module.css';
 import { GoPeople } from 'react-icons/go';
-import { BsArrowRight } from 'react-icons/bs';
+import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
-import { getEventId, getEvents } from '../../../apis/events';
+import { duplicateEvent, getEventId, getEvents } from '../../../apis/events';
 
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
-// import RightClickMenu from './RightClickMenu';
+import RightClickMenu from './RightClickMenu';
 import Modal from '../../../components/Modal/Modal';
-// import RightClickMenu from './Menu';
 
 const Events = () => {
-  // interface Position {
-  //   x: number;
-  //   y: number;
-  // }
+  interface Position {
+    x: number;
+    y: number;
+  }
 
   const navigate = useNavigate();
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // const [menuPosition, setMenuPosition] = useState<Position>({ x: 0, y: 0 });
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState<Position>({ x: 0, y: 0 });
   const [showModal, setShowModal] = useState(false);
-  // const [duplicateEventId, setDuplicateEventId] = useState<string>('');
+  const [duplicateEventId, setDuplicateEventId] = useState<string>('');
 
-  // const handleButtonClick = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
-  //   setDuplicateEventId(event.currentTarget.id);
-  //   setIsMenuOpen(true);
-  //   setMenuPosition({ x: event.clientX, y: event.clientY });
-  // };
+  const handleButtonClick = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+    setDuplicateEventId(event.currentTarget.id);
+    setIsMenuOpen(true);
+    setMenuPosition({ x: event.clientX, y: event.clientY });
+  };
 
-  // const handleMenuClose = () => {
-  //   setIsMenuOpen(false);
-  // };
+  const handleMenuClose = () => {
+    setIsMenuOpen(false);
+  };
 
   type Event = {
     id: string;
@@ -71,7 +70,7 @@ const Events = () => {
             <div className={styles.buttons}>
               <p
                 onClick={() => {
-                  // duplicateEvent(duplicateEventId);
+                  duplicateEvent(duplicateEventId);
                   setShowModal(false);
                 }}
                 className={styles.button}
@@ -136,23 +135,25 @@ const Events = () => {
                         <div className={styles.eventDetails}>
                           <div className={styles.eventDetailsHeader}>
                             <p className={styles.eventName}>{event.title}</p>
-                            {/* <BsThreeDots
-                              onClick={(e: React.MouseEvent<SVGElement, MouseEvent>) => {
-                                handleButtonClick(e);
-                                setDuplicateEventId(event?.id);
-                              }}
-                              size={15}
-                              color='#ffffff'
-                            /> */}
+                            {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
+                              <BsThreeDots
+                                onClick={(e: React.MouseEvent<SVGElement, MouseEvent>) => {
+                                  handleButtonClick(e);
+                                  setDuplicateEventId(event?.id);
+                                }}
+                                size={15}
+                                color='#ffffff'
+                              />
+                            )}
                           </div>
-                          {/* {isMenuOpen && (
+                          {isMenuOpen && (
                             <RightClickMenu
                               isOpen={isMenuOpen}
                               position={menuPosition}
                               onClose={handleMenuClose}
                               setShowModal={setShowModal}
                             />
-                          )} */}
+                          )}
                           <p className={styles.eventGuests}>
                             <span>
                               <GoPeople color='a4a4a4' />

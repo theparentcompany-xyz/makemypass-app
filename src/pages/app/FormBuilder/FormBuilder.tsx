@@ -13,16 +13,19 @@ import Select from 'react-select';
 import { customStyles } from '../EventPage/constants';
 import { useEffect, useState } from 'react';
 import { getForm } from '../../../apis/formbuilder';
+import { Field } from './types';
 
 const categories = ['Attendee', 'Speaker', 'Sponsor', 'Exhibitor', 'Staff'];
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
-  const [formFields, setFormFields] = useState([]);
-  const [selectedField, setSelectedField] = useState([]);
+  const [formFields, setFormFields] = useState<Field[]>([]);
+  const [selectedField, setSelectedField] = useState<Field>({});
+
   useEffect(() => {
     getForm(event_id, setFormFields);
-  }, []);
+  }, [event_id]);
+
   return (
     <>
       <Theme>
