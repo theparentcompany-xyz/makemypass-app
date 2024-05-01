@@ -158,16 +158,16 @@ const EditEvent = () => {
             <div className={styles.createEventContainer}>
               <div className={styles.rightSideContainer}>
                 <div className={styles.bannerContainer}>
-                  {eventData?.banner ? (
+                  <input
+                    type='file'
+                    className={styles.fileUpload}
+                    accept='image/*'
+                    onChange={(e) => setBanner(e.target.files ? e.target.files[0] : null)}
+                  />
+                  {eventData?.banner && !banner?.name ? (
                     <img src={eventData?.banner} alt='' className={styles.banner} />
                   ) : (
                     <>
-                      <input
-                        type='file'
-                        className={styles.fileUpload}
-                        accept='image/*'
-                        onChange={(e) => setBanner(e.target.files ? e.target.files[0] : null)}
-                      />
                       {banner?.name ? (
                         <img src={URL.createObjectURL(banner)} alt='' className={styles.banner} />
                       ) : (
