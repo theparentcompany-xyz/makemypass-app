@@ -20,7 +20,7 @@ const categories = ['Attendee', 'Speaker', 'Sponsor', 'Exhibitor', 'Staff'];
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [formFields, setFormFields] = useState<Field[]>([]);
-  const [selectedField, setSelectedField] = useState<Field>({});
+  const [selectedField, setSelectedField] = useState<Field>({} as Field);
 
   useEffect(() => {
     getForm(event_id, setFormFields);
@@ -80,20 +80,23 @@ const FormBuilder = () => {
 
               <div className={styles.customFields}>
                 {Object.keys(formFields).map((field) => {
-                  return formFields[field].id !== selectedField.id ? (
+                  return formFields[Number(field)].id !== selectedField.id ? (
                     <div className={styles.customField}>
                       <div className={styles.row1}>
                         <RxDragHandleDots2 size={25} color='#606264' />
                         <div>
-                          <p className={styles.customFieldLabel}>{formFields[field].title}</p>
+                          <p className={styles.customFieldLabel}>
+                            {formFields[Number(field)].title}
+                          </p>
                           <p className={styles.customFieldType}>
-                            <BsAlphabetUppercase size={25} /> {formFields[field].description}
+                            <BsAlphabetUppercase size={25} />{' '}
+                            {formFields[Number(field)].description}
                           </p>
                         </div>
                       </div>
                       <LuPencil
                         onClick={() => {
-                          setSelectedField(formFields[field]);
+                          setSelectedField(formFields[Number(field)]);
                         }}
                         size={20}
                         color='#606264'
@@ -126,7 +129,7 @@ const FormBuilder = () => {
                         <input
                           type='text'
                           placeholder='Add Some help text.'
-                          value={selectedField.decription}
+                          value={selectedField.description || ''}
                         />
                       </div>
 
