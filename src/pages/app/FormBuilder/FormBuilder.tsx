@@ -1,4 +1,4 @@
-import { FaAddressCard, FaRegEyeSlash, FaUser } from 'react-icons/fa6';
+import { FaAddressCard, FaRegEye, FaRegEyeSlash, FaUser } from 'react-icons/fa6';
 import EventHeader from '../../../components/EventHeader/EventHeader';
 import Glance from '../../../components/Glance/Glance';
 import Theme from '../../../components/Theme/Theme';
@@ -113,14 +113,70 @@ const FormBuilder = () => {
                         </div>
                         <div className={styles.expandedRight}>
                           <div className={styles.requiredCheckbox}>
+                            Unique
+                            <Slider
+                              checked={formFields[Number(field)].unique}
+                              text={''}
+                              onChange={() => {
+                                setFormFields([
+                                  ...formFields.slice(0, Number(field)),
+                                  {
+                                    ...formFields[Number(field)],
+                                    unique: !formFields[Number(field)].unique,
+                                  },
+                                  ...formFields.slice(Number(field) + 1),
+                                ]);
+                              }}
+                            />
+                          </div>
+                          <div className={styles.requiredCheckbox}>
                             Required
                             <Slider
                               checked={formFields[Number(field)].required}
                               text={''}
-                              onChange={() => {}}
+                              onChange={() => {
+                                setFormFields([
+                                  ...formFields.slice(0, Number(field)),
+                                  {
+                                    ...formFields[Number(field)],
+                                    required: !formFields[Number(field)].required,
+                                  },
+                                  ...formFields.slice(Number(field) + 1),
+                                ]);
+                              }}
                             />
                           </div>
-                          <FaRegEyeSlash size={25} color='#606264' />
+                          {formFields[Number(field)].hidden ? (
+                            <FaRegEyeSlash
+                              size={25}
+                              color='#606264'
+                              onClick={() => {
+                                setFormFields([
+                                  ...formFields.slice(0, Number(field)),
+                                  {
+                                    ...formFields[Number(field)],
+                                    hidden: !formFields[Number(field)].hidden,
+                                  },
+                                  ...formFields.slice(Number(field) + 1),
+                                ]);
+                              }}
+                            />
+                          ) : (
+                            <FaRegEye
+                              size={25}
+                              color='#606264'
+                              onClick={() => {
+                                setFormFields([
+                                  ...formFields.slice(0, Number(field)),
+                                  {
+                                    ...formFields[Number(field)],
+                                    hidden: !formFields[Number(field)].hidden,
+                                  },
+                                  ...formFields.slice(Number(field) + 1),
+                                ]);
+                              }}
+                            />
+                          )}
                         </div>
                       </div>
 
