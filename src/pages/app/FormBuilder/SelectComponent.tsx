@@ -6,7 +6,7 @@ const SelectComponent = ({
   options,
 }: {
   backgroundColor?: string;
-  options: string[];
+  options?: string[];
 }) => {
   const categories = options || ['Attendee', 'Speaker', 'Sponsor', 'Exhibitor', 'Staff'];
 

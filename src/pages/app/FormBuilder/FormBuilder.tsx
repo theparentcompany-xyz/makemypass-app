@@ -276,49 +276,63 @@ const FormBuilder = () => {
                           marginLeft: '1rem',
                         }}
                       >
-                        <Slider checked={true} text={''} onChange={() => {}} />
+                        <Slider
+                          checked={formFields[Number(field)].condition.length > 0}
+                          text={''}
+                          onChange={() => {
+                            updateFormFieldValue(
+                              formFields[Number(field)],
+                              'condition',
+                              formFields[Number(field)].condition.length > 0
+                                ? []
+                                : [{ field: '', condition: '', value: '' }],
+                            );
+                          }}
+                        />
                         <p className={styles.customFieldLabel}>
                           Show Field only when the conditions are met.
                         </p>
                       </div>
 
-                      <div className={styles.conditions}>
-                        <div className={styles.conditionRow}>
-                          <p className={styles.when}>When</p>
-                          <div className={styles.conditionsSelect}>
-                            <SelectComponent />
-                            <SelectComponent />
-                            <input type='text' placeholder='Enter a Value' />
+                      {formFields[Number(field)].condition.length > 0 && (
+                        <div className={styles.conditions}>
+                          <div className={styles.conditionRow}>
+                            <p className={styles.when}>When</p>
+                            <div className={styles.conditionsSelect}>
+                              <SelectComponent />
+                              <SelectComponent />
+                              <input type='text' placeholder='Enter a Value' />
 
-                            <RiDeleteBinLine size={20} color='#606264' />
-                            <RxDragHandleDots2
-                              style={{
-                                marginLeft: '1rem',
-                              }}
-                              size={20}
-                              color='#606264'
-                            />
+                              <RiDeleteBinLine size={20} color='#606264' />
+                              <RxDragHandleDots2
+                                style={{
+                                  marginLeft: '1rem',
+                                }}
+                                size={20}
+                                color='#606264'
+                              />
+                            </div>
+                          </div>
+
+                          <div className={styles.conditionRow}>
+                            <SelectComponent />
+                            <div className={styles.conditionsSelect}>
+                              <SelectComponent />
+                              <SelectComponent />
+                              <input type='text' placeholder='Enter a Value' />
+
+                              <RiDeleteBinLine size={20} color='#606264' />
+                              <RxDragHandleDots2
+                                style={{
+                                  marginLeft: '1rem',
+                                }}
+                                size={20}
+                                color='#606264'
+                              />
+                            </div>
                           </div>
                         </div>
-
-                        <div className={styles.conditionRow}>
-                          <SelectComponent />
-                          <div className={styles.conditionsSelect}>
-                            <SelectComponent />
-                            <SelectComponent />
-                            <input type='text' placeholder='Enter a Value' />
-
-                            <RiDeleteBinLine size={20} color='#606264' />
-                            <RxDragHandleDots2
-                              style={{
-                                marginLeft: '1rem',
-                              }}
-                              size={20}
-                              color='#606264'
-                            />
-                          </div>
-                        </div>
-                      </div>
+                      )}
 
                       <p className={styles.addCustomField}>
                         <span>+</span> Add Custom Field
