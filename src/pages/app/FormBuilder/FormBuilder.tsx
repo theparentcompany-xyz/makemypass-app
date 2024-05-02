@@ -14,6 +14,7 @@ import { customStyles } from '../EventPage/constants';
 import { useEffect, useState } from 'react';
 import { getForm, updateForm } from '../../../apis/formbuilder';
 import { Field } from './types';
+import RequiredFields from './RequiredFields';
 
 const categories = ['Attendee', 'Speaker', 'Sponsor', 'Exhibitor', 'Staff'];
 
@@ -25,6 +26,17 @@ const FormBuilder = () => {
   useEffect(() => {
     getForm(event_id, setFormFields);
   }, [event_id]);
+
+  const updateFormFieldValue = (field: Field, key: string, value: any) => {
+    setFormFields([
+      ...formFields.slice(0, formFields.indexOf(field)),
+      {
+        ...field,
+        [key]: value,
+      },
+      ...formFields.slice(formFields.indexOf(field) + 1),
+    ]);
+  };
 
   return (
     <>
@@ -39,28 +51,17 @@ const FormBuilder = () => {
               </div>
               <p className={styles.requiredFieldsText}>Required Fields</p>
             </div>
+
             <div className={styles.requiredFields}>
-              <div className={styles.requiredField}>
-                <div>
-                  <FaUser size={20} color='#606264' />
-                  <p className={styles.requiredLabel}>Name</p>
-                </div>
-                <Slider checked={true} text={''} onChange={() => {}} />
-              </div>
-              <div className={styles.requiredField}>
-                <div>
-                  <MdEmail size={20} color='#606264' />
-                  <p className={styles.requiredLabel}>Email Address</p>
-                </div>
-                <Slider checked={true} text={''} onChange={() => {}} />
-              </div>
-              <div className={styles.requiredField}>
-                <div>
-                  <MdOutlinePhoneAndroid size={20} color='#606264' />
-                  <p className={styles.requiredLabel}>Phone Number</p>
-                </div>
-                <Slider checked={true} text={''} onChange={() => {}} />
-              </div>
+              <RequiredFields icon={<FaUser size={20} color='#606264' />} label={'Name'} />
+              <RequiredFields
+                icon={<MdEmail size={20} color='#606264' />}
+                label={'Email Address'}
+              />
+              <RequiredFields
+                icon={<MdOutlinePhoneAndroid size={20} color='#606264' />}
+                label={'Phone Number'}
+              />
             </div>
 
             <div className={styles.customFieldsContainer}>
@@ -118,14 +119,11 @@ const FormBuilder = () => {
                               checked={formFields[Number(field)].unique}
                               text={''}
                               onChange={() => {
-                                setFormFields([
-                                  ...formFields.slice(0, Number(field)),
-                                  {
-                                    ...formFields[Number(field)],
-                                    unique: !formFields[Number(field)].unique,
-                                  },
-                                  ...formFields.slice(Number(field) + 1),
-                                ]);
+                                updateFormFieldValue(
+                                  formFields[Number(field)],
+                                  'unique',
+                                  !formFields[Number(field)].unique,
+                                );
                               }}
                             />
                           </div>
@@ -135,14 +133,11 @@ const FormBuilder = () => {
                               checked={formFields[Number(field)].required}
                               text={''}
                               onChange={() => {
-                                setFormFields([
-                                  ...formFields.slice(0, Number(field)),
-                                  {
-                                    ...formFields[Number(field)],
-                                    required: !formFields[Number(field)].required,
-                                  },
-                                  ...formFields.slice(Number(field) + 1),
-                                ]);
+                                updateFormFieldValue(
+                                  formFields[Number(field)],
+                                  'required',
+                                  !formFields[Number(field)].required,
+                                );
                               }}
                             />
                           </div>
@@ -151,14 +146,11 @@ const FormBuilder = () => {
                               size={25}
                               color='#606264'
                               onClick={() => {
-                                setFormFields([
-                                  ...formFields.slice(0, Number(field)),
-                                  {
-                                    ...formFields[Number(field)],
-                                    hidden: !formFields[Number(field)].hidden,
-                                  },
-                                  ...formFields.slice(Number(field) + 1),
-                                ]);
+                                updateFormFieldValue(
+                                  formFields[Number(field)],
+                                  'hidden',
+                                  !formFields[Number(field)].hidden,
+                                );
                               }}
                             />
                           ) : (
@@ -166,14 +158,11 @@ const FormBuilder = () => {
                               size={25}
                               color='#606264'
                               onClick={() => {
-                                setFormFields([
-                                  ...formFields.slice(0, Number(field)),
-                                  {
-                                    ...formFields[Number(field)],
-                                    hidden: !formFields[Number(field)].hidden,
-                                  },
-                                  ...formFields.slice(Number(field) + 1),
-                                ]);
+                                updateFormFieldValue(
+                                  formFields[Number(field)],
+                                  'hidden',
+                                  !formFields[Number(field)].hidden,
+                                );
                               }}
                             />
                           )}
@@ -186,14 +175,11 @@ const FormBuilder = () => {
                           placeholder='Field Name'
                           value={formFields[Number(field)].title}
                           onChange={(event) => {
-                            setFormFields([
-                              ...formFields.slice(0, Number(field)),
-                              {
-                                ...formFields[Number(field)],
-                                title: event.target.value,
-                              },
-                              ...formFields.slice(Number(field) + 1),
-                            ]);
+                            updateFormFieldValue(
+                              formFields[Number(field)],
+                              'title',
+                              event.target.value,
+                            );
                           }}
                         />
                       </div>
@@ -203,14 +189,11 @@ const FormBuilder = () => {
                           placeholder='Add Some help text.'
                           value={formFields[Number(field)].description || ''}
                           onChange={(event) => {
-                            setFormFields([
-                              ...formFields.slice(0, Number(field)),
-                              {
-                                ...formFields[Number(field)],
-                                description: event.target.value,
-                              },
-                              ...formFields.slice(Number(field) + 1),
-                            ]);
+                            updateFormFieldValue(
+                              formFields[Number(field)],
+                              'description',
+                              event.target.value,
+                            );
                           }}
                         />
                       </div>
