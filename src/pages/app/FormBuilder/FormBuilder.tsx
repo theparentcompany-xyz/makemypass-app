@@ -15,11 +15,15 @@ import { getForm, updateForm } from '../../../apis/formbuilder';
 import { Field } from './types';
 import RequiredFields from './RequiredFields';
 import SelectComponent from './SelectComponent';
+import { IoCloseSharp } from 'react-icons/io5';
+import { IoIosSave } from 'react-icons/io';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [formFields, setFormFields] = useState<Field[]>([]);
   const [selectedField, setSelectedField] = useState<Field>({} as Field);
+  const [newOption, setNewOption] = useState(false);
+  const [newOptionValue, setNewOptionValue] = useState('');
 
   useEffect(() => {
     getForm(event_id, setFormFields);
@@ -34,6 +38,12 @@ const FormBuilder = () => {
       },
       ...formFields.slice(formFields.indexOf(field) + 1),
     ]);
+  };
+
+  const removeOption = (field: Field, index: number) => {
+    const updatedOptions = field.options;
+    updatedOptions.splice(index, 1);
+    updateFormFieldValue(field, 'options', updatedOptions);
   };
 
   return (
@@ -195,7 +205,70 @@ const FormBuilder = () => {
                           }}
                         />
                       </div>
-
+                      {formFields[Number(field)].options && (
+                        <div className={styles.customFieldOption}>
+                          {formFields[Number(field)].options.map((option, index) => (
+                            <div className='row'>
+                              <input
+                                className={styles.optionInput}
+                                type='text'
+                                placeholder='Option'
+                                value={option}
+                                onChange={(event) => {
+                                  const updatedOptions = formFields[Number(field)].options;
+                                  updatedOptions[index] = event.target.value;
+                                  updateFormFieldValue(
+                                    formFields[Number(field)],
+                                    'options',
+                                    updatedOptions,
+                                  );
+                                }}
+                              />
+                              <IoCloseSharp
+                                onClick={() => {
+                                  removeOption(formFields[Number(field)], index);
+                                }}
+                                size={20}
+                                color='#606264'
+                              />
+                            </div>
+                          ))}
+                          {newOption && (
+                            <div className='row'>
+                              <input
+                                className={styles.optionInput}
+                                type='text'
+                                placeholder='Option'
+                                onChange={(event) => {
+                                  setNewOptionValue(event.target.value);
+                                }}
+                              />
+                              <IoIosSave
+                                onClick={() => {
+                                  const updatedOptions = formFields[Number(field)].options;
+                                  updatedOptions.push(newOptionValue);
+                                  updateFormFieldValue(
+                                    formFields[Number(field)],
+                                    'options',
+                                    updatedOptions,
+                                  );
+                                  setNewOption(false);
+                                }}
+                                size={20}
+                                color='#606264'
+                              />
+                            </div>
+                          )}
+                          <p
+                            onClick={() => {
+                              setNewOption(true);
+                            }}
+                            className={styles.addOption}
+                          >
+                            <span>+</span> Add Option
+                          </p>
+                        </div>
+                      )}
                       <div
                         className={styles.row1}
                         style={{

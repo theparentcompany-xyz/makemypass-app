@@ -1,8 +1,14 @@
 import Select from 'react-select';
 import { customStyles } from '../EventPage/constants';
 
-const SelectComponent = () => {
-  const categories = ['Attendee', 'Speaker', 'Sponsor', 'Exhibitor', 'Staff'];
+const SelectComponent = ({
+  backgroundColor,
+  options,
+}: {
+  backgroundColor?: string;
+  options: string[];
+}) => {
+  const categories = options || ['Attendee', 'Speaker', 'Sponsor', 'Exhibitor', 'Staff'];
 
   return (
     <>
@@ -25,7 +31,7 @@ const SelectComponent = () => {
           control: (provided: any) => ({
             ...provided,
             border: 'none',
-            backgroundColor: 'transparent', // Set the background color to transparent
+            backgroundColor: backgroundColor || 'transparent', // Set the background color to transparent
             color: '#fff',
             fontFamily: 'Inter, sans-serif',
             fontStyle: 'normal',

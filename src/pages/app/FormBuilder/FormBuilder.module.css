@@ -218,3 +218,38 @@
 .addQuestionButton:hover {
   background: rgba(255, 255, 255, 0.08);
 }
+
+.customFieldOption {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  column-gap: 0.5rem;
+  margin-left: 1.75rem;
+}
+
+.optionInput {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: transparent;
+  border: none;
+  padding: 0.55rem;
+  font-family: 'Inter', sans-serif;
+  column-gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.optionInput:focus {
+  outline: 1px solid #ffffff;
+  border-radius: 8px;
+}
+
+.addOption {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+}
