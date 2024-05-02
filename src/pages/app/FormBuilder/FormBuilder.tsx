@@ -9,14 +9,12 @@ import { BsAlphabetUppercase } from 'react-icons/bs';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import { LuPencil } from 'react-icons/lu';
 import { RiDeleteBinLine } from 'react-icons/ri';
-import Select from 'react-select';
-import { customStyles } from '../EventPage/constants';
+
 import { useEffect, useState } from 'react';
 import { getForm, updateForm } from '../../../apis/formbuilder';
 import { Field } from './types';
 import RequiredFields from './RequiredFields';
-
-const categories = ['Attendee', 'Speaker', 'Sponsor', 'Exhibitor', 'Staff'];
+import SelectComponent from './SelectComponent';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -215,66 +213,8 @@ const FormBuilder = () => {
                         <div className={styles.conditionRow}>
                           <p className={styles.when}>When</p>
                           <div className={styles.conditionsSelect}>
-                            <Select
-                              className='basic-single'
-                              classNamePrefix='select'
-                              name='role'
-                              options={[
-                                ...categories.map((category) => ({
-                                  value: category,
-                                  label: category,
-                                })),
-                                {
-                                  value: '',
-                                  label: 'All',
-                                },
-                              ]}
-                              styles={{
-                                ...customStyles,
-                                control: (provided: any) => ({
-                                  ...provided,
-                                  border: 'none',
-                                  backgroundColor: 'transparent', // Set the background color to transparent
-                                  color: '#fff',
-                                  fontFamily: 'Inter, sans-serif',
-                                  fontStyle: 'normal',
-                                  fontWeight: 400,
-                                  fontSize: '0.9rem',
-                                  zIndex: 1000,
-                                  width: '12rem',
-                                }),
-                              }}
-                            />
-                            <Select
-                              className='basic-single'
-                              classNamePrefix='select'
-                              name='role'
-                              options={[
-                                ...categories.map((category) => ({
-                                  value: category,
-                                  label: category,
-                                })),
-                                {
-                                  value: '',
-                                  label: 'All',
-                                },
-                              ]}
-                              styles={{
-                                ...customStyles,
-                                control: (provided: any) => ({
-                                  ...provided,
-                                  border: 'none',
-                                  backgroundColor: 'transparent', // Set the background color to transparent
-                                  color: '#fff',
-                                  fontFamily: 'Inter, sans-serif',
-                                  fontStyle: 'normal',
-                                  fontWeight: 400,
-                                  fontSize: '0.9rem',
-                                  zIndex: 1000,
-                                  width: '12rem',
-                                }),
-                              }}
-                            />
+                            <SelectComponent />
+                            <SelectComponent />
                             <input type='text' placeholder='Enter a Value' />
 
                             <RiDeleteBinLine size={20} color='#606264' />
@@ -289,97 +229,10 @@ const FormBuilder = () => {
                         </div>
 
                         <div className={styles.conditionRow}>
-                          <Select
-                            className='basic-single'
-                            classNamePrefix='select'
-                            name='role'
-                            options={[
-                              ...categories.map((category) => ({
-                                value: category,
-                                label: category,
-                              })),
-                              {
-                                value: '',
-                                label: 'All',
-                              },
-                            ]}
-                            styles={{
-                              ...customStyles,
-                              control: (provided: any) => ({
-                                ...provided,
-                                border: 'none',
-                                backgroundColor: '#24332F', // Set the background color to transparent
-                                color: '#fff',
-                                fontFamily: 'Inter, sans-serif',
-                                fontStyle: 'normal',
-                                fontWeight: 400,
-                                fontSize: '0.9rem',
-                                zIndex: 1000,
-                                width: '8rem',
-                              }),
-                            }}
-                          />
+                          <SelectComponent />
                           <div className={styles.conditionsSelect}>
-                            <Select
-                              className='basic-single'
-                              classNamePrefix='select'
-                              name='role'
-                              options={[
-                                ...categories.map((category) => ({
-                                  value: category,
-                                  label: category,
-                                })),
-                                {
-                                  value: '',
-                                  label: 'All',
-                                },
-                              ]}
-                              styles={{
-                                ...customStyles,
-                                control: (provided: any) => ({
-                                  ...provided,
-                                  border: 'none',
-                                  backgroundColor: 'transparent', // Set the background color to transparent
-                                  color: '#fff',
-                                  fontFamily: 'Inter, sans-serif',
-                                  fontStyle: 'normal',
-                                  fontWeight: 400,
-                                  fontSize: '0.9rem',
-                                  zIndex: 1000,
-                                  width: '12rem',
-                                }),
-                              }}
-                            />
-                            <Select
-                              className='basic-single'
-                              classNamePrefix='select'
-                              name='role'
-                              options={[
-                                ...categories.map((category) => ({
-                                  value: category,
-                                  label: category,
-                                })),
-                                {
-                                  value: '',
-                                  label: 'All',
-                                },
-                              ]}
-                              styles={{
-                                ...customStyles,
-                                control: (provided: any) => ({
-                                  ...provided,
-                                  border: 'none',
-                                  backgroundColor: 'transparent', // Set the background color to transparent
-                                  color: '#fff',
-                                  fontFamily: 'Inter, sans-serif',
-                                  fontStyle: 'normal',
-                                  fontWeight: 400,
-                                  fontSize: '0.9rem',
-                                  zIndex: 1000,
-                                  width: '12rem',
-                                }),
-                              }}
-                            />
+                            <SelectComponent />
+                            <SelectComponent />
                             <input type='text' placeholder='Enter a Value' />
 
                             <RiDeleteBinLine size={20} color='#606264' />
