@@ -244,7 +244,7 @@ const Table = ({
             <AnimatePresence>
               <FixedSizeList
                 height={
-                  Object.keys(groupByTeam).length > 15 ? 550 : filteredData.length * 35
+                  Object.keys(groupByTeam).length > 30 ? 550 : filteredData.length * 35
                 }
                 width='100%'
                 itemCount={Object.keys(groupByTeam).length}
