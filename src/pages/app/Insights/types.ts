@@ -43,7 +43,8 @@ export type AnalyticsData = {
     [key: string]: {
       count: number;
       amount: number;
-    }
+    };
+  };
 };
 
 export interface Dataset {
