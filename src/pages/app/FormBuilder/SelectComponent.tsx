@@ -4,12 +4,14 @@ import { customStyles } from '../EventPage/constants';
 const SelectComponent = ({
   backgroundColor,
   options,
+  onChange,
 }: {
   backgroundColor?: string;
   options?: {
     value: string;
     label: string;
   }[];
+  onChange?: any;
 }) => {
   return (
     <>
@@ -17,6 +19,7 @@ const SelectComponent = ({
         className='basic-single'
         classNamePrefix='select'
         name='role'
+        onChange={onChange}
         options={options}
         styles={{
           ...customStyles,
