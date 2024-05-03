@@ -40,15 +40,13 @@ const CouponForm = ({
   eventData: EventType | undefined;
   setCoupon: React.Dispatch<React.SetStateAction<CouponData>>;
   coupon: CouponData;
-  setSelectedDate: React.Dispatch<React.SetStateAction<string | null>>;
-  selectedDate: Date | null;
+  setSelectedDate: React.Dispatch<React.SetStateAction<string | null | undefined>>;
+  selectedDate: string | null | undefined;
 }) => {
   const [remainingTickets, setRemainingTickets] = React.useState<number>(0);
   const [isTicketsAvailable, setIsTicketsAvailable] = React.useState<boolean>(true);
 
-  const handleDateChange = (date: Date | null) => {
-    console.log(date);
-
+  const handleDateChange = (date: string | null | undefined) => {
     let newDate;
     if (date) newDate = new Date(date);
 
@@ -88,8 +86,8 @@ const CouponForm = ({
             <DatePicker
               wrapperClassName={styles.datePicker}
               dateFormat='dd MMM yyyy'
-              selected={selectedDate}
-              onChange={(date) => handleDateChange(date)}
+              selected={selectedDate ? new Date(selectedDate) : null}
+              onChange={(date) => handleDateChange(date?.toString())}
               minDate={
                 eventData.event_start_date ? new Date(eventData.event_start_date) : new Date()
               }

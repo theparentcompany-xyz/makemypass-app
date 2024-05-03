@@ -408,6 +408,30 @@ const Insights = () => {
                     </div>
                   </div>
                 )}
+
+                {Object.entries(message?.referral_analytics || {}).length > 0 && (
+                  <div className={styles.categorySection}>
+                    <p className={styles.rightSectionHeading}>Referral Analytics</p>
+
+                    <div className={styles.categories}>
+                      <div className={styles.category}>
+                        <p className={styles.categoryName}>Referral Code</p>
+                        <p className={styles.categoryCount}>Registrations</p>
+
+                        <p className={styles.categoryCount}>Amount(Rs.)</p>
+                      </div>
+                      <hr className={styles.line} />
+                      {Object.entries(message?.referral_analytics || {}).map(([key, value]) => (
+                        <div className={styles.category}>
+                          <p className={styles.categoryName}>{key}</p>
+                          <p className={styles.categoryCount}>{value.count}</p>
+
+                          <p className={styles.categoryCount}>Rs.{value.amount}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </>

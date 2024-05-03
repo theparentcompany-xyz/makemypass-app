@@ -231,7 +231,13 @@ const EventPage = () => {
                     if (formNumber === 0 && !hasZeroPriceTicket) {
                       {
                         console.log('event id', eventData.id);
-                        validateRsvp(eventData.id, formData, setFormNumber, setFormErrors, selectedDate);
+                        validateRsvp(
+                          eventData.id,
+                          formData,
+                          setFormNumber,
+                          setFormErrors,
+                          selectedDate,
+                        );
                       }
                     } else {
                       submitForm({

@@ -39,6 +39,11 @@ export type AnalyticsData = {
     conversion_rate_vs_page_visit: number | null;
     total_unique: number | null;
   };
+  referral_analytics: {
+    [key: string]: {
+      count: number;
+      amount: number;
+    }
 };
 
 export interface Dataset {
