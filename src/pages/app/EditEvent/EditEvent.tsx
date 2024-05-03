@@ -86,7 +86,9 @@ const EditEvent = () => {
 
   const onSubmit = () => {
     const changedData: Record<string, any> = Object.entries(eventData as Record<string, any>)
-      .filter(([key, value]) => fetchedEvent?.[key as keyof EventType] !== value)
+      .filter(
+        ([key, value]) => fetchedEvent?.[key as keyof EventType] !== value && key !== 'location',
+      )
       .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
 
     if (eventTitle !== eventData?.title) changedData['title'] = eventTitle;
@@ -101,13 +103,22 @@ const EditEvent = () => {
       changedData['reg_end_date'] = convertDate(regDate?.end);
     if (placeName && placeName !== fetchedEvent?.place) changedData['place'] = placeName;
     if (
-      location?.lat !== fetchedEvent?.location?.lat ||
-      location?.lng !== fetchedEvent?.location?.lng
-    )
+      location?.lat != fetchedEvent?.location?.lat ||
+      location?.lng != fetchedEvent?.location?.lng
+    ) {
       changedData['location'] = location;
+    }
+
     if (logo) changedData['logo'] = logo;
     if (banner) changedData['banner'] = banner;
-    if (eventData?.capacity == undefined) changedData['capacity'] = 'null';
+    if (eventData?.capacity == undefined && fetchedEvent?.capacity)
+      changedData['capacity'] = 'null';
+    if (changedData?.is_online == true) {
+      changedData['location[lat]'] = '';
+      changedData['location[lng]'] = '';
+
+      changedData['place'] = '';
+    }
     editEvent(eventId, changedData);
   };
 

@@ -90,6 +90,8 @@ header {
 .dropdown {
   position: relative;
   display: inline-block;
+  cursor: pointer;
+  user-select: none;
 }
 
 .dropdownContent {
