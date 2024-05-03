@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CouponData, DiscountData } from '../../types';
 import { EventType, TicketType } from '../../../../../apis/types';
 import styles from './CouponForm.module.css';
@@ -7,6 +7,10 @@ import InputFIeld from '../../../../auth/Login/InputFIeld';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { motion } from 'framer-motion';
 import { applyCoupon } from '../../../../../apis/publicpage';
+import DatePicker from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
+import toast from 'react-hot-toast';
 
 // ! POSTPONDED: Feature not available in the current version
 // * This feature is not available in the current version of the app
@@ -23,6 +27,8 @@ const CouponForm = ({
   eventData,
   setCoupon,
   coupon,
+  setSelectedDate,
+  selectedDate,
 }: {
   ticketInfo: { [key: string]: TicketType };
   setTicketIds: React.Dispatch<React.SetStateAction<string[]>>;
@@ -34,9 +40,63 @@ const CouponForm = ({
   eventData: EventType | undefined;
   setCoupon: React.Dispatch<React.SetStateAction<CouponData>>;
   coupon: CouponData;
+  setSelectedDate: React.Dispatch<React.SetStateAction<string | null | undefined>>;
+  selectedDate: string | null | undefined;
 }) => {
+  const [remainingTickets, setRemainingTickets] = React.useState<number>(0);
+  const [isTicketsAvailable, setIsTicketsAvailable] = React.useState<boolean>(true);
+
+  const handleDateChange = (date: string | null | undefined) => {
+    let newDate;
+    if (date) newDate = new Date(date);
+
+    if (newDate && eventData) {
+      setSelectedDate(newDate.toISOString().split('T')[0]);
+      const remainingTicketsL =
+        eventData.remaining_tickets[newDate.toISOString().split('T')[0]] ?? 0;
+
+      setRemainingTickets(remainingTicketsL);
+
+      if (remainingTicketsL === 0) setIsTicketsAvailable(false);
+      else setIsTicketsAvailable(true);
+    }
+  };
+
+  useEffect(() => {
+    if (eventData && !eventData.remaining_tickets) return;
+
+    if (eventData) console.log(new Date() > new Date(eventData.event_start_date));
+    if (eventData?.event_start_date && new Date() > new Date(eventData.event_start_date)) {
+      setSelectedDate(new Date().toISOString().split('T')[0]);
+      handleDateChange(selectedDate);
+    } else {
+      if (eventData?.event_start_date) setSelectedDate(eventData?.event_start_date);
+      handleDateChange(selectedDate);
+    }
+  });
+
   return (
     <>
+      {eventData && eventData.remaining_tickets && (
+        <div className={styles.selectDateContainer}>
+          <p className={styles.ticketTypesTitle}>Select Date</p>
+          <p className={styles.eventDescription}>Select a date to register for the event.</p>
+
+          <div className={styles.selectionContainer}>
+            <DatePicker
+              wrapperClassName={styles.datePicker}
+              dateFormat='dd MMM yyyy'
+              selected={selectedDate ? new Date(selectedDate) : null}
+              onChange={(date) => handleDateChange(date?.toString())}
+              minDate={
+                eventData.event_start_date ? new Date(eventData.event_start_date) : new Date()
+              }
+              maxDate={eventData.event_end_date ? new Date(eventData.event_end_date) : new Date()}
+            />
+          </div>
+        </div>
+      )}
+
       {coupon.status && (
         <motion.div
           initial={{ opacity: 0, y: 35 }}
@@ -121,6 +181,11 @@ const CouponForm = ({
           <div
             key={ticketType}
             onClick={() => {
+              if (eventData && eventData.remaining_tickets && !isTicketsAvailable) {
+                toast.error('No tickets available for this date');
+                return;
+              }
+
               if (eventData?.select_multi_ticket) {
                 let newTicketIds = []; //temporary variable to store new ticket ids for amount updation
 
@@ -175,6 +240,11 @@ const CouponForm = ({
             }}
           >
             <div className={styles.passText}>
+              {selectedDate && (
+                <p className={styles.remainingTickets}>
+                  {remainingTickets > 0 ? `${remainingTickets} tickets left` : 'No tickets left'}
+                </p>
+              )}
               <p className={styles.ticketTypeTitle}>{ticketType?.toUpperCase()}</p>
               <p className={styles.ticketTypeDescription}>{ticketInfo[ticketType].description}</p>
               <div className={styles.perks}>

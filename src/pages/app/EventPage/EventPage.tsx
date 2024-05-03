@@ -28,6 +28,7 @@ const EventPage = () => {
   const [success, setSuccess] = useState<string>('');
 
   const [formNumber, setFormNumber] = useState<number>(0);
+  const [selectedDate, setSelectedDate] = useState<string | null>();
   // const [hasEvent, setHasEvent] = useState<boolean>(true);
 
   const [discount, setDiscount] = useState<DiscountData>({
@@ -203,6 +204,8 @@ const EventPage = () => {
                   eventData={eventData}
                   setCoupon={setCoupon}
                   coupon={coupon}
+                  setSelectedDate={setSelectedDate}
+                  selectedDate={selectedDate}
                 />
               )}
 
@@ -228,7 +231,13 @@ const EventPage = () => {
                     if (formNumber === 0 && !hasZeroPriceTicket) {
                       {
                         console.log('event id', eventData.id);
-                        validateRsvp(eventData.id, formData, setFormNumber, setFormErrors);
+                        validateRsvp(
+                          eventData.id,
+                          formData,
+                          setFormNumber,
+                          setFormErrors,
+                          selectedDate,
+                        );
                       }
                     } else {
                       submitForm({
@@ -242,6 +251,9 @@ const EventPage = () => {
                         setAmount,
                         setFormErrors,
                         setCoupon,
+                        setEventData,
+                        eventTitle,
+                        selectedDate,
                       });
                     }
                   }}

@@ -32,6 +32,8 @@
 
   color: white;
   font-family: 'Inter', sans-serif;
+
+  position: relative;
 }
 
 .ticketTypeTitle {
@@ -236,4 +238,30 @@
   right: 0;
   bottom: 0;
   z-index: -1;
+}
+
+.remainingTickets {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #bbbaba;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
+  text-align: right;
+
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.datePicker input {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  width: 95%;
+  display: flex;
+  font-family: 'Inter', sans-serif;
+
+  border: none;
 }
