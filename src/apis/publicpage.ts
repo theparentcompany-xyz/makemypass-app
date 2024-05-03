@@ -31,6 +31,9 @@ export const submitForm = async ({
   setFormErrors,
   response,
   setCoupon,
+  setEventData,
+  eventTitle,
+  selectedDate,
 }: {
   eventId: string;
   ticketIds: string[];
@@ -43,7 +46,14 @@ export const submitForm = async ({
   setFormErrors?: Dispatch<ErrorMessages>;
   response?: unknown;
   setCoupon?: React.Dispatch<CouponData>;
+  setEventData?: React.Dispatch<React.SetStateAction<EventType | undefined>>;
+  eventTitle?: string;
+  selectedDate?: string | null;
 }) => {
+  const selectedDateFormatted = selectedDate
+    ? new Date(selectedDate).toISOString().split('T')[0]
+    : null;
+
   const script = document.createElement('script');
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';
   document.body.appendChild(script);
@@ -71,6 +81,7 @@ export const submitForm = async ({
   if (response) backendFormData.append('payment_data', JSON.stringify(response));
   if (coupon.value) backendFormData.append('coupon_code', coupon.value?.toString());
   ticketIds.forEach((ticketId) => backendFormData.append('tickets[]', ticketId));
+  if (selectedDateFormatted) backendFormData.append('ticket_date', selectedDateFormatted);
 
   publicGateway
     .post(makeMyPass.submitForm(eventId), backendFormData, {
@@ -108,6 +119,7 @@ export const submitForm = async ({
                   setFormNumber && setFormNumber(0);
                   setFormData && setFormData({});
                   setAmount && setAmount('');
+                  if (setEventData && eventTitle) getEventInfo(eventTitle, setEventData);
                 }, 5000);
 
                 setCoupon && setCoupon({ status: '', description: '' });
@@ -173,7 +185,12 @@ export const validateRsvp = async (
   formData: FormDataType,
   setFormNumber: React.Dispatch<React.SetStateAction<number>>,
   setFieldErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
+  selectedDate?: string | null,
 ) => {
+  const selectedDateFormatted = selectedDate
+    ? new Date(selectedDate).toISOString().split('T')[0]
+    : null;
+
   // Remove empty key-value pairs from formData
   Object.keys(formData).forEach((key) => {
     if (formData[key] === '') {
@@ -200,6 +217,8 @@ export const validateRsvp = async (
       Array.from(value).forEach((value) => payloadFormData.append(key + '[]', value));
     }
   });
+
+  if (selectedDateFormatted) payloadFormData.append('ticket_date', selectedDateFormatted);
 
   return publicGateway
     .post(makeMyPass.validateRsvp(eventId), payloadFormData, {

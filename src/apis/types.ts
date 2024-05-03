@@ -133,6 +133,9 @@ export interface EventType {
   is_online: boolean;
   approval_required: boolean;
   status: string;
+  remaining_tickets: {
+    [key: string]: number;
+  };
 }
 
 export type EventDetails = {
