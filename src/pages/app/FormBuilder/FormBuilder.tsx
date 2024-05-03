@@ -40,6 +40,21 @@ const FormBuilder = () => {
     ]);
   };
 
+  const getFormFields = () => {
+    const fields = formFields.map((field) => {
+      return {
+        value: field.id,
+        label: field.title,
+      };
+    });
+
+    console.log(fields);
+
+    return fields;
+  };
+
+  const categories = ['is', 'is not', 'is greater than', 'is less than', 'is equal to'];
+
   const removeOption = (field: Field, index: number) => {
     const updatedOptions = field.options;
     updatedOptions.splice(index, 1);
@@ -299,8 +314,19 @@ const FormBuilder = () => {
                           <div className={styles.conditionRow}>
                             <p className={styles.when}>When</p>
                             <div className={styles.conditionsSelect}>
-                              <SelectComponent />
-                              <SelectComponent />
+                              <SelectComponent options={getFormFields()} />
+                              <SelectComponent
+                                options={[
+                                  ...categories.map((category) => ({
+                                    value: category,
+                                    label: category,
+                                  })),
+                                  {
+                                    value: '',
+                                    label: 'All',
+                                  },
+                                ]}
+                              />
                               <input type='text' placeholder='Enter a Value' />
 
                               <RiDeleteBinLine size={20} color='#606264' />
@@ -315,10 +341,43 @@ const FormBuilder = () => {
                           </div>
 
                           <div className={styles.conditionRow}>
-                            <SelectComponent />
+                            <SelectComponent
+                              options={[
+                                ...categories.map((category) => ({
+                                  value: category,
+                                  label: category,
+                                })),
+                                {
+                                  value: '',
+                                  label: 'All',
+                                },
+                              ]}
+                            />
                             <div className={styles.conditionsSelect}>
-                              <SelectComponent />
-                              <SelectComponent />
+                              <SelectComponent
+                                options={[
+                                  ...categories.map((category) => ({
+                                    value: category,
+                                    label: category,
+                                  })),
+                                  {
+                                    value: '',
+                                    label: 'All',
+                                  },
+                                ]}
+                              />
+                              <SelectComponent
+                                options={[
+                                  ...categories.map((category) => ({
+                                    value: category,
+                                    label: category,
+                                  })),
+                                  {
+                                    value: '',
+                                    label: 'All',
+                                  },
+                                ]}
+                              />
                               <input type='text' placeholder='Enter a Value' />
 
                               <RiDeleteBinLine size={20} color='#606264' />
