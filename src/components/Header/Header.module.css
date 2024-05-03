@@ -117,8 +117,14 @@ header {
   background: #212729;
 }
 
-.dropdownContent:hover {
+
+.dropdownContent .link {
+  transition: all 0.2s ease-in-out;
+    border-radius: 0px 0 8px 8px;
+}
+.dropdownContent:hover .link {
   background-color: #2d3436;
+  transform: scale(1.02);
 }
 
 .dropdown:hover .dropdownContent {

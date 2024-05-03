@@ -3,6 +3,7 @@ import styles from './Header.module.css';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import { Link } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 const Header = ({ type }: { type?: string | undefined }) => {
   const [openSettings, setOpenSettings] = useState(false);
 
@@ -15,6 +16,25 @@ const Header = ({ type }: { type?: string | undefined }) => {
     }
   }, [isAuthenticated]);
 
+  const variants = {
+    fadein: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.2,
+      },
+    },
+    fadeout: {
+      opacity: 0,
+      y: -10,
+      transition: {
+        duration: 0.2,
+      },
+      transitionEnd: {
+        display: 'none',
+      },
+    },
+  };
   return (
     <>
       <header>
@@ -44,15 +64,20 @@ const Header = ({ type }: { type?: string | undefined }) => {
                           </span>
                         </p>
 
-                        {openSettings && window.location.pathname !== '/set-profile' && (
-                          <div className={styles.dropdownContent}>
+                        {window.location.pathname !== '/set-profile' && (
+                          <motion.div
+                            className={styles.dropdownContent}
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={openSettings ? 'fadein' : 'fadeout'}
+                            variants={variants}
+                          >
                             <Link to='/set-profile'>
                               <div className={styles.link}>
                                 <FaUser size={15} color='#57575C' />
                                 <p className={styles.linkText}>Update Profile</p>
                               </div>
                             </Link>
-                          </div>
+                          </motion.div>
                         )}
                       </div>
 
