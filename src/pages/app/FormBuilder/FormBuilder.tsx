@@ -7,7 +7,7 @@ import { MdEmail, MdOutlinePhoneAndroid } from 'react-icons/md';
 import Slider from '../../../components/SliderButton/Slider';
 import { BsAlphabetUppercase } from 'react-icons/bs';
 import { RxDragHandleDots2 } from 'react-icons/rx';
-import { LuPencil } from 'react-icons/lu';
+import { LuPencil, LuSave } from 'react-icons/lu';
 import { RiDeleteBinLine } from 'react-icons/ri';
 
 import { useEffect, useState } from 'react';
@@ -18,6 +18,7 @@ import SelectComponent from './SelectComponent';
 import { IoCloseSharp } from 'react-icons/io5';
 import { IoIosSave } from 'react-icons/io';
 import { conditions } from './constant';
+import toast from 'react-hot-toast';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -25,6 +26,14 @@ const FormBuilder = () => {
   const [selectedField, setSelectedField] = useState<Field>({} as Field);
   const [newOption, setNewOption] = useState(false);
   const [newOptionValue, setNewOptionValue] = useState('');
+
+  const [condition, setCondition] = useState([
+    {
+      field: '',
+      condition: '',
+      value: '',
+    },
+  ]);
 
   useEffect(() => {
     getForm(event_id, setFormFields);
@@ -58,13 +67,13 @@ const FormBuilder = () => {
     return fields;
   };
 
-  const categories = ['All', 'Ticket', 'Registration', 'Survey', 'Feedback', 'Contact'];
-
   const removeOption = (field: Field, index: number) => {
     const updatedOptions = field.options;
     updatedOptions.splice(index, 1);
     updateFormFieldValue(field, 'options', updatedOptions);
   };
+
+  console.log(condition);
 
   return (
     <>
@@ -126,6 +135,11 @@ const FormBuilder = () => {
                       <LuPencil
                         onClick={() => {
                           setSelectedField(formFields[Number(field)]);
+                          setCondition(
+                            formFields[Number(field)].condition.length > 0
+                              ? formFields[Number(field)].condition
+                              : [{ field: '', condition: '', value: '' }],
+                          );
                         }}
                         size={20}
                         color='#606264'
@@ -307,6 +321,16 @@ const FormBuilder = () => {
                                 ? []
                                 : [{ field: '', condition: '', value: '' }],
                             );
+
+                            if (formFields[Number(field)].condition.length > 0) {
+                              setCondition([
+                                {
+                                  field: '',
+                                  condition: '',
+                                  value: '',
+                                },
+                              ]);
+                            }
                           }}
                         />
                         <p className={styles.customFieldLabel}>
@@ -316,30 +340,53 @@ const FormBuilder = () => {
 
                       {formFields[Number(field)].condition.length > 0 && (
                         <div className={styles.conditions}>
-                          <div className={styles.conditionRow}>
-                            <p className={styles.when}>When</p>
-                            <div className={styles.conditionsSelect}>
-                              <SelectComponent options={getFormFields(formFields[Number(field)])} />
-                              <SelectComponent
-                                options={[
-                                  ...conditions.map((condition) => ({
-                                    value: condition.value,
-                                    label: condition.label,
-                                  })),
-                                ]}
-                              />
-                              <input type='text' placeholder='Enter a Value' />
+                          {formFields[Number(field)].condition.map((condition) => (
+                            <div className={styles.conditionRow}>
+                              <p className={styles.when}>When</p>
+                              <div className={styles.conditionsSelect}>
+                                <SelectComponent
+                                  options={getFormFields(formFields[Number(field)])}
+                                />
+                                <SelectComponent
+                                  options={[
+                                    ...conditions.map((condition) => ({
+                                      value: condition.value,
+                                      label: condition.label,
+                                    })),
+                                  ]}
+                                />
+                                <input type='text' placeholder='Enter a Value' />
 
-                              <RiDeleteBinLine size={20} color='#606264' />
-                              <RxDragHandleDots2
-                                style={{
-                                  marginLeft: '1rem',
-                                }}
-                                size={20}
-                                color='#606264'
-                              />
+                                <RiDeleteBinLine size={20} color='#606264' />
+                                <RxDragHandleDots2
+                                  style={{
+                                    marginLeft: '0.5rem',
+                                  }}
+                                  size={20}
+                                  color='#606264'
+                                />
+
+                                <LuSave
+                                  onClick={() => {
+                                    const updatedConditions = formFields[Number(field)].condition;
+                                    updatedConditions.push(condition);
+                                    updateFormFieldValue(
+                                      formFields[Number(field)],
+                                      'condition',
+                                      updatedConditions,
+                                    );
+
+                                    toast.success('Condition Added Successfully');
+                                  }}
+                                  style={{
+                                    marginLeft: '0.5rem',
+                                  }}
+                                  size={20}
+                                  color='#606264'
+                                />
+                              </div>
                             </div>
-                          </div>
+                          ))}
                         </div>
                       )}
 

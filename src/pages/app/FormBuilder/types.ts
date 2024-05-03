@@ -7,7 +7,11 @@ export interface Field {
   options: string[];
   property: object;
   required: boolean;
-  condition: unknown[];
+  condition: {
+    field: string;
+    condition: string;
+    value: string;
+  }[];
   field_key: string;
   team_field: boolean;
   description: string | null;
