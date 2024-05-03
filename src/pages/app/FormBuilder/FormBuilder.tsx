@@ -17,6 +17,7 @@ import RequiredFields from './RequiredFields';
 import SelectComponent from './SelectComponent';
 import { IoCloseSharp } from 'react-icons/io5';
 import { IoIosSave } from 'react-icons/io';
+import { conditions } from './constant';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -40,20 +41,24 @@ const FormBuilder = () => {
     ]);
   };
 
-  const getFormFields = () => {
-    const fields = formFields.map((field) => {
-      return {
-        value: field.id,
-        label: field.title,
-      };
-    });
-
-    console.log(fields);
+  const getFormFields = (currentField: Field) => {
+    let hasPassed = false;
+    const fields = formFields.reduce((acc: { value: string; label: string }[], field) => {
+      if (field.id !== currentField.id && !hasPassed) {
+        acc.push({
+          value: field.id,
+          label: field.title,
+        });
+      } else {
+        hasPassed = true;
+      }
+      return acc;
+    }, []);
 
     return fields;
   };
 
-  const categories = ['is', 'is not', 'is greater than', 'is less than', 'is equal to'];
+  const categories = ['All', 'Ticket', 'Registration', 'Survey', 'Feedback', 'Contact'];
 
   const removeOption = (field: Field, index: number) => {
     const updatedOptions = field.options;
@@ -314,68 +319,13 @@ const FormBuilder = () => {
                           <div className={styles.conditionRow}>
                             <p className={styles.when}>When</p>
                             <div className={styles.conditionsSelect}>
-                              <SelectComponent options={getFormFields()} />
+                              <SelectComponent options={getFormFields(formFields[Number(field)])} />
                               <SelectComponent
                                 options={[
-                                  ...categories.map((category) => ({
-                                    value: category,
-                                    label: category,
+                                  ...conditions.map((condition) => ({
+                                    value: condition.value,
+                                    label: condition.label,
                                   })),
-                                  {
-                                    value: '',
-                                    label: 'All',
-                                  },
-                                ]}
-                              />
-                              <input type='text' placeholder='Enter a Value' />
-
-                              <RiDeleteBinLine size={20} color='#606264' />
-                              <RxDragHandleDots2
-                                style={{
-                                  marginLeft: '1rem',
-                                }}
-                                size={20}
-                                color='#606264'
-                              />
-                            </div>
-                          </div>
-
-                          <div className={styles.conditionRow}>
-                            <SelectComponent
-                              options={[
-                                ...categories.map((category) => ({
-                                  value: category,
-                                  label: category,
-                                })),
-                                {
-                                  value: '',
-                                  label: 'All',
-                                },
-                              ]}
-                            />
-                            <div className={styles.conditionsSelect}>
-                              <SelectComponent
-                                options={[
-                                  ...categories.map((category) => ({
-                                    value: category,
-                                    label: category,
-                                  })),
-                                  {
-                                    value: '',
-                                    label: 'All',
-                                  },
-                                ]}
-                              />
-                              <SelectComponent
-                                options={[
-                                  ...categories.map((category) => ({
-                                    value: category,
-                                    label: category,
-                                  })),
-                                  {
-                                    value: '',
-                                    label: 'All',
-                                  },
                                 ]}
                               />
                               <input type='text' placeholder='Enter a Value' />
@@ -393,9 +343,9 @@ const FormBuilder = () => {
                         </div>
                       )}
 
-                      <p className={styles.addCustomField}>
-                        <span>+</span> Add Custom Field
-                      </p>
+                      {/* <p className={styles.addCustomField}>
+                        <span>+</span> Add Condition
+                      </p> */}
                     </div>
                   );
                 })}
