@@ -243,12 +243,10 @@ const Table = ({
           <div className={styles.table}>
             <AnimatePresence>
               <FixedSizeList
-                height={
-                  Object.keys(groupByTeam).length > 30 ? 550 : filteredData.length * 35
-                }
+                height={Object.keys(groupByTeam).length > 50 ? 550 : filteredData.length * 37}
                 width='100%'
                 itemCount={Object.keys(groupByTeam).length}
-                itemSize={35} // Adjust based on row height
+                itemSize={37} // Adjust based on row height
                 itemData={itemData}
               >
                 {RowComponent}
