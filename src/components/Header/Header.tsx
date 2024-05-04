@@ -18,6 +18,7 @@ const Header = ({ type }: { type?: string | undefined }) => {
 
   const variants = {
     fadein: {
+      display: 'block',
       opacity: 1,
       y: 0,
       transition: {
