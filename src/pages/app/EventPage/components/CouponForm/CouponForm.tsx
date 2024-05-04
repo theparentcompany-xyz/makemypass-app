@@ -62,6 +62,28 @@ const CouponForm = ({
     }
   };
 
+  const findMaxDate = () => {
+    let maxDate: Date | null = null;
+
+    if (eventData && eventData.event_end_date) {
+      const maxDateReducer = (maxDate: Date | null, date: string) => {
+        const remainingTickets = eventData.remaining_tickets[date];
+        if (remainingTickets > 0) {
+          const currentDate = new Date(date);
+          if (!maxDate || currentDate > maxDate) {
+            maxDate = currentDate;
+          }
+        }
+        return maxDate;
+      };
+
+      maxDate = Object.keys(eventData.remaining_tickets).reduce(maxDateReducer, null);
+
+      return maxDate || new Date();
+    }
+    return new Date();
+  };
+
   useEffect(() => {
     if (eventData && !eventData.remaining_tickets) return;
 
@@ -91,7 +113,7 @@ const CouponForm = ({
               minDate={
                 eventData.event_start_date ? new Date(eventData.event_start_date) : new Date()
               }
-              maxDate={eventData.event_end_date ? new Date(eventData.event_end_date) : new Date()}
+              maxDate={findMaxDate()}
             />
           </div>
         </div>
