@@ -174,13 +174,20 @@ export const getIcon = (type: string) => {
   }
 };
 
-export const discountedTicketPrice = (ticketPrice: number, discount: DiscountData) => {
+export const discountedTicketPrice = (
+  ticketPrice: number,
+  discount: DiscountData,
+  ticketId: string,
+) => {
   let discountedPrice = 0;
-  if (discount.discount_type?.toLowerCase() === 'percentage') {
-    discountedPrice = (ticketPrice * (100 - discount.discount_value)) / 100;
-  } else {
-    discountedPrice = ticketPrice - discount.discount_value;
-  }
+
+  if (discount.ticket.includes(ticketId))
+    if (discount.discount_type?.toLowerCase() === 'percentage') {
+      discountedPrice = (ticketPrice * (100 - discount.discount_value)) / 100;
+    } else {
+      discountedPrice = ticketPrice - discount.discount_value;
+    }
+  else discountedPrice = ticketPrice;
 
   if (discountedPrice < 0) return 0;
   else {

@@ -183,6 +183,11 @@ const CouponForm = ({
               maxDate={findMaxDate()}
             />
           </div>
+          {selectedDate && (
+            <p className={styles.remainingTickets}>
+              {remainingTickets > 0 ? `${remainingTickets} tickets left` : 'No tickets left'}
+            </p>
+          )}
         </div>
       )}
 
@@ -231,6 +236,7 @@ const CouponForm = ({
                       discountedTicketPrice(
                         Object.values(ticketInfo).filter((ticktype) => ticktype.id === id)[0].price,
                         discount,
+                        id,
                       )
                     );
                   }, 0);
@@ -256,6 +262,7 @@ const CouponForm = ({
                     discountedTicketPrice(
                       Number(ticketInfo[ticketType].price),
                       discount,
+                      ticketInfo[ticketType].id,
                     ).toString(),
                   );
                 else {
@@ -271,11 +278,6 @@ const CouponForm = ({
             }}
           >
             <div className={styles.passText}>
-              {selectedDate && (
-                <p className={styles.remainingTickets}>
-                  {remainingTickets > 0 ? `${remainingTickets} tickets left` : 'No tickets left'}
-                </p>
-              )}
               <p className={styles.ticketTypeTitle}>{ticketType?.toUpperCase()}</p>
               <p className={styles.ticketTypeDescription}>{ticketInfo[ticketType].description}</p>
               <div className={styles.perks}>
@@ -306,14 +308,22 @@ const CouponForm = ({
                 )}
               <div className={styles.priceData}>
                 <p className={styles.ticketPrice}>
-                  {discountedTicketPrice(Number(ticketInfo[ticketType].price), discount) === 0
+                  {discountedTicketPrice(
+                    Number(ticketInfo[ticketType].price),
+                    discount,
+                    ticketInfo[ticketType].id,
+                  ) === 0
                     ? 'FREE'
-                    : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(Number(ticketInfo[ticketType].price), discount)}`}
+                    : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(Number(ticketInfo[ticketType].price), discount, ticketInfo[ticketType].id)}`}
                 </p>
                 <p className={styles.extraCharges}>
                   {ticketInfo[ticketType].platform_fee_from_user &&
                     Number(ticketInfo[ticketType].price) > 0 &&
-                    discountedTicketPrice(Number(ticketInfo[ticketType].price), discount) !== 0 && (
+                    discountedTicketPrice(
+                      Number(ticketInfo[ticketType].price),
+                      discount,
+                      ticketInfo[ticketType].id,
+                    ) !== 0 && (
                       <p className={styles.extraCharges}>
                         {ticketInfo[ticketType].platform_fee}% extra charges
                       </p>
