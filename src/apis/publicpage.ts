@@ -155,7 +155,7 @@ export const submitForm = async ({
       }
     })
     .catch((error) => {
-      toast.error('Error in Registering Event');
+      toast.error(error.response.data.message.general[0] || 'Error in Registering Event');
       if (setFormErrors) setFormErrors(error.response.data.message);
     });
 };
