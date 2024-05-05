@@ -67,7 +67,7 @@ const EventPage = () => {
 
   useEffect(() => {
     if (discount.discount_value > 0) {
-      setAmount(discountedTicketPrice(Number(amount), discount).toString());
+      setAmount(discountedTicketPrice(Number(amount), discount, ticketIds[0]).toString());
     } else {
       if (eventData?.tickets && ticketIds) {
         let ticketPrice = 0;
