@@ -179,7 +179,7 @@ export const editEvent = (eventId: string, eventData: object) => {
       }, 1000);
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+      toast.error(error.response.data.message.name[0] || 'Unable to process the request');
     });
 };
 

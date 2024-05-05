@@ -33,6 +33,7 @@ import Feedback from './pages/app/Feedback/Feedback';
 import CreateEvent from './pages/app/CreateEvent/CreateEvent';
 import EventGlance from './pages/app/EventGlance/EventGlance';
 import EditEvent from './pages/app/EditEvent/EditEvent';
+import FormBuilder from './pages/app/FormBuilder/FormBuilder';
 
 const routes = [
   {
@@ -136,8 +137,13 @@ const routes = [
         path: '/:eventTitle/manage/edit-event',
         element: <RoleChecker roles={['Admin', 'Owner', 'Volunteer']} children={<EditEvent />} />,
       },
+      {
+        path: '/:eventTitle/formbuilder',
+        element: <RoleChecker roles={['Admin', 'Owner', 'Volunteer']} children={<FormBuilder />} />,
+      },
     ],
   },
+
   {
     path: '/404',
     element: <FourNotFour />,

@@ -97,6 +97,10 @@ export const makeMyPass = {
   submitFeedback: (eventId: string) => makeMyPassURL(`/feedback/submit-feedback/${eventId}/`),
   getPostEventCategories: (eventId: string) =>
     makeMyPassURL(`/feedback/get-post-event-categories/${eventId}/`),
+
+  //FormBuilder
+  formBuilderGetForm: (eventId: string) => makeMyPassURL(`/form-builder/${eventId}/get-form/`),
+  formBuilderUpdateForm: (eventId: string) => makeMyPassURL(`/form-builder/${eventId}/update-form/`),
 };
 
 export const makeMyPassSocket = {
