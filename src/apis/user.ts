@@ -62,3 +62,20 @@ export const setUserData = async ({ formData, token }: { formData: FormData; tok
       toast.error(error.response.data.message.general[0] || 'Error in Updating Profile');
     });
 };
+
+
+export const getProfileInfo = (): Promise<{ 
+  name?: string;
+  email?: string;
+  profile_pic?: string;
+}> => {
+   return privateGateway
+    .get(buildVerse.profileInfo)
+    .then((response) => {
+      console.log(response.data);
+      return response.data.response;
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Error in Fetching Profile Info');
+    });
+}

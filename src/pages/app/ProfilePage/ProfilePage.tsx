@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './ProfilePage.module.css';
 import Theme from '../../../components/Theme/Theme';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import { setUserData, updateProfile } from '../../../apis/user';
+import { setUserData, updateProfile, getProfileInfo } from '../../../apis/user';
 import { useLocation } from 'react-router-dom';
 
 const ProfilePage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get('token')?.replace(/\/+$/, '') as string;
+
+  const NameRef = useRef<HTMLInputElement>(null);
+  const EmailRef = useRef<HTMLInputElement>(null);
 
   const handleUpdateProfile = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -20,35 +23,42 @@ const ProfilePage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const userInfo = await getProfileInfo();
+      if (userInfo) {
+        NameRef.current!.value = userInfo.name ?? '';
+        EmailRef.current!.value = userInfo.email ?? '';
+      }
+      console.log(userInfo);
+    };
+    fetchData();
+  }, []);
+
   return (
     <Theme>
       <div className={styles.profilePageContainer}>
         <div className={styles.viewProfile}>
           <h2>Update Profile</h2>
-          <form
-            className={styles.profileForm}
-            onSubmit={(event) => {
-              handleUpdateProfile(event);
-            }}
-          >
+          <form className={styles.profileForm} onSubmit={handleUpdateProfile}>
             <div className={styles.formGroup}>
               <label htmlFor='name'>Full Name</label>
-              <input required type='text' id='name' name='name' autoComplete='off' />
+              <input type='text' id='name' name='name' autoComplete='off' ref={NameRef} />
             </div>
             {token ? (
               <div className={styles.formGroup}>
                 <label htmlFor='password'>Password</label>
-                <input required type='password' id='password' name='password' />
+                <input type='password' id='password' name='password' />
               </div>
             ) : (
               <div className={styles.formGroup}>
                 <label htmlFor='email'>Email Address</label>
-                <input required type='email' id='email' name='email' />
+                <input required type='email' id='email' name='email' ref={EmailRef} />
               </div>
             )}
             <div className={styles.formGroup}>
               <label htmlFor='profile_pic'>Profile Picture</label>
-              <input required type='file' id='profile_pic' name='profile_pic' />
+              <input type='file' id='profile_pic' name='profile_pic' />
             </div>
             <SecondaryButton buttonText='Update Details' type='submit' />
             <div className={styles.formGroup}>
