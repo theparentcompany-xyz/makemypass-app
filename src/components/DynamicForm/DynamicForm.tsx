@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import { ErrorMessages, FormDataType, FormFieldType, TicketType } from '../../apis/types';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
 import InputFIeld from '../../pages/auth/Login/InputFIeld';
@@ -10,6 +10,7 @@ import AudioRecorder from './components/AudioRecorder/AudioRecorder';
 import { EventType } from '../../apis/types';
 import Scanner from '../Scanner/Scanner';
 import { SelectedGuest } from '../../pages/app/Guests/types';
+import SelectDate from '../SelectDate/SelectDate';
 const DynamicForm = ({
   formFields,
   formErrors,
@@ -26,6 +27,10 @@ const DynamicForm = ({
   showScanner,
   setShowScanner,
   selectedGuestId,
+  remainingTicketsList,
+  setIsTicketsAvailable,
+  selectedDate,
+  setSelectedDate,
 }: {
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
@@ -42,12 +47,48 @@ const DynamicForm = ({
   showScanner?: boolean;
   setShowScanner?: React.Dispatch<React.SetStateAction<boolean>>;
   selectedGuestId?: SelectedGuest;
+  remainingTicketsList?: { [key: string]: number };
+  setIsTicketsAvailable?: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedDate?: string;
+  setSelectedDate?: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const variants = {
     initial: { opacity: 0, y: -10 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -10 },
   };
+
+  const [remainingTickets, setRemainingTickets] = useState<number>(0);
+
+  const handleDateChange = (date: string | null | undefined) => {
+    let newDate;
+    if (date) newDate = new Date(date);
+
+    if (newDate && eventData && setSelectedDate) {
+      setSelectedDate(newDate.toISOString().split('T')[0]);
+      const remainingTicketsL =
+        eventData.remaining_tickets[newDate.toISOString().split('T')[0]] ?? 0;
+
+      setRemainingTickets(remainingTicketsL);
+
+      if (setIsTicketsAvailable)
+        if (remainingTicketsL === 0) setIsTicketsAvailable(false);
+        else setIsTicketsAvailable(true);
+    }
+  };
+
+  useEffect(() => {
+    if (eventData && !eventData.remaining_tickets) return;
+
+    if (eventData) console.log(new Date() > new Date(eventData.event_start_date));
+    if (eventData?.event_start_date && new Date() > new Date(eventData.event_start_date)) {
+      setSelectedDate(new Date().toISOString().split('T')[0]);
+      handleDateChange(selectedDate);
+    } else {
+      if (eventData?.event_start_date) setSelectedDate(eventData?.event_start_date);
+      handleDateChange(selectedDate);
+    }
+  }, [eventData]);
 
   const validateCondition = (field: FormFieldType) => {
     let valid = true;
@@ -134,6 +175,9 @@ const DynamicForm = ({
     }
   };
 
+  console.log('eventData', eventData);
+  console.log('remainingTicketsList', remainingTicketsList);
+
   return (
     <>
       <div className={styles.formFields}>
@@ -141,6 +185,15 @@ const DynamicForm = ({
 
         {selectedGuestId?.type !== 'edit' && ticketInfo && !showScanner && (
           <>
+            {eventData && remainingTicketsList && (
+              <SelectDate
+                eventData={eventData}
+                selectedDate={selectedDate}
+                handleDateChange={handleDateChange}
+                remainingTickets={remainingTickets}
+                type='addGuest'
+              />
+            )}
             <div
               style={{
                 marginBottom: '1rem',

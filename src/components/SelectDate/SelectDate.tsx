@@ -7,6 +7,7 @@ interface SelectDateProps {
   selectedDate: string | null | undefined;
   handleDateChange: (date: string | null | undefined) => void;
   remainingTickets: number;
+  type?: string;
 }
 
 const findMaxDate = (eventData: EventType) => {
@@ -36,11 +37,16 @@ const SelectDate = ({
   selectedDate,
   handleDateChange,
   remainingTickets,
+  type,
 }: SelectDateProps) => {
   return (
     <>
       {' '}
-      <div className={styles.selectDateContainer}>
+      <div
+        className={
+          type !== 'addGuest' ? styles.selectDateContainer : styles.selectDateContainerAddGuest
+        }
+      >
         <p className={styles.ticketTypesTitle}>Select Date</p>
         <p className={styles.eventDescription}>Select a date to register for the event.</p>
 
@@ -54,7 +60,7 @@ const SelectDate = ({
             maxDate={findMaxDate(eventData)}
           />
         </div>
-        {selectedDate && (
+        {selectedDate && !type && (
           <p className={styles.remainingTickets}>
             {remainingTickets > 0 ? `${remainingTickets} tickets left` : 'No tickets left'}
           </p>

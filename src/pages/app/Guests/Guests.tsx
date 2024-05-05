@@ -34,7 +34,8 @@ import Select from 'react-select';
 import { isArray } from 'chart.js/helpers';
 import Modal from '../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
-import { getFormFields, getTickets } from '../../../apis/publicpage';
+import { getEventInfo, getFormFields, getTickets } from '../../../apis/publicpage';
+import { useParams } from 'react-router';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -52,6 +53,11 @@ const Guests = () => {
   const [cashInHand, setCashInHand] = useState(false);
   const [ticketCode, setTicketCode] = useState<string>('');
   const [showScanner, setShowScanner] = useState<boolean>(false);
+  const [remainingTicketsList, setRemainingTicketsList] = useState<{ [key: string]: number }>({});
+  const [selectedDate, setSelectedDate] = useState<string>('');
+
+  const [isTicketsAvailable, setIsTicketsAvailable] = useState<boolean>(true);
+  const [eventData, setEventData] = useState<any>();
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
@@ -75,9 +81,15 @@ const Guests = () => {
 
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
+  const { eventTitle } = useParams<{ eventTitle: string }>();
+  useEffect(() => {
+    if (eventTitle) getEventInfo(eventTitle, setEventData);
+  }, [eventTitle]);
+
   useEffect(() => {
     if (eventId && !selectedGuestId?.id) {
       if (socket) socket.close();
+      ``;
       connectPrivateSocket({
         url: makeMyPassSocket.listGuests(eventId),
       }).then((ws) => {
@@ -102,7 +114,7 @@ const Guests = () => {
 
   useEffect(() => {
     if (eventId) {
-      getFormFields(eventId, setFormFields);
+      getFormFields(eventId, setFormFields, setRemainingTicketsList);
       getTickets(eventId, setTicketInfo);
       getCategories(eventId, setCategories);
     }
@@ -150,7 +162,8 @@ const Guests = () => {
   };
 
   const handleSubmissionEdit = () => {
-    if (selectedGuest) editSubmissons(eventId, formData, setSelectedGuestId, setFormData, setFormErrors);
+    if (selectedGuest)
+      editSubmissons(eventId, formData, setSelectedGuestId, setFormData, setFormErrors);
   };
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
@@ -224,18 +237,30 @@ const Guests = () => {
               ticketInfo={ticketInfo}
               setTicketId={setTicketId}
               ticketId={ticketId}
+              eventData={eventData}
               ticketCode={ticketCode}
               setTicketCode={setTicketCode}
               showScanner={showScanner}
               setShowScanner={setShowScanner}
               selectedGuestId={selectedGuestId}
+              remainingTicketsList={remainingTicketsList}
+              setIsTicketsAvailable={setIsTicketsAvailable}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
             />
 
             {!showScanner && (
               <div className={styles.buttons}>
                 <p
                   onClick={() => {
-                    addGuest(eventId, ticketId, formData, setFormErrors, setSelectedGuestId);
+                    addGuest(
+                      eventId,
+                      ticketId,
+                      formData,
+                      setFormErrors,
+                      setSelectedGuestId,
+                      selectedDate,
+                    );
                   }}
                   className={styles.button}
                 >

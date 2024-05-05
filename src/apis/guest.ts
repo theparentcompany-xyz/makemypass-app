@@ -10,10 +10,12 @@ export const shortListUser = (
   userId: string,
   isShortListed: boolean,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
+  selectedDate: string,
 ) => {
   privateGateway
     .post(makeMyPass.shortListUser(eventId, userId), {
       is_approved: isShortListed,
+      ticket_date: selectedDate,
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'User shortlisted successfully');
@@ -37,13 +39,16 @@ export const addGuest = (
   formData: FormDataType,
   setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
+  selectedDate?: string,
 ) => {
   formData['tickets[]'] = ticketId;
 
   const script = document.createElement('script');
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';
   document.body.appendChild(script);
-
+  if (selectedDate) {
+    formData['ticket_date'] = selectedDate;
+  }
   privateGateway
     .post(makeMyPass.sentInvite(eventId), formData, {
       headers: {
