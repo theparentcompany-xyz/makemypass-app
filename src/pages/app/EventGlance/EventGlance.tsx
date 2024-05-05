@@ -41,9 +41,9 @@ const EventGlance = () => {
   return (
     <>
       <Theme>
-        <EventHeader />
         <div className={styles.eventGlanceContainer}>
           <div className={styles.eventGlance}>
+            <EventHeader />
             <Glance tab='manage' />
           </div>
           {selectedMail && (
