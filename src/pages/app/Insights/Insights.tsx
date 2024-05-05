@@ -41,6 +41,7 @@ const Insights = () => {
 
   const [lineData, setLineData] = useState<ChartData>();
   const [lineData2, setLineData2] = useState<ChartData>();
+  const [entryDateCount, setEntryDateCount] = useState<ChartData>();
   const [pieData, setPieData] = useState<ChartData>();
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -86,6 +87,18 @@ const Insights = () => {
               {
                 label: 'Daily Analytics',
                 data: Object.values(lineBarData?.analytics || {}),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+              },
+            ],
+          });
+
+          setEntryDateCount({
+            labels: Object.keys(lineBarData?.entry_date_count || {}),
+            datasets: [
+              {
+                label: 'Entry Date Count',
+                data: Object.values(lineBarData?.entry_date_count || {}),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
               },
@@ -432,6 +445,14 @@ const Insights = () => {
                     </div>
                   </div>
                 )}
+              </div>
+
+              <div className={styles.insightsContainer}>
+                <div className={styles.registrationCount}>
+                  <div className={styles.graphContainer}>
+                    {entryDateCount && <Line options={options} data={entryDateCount} />}
+                  </div>
+                </div>
               </div>
             </div>
           </>
