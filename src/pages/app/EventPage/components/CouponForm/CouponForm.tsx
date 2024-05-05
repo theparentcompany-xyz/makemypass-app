@@ -130,7 +130,10 @@ const CouponForm = ({
             description={coupon.description}
             style={{
               marginTop: '-1rem',
-              border: discount.discount_value > 0 ? '2px solid #46BF75' : '2px solid #2A3533',
+              border:
+                discount.discount_value > 0 && discount.ticket.length > 0
+                  ? '2px solid #46BF75'
+                  : '2px solid #2A3533',
             }}
           />
           {discount.discount_type && discount.discount_value > 0 && (
