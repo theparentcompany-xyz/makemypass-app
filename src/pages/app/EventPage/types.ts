@@ -9,6 +9,7 @@ export const fieldMappings = {
 export type DiscountData = {
   discount_type: string;
   discount_value: number;
+  ticket: string[];
 };
 
 export type CouponData = {

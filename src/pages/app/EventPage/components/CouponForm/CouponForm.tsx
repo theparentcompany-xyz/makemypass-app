@@ -218,7 +218,10 @@ const CouponForm = ({
                   setTicketIds([...ticketIds, ticketInfo[ticketType].id]);
                   newTicketIds = [...ticketIds, ticketInfo[ticketType].id];
                 }
-                if (discount.discount_value > 0) {
+                if (
+                  discount.discount_value > 0 &&
+                  discount.ticket.includes(ticketInfo[ticketType].id)
+                ) {
                   const amount = newTicketIds.reduce((acc, id) => {
                     return (
                       acc +
@@ -242,7 +245,10 @@ const CouponForm = ({
                 }
               } else {
                 setTicketIds([ticketInfo[ticketType].id]);
-                if (discount.discount_value > 0)
+                if (
+                  discount.discount_value > 0 &&
+                  discount.ticket.includes(ticketInfo[ticketType].id)
+                )
                   setAmount(
                     discountedTicketPrice(
                       Number(ticketInfo[ticketType].price),
@@ -279,20 +285,22 @@ const CouponForm = ({
             </div>
 
             <div className={styles.ticketPriceData}>
-              {discount.discount_value > 0 && ticketInfo[ticketType].price > 0 && (
-                <div className={styles.discountData}>
-                  <p className={styles.discountAmount}>
-                    {discount.discount_type.toLowerCase() === 'percentage'
-                      ? `${discount.discount_value}% off`
-                      : `${ticketInfo[ticketType].currency} ${discount.discount_value} off`}
-                  </p>
-                  <p className={styles.originalPrice}>
-                    <del>
-                      M.R.P. {ticketInfo[ticketType].currency} {ticketInfo[ticketType].price}
-                    </del>
-                  </p>
-                </div>
-              )}
+              {discount.discount_value > 0 &&
+                ticketInfo[ticketType].price > 0 &&
+                discount.ticket.includes(ticketInfo[ticketType].id) && (
+                  <div className={styles.discountData}>
+                    <p className={styles.discountAmount}>
+                      {discount.discount_type.toLowerCase() === 'percentage'
+                        ? `${discount.discount_value}% off`
+                        : `${ticketInfo[ticketType].currency} ${discount.discount_value} off`}
+                    </p>
+                    <p className={styles.originalPrice}>
+                      <del>
+                        M.R.P. {ticketInfo[ticketType].currency} {ticketInfo[ticketType].price}
+                      </del>
+                    </p>
+                  </div>
+                )}
               <div className={styles.priceData}>
                 <p className={styles.ticketPrice}>
                   {discountedTicketPrice(Number(ticketInfo[ticketType].price), discount) === 0

@@ -34,6 +34,7 @@ export const submitForm = async ({
   setEventData,
   eventTitle,
   selectedDate,
+  setDiscount
 }: {
   eventId: string;
   ticketIds: string[];
@@ -49,6 +50,7 @@ export const submitForm = async ({
   setEventData?: React.Dispatch<React.SetStateAction<EventType | undefined>>;
   eventTitle?: string;
   selectedDate?: string | null;
+  setDiscount?: React.Dispatch<DiscountData>;
 }) => {
   const selectedDateFormatted = selectedDate
     ? new Date(selectedDate).toISOString().split('T')[0]
@@ -119,6 +121,7 @@ export const submitForm = async ({
                   setFormNumber && setFormNumber(0);
                   setFormData && setFormData({});
                   setAmount && setAmount('');
+                  setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
                   if (setEventData && eventTitle) getEventInfo(eventTitle, setEventData);
                 }, 5000);
 
@@ -144,6 +147,7 @@ export const submitForm = async ({
           setSuccess && setSuccess('');
           setFormNumber && setFormNumber(0);
           setFormData && setFormData({});
+          setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
           setAmount && setAmount('');
         }, 5000);
 
@@ -176,6 +180,7 @@ export const applyCoupon = async (
         setDiscount({
           discount_value: 0,
           discount_type: 'error',
+          ticket: [],
         });
       });
 };

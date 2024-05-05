@@ -34,6 +34,7 @@ const EventPage = () => {
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
     discount_value: 0,
+    ticket: [],
   });
 
   const [hasZeroPriceTicket, setHasZeroPriceTicket] = useState(false);
@@ -254,6 +255,7 @@ const EventPage = () => {
                         setEventData,
                         eventTitle,
                         selectedDate,
+                        setDiscount,
                       });
                     }
                   }}
