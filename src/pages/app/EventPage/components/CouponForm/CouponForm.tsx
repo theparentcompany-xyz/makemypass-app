@@ -99,26 +99,6 @@ const CouponForm = ({
 
   return (
     <>
-      {eventData && eventData.remaining_tickets && (
-        <div className={styles.selectDateContainer}>
-          <p className={styles.ticketTypesTitle}>Select Date</p>
-          <p className={styles.eventDescription}>Select a date to register for the event.</p>
-
-          <div className={styles.selectionContainer}>
-            <DatePicker
-              wrapperClassName={styles.datePicker}
-              dateFormat='dd MMM yyyy'
-              selected={selectedDate ? new Date(selectedDate) : null}
-              onChange={(date) => handleDateChange(date?.toString())}
-              minDate={
-                eventData.event_start_date ? new Date(eventData.event_start_date) : new Date()
-              }
-              maxDate={findMaxDate()}
-            />
-          </div>
-        </div>
-      )}
-
       {coupon.status && (
         <motion.div
           initial={{ opacity: 0, y: 35 }}
@@ -181,6 +161,26 @@ const CouponForm = ({
             />
           </div>
         </motion.div>
+      )}
+
+      {eventData && eventData.remaining_tickets && (
+        <div className={styles.selectDateContainer}>
+          <p className={styles.ticketTypesTitle}>Select Date</p>
+          <p className={styles.eventDescription}>Select a date to register for the event.</p>
+
+          <div className={styles.selectionContainer}>
+            <DatePicker
+              wrapperClassName={styles.datePicker}
+              dateFormat='dd MMM yyyy'
+              selected={selectedDate ? new Date(selectedDate) : null}
+              onChange={(date) => handleDateChange(date?.toString())}
+              minDate={
+                eventData.event_start_date ? new Date(eventData.event_start_date) : new Date()
+              }
+              maxDate={findMaxDate()}
+            />
+          </div>
+        </div>
       )}
 
       <motion.div

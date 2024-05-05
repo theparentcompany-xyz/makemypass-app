@@ -265,3 +265,16 @@
 
   border: none;
 }
+
+.selectDateContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  column-gap: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgb(42, 53, 51);
+}
