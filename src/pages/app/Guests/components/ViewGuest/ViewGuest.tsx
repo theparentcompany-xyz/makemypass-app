@@ -159,6 +159,7 @@ const ViewGuest = ({
                             formData['id'],
                             confirmClicked.value,
                             setSelectedGuestId,
+                            
                           );
                       }}
                       buttonText={confirmClicked.value ? 'Yes, Accept' : 'Yes, Decline'}

@@ -82,10 +82,10 @@ const DynamicForm = ({
 
     if (eventData) console.log(new Date() > new Date(eventData.event_start_date));
     if (eventData?.event_start_date && new Date() > new Date(eventData.event_start_date)) {
-      setSelectedDate(new Date().toISOString().split('T')[0]);
+      setSelectedDate && setSelectedDate(new Date().toISOString().split('T')[0]);
       handleDateChange(selectedDate);
     } else {
-      if (eventData?.event_start_date) setSelectedDate(eventData?.event_start_date);
+      if (eventData?.event_start_date) setSelectedDate && setSelectedDate(eventData?.event_start_date);
       handleDateChange(selectedDate);
     }
   }, [eventData]);

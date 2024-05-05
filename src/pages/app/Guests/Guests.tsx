@@ -253,6 +253,10 @@ const Guests = () => {
               <div className={styles.buttons}>
                 <p
                   onClick={() => {
+                    if (!isTicketsAvailable) {
+                      toast.error('No tickets available for the selected date');
+                      return;
+                    }
                     addGuest(
                       eventId,
                       ticketId,

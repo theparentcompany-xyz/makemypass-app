@@ -10,12 +10,10 @@ export const shortListUser = (
   userId: string,
   isShortListed: boolean,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
-  selectedDate: string,
 ) => {
   privateGateway
     .post(makeMyPass.shortListUser(eventId, userId), {
       is_approved: isShortListed,
-      ticket_date: selectedDate,
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'User shortlisted successfully');
