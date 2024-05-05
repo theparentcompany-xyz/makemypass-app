@@ -7,10 +7,11 @@ import InputFIeld from '../../../../auth/Login/InputFIeld';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { motion } from 'framer-motion';
 import { applyCoupon } from '../../../../../apis/publicpage';
-import DatePicker from 'react-datepicker';
+
 
 import 'react-datepicker/dist/react-datepicker.css';
 import toast from 'react-hot-toast';
+import SelectDate from '../../../../../components/SelectDate/SelectDate';
 
 // ! POSTPONDED: Feature not available in the current version
 // * This feature is not available in the current version of the app
@@ -60,28 +61,6 @@ const CouponForm = ({
       if (remainingTicketsL === 0) setIsTicketsAvailable(false);
       else setIsTicketsAvailable(true);
     }
-  };
-
-  const findMaxDate = () => {
-    let maxDate: Date | null = null;
-
-    if (eventData && eventData.event_end_date) {
-      const maxDateReducer = (maxDate: Date | null, date: string) => {
-        const remainingTickets = eventData.remaining_tickets[date];
-        if (remainingTickets > 0) {
-          const currentDate = new Date(date);
-          if (!maxDate || currentDate > maxDate) {
-            maxDate = currentDate;
-          }
-        }
-        return maxDate;
-      };
-
-      maxDate = Object.keys(eventData.remaining_tickets).reduce(maxDateReducer, null);
-
-      return maxDate || new Date();
-    }
-    return new Date();
   };
 
   useEffect(() => {
@@ -167,28 +146,12 @@ const CouponForm = ({
       )}
 
       {eventData && eventData.remaining_tickets && (
-        <div className={styles.selectDateContainer}>
-          <p className={styles.ticketTypesTitle}>Select Date</p>
-          <p className={styles.eventDescription}>Select a date to register for the event.</p>
-
-          <div className={styles.selectionContainer}>
-            <DatePicker
-              wrapperClassName={styles.datePicker}
-              dateFormat='dd MMM yyyy'
-              selected={selectedDate ? new Date(selectedDate) : null}
-              onChange={(date) => handleDateChange(date?.toString())}
-              minDate={
-                eventData.event_start_date ? new Date(eventData.event_start_date) : new Date()
-              }
-              maxDate={findMaxDate()}
-            />
-          </div>
-          {selectedDate && (
-            <p className={styles.remainingTickets}>
-              {remainingTickets > 0 ? `${remainingTickets} tickets left` : 'No tickets left'}
-            </p>
-          )}
-        </div>
+        <SelectDate
+          eventData={eventData}
+          selectedDate={selectedDate}
+          handleDateChange={handleDateChange}
+          remainingTickets={remainingTickets}
+        />
       )}
 
       <motion.div
