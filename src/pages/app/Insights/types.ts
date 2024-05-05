@@ -45,6 +45,12 @@ export type AnalyticsData = {
       amount: number;
     };
   };
+  coupon_analytics: {
+    [key: string]: {
+      count: number;
+      amount: number;
+    };
+  };
 };
 
 export interface Dataset {
