@@ -120,5 +120,6 @@ export const buildVerse = {
   preRegister: buildVerseURL('/pre-register/'),
   register: buildVerseURL('/register/'),
   updateProfile: buildVerseURL('/update-profile/'),
+  profileInfo: buildVerseURL('/profile-info/'),
   setUserData: (token: string) => buildVerseURL(`/set-user-data/${token}`),
 };
