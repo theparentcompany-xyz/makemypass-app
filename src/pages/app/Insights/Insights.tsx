@@ -454,7 +454,7 @@ const Insights = () => {
                 </div>
               </div>
 
-              <div className={styles.insightsContainer}>
+              {/* <div className={styles.insightsContainer}>
                 {Object.entries(message?.coupon_analytics || {}).length > 0 && (
                   <div className={styles.categorySection}>
                     <p className={styles.rightSectionHeading}>Referral Analytics</p>
@@ -478,7 +478,7 @@ const Insights = () => {
                     </div>
                   </div>
                 )}
-              </div>
+              </div> */}
             </div>
           </>
         ) : (
