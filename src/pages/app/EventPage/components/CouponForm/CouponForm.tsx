@@ -8,7 +8,6 @@ import SecondaryButton from '../../../Overview/components/SecondaryButton/Second
 import { motion } from 'framer-motion';
 import { applyCoupon } from '../../../../../apis/publicpage';
 
-
 import 'react-datepicker/dist/react-datepicker.css';
 import toast from 'react-hot-toast';
 import SelectDate from '../../../../../components/SelectDate/SelectDate';
@@ -240,6 +239,11 @@ const CouponForm = ({
                 : '2px solid #2A3533',
             }}
           >
+            <div className={styles.ticketCountContainer}>
+              <button className={styles.ticketCountUpdateButton}>+</button>
+              <p className={styles.ticketCount}>0</p>
+              <button className={styles.ticketCountUpdateButton}>-</button>
+            </div>
             <div className={styles.passText}>
               <p className={styles.ticketTypeTitle}>{ticketType?.toUpperCase()}</p>
               <p className={styles.ticketTypeDescription}>{ticketInfo[ticketType].description}</p>
