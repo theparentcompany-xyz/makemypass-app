@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './ProfilePage.module.css';
 import Theme from '../../../components/Theme/Theme';
-import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { setUserData, updateProfile, getProfileInfo } from '../../../apis/user';
 import { useLocation } from 'react-router-dom';
 
@@ -58,9 +57,11 @@ const ProfilePage = () => {
             )}
             <div className={styles.formGroup}>
               <label htmlFor='profile_pic'>Profile Picture</label>
-              <input type='file' id='profile_pic' name='profile_pic' />
+              <input type='file' id='profile_pic' name='profile_pic' className={styles.fileInput} />
             </div>
-            <SecondaryButton buttonText='Update Details' type='submit' />
+            <button type='submit' className={styles.updateButton}>
+              Update details
+            </button>
             <div className={styles.formGroup}>
               <label className={styles.optional}>All fields are optional</label>
             </div>
