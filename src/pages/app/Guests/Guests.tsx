@@ -36,6 +36,7 @@ import Modal from '../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
 import { getEventInfo, getFormFields, getTickets } from '../../../apis/publicpage';
 import { useParams } from 'react-router';
+import { Tickets } from '../EventPage/types';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -47,7 +48,7 @@ const Guests = () => {
   const [formErrors, setFormErrors] = useState<ErrorMessages>({});
   const [formData, setFormData] = useState<FormDataType>({});
   const [ticketInfo, setTicketInfo] = useState<{}>();
-  const [ticketId, setTicketId] = useState<string>('');
+  const [tickets, setTickets] = useState<Tickets[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>();
   const [cashInHand, setCashInHand] = useState(false);
@@ -235,8 +236,8 @@ const Guests = () => {
               setCashInHand={setCashInHand}
               cashInHand={cashInHand}
               ticketInfo={ticketInfo}
-              setTicketId={setTicketId}
-              ticketId={ticketId}
+              setTickets={setTickets}
+              tickets={tickets}
               eventData={eventData}
               ticketCode={ticketCode}
               setTicketCode={setTicketCode}
@@ -259,7 +260,7 @@ const Guests = () => {
                     }
                     addGuest(
                       eventId,
-                      ticketId,
+                      tickets,
                       formData,
                       setFormErrors,
                       setSelectedGuestId,
@@ -342,8 +343,8 @@ const Guests = () => {
                   setCashInHand={setCashInHand}
                   cashInHand={cashInHand}
                   ticketInfo={ticketInfo}
-                  setTicketId={setTicketId}
-                  ticketId={ticketId}
+                  setTickets={setTickets}
+                  tickets={tickets}
                   selectedGuestId={selectedGuestId}
                 />
 

@@ -4,6 +4,7 @@ import { makeMyPass } from '../../services/urls';
 import { Dispatch } from 'react';
 import { SelectedGuest } from '../pages/app/Guests/types';
 import { ErrorMessages, FormDataType, PaymentDetails } from './types';
+import { Tickets } from '../pages/app/EventPage/types';
 
 export const shortListUser = (
   eventId: string,
@@ -33,13 +34,15 @@ declare global {
 
 export const addGuest = (
   eventId: string,
-  ticketId: string,
+  tickets: Tickets[],
   formData: FormDataType,
   setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
   selectedDate?: string,
 ) => {
-  formData['tickets[]'] = ticketId;
+  tickets.map((ticket) => {
+    formData['tickets'] = JSON.stringify(ticket);
+  });
 
   const script = document.createElement('script');
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';

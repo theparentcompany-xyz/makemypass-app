@@ -11,14 +11,15 @@ import { EventType } from '../../apis/types';
 import Scanner from '../Scanner/Scanner';
 import { SelectedGuest } from '../../pages/app/Guests/types';
 import SelectDate from '../SelectDate/SelectDate';
+import { Tickets } from '../../pages/app/EventPage/types';
 const DynamicForm = ({
   formFields,
   formErrors,
   formData,
   onFieldChange,
   ticketInfo,
-  setTicketId,
-  ticketId,
+  setTickets,
+  tickets,
   eventData,
   setCashInHand,
   cashInHand,
@@ -39,8 +40,8 @@ const DynamicForm = ({
   setCashInHand?: React.Dispatch<React.SetStateAction<boolean>>;
   cashInHand?: boolean;
   ticketInfo?: { [key: string]: TicketType };
-  setTicketId?: Dispatch<React.SetStateAction<string>>;
-  ticketId?: string;
+  setTickets?: Dispatch<React.SetStateAction<Tickets[]>>;
+  tickets?: Tickets[];
   eventData?: EventType;
   ticketCode?: string;
   setTicketCode?: Dispatch<React.SetStateAction<string>>;
@@ -85,8 +86,33 @@ const DynamicForm = ({
       setSelectedDate && setSelectedDate(new Date().toISOString().split('T')[0]);
       handleDateChange(selectedDate);
     } else {
-      if (eventData?.event_start_date) setSelectedDate && setSelectedDate(eventData?.event_start_date);
+      if (eventData?.event_start_date)
+        setSelectedDate && setSelectedDate(eventData?.event_start_date);
       handleDateChange(selectedDate);
+    }
+
+    if (eventData && eventData.tickets) {
+      Object.keys(eventData.tickets).map((key) => {
+        const ticket = eventData.tickets[key];
+        const ticketsTemp = [];
+        if (ticket) {
+          ticketsTemp.push({
+            ticket_id: eventData.tickets[key].id,
+            count: 0,
+            my_ticket: false,
+          });
+        }
+      });
+
+      console.log('ticketsTemp', tickets);
+      setTickets &&
+        setTickets(
+          Object.keys(eventData.tickets).map((key) => ({
+            ticket_id: eventData.tickets[key].id,
+            count: 0,
+            my_ticket: false,
+          })),
+        );
     }
   }, [eventData]);
 
@@ -200,7 +226,7 @@ const DynamicForm = ({
               }}
             >
               <p className={styles.formLabel}>Ticket Type</p>
-              <motion.div className={styles.dropdown}>
+              {/* <motion.div className={styles.dropdown}>
                 <Select
                   options={Object.keys(ticketInfo).map((key) => ({
                     value: ticketInfo[key].id,
@@ -232,7 +258,42 @@ const DynamicForm = ({
                   placeholder={`Select an option`}
                   isSearchable={false}
                 />
-              </motion.div>
+              </motion.div> */}
+
+              <div className={styles.tickets}>
+                {Object.keys(ticketInfo).map((key) => {
+                  return (
+                    <div className={styles.ticket}>
+                      <p key={key} className={styles.ticketDetails}>
+                        {ticketInfo[key].title} - {ticketInfo[key].currency} {ticketInfo[key].price}
+                      </p>
+
+                      <input
+                        placeholder='Enter Ticket Count'
+                        type='number'
+                        className={styles.ticketCountInput}
+                        onChange={(event) => {
+                          setTickets &&
+                            setTickets((prevTickets) =>
+                              prevTickets.map((ticket) => {
+                                if (ticket.ticket_id === ticketInfo[key].id) {
+                                  ticket.my_ticket = true;
+                                  ticket.count = event.target.value
+                                    ? Number(event.target.value)
+                                    : 0;
+                                } else {
+                                  ticket.my_ticket = false;
+                                  ticket.count = 0;
+                                }
+                                return ticket;
+                              }),
+                            );
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
             <div
               style={{
