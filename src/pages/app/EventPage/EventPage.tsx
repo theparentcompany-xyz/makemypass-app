@@ -20,8 +20,11 @@ const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
   const [tickets, setTickets] = useState<Tickets[]>([]);
+
   const [eventData, setEventData] = useState<EventType>();
   const [formErrors, setFormErrors] = useState<any>({});
+
+  const [newTickets, setNewTickets] = useState<Tickets[]>([]);
 
   const [formData, setFormData] = useState<FormDataType>({});
   const [amount, setAmount] = useState<string>('');
@@ -125,6 +128,36 @@ const EventPage = () => {
       });
     }
   };
+
+  const updateTicketCount = (ticketId: string, increment: boolean) => {
+    let otherTicket = false;
+    const updatedTickets = tickets.map((ticket) => {
+      if (ticket.ticket_id === ticketId) {
+        return {
+          ...ticket,
+          count: increment ? ticket.count + 1 : ticket.count - 1,
+        };
+      } else {
+        otherTicket = true;
+      }
+
+      return ticket;
+    });
+
+    if (updatedTickets.length > 0) {
+      if (!otherTicket) {
+        updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: false });
+      }
+      setNewTickets(updatedTickets);
+    }
+  };
+
+  useEffect(() => {
+    if (newTickets.length > 0) {
+      setTickets(newTickets);
+    }
+  }, [newTickets]);
+
   return (
     <>
       <Helmet>
@@ -208,6 +241,7 @@ const EventPage = () => {
                   coupon={coupon}
                   setSelectedDate={setSelectedDate}
                   selectedDate={selectedDate}
+                  updateTicketCount={updateTicketCount}
                 />
               )}
 

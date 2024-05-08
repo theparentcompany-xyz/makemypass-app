@@ -25,6 +25,7 @@ const CouponForm = ({
   coupon,
   setSelectedDate,
   selectedDate,
+  updateTicketCount,
 }: {
   ticketInfo: { [key: string]: TicketType };
   setTickets: React.Dispatch<React.SetStateAction<Tickets[]>>;
@@ -38,6 +39,7 @@ const CouponForm = ({
   coupon: CouponData;
   setSelectedDate: React.Dispatch<React.SetStateAction<string | null | undefined>>;
   selectedDate: string | null | undefined;
+  updateTicketCount: (ticketId: string, increment: boolean) => void;
 }) => {
   const [remainingTickets, setRemainingTickets] = React.useState<number>(0);
   const [isTicketsAvailable, setIsTicketsAvailable] = React.useState<boolean>(true);
@@ -61,7 +63,6 @@ const CouponForm = ({
   useEffect(() => {
     if (eventData && !eventData.remaining_tickets) return;
 
-    if (eventData) console.log(new Date() > new Date(eventData.event_start_date));
     if (eventData?.event_start_date && new Date() > new Date(eventData.event_start_date)) {
       setSelectedDate(new Date().toISOString().split('T')[0]);
       handleDateChange(selectedDate);
@@ -235,6 +236,7 @@ const CouponForm = ({
                     my_ticket: true,
                   },
                 ]);
+
                 if (
                   discount.discount_value > 0 &&
                   discount.ticket.includes(ticketInfo[ticketType].id)
@@ -254,17 +256,37 @@ const CouponForm = ({
             className={styles.ticketType}
             style={{
               border:
-                tickets.filter((ticket) => ticket.ticket_id === ticketInfo[ticketType].id).length >
-                0
+                tickets.filter(
+                  (ticket) => ticket.ticket_id === ticketInfo[ticketType].id && ticket.my_ticket,
+                ).length > 0
                   ? '2px solid #FFFFFF'
                   : '2px solid #2A3533',
             }}
           >
-            <div className={styles.ticketCountContainer}>
-              <button className={styles.ticketCountUpdateButton}>-</button>
-              <p className={styles.ticketCount}>0</p>
-              <button className={styles.ticketCountUpdateButton}>+</button>
-            </div>
+            {tickets && (
+              <div className={styles.ticketCountContainer}>
+                <button
+                  className={styles.ticketCountUpdateButton}
+                  onClick={() => {
+                    updateTicketCount(ticketInfo[ticketType].id, false);
+                  }}
+                >
+                  -
+                </button>
+                <p className={styles.ticketCount}>
+                  {tickets.find((ticket) => ticket.ticket_id === ticketInfo[ticketType].id)
+                    ?.count ?? 0}
+                </p>
+                <button
+                  className={styles.ticketCountUpdateButton}
+                  onClick={() => {
+                    updateTicketCount(ticketInfo[ticketType].id, true);
+                  }}
+                >
+                  +
+                </button>
+              </div>
+            )}
             <div className={styles.passText}>
               <p className={styles.ticketTypeTitle}>{ticketType?.toUpperCase()}</p>
               <p className={styles.ticketTypeDescription}>{ticketInfo[ticketType].description}</p>
