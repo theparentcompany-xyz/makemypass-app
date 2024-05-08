@@ -130,7 +130,7 @@ const EventPage = () => {
   };
 
   const updateTicketCount = (ticketId: string, increment: boolean) => {
-    let otherTicket = false;
+    let newTicket = false;
     const updatedTickets = tickets.map((ticket) => {
       if (ticket.ticket_id === ticketId) {
         return {
@@ -138,16 +138,17 @@ const EventPage = () => {
           count: increment ? ticket.count + 1 : ticket.count - 1,
         };
       } else {
-        otherTicket = true;
+        newTicket = true;
       }
 
       return ticket;
     });
 
+    if (newTicket) {
+      updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: false });
+    }
+
     if (updatedTickets.length > 0) {
-      if (!otherTicket) {
-        updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: false });
-      }
       setNewTickets(updatedTickets);
     }
   };
