@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 // import { getEventId } from '../../../apis/events';
 import { getEventInfo, submitForm, validateRsvp } from '../../../apis/publicpage';
-import { CouponData, DiscountData } from './types';
+import { CouponData, DiscountData, Tickets } from './types';
 import { motion } from 'framer-motion';
 // import { showRazorpay } from './components/Razorpay';
 import { EventType, FormDataType } from '../../../apis/types';
@@ -19,7 +19,7 @@ import { Helmet } from 'react-helmet';
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
-  const [ticketIds, setTicketIds] = useState<string[]>([]);
+  const [tickets, setTickets] = useState<Tickets[]>([]);
   const [eventData, setEventData] = useState<EventType>();
   const [formErrors, setFormErrors] = useState<any>({});
 
@@ -67,12 +67,13 @@ const EventPage = () => {
 
   useEffect(() => {
     if (discount.discount_value > 0) {
-      setAmount(discountedTicketPrice(Number(amount), discount, ticketIds[0]).toString());
+      //* Does all the ticket prices are added
+      setAmount(discountedTicketPrice(Number(amount), discount, tickets[0].ticket_id).toString());
     } else {
-      if (eventData?.tickets && ticketIds) {
+      if (eventData?.tickets && tickets) {
         let ticketPrice = 0;
         Object.keys(eventData?.tickets)?.map((ticketType) => {
-          if (ticketIds.includes(eventData?.tickets[ticketType].id)) {
+          if (tickets.find((ticket) => ticket.ticket_id === eventData?.tickets[ticketType].id)) {
             ticketPrice += eventData?.tickets[ticketType].price;
           }
         });
@@ -86,7 +87,7 @@ const EventPage = () => {
     if (eventData?.tickets) {
       Object.keys(eventData?.tickets)?.map((ticketType) => {
         if (eventData?.tickets[ticketType].default_selected) {
-          setTicketIds([eventData?.tickets[ticketType].id]);
+          setTickets([{ ticket_id: eventData?.tickets[ticketType].id, count: 1, my_ticket: true }]);
           setAmount(eventData?.tickets[ticketType].price.toString());
         }
       });
@@ -196,8 +197,8 @@ const EventPage = () => {
               {(eventData.tickets || eventData.select_multi_ticket) && formNumber === 1 && (
                 <CouponForm
                   ticketInfo={eventData.tickets}
-                  setTicketIds={setTicketIds}
-                  ticketIds={ticketIds}
+                  setTickets={setTickets}
+                  tickets={tickets}
                   eventId={eventData.id}
                   discount={discount}
                   setDiscount={setDiscount}
@@ -243,7 +244,7 @@ const EventPage = () => {
                     } else {
                       submitForm({
                         eventId: eventData.id,
-                        ticketIds,
+                        tickets,
                         formData,
                         coupon,
                         setSuccess,

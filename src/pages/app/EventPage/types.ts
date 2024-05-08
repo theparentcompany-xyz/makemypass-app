@@ -36,3 +36,9 @@ type TicketType = {
 export type TicketOptions = {
   [key: string]: TicketType;
 };
+
+export type Tickets = {
+  ticket_id: string;
+  count: number;
+  my_ticket: boolean;
+};

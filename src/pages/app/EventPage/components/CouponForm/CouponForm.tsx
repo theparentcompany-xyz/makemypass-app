@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { CouponData, DiscountData } from '../../types';
+import { CouponData, DiscountData, Tickets } from '../../types';
 import { EventType, TicketType } from '../../../../../apis/types';
 import styles from './CouponForm.module.css';
 import { discountedTicketPrice, getIcon } from '../../constants';
@@ -12,14 +12,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 import toast from 'react-hot-toast';
 import SelectDate from '../../../../../components/SelectDate/SelectDate';
 
-// ! POSTPONDED: Feature not available in the current version
-// * This feature is not available in the current version of the app
-/* eslint no-use-before-define: 0 */ // --> OFF
-
 const CouponForm = ({
   ticketInfo,
-  setTicketIds,
-  ticketIds,
+  setTickets,
+  tickets,
   eventId,
   discount,
   setDiscount,
@@ -31,8 +27,8 @@ const CouponForm = ({
   selectedDate,
 }: {
   ticketInfo: { [key: string]: TicketType };
-  setTicketIds: React.Dispatch<React.SetStateAction<string[]>>;
-  ticketIds: string[];
+  setTickets: React.Dispatch<React.SetStateAction<Tickets[]>>;
+  tickets: Tickets[];
   eventId: string;
   discount: DiscountData;
   setDiscount: React.Dispatch<React.SetStateAction<DiscountData>>;
@@ -181,12 +177,12 @@ const CouponForm = ({
               if (eventData?.select_multi_ticket) {
                 let newTicketIds = []; //temporary variable to store new ticket ids for amount updation
 
-                if (ticketIds.includes(ticketInfo[ticketType].id)) {
-                  setTicketIds(ticketIds.filter((id) => id !== ticketInfo[ticketType].id));
-                  newTicketIds = ticketIds.filter((id) => id !== ticketInfo[ticketType].id);
+                if (tickets.includes(ticketInfo[ticketType].id)) {
+                  setTickets(tickets.filter((id) => id !== ticketInfo[ticketType].id));
+                  newTicketIds = tickets.filter((id) => id !== ticketInfo[ticketType].id);
                 } else {
-                  setTicketIds([...ticketIds, ticketInfo[ticketType].id]);
-                  newTicketIds = [...ticketIds, ticketInfo[ticketType].id];
+                  setTickets([...tickets, ticketInfo[ticketType].id]);
+                  newTicketIds = [...tickets, ticketInfo[ticketType].id];
                 }
                 if (
                   discount.discount_value > 0 &&
@@ -215,7 +211,7 @@ const CouponForm = ({
                   setAmount(amount.toString());
                 }
               } else {
-                setTicketIds([ticketInfo[ticketType].id]);
+                setTickets([ticketInfo[ticketType].id]);
                 if (
                   discount.discount_value > 0 &&
                   discount.ticket.includes(ticketInfo[ticketType].id)
@@ -234,15 +230,15 @@ const CouponForm = ({
             }}
             className={styles.ticketType}
             style={{
-              border: ticketIds.includes(ticketInfo[ticketType].id)
+              border: tickets.includes(ticketInfo[ticketType].id)
                 ? '2px solid #FFFFFF'
                 : '2px solid #2A3533',
             }}
           >
             <div className={styles.ticketCountContainer}>
-              <button className={styles.ticketCountUpdateButton}>+</button>
-              <p className={styles.ticketCount}>0</p>
               <button className={styles.ticketCountUpdateButton}>-</button>
+              <p className={styles.ticketCount}>0</p>
+              <button className={styles.ticketCountUpdateButton}>+</button>
             </div>
             <div className={styles.passText}>
               <p className={styles.ticketTypeTitle}>{ticketType?.toUpperCase()}</p>

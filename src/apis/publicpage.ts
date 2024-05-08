@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { CouponData, DiscountData, TicketOptions } from '../pages/app/EventPage/types';
+import { CouponData, DiscountData, TicketOptions, Tickets } from '../pages/app/EventPage/types';
 import { Dispatch } from 'react';
 import {
   ErrorMessages,
@@ -21,7 +21,7 @@ declare global {
 
 export const submitForm = async ({
   eventId,
-  ticketIds,
+  tickets,
   formData,
   coupon,
   setSuccess,
@@ -37,7 +37,7 @@ export const submitForm = async ({
   setDiscount,
 }: {
   eventId: string;
-  ticketIds: string[];
+  tickets: Tickets[];
   formData: FormDataType;
   coupon: CouponData;
   setSuccess?: React.Dispatch<React.SetStateAction<string>>;
@@ -82,7 +82,7 @@ export const submitForm = async ({
 
   if (response) backendFormData.append('payment_data', JSON.stringify(response));
   if (coupon.value) backendFormData.append('coupon_code', coupon.value?.toString());
-  ticketIds.forEach((ticketId) => backendFormData.append('tickets[]', ticketId));
+  tickets.forEach((ticket: Tickets) => backendFormData.append('tickets[]', JSON.stringify(ticket)));
   if (selectedDateFormatted) backendFormData.append('ticket_date', selectedDateFormatted);
 
   publicGateway
