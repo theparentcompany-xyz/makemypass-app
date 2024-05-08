@@ -130,7 +130,7 @@ const EventPage = () => {
   };
 
   const updateTicketCount = (ticketId: string, increment: boolean) => {
-    let newTicket = false;
+    let newTicket = true;
 
     const updatedTickets = tickets.map((ticket) => {
       if (ticket.ticket_id === ticketId) {
