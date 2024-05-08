@@ -177,24 +177,41 @@ const CouponForm = ({
               if (eventData?.select_multi_ticket) {
                 let newTicketIds = []; //temporary variable to store new ticket ids for amount updation
 
-                if (tickets.includes(ticketInfo[ticketType].id)) {
-                  setTickets(tickets.filter((id) => id !== ticketInfo[ticketType].id));
-                  newTicketIds = tickets.filter((id) => id !== ticketInfo[ticketType].id);
+                if (
+                  tickets.filter((ticket) => ticket.ticket_id === ticketInfo[ticketType].id)
+                    .length > 0
+                ) {
+                  setTickets(
+                    tickets.filter((ticket) => ticket.ticket_id !== ticketInfo[ticketType].id),
+                  );
+                  newTicketIds = tickets.filter(
+                    (ticket) => ticket.ticket_id !== ticketInfo[ticketType].id,
+                  );
                 } else {
-                  setTickets([...tickets, ticketInfo[ticketType].id]);
+                  setTickets([
+                    ...tickets,
+                    {
+                      ticket_id: ticketInfo[ticketType].id,
+                      count: 1,
+                      my_ticket: true,
+                    },
+                  ]);
                   newTicketIds = [...tickets, ticketInfo[ticketType].id];
                 }
+
                 if (
                   discount.discount_value > 0 &&
                   discount.ticket.includes(ticketInfo[ticketType].id)
                 ) {
-                  const amount = newTicketIds.reduce((acc, id) => {
+                  const amount = newTicketIds.reduce((acc, ticket) => {
+                    const ticketId = typeof ticket === 'string' ? ticket : ticket.ticket_id;
                     return (
                       acc +
                       discountedTicketPrice(
-                        Object.values(ticketInfo).filter((ticktype) => ticktype.id === id)[0].price,
+                        Object.values(ticketInfo).filter((ticktype) => ticktype.id === ticketId)[0]
+                          .price,
                         discount,
-                        id,
+                        ticketId,
                       )
                     );
                   }, 0);
@@ -211,7 +228,13 @@ const CouponForm = ({
                   setAmount(amount.toString());
                 }
               } else {
-                setTickets([ticketInfo[ticketType].id]);
+                setTickets([
+                  {
+                    ticket_id: ticketInfo[ticketType].id,
+                    count: 1,
+                    my_ticket: true,
+                  },
+                ]);
                 if (
                   discount.discount_value > 0 &&
                   discount.ticket.includes(ticketInfo[ticketType].id)
@@ -230,9 +253,11 @@ const CouponForm = ({
             }}
             className={styles.ticketType}
             style={{
-              border: tickets.includes(ticketInfo[ticketType].id)
-                ? '2px solid #FFFFFF'
-                : '2px solid #2A3533',
+              border:
+                tickets.filter((ticket) => ticket.ticket_id === ticketInfo[ticketType].id).length >
+                0
+                  ? '2px solid #FFFFFF'
+                  : '2px solid #2A3533',
             }}
           >
             <div className={styles.ticketCountContainer}>
