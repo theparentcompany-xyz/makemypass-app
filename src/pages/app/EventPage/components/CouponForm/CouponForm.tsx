@@ -229,13 +229,31 @@ const CouponForm = ({
                   setAmount(amount.toString());
                 }
               } else {
-                setTickets([
-                  {
+                const ticketAlreadyThere =
+                  tickets.filter((ticket) => ticket.ticket_id === ticketInfo[ticketType].id)
+                    .length > 0;
+
+                if (ticketAlreadyThere) {
+                  setTickets(
+                    tickets.map((ticket) => ({
+                      ...ticket,
+                      my_ticket: ticket.ticket_id === ticketInfo[ticketType].id ? true : false,
+                    })),
+                  );
+                } else {
+                  const updatedTickets = tickets.map((ticket) => ({
+                    ...ticket,
+                    my_ticket: false,
+                  }));
+
+                  updatedTickets.push({
                     ticket_id: ticketInfo[ticketType].id,
                     count: 1,
                     my_ticket: true,
-                  },
-                ]);
+                  });
+
+                  setTickets(updatedTickets);
+                }
 
                 if (
                   discount.discount_value > 0 &&
