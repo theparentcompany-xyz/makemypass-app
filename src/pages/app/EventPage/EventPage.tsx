@@ -153,7 +153,6 @@ const EventPage = () => {
 
   useEffect(() => {
     if (newTickets.length > 0) {
-      console.log('newTickets', newTickets);
       setTickets(newTickets);
     }
   }, [newTickets]);
