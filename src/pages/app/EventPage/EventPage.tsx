@@ -133,7 +133,7 @@ const EventPage = () => {
     let newTicket = true;
 
     const updatedTickets = tickets.map((ticket) => {
-      if (ticket.ticket_id === ticketId) {
+      if (ticket.ticket_id === ticketId && ticket.count >= 0) {
         newTicket = false;
         return {
           ...ticket,
