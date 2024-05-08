@@ -131,23 +131,21 @@ const EventPage = () => {
 
   const updateTicketCount = (ticketId: string, increment: boolean) => {
     let newTicket = false;
+
     const updatedTickets = tickets.map((ticket) => {
       if (ticket.ticket_id === ticketId) {
+        newTicket = false;
         return {
           ...ticket,
           count: increment ? ticket.count + 1 : ticket.count - 1,
         };
-      } else {
-        newTicket = true;
       }
-
       return ticket;
     });
 
     if (newTicket) {
       updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: false });
     }
-
     if (updatedTickets.length > 0) {
       setNewTickets(updatedTickets);
     }
@@ -155,6 +153,7 @@ const EventPage = () => {
 
   useEffect(() => {
     if (newTickets.length > 0) {
+      console.log('newTickets', newTickets);
       setTickets(newTickets);
     }
   }, [newTickets]);
