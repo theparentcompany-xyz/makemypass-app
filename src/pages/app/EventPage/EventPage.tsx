@@ -30,7 +30,7 @@ const EventPage = () => {
   const [amount, setAmount] = useState<string>('');
   const [success, setSuccess] = useState<string>('');
 
-  const [formNumber, setFormNumber] = useState<number>(1);
+  const [formNumber, setFormNumber] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState<string | null>();
   // const [hasEvent, setHasEvent] = useState<boolean>(true);
 
