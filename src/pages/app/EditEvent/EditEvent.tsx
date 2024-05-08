@@ -114,8 +114,8 @@ const EditEvent = () => {
     if (eventData?.capacity == undefined && fetchedEvent?.capacity)
       changedData['capacity'] = 'null';
     if (changedData?.is_online == true) {
-      changedData['location[lat]'] = '';
-      changedData['location[lng]'] = '';
+      changedData['location[lat]'] = 'null';
+      changedData['location[lng]'] = 'null';
 
       changedData['place'] = '';
     }

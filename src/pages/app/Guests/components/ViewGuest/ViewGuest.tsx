@@ -159,7 +159,6 @@ const ViewGuest = ({
                             formData['id'],
                             confirmClicked.value,
                             setSelectedGuestId,
-                            
                           );
                       }}
                       buttonText={confirmClicked.value ? 'Yes, Accept' : 'Yes, Decline'}
@@ -232,6 +231,15 @@ const ViewGuest = ({
                 </div>
               )}
             </div>
+          )}
+        </div>
+        <hr className={styles.line} />
+        <div className={styles.invitedBy}>
+          {formData['invited_by'] && (
+            <p className={styles.invitedByText}>{`Invited By ${formData['invited_by']}`}</p>
+          )}
+          {formData['entry_date'] && (
+            <p className={styles.invitedByText}>{`Registered For ${formData['entry_date']}`}</p>
           )}
         </div>
         <hr className={styles.line} />

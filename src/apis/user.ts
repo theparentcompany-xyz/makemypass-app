@@ -34,6 +34,7 @@ export const getUserInfo = async (
 };
 
 export const updateProfile = async ({ data }: { [k: string]: FormData }) => {
+  const toastId  = toast.loading('Updating Profile...');
   return privateGateway
     .put(buildVerse.updateProfile, data, {
       headers: {
@@ -41,10 +42,16 @@ export const updateProfile = async ({ data }: { [k: string]: FormData }) => {
       },
     })
     .then(() => {
-      toast.success('Profile Updated Successfully');
+      toast.success('Profile Updated Successfully', {
+          id: toastId,
+      });
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Updating Profile');
+      
+      toast.error(error.response?.data?.message?.general[0] || 'Error in Updating Profile', {
+          id: toastId,
+      });
+      
     });
 };
 
@@ -59,7 +66,7 @@ export const setUserData = async ({ formData, token }: { formData: FormData; tok
       toast.success('Profile Updated Successfully');
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Updating Profile');
+      toast.error(error?.response?.data?.message.general[0] || 'Error in Updating Profile');
     });
 };
 

@@ -208,3 +208,20 @@
   cursor: pointer;
   transition: 0.3s;
 }
+
+.invitedBy {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 0rem;
+  margin-bottom: -1rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.invitedBy p {
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+}
