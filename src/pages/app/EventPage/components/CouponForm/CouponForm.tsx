@@ -301,7 +301,7 @@ const CouponForm = ({
                 <button
                   className={styles.ticketCountUpdateButton}
                   onClick={() => {
-                    if (isWithinTicketCount()) updateTicketCount(ticketInfo[ticketType].id, false);
+                    updateTicketCount(ticketInfo[ticketType].id, false);
                   }}
                 >
                   -
