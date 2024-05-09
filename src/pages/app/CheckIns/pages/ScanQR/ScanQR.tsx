@@ -42,10 +42,6 @@ const ScanQR = () => {
       preview(eventId, ticketId, setPreviewData);
 
       setTimeout(() => {
-        setTicketId('');
-      }, 4000);
-
-      setTimeout(() => {
         setMessage('');
       }, 2250);
     }
@@ -150,6 +146,7 @@ const ScanQR = () => {
                             tickets: {},
                           });
                           checkInUser(ticketId, eventId, setMessage, setIsError, selectedTicket);
+                          setTicketId('');
                         }}
                         buttonColor='red'
                         icon={<LuCheck />}
