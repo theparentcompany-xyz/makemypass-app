@@ -303,8 +303,6 @@ const DynamicForm = ({
                             return ticket;
                           });
 
-                          console.log('tempTickets', tempTickets);
-
                           if (tempTickets && isWithinTicketCount(tempTickets))
                             setTickets &&
                               setTickets((prevTickets) =>
@@ -325,8 +323,19 @@ const DynamicForm = ({
                               if (ticket.ticket_id === ticketInfo[key].id) {
                                 ticket.count = 0;
                               }
-                              return ticket; // Add this line
+                              return ticket;
                             });
+                          }
+
+                          const ticketCount = tempTickets?.reduce(
+                            (sum, ticket) => sum + (ticket.count ?? 0),
+                            0,
+                          );
+
+                          if (ticketCount && ticketCount > 0) {
+                            setCashInHand && setCashInHand(true);
+                          } else {
+                            setCashInHand && setCashInHand(false);
                           }
                         }}
                       />
