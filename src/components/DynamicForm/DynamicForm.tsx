@@ -79,16 +79,20 @@ const DynamicForm = ({
     }
   };
 
-  const isWithinTicketCount = () => {
-    if (tickets)
+  const isWithinTicketCount = (tempTickets: Tickets[]) => {
+    if (tempTickets)
       if (eventData && eventData.remaining_tickets) {
         const remainingTicketsL =
           eventData.remaining_tickets[selectedDate ?? eventData.event_start_date] ?? 0;
 
-        const totalCount = tickets.reduce((sum, ticket) => sum + (ticket.count ?? 0), 0);
+        console.log('remainingTicketsL', remainingTicketsL);
 
-        if (totalCount >= remainingTicketsL) {
-          toast.error('No tickets available for this date');
+        const totalCount = tempTickets.reduce((sum, ticket) => sum + (ticket.count ?? 0), 0);
+
+        console.log('totalCount', totalCount);
+
+        if (totalCount > remainingTicketsL) {
+          toast.error('The ticket count exceeds the available tickets');
           return false;
         }
       }
@@ -292,7 +296,16 @@ const DynamicForm = ({
                             return;
                           }
 
-                          if (isWithinTicketCount())
+                          let tempTickets = tickets?.map((ticket) => {
+                            if (ticket.ticket_id === ticketInfo[key].id) {
+                              ticket.count = event.target.value ? Number(event.target.value) : 0;
+                            }
+                            return ticket;
+                          });
+
+                          console.log('tempTickets', tempTickets);
+
+                          if (tempTickets && isWithinTicketCount(tempTickets))
                             setTickets &&
                               setTickets((prevTickets) =>
                                 prevTickets.map((ticket) => {
@@ -308,7 +321,12 @@ const DynamicForm = ({
                               );
                           else {
                             event.target.value = '0';
-                            toast.error('The ticket count exceeds the available tickets');
+                            tempTickets = tempTickets?.map((ticket) => {
+                              if (ticket.ticket_id === ticketInfo[key].id) {
+                                ticket.count = 0;
+                              }
+                              return ticket; // Add this line
+                            });
                           }
                         }}
                       />
