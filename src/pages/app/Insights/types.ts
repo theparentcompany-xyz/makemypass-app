@@ -21,6 +21,8 @@ export type AnalyticsData = {
     total_amount: number;
     online_paid_users: number;
     total_withdraw: number;
+    total_online_payments: number;
+    total_cash_in_hand: number;
     online_paid_user_percentage: string;
     cash_in_hand_user_percentage: string;
   };
