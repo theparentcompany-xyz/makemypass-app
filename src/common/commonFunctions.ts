@@ -61,7 +61,6 @@ export const formatDate = (dateString: string) => {
 
   const day = date.getDate();
   const month = months[date.getMonth()];
-  const year = date.getFullYear();
 
   // Function to get the ordinal suffix for the day
   function getOrdinal(n: number) {
