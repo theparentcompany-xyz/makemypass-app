@@ -88,7 +88,7 @@ const SelectDate = ({
             }, [] as Date[])}
           />
         </div>
-        {selectedDate && (
+        {selectedDate && !type && (
           <p className={styles.remainingTickets}>
             {remainingTickets > 0 ? `${remainingTickets} tickets left` : 'No tickets left'}
           </p>
