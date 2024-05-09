@@ -248,7 +248,8 @@ export const getEventInfo = async (
     .get(makeMyPass.getEventInfo(eventTitle))
     .then((response) => {
       setEventData(response.data.response);
-      return response.data.response;
+      console.log('API Response', response.data.response);
+      // return response.data.response;
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Info');

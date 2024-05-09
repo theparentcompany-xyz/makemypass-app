@@ -85,11 +85,8 @@ const DynamicForm = ({
         const remainingTicketsL =
           eventData.remaining_tickets[selectedDate ?? eventData.event_start_date] ?? 0;
 
-        console.log('remainingTicketsL', remainingTicketsL);
-
+        console.log(eventData);
         const totalCount = tempTickets.reduce((sum, ticket) => sum + (ticket.count ?? 0), 0);
-
-        console.log('totalCount', totalCount);
 
         if (totalCount > remainingTicketsL) {
           toast.error('The ticket count exceeds the available tickets');
@@ -303,6 +300,8 @@ const DynamicForm = ({
                             return ticket;
                           });
 
+                          console.log('tempTickets', tempTickets);
+
                           if (tempTickets && isWithinTicketCount(tempTickets))
                             setTickets &&
                               setTickets((prevTickets) =>
@@ -331,6 +330,8 @@ const DynamicForm = ({
                             (sum, ticket) => sum + (ticket.count ?? 0),
                             0,
                           );
+
+                          console.log('ticketCount', ticketCount);
 
                           if (ticketCount && ticketCount > 0) {
                             setCashInHand && setCashInHand(true);
