@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { TicketType } from './types';
+import { PreviewData, TicketType } from './types';
 
 export const checkInUser = async (
   ticketId: string,
@@ -40,6 +40,21 @@ export const getCheckInCount = async (
     .get(makeMyPass.checkInCount(eventId))
     .then((response) => {
       setCheckInCount(response.data.response.authorized_count);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Error in Fetching Check-In Count');
+    });
+};
+
+export const preview = async (
+  eventId: string,
+  ticketCode: string,
+  setPreviewData: React.Dispatch<React.SetStateAction<PreviewData>>,
+) => {
+  privateGateway
+    .get(makeMyPass.preview(eventId, ticketCode))
+    .then((response) => {
+      setPreviewData(response.data.response);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Error in Fetching Check-In Count');

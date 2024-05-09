@@ -175,3 +175,27 @@
   bottom: 0;
   z-index: 50;
 }
+
+.previewDataContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.previewDataText {
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+  color: white;
+  opacity: 0.75;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  row-gap: 1rem;
+  column-gap: 1rem;
+}

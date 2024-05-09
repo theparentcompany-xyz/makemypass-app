@@ -182,3 +182,11 @@ export type PaymentDetails<T extends string> = {
 };
 
 export type RazorpayPaymentDetails = PaymentDetails<'razorpay'>;
+
+export type PreviewData = {
+  name: string;
+  entry_date: string | null;
+  tickets: {
+    [key: string]: number;
+  };
+};

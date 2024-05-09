@@ -29,6 +29,8 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-guest/${eventId}/download-ticket/${ticketCode}`),
   userInfo: (eventId: string, ticketCode: string) =>
     makeMyPassURL(`/scan-guest/${eventId}/user-info/${ticketCode}`),
+  preview: (eventId: string, ticketCode: string) =>
+    makeMyPassURL(`/scan-guest/${eventId}/preview/${ticketCode}`),
   getTicketInfo: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/list-tickets/`),
   sentInvite: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/sent-invite/`),
   shortListUser: (eventId: string, userId: string) =>
@@ -100,7 +102,8 @@ export const makeMyPass = {
 
   //FormBuilder
   formBuilderGetForm: (eventId: string) => makeMyPassURL(`/form-builder/${eventId}/get-form/`),
-  formBuilderUpdateForm: (eventId: string) => makeMyPassURL(`/form-builder/${eventId}/update-form/`),
+  formBuilderUpdateForm: (eventId: string) =>
+    makeMyPassURL(`/form-builder/${eventId}/update-form/`),
 };
 
 export const makeMyPassSocket = {

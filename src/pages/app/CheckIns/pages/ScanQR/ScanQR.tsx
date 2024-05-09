@@ -3,14 +3,15 @@ import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInH
 import styles from './ScanQR.module.css';
 
 import { useEffect, useState } from 'react';
-import { checkInUser, getCheckInCount } from '../../../../../apis/scan';
+import { checkInUser, getCheckInCount, preview } from '../../../../../apis/scan';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import { CgClose } from 'react-icons/cg';
 import Modal from '../../../../../components/Modal/Modal';
-import { TicketType } from '../../../../../apis/types';
+import { PreviewData, TicketType } from '../../../../../apis/types';
 import Loader from '../../../../../components/Loader';
 import MultipleTicket from './components/MultipleTicket';
 import Scanner from '../../../../../components/Scanner/Scanner';
+import { LuCheck } from 'react-icons/lu';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -22,6 +23,12 @@ const ScanQR = () => {
   const [isTicketSelected, setIsTicketSelected] = useState<boolean>(false);
   const [selectedTicket, setSelectedTicket] = useState<TicketType>();
 
+  const [previewData, setPreviewData] = useState<PreviewData>({
+    name: '',
+    entry_date: '',
+    tickets: {},
+  });
+
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
   const eventData = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -32,7 +39,8 @@ const ScanQR = () => {
     }
 
     if (ticketId.length > 0 && trigger) {
-      checkInUser(ticketId, eventId, setMessage, setIsError, selectedTicket);
+      preview(eventId, ticketId, setPreviewData);
+
       setTimeout(() => {
         setTicketId('');
       }, 4000);
@@ -89,6 +97,64 @@ const ScanQR = () => {
                       buttonColor='red'
                       icon={<CgClose />}
                     />
+                  </Modal>
+                </>
+              )}
+
+              {previewData && previewData.name && (
+                <>
+                  <div className={styles.backgroundBlur}></div>
+                  <Modal
+                    style={
+                      isError
+                        ? {
+                            borderBottom: '3px solid #f71e1e',
+                            background: 'rgba(185, 31, 31, 0.09)',
+                          }
+                        : {
+                            borderBottom: '3px solid #47c97e',
+                            background: 'rgba(31, 185, 31, 0.09)',
+                          }
+                    }
+                  >
+                    <br />
+                    <div className={styles.previewDataContainer}>
+                      <p className={styles.previewDataText}> {previewData.name}</p>
+                      <p className={styles.previewDataText}>Entry Date: {previewData.entry_date}</p>
+                      {previewData.tickets &&
+                        Object.keys(previewData.tickets).map((key) => (
+                          <p className={styles.previewDataText}>
+                            {[key]}: {previewData.tickets[key]} Tickets
+                          </p>
+                        ))}
+                    </div>
+                    <div className={styles.buttonsContainer}>
+                      <SectionButton
+                        buttonText='Close'
+                        onClick={() => {
+                          setPreviewData({
+                            name: '',
+                            entry_date: '',
+                            tickets: {},
+                          });
+                        }}
+                        buttonColor='red'
+                        icon={<CgClose />}
+                      />
+                      <SectionButton
+                        buttonText='Confirm'
+                        onClick={() => {
+                          setPreviewData({
+                            name: '',
+                            entry_date: '',
+                            tickets: {},
+                          });
+                          checkInUser(ticketId, eventId, setMessage, setIsError, selectedTicket);
+                        }}
+                        buttonColor='red'
+                        icon={<LuCheck />}
+                      />
+                    </div>
                   </Modal>
                 </>
               )}
