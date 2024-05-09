@@ -112,7 +112,7 @@ export const makeMyPassSocket = {
   registerCounts: (eventId: string) => `analytics/${eventId}/register-count/`,
   checkInCounts: (eventId: string) => `checkin/${eventId}/count/`,
   listGuests: (eventId: string) => `manage-guest/${eventId}/list-guests/`,
-  listCheckinGuests: (eventId: string) => `manage-guests/${eventId}/checkin-list-guests/`,
+  listCheckinGuests: (eventId: string) => `manage-guest/${eventId}/checkin-list-guests/`,
   checkInAnalytics: (eventId: string) => `analytics/${eventId}/checkin-analytics/`,
 };
 

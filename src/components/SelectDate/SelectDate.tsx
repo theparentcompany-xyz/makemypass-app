@@ -32,6 +32,28 @@ const findMaxDate = (eventData: EventType) => {
   return new Date();
 };
 
+const findMinDate = (eventData: EventType) => {
+  let minDate: Date | null = null;
+
+  if (eventData && eventData.event_start_date) {
+    const minDateReducer = (minDate: Date | null, date: string) => {
+      const remainingTickets = eventData.remaining_tickets[date];
+      if (remainingTickets > 0) {
+        const currentDate = new Date(date);
+        if (!minDate || currentDate < minDate) {
+          minDate = currentDate;
+        }
+      }
+      return minDate;
+    };
+
+    minDate = Object.keys(eventData.remaining_tickets).reduce(minDateReducer, null);
+
+    return minDate || new Date();
+  }
+  return new Date();
+};
+
 const SelectDate = ({
   eventData,
   selectedDate,
@@ -56,8 +78,14 @@ const SelectDate = ({
             dateFormat='dd MMM yyyy'
             selected={selectedDate ? new Date(selectedDate) : null}
             onChange={(date) => handleDateChange(date?.toString())}
-            minDate={eventData.event_start_date ? new Date(eventData.event_start_date) : new Date()}
+            minDate={findMinDate(eventData)}
             maxDate={findMaxDate(eventData)}
+            excludeDates={Object.keys(eventData.remaining_tickets).reduce((acc, date) => {
+              if (eventData.remaining_tickets[date] <= 0) {
+                acc.push(new Date(date));
+              }
+              return acc;
+            }, [] as Date[])}
           />
         </div>
         {selectedDate && !type && (

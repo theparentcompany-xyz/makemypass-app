@@ -144,7 +144,7 @@ const EventPage = () => {
     });
 
     if (newTicket) {
-      updatedTickets.push({ ticket_id: ticketId, count: 0, my_ticket: false });
+      updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: false });
     }
     if (updatedTickets.length > 0) {
       setNewTickets(updatedTickets);

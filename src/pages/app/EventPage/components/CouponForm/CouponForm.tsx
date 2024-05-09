@@ -72,6 +72,22 @@ const CouponForm = ({
     }
   });
 
+  const isWithinTicketCount = () => {
+    if (eventData && eventData.remaining_tickets) {
+      const remainingTicketsL =
+        eventData.remaining_tickets[selectedDate ?? eventData.event_start_date] ?? 0;
+
+      const totalCount = tickets.reduce((sum, ticket) => sum + (ticket.count ?? 0), 0);
+
+      if (totalCount >= remainingTicketsL) {
+        toast.error('No tickets available for this date');
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   return (
     <>
       {coupon.status && (
@@ -273,12 +289,11 @@ const CouponForm = ({
             }}
             className={styles.ticketType}
             style={{
-              border:
-                tickets.filter(
-                  (ticket) => ticket.ticket_id === ticketInfo[ticketType].id && ticket.my_ticket,
-                ).length > 0
-                  ? '2px solid #FFFFFF'
-                  : '2px solid #2A3533',
+              border: tickets.find(
+                (ticket) => ticket.my_ticket && ticket.ticket_id === ticketInfo[ticketType].id,
+              )
+                ? '2px solid #FFFFFF'
+                : '2px solid #2A3533',
             }}
           >
             {tickets && (
@@ -286,7 +301,7 @@ const CouponForm = ({
                 <button
                   className={styles.ticketCountUpdateButton}
                   onClick={() => {
-                    updateTicketCount(ticketInfo[ticketType].id, false);
+                    if (isWithinTicketCount()) updateTicketCount(ticketInfo[ticketType].id, false);
                   }}
                 >
                   -
@@ -298,7 +313,7 @@ const CouponForm = ({
                 <button
                   className={styles.ticketCountUpdateButton}
                   onClick={() => {
-                    updateTicketCount(ticketInfo[ticketType].id, true);
+                    if (isWithinTicketCount()) updateTicketCount(ticketInfo[ticketType].id, true);
                   }}
                 >
                   +
