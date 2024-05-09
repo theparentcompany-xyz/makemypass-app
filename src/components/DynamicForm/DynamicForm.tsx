@@ -12,6 +12,7 @@ import Scanner from '../Scanner/Scanner';
 import { SelectedGuest } from '../../pages/app/Guests/types';
 import SelectDate from '../SelectDate/SelectDate';
 import { Tickets } from '../../pages/app/EventPage/types';
+import toast from 'react-hot-toast';
 const DynamicForm = ({
   formFields,
   formErrors,
@@ -76,6 +77,23 @@ const DynamicForm = ({
         if (remainingTicketsL === 0) setIsTicketsAvailable(false);
         else setIsTicketsAvailable(true);
     }
+  };
+
+  const isWithinTicketCount = () => {
+    if (tickets)
+      if (eventData && eventData.remaining_tickets) {
+        const remainingTicketsL =
+          eventData.remaining_tickets[selectedDate ?? eventData.event_start_date] ?? 0;
+
+        const totalCount = tickets.reduce((sum, ticket) => sum + (ticket.count ?? 0), 0);
+
+        if (totalCount >= remainingTicketsL) {
+          toast.error('No tickets available for this date');
+          return false;
+        }
+      }
+
+    return true;
   };
 
   useEffect(() => {
@@ -268,22 +286,30 @@ const DynamicForm = ({
                         type='number'
                         className={styles.ticketCountInput}
                         onChange={(event) => {
-                          setTickets &&
-                            setTickets((prevTickets) =>
-                              prevTickets.map((ticket) => {
-                                if (ticket.ticket_id === ticketInfo[key].id) {
-                                  ticket.my_ticket = true;
-                                  ticket.count = event.target.value
-                                    ? Number(event.target.value)
-                                    : 0;
-                                }
+                          if (event.target.value != '' && Number(event.target.value) < 0) {
+                            toast.error('Ticket count cannot be negative');
+                            event.target.value = '0';
+                            return;
+                          }
 
-                                console.log('ticket', ticket);
-                                return ticket;
-                              }),
-                            );
+                          if (isWithinTicketCount())
+                            setTickets &&
+                              setTickets((prevTickets) =>
+                                prevTickets.map((ticket) => {
+                                  if (ticket.ticket_id === ticketInfo[key].id) {
+                                    ticket.my_ticket = true;
+                                    ticket.count = event.target.value
+                                      ? Number(event.target.value)
+                                      : 0;
+                                  }
 
-                          console.log('State Tickets', tickets);
+                                  return ticket;
+                                }),
+                              );
+                          else {
+                            event.target.value = '0';
+                            toast.error('The ticket count exceeds the available tickets');
+                          }
                         }}
                       />
                     </div>
