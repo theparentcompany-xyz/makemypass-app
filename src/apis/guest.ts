@@ -40,18 +40,40 @@ export const addGuest = (
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
   selectedDate?: string,
 ) => {
-  tickets.map((ticket) => {
-    formData['tickets'] = JSON.stringify(ticket);
+  if (selectedDate) {
+    formData['ticket_date'] = selectedDate;
+  }
+
+  const backendFormData = new FormData();
+
+  Object.keys(formData).forEach((key) => {
+    let value = formData[key];
+
+    if (!(value instanceof FileList)) {
+      if (Array.isArray(value) && value.length > 0) {
+        value.forEach((value) => backendFormData.append(key + '[]', value));
+      } else {
+        value = formData[key].toString();
+      }
+    }
+
+    if (typeof value === 'string' && value.length > 0) {
+      backendFormData.append(key, value);
+    } else if (value instanceof FileList) {
+      Array.from(value).forEach((value) => backendFormData.append(key + '[]', value));
+    }
+  });
+
+  tickets.forEach((ticket) => {
+    backendFormData.append('tickets[]', JSON.stringify(ticket));
   });
 
   const script = document.createElement('script');
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';
   document.body.appendChild(script);
-  if (selectedDate) {
-    formData['ticket_date'] = selectedDate;
-  }
+
   privateGateway
-    .post(makeMyPass.sentInvite(eventId), formData, {
+    .post(makeMyPass.sentInvite(eventId), backendFormData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

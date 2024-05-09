@@ -35,11 +35,11 @@ const ScanQR = () => {
       checkInUser(ticketId, eventId, setMessage, setIsError, selectedTicket);
       setTimeout(() => {
         setTicketId('');
-      }, 2000);
+      }, 4000);
 
       setTimeout(() => {
         setMessage('');
-      }, 1150);
+      }, 2250);
     }
   }, [trigger, eventId]);
 

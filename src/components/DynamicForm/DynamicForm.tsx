@@ -81,7 +81,6 @@ const DynamicForm = ({
   useEffect(() => {
     if (eventData && !eventData.remaining_tickets) return;
 
-    if (eventData) console.log(new Date() > new Date(eventData.event_start_date));
     if (eventData?.event_start_date && new Date() > new Date(eventData.event_start_date)) {
       setSelectedDate && setSelectedDate(new Date().toISOString().split('T')[0]);
       handleDateChange(selectedDate);
@@ -104,7 +103,6 @@ const DynamicForm = ({
         }
       });
 
-      console.log('ticketsTemp', tickets);
       setTickets &&
         setTickets(
           Object.keys(eventData.tickets).map((key) => ({
@@ -201,9 +199,6 @@ const DynamicForm = ({
     }
   };
 
-  console.log('eventData', eventData);
-  console.log('remainingTicketsList', remainingTicketsList);
-
   return (
     <>
       <div className={styles.formFields}>
@@ -281,13 +276,14 @@ const DynamicForm = ({
                                   ticket.count = event.target.value
                                     ? Number(event.target.value)
                                     : 0;
-                                } else {
-                                  ticket.my_ticket = false;
-                                  ticket.count = 0;
                                 }
+
+                                console.log('ticket', ticket);
                                 return ticket;
                               }),
                             );
+
+                          console.log('State Tickets', tickets);
                         }}
                       />
                     </div>
