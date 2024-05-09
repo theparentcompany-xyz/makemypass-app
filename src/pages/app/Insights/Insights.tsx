@@ -411,6 +411,33 @@ const Insights = () => {
                           </p>
                         </div>
                         <div className={styles.weeklyCount}>
+                          <p className={styles.week}>Paid On System</p>
+                          <p className={styles.wcount}>
+                            {message?.payment_analytics.total_online_payments?.toLocaleString(
+                              'en-IN',
+                              {
+                                style: 'currency',
+                                currency: 'INR',
+                              },
+                            ) || '-'}
+                          </p>
+                        </div>
+                      </div>
+                      <div className={styles.weeklyCounts}>
+                        <div className={styles.weeklyCount}>
+                          <p className={styles.week}>Cash In Hand</p>
+                          <p className={styles.wcount}>
+                            {message?.payment_analytics.total_cash_in_hand?.toLocaleString(
+                              'en-IN',
+                              {
+                                style: 'currency',
+                                currency: 'INR',
+                              },
+                            ) || '-'}
+                          </p>
+                        </div>
+
+                        <div className={styles.weeklyCount}>
                           <p className={styles.week}>Withdrawable</p>
                           <p className={styles.wcount}>
                             {message?.payment_analytics.total_withdraw?.toLocaleString('en-IN', {
@@ -420,7 +447,8 @@ const Insights = () => {
                           </p>
                         </div>
                       </div>
-                      <div className={styles.liveTraffic}>
+
+                      {/* <div className={styles.liveTraffic}>
                         <p className={styles.live}>Paid User %</p>
                         <p className={styles.lcount}>
                           {message?.payment_analytics.online_paid_user_percentage &&
@@ -429,7 +457,7 @@ const Insights = () => {
                             ).toFixed(2)}
                           %
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
