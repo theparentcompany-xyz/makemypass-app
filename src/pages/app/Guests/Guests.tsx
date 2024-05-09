@@ -258,14 +258,19 @@ const Guests = () => {
                       toast.error('No tickets available for the selected date');
                       return;
                     }
-                    addGuest(
-                      eventId,
-                      tickets,
-                      formData,
-                      setFormErrors,
-                      setSelectedGuestId,
-                      selectedDate,
-                    );
+
+                    if (tickets.some((ticket) => ticket.count > 0))
+                      addGuest(
+                        eventId,
+                        tickets,
+                        formData,
+                        setFormErrors,
+                        setSelectedGuestId,
+                        selectedDate,
+                      );
+                    else {
+                      toast.error('Please select atleast one ticket');
+                    }
                   }}
                   className={styles.button}
                 >
