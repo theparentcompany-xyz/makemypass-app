@@ -11,7 +11,7 @@ import {
   BarElement,
   ArcElement,
 } from 'chart.js';
-import { Line, Doughnut } from 'react-chartjs-2';
+import { Line, Doughnut, Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
@@ -373,9 +373,32 @@ const Insights = () => {
                     <div className={styles.cLeftSection}>
                       <div className={styles.totalRegistered}>
                         <p className={styles.total}>Payment Details</p>
-                        <p className={styles.count}>
-                          {message?.payment_analytics.total_paid_users} <span>Paid Users</span>
-                        </p>
+                        <div className='row'>
+                          <p className={styles.count}>
+                            {message?.payment_analytics.online_paid_users}{' '}
+                            <span className={styles.percentage}>
+                              (
+                              {message?.payment_analytics.online_paid_user_percentage &&
+                                Math.round(
+                                  Number(message?.payment_analytics.online_paid_user_percentage),
+                                ).toFixed(2)}
+                              %)
+                            </span>
+                            <span>Online Payment</span>
+                          </p>
+                          <p className={styles.count}>
+                            {message?.payment_analytics.cash_in_hand_users}{' '}
+                            <span className={styles.percentage}>
+                              (
+                              {message?.payment_analytics.cash_in_hand_user_percentage &&
+                                Math.round(
+                                  Number(message?.payment_analytics.cash_in_hand_user_percentage),
+                                ).toFixed(2)}
+                              %)
+                            </span>
+                            <span>Offline Payment</span>
+                          </p>
+                        </div>
                       </div>
                       <div className={styles.weeklyCounts}>
                         <div className={styles.weeklyCount}>
@@ -400,7 +423,11 @@ const Insights = () => {
                       <div className={styles.liveTraffic}>
                         <p className={styles.live}>Paid User %</p>
                         <p className={styles.lcount}>
-                          {message?.payment_analytics.paid_user_percentage}
+                          {message?.payment_analytics.online_paid_user_percentage &&
+                            Math.round(
+                              Number(message?.payment_analytics.online_paid_user_percentage),
+                            ).toFixed(2)}
+                          %
                         </p>
                       </div>
                     </div>
@@ -449,7 +476,7 @@ const Insights = () => {
                 )}
                 <div className={styles.registrationCount}>
                   <div className={styles.graphContainer}>
-                    {entryDateCount && <Line options={options} data={entryDateCount} />}
+                    {entryDateCount && <Bar options={options} data={entryDateCount} />}
                   </div>
                 </div>
               </div>

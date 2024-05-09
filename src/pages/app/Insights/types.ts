@@ -17,9 +17,12 @@ export type AnalyticsData = {
   };
   payment_analytics: {
     paid_user_percentage: string;
+    cash_in_hand_users: number;
     total_amount: number;
-    total_paid_users: number;
+    online_paid_users: number;
     total_withdraw: number;
+    online_paid_user_percentage: string;
+    cash_in_hand_user_percentage: string;
   };
   organisation_count: {
     [organisation: string]: string;
