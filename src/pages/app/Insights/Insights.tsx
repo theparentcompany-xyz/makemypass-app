@@ -94,7 +94,7 @@ const Insights = () => {
           });
 
           setEntryDateCount({
-            labels: Object.keys(lineBarData?.entry_date_count || {}),
+            labels: Object.keys(lineBarData?.entry_date_count || {}).sort(),
             datasets: [
               {
                 label: 'Entry Date Count',
