@@ -167,7 +167,7 @@ const Glance = ({ tab }: { tab: string }) => {
                     >
                       Last {tab === 'checkins' || tab === 'inevent' ? 'Check-In' : 'Registered'}
                       :&nbsp;
-                      {formatDate(lastRegistered)}
+                      {formatDate(lastRegistered, true)}
                     </motion.p>
                   )}
                 </div>

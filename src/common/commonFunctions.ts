@@ -42,7 +42,7 @@ export const getEventUUID = (eventTitle: string, setEventId: Dispatch<SetStateAc
   setEventId(eventData?.event_id);
 };
 
-export const formatDate = (dateString: string) => {
+export const formatDate = (dateString: string, withTime?: boolean) => {
   const months = [
     'Jan',
     'Feb',
@@ -82,6 +82,7 @@ export const formatDate = (dateString: string) => {
   const formattedHours = hours % 12 || 12;
   const formattedMinutes = String(minutes).padStart(2, '0');
 
+  if (!withTime) return `${getOrdinal(day)} ${month}`;
   return `${getOrdinal(day)} ${month} at ${formattedHours}:${formattedMinutes} ${ampm}`;
 };
 

@@ -105,6 +105,8 @@ export const submitForm = async ({
           image: '/pwa/maskable.webp',
           order_id: paymentId,
           handler: function (response: RazorpayPaymentDetails) {
+            console.log(response);
+
             const audio = new Audio('/sounds/gpay.mp3');
             audio.play();
 
