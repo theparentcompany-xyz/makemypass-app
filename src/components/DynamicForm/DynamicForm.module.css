@@ -269,10 +269,14 @@ input {
   color: white;
   font-family: 'Inter';
   position: relative;
+
+  flex-wrap: wrap;
   column-gap: 0.5rem;
 
   margin: 1rem;
   margin-left: 0;
+
+  row-gap: 0.5rem;
 }
 
 .ticket {

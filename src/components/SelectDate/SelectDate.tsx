@@ -93,6 +93,8 @@ const SelectDate = ({
             {remainingTickets > 0 ? `${remainingTickets} tickets left` : 'No tickets left'}
           </p>
         )}
+
+        <hr className={styles.line} />
       </div>
     </>
   );
