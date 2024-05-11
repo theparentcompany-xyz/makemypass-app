@@ -24,7 +24,7 @@ const ViewGuest = ({
   formData: FormDataType;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;
-  setResentTicket: Dispatch<React.SetStateAction<ResentTicket>>;
+  setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
   type?: string;
 }) => {
   const [confirmClicked, setConfirmClicked] = useState({
