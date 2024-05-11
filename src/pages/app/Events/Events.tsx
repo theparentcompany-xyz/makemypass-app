@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
 import RightClickMenu from './RightClickMenu';
 import Modal from '../../../components/Modal/Modal';
+import { formatDate } from '../../../common/commonFunctions';
 
 const Events = () => {
   interface Position {
@@ -40,8 +41,8 @@ const Events = () => {
     date: string;
     day: string;
     name: string;
-    start_day: string;
-    start_date: string;
+    event_start_day: string;
+    event_start_date: string;
   };
 
   const [events, setEvents] = useState([] as Event[]);
@@ -107,7 +108,7 @@ const Events = () => {
                     transition={{ duration: 0.5 }}
                     className={styles.eventDate}
                   >
-                    <p className={styles.date}>{event?.start_date}</p>
+                    <p className={styles.date}>{formatDate(event?.event_start_date)}</p>
                   </motion.div>
 
                   <div>

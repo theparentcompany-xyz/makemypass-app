@@ -81,8 +81,10 @@ export const formatDate = (dateString: string, withTime?: boolean) => {
   const ampm = hours >= 12 ? 'PM' : 'AM';
   const formattedHours = hours % 12 || 12;
   const formattedMinutes = String(minutes).padStart(2, '0');
+  const year = date.getFullYear();
+  const dayOfWeekText = date.toLocaleString('en-US', { weekday: 'long' });
 
-  if (!withTime) return `${getOrdinal(day)} ${month}`;
+  if (!withTime) return `${getOrdinal(day)} ${month} ${year}, ${dayOfWeekText}`;
   return `${getOrdinal(day)} ${month} at ${formattedHours}:${formattedMinutes} ${ampm}`;
 };
 

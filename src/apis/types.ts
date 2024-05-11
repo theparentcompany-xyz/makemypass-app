@@ -8,8 +8,8 @@ export type Event = {
   date: string;
   day: string;
   name: string;
-  start_day: string;
-  start_date: string;
+  event_start_day: string;
+  event_start_date: string;
 };
 
 export type hostList = {
