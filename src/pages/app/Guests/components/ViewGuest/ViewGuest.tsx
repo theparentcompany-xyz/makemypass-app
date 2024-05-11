@@ -30,6 +30,8 @@ const ViewGuest = ({
     value: false,
   });
 
+  console.log('formData', formData);
+
   return (
     <motion.div
       initial={{ y: -10, opacity: 0 }}
@@ -238,8 +240,26 @@ const ViewGuest = ({
           {formData['invited_by'] && (
             <p className={styles.invitedByText}>{`Invited By ${formData['invited_by']}`}</p>
           )}
-          {formData['entry_date'] && (
-            <p className={styles.invitedByText}>{`Registered For ${formData['entry_date']}`}</p>
+          {formData['entry_date'] && typeof formData['entry_date'] === 'string' && (
+            <p
+              className={styles.invitedByText}
+            >{`Registered For ${formatDate(formData['entry_date'])}`}</p>
+          )}
+        </div>
+
+        <hr className={styles.line} />
+        <div
+          className={styles.invitedBy}
+          style={{
+            justifyContent: 'flex-start',
+            columnGap: '4px',
+          }}
+        >
+          {formData['amount'] && (
+            <p className={styles.invitedByText}>{`Paid Rs.${formData['amount']}`}</p>
+          )}
+          {formData['ticket_count'] && (
+            <p className={styles.invitedByText}>{` for ${formData['ticket_count']} tickets.`}</p>
           )}
         </div>
         <hr className={styles.line} />

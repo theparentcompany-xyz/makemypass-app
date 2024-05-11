@@ -25,18 +25,37 @@ import { addHosts, removeHost, updateHostRole } from '../../../../apis/host';
 import { AnimatePresence } from 'framer-motion';
 import Modal from '../../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
+import { GuestsType, ResentTicket, SelectedGuest } from '../../Guests/types';
+import { FormDataType, FormFieldType } from '../../../../apis/types';
+import ViewGuest from '../../Guests/components/ViewGuest/ViewGuest';
+import { getFormFields } from '../../../../apis/publicpage';
+import { downloadTicket } from '../../../../apis/guests';
+import { isArray } from 'chart.js/helpers';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
   const [recentTableData, setRecentTableData] = useState<TableType[]>([]);
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
+    id: '',
+    type: '',
+  });
+
+  const [selectedGuest, setSelectedGuest] = useState<GuestsType | null | TableType>(null);
   const [hostList, setHostList] = useState<hostList[]>([]);
   const [hostListTableData, setHostListTableData] = useState<TableType[]>([]);
   const [hostId, setHostId] = useState<hostId>({
     id: '',
     type: 'edit',
   });
+  const [resentTicket, setResentTicket] = useState<ResentTicket>({
+    status: false,
+    guestId: '',
+    name: '',
+  });
+
+  const [formData, setFormData] = useState<FormDataType>({});
 
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
@@ -50,8 +69,21 @@ const Overview = () => {
 
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
+  const getGuestData = () => {
+    const selectedGuestData = recentRegistrations.filter(
+      (guest) => guest?.id === selectedGuestId?.id,
+    );
+    console.log(selectedGuestData);
+    setSelectedGuest(selectedGuestData[0]);
+    setFormData(selectedGuestData[0]);
+  };
+
+  const [formFields, setFormFields] = useState<FormFieldType[]>([]);
+
   useEffect(() => {
     if (eventId && hostList.length === 0) getHosts(eventId, setHostList);
+
+    getFormFields(eventId, setFormFields);
   }, [eventId, hostList]);
 
   useEffect(() => {
@@ -59,6 +91,20 @@ const Overview = () => {
       socket?.close();
     };
   }, []);
+
+  useEffect(() => {
+    console.log(selectedGuestId);
+    if (selectedGuestId?.id && (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view'))
+      getGuestData();
+    else if (
+      selectedGuestId?.id &&
+      selectedGuestId.type === 'download' &&
+      !isArray(selectedGuestId.id)
+    )
+      if (selectedGuestId.id && selectedGuest?.name)
+        downloadTicket(eventId, selectedGuestId?.id, selectedGuest?.name);
+      else toast.error('Ticket download failed');
+  }, [selectedGuestId]);
 
   useEffect(() => {
     if (eventId)
@@ -85,10 +131,15 @@ const Overview = () => {
 
   useEffect(() => {
     const recentTableMapping = {
+      id: 'id',
       name: 'name',
       email: 'email',
       category: 'category',
       registered_at: 'date',
+      check_in_date: 'check_in_date',
+      phone_number: 'phone_number',
+      amount: 'amount',
+      is_approved: 'is_approved',
       team_id: 'team_id',
     };
 
@@ -177,8 +228,27 @@ const Overview = () => {
     return true;
   };
 
+  const onClose = () => {
+    setSelectedGuestId({
+      id: '',
+      type: '',
+    });
+  };
+
   return (
     <Theme>
+      {selectedGuestId && formData && selectedGuestId.id && selectedGuestId.type == 'view' && (
+        <>
+          <div onClick={onClose} className={styles.backgroundBlur}></div>
+          <ViewGuest
+            formFields={formFields}
+            formData={formData}
+            setSelectedGuestId={setSelectedGuestId}
+            eventId={eventId}
+            setResentTicket={setResentTicket}
+          />
+        </>
+      )}
       <>
         {openAddModal && (
           <AddHosts
@@ -267,7 +337,12 @@ const Overview = () => {
 
             <AnimatePresence>
               {recentTableData.length >= 0 && (
-                <Table tableHeading='Recent Registration' tableData={recentTableData} />
+                <Table
+                  tableHeading='Recent Registration'
+                  tableData={recentTableData}
+                  setSelectedGuestId={setSelectedGuestId}
+                  setResentTicket={setResentTicket}
+                />
               )}
             </AnimatePresence>
 
