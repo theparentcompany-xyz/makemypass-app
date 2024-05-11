@@ -63,7 +63,7 @@ export type AnalyticsData = {
 
 export interface Dataset {
   label: string;
-  data: number[];
+  data: number[] | unknown[];
   borderColor: string | string[];
   backgroundColor: string | string[];
   borderWidth?: number;

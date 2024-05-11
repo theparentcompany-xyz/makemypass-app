@@ -93,12 +93,20 @@ const Insights = () => {
             ],
           });
 
+          const sortedEntryDateCount = Object.entries(lineBarData?.entry_date_count || {}).sort(
+            (a, b) => {
+              const dateA = new Date(a[0]);
+              const dateB = new Date(b[0]);
+              return dateA.getTime() - dateB.getTime();
+            },
+          );
+
           setEntryDateCount({
-            labels: Object.keys(lineBarData?.entry_date_count || {}).sort(),
+            labels: sortedEntryDateCount.map((entry) => entry[0]),
             datasets: [
               {
                 label: 'Entry Date Count',
-                data: Object.values(lineBarData?.entry_date_count || {}),
+                data: sortedEntryDateCount.map((entry) => entry[1]),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
               },
