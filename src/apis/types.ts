@@ -8,7 +8,8 @@ export type Event = {
   date: string;
   day: string;
   name: string;
-  event_start_day: string;
+  start_day: string;
+  start_date: string;
   event_start_date: string;
 };
 

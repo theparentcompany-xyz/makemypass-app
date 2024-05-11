@@ -22,7 +22,6 @@ const Events = () => {
   const [menuPosition, setMenuPosition] = useState<Position>({ x: 0, y: 0 });
   const [showModal, setShowModal] = useState(false);
   const [duplicateEventId, setDuplicateEventId] = useState<string>('');
-
   const handleButtonClick = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
     setDuplicateEventId(event.currentTarget.id);
     setIsMenuOpen(true);
@@ -41,7 +40,8 @@ const Events = () => {
     date: string;
     day: string;
     name: string;
-    event_start_day: string;
+    start_day: string;
+    start_date: string;
     event_start_date: string;
   };
 
