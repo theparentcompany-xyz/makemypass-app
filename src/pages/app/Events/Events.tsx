@@ -21,7 +21,7 @@ const Events = () => {
   const [menuPosition, setMenuPosition] = useState<Position>({ x: 0, y: 0 });
   const [showModal, setShowModal] = useState(false);
   const [duplicateEventId, setDuplicateEventId] = useState<string>('');
-
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   const handleButtonClick = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
     setDuplicateEventId(event.currentTarget.id);
     setIsMenuOpen(true);
@@ -42,6 +42,7 @@ const Events = () => {
     name: string;
     start_day: string;
     start_date: string;
+    event_start_date: string;
   };
 
   const [events, setEvents] = useState([] as Event[]);
@@ -107,7 +108,9 @@ const Events = () => {
                     transition={{ duration: 0.5 }}
                     className={styles.eventDate}
                   >
-                    <p className={styles.date}>{event?.start_date}</p>
+                    <p className={styles.date}>
+                      {new Date(event?.event_start_date).toLocaleDateString('en-US', options)}
+                    </p>
                   </motion.div>
 
                   <div>
