@@ -246,9 +246,11 @@ const Overview = () => {
             setSelectedGuestId={setSelectedGuestId}
             eventId={eventId}
             setResentTicket={setResentTicket}
+            type='overview'
           />
         </>
       )}
+
       <>
         {openAddModal && (
           <AddHosts

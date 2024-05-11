@@ -18,12 +18,14 @@ const ViewGuest = ({
   setSelectedGuestId,
   eventId,
   setResentTicket,
+  type,
 }: {
   formFields: FormFieldType[];
   formData: FormDataType;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;
   setResentTicket: Dispatch<React.SetStateAction<ResentTicket>>;
+  type?: string;
 }) => {
   const [confirmClicked, setConfirmClicked] = useState({
     confirm: false,
@@ -177,29 +179,31 @@ const ViewGuest = ({
           </div>
           {formData['is_approved'] && (
             <div className={styles.guestActionButtons}>
-              <div
-                className={styles.icon}
-                onClick={() => {
-                  if (setResentTicket) {
-                    setResentTicket((prevState) => ({
-                      ...prevState,
-                      status: true,
-                      guestId: formData['id'],
-                      name: formData['name'],
-                    }));
-                  }
-                }}
-              >
-                <BsTicketPerforatedFill
-                  style={{
-                    marginRight: '5px',
+              {type !== 'overview' && (
+                <div
+                  className={styles.icon}
+                  onClick={() => {
+                    if (setResentTicket) {
+                      setResentTicket((prevState) => ({
+                        ...prevState,
+                        status: true,
+                        guestId: formData['id'],
+                        name: formData['name'],
+                      }));
+                    }
                   }}
-                  size={20}
-                  title='Resend Ticket'
-                  color='#8E8E8E'
-                />
-                <span>Resent Ticket</span>
-              </div>
+                >
+                  <BsTicketPerforatedFill
+                    style={{
+                      marginRight: '5px',
+                    }}
+                    size={20}
+                    title='Resend Ticket'
+                    color='#8E8E8E'
+                  />
+                  <span>Resent Ticket</span>
+                </div>
+              )}
               <div
                 className={styles.icon}
                 onClick={() => {

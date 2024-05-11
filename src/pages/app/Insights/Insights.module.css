@@ -118,6 +118,10 @@
   font-size: 14px;
 }
 
+.wcount span {
+  color: #c33d7b;
+}
+
 .live {
   font-size: 1rem;
   font-weight: 600;
