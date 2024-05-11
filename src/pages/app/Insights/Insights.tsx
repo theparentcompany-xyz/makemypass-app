@@ -373,59 +373,45 @@ const Insights = () => {
                     <div className={styles.cLeftSection}>
                       <div className={styles.totalRegistered}>
                         <p className={styles.total}>Payment Details</p>
-                        <div className='row'>
-                          <p className={styles.count}>
-                            {message?.payment_analytics.online_paid_users}{' '}
-                            <span className={styles.percentage}>
-                              (
-                              {message?.payment_analytics.online_paid_user_percentage &&
-                                Math.round(
-                                  Number(message?.payment_analytics.online_paid_user_percentage),
-                                ).toFixed(2)}
-                              %)
-                            </span>
-                            <span>Online Payment</span>
-                          </p>
-                          <p className={styles.count}>
-                            {message?.payment_analytics.cash_in_hand_users}{' '}
-                            <span className={styles.percentage}>
-                              (
-                              {message?.payment_analytics.cash_in_hand_user_percentage &&
-                                Math.round(
-                                  Number(message?.payment_analytics.cash_in_hand_user_percentage),
-                                ).toFixed(2)}
-                              %)
-                            </span>
-                            <span>Offline Payment</span>
-                          </p>
-                        </div>
                       </div>
                       <div className={styles.weeklyCounts}>
                         <div className={styles.weeklyCount}>
-                          <p className={styles.week}>Total Amount</p>
+                          <p className={styles.live}>Total Amount</p>
                           <p className={styles.wcount}>
                             {message?.payment_analytics.total_amount?.toLocaleString('en-IN', {
                               style: 'currency',
                               currency: 'INR',
                             }) || '-'}
+                            {message?.payment_analytics.total_paid_percentage
+                              ? `(${Number(
+                                  message?.payment_analytics.total_paid_percentage,
+                                ).toFixed(2)}%)`
+                              : ''}
                           </p>
                         </div>
                         <div className={styles.weeklyCount}>
-                          <p className={styles.week}>Paid On System</p>
+                          <p className={styles.live}>
+                            Paid Via App{`(${message?.payment_analytics.platform_paid_users})`}
+                          </p>
                           <p className={styles.wcount}>
-                            {message?.payment_analytics.total_online_payments?.toLocaleString(
+                            {message?.payment_analytics.platform_paid_users?.toLocaleString(
                               'en-IN',
                               {
                                 style: 'currency',
                                 currency: 'INR',
                               },
                             ) || '-'}
+                            {message?.payment_analytics.cash_in_hand_user_percent
+                              ? `(${Number(message?.payment_analytics.platform_paid_user_percent).toFixed(2)}%)`
+                              : ''}
                           </p>
                         </div>
                       </div>
                       <div className={styles.weeklyCounts}>
                         <div className={styles.weeklyCount}>
-                          <p className={styles.week}>Cash In Hand</p>
+                          <p className={styles.live}>
+                            Cash In Hand{`(${message?.payment_analytics.cash_in_hand_users})`}
+                          </p>
                           <p className={styles.wcount}>
                             {message?.payment_analytics.total_cash_in_hand?.toLocaleString(
                               'en-IN',
@@ -434,11 +420,15 @@ const Insights = () => {
                                 currency: 'INR',
                               },
                             ) || '-'}
+
+                            {message?.payment_analytics.cash_in_hand_user_percent
+                              ? `(${Number(message?.payment_analytics.cash_in_hand_user_percent).toFixed(2)}%)`
+                              : ''}
                           </p>
                         </div>
 
                         <div className={styles.weeklyCount}>
-                          <p className={styles.week}>Withdrawable</p>
+                          <p className={styles.live}>Withdrawable</p>
                           <p className={styles.wcount}>
                             {message?.payment_analytics.total_withdraw?.toLocaleString('en-IN', {
                               style: 'currency',
