@@ -244,7 +244,7 @@ const DynamicForm = ({
                 <Select
                   options={Object.keys(ticketInfo).map((key) => ({
                     value: ticketInfo[key].id,
-                    label: `${ticketInfo[key].title} - ${ticketInfo[key].currency} ${ticketInfo[key].price}`,
+                    label: `${ticketInfo[key]?.title} - ${ticketInfo[key].currency} ${ticketInfo[key].price}`,
                   }))}
                   styles={customStyles}
                   onChange={(selectedOption: { value: string } | null) => {
@@ -265,7 +265,7 @@ const DynamicForm = ({
                     Object.keys(ticketInfo)
                       .map((key) => ({
                         value: ticketInfo[key].id,
-                        label: `${ticketInfo[key].title} - ${ticketInfo[key].currency} ${ticketInfo[key].price}`,
+                        label: `${ticketInfo[key]?.title} - ${ticketInfo[key].currency} ${ticketInfo[key].price}`,
                       }))
                       .filter((option: { value: string }) => option.value === ticketId)
                   }
@@ -279,7 +279,8 @@ const DynamicForm = ({
                   return (
                     <div className={styles.ticket}>
                       <p key={key} className={styles.ticketDetails}>
-                        {ticketInfo[key].title} - {ticketInfo[key].currency} {ticketInfo[key].price}
+                        {ticketInfo[key]?.title} - {ticketInfo[key]?.currency}{' '}
+                        {ticketInfo[key]?.price}
                       </p>
 
                       <input
@@ -423,13 +424,13 @@ const DynamicForm = ({
 
         {!showScanner &&
           formFields?.map((field: FormFieldType) => {
-            const fieldTitle = field.title + (field.required ? '*' : '');
+            const fieldTitle = field?.title + (field.required ? '*' : '');
             if (!validateCondition(field)) return null;
             if (field.type === 'text' || field.type === 'email' || field.type === 'phonenumber') {
               return (
                 <InputFIeld
                   name={field.field_key}
-                  placeholder={field.title}
+                  placeholder={field?.title}
                   id={field.id}
                   key={field.id}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -514,7 +515,7 @@ const DynamicForm = ({
                     rows={4}
                     className={styles.textarea}
                     value={formData[field.field_key] || ''}
-                    placeholder={`Enter your ${field.title}`}
+                    placeholder={`Enter your ${field?.title}`}
                     onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                       onFieldChange(field.field_key, e.target.value)
                     }
@@ -626,7 +627,7 @@ const DynamicForm = ({
                     type='file'
                     id={field.field_key}
                     accept={field.property?.extension_types.join(',') ?? ''}
-                    name={field.title}
+                    name={field?.title}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       if (e.target.files) onFieldChange(field.field_key, e.target.files as any);
                     }}
@@ -646,7 +647,7 @@ const DynamicForm = ({
                   <input
                     type='date'
                     id={field.field_key}
-                    name={field.title}
+                    name={field?.title}
                     value={formData[field.field_key]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       onFieldChange(field.field_key, e.target.value)
@@ -666,7 +667,7 @@ const DynamicForm = ({
                   <input
                     type='datetime-local'
                     id={field.field_key}
-                    name={field.title}
+                    name={field?.title}
                     value={formData[field.field_key]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       onFieldChange(field.field_key, e.target.value)
@@ -686,7 +687,7 @@ const DynamicForm = ({
                   <input
                     type='time'
                     id={field.field_key}
-                    name={field.title}
+                    name={field?.title}
                     value={formData[field.field_key]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       onFieldChange(field.field_key, e.target.value)
@@ -706,7 +707,7 @@ const DynamicForm = ({
                   <input
                     type='number'
                     id={field.field_key}
-                    name={field.title}
+                    name={field?.title}
                     value={formData[field.field_key]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       onFieldChange(field.field_key, e.target.value)
