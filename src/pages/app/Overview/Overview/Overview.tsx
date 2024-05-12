@@ -25,7 +25,7 @@ import { addHosts, removeHost, updateHostRole } from '../../../../apis/host';
 import { AnimatePresence } from 'framer-motion';
 import Modal from '../../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
-import { GuestsType, ResentTicket, SelectedGuest } from '../../Guests/types';
+import { GuestsType, SelectedGuest } from '../../Guests/types';
 import { FormDataType, FormFieldType } from '../../../../apis/types';
 import ViewGuest from '../../Guests/components/ViewGuest/ViewGuest';
 import { getFormFields } from '../../../../apis/publicpage';
@@ -48,11 +48,6 @@ const Overview = () => {
   const [hostId, setHostId] = useState<hostId>({
     id: '',
     type: 'edit',
-  });
-  const [resentTicket, setResentTicket] = useState<ResentTicket>({
-    status: false,
-    guestId: '',
-    name: '',
   });
 
   const [formData, setFormData] = useState<FormDataType>({});
@@ -245,7 +240,6 @@ const Overview = () => {
             formData={formData}
             setSelectedGuestId={setSelectedGuestId}
             eventId={eventId}
-            setResentTicket={setResentTicket}
             type='overview'
           />
         </>
@@ -343,7 +337,6 @@ const Overview = () => {
                   tableHeading='Recent Registration'
                   tableData={recentTableData}
                   setSelectedGuestId={setSelectedGuestId}
-                  setResentTicket={setResentTicket}
                 />
               )}
             </AnimatePresence>
