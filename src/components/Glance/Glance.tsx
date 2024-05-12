@@ -65,7 +65,10 @@ const Glance = ({ tab }: { tab: string }) => {
             audio.play();
           }
 
-          if (!JSON.parse(event.data).response.today_checkin) {
+          if (
+            !JSON.parse(event.data).response.today_checkin &&
+            JSON.parse(event.data).response.today_checkin != 0
+          ) {
             setTotalGuests(Number(JSON.parse(event.data).response.total_reg));
             setTargetGuests(Number(JSON.parse(event.data).response.target_reg));
             setLastRegistered(JSON.parse(event.data).response.last_registered_at);
