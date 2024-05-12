@@ -221,7 +221,17 @@ const Insights = () => {
                       </div>
                       <div className={styles.liveTraffic}>
                         <p className={styles.live}>Event Date</p>
-                        <p className={styles.lcount}>{message?.event_date}</p>
+                        {message?.event_start_date && (
+                          <p className={styles.lcount}>
+                            {new Intl.DateTimeFormat('en-GB', {
+                              day: '2-digit',
+                              month: 'long',
+                              year: 'numeric',
+                            })
+                              .format(new Date(message?.event_start_date))
+                              .replace(/\s/g, '-')}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>

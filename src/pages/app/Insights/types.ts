@@ -33,7 +33,7 @@ export type AnalyticsData = {
     [organisation: string]: string;
   };
   days_left: string;
-  event_date: string;
+  event_start_date: string;
   active_timeframe: {
     Morning: number;
     Night: number;
