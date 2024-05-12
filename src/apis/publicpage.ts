@@ -118,7 +118,8 @@ export const submitForm = async ({
               .then((response) => {
                 setSuccess && setSuccess(response.data.response.code || 'Will be Informed Later');
 
-                const ticketURL = response.data.response.ticket_url;
+                if (response.data.response.ticket_url)
+                  const ticketURL = response.data.response.ticket_url;
                 console.log(ticketURL);
                 const link = document.createElement('a');
                 link.href = response.data.response.ticket_url;
