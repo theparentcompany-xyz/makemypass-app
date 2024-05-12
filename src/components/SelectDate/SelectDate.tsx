@@ -24,8 +24,8 @@ const findMaxDate = (eventData: EventType) => {
       }
       return maxDate;
     };
-
-    maxDate = Object.keys(eventData.remaining_tickets).reduce(maxDateReducer, null);
+    if (eventData.remaining_tickets)
+      maxDate = Object.keys(eventData.remaining_tickets).reduce(maxDateReducer, null);
 
     return maxDate || new Date();
   }
@@ -47,7 +47,8 @@ const findMinDate = (eventData: EventType) => {
       return minDate;
     };
 
-    minDate = Object.keys(eventData.remaining_tickets).reduce(minDateReducer, null);
+    if (eventData.remaining_tickets)
+      minDate = Object.keys(eventData.remaining_tickets).reduce(minDateReducer, null);
 
     return minDate || new Date();
   }

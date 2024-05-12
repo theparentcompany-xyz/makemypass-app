@@ -406,6 +406,7 @@ const DynamicForm = ({
                     }}
                     value={cashInHand.toString()}
                     className={styles.checkboxInput}
+                    defaultChecked
                   />
                   <label>No</label>
                 </div>
@@ -419,7 +420,7 @@ const DynamicForm = ({
         {!showScanner &&
           formFields?.map((field: FormFieldType) => {
             const fieldTitle = field?.title + (field.required ? '*' : '');
-            if (!validateCondition(field)) return null;
+            if (!validateCondition(field) || field.hidden) return null;
             if (field.type === 'text' || field.type === 'email' || field.type === 'phonenumber') {
               return (
                 <InputFIeld

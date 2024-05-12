@@ -59,6 +59,7 @@ export type FormFieldType = {
   id: string;
   type: string;
   title: string;
+  hidden: boolean;
   unique: boolean;
   required: boolean;
   field_key: string;
