@@ -12,7 +12,7 @@ export const resentEventTicket = async (
 ) => {
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   privateGateway
-    .post(makeMyPass.resentTicket, {
+    .post(makeMyPass.resentTicket(eventId), {
       client_id: ticketData.guestId,
       event_id: eventId,
     })
@@ -45,7 +45,7 @@ export const editSubmissons = async (
         setFormData({});
       })
       .catch((error) => {
-        setFormErrors(error.response.data.response)
+        setFormErrors(error.response.data.response);
         toast.error(error.response.data.message.general[0] || 'Something went wrong');
       });
   else {

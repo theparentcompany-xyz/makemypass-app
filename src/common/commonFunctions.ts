@@ -42,7 +42,7 @@ export const getEventUUID = (eventTitle: string, setEventId: Dispatch<SetStateAc
   setEventId(eventData?.event_id);
 };
 
-export const formatDate = (dateString: string, withTime?: boolean) => {
+export const formatDate = (dateString: string, withTime?: boolean, justDate?: boolean) => {
   const months = [
     'Jan',
     'Feb',
@@ -84,7 +84,9 @@ export const formatDate = (dateString: string, withTime?: boolean) => {
   const year = date.getFullYear();
   const dayOfWeekText = date.toLocaleString('en-US', { weekday: 'long' });
 
-  if (!withTime) return `${getOrdinal(day)} ${month} ${year}, ${dayOfWeekText}`;
+  if (!withTime)
+    if (justDate) return `${getOrdinal(day)} ${month}`;
+    else return `${getOrdinal(day)} ${month} ${year}, ${dayOfWeekText}`;
   return `${getOrdinal(day)} ${month} at ${formattedHours}:${formattedMinutes} ${ampm}`;
 };
 

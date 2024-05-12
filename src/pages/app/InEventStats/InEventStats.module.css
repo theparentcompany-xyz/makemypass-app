@@ -40,10 +40,12 @@
 }
 
 .countSection {
+  margin-left: 1rem;
+  margin-top: 1rem;
   display: flex;
   justify-content: start;
   align-items: start;
-  column-gap: 2rem;
+  column-gap: 1rem;
 }
 
 .cLeftSection {
@@ -200,14 +202,6 @@
   font-family: 'Inter', sans-serif;
   color: white;
   width: 49%;
-}
-
-.totalRegistered {
-  padding: 0 1rem;
-}
-
-.dailyCount {
-  margin: 1rem;
 }
 
 @media (max-width: 1120px) {

@@ -22,7 +22,7 @@ export const makeMyPass = {
   // Guest and TicketManagement
   checkInUser: (ticketCode: string, eventId: string) =>
     makeMyPassURL(`/scan-guest/${eventId}/register/${ticketCode}/`),
-  resentTicket: makeMyPassURL('/manage-guest/resent-ticket/'),
+  resentTicket: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/resent-ticket/`),
   editSubmission: (eventId: string, submissionId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/edit-submission/${submissionId}`),
   downloadTicket: (eventId: string, ticketCode: string) =>

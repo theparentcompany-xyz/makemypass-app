@@ -338,7 +338,7 @@ const InEventStats = () => {
                       }}
                       className={styles.day}
                     >
-                      {formatDate(day.day)}
+                      {formatDate(day.day, false, true)}
                     </p>
                     <p className={styles.dcount}>
                       {day.count} <span>guests</span>
