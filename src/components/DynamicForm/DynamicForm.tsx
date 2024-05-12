@@ -65,7 +65,6 @@ const DynamicForm = ({
   const handleDateChange = (date: string | null | undefined) => {
     let newDate;
     if (date) newDate = new Date(date);
-
     if (newDate && eventData && setSelectedDate) {
       setSelectedDate(newDate.toISOString().split('T')[0]);
       const remainingTicketsL =
@@ -85,7 +84,6 @@ const DynamicForm = ({
         const remainingTicketsL =
           eventData.remaining_tickets[selectedDate ?? eventData.event_start_date] ?? 0;
 
-        console.log(eventData);
         const totalCount = tempTickets.reduce((sum, ticket) => sum + (ticket.count ?? 0), 0);
 
         if (totalCount > remainingTicketsL) {
@@ -102,11 +100,11 @@ const DynamicForm = ({
 
     if (eventData?.event_start_date && new Date() > new Date(eventData.event_start_date)) {
       setSelectedDate && setSelectedDate(new Date().toISOString().split('T')[0]);
-      handleDateChange(selectedDate);
+      handleDateChange(new Date().toISOString().split('T')[0]);
     } else {
       if (eventData?.event_start_date)
         setSelectedDate && setSelectedDate(eventData?.event_start_date);
-      handleDateChange(selectedDate);
+      handleDateChange(new Date().toISOString().split('T')[0]);
     }
 
     if (eventData && eventData.tickets) {
@@ -301,8 +299,6 @@ const DynamicForm = ({
                             return ticket;
                           });
 
-                          console.log('tempTickets', tempTickets);
-
                           if (tempTickets && isWithinTicketCount(tempTickets))
                             setTickets &&
                               setTickets((prevTickets) =>
@@ -331,8 +327,6 @@ const DynamicForm = ({
                             (sum, ticket) => sum + (ticket.count ?? 0),
                             0,
                           );
-
-                          console.log('ticketCount', ticketCount);
 
                           if (ticketCount && ticketCount > 0) {
                             setCashInHand && setCashInHand(true);

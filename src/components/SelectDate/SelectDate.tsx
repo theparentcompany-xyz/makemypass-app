@@ -94,7 +94,7 @@ const SelectDate = ({
           </p>
         )}
 
-        <hr className={styles.line} />
+        {type && <hr className={styles.line} />}
       </div>
     </>
   );
