@@ -36,9 +36,33 @@ export const editSubmissons = async (
   setFormData: Dispatch<React.SetStateAction<FormDataType>>,
   setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
 ) => {
+  const backendFormData = new FormData();
+
+  Object.keys(data).forEach((key) => {
+    let value = data[key];
+
+    if (!(value instanceof FileList)) {
+      if (Array.isArray(value) && value.length > 0) {
+        value.forEach((value) => backendFormData.append(key + '[]', value));
+      } else {
+        value = data[key]?.toString();
+      }
+    }
+
+    if (typeof value === 'string' && value.length > 0) {
+      backendFormData.append(key, value);
+    } else if (value instanceof FileList) {
+      Array.from(value).forEach((value) => backendFormData.append(key + '[]', value));
+    }
+  });
+
   if (data && !isArray(data.id))
     privateGateway
-      .put(makeMyPass.editSubmission(eventId, data.id), data)
+      .put(makeMyPass.editSubmission(eventId, data.id), backendFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       .then((response) => {
         toast.success(response.data.message.general[0] || 'Submission edited successfully');
         setSelectedGuestId(null);
