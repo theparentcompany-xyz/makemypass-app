@@ -345,17 +345,16 @@ const Overview = () => {
               )}
             </AnimatePresence>
 
-            {userRole === 'Admin' ||
-              (userRole === 'Owner' && (
-                <div id='hosts'>
-                  <Table
-                    tableHeading='Event Hosts'
-                    tableData={hostListTableData}
-                    secondaryButton={<SecondaryButton buttonText='Add Hosts +' onClick={addHost} />}
-                    setHostId={setHostId}
-                  />
-                </div>
-              ))}
+            {(userRole === 'Admin' || userRole === 'Owner') && (
+              <div id='hosts'>
+                <Table
+                  tableHeading='Event Hosts'
+                  tableData={hostListTableData}
+                  secondaryButton={<SecondaryButton buttonText='Add Hosts +' onClick={addHost} />}
+                  setHostId={setHostId}
+                />
+              </div>
+            )}
           </div>
         ) : (
           <div className={styles.center}>
