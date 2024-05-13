@@ -390,7 +390,6 @@ const DynamicForm = ({
                       if (setCashInHand) setCashInHand(e.target.checked);
                       onFieldChange('is_cash_in_hand', e.target.checked ? 'true' : 'false');
                     }}
-                    value={cashInHand.toString()}
                     className={styles.checkboxInput}
                   />
                   <label>Yes</label>
@@ -404,7 +403,6 @@ const DynamicForm = ({
                       if (setCashInHand) setCashInHand(e.target.checked);
                       onFieldChange('is_cash_in_hand', e.target.checked ? 'false' : 'true');
                     }}
-                    value={cashInHand.toString()}
                     className={styles.checkboxInput}
                     defaultChecked
                   />

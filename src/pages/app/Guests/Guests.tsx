@@ -188,12 +188,12 @@ const Guests = () => {
     });
   };
 
-  useEffect(() => {
-    setFormData({
-      ...formData,
-      is_cash_in_hand: cashInHand.toString(),
-    });
-  }, [cashInHand]);
+  // useEffect(() => {
+  //   setFormData({
+  //     ...formData,
+  //     is_cash_in_hand: cashInHand.toString(),
+  //   });
+  // }, [cashInHand]);
 
   useEffect(() => {
     if (ticketCode.length > 0) {
