@@ -230,6 +230,8 @@ const Overview = () => {
     });
   };
 
+  const userRole = JSON.parse(sessionStorage.getItem('eventData')!).current_user_role;
+
   return (
     <Theme>
       {selectedGuestId && formData && selectedGuestId.id && selectedGuestId.type == 'view' && (
@@ -314,13 +316,15 @@ const Overview = () => {
                 />
               </Link>
 
-              <a href='#hosts'>
-                <SectionButton
-                  buttonText='Host List'
-                  buttonColor='#C33D7B'
-                  icon={<FaWrench size={25} color='#C33D7B' />}
-                />
-              </a>
+              {(userRole === 'Owner' || userRole === 'Admin') && (
+                <a href='#hosts'>
+                  <SectionButton
+                    buttonText='Host List'
+                    buttonColor='#C33D7B'
+                    icon={<FaWrench size={25} color='#C33D7B' />}
+                  />
+                </a>
+              )}
 
               <Link to={`/${eventTitle}/checkins`}>
                 <SectionButton
@@ -341,14 +345,17 @@ const Overview = () => {
               )}
             </AnimatePresence>
 
-            <div id='hosts'>
-              <Table
-                tableHeading='Event Hosts'
-                tableData={hostListTableData}
-                secondaryButton={<SecondaryButton buttonText='Add Hosts +' onClick={addHost} />}
-                setHostId={setHostId}
-              />
-            </div>
+            {userRole === 'Admin' ||
+              (userRole === 'Owner' && (
+                <div id='hosts'>
+                  <Table
+                    tableHeading='Event Hosts'
+                    tableData={hostListTableData}
+                    secondaryButton={<SecondaryButton buttonText='Add Hosts +' onClick={addHost} />}
+                    setHostId={setHostId}
+                  />
+                </div>
+              ))}
           </div>
         ) : (
           <div className={styles.center}>

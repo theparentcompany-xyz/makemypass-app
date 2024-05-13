@@ -80,7 +80,9 @@ const Guests = () => {
     setFormData(selectedGuestData[0]);
   };
 
-  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
+  const { event_id: eventId, current_user_role: userRole } = JSON.parse(
+    sessionStorage.getItem('eventData')!,
+  );
 
   const { eventTitle } = useParams<{ eventTitle: string }>();
   useEffect(() => {
@@ -423,12 +425,14 @@ const Guests = () => {
                         setFormData({});
                       }}
                     />
-                    <SecondaryButton
-                      buttonText='CSV'
-                      onClick={() => {
-                        downloadCSVData(eventId);
-                      }}
-                    />
+                    {(userRole === 'Admin' || userRole === 'Owner') && (
+                      <SecondaryButton
+                        buttonText='CSV'
+                        onClick={() => {
+                          downloadCSVData(eventId);
+                        }}
+                      />
+                    )}
                     {categories.length > 0 && (
                       <Select
                         className='basic-single'

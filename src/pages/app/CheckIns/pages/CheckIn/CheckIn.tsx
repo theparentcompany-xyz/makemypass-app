@@ -74,6 +74,8 @@ const CheckIn = () => {
     }
   }, [recentRegistrations]);
 
+  const userRole = JSON.parse(sessionStorage.getItem('eventData')!).current_user_role;
+
   return (
     <Theme>
       <div className={styles.checkInContainer}>
@@ -102,17 +104,19 @@ const CheckIn = () => {
           search={searchKeyword}
           secondaryButton={
             <div className={styles.tableButtons}>
-              <SecondaryButton
-                buttonText='CSV'
-                onClick={() => {
-                  handleClick(
-                    currentCategory
-                      ? recentTableData.filter((data) => data.category === currentCategory)
-                      : recentTableData,
-                    'Guests CSV',
-                  );
-                }}
-              />
+              {(userRole === 'Admin' || userRole === 'Owner') && (
+                <SecondaryButton
+                  buttonText='CSV'
+                  onClick={() => {
+                    handleClick(
+                      currentCategory
+                        ? recentTableData.filter((data) => data.category === currentCategory)
+                        : recentTableData,
+                      'Guests CSV',
+                    );
+                  }}
+                />
+              )}
               {categories.length > 0 && (
                 <Select
                   className='basic-single'

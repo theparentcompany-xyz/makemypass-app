@@ -99,38 +99,66 @@ const Glance = ({ tab }: { tab: string }) => {
   }, [eventId, backendURL, totalGuests]);
 
   const tabs = {
-    overview: 'Overview',
-    insights: 'Insights',
-    guests: 'Guests',
-    inevent: 'In-Event',
+    overview: {
+      title: 'Overview',
+      roles: ['Admin', 'Owner', 'Volunteer'],
+    },
+    insights: {
+      title: 'Insights',
+      roles: ['Admin', 'Owner'],
+    },
+
+    guests: {
+      title: 'Guests',
+      roles: ['Admin', 'Owner', 'Volunteer'],
+    },
+    inevent: {
+      title: 'In-Event',
+      roles: ['Admin', 'Owner', 'Volunteer'],
+    },
+
     // formbuilder: 'Form Builder',
-    manage: 'Events Page',
-    checkins: 'Check-Ins',
+    manage: {
+      title: 'Event Page',
+      roles: ['Admin', 'Owner'],
+    },
+
+    checkins: {
+      title: 'Check-Ins',
+      roles: ['Admin', 'Owner', 'Volunteer'],
+    },
+
     // feedback: 'Feedbacks',
   };
 
+  const userRoles = eventData.current_user_role;
+
   return (
     <AnimatePresence>
-      {eventData && eventData.current_user_role !== 'Volunteer' && (
+      {eventData && (
         <div className={styles.tabsContainer}>
           <div className={styles.tabs}>
             <ol>
               {eventData.current_user_role != 'Gamer' && (
                 <>
-                  {Object.keys(tabs).map((tab) => (
-                    <div key={tab}>
-                      <motion.li
-                        whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
-                        className={styles.tab}
-                        onClick={() => updateTab(tab)}
-                      >
-                        {tabs[tab as keyof typeof tabs]}
-                      </motion.li>
-                      {currentTab === tab && (
-                        <motion.div layoutId='tab-indicator' className={styles.active} />
-                      )}
-                    </div>
-                  ))}
+                  {Object.keys(tabs)
+                    .filter((tab) => {
+                      return tabs[tab as keyof typeof tabs].roles.includes(userRoles);
+                    })
+                    .map((tab) => (
+                      <div key={tab}>
+                        <motion.li
+                          whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
+                          className={styles.tab}
+                          onClick={() => updateTab(tab)}
+                        >
+                          {tabs[tab as keyof typeof tabs].title}
+                        </motion.li>
+                        {currentTab === tab && (
+                          <motion.div layoutId='tab-indicator' className={styles.active} />
+                        )}
+                      </div>
+                    ))}
                 </>
               )}
             </ol>
