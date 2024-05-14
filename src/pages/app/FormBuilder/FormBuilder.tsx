@@ -27,13 +27,7 @@ const FormBuilder = () => {
   const [newOption, setNewOption] = useState(false);
   const [newOptionValue, setNewOptionValue] = useState('');
 
-  const [condition, setCondition] = useState<
-    {
-      field: string;
-      condition: string;
-      value: string;
-    }[]
-  >([
+  const [condition, setCondition] = useState([
     {
       field: '',
       condition: '',
@@ -356,15 +350,6 @@ const FormBuilder = () => {
                               <div className={styles.conditionsSelect}>
                                 <SelectComponent
                                   options={getFormFields(formFields[Number(field)])}
-                                  onChange={(selectedOption: any) => {
-                                    setCondition([
-                                      {
-                                        field: selectedOption.value,
-                                        condition: '',
-                                        value: '',
-                                      },
-                                    ]);
-                                  }}
                                 />
                                 <SelectComponent
                                   options={[
@@ -373,15 +358,6 @@ const FormBuilder = () => {
                                       label: condition.label,
                                     })),
                                   ]}
-                                  onChange={(selectedOption: any) => {
-                                    setCondition([
-                                      {
-                                        field: condition.field,
-                                        condition: selectedOption.value,
-                                        value: '',
-                                      },
-                                    ]);
-                                  }}
                                 />
                                 <input type='text' placeholder='Enter a Value' />
 
@@ -414,9 +390,7 @@ const FormBuilder = () => {
                                 <LuSave
                                   onClick={() => {
                                     const updatedConditions = formFields[Number(field)].condition;
-
                                     updatedConditions.push(condition);
-
                                     updateFormFieldValue(
                                       formFields[Number(field)],
                                       'condition',
