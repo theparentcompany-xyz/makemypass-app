@@ -37,6 +37,7 @@ const FormBuilder = () => {
 
   useEffect(() => {
     getForm(event_id, setFormFields);
+    console.log(condition);
   }, [event_id]);
 
   const updateFormFieldValue = (field: Field, key: string, value: any) => {
