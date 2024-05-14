@@ -9,6 +9,7 @@ interface SelectDateProps {
   remainingTickets: number;
   type?: string;
   value?: string | string[];
+  onFieldChange?: (field: string, value: string) => void;
 }
 
 const findMaxDate = (eventData: EventType) => {
@@ -63,7 +64,9 @@ const SelectDate = ({
   remainingTickets,
   type,
   value,
+  onFieldChange,
 }: SelectDateProps) => {
+  console.log('selectedDate', selectedDate);
   return (
     <>
       {' '}
@@ -84,9 +87,14 @@ const SelectDate = ({
                 ? new Date(value)
                 : selectedDate
                   ? new Date(selectedDate)
-                  : undefined
+                  : null
             }
-            onChange={(date) => handleDateChange(date?.toString())}
+            onChange={(date) => {
+              if (onFieldChange) {
+                onFieldChange('entry_date', date?.toISOString() || '');
+              }
+              handleDateChange(date?.toString());
+            }}
             minDate={findMinDate(eventData)}
             maxDate={findMaxDate(eventData)}
             excludeDates={

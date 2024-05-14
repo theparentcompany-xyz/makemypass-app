@@ -230,6 +230,7 @@ const DynamicForm = ({
                 remainingTickets={remainingTickets}
                 type='addGuest'
                 value={formData['entry_date']}
+                onFieldChange={(fieldName, fieldValue) => onFieldChange(fieldName, fieldValue)}
               />
             )}
             {selectedGuestId?.type !== 'edit' && (
