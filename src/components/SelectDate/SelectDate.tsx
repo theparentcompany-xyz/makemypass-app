@@ -8,7 +8,7 @@ interface SelectDateProps {
   handleDateChange: (date: string | null | undefined) => void;
   remainingTickets: number;
   type?: string;
-  value?: string;
+  value?: string | string[];
 }
 
 const findMaxDate = (eventData: EventType) => {
@@ -79,7 +79,13 @@ const SelectDate = ({
           <DatePicker
             wrapperClassName={styles.datePicker}
             dateFormat='dd MMM yyyy'
-            selected={value ? new Date(value) : selectedDate ? new Date(selectedDate) : undefined}
+            selected={
+              value && typeof value === 'string'
+                ? new Date(value)
+                : selectedDate
+                  ? new Date(selectedDate)
+                  : undefined
+            }
             onChange={(date) => handleDateChange(date?.toString())}
             minDate={findMinDate(eventData)}
             maxDate={findMaxDate(eventData)}
