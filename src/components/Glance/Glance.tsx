@@ -116,8 +116,10 @@ const Glance = ({ tab }: { tab: string }) => {
       title: 'In-Event',
       roles: ['Admin', 'Owner', 'Volunteer'],
     },
-
-    // formbuilder: 'Form Builder',
+    formbuilder: {
+      title: 'Form Builder',
+      roles: ['Admin', 'Owner'],
+    },
     manage: {
       title: 'Event Page',
       roles: ['Admin', 'Owner'],

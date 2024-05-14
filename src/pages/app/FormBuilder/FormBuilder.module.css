@@ -106,7 +106,9 @@
 
 .customFieldType {
   display: flex;
-  color: #606264;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #989999;
   align-items: center;
   column-gap: 0.25rem;
 }
