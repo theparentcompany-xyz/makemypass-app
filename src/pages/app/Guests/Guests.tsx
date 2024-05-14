@@ -353,6 +353,8 @@ const Guests = () => {
                   setTickets={setTickets}
                   tickets={tickets}
                   selectedGuestId={selectedGuestId}
+                  eventData={eventData}
+                  remainingTicketsList={remainingTicketsList}
                 />
 
                 {!showScanner && (

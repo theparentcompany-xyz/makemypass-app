@@ -215,13 +215,12 @@ const DynamicForm = ({
       postAudio(eventData?.id, recordedBlob);
     }
   };
-
   return (
     <>
       <div className={styles.formFields}>
         {eventData?.parse_audio && <AudioRecorder handleSubmit={handleAudioSubmit} />}
 
-        {selectedGuestId?.type !== 'edit' && ticketInfo && !showScanner && (
+        {ticketInfo && !showScanner && (
           <>
             {eventData && remainingTicketsList && (
               <SelectDate
@@ -230,15 +229,18 @@ const DynamicForm = ({
                 handleDateChange={handleDateChange}
                 remainingTickets={remainingTickets}
                 type='addGuest'
+                value={formData['entry_date']}
               />
             )}
-            <div
-              style={{
-                marginBottom: '1rem',
-              }}
-            >
-              <p className={styles.formLabel}>Ticket Type</p>
-              {/* <motion.div className={styles.dropdown}>
+            {selectedGuestId?.type !== 'edit' && (
+              <>
+                <div
+                  style={{
+                    marginBottom: '1rem',
+                  }}
+                >
+                  <p className={styles.formLabel}>Ticket Type</p>
+                  {/* <motion.div className={styles.dropdown}>
                 <Select
                   options={Object.keys(ticketInfo).map((key) => ({
                     value: ticketInfo[key].id,
@@ -272,106 +274,109 @@ const DynamicForm = ({
                 />
               </motion.div> */}
 
-              <div className={styles.tickets}>
-                {Object.keys(ticketInfo).map((key) => {
-                  return (
-                    <div className={styles.ticket}>
-                      <p key={key} className={styles.ticketDetails}>
-                        {ticketInfo[key]?.title} - {ticketInfo[key]?.currency}{' '}
-                        {ticketInfo[key]?.price}
-                      </p>
+                  <div className={styles.tickets}>
+                    {Object.keys(ticketInfo).map((key) => {
+                      return (
+                        <div className={styles.ticket}>
+                          <p key={key} className={styles.ticketDetails}>
+                            {ticketInfo[key]?.title} - {ticketInfo[key]?.currency}{' '}
+                            {ticketInfo[key]?.price}
+                          </p>
 
-                      <input
-                        placeholder='Enter Ticket Count'
-                        type='number'
-                        className={styles.ticketCountInput}
-                        onChange={(event) => {
-                          if (event.target.value != '' && Number(event.target.value) < 0) {
-                            toast.error('Ticket count cannot be negative');
-                            event.target.value = '0';
-                            return;
-                          }
-
-                          let tempTickets = tickets?.map((ticket) => {
-                            if (ticket.ticket_id === ticketInfo[key].id) {
-                              ticket.count = event.target.value ? Number(event.target.value) : 0;
-                            }
-                            return ticket;
-                          });
-
-                          if (tempTickets && isWithinTicketCount(tempTickets))
-                            setTickets &&
-                              setTickets((prevTickets) =>
-                                prevTickets.map((ticket) => {
-                                  if (ticket.ticket_id === ticketInfo[key].id) {
-                                    ticket.my_ticket = true;
-                                    ticket.count = event.target.value
-                                      ? Number(event.target.value)
-                                      : 0;
-                                  }
-
-                                  return ticket;
-                                }),
-                              );
-                          else {
-                            event.target.value = '0';
-                            tempTickets = tempTickets?.map((ticket) => {
-                              if (ticket.ticket_id === ticketInfo[key].id) {
-                                ticket.count = 0;
+                          <input
+                            placeholder='Enter Ticket Count'
+                            type='number'
+                            className={styles.ticketCountInput}
+                            onChange={(event) => {
+                              if (event.target.value != '' && Number(event.target.value) < 0) {
+                                toast.error('Ticket count cannot be negative');
+                                event.target.value = '0';
+                                return;
                               }
-                              return ticket;
-                            });
-                          }
 
-                          const ticketCount = tempTickets?.reduce(
-                            (sum, ticket) => sum + (ticket.count ?? 0),
-                            0,
-                          );
+                              let tempTickets = tickets?.map((ticket) => {
+                                if (ticket.ticket_id === ticketInfo[key].id) {
+                                  ticket.count = event.target.value
+                                    ? Number(event.target.value)
+                                    : 0;
+                                }
+                                return ticket;
+                              });
 
-                          if (ticketCount && ticketCount > 0) {
-                            setCashInHand && setCashInHand(true);
-                          } else {
-                            setCashInHand && setCashInHand(false);
-                          }
-                        }}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div
-              style={{
-                marginBottom: '1rem',
-              }}
-            >
-              <p className={styles.formLabel}>Scan Ticket Type</p>
-              <div className={styles.scanTicketCodeContainer}>
-                <input
-                  disabled
-                  type='text'
-                  id='ticket_code'
-                  name='ticket_code'
-                  value={ticketCode}
-                  className={styles.scanTicketCodeInput}
-                  placeholder='Enter Ticket Code'
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setTicketCode && setTicketCode(e.target.value);
+                              if (tempTickets && isWithinTicketCount(tempTickets))
+                                setTickets &&
+                                  setTickets((prevTickets) =>
+                                    prevTickets.map((ticket) => {
+                                      if (ticket.ticket_id === ticketInfo[key].id) {
+                                        ticket.my_ticket = true;
+                                        ticket.count = event.target.value
+                                          ? Number(event.target.value)
+                                          : 0;
+                                      }
+
+                                      return ticket;
+                                    }),
+                                  );
+                              else {
+                                event.target.value = '0';
+                                tempTickets = tempTickets?.map((ticket) => {
+                                  if (ticket.ticket_id === ticketInfo[key].id) {
+                                    ticket.count = 0;
+                                  }
+                                  return ticket;
+                                });
+                              }
+
+                              const ticketCount = tempTickets?.reduce(
+                                (sum, ticket) => sum + (ticket.count ?? 0),
+                                0,
+                              );
+
+                              if (ticketCount && ticketCount > 0) {
+                                setCashInHand && setCashInHand(true);
+                              } else {
+                                setCashInHand && setCashInHand(false);
+                              }
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    marginBottom: '1rem',
                   }}
-                />
-                <button
-                  onClick={() => {
-                    if (setShowScanner) setShowScanner(true);
-                  }}
-                  className={styles.scanTicketCodeButton}
                 >
-                  Scan
-                </button>
-              </div>
-            </div>
+                  <p className={styles.formLabel}>Scan Ticket Type</p>
+                  <div className={styles.scanTicketCodeContainer}>
+                    <input
+                      disabled
+                      type='text'
+                      id='ticket_code'
+                      name='ticket_code'
+                      value={ticketCode}
+                      className={styles.scanTicketCodeInput}
+                      placeholder='Enter Ticket Code'
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setTicketCode && setTicketCode(e.target.value);
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        if (setShowScanner) setShowScanner(true);
+                      }}
+                      className={styles.scanTicketCodeButton}
+                    >
+                      Scan
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </>
         )}
-
         {selectedGuestId?.type !== 'edit' && cashInHand && !showScanner && (
           <div
             style={{
@@ -412,9 +417,7 @@ const DynamicForm = ({
             </div>
           </div>
         )}
-
         {/* <hr className={styles.line} /> */}
-
         {!showScanner &&
           formFields?.map((field: FormFieldType) => {
             const fieldTitle = field?.title + (field.required ? '*' : '');
@@ -785,7 +788,6 @@ const DynamicForm = ({
               );
             }
           })}
-
         {showScanner && (
           <Scanner
             ticketId={ticketCode}

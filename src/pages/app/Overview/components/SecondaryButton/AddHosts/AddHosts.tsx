@@ -59,7 +59,7 @@ const AddHosts = ({
   return (
     <Modal onClose={onClose}>
       <div className={styles.userInfoModalContainer}>
-        <p className={styles.modalHeader}>Edit Guest</p>
+        <p className={styles.modalHeader}>Edit Host</p>
         <div className={styles.inputContainers}>
           <div className={styles.inputContainer}>
             <p className={styles.inputLabel}>Email</p>

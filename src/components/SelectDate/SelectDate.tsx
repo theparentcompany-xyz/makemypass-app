@@ -8,6 +8,7 @@ interface SelectDateProps {
   handleDateChange: (date: string | null | undefined) => void;
   remainingTickets: number;
   type?: string;
+  value?: string;
 }
 
 const findMaxDate = (eventData: EventType) => {
@@ -61,6 +62,7 @@ const SelectDate = ({
   handleDateChange,
   remainingTickets,
   type,
+  value,
 }: SelectDateProps) => {
   return (
     <>
@@ -77,16 +79,19 @@ const SelectDate = ({
           <DatePicker
             wrapperClassName={styles.datePicker}
             dateFormat='dd MMM yyyy'
-            selected={selectedDate ? new Date(selectedDate) : null}
+            selected={value ? new Date(value) : selectedDate ? new Date(selectedDate) : undefined}
             onChange={(date) => handleDateChange(date?.toString())}
             minDate={findMinDate(eventData)}
             maxDate={findMaxDate(eventData)}
-            excludeDates={Object.keys(eventData.remaining_tickets).reduce((acc, date) => {
-              if (eventData.remaining_tickets[date] <= 0) {
-                acc.push(new Date(date));
-              }
-              return acc;
-            }, [] as Date[])}
+            excludeDates={
+              eventData?.remaining_tickets &&
+              Object.keys(eventData?.remaining_tickets).reduce((acc, date) => {
+                if (eventData?.remaining_tickets[date] <= 0 || new Date(date) < new Date()) {
+                  acc.push(new Date(date));
+                }
+                return acc;
+              }, [] as Date[])
+            }
           />
         </div>
         {selectedDate && (
