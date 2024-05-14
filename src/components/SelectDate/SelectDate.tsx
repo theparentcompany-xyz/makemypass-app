@@ -91,7 +91,7 @@ const SelectDate = ({
             }
             onChange={(date) => {
               if (onFieldChange) {
-                onFieldChange('entry_date', date?.toISOString() || '');
+                onFieldChange('entry_date', date?.toISOString().split('T')[0] || '');
               }
               handleDateChange(date?.toString());
             }}
