@@ -33,7 +33,8 @@ export const getUserInfo = async (
     });
 };
 
-export const updateProfile = async ({ data }: { [k: string]: FormData }) => {
+export const updateProfile = async ({ data }: { [k: string]: FormData; }, setLoading?: React.Dispatch<React.SetStateAction<boolean>>) => {
+  setLoading && setLoading(true);
   const toastId  = toast.loading('Updating Profile...');
   return privateGateway
     .put(buildVerse.updateProfile, data, {
@@ -45,17 +46,20 @@ export const updateProfile = async ({ data }: { [k: string]: FormData }) => {
       toast.success('Profile Updated Successfully', {
           id: toastId,
       });
+
+      setLoading && setLoading(false);
     })
     .catch((error) => {
       
       toast.error(error.response?.data?.message?.general[0] || 'Error in Updating Profile', {
           id: toastId,
       });
-      
+      setLoading && setLoading(false);
     });
 };
 
-export const setUserData = async ({ formData, token }: { formData: FormData; token: string }) => {
+export const setUserData = async ({ formData, token, setLoading }: { formData: FormData; token: string; setLoading?: React.Dispatch<React.SetStateAction<boolean>> }) => {
+  setLoading && setLoading(true);
   return privateGateway
     .post(buildVerse.setUserData(token), formData, {
       headers: {
@@ -64,9 +68,11 @@ export const setUserData = async ({ formData, token }: { formData: FormData; tok
     })
     .then(() => {
       toast.success('Profile Updated Successfully');
+      setLoading && setLoading(false);
     })
     .catch((error) => {
       toast.error(error?.response?.data?.message.general[0] || 'Error in Updating Profile');
+      setLoading && setLoading(false);
     });
 };
 
