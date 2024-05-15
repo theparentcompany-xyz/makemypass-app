@@ -8,9 +8,12 @@ import { TbMailStar } from 'react-icons/tb';
 import { BiArrowToTop } from 'react-icons/bi';
 import { LuPencil } from 'react-icons/lu';
 import { FiGlobe } from 'react-icons/fi';
+import { HiOutlineUserGroup } from 'react-icons/hi2';
+import { BsTicketDetailed } from 'react-icons/bs';
+import { PiArrowsSplit } from 'react-icons/pi';
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { HashLoader } from 'react-spinners';
-import { EventType } from '../../../apis/types';
+import { ErrorMessages, EventType } from '../../../apis/types';
 import Slider from '../../../components/SliderButton/Slider';
 import { getCurrentTimezone, convertDate } from '../../../common/commonFunctions';
 import { Autocomplete, GoogleMap, useLoadScript, Libraries, MarkerF } from '@react-google-maps/api';
@@ -19,11 +22,13 @@ import Modal from '../../../components/Modal/Modal';
 import Select from 'react-select';
 
 import './google.css';
+import { AnimatePresence, motion } from 'framer-motion';
 const libraries: Libraries = ['places'];
 
 const EditEvent = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [eventTitle, setEventTitle] = useState('');
+  const [formErrors, setFormErrors] = useState<ErrorMessages>({});
   const [fetchedEvent, setFetchedEvent] = useState<EventType>();
   const [eventData, setEventData] = useState<EventType>();
   const [newDescription, setNewDescription] = useState('');
@@ -70,7 +75,7 @@ const EditEvent = () => {
     }
   };
   const onMapClick = (event: google.maps.MapMouseEvent) => {
-    setLocation({ lat: event.latLng?.lat()!, lng: event.latLng?.lng()! });
+    setLocation({ lat: event.latLng?.lat() ?? 0, lng: event.latLng?.lng() ?? 0 });
   };
 
   const mapOptions = useMemo<google.maps.MapOptions>(
@@ -111,15 +116,20 @@ const EditEvent = () => {
 
     if (logo) changedData['logo'] = logo;
     if (banner) changedData['banner'] = banner;
-    if (eventData?.capacity == undefined && fetchedEvent?.capacity)
-      changedData['capacity'] = 'null';
+
+    Object.keys(changedData).forEach((key) => {
+      if (changedData[key] === null || changedData[key] === undefined || changedData[key] === '')
+        changedData[key] = 'null';
+    });
+
     if (changedData?.is_online == true) {
       changedData['location[lat]'] = 'null';
       changedData['location[lng]'] = 'null';
 
-      changedData['place'] = '';
+      changedData['place'] = 'null';
     }
-    editEvent(eventId, changedData);
+    editEvent(eventId, changedData, setFormErrors);
+    console.log(changedData);
   };
 
   const agreeToDelete = () => {
@@ -243,6 +253,19 @@ const EditEvent = () => {
                     onChange={(e) => setEventTitle(e.target.value)}
                     value={eventTitle}
                   />
+                  <AnimatePresence>
+                    {formErrors.title && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className={styles.errorText}
+                      >
+                        {`${formErrors.title[0]}`}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
                   <div className={styles.urlContainer}>
                     <label>Public URL: makemypass.com/</label>
                     <input
@@ -253,7 +276,19 @@ const EditEvent = () => {
                       onChange={(e) => setEventData({ ...eventData, name: e.target.value })}
                     />
                   </div>
-
+                  <AnimatePresence>
+                    {formErrors.name && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className={styles.errorText}
+                      >
+                        {`${formErrors.name[0]}`}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
                   <div className={styles.timezoneContainer}>
                     <div className={styles.dateTimeParentContainer}>
                       <div className={styles.dateTimeContainer}>
@@ -265,7 +300,7 @@ const EditEvent = () => {
                             value={dateForDateTimeLocal(eventDate?.start)}
                             onChange={(e) => {
                               setEventDate({
-                                end: eventDate?.end!,
+                                end: eventDate?.end,
                                 start: e.target.value ? new Date(e.target.value) : undefined,
                               });
                             }}
@@ -279,7 +314,7 @@ const EditEvent = () => {
                             value={dateForDateTimeLocal(eventDate?.end)}
                             onChange={(e) =>
                               setEventDate({
-                                start: eventDate?.start!,
+                                start: eventDate?.start,
                                 end: e.target.value ? new Date(e.target.value) : undefined,
                               })
                             }
@@ -295,7 +330,7 @@ const EditEvent = () => {
                             value={dateForDateTimeLocal(regDate?.start)}
                             onChange={(e) =>
                               setRegDate({
-                                end: regDate?.end!,
+                                end: regDate?.end,
                                 start: e.target.value ? new Date(e.target.value) : undefined,
                               })
                             }
@@ -309,7 +344,7 @@ const EditEvent = () => {
                             value={dateForDateTimeLocal(regDate?.end)}
                             onChange={(e) =>
                               setRegDate({
-                                start: regDate?.start!,
+                                start: regDate?.start,
                                 end: e.target.value ? new Date(e.target.value) : undefined,
                               })
                             }
@@ -325,6 +360,23 @@ const EditEvent = () => {
                       {timezone?.zoneName}
                     </span>
                   </div>
+                  <AnimatePresence>
+                    {(formErrors.reg_start_date ||
+                      formErrors.reg_end_date ||
+                      formErrors.event_start_date ||
+                      formErrors.event_end_date) && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className={styles.errorText}
+                      >
+                        {`${formErrors.reg_start_date[0]}\n ${formErrors.reg_end_date[0]}\n ${formErrors.event_start_date[0]}\n ${formErrors.event_end_date[0]}`}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+
                   {!eventData.is_online && (
                     <>
                       <GoogleMap
@@ -409,6 +461,52 @@ const EditEvent = () => {
                     </div>
                     <div className={styles.option}>
                       <label>
+                        <HiOutlineUserGroup size={20} color='#949597' />
+                        Allow Multiple Check-In
+                      </label>
+                      <Slider
+                        checked={eventData.is_multiple_checkin as boolean}
+                        text={''}
+                        onChange={() =>
+                          setEventData({
+                            ...eventData,
+                            is_multiple_checkin: !eventData.is_multiple_checkin,
+                          })
+                        }
+                      />
+                    </div>
+                    <div className={styles.option}>
+                      <label>
+                        <BsTicketDetailed size={20} color='#949597' /> Grouped Ticket
+                      </label>
+                      <Slider
+                        checked={eventData.is_grouped_ticket}
+                        text={''}
+                        onChange={() =>
+                          setEventData({
+                            ...eventData,
+                            is_grouped_ticket: !eventData.is_grouped_ticket,
+                          })
+                        }
+                      />
+                    </div>
+                    <div className={styles.option}>
+                      <label>
+                        <PiArrowsSplit size={20} color='#949597' /> Add Sub-Event
+                      </label>
+                      <Slider
+                        checked={eventData.select_multi_ticket as boolean}
+                        text={''}
+                        onChange={() =>
+                          setEventData({
+                            ...eventData,
+                            select_multi_ticket: !eventData.select_multi_ticket,
+                          })
+                        }
+                      />
+                    </div>
+                    <div className={styles.option}>
+                      <label>
                         {' '}
                         <BiArrowToTop size={20} color='#949597' />
                         Capacity
@@ -441,7 +539,6 @@ const EditEvent = () => {
                     />
                     <label>Background Color</label> */}
                   </div>
-
                   <div className={styles.uploadLogoContainer}>
                     <div>
                       {logo ? (
@@ -470,7 +567,6 @@ const EditEvent = () => {
                       <LuPencil size={15} color='#949597' />
                     </div>
                   </div>
-
                   <div className={styles.buttonContainer}>
                     <button className={styles.deleteButton} onClick={() => setShowModal(true)}>
                       Delete
