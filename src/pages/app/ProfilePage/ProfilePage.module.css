@@ -90,8 +90,14 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   transition: all 0.2s ease-out;
+  display: flex;
+  align-items: center;
 }
 
 .updateButton:hover {
   background: rgba(255, 255, 255, 0.16);
+}
+
+.buttonText{
+    margin-left: auto;
 }
