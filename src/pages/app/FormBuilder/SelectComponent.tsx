@@ -5,6 +5,7 @@ const SelectComponent = ({
   backgroundColor,
   options,
   onChange,
+  value,
 }: {
   backgroundColor?: string;
   options?: {
@@ -12,6 +13,7 @@ const SelectComponent = ({
     label: string;
   }[];
   onChange?: any;
+  value?: string;
 }) => {
   return (
     <>
@@ -47,6 +49,7 @@ const SelectComponent = ({
             zIndex: 10000,
           }),
         }}
+        value={options?.find((option) => option.value === value)}
       />
     </>
   );

@@ -27,20 +27,11 @@ const FormBuilder = () => {
   const [newOption, setNewOption] = useState(false);
   const [newOptionValue, setNewOptionValue] = useState('');
 
-  const [condition, setCondition] = useState([
-    {
-      field: '',
-      condition: '',
-      value: '',
-    },
-  ]);
-
   useEffect(() => {
     getForm(event_id, setFormFields);
-    console.log(condition);
   }, [event_id]);
 
-  const updateFormFieldValue = (field: Field, key: string, value: any) => {
+  const updateFormFieldValue = (field: Field, key: string, value: string | boolean | string[]) => {
     setFormFields([
       ...formFields.slice(0, formFields.indexOf(field)),
       {
@@ -134,11 +125,6 @@ const FormBuilder = () => {
                       <LuPencil
                         onClick={() => {
                           setSelectedField(formFields[Number(field)]);
-                          setCondition(
-                            formFields[Number(field)].condition.length > 0
-                              ? formFields[Number(field)].condition
-                              : [{ field: '', condition: '', value: '' }],
-                          );
                         }}
                         size={20}
                         color='#606264'
@@ -317,25 +303,7 @@ const FormBuilder = () => {
                           <Slider
                             checked={formFields[Number(field)].condition.length > 0}
                             text={''}
-                            onChange={() => {
-                              updateFormFieldValue(
-                                formFields[Number(field)],
-                                'condition',
-                                formFields[Number(field)].condition.length > 0
-                                  ? []
-                                  : [{ field: '', condition: '', value: '' }],
-                              );
-
-                              if (formFields[Number(field)].condition.length > 0) {
-                                setCondition([
-                                  {
-                                    field: '',
-                                    condition: '',
-                                    value: '',
-                                  },
-                                ]);
-                              }
-                            }}
+                            onChange={() => {}}
                           />
                           <p className={styles.customFieldLabel}>
                             Show Field only when the conditions are met.
@@ -351,6 +319,7 @@ const FormBuilder = () => {
                               <div className={styles.conditionsSelect}>
                                 <SelectComponent
                                   options={getFormFields(formFields[Number(field)])}
+                                  value={condition.field}
                                 />
                                 <SelectComponent
                                   options={[
@@ -359,24 +328,18 @@ const FormBuilder = () => {
                                       label: condition.label,
                                     })),
                                   ]}
+                                  value={condition.operator}
                                 />
-                                <input type='text' placeholder='Enter a Value' />
+                                <input
+                                  type='text'
+                                  placeholder='Enter a Value'
+                                  value={condition.value}
+                                />
 
                                 <RiDeleteBinLine
                                   size={20}
                                   color='#606264'
                                   onClick={() => {
-                                    const updatedConditions = formFields[Number(field)].condition;
-                                    updatedConditions.splice(
-                                      updatedConditions.indexOf(condition),
-                                      1,
-                                    );
-                                    updateFormFieldValue(
-                                      formFields[Number(field)],
-                                      'condition',
-                                      updatedConditions,
-                                    );
-
                                     toast.success('Condition Removed Successfully');
                                   }}
                                 />
@@ -390,14 +353,6 @@ const FormBuilder = () => {
 
                                 <LuSave
                                   onClick={() => {
-                                    const updatedConditions = formFields[Number(field)].condition;
-                                    updatedConditions.push(condition);
-                                    updateFormFieldValue(
-                                      formFields[Number(field)],
-                                      'condition',
-                                      updatedConditions,
-                                    );
-
                                     toast.success('Condition Added Successfully');
                                   }}
                                   style={{

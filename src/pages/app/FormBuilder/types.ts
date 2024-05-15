@@ -9,7 +9,7 @@ export interface Field {
   required: boolean;
   condition: {
     field: string;
-    condition: string;
+    operator: string;
     value: string;
   }[];
   field_key: string;
