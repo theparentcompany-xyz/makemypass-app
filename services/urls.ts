@@ -19,7 +19,7 @@ export const makeMyPass = {
   editEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/edit-event/`),
   duplicateEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/duplicate-event/`),
 
-  // Guest and TicketManagement
+  // Guest and Ticket Management
   checkInUser: (ticketCode: string, eventId: string) =>
     makeMyPassURL(`/scan-guest/${eventId}/register/${ticketCode}/`),
   resentTicket: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/resent-ticket/`),
@@ -39,6 +39,10 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-guest/${eventId}/validate-sent-invite-payment/`),
   getUserPerksInfo: (ticketCode: string) =>
     makeMyPassURL(`/manage-guest/get-user-perks-info/${ticketCode}`),
+  //Ticket Details APIs for fetching and manipulation
+  getTicket: (eventId: string, ticketCode: string) => makeMyPassURL(`/${eventId}/get-ticket/${ticketCode}`),
+  editTicket: (eventId: string, ticketCode: string) => makeMyPassURL(`/${eventId}/edit-ticket/${ticketCode}`),
+  deleteTicket: (eventId: string, ticketCode: string) => makeMyPassURL(`/${eventId}/delete-ticket/${ticketCode}`),
 
   // Host Management
   listHosts: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-hosts/`),
