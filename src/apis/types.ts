@@ -133,6 +133,8 @@ export interface EventType {
   capacity?: number;
   is_private: boolean;
   is_online: boolean;
+  is_grouped_ticket: boolean;
+  is_multiple_checkin: boolean;
   approval_required: boolean;
   status: string;
   remaining_tickets: {
