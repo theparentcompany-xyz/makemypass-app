@@ -8,7 +8,7 @@ export const publicGateway = axios.create({
     'ngrok-skip-browser-warning': '69420',
     'Content-Type': 'application/json',
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    product: 'Makemypass',
+    Product: 'Makemypass',
     'Accept-Language': navigator.language,
   },
 });
@@ -28,7 +28,7 @@ export const privateGateway = axios.create({
     'ngrok-skip-browser-warning': '69420',
     'Content-Type': 'application/json',
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    product: 'Makemypass',
+    Product: 'Makemypass',
     'Accept-Language': navigator.language,
   },
 });
