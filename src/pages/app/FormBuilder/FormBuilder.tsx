@@ -308,7 +308,7 @@ const FormBuilder = () => {
                           </div>
                         )}
 
-                      {getFormFields(formFields[Number(field)]).length > 0 && (
+                      {getFormFields(formFields[Number(field)]).length >= 0 && (
                         <div
                           className={styles.row1}
                           style={{
@@ -418,6 +418,13 @@ const FormBuilder = () => {
                                   size={20}
                                   color='#606264'
                                   onClick={() => {
+                                    updateFormFieldValue(
+                                      formFields[Number(field)],
+                                      'condition',
+                                      formFields[Number(field)].condition.filter(
+                                        (cond) => cond.field !== condition.field,
+                                      ),
+                                    );
                                     toast.success('Condition Removed Successfully');
                                   }}
                                 />
@@ -430,23 +437,26 @@ const FormBuilder = () => {
                                   color='#606264'
                                 />
 
-                                <LuPlus
-                                  style={{
-                                    marginLeft: '0.5rem',
-                                  }}
-                                  size={20}
-                                  color='#606264'
-                                  onClick={() => {
-                                    updateFormFieldValue(formFields[Number(field)], 'condition', [
-                                      ...formFields[Number(field)].condition,
-                                      {
-                                        field: '',
-                                        operator: '',
-                                        value: '',
-                                      },
-                                    ]);
-                                  }}
-                                />
+                                {getFormFields(formFields[Number(field)], condition.field).length >
+                                  0 && (
+                                  <LuPlus
+                                    style={{
+                                      marginLeft: '0.5rem',
+                                    }}
+                                    size={20}
+                                    color='#606264'
+                                    onClick={() => {
+                                      updateFormFieldValue(formFields[Number(field)], 'condition', [
+                                        ...formFields[Number(field)].condition,
+                                        {
+                                          field: '',
+                                          operator: '',
+                                          value: '',
+                                        },
+                                      ]);
+                                    }}
+                                  />
+                                )}
                               </div>
                             </div>
                           ))}
@@ -466,8 +476,7 @@ const FormBuilder = () => {
                 </button>
                 <button
                   onClick={() => {
-                    console.log(formFields);
-                    // updateForm(event_id, formFields);
+                    updateForm(event_id, formFields);
                   }}
                   className={styles.addQuestionButton}
                 >
