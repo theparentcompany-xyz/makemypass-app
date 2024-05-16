@@ -84,6 +84,8 @@ export const makeMyPass = {
   parseFromAudio: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/parse-from-audio/`),
   downloadBulkUploadCSV: (eventId: string, fileId: string, fileType: string) =>
     makeMyPassURL(`/manage-event/${eventId}/download_file/${fileId}/?file_type=${fileType}/`),
+  initateRefund: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/manage-guest/${eventId}/initiate-refund/${eventRegisterId}/`),
 
   //Payment and Coupons
   validatePayment: makeMyPassURL(`/public-form/validate-payment/`),

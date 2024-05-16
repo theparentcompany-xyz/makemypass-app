@@ -7,7 +7,7 @@ import { MdEmail, MdOutlinePhoneAndroid } from 'react-icons/md';
 import Slider from '../../../components/SliderButton/Slider';
 import { BsAlphabetUppercase } from 'react-icons/bs';
 import { RxDragHandleDots2 } from 'react-icons/rx';
-import { LuPencil, LuPlus, LuSave } from 'react-icons/lu';
+import { LuPencil, LuPlus } from 'react-icons/lu';
 import { RiDeleteBinLine } from 'react-icons/ri';
 
 import { useEffect, useState } from 'react';

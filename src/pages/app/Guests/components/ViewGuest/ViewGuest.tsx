@@ -11,6 +11,7 @@ import { FaCheck } from 'react-icons/fa6';
 import { checkInUser } from '../../../../../apis/scan';
 import { formatDate } from '../../../../../common/commonFunctions';
 import { isArray } from 'chart.js/helpers';
+import { initateRefund } from '../../../../../apis/guests';
 
 const ViewGuest = ({
   formFields,
@@ -32,7 +33,7 @@ const ViewGuest = ({
     value: false,
   });
 
-  console.log('formData', formData);
+  const [initateRefundClicked, setInitateRefundClicked] = useState(false);
 
   return (
     <motion.div
@@ -238,6 +239,33 @@ const ViewGuest = ({
               )}
             </div>
           )}
+
+          {Number(formData['amount']) > 0 &&
+            (!initateRefundClicked ? (
+              <SecondaryButton
+                onClick={() => {
+                  setInitateRefundClicked(true);
+                }}
+                buttonText='Initate Refund'
+              />
+            ) : (
+              <div className={styles.confirmButton}>
+                <SecondaryButton
+                  onClick={() => {
+                    setInitateRefundClicked(false);
+                  }}
+                  buttonText='No'
+                />
+                <SecondaryButton
+                  onClick={() => {
+                    if (!isArray(formData['id']))
+                      initateRefund(eventId, formData['id'], setInitateRefundClicked);
+                  }}
+                  buttonText='Yes, Initate Refund'
+                />
+                <p className={styles.alertText}>Are you sure you want to initiate refund.</p>
+              </div>
+            ))}
         </div>
         <hr className={styles.line} />
         <div className={styles.invitedBy}>
