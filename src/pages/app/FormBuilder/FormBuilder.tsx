@@ -7,7 +7,7 @@ import { MdEmail, MdOutlinePhoneAndroid } from 'react-icons/md';
 import Slider from '../../../components/SliderButton/Slider';
 import { BsAlphabetUppercase } from 'react-icons/bs';
 import { RxDragHandleDots2 } from 'react-icons/rx';
-import { LuPencil, LuSave } from 'react-icons/lu';
+import { LuPencil, LuPlus, LuSave } from 'react-icons/lu';
 import { RiDeleteBinLine } from 'react-icons/ri';
 
 import { useEffect, useState } from 'react';
@@ -31,7 +31,11 @@ const FormBuilder = () => {
     getForm(event_id, setFormFields);
   }, [event_id]);
 
-  const updateFormFieldValue = (field: Field, key: string, value: string | boolean | string[]) => {
+  const updateFormFieldValue = (
+    field: Field,
+    key: string,
+    value: string | boolean | string[] | { field: string; operator: string; value: string }[],
+  ) => {
     setFormFields([
       ...formFields.slice(0, formFields.indexOf(field)),
       {
@@ -68,9 +72,9 @@ const FormBuilder = () => {
   return (
     <>
       <Theme>
-        <EventHeader />
-        <Glance tab='formbuilder' />
         <div className={styles.builderContainer}>
+          <EventHeader />
+          <Glance tab='formbuilder' />
           <div className={styles.requiredFieldsHeader}>
             <div className={styles.requiredHeading}>
               <div className={styles.image}>
@@ -224,6 +228,7 @@ const FormBuilder = () => {
                           }}
                         />
                       </div>
+
                       {formFields[Number(field)].options &&
                         (formFields[Number(field)].type === 'radio' ||
                           formFields[Number(field)].type === 'checkbox') && (
@@ -292,6 +297,7 @@ const FormBuilder = () => {
                             </p>
                           </div>
                         )}
+
                       {getFormFields(formFields[Number(field)]).length > 0 && (
                         <div
                           className={styles.row1}
@@ -303,7 +309,21 @@ const FormBuilder = () => {
                           <Slider
                             checked={formFields[Number(field)].condition.length > 0}
                             text={''}
-                            onChange={() => {}}
+                            onChange={() => {
+                              updateFormFieldValue(
+                                formFields[Number(field)],
+                                'condition',
+                                formFields[Number(field)].condition.length > 0
+                                  ? []
+                                  : [
+                                      {
+                                        field: getFormFields(formFields[Number(field)])[0].value,
+                                        operator: conditions[0].value,
+                                        value: '',
+                                      },
+                                    ],
+                              );
+                            }}
                           />
                           <p className={styles.customFieldLabel}>
                             Show Field only when the conditions are met.
@@ -320,6 +340,21 @@ const FormBuilder = () => {
                                 <SelectComponent
                                   options={getFormFields(formFields[Number(field)])}
                                   value={condition.field}
+                                  onChange={(option: { value: string; label: string }) => {
+                                    updateFormFieldValue(
+                                      formFields[Number(field)],
+                                      'condition',
+                                      formFields[Number(field)].condition.map((cond) => {
+                                        if (cond.field === condition.field) {
+                                          return {
+                                            ...cond,
+                                            field: option.value,
+                                          };
+                                        }
+                                        return cond;
+                                      }),
+                                    );
+                                  }}
                                 />
                                 <SelectComponent
                                   options={[
@@ -329,11 +364,41 @@ const FormBuilder = () => {
                                     })),
                                   ]}
                                   value={condition.operator}
+                                  onChange={(option: { value: string; label: string }) => {
+                                    updateFormFieldValue(
+                                      formFields[Number(field)],
+                                      'condition',
+                                      formFields[Number(field)].condition.map((cond) => {
+                                        if (cond.field === condition.field) {
+                                          return {
+                                            ...cond,
+                                            operator: option.value,
+                                          };
+                                        }
+                                        return cond;
+                                      }),
+                                    );
+                                  }}
                                 />
                                 <input
                                   type='text'
                                   placeholder='Enter a Value'
                                   value={condition.value}
+                                  onChange={(event) => {
+                                    updateFormFieldValue(
+                                      formFields[Number(field)],
+                                      'condition',
+                                      formFields[Number(field)].condition.map((cond) => {
+                                        if (cond.field === condition.field) {
+                                          return {
+                                            ...cond,
+                                            value: event.target.value,
+                                          };
+                                        }
+                                        return cond;
+                                      }),
+                                    );
+                                  }}
                                 />
 
                                 <RiDeleteBinLine
@@ -343,6 +408,7 @@ const FormBuilder = () => {
                                     toast.success('Condition Removed Successfully');
                                   }}
                                 />
+
                                 <RxDragHandleDots2
                                   style={{
                                     marginLeft: '0.5rem',
@@ -351,15 +417,22 @@ const FormBuilder = () => {
                                   color='#606264'
                                 />
 
-                                <LuSave
-                                  onClick={() => {
-                                    toast.success('Condition Added Successfully');
-                                  }}
+                                <LuPlus
                                   style={{
                                     marginLeft: '0.5rem',
                                   }}
                                   size={20}
                                   color='#606264'
+                                  onClick={() => {
+                                    updateFormFieldValue(formFields[Number(field)], 'condition', [
+                                      ...formFields[Number(field)].condition,
+                                      {
+                                        field: '',
+                                        operator: '',
+                                        value: '',
+                                      },
+                                    ]);
+                                  }}
                                 />
                               </div>
                             </div>
@@ -380,7 +453,8 @@ const FormBuilder = () => {
                 </button>
                 <button
                   onClick={() => {
-                    updateForm(event_id, formFields);
+                    console.log(formFields);
+                    // updateForm(event_id, formFields);
                   }}
                   className={styles.addQuestionButton}
                 >
