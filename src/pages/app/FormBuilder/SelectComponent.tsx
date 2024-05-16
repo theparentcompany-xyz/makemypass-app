@@ -15,6 +15,7 @@ const SelectComponent = ({
   onChange?: any;
   value?: string;
 }) => {
+  console.log(options?.find((option) => option.value === value));
   return (
     <>
       <Select

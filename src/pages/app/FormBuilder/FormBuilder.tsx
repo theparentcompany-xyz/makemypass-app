@@ -46,17 +46,24 @@ const FormBuilder = () => {
     ]);
   };
 
-  const getFormFields = (currentField: Field) => {
+  const getFormFields = (currentField: Field, fieldId: string) => {
     let hasPassed = false;
+
     const fields = formFields.reduce((acc: { value: string; label: string }[], field) => {
-      if (field.id !== currentField.id && !hasPassed) {
-        acc.push({
-          value: field.id,
-          label: field.title,
-        });
-      } else {
-        hasPassed = true;
-      }
+      if (
+        !fieldId &&
+        currentField.condition.length >= 0 &&
+        !currentField.condition.find((condition) => condition.field === field.id)
+      )
+        if (field.id !== currentField.id && !hasPassed) {
+          acc.push({
+            value: field.id,
+            label: field.title,
+          });
+        } else {
+          hasPassed = true;
+        }
+
       return acc;
     }, []);
 
@@ -68,6 +75,10 @@ const FormBuilder = () => {
     updatedOptions.splice(index, 1);
     updateFormFieldValue(field, 'options', updatedOptions);
   };
+
+  useEffect(() => {
+    console.log(formFields);
+  }, [formFields]);
 
   return (
     <>
@@ -317,8 +328,8 @@ const FormBuilder = () => {
                                   ? []
                                   : [
                                       {
-                                        field: getFormFields(formFields[Number(field)])[0].value,
-                                        operator: conditions[0].value,
+                                        field: '',
+                                        operator: '',
                                         value: '',
                                       },
                                     ],
@@ -338,7 +349,10 @@ const FormBuilder = () => {
                               <p className={styles.when}>When</p>
                               <div className={styles.conditionsSelect}>
                                 <SelectComponent
-                                  options={getFormFields(formFields[Number(field)])}
+                                  options={getFormFields(
+                                    formFields[Number(field)],
+                                    condition.field,
+                                  )}
                                   value={condition.field}
                                   onChange={(option: { value: string; label: string }) => {
                                     updateFormFieldValue(
