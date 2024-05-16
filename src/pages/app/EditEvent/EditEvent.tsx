@@ -11,6 +11,7 @@ import { FiGlobe } from 'react-icons/fi';
 import { HiOutlineUserGroup } from 'react-icons/hi2';
 import { BsTicketDetailed } from 'react-icons/bs';
 import { PiArrowsSplit } from 'react-icons/pi';
+import { IoCloseOutline } from 'react-icons/io5';
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { HashLoader } from 'react-spinners';
 import { ErrorMessages, EventType } from '../../../apis/types';
@@ -186,11 +187,28 @@ const EditEvent = () => {
                     onChange={(e) => setBanner(e.target.files ? e.target.files[0] : null)}
                   />
                   {eventData?.banner && !banner?.name ? (
-                    <img src={eventData?.banner} alt='' className={styles.banner} />
+                    <>
+                      <IoCloseOutline
+                        className={styles.closeIcon}
+                        onClick={() => {
+                          setEventData({ ...eventData, banner: '' });
+                        }}
+                      />
+                      <img src={eventData?.banner} alt='' className={styles.banner} />
+                    </>
                   ) : (
                     <>
                       {banner?.name ? (
-                        <img src={URL.createObjectURL(banner)} alt='' className={styles.banner} />
+                        <>
+                          <IoCloseOutline
+                            className={styles.closeIcon}
+                            onClick={() => {
+                              eventData?.banner && setEventData({ ...eventData, banner: '' });
+                              setBanner(null);
+                            }}
+                          />
+                          <img src={URL.createObjectURL(banner)} alt='' className={styles.banner} />
+                        </>
                       ) : (
                         <svg height='250' width='100%' className={styles.banner}>
                           {eventTitle && (
@@ -539,33 +557,42 @@ const EditEvent = () => {
                     />
                     <label>Background Color</label> */}
                   </div>
-                  <div className={styles.uploadLogoContainer}>
-                    <div>
-                      {logo ? (
-                        <img
-                          src={URL.createObjectURL(logo)}
-                          alt='Uploaded Image'
-                          className={styles.noImage}
-                        />
-                      ) : eventData?.logo ? (
-                        <img src={eventData.logo} className={styles.noImage} />
-                      ) : (
-                        <div className={styles.noImage}></div>
-                      )}
+                  <div className={styles.uploadLogoContainerParent}>
+                    <div className={styles.uploadLogoContainer}>
+                      <div>
+                        {logo ? (
+                          <img
+                            src={URL.createObjectURL(logo)}
+                            alt='Uploaded Image'
+                            className={styles.noImage}
+                          />
+                        ) : eventData?.logo ? (
+                          <img src={eventData.logo} className={styles.noImage} />
+                        ) : (
+                          <div className={styles.noImage}></div>
+                        )}
+                      </div>
+                      <div className={styles.uploadLogo}>
+                        <p>Upload {eventData?.logo ? 'New' : ''} Logo</p>
+                        <p className={styles.logoName}>{logo?.name}</p>
+                      </div>
+                      <input
+                        type='file'
+                        className={styles.fileUpload}
+                        accept='image/*'
+                        onChange={(e) => setLogo(e.target.files ? e.target.files[0] : null)}
+                      />
+                      <div className={styles.pencil}>
+                        <LuPencil size={15} color='#949597' />
+                      </div>
                     </div>
-                    <div className={styles.uploadLogo}>
-                      <p>Upload {eventData?.logo ? 'New' : ''} Logo</p>
-                      <p className={styles.logoName}>{logo?.name}</p>
-                    </div>
-                    <input
-                      type='file'
-                      className={styles.fileUpload}
-                      accept='image/*'
-                      onChange={(e) => setLogo(e.target.files ? e.target.files[0] : null)}
+                    <IoCloseOutline
+                      className={styles.closeIcon}
+                      onClick={() => {
+                        setLogo(null);
+                        setEventData({ ...eventData, logo: '' });
+                      }}
                     />
-                    <div className={styles.pencil}>
-                      <LuPencil size={15} color='#949597' />
-                    </div>
                   </div>
                   <div className={styles.buttonContainer}>
                     <button className={styles.deleteButton} onClick={() => setShowModal(true)}>

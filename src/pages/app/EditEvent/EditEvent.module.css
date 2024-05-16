@@ -469,7 +469,11 @@ input[type='color']::-webkit-color-swatch {
   justify-content: flex-end;
   column-gap: 1rem;
 }
-
+.uploadLogoContainerParent{
+  display: flex;
+  align-items: center;
+  
+}
 .uploadLogoContainer {
   position: relative;
   padding: 0.5rem 1rem;
@@ -684,4 +688,35 @@ input[type='color']::-webkit-color-swatch {
   font-family: 'Inter', sans-serif;
   margin-top: 0.5rem;
   margin-left: 0.5rem;
+}
+
+.closeIcon{
+  cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 25px;
+  height: 25px;
+  transition: all 0.2s ease-in-out;
+  scale: 1.2;
+}
+
+.closeIcon:hover{
+  transform: scale(1.25);
+}
+
+
+
+.uploadLogoContainerParent>.closeIcon{
+  position: relative ;
+  top: 0;
+  right: 0;
+  scale: 1;
+  margin-left: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.uploadLogoContainerParent>.closeIcon:hover{
+  transform: scale(1.05);
 }
