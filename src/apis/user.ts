@@ -46,16 +46,15 @@ export const updateProfile = async ({ data }: { [k: string]: FormData; }, setLoa
       toast.success('Profile Updated Successfully', {
           id: toastId,
       });
-
-      setLoading && setLoading(false);
     })
     .catch((error) => {
-      
       toast.error(error.response?.data?.message?.general[0] || 'Error in Updating Profile', {
           id: toastId,
       });
+    })
+    .finally(() => {
       setLoading && setLoading(false);
-    });
+    })
 };
 
 export const setUserData = async ({ formData, token, setLoading }: { formData: FormData; token: string; setLoading?: React.Dispatch<React.SetStateAction<boolean>> }) => {
