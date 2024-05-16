@@ -46,14 +46,13 @@ const FormBuilder = () => {
     ]);
   };
 
-  const getFormFields = (currentField: Field, fieldId: string) => {
+  const getFormFields = (currentField: Field, fieldId?: string) => {
     let hasPassed = false;
 
     const fields = formFields.reduce((acc: { value: string; label: string }[], field) => {
       if (
-        !fieldId &&
         currentField.condition.length >= 0 &&
-        !currentField.condition.find((condition) => condition.field === field.id)
+        (!currentField.condition.find((condition) => condition.field === field.id) || fieldId)
       )
         if (field.id !== currentField.id && !hasPassed) {
           acc.push({
