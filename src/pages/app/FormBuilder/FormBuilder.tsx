@@ -7,7 +7,7 @@ import { MdEmail, MdOutlinePhoneAndroid } from 'react-icons/md';
 import Slider from '../../../components/SliderButton/Slider';
 import { BsAlphabetUppercase } from 'react-icons/bs';
 import { RxDragHandleDots2 } from 'react-icons/rx';
-import { LuPencil, LuPlus, LuSave } from 'react-icons/lu';
+import { LuPencil, LuPlus } from 'react-icons/lu';
 import { RiDeleteBinLine } from 'react-icons/ri';
 
 import { useEffect, useState } from 'react';
@@ -308,7 +308,7 @@ const FormBuilder = () => {
                           </div>
                         )}
 
-                      {getFormFields(formFields[Number(field)]).length > 0 && (
+                      {getFormFields(formFields[Number(field)]).length >= 0 && (
                         <div
                           className={styles.row1}
                           style={{
@@ -418,6 +418,13 @@ const FormBuilder = () => {
                                   size={20}
                                   color='#606264'
                                   onClick={() => {
+                                    updateFormFieldValue(
+                                      formFields[Number(field)],
+                                      'condition',
+                                      formFields[Number(field)].condition.filter(
+                                        (cond) => cond.field !== condition.field,
+                                      ),
+                                    );
                                     toast.success('Condition Removed Successfully');
                                   }}
                                 />
@@ -430,23 +437,26 @@ const FormBuilder = () => {
                                   color='#606264'
                                 />
 
-                                <LuPlus
-                                  style={{
-                                    marginLeft: '0.5rem',
-                                  }}
-                                  size={20}
-                                  color='#606264'
-                                  onClick={() => {
-                                    updateFormFieldValue(formFields[Number(field)], 'condition', [
-                                      ...formFields[Number(field)].condition,
-                                      {
-                                        field: '',
-                                        operator: '',
-                                        value: '',
-                                      },
-                                    ]);
-                                  }}
-                                />
+                                {getFormFields(formFields[Number(field)], condition.field).length >
+                                  0 && (
+                                  <LuPlus
+                                    style={{
+                                      marginLeft: '0.5rem',
+                                    }}
+                                    size={20}
+                                    color='#606264'
+                                    onClick={() => {
+                                      updateFormFieldValue(formFields[Number(field)], 'condition', [
+                                        ...formFields[Number(field)].condition,
+                                        {
+                                          field: '',
+                                          operator: '',
+                                          value: '',
+                                        },
+                                      ]);
+                                    }}
+                                  />
+                                )}
                               </div>
                             </div>
                           ))}
@@ -466,8 +476,7 @@ const FormBuilder = () => {
                 </button>
                 <button
                   onClick={() => {
-                    console.log(formFields);
-                    // updateForm(event_id, formFields);
+                    updateForm(event_id, formFields);
                   }}
                   className={styles.addQuestionButton}
                 >
