@@ -178,3 +178,19 @@ export const downloadFile = async (eventId: string, fileId: string, fileType: st
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
     });
 };
+
+export const initateRefund = async (
+  eventId: string,
+  eventRegisterId: string,
+  setInitateRefundClicked: Dispatch<React.SetStateAction<boolean>>,
+) => {
+  privateGateway
+    .post(makeMyPass.initateRefund(eventId, eventRegisterId))
+    .then((response) => {
+      toast.success(response.data.message.general[0] || 'Refund initiated successfully');
+      setInitateRefundClicked(false);
+    })
+    .catch(() => {
+      toast.error("Can't initiate refund");
+    });
+};
