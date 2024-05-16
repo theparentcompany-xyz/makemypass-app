@@ -31,7 +31,7 @@ export const login = async (
   publicGateway
     .post(buildVerse.login, data, {
       headers: {
-        product: 'buildverse',
+        Product: 'buildverse',
       },
     })
     .then((response) => {

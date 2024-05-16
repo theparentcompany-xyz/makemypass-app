@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { Event, EventType } from './types';
+import { ErrorMessages, Event, EventType } from './types';
 import { Dispatch } from 'react';
 import { NavigateFunction } from 'react-router';
 
@@ -165,7 +165,7 @@ export const getEvent = (
     });
 };
 
-export const editEvent = (eventId: string, eventData: object) => {
+export const editEvent = (eventId: string, eventData: object,setFormErrors?:Dispatch<React.SetStateAction<ErrorMessages>>) => {
   privateGateway
     .patch(makeMyPass.editEvent(eventId), eventData, {
       headers: {
@@ -179,7 +179,8 @@ export const editEvent = (eventId: string, eventData: object) => {
       }, 1000);
     })
     .catch((error) => {
-      toast.error(error.response.data.message.name[0] || 'Unable to process the request');
+        setFormErrors && setFormErrors(error.response.data.message);
+        toast.error(error?.response?.data?.message?.general[0] || 'Unable to process the request');
     });
 };
 

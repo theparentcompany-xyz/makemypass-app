@@ -677,3 +677,11 @@ input[type='color']::-webkit-color-swatch {
 .basic-multi-select {
   width: 100%;
 }
+.errorText {
+  color: #f04b4b;
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+}
