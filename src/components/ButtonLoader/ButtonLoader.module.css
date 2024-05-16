@@ -21,7 +21,7 @@
 @keyframes fadein {
     from {
          opacity: 0;
-            transform: translateX(-5px);
+            transform: translateX(-2px);
     }
     to   {
          opacity: 1; 

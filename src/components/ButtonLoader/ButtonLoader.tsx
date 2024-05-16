@@ -1,4 +1,6 @@
-import { ColorRing } from 'react-loader-spinner';
+import {
+  ClipLoader,
+} from 'react-spinners';
 import styles from './ButtonLoader.module.css';
 type Props = {
   loading?: boolean | undefined;
@@ -7,7 +9,7 @@ type Props = {
 const LoaderButton = ({ loading }: Props) => {
   return (
     <div className={`${styles.loaderButton} ${loading ? styles.loading : ''}`}>
-      <ColorRing
+      {/* <ColorRing
         visible={true}
         height='15'
         width='20'
@@ -15,7 +17,8 @@ const LoaderButton = ({ loading }: Props) => {
         wrapperStyle={{}}
         wrapperClass='blocks-wrapper'
         colors={['f3f3f3', 'f3f3f3', 'f3f3f3', 'f3f3f3', 'f3f3f3']}
-      />
+      /> */}
+      <ClipLoader color='white' loading={true} size={10} aria-label='Loading Spinner' />
     </div>
   );
 };
