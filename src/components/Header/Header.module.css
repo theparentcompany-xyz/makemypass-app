@@ -105,7 +105,7 @@ header {
   z-index: 100;
   font-size: 0.8rem;
   font-family: 'Inter', sans-serif;
-
+  display: none;
   border-radius: 8px 0 8px 8px;
 }
 
