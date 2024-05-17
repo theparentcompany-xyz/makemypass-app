@@ -248,13 +248,23 @@ const CouponForm = ({
                     )
                       setAmount(
                         discountedTicketPrice(
-                          Number(ticketInfo[ticketType].price),
+                          Number(
+                            ticketInfo[ticketType].entry_date.find(
+                              (entry) => entry.date === selectedDate,
+                            )?.price || ticketInfo[ticketType].price,
+                          ),
                           discount,
                           ticketInfo[ticketType].id,
                         ).toString(),
                       );
                     else {
-                      setAmount(ticketInfo[ticketType].price.toString());
+                      setAmount(
+                        (
+                          ticketInfo[ticketType].entry_date.find(
+                            (entry) => entry.date === selectedDate,
+                          )?.price || ticketInfo[ticketType].price
+                        ).toString(),
+                      );
                     }
                   }
                 }}
@@ -338,7 +348,8 @@ const CouponForm = ({
 
                 <div className={styles.ticketPriceData}>
                   {discount.discount_value > 0 &&
-                    ticketInfo[ticketType].price > 0 &&
+                    (ticketInfo[ticketType].entry_date.find((entry) => entry.date === selectedDate)
+                      ?.price || ticketInfo[ticketType].price) > 0 &&
                     discount.ticket.includes(ticketInfo[ticketType].id) && (
                       <div className={styles.discountData}>
                         <p className={styles.discountAmount}>
@@ -348,7 +359,10 @@ const CouponForm = ({
                         </p>
                         <p className={styles.originalPrice}>
                           <del>
-                            M.R.P. {ticketInfo[ticketType].currency} {ticketInfo[ticketType].price}
+                            M.R.P. {ticketInfo[ticketType].currency}{' '}
+                            {ticketInfo[ticketType].entry_date.find(
+                              (entry) => entry.date === selectedDate,
+                            )?.price || ticketInfo[ticketType].price}
                           </del>
                         </p>
                       </div>
@@ -356,18 +370,38 @@ const CouponForm = ({
                   <div className={styles.priceData}>
                     <p className={styles.ticketPrice}>
                       {discountedTicketPrice(
-                        Number(ticketInfo[ticketType].price),
+                        Number(
+                          ticketInfo[ticketType].entry_date.find(
+                            (entry) => entry.date === selectedDate,
+                          )?.price || ticketInfo[ticketType].price,
+                        ),
                         discount,
                         ticketInfo[ticketType].id,
                       ) === 0
                         ? 'FREE'
-                        : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(Number(ticketInfo[ticketType].price), discount, ticketInfo[ticketType].id)}`}
+                        : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(
+                            Number(
+                              ticketInfo[ticketType].entry_date.find(
+                                (entry) => entry.date === selectedDate,
+                              )?.price || ticketInfo[ticketType].price,
+                            ),
+                            discount,
+                            ticketInfo[ticketType].id,
+                          )}`}
                     </p>
                     <p className={styles.extraCharges}>
                       {ticketInfo[ticketType].platform_fee_from_user &&
-                        Number(ticketInfo[ticketType].price) > 0 &&
+                        Number(
+                          ticketInfo[ticketType].entry_date.find(
+                            (entry) => entry.date === selectedDate,
+                          )?.price || ticketInfo[ticketType].price,
+                        ) > 0 &&
                         discountedTicketPrice(
-                          Number(ticketInfo[ticketType].price),
+                          Number(
+                            ticketInfo[ticketType].entry_date.find(
+                              (entry) => entry.date === selectedDate,
+                            )?.price || ticketInfo[ticketType].price,
+                          ),
                           discount,
                           ticketInfo[ticketType].id,
                         ) !== 0 && (

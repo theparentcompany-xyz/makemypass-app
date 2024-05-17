@@ -97,6 +97,7 @@ export interface TicketType {
   entry_date: {
     date: string;
     capacity: number;
+    price: number;
   }[];
 }
 

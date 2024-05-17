@@ -190,6 +190,7 @@ const DynamicForm = ({
           <>
             {eventData && remainingTicketsList && (
               <SelectDate
+                eventData={eventData}
                 selectedDate={selectedDate}
                 handleDateChange={handleDateChange}
                 type='addGuest'
