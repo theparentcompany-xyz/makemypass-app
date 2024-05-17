@@ -128,9 +128,13 @@ const Guests = () => {
   }, [eventId]);
 
   useEffect(() => {
-    if (selectedGuestId?.id && (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view'))
+    if (
+      selectedGuestId?.id &&
+      (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view')
+    ) {
+      getGuestInfo(eventId, setFormFields, setTicketInfo);
       getGuestData();
-    else if (
+    } else if (
       selectedGuestId?.id &&
       selectedGuestId.type === 'download' &&
       !isArray(selectedGuestId.id)
