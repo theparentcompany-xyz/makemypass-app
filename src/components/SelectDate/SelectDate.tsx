@@ -1,6 +1,8 @@
+import { EventType, TicketType } from '../../apis/types';
 import styles from './SelectDate.module.css';
 import DatePicker from 'react-datepicker';
 interface SelectDateProps {
+  eventData: EventType;
   selectedDate: string | null | undefined;
   handleDateChange: (date: string | null | undefined) => void;
   type?: string;
@@ -8,13 +10,40 @@ interface SelectDateProps {
   onFieldChange?: (field: string, value: string) => void;
 }
 const SelectDate = ({
+  eventData,
   selectedDate,
   handleDateChange,
   type,
   value,
   onFieldChange,
 }: SelectDateProps) => {
-  console.log('selectedDate', selectedDate);
+  const findMinDate = (eventData: EventType) => {
+    let minDate: Date | null = new Date(); // Initialize minDate with current date
+    const currentDate = new Date(); // Get current date
+    Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
+      ticketInfo.entry_date.forEach((entry) => {
+        const date = new Date(entry.date);
+        if (date >= currentDate && (!minDate || (date < minDate && entry.capacity > 0))) {
+          minDate = date;
+        }
+      });
+    });
+    return minDate;
+  };
+
+  const findMaxDate = (eventData: EventType) => {
+    let maxDate: Date | null = null; // Initialize maxDate with null
+    Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
+      ticketInfo.entry_date.forEach((entry) => {
+        const date = new Date(entry.date);
+        if ((!maxDate || date > maxDate) && entry.capacity > 0) {
+          maxDate = date;
+        }
+      });
+    });
+    return maxDate;
+  };
+
   return (
     <>
       {' '}
@@ -43,17 +72,13 @@ const SelectDate = ({
               }
               handleDateChange(date?.toString());
             }}
-            // minDate={findMinDate(eventData)}~
-            // maxDate={findMaxDate(eventData)}
-            // excludeDates={
-            //   eventData?.remaining_tickets &&
-            //   Object.keys(eventData?.remaining_tickets).reduce((acc, date) => {
-            //     if (eventData?.remaining_tickets[date] <= 0 || new Date(date) < new Date()) {
-            //       acc.push(new Date(date));
-            //     }
-            //     return acc;
-            //   }, [] as Date[])
-            // }
+            minDate={findMinDate(eventData)}
+            maxDate={findMaxDate(eventData)}
+            excludeDates={Object.values(eventData.tickets).flatMap((ticketInfo) =>
+              ticketInfo.entry_date
+                .filter((entry) => entry.capacity === 0)
+                .map((entry) => new Date(entry.date)),
+            )}
           />
         </div>
 
