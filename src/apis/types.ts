@@ -137,9 +137,6 @@ export interface EventType {
   is_multiple_checkin: boolean;
   approval_required: boolean;
   status: string;
-  remaining_tickets: {
-    [key: string]: number;
-  };
 }
 
 export type EventDetails = {

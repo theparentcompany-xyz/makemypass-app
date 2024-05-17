@@ -1,4 +1,4 @@
-import { Dispatch, useEffect, useState } from 'react';
+import { Dispatch, useEffect } from 'react';
 import { ErrorMessages, FormDataType, FormFieldType, TicketType } from '../../apis/types';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
 import InputFIeld from '../../pages/auth/Login/InputFIeld';
@@ -12,7 +12,6 @@ import Scanner from '../Scanner/Scanner';
 import { SelectedGuest } from '../../pages/app/Guests/types';
 import SelectDate from '../SelectDate/SelectDate';
 import { Tickets } from '../../pages/app/EventPage/types';
-import toast from 'react-hot-toast';
 const DynamicForm = ({
   formFields,
   formErrors,
@@ -20,7 +19,6 @@ const DynamicForm = ({
   onFieldChange,
   ticketInfo,
   setTickets,
-  tickets,
   eventData,
   setCashInHand,
   cashInHand,
@@ -30,7 +28,6 @@ const DynamicForm = ({
   setShowScanner,
   selectedGuestId,
   remainingTicketsList,
-  setIsTicketsAvailable,
   selectedDate,
   setSelectedDate,
 }: {
@@ -42,7 +39,6 @@ const DynamicForm = ({
   cashInHand?: boolean;
   ticketInfo?: { [key: string]: TicketType };
   setTickets?: Dispatch<React.SetStateAction<Tickets[]>>;
-  tickets?: Tickets[];
   eventData?: EventType;
   ticketCode?: string;
   setTicketCode?: Dispatch<React.SetStateAction<string>>;
@@ -50,7 +46,6 @@ const DynamicForm = ({
   setShowScanner?: React.Dispatch<React.SetStateAction<boolean>>;
   selectedGuestId?: SelectedGuest;
   remainingTicketsList?: { [key: string]: number };
-  setIsTicketsAvailable?: React.Dispatch<React.SetStateAction<boolean>>;
   selectedDate?: string;
   setSelectedDate?: React.Dispatch<React.SetStateAction<string>>;
 }) => {
@@ -60,44 +55,15 @@ const DynamicForm = ({
     exit: { opacity: 0, y: -10 },
   };
 
-  const [remainingTickets, setRemainingTickets] = useState<number>(0);
-
   const handleDateChange = (date: string | null | undefined) => {
     let newDate;
     if (date) newDate = new Date(date);
     if (newDate && eventData && setSelectedDate) {
       setSelectedDate(newDate.toISOString().split('T')[0]);
-      const remainingTicketsL =
-        eventData.remaining_tickets[newDate.toISOString().split('T')[0]] ?? 0;
-
-      setRemainingTickets(remainingTicketsL);
-
-      if (setIsTicketsAvailable)
-        if (remainingTicketsL === 0) setIsTicketsAvailable(false);
-        else setIsTicketsAvailable(true);
     }
   };
 
-  const isWithinTicketCount = (tempTickets: Tickets[]) => {
-    if (tempTickets)
-      if (eventData && eventData.remaining_tickets) {
-        const remainingTicketsL =
-          eventData.remaining_tickets[selectedDate ?? eventData.event_start_date] ?? 0;
-
-        const totalCount = tempTickets.reduce((sum, ticket) => sum + (ticket.count ?? 0), 0);
-
-        if (totalCount > remainingTicketsL) {
-          toast.error('The ticket count exceeds the available tickets');
-          return false;
-        }
-      }
-
-    return true;
-  };
-
   useEffect(() => {
-    if (eventData && !eventData.remaining_tickets) return;
-
     if (eventData?.event_start_date && new Date() > new Date(eventData.event_start_date)) {
       setSelectedDate && setSelectedDate(new Date().toISOString().split('T')[0]);
       handleDateChange(new Date().toISOString().split('T')[0]);
@@ -224,10 +190,8 @@ const DynamicForm = ({
           <>
             {eventData && remainingTicketsList && (
               <SelectDate
-                eventData={eventData}
                 selectedDate={selectedDate}
                 handleDateChange={handleDateChange}
-                remainingTickets={remainingTickets}
                 type='addGuest'
                 value={formData['entry_date']}
                 onFieldChange={(fieldName, fieldValue) => onFieldChange(fieldName, fieldValue)}
@@ -288,57 +252,57 @@ const DynamicForm = ({
                             placeholder='Enter Ticket Count'
                             type='number'
                             className={styles.ticketCountInput}
-                            onChange={(event) => {
-                              if (event.target.value != '' && Number(event.target.value) < 0) {
-                                toast.error('Ticket count cannot be negative');
-                                event.target.value = '0';
-                                return;
-                              }
+                            // onChange={(event) => {
+                            //   if (event.target.value != '' && Number(event.target.value) < 0) {
+                            //     toast.error('Ticket count cannot be negative');
+                            //     event.target.value = '0';
+                            //     return;
+                            //   }
 
-                              let tempTickets = tickets?.map((ticket) => {
-                                if (ticket.ticket_id === ticketInfo[key].id) {
-                                  ticket.count = event.target.value
-                                    ? Number(event.target.value)
-                                    : 0;
-                                }
-                                return ticket;
-                              });
+                            //   let tempTickets = tickets?.map((ticket) => {
+                            //     if (ticket.ticket_id === ticketInfo[key].id) {
+                            //       ticket.count = event.target.value
+                            //         ? Number(event.target.value)
+                            //         : 0;
+                            //     }
+                            //     return ticket;
+                            //   });
 
-                              if (tempTickets && isWithinTicketCount(tempTickets))
-                                setTickets &&
-                                  setTickets((prevTickets) =>
-                                    prevTickets.map((ticket) => {
-                                      if (ticket.ticket_id === ticketInfo[key].id) {
-                                        ticket.my_ticket = true;
-                                        ticket.count = event.target.value
-                                          ? Number(event.target.value)
-                                          : 0;
-                                      }
+                            //   if (tempTickets)
+                            //     setTickets &&
+                            //       setTickets((prevTickets) =>
+                            //         prevTickets.map((ticket) => {
+                            //           if (ticket.ticket_id === ticketInfo[key].id) {
+                            //             ticket.my_ticket = true;
+                            //             ticket.count = event.target.value
+                            //               ? Number(event.target.value)
+                            //               : 0;
+                            //           }
 
-                                      return ticket;
-                                    }),
-                                  );
-                              else {
-                                event.target.value = '0';
-                                tempTickets = tempTickets?.map((ticket) => {
-                                  if (ticket.ticket_id === ticketInfo[key].id) {
-                                    ticket.count = 0;
-                                  }
-                                  return ticket;
-                                });
-                              }
+                            //           return ticket;
+                            //         }),
+                            //       );
+                            //   else {
+                            //     event.target.value = '0';
+                            //     tempTickets = tempTickets?.map((ticket) => {
+                            //       if (ticket.ticket_id === ticketInfo[key].id) {
+                            //         ticket.count = 0;
+                            //       }
+                            //       return ticket;
+                            //     });
+                            //   }
 
-                              const ticketCount = tempTickets?.reduce(
-                                (sum, ticket) => sum + (ticket.count ?? 0),
-                                0,
-                              );
+                            //   const ticketCount = tempTickets?.reduce(
+                            //     (sum, ticket) => sum + (ticket.count ?? 0),
+                            //     0,
+                            //   );
 
-                              if (ticketCount && ticketCount > 0) {
-                                setCashInHand && setCashInHand(true);
-                              } else {
-                                setCashInHand && setCashInHand(false);
-                              }
-                            }}
+                            //   if (ticketCount && ticketCount > 0) {
+                            //     setCashInHand && setCashInHand(true);
+                            //   } else {
+                            //     setCashInHand && setCashInHand(false);
+                            //   }
+                            // }}
                           />
                         </div>
                       );

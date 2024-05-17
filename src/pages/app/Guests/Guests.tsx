@@ -54,10 +54,8 @@ const Guests = () => {
   const [cashInHand, setCashInHand] = useState(false);
   const [ticketCode, setTicketCode] = useState<string>('');
   const [showScanner, setShowScanner] = useState<boolean>(false);
-  const [remainingTicketsList, setRemainingTicketsList] = useState<{ [key: string]: number }>({});
   const [selectedDate, setSelectedDate] = useState<string>('');
 
-  const [isTicketsAvailable, setIsTicketsAvailable] = useState<boolean>(true);
   const [eventData, setEventData] = useState<any>();
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
@@ -117,7 +115,7 @@ const Guests = () => {
 
   useEffect(() => {
     if (eventId) {
-      getFormFields(eventId, setFormFields, setRemainingTicketsList);
+      getFormFields(eventId, setFormFields);
       getTickets(eventId, setTicketInfo);
       getCategories(eventId, setCategories);
     }
@@ -239,15 +237,12 @@ const Guests = () => {
               cashInHand={cashInHand}
               ticketInfo={ticketInfo}
               setTickets={setTickets}
-              tickets={tickets}
               eventData={eventData}
               ticketCode={ticketCode}
               setTicketCode={setTicketCode}
               showScanner={showScanner}
               setShowScanner={setShowScanner}
               selectedGuestId={selectedGuestId}
-              remainingTicketsList={remainingTicketsList}
-              setIsTicketsAvailable={setIsTicketsAvailable}
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
             />
@@ -256,11 +251,6 @@ const Guests = () => {
               <div className={styles.buttons}>
                 <p
                   onClick={() => {
-                    if (!isTicketsAvailable) {
-                      toast.error('No tickets available for the selected date');
-                      return;
-                    }
-
                     if (tickets.some((ticket) => ticket.count > 0))
                       addGuest(
                         eventId,
@@ -351,10 +341,8 @@ const Guests = () => {
                   cashInHand={cashInHand}
                   ticketInfo={ticketInfo}
                   setTickets={setTickets}
-                  tickets={tickets}
                   selectedGuestId={selectedGuestId}
                   eventData={eventData}
-                  remainingTicketsList={remainingTicketsList}
                 />
 
                 {!showScanner && (

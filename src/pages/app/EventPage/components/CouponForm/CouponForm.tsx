@@ -9,7 +9,6 @@ import { motion } from 'framer-motion';
 import { applyCoupon } from '../../../../../apis/publicpage';
 
 import 'react-datepicker/dist/react-datepicker.css';
-import toast from 'react-hot-toast';
 import SelectDate from '../../../../../components/SelectDate/SelectDate';
 
 const CouponForm = ({
@@ -41,28 +40,16 @@ const CouponForm = ({
   selectedDate: string | null | undefined;
   updateTicketCount: (ticketId: string, increment: boolean) => void;
 }) => {
-  const [remainingTickets, setRemainingTickets] = React.useState<number>(0);
-  const [isTicketsAvailable, setIsTicketsAvailable] = React.useState<boolean>(true);
-
   const handleDateChange = (date: string | null | undefined) => {
     let newDate;
     if (date) newDate = new Date(date);
 
     if (newDate && eventData) {
       setSelectedDate(newDate.toISOString().split('T')[0]);
-      const remainingTicketsL =
-        eventData.remaining_tickets[newDate.toISOString().split('T')[0]] ?? 0;
-
-      setRemainingTickets(remainingTicketsL);
-
-      if (remainingTicketsL === 0) setIsTicketsAvailable(false);
-      else setIsTicketsAvailable(true);
     }
   };
 
   useEffect(() => {
-    if (eventData && !eventData.remaining_tickets) return;
-
     if (eventData?.event_start_date && new Date() > new Date(eventData.event_start_date)) {
       setSelectedDate(new Date().toISOString().split('T')[0]);
       handleDateChange(selectedDate);
@@ -71,22 +58,6 @@ const CouponForm = ({
       handleDateChange(selectedDate);
     }
   });
-
-  const isWithinTicketCount = () => {
-    if (eventData && eventData.remaining_tickets) {
-      const remainingTicketsL =
-        eventData.remaining_tickets[selectedDate ?? eventData.event_start_date] ?? 0;
-
-      const totalCount = tickets.reduce((sum, ticket) => sum + (ticket.count ?? 0), 0);
-
-      if (totalCount >= remainingTicketsL) {
-        toast.error('No tickets available for this date');
-        return false;
-      }
-    }
-
-    return true;
-  };
 
   return (
     <>
@@ -157,14 +128,7 @@ const CouponForm = ({
         </motion.div>
       )}
 
-      {eventData && eventData.remaining_tickets && (
-        <SelectDate
-          eventData={eventData}
-          selectedDate={selectedDate}
-          handleDateChange={handleDateChange}
-          remainingTickets={remainingTickets}
-        />
-      )}
+      {eventData && <SelectDate selectedDate={selectedDate} handleDateChange={handleDateChange} />}
 
       <motion.div
         initial={{ opacity: 0, y: 35 }}
@@ -186,11 +150,6 @@ const CouponForm = ({
           <div
             key={ticketType}
             onClick={() => {
-              if (eventData && eventData.remaining_tickets && !isTicketsAvailable) {
-                toast.error('No tickets available for this date');
-                return;
-              }
-
               if (eventData?.select_multi_ticket) {
                 let newTicketIds = []; //temporary variable to store new ticket ids for amount updation
 
@@ -313,7 +272,7 @@ const CouponForm = ({
                 <button
                   className={styles.ticketCountUpdateButton}
                   onClick={() => {
-                    if (isWithinTicketCount()) updateTicketCount(ticketInfo[ticketType].id, true);
+                    updateTicketCount(ticketInfo[ticketType].id, true);
                   }}
                 >
                   +

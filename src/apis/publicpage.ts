@@ -283,14 +283,11 @@ export const getTickets = async (
 export const getFormFields = async (
   eventId: string,
   setFormFields: Dispatch<React.SetStateAction<FormFieldType[]>>,
-  setRemainingTicketsList?: Dispatch<React.SetStateAction<{ [key: string]: number }>>,
 ) => {
   publicGateway
     .get(makeMyPass.getFormFields(eventId))
     .then((response) => {
       setFormFields(response.data.response.form_fields);
-      if (setRemainingTicketsList)
-        setRemainingTicketsList(response.data.response.remaining_tickets);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Error in Fetching Form Fields');
