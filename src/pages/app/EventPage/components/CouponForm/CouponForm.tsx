@@ -11,6 +11,7 @@ import { applyCoupon } from '../../../../../apis/publicpage';
 import 'react-datepicker/dist/react-datepicker.css';
 import SelectDate from '../../../../../components/SelectDate/SelectDate';
 import toast from 'react-hot-toast';
+import { findMinDate } from '../../../../../common/commonFunctions';
 
 const CouponForm = ({
   ticketInfo,
@@ -41,7 +42,7 @@ const CouponForm = ({
   selectedDate: string | null | undefined;
   updateTicketCount: (ticketId: string, increment: boolean) => void;
 }) => {
-  const handleDateChange = (date: string | null | undefined) => {
+  const handleDateChange = (date: string | null | undefined | Date) => {
     let newDate;
     if (date) newDate = new Date(date);
 
@@ -51,14 +52,8 @@ const CouponForm = ({
   };
 
   useEffect(() => {
-    if (eventData?.event_start_date && new Date() > new Date(eventData.event_start_date)) {
-      setSelectedDate(new Date().toISOString().split('T')[0]);
-      handleDateChange(selectedDate);
-    } else {
-      if (eventData?.event_start_date) setSelectedDate(eventData?.event_start_date);
-      handleDateChange(selectedDate);
-    }
-  });
+    if (eventData) handleDateChange(findMinDate(eventData));
+  }, [eventData]);
 
   return (
     <>

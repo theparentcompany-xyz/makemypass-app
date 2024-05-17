@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { getEventId } from '../apis/events';
+import { EventType, TicketType } from '../apis/types';
 interface transformTableDataType {
   [key: string]: string;
 }
@@ -135,3 +136,32 @@ export function convertDate(date: Date | undefined) {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
+export const findMinDate = (eventData: EventType): Date | null => {
+  let minDate: Date | null = null; // Initialize minDate with current date
+  const currentDate = new Date(); // Get current date
+  Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
+    ticketInfo.entry_date.forEach((entry) => {
+      const date = new Date(entry.date);
+      if (date >= currentDate && (!minDate || (date < minDate && entry.capacity > 0))) {
+        minDate = date;
+      }
+    });
+  });
+
+  console.log('minDate', minDate);
+  return minDate;
+};
+
+export const findMaxDate = (eventData: EventType) => {
+  let maxDate: Date | null = null; // Initialize maxDate with null
+  Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
+    ticketInfo.entry_date.forEach((entry) => {
+      const date = new Date(entry.date);
+      if ((!maxDate || date > maxDate) && entry.capacity > 0) {
+        maxDate = date;
+      }
+    });
+  });
+  return maxDate;
+};

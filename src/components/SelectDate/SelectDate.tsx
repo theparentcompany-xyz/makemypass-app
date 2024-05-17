@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { EventType, TicketType } from '../../apis/types';
 import styles from './SelectDate.module.css';
 import DatePicker from 'react-datepicker';
+import { findMaxDate, findMinDate } from '../../common/commonFunctions';
 interface SelectDateProps {
   eventData: EventType;
   selectedDate: string | null | undefined;
@@ -17,33 +19,6 @@ const SelectDate = ({
   value,
   onFieldChange,
 }: SelectDateProps) => {
-  const findMinDate = (eventData: EventType) => {
-    let minDate: Date | null = new Date(); // Initialize minDate with current date
-    const currentDate = new Date(); // Get current date
-    Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
-      ticketInfo.entry_date.forEach((entry) => {
-        const date = new Date(entry.date);
-        if (date >= currentDate && (!minDate || (date < minDate && entry.capacity > 0))) {
-          minDate = date;
-        }
-      });
-    });
-    return minDate;
-  };
-
-  const findMaxDate = (eventData: EventType) => {
-    let maxDate: Date | null = null; // Initialize maxDate with null
-    Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
-      ticketInfo.entry_date.forEach((entry) => {
-        const date = new Date(entry.date);
-        if ((!maxDate || date > maxDate) && entry.capacity > 0) {
-          maxDate = date;
-        }
-      });
-    });
-    return maxDate;
-  };
-
   return (
     <>
       {' '}

@@ -13,6 +13,7 @@ import { SelectedGuest } from '../../pages/app/Guests/types';
 import SelectDate from '../SelectDate/SelectDate';
 import { Tickets } from '../../pages/app/EventPage/types';
 import toast from 'react-hot-toast';
+import { findMinDate } from '../../common/commonFunctions';
 const DynamicForm = ({
   formFields,
   formErrors,
@@ -56,7 +57,7 @@ const DynamicForm = ({
     exit: { opacity: 0, y: -10 },
   };
 
-  const handleDateChange = (date: string | null | undefined) => {
+  const handleDateChange = (date: string | null | undefined | Date) => {
     let newDate;
     if (date) newDate = new Date(date);
     if (newDate && eventData && setSelectedDate) {
@@ -65,14 +66,7 @@ const DynamicForm = ({
   };
 
   useEffect(() => {
-    if (eventData?.event_start_date && new Date() > new Date(eventData.event_start_date)) {
-      setSelectedDate && setSelectedDate(new Date().toISOString().split('T')[0]);
-      handleDateChange(new Date().toISOString().split('T')[0]);
-    } else {
-      if (eventData?.event_start_date)
-        setSelectedDate && setSelectedDate(eventData?.event_start_date);
-      handleDateChange(new Date().toISOString().split('T')[0]);
-    }
+    if (eventData) handleDateChange(findMinDate(eventData));
 
     if (eventData && eventData.tickets) {
       Object.keys(eventData.tickets).map((key) => {
