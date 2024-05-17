@@ -40,9 +40,12 @@ export const makeMyPass = {
   getUserPerksInfo: (ticketCode: string) =>
     makeMyPassURL(`/manage-guest/get-user-perks-info/${ticketCode}`),
   //Ticket Details APIs for fetching and manipulation
-  getTicket: (eventId: string, ticketCode: string) => makeMyPassURL(`/${eventId}/get-ticket/${ticketCode}`),
-  editTicket: (eventId: string, ticketCode: string) => makeMyPassURL(`/${eventId}/edit-ticket/${ticketCode}`),
-  deleteTicket: (eventId: string, ticketCode: string) => makeMyPassURL(`/${eventId}/delete-ticket/${ticketCode}`),
+  getTicket: (eventId: string, ticketCode: string) =>
+    makeMyPassURL(`/${eventId}/get-ticket/${ticketCode}`),
+  editTicket: (eventId: string, ticketCode: string) =>
+    makeMyPassURL(`/${eventId}/edit-ticket/${ticketCode}`),
+  deleteTicket: (eventId: string, ticketCode: string) =>
+    makeMyPassURL(`/${eventId}/delete-ticket/${ticketCode}`),
 
   // Host Management
   listHosts: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-hosts/`),
@@ -86,6 +89,7 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-event/${eventId}/download_file/${fileId}/?file_type=${fileType}/`),
   initateRefund: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/initiate-refund/${eventRegisterId}/`),
+  addGuestInfo: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/form-info/`),
 
   //Payment and Coupons
   validatePayment: makeMyPassURL(`/public-form/validate-payment/`),

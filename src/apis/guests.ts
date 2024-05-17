@@ -3,7 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
-import { ErrorMessages, FileType, FormDataType } from './types';
+import { ErrorMessages, FileType, FormDataType, FormFieldType, TicketType } from './types';
 import { isArray } from 'chart.js/helpers';
 
 export const resentEventTicket = async (
@@ -192,5 +192,21 @@ export const initateRefund = async (
     })
     .catch(() => {
       toast.error("Can't initiate refund");
+    });
+};
+
+export const getGuestInfo = async (
+  eventId: string,
+  setFormField: Dispatch<React.SetStateAction<FormFieldType[]>>,
+  setTicketInfo: Dispatch<React.SetStateAction<TicketType | undefined>>,
+) => {
+  privateGateway
+    .get(makeMyPass.addGuestInfo(eventId))
+    .then((response) => {
+      setFormField(response.data.response.form);
+      setTicketInfo(response.data.response.tickets);
+    })
+    .catch(() => {
+      toast.error('Something went wrong');
     });
 };

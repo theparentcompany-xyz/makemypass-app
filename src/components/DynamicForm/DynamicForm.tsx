@@ -12,6 +12,7 @@ import Scanner from '../Scanner/Scanner';
 import { SelectedGuest } from '../../pages/app/Guests/types';
 import SelectDate from '../SelectDate/SelectDate';
 import { Tickets } from '../../pages/app/EventPage/types';
+import toast from 'react-hot-toast';
 const DynamicForm = ({
   formFields,
   formErrors,
@@ -27,9 +28,9 @@ const DynamicForm = ({
   showScanner,
   setShowScanner,
   selectedGuestId,
-  remainingTicketsList,
   selectedDate,
   setSelectedDate,
+  tickets,
 }: {
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
@@ -45,9 +46,9 @@ const DynamicForm = ({
   showScanner?: boolean;
   setShowScanner?: React.Dispatch<React.SetStateAction<boolean>>;
   selectedGuestId?: SelectedGuest;
-  remainingTicketsList?: { [key: string]: number };
   selectedDate?: string;
   setSelectedDate?: React.Dispatch<React.SetStateAction<string>>;
+  tickets?: Tickets[];
 }) => {
   const variants = {
     initial: { opacity: 0, y: -10 },
@@ -188,7 +189,7 @@ const DynamicForm = ({
 
         {ticketInfo && !showScanner && (
           <>
-            {eventData && remainingTicketsList && (
+            {eventData && (
               <SelectDate
                 eventData={eventData}
                 selectedDate={selectedDate}
@@ -206,106 +207,99 @@ const DynamicForm = ({
                   }}
                 >
                   <p className={styles.formLabel}>Ticket Type</p>
-                  {/* <motion.div className={styles.dropdown}>
-                <Select
-                  options={Object.keys(ticketInfo).map((key) => ({
-                    value: ticketInfo[key].id,
-                    label: `${ticketInfo[key]?.title} - ${ticketInfo[key].currency} ${ticketInfo[key].price}`,
-                  }))}
-                  styles={customStyles}
-                  onChange={(selectedOption: { value: string } | null) => {
-                    setTicketId && setTicketId(selectedOption?.value || '');
-
-                    Object.keys(ticketInfo).map((key) => {
-                      if (ticketInfo[key].id === selectedOption?.value) {
-                        if (ticketInfo[key].price > 0) {
-                          setCashInHand && setCashInHand(true);
-                        } else {
-                          setCashInHand && setCashInHand(false);
-                        }
-                      }
-                    });
-                  }}
-                  value={
-                    ticketInfo &&
-                    Object.keys(ticketInfo)
-                      .map((key) => ({
-                        value: ticketInfo[key].id,
-                        label: `${ticketInfo[key]?.title} - ${ticketInfo[key].currency} ${ticketInfo[key].price}`,
-                      }))
-                      .filter((option: { value: string }) => option.value === ticketId)
-                  }
-                  placeholder={`Select an option`}
-                  isSearchable={false}
-                />
-              </motion.div> */}
 
                   <div className={styles.tickets}>
                     {Object.keys(ticketInfo).map((key) => {
                       return (
-                        <div className={styles.ticket}>
-                          <p key={key} className={styles.ticketDetails}>
-                            {ticketInfo[key]?.title} - {ticketInfo[key]?.currency}{' '}
-                            {ticketInfo[key]?.price}
-                          </p>
+                        (ticketInfo[key].entry_date.find((entry) => entry.date === selectedDate)
+                          ?.capacity ?? 0) > 0 && (
+                          <div className={styles.ticket}>
+                            <p key={key} className={styles.ticketDetails}>
+                              {key} - {ticketInfo[key]?.currency}{' '}
+                              {ticketInfo[key].entry_date?.find(
+                                (entry) => entry.date === selectedDate,
+                              )?.price || ticketInfo[key]?.price}
+                            </p>
 
-                          <input
-                            placeholder='Enter Ticket Count'
-                            type='number'
-                            className={styles.ticketCountInput}
-                            // onChange={(event) => {
-                            //   if (event.target.value != '' && Number(event.target.value) < 0) {
-                            //     toast.error('Ticket count cannot be negative');
-                            //     event.target.value = '0';
-                            //     return;
-                            //   }
+                            <input
+                              placeholder='Enter Ticket Count'
+                              type='number'
+                              className={styles.ticketCountInput}
+                              onChange={(event) => {
+                                if (event.target.value != '' && Number(event.target.value) < 0) {
+                                  toast.error('Ticket count cannot be negative');
+                                  event.target.value = '0';
+                                  return;
+                                }
 
-                            //   let tempTickets = tickets?.map((ticket) => {
-                            //     if (ticket.ticket_id === ticketInfo[key].id) {
-                            //       ticket.count = event.target.value
-                            //         ? Number(event.target.value)
-                            //         : 0;
-                            //     }
-                            //     return ticket;
-                            //   });
+                                if (
+                                  event.target.value != '' &&
+                                  Number(event.target.value) >
+                                    (ticketInfo[key].entry_date.find(
+                                      (entry) => entry.date === selectedDate,
+                                    )?.capacity ?? 0)
+                                ) {
+                                  toast.error('Ticket Limit Exceeded');
+                                  event.target.value = '0';
+                                  return;
+                                }
 
-                            //   if (tempTickets)
-                            //     setTickets &&
-                            //       setTickets((prevTickets) =>
-                            //         prevTickets.map((ticket) => {
-                            //           if (ticket.ticket_id === ticketInfo[key].id) {
-                            //             ticket.my_ticket = true;
-                            //             ticket.count = event.target.value
-                            //               ? Number(event.target.value)
-                            //               : 0;
-                            //           }
+                                const tempTickets = tickets?.map((ticket) => {
+                                  if (ticket.ticket_id === ticketInfo[key].id) {
+                                    ticket.count = event.target.value
+                                      ? Number(event.target.value)
+                                      : 0;
+                                  }
+                                  return ticket;
+                                });
 
-                            //           return ticket;
-                            //         }),
-                            //       );
-                            //   else {
-                            //     event.target.value = '0';
-                            //     tempTickets = tempTickets?.map((ticket) => {
-                            //       if (ticket.ticket_id === ticketInfo[key].id) {
-                            //         ticket.count = 0;
-                            //       }
-                            //       return ticket;
-                            //     });
-                            //   }
+                                if (tempTickets)
+                                  setTickets &&
+                                    setTickets((prevTickets) =>
+                                      prevTickets.map((ticket) => {
+                                        if (ticket.ticket_id === ticketInfo[key].id) {
+                                          ticket.my_ticket = true;
+                                          ticket.count = event.target.value
+                                            ? Number(event.target.value)
+                                            : 0;
+                                        }
 
-                            //   const ticketCount = tempTickets?.reduce(
-                            //     (sum, ticket) => sum + (ticket.count ?? 0),
-                            //     0,
-                            //   );
+                                        return ticket;
+                                      }),
+                                    );
+                                else {
+                                  event.target.value = '0';
+                                  // tempTickets = tempTickets?.map((ticket) => {
+                                  //   if (ticket.ticket_id === ticketInfo[key].id) {
+                                  //     ticket.count = 0;
+                                  //   }
+                                  //   return ticket;
+                                  // });
+                                }
 
-                            //   if (ticketCount && ticketCount > 0) {
-                            //     setCashInHand && setCashInHand(true);
-                            //   } else {
-                            //     setCashInHand && setCashInHand(false);
-                            //   }
-                            // }}
-                          />
-                        </div>
+                                const ticketCount = tempTickets?.reduce(
+                                  (sum, ticket) => sum + (ticket.count ?? 0),
+                                  0,
+                                );
+
+                                if (ticketCount && ticketCount > 0) {
+                                  setCashInHand && setCashInHand(true);
+                                } else {
+                                  setCashInHand && setCashInHand(false);
+                                }
+                              }}
+                            />
+
+                            <p className={styles.ticketCount}>
+                              {
+                                ticketInfo[key].entry_date.find(
+                                  (entry) => entry.date === selectedDate,
+                                )?.capacity
+                              }{' '}
+                              tickets left
+                            </p>
+                          </div>
+                        )
                       );
                     })}
                   </div>

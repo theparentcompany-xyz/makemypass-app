@@ -11,9 +11,16 @@ import {
   downloadCSVData,
   downloadTicket,
   editSubmissons,
+  getGuestInfo,
   resentEventTicket,
 } from '../../../apis/guests';
-import { ErrorMessages, FormDataType, FormFieldType } from '../../../apis/types';
+import {
+  ErrorMessages,
+  EventType,
+  FormDataType,
+  FormFieldType,
+  TicketType,
+} from '../../../apis/types';
 import { getCategories } from '../../../apis/events';
 import { transformTableData } from '../../../common/commonFunctions';
 
@@ -34,7 +41,7 @@ import Select from 'react-select';
 import { isArray } from 'chart.js/helpers';
 import Modal from '../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
-import { getEventInfo, getFormFields, getTickets } from '../../../apis/publicpage';
+import { getEventInfo } from '../../../apis/publicpage';
 import { useParams } from 'react-router';
 import { Tickets } from '../EventPage/types';
 
@@ -47,7 +54,7 @@ const Guests = () => {
   const [formFields, setFormFields] = useState<FormFieldType[]>([]);
   const [formErrors, setFormErrors] = useState<ErrorMessages>({});
   const [formData, setFormData] = useState<FormDataType>({});
-  const [ticketInfo, setTicketInfo] = useState<{}>();
+  const [ticketInfo, setTicketInfo] = useState<TicketType>();
   const [tickets, setTickets] = useState<Tickets[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>();
@@ -56,7 +63,7 @@ const Guests = () => {
   const [showScanner, setShowScanner] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string>('');
 
-  const [eventData, setEventData] = useState<any>();
+  const [eventData, setEventData] = useState<EventType>();
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
@@ -69,8 +76,6 @@ const Guests = () => {
     guestId: '',
     name: '',
   });
-
-  // const navigate = useNavigate();
 
   const getGuestData = () => {
     const selectedGuestData = guests.filter((guest) => guest?.id === selectedGuestId?.id);
@@ -115,8 +120,6 @@ const Guests = () => {
 
   useEffect(() => {
     if (eventId) {
-      getFormFields(eventId, setFormFields);
-      getTickets(eventId, setTicketInfo);
       getCategories(eventId, setCategories);
     }
     return () => {
@@ -188,13 +191,6 @@ const Guests = () => {
     });
   };
 
-  // useEffect(() => {
-  //   setFormData({
-  //     ...formData,
-  //     is_cash_in_hand: cashInHand.toString(),
-  //   });
-  // }, [cashInHand]);
-
   useEffect(() => {
     if (ticketCode.length > 0) {
       setFormData({
@@ -245,6 +241,7 @@ const Guests = () => {
               selectedGuestId={selectedGuestId}
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
+              tickets={tickets}
             />
 
             {!showScanner && (
@@ -408,6 +405,7 @@ const Guests = () => {
                     <SecondaryButton
                       buttonText='Add Guests +'
                       onClick={() => {
+                        getGuestInfo(eventId, setFormFields, setTicketInfo);
                         setSelectedGuestId({
                           id: '',
                           type: 'add',
