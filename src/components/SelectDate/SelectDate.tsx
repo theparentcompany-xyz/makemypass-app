@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { EventType, TicketType } from '../../apis/types';
+import { EventType } from '../../apis/types';
 import styles from './SelectDate.module.css';
 import DatePicker from 'react-datepicker';
 import { findMaxDate, findMinDate } from '../../common/commonFunctions';

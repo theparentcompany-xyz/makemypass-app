@@ -138,18 +138,29 @@ export function convertDate(date: Date | undefined) {
 }
 
 export const findMinDate = (eventData: EventType): Date | null => {
-  let minDate: Date | null = null; // Initialize minDate with current date
+  let minDate: Date = new Date(); // Initialize minDate with current date
+
+  let hasTickets = false;
+  Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
+    ticketInfo.entry_date.find((entry) => {
+      if (entry.capacity > 0 && entry.date === minDate.toISOString().split('T')[0]) {
+        console.log('found');
+        hasTickets = true;
+        return true;
+      }
+    });
+  });
+
   const currentDate = new Date(); // Get current date
   Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
     ticketInfo.entry_date.forEach((entry) => {
       const date = new Date(entry.date);
-      if (date >= currentDate && (!minDate || (date < minDate && entry.capacity > 0))) {
+      if (date >= currentDate && (!hasTickets || (date < minDate && entry.capacity > 0))) {
         minDate = date;
       }
     });
   });
 
-  console.log('minDate', minDate);
   return minDate;
 };
 
