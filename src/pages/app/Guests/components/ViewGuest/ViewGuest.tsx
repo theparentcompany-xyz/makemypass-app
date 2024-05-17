@@ -239,8 +239,9 @@ const ViewGuest = ({
               )}
             </div>
           )}
-
-          {Number(formData['amount']) > 0 &&
+          <br />
+          {import.meta.env.VITE_CURRENT_ENV === 'dev' &&
+            Number(formData['amount']) > 0 &&
             (!initateRefundClicked ? (
               <SecondaryButton
                 onClick={() => {
