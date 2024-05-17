@@ -31,6 +31,10 @@ type TicketType = {
   default_selected: boolean;
   platform_fee: number;
   platform_fee_from_user: boolean;
+  entry_date: {
+    date: string;
+    capacity: number;
+  }[];
 };
 
 export type TicketOptions = {

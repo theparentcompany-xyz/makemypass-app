@@ -94,6 +94,10 @@ export interface TicketType {
   platform_fee: number;
   platform_fee_from_user: boolean;
   currency: string;
+  entry_date: {
+    date: string;
+    capacity: number;
+  }[];
 }
 
 interface CouponType {

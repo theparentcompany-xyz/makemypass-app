@@ -10,6 +10,7 @@ import { applyCoupon } from '../../../../../apis/publicpage';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import SelectDate from '../../../../../components/SelectDate/SelectDate';
+import toast from 'react-hot-toast';
 
 const CouponForm = ({
   ticketInfo,
@@ -146,197 +147,232 @@ const CouponForm = ({
           <p className={styles.eventDescription}>Select a ticket type to register for the event.</p>
         </div>
 
-        {Object.keys(ticketInfo)?.map((ticketType) => (
-          <div
-            key={ticketType}
-            onClick={() => {
-              if (eventData?.select_multi_ticket) {
-                let newTicketIds = []; //temporary variable to store new ticket ids for amount updation
+        {Object.keys(ticketInfo)?.map((ticketType) => {
+          return (
+            <div
+              key={ticketType}
+              onClick={() => {
+                if (eventData?.select_multi_ticket) {
+                  let newTicketIds = []; //temporary variable to store new ticket ids for amount updation
 
-                if (
-                  tickets.filter((ticket) => ticket.ticket_id === ticketInfo[ticketType].id)
-                    .length > 0
-                ) {
-                  setTickets(
-                    tickets.filter((ticket) => ticket.ticket_id !== ticketInfo[ticketType].id),
-                  );
-                  newTicketIds = tickets.filter(
-                    (ticket) => ticket.ticket_id !== ticketInfo[ticketType].id,
-                  );
+                  if (
+                    tickets.filter((ticket) => ticket.ticket_id === ticketInfo[ticketType].id)
+                      .length > 0
+                  ) {
+                    setTickets(
+                      tickets.filter((ticket) => ticket.ticket_id !== ticketInfo[ticketType].id),
+                    );
+                    newTicketIds = tickets.filter(
+                      (ticket) => ticket.ticket_id !== ticketInfo[ticketType].id,
+                    );
+                  } else {
+                    setTickets([
+                      ...tickets,
+                      {
+                        ticket_id: ticketInfo[ticketType].id,
+                        count: 1,
+                        my_ticket: true,
+                      },
+                    ]);
+                    newTicketIds = [...tickets, ticketInfo[ticketType].id];
+                  }
+
+                  if (
+                    discount.discount_value > 0 &&
+                    discount.ticket.includes(ticketInfo[ticketType].id)
+                  ) {
+                    const amount = newTicketIds.reduce((acc, ticket) => {
+                      const ticketId = typeof ticket === 'string' ? ticket : ticket.ticket_id;
+                      return (
+                        acc +
+                        discountedTicketPrice(
+                          Object.values(ticketInfo).filter(
+                            (ticktype) => ticktype.id === ticketId,
+                          )[0].price,
+                          discount,
+                          ticketId,
+                        )
+                      );
+                    }, 0);
+                    setAmount(amount.toString());
+                  } else {
+                    const amount = newTicketIds.reduce((acc, id) => {
+                      return (
+                        acc +
+                        Number(
+                          Object.values(ticketInfo).filter((ticktype) => ticktype.id === id)[0]
+                            .price,
+                        )
+                      );
+                    }, 0);
+                    setAmount(amount.toString());
+                  }
                 } else {
-                  setTickets([
-                    ...tickets,
-                    {
+                  const ticketAlreadyThere =
+                    tickets.filter((ticket) => ticket.ticket_id === ticketInfo[ticketType].id)
+                      .length > 0;
+
+                  if (ticketAlreadyThere) {
+                    setTickets(
+                      tickets.map((ticket) => ({
+                        ...ticket,
+                        my_ticket: ticket.ticket_id === ticketInfo[ticketType].id ? true : false,
+                      })),
+                    );
+                  } else {
+                    const updatedTickets = tickets.map((ticket) => ({
+                      ...ticket,
+                      my_ticket: false,
+                    }));
+
+                    updatedTickets.push({
                       ticket_id: ticketInfo[ticketType].id,
                       count: 1,
                       my_ticket: true,
-                    },
-                  ]);
-                  newTicketIds = [...tickets, ticketInfo[ticketType].id];
-                }
+                    });
 
-                if (
-                  discount.discount_value > 0 &&
-                  discount.ticket.includes(ticketInfo[ticketType].id)
-                ) {
-                  const amount = newTicketIds.reduce((acc, ticket) => {
-                    const ticketId = typeof ticket === 'string' ? ticket : ticket.ticket_id;
-                    return (
-                      acc +
+                    setTickets(updatedTickets);
+                  }
+
+                  if (
+                    discount.discount_value > 0 &&
+                    discount.ticket.includes(ticketInfo[ticketType].id)
+                  )
+                    setAmount(
                       discountedTicketPrice(
-                        Object.values(ticketInfo).filter((ticktype) => ticktype.id === ticketId)[0]
-                          .price,
+                        Number(ticketInfo[ticketType].price),
                         discount,
-                        ticketId,
-                      )
+                        ticketInfo[ticketType].id,
+                      ).toString(),
                     );
-                  }, 0);
-                  setAmount(amount.toString());
-                } else {
-                  const amount = newTicketIds.reduce((acc, id) => {
-                    return (
-                      acc +
-                      Number(
-                        Object.values(ticketInfo).filter((ticktype) => ticktype.id === id)[0].price,
-                      )
-                    );
-                  }, 0);
-                  setAmount(amount.toString());
+                  else {
+                    setAmount(ticketInfo[ticketType].price.toString());
+                  }
                 }
-              } else {
-                const ticketAlreadyThere =
-                  tickets.filter((ticket) => ticket.ticket_id === ticketInfo[ticketType].id)
-                    .length > 0;
-
-                if (ticketAlreadyThere) {
-                  setTickets(
-                    tickets.map((ticket) => ({
-                      ...ticket,
-                      my_ticket: ticket.ticket_id === ticketInfo[ticketType].id ? true : false,
-                    })),
-                  );
-                } else {
-                  const updatedTickets = tickets.map((ticket) => ({
-                    ...ticket,
-                    my_ticket: false,
-                  }));
-
-                  updatedTickets.push({
-                    ticket_id: ticketInfo[ticketType].id,
-                    count: 1,
-                    my_ticket: true,
-                  });
-
-                  setTickets(updatedTickets);
-                }
-
-                if (
-                  discount.discount_value > 0 &&
-                  discount.ticket.includes(ticketInfo[ticketType].id)
+              }}
+              className={styles.ticketType}
+              style={{
+                border: tickets.find(
+                  (ticket) => ticket.my_ticket && ticket.ticket_id === ticketInfo[ticketType].id,
                 )
-                  setAmount(
-                    discountedTicketPrice(
-                      Number(ticketInfo[ticketType].price),
-                      discount,
-                      ticketInfo[ticketType].id,
-                    ).toString(),
-                  );
-                else {
-                  setAmount(ticketInfo[ticketType].price.toString());
-                }
-              }
-            }}
-            className={styles.ticketType}
-            style={{
-              border: tickets.find(
-                (ticket) => ticket.my_ticket && ticket.ticket_id === ticketInfo[ticketType].id,
-              )
-                ? '2px solid #FFFFFF'
-                : '2px solid #2A3533',
-            }}
-          >
-            {tickets && (
-              <div className={styles.ticketCountContainer}>
-                <button
-                  className={styles.ticketCountUpdateButton}
-                  onClick={() => {
-                    updateTicketCount(ticketInfo[ticketType].id, false);
-                  }}
-                >
-                  -
-                </button>
-                <p className={styles.ticketCount}>
-                  {tickets.find((ticket) => ticket.ticket_id === ticketInfo[ticketType].id)
-                    ?.count ?? 0}
-                </p>
-                <button
-                  className={styles.ticketCountUpdateButton}
-                  onClick={() => {
-                    updateTicketCount(ticketInfo[ticketType].id, true);
-                  }}
-                >
-                  +
-                </button>
-              </div>
-            )}
-            <div className={styles.passText}>
-              <p className={styles.ticketTypeTitle}>{ticketType?.toUpperCase()}</p>
-              <p className={styles.ticketTypeDescription}>{ticketInfo[ticketType].description}</p>
-              <div className={styles.perks}>
-                {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
-                  <div key={perk} className={styles.perk}>
-                    {perk}: {ticketInfo[ticketType].perks[perk]}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className={styles.ticketPriceData}>
-              {discount.discount_value > 0 &&
-                ticketInfo[ticketType].price > 0 &&
-                discount.ticket.includes(ticketInfo[ticketType].id) && (
-                  <div className={styles.discountData}>
-                    <p className={styles.discountAmount}>
-                      {discount.discount_type.toLowerCase() === 'percentage'
-                        ? `${discount.discount_value}% off`
-                        : `${ticketInfo[ticketType].currency} ${discount.discount_value} off`}
-                    </p>
-                    <p className={styles.originalPrice}>
-                      <del>
-                        M.R.P. {ticketInfo[ticketType].currency} {ticketInfo[ticketType].price}
-                      </del>
-                    </p>
-                  </div>
-                )}
-              <div className={styles.priceData}>
-                <p className={styles.ticketPrice}>
-                  {discountedTicketPrice(
-                    Number(ticketInfo[ticketType].price),
-                    discount,
-                    ticketInfo[ticketType].id,
-                  ) === 0
-                    ? 'FREE'
-                    : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(Number(ticketInfo[ticketType].price), discount, ticketInfo[ticketType].id)}`}
-                </p>
-                <p className={styles.extraCharges}>
-                  {ticketInfo[ticketType].platform_fee_from_user &&
-                    Number(ticketInfo[ticketType].price) > 0 &&
-                    discountedTicketPrice(
-                      Number(ticketInfo[ticketType].price),
-                      discount,
-                      ticketInfo[ticketType].id,
-                    ) !== 0 && (
-                      <p className={styles.extraCharges}>
-                        {ticketInfo[ticketType].platform_fee}% extra charges
+                  ? '2px solid #FFFFFF'
+                  : '2px solid #2A3533',
+              }}
+            >
+              {tickets && (
+                <>
+                  <div className={styles.ticketCountContainer}>
+                    <div
+                      className='row'
+                      style={{
+                        columnGap: 0,
+                      }}
+                    >
+                      <button
+                        className={styles.ticketCountUpdateButton}
+                        onClick={() => {
+                          updateTicketCount(ticketInfo[ticketType].id, false);
+                        }}
+                      >
+                        -
+                      </button>
+                      <p className={styles.ticketCount}>
+                        {tickets.find((ticket) => ticket.ticket_id === ticketInfo[ticketType].id)
+                          ?.count ?? 0}
                       </p>
-                    )}
-                </p>
-              </div>
-            </div>
+                      <button
+                        className={styles.ticketCountUpdateButton}
+                        onClick={() => {
+                          const currentTicketCount = tickets.find(
+                            (ticket) => ticket.ticket_id === ticketInfo[ticketType].id,
+                          )?.count;
 
-            <p className={styles.cardText}>{eventData?.title?.toUpperCase()}</p>
-          </div>
-        ))}
+                          const ticketLimit = ticketInfo[ticketType].entry_date?.find(
+                            (entryDate) => entryDate.date === selectedDate,
+                          )?.capacity;
+
+                          if (currentTicketCount === ticketLimit) {
+                            toast.error('Ticket limit reached');
+                            return;
+                          }
+                          updateTicketCount(ticketInfo[ticketType].id, true);
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+                    {ticketInfo[ticketType].entry_date?.map((entryDate) => {
+                      return (
+                        entryDate.date === selectedDate && (
+                          <div key={entryDate.date} className={styles.dateContainer}>
+                            <p className={styles.capacity}>{entryDate.capacity} tickets left</p>
+                          </div>
+                        )
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+
+              <div className={styles.passText}>
+                <p className={styles.ticketTypeTitle}>{ticketType?.toUpperCase()}</p>
+                <p className={styles.ticketTypeDescription}>{ticketInfo[ticketType].description}</p>
+                <div className={styles.perks}>
+                  {Object.keys(ticketInfo[ticketType].perks)?.map((perk) => (
+                    <div key={perk} className={styles.perk}>
+                      {perk}: {ticketInfo[ticketType].perks[perk]}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.ticketPriceData}>
+                {discount.discount_value > 0 &&
+                  ticketInfo[ticketType].price > 0 &&
+                  discount.ticket.includes(ticketInfo[ticketType].id) && (
+                    <div className={styles.discountData}>
+                      <p className={styles.discountAmount}>
+                        {discount.discount_type.toLowerCase() === 'percentage'
+                          ? `${discount.discount_value}% off`
+                          : `${ticketInfo[ticketType].currency} ${discount.discount_value} off`}
+                      </p>
+                      <p className={styles.originalPrice}>
+                        <del>
+                          M.R.P. {ticketInfo[ticketType].currency} {ticketInfo[ticketType].price}
+                        </del>
+                      </p>
+                    </div>
+                  )}
+                <div className={styles.priceData}>
+                  <p className={styles.ticketPrice}>
+                    {discountedTicketPrice(
+                      Number(ticketInfo[ticketType].price),
+                      discount,
+                      ticketInfo[ticketType].id,
+                    ) === 0
+                      ? 'FREE'
+                      : `${ticketInfo[ticketType].currency} ${discountedTicketPrice(Number(ticketInfo[ticketType].price), discount, ticketInfo[ticketType].id)}`}
+                  </p>
+                  <p className={styles.extraCharges}>
+                    {ticketInfo[ticketType].platform_fee_from_user &&
+                      Number(ticketInfo[ticketType].price) > 0 &&
+                      discountedTicketPrice(
+                        Number(ticketInfo[ticketType].price),
+                        discount,
+                        ticketInfo[ticketType].id,
+                      ) !== 0 && (
+                        <p className={styles.extraCharges}>
+                          {ticketInfo[ticketType].platform_fee}% extra charges
+                        </p>
+                      )}
+                  </p>
+                </div>
+              </div>
+
+              <p className={styles.cardText}>{eventData?.title?.toUpperCase()}</p>
+            </div>
+          );
+        })}
       </motion.div>
     </>
   );

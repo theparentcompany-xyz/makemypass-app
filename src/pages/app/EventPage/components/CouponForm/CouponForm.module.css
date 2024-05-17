@@ -242,12 +242,21 @@
 
 .ticketCountContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
   position: absolute;
 
   right: 20px;
   top: 30px;
+}
+
+.capacity {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #bbbaba;
+  margin-top: 0.5rem;
+  text-align: right;
+  font-family: 'Inter', sans-serif;
 }
 
 .ticketCount {
