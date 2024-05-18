@@ -316,7 +316,8 @@ const CouponForm = ({
                       </div>
                       {ticketInfo[ticketType].entry_date?.map((entryDate) => {
                         return (
-                          entryDate.date === selectedDate && (
+                          entryDate.date === selectedDate &&
+                          entryDate.capacity < 20 && (
                             <div key={entryDate.date} className={styles.dateContainer}>
                               <p className={styles.capacity}>{entryDate.capacity} tickets left</p>
                             </div>
