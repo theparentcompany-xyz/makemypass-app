@@ -183,7 +183,7 @@ export const applyCoupon = async (
       .then((response) => {
         setDiscount(response.data.response);
       })
-      .catch((error) => {
+      .catch(() => {
         setCoupon({
           ...couponData,
           error: 'Invalid Coupon Code',
