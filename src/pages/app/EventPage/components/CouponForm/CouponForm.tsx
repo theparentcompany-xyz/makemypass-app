@@ -317,7 +317,7 @@ const CouponForm = ({
                       {ticketInfo[ticketType].entry_date?.map((entryDate) => {
                         return (
                           entryDate.date === selectedDate &&
-                          entryDate.capacity < 20 && (
+                          entryDate.capacity <= 10 && (
                             <div key={entryDate.date} className={styles.dateContainer}>
                               <p className={styles.capacity}>{entryDate.capacity} tickets left</p>
                             </div>
@@ -363,6 +363,7 @@ const CouponForm = ({
                         </p>
                       </div>
                     )}
+
                   <div className={styles.priceData}>
                     <p className={styles.ticketPrice}>
                       {discountedTicketPrice(
@@ -407,6 +408,25 @@ const CouponForm = ({
                         )}
                     </p>
                   </div>
+                  {
+                    /*Check for Show price if discount value is 0 and show it if available*/
+                    !discount.discount_value &&
+                      (ticketInfo[ticketType].entry_date.find((entry) => entry.date == selectedDate)
+                        ?.show_price ||
+                        ticketInfo[ticketType].show_price) && (
+                        <div className={styles.discountData}>
+                          <p className={styles.marketingOriginalPrice}>
+                            <del>
+                              M.R.P. {ticketInfo[ticketType].currency}{' '}
+                              {ticketInfo[ticketType].entry_date.find(
+                                (entry) => entry.date == selectedDate,
+                              )?.show_price || ticketInfo[ticketType].show_price}{' '}
+                              {/*Show price if available*/}
+                            </del>
+                          </p>
+                        </div>
+                      )
+                  }
                 </div>
 
                 <p className={styles.cardText}>{eventData?.title?.toUpperCase()}</p>

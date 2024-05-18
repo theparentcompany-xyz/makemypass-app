@@ -182,6 +182,14 @@
   text-align: left;
 }
 
+.marketingOriginalPrice{
+    font-size: 0.8rem;
+      font-weight: 400;
+      color: #e67474;
+      font-family: 'Inter', sans-serif;
+      text-align: left;
+}
+
 .row {
   display: flex;
   flex-direction: column;
