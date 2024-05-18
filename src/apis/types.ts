@@ -87,6 +87,7 @@ export interface TicketType {
   description: ReactNode;
   id: string;
   price: number;
+  show_price?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   perks: any;
   slots_left: number | null;
@@ -98,6 +99,7 @@ export interface TicketType {
     date: string;
     capacity: number;
     price: number;
+    show_price?: number;
   }[];
 }
 
