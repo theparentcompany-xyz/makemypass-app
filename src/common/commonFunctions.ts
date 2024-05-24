@@ -109,6 +109,7 @@ export function timeAgo(date: string | number | Date) {
     return `today`;
   }
 }
+
 export const getCurrentTimezone = () => {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const date = new Date();

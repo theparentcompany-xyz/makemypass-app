@@ -1,4 +1,4 @@
-import { Roles } from './types';
+// import { Roles } from './types';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { getEventId } from '../src/apis/events';
 
@@ -9,7 +9,7 @@ const RoleChecker = ({
 }: {
   redirectPath?: JSX.Element;
   children: JSX.Element;
-  roles: Roles[];
+  roles: string[];
 }) => {
   const currentTitle = JSON.parse(sessionStorage.getItem('eventData')!)?.event_name;
   const currentUserRole = [JSON.parse(sessionStorage.getItem('eventData')!)?.current_user_role];
@@ -20,12 +20,11 @@ const RoleChecker = ({
     getEventId(eventTitle, navigate);
   }
 
-  const hasRoleNoFetch = (roles: Roles[]) => {
+  const hasRoleNoFetch = (roles: string[]) => {
     return roles.some((role) => currentUserRole.includes(role));
   };
 
   if (hasRoleNoFetch(roles)) {
-    console.log('Authorized');
     return children;
   } else {
     return redirectPath ? redirectPath : <Navigate to='/login' replace={true} />;

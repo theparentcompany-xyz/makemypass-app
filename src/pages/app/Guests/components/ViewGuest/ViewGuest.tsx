@@ -75,7 +75,7 @@ const ViewGuest = ({
               <div className={styles.field}>
                 <p className={styles.fieldLabel}>Registered</p>
                 {!isArray(formData['registered_at']) && (
-                  <p className={styles.fieldData}>{formatDate(formData['registered_at'])}</p>
+                  <p className={styles.fieldData}>{formatDate(formData['registered_at'], true)}</p>
                 )}
               </div>
               {formData['check_in_date'] && (
