@@ -63,10 +63,10 @@ header {
 }
 
 @media screen and (max-width: 768px) {
-  .logo {
-    display: none;
+  .headerComponent {
+    justify-content: center;
+    padding-bottom: 0;
   }
-
   .userName {
     font-size: 0.6rem;
   }
@@ -119,10 +119,9 @@ header {
   background: #212729;
 }
 
-
 .dropdownContent .link {
   transition: all 0.2s ease-in-out;
-    border-radius: 0px 0 8px 8px;
+  border-radius: 0px 0 8px 8px;
 }
 .dropdownContent:hover .link {
   background-color: #2d3436;
