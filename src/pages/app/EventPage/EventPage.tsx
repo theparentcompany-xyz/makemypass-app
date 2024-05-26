@@ -1,6 +1,6 @@
 import styles from './EventPage.module.css';
 import Theme from '../../../components/Theme/Theme';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 // import { getEventId } from '../../../apis/events';
@@ -49,6 +49,9 @@ const EventPage = () => {
     error: '',
   });
 
+  const [searchParams] = useSearchParams();
+  const typeParam = searchParams.get('type');
+
   useEffect(() => {
     if (eventTitle) getEventInfo(eventTitle, setEventData);
   }, [eventTitle]);
@@ -58,7 +61,7 @@ const EventPage = () => {
   }, [eventData]);
 
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  const newSearchParams = new URLSearchParams(location.search);
 
   useEffect(() => {
     const scrollToTop = () => {
@@ -109,7 +112,7 @@ const EventPage = () => {
   useEffect(() => {
     setFormData(
       eventData?.form.reduce((data: any, field: any) => {
-        data[field.field_key] = searchParams.get(field.field_key) || '';
+        data[field.field_key] = newSearchParams.get(field.field_key) || '';
         return data;
       }, {}),
     );
@@ -194,9 +197,11 @@ const EventPage = () => {
 
         {eventData && eventData?.form?.length > 0 ? (
           <div className={styles.eventPageContainer}>
-            <div className={styles.eventHeaderContainer}>
-              <EventHeader eventData={eventData} />
-            </div>
+            {typeParam !== 'embed' && (
+              <div className={styles.eventHeaderContainer}>
+                <EventHeader eventData={eventData} />
+              </div>
+            )}
             <div className={styles.formContainer}>
               {formNumber === 0 && (
                 <motion.div
