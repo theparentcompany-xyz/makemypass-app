@@ -124,7 +124,7 @@ const CouponForm = ({
         </motion.div>
       )}
 
-      {eventData && (
+      {eventData && eventData.tickets[0]?.entry_date && (
         <SelectDate
           eventData={eventData}
           selectedDate={selectedDate}
@@ -149,9 +149,11 @@ const CouponForm = ({
         </div>
 
         {Object.keys(ticketInfo)?.map((ticketType) => {
+          const hasCapacity = ticketInfo[ticketType].entry_date.find(
+            (entry) => entry.date === selectedDate,
+          )?.capacity;
           return (
-            (ticketInfo[ticketType].entry_date.find((entry) => entry.date === selectedDate)
-              ?.capacity ?? 0) > 0 && (
+            ((hasCapacity && hasCapacity > 0) || !hasCapacity) && (
               <div
                 key={ticketType}
                 onClick={() => {
