@@ -274,7 +274,7 @@ const CouponForm = ({
                     : '2px solid #2A3533',
                 }}
               >
-                {tickets && (
+                {eventData?.is_grouped_ticket && tickets && (
                   <>
                     <div className={styles.ticketCountContainer}>
                       <div
