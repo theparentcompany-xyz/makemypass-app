@@ -395,7 +395,7 @@ const Insights = () => {
                       <div className={styles.weeklyCounts}>
                         <div className={styles.weeklyCount}>
                           <p className={styles.live}>
-                            Total Amount{`(${message?.payment_analytics.total_paid_users})`}
+                            Total Amount{`(${message?.payment_analytics.total_paid_users ?? '0'})`}
                           </p>
                           <p className={styles.wcount}>
                             {message?.payment_analytics.total_amount?.toLocaleString('en-IN', {
@@ -413,7 +413,8 @@ const Insights = () => {
                         </div>
                         <div className={styles.weeklyCount}>
                           <p className={styles.live}>
-                            Paid Via App{`(${message?.payment_analytics.platform_paid_users})`}
+                            Paid Via App
+                            {`(${message?.payment_analytics.platform_paid_users ?? '0'})`}
                           </p>
                           <p className={styles.wcount}>
                             {message?.payment_analytics.total_platform_payments?.toLocaleString(
@@ -434,7 +435,8 @@ const Insights = () => {
                       <div className={styles.weeklyCounts}>
                         <div className={styles.weeklyCount}>
                           <p className={styles.live}>
-                            Cash In Hand{`(${message?.payment_analytics.cash_in_hand_users})`}
+                            Cash In Hand
+                            {`(${message?.payment_analytics.cash_in_hand_users ?? '0'})`}
                           </p>
                           <p className={styles.wcount}>
                             {message?.payment_analytics.total_cash_in_hand?.toLocaleString(
