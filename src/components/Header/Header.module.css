@@ -13,6 +13,7 @@ header {
 
   font-family: 'Inter', sans-serif;
   height: 5vh;
+  margin-top: 1rem;
 }
 
 .headerComponent {
