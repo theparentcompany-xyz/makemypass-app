@@ -96,14 +96,16 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                   </>
                 )}
               </div>
-              <div className={styles.eventPlace}>
-                <div className={styles.locationBox}>
-                  <IoLocationOutline size={25} className={styles.locationIcon} />
+              {eventData?.place && (
+                <div className={styles.eventPlace}>
+                  <div className={styles.locationBox}>
+                    <IoLocationOutline size={25} className={styles.locationIcon} />
+                  </div>
+                  <div className={styles.eventDateTimeText}>
+                    <p className={styles.eventDateText}>{eventData?.place}</p>
+                  </div>
                 </div>
-                <div className={styles.eventDateTimeText}>
-                  <p className={styles.eventDateText}>{eventData?.place}</p>
-                </div>
-              </div>
+              )}
             </div>
             <a href='#formFields'>
               <button className={styles.registerButton}>Register Now!</button>
