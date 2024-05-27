@@ -509,11 +509,15 @@ const Insights = () => {
                     </div>
                   </div>
                 )}
-                <div className={styles.registrationCount}>
-                  <div className={styles.graphContainer}>
-                    {entryDateCount && <Bar options={options} data={entryDateCount} />}
+                {entryDateCount && entryDateCount.datasets[0].data.length > 0 && (
+                  <div className={styles.registrationCount}>
+                    <div className={styles.graphContainer}>
+                      {entryDateCount && entryDateCount.datasets[0].data && (
+                        <Bar options={options} data={entryDateCount} />
+                      )}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               {/* <div className={styles.insightsContainer}>
