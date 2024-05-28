@@ -109,8 +109,8 @@ const EditEvent = () => {
       changedData['reg_end_date'] = convertDate(regDate?.end);
     if (placeName && placeName !== fetchedEvent?.place) changedData['place'] = placeName;
     if (
-      location?.lat != fetchedEvent?.location?.lat ||
-      location?.lng != fetchedEvent?.location?.lng
+      !eventData?.is_online &&
+      (location?.lat != fetchedEvent?.location?.lat || location?.lng != fetchedEvent?.location?.lng)
     ) {
       changedData['location'] = location;
     }
