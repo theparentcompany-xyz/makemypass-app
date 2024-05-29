@@ -25,6 +25,21 @@
   z-index: 2;
 }
 
+.alertMessage {
+  color: #ff6384;
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  /* max-width: ; */
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 0.25rem;
+}
+
 .formTitle {
   color: #fff;
   font-size: 1.25rem;

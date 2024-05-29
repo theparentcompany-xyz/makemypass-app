@@ -8,6 +8,7 @@ import { login, generateOTP, preRegister, register } from '../../../apis/auth';
 import InputFIeld from './InputFIeld';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { TbAlertTriangleFilled } from 'react-icons/tb';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -133,6 +134,13 @@ const Login = () => {
                   />
                 )}
               </div>
+
+              {isOtpSent && !isRegistered && (
+                <p className={styles.alertMessage}>
+                  <TbAlertTriangleFilled size={20} color='#FF6384' />
+                  By clicking register you are creating a new account
+                </p>
+              )}
 
               <div className={styles.formFooter}>
                 <p
