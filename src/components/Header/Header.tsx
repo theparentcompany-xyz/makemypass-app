@@ -39,11 +39,31 @@ const Header = ({ type }: { type?: string | undefined }) => {
   return (
     <>
       <header>
-        <div className={styles.headerComponent}>
+        <div
+          className={styles.headerComponent}
+          style={
+            type === 'eventForm'
+              ? {
+                  justifyContent: 'center',
+                }
+              : {}
+          }
+        >
           <Link to='/home'>
             <div className={styles.mainLogo}>
               <img src='/app/logoText.webp' alt='makemypass brand logo' className={styles.header} />
-              <span className={styles.logo}>MakeMyPass</span>
+              <span
+                className={styles.logo}
+                style={
+                  type === 'eventForm'
+                    ? {
+                        display: 'block',
+                      }
+                    : {}
+                }
+              >
+                MakeMyPass
+              </span>
             </div>
           </Link>
           {type != 'eventForm' && (

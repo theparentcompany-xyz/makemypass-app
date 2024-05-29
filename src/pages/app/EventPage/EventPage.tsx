@@ -183,16 +183,18 @@ const EventPage = () => {
           hasShortlisting={eventData?.shortlist}
         />
         {eventData?.err_message && (
-          <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.5 }}
-            className={styles.center}
-          >
-            <EventHeader eventData={eventData} />
+          <>
+            <motion.div
+              initial={{ opacity: 0, y: 35 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.5 }}
+              className={styles.eventPageContainer}
+            >
+              <EventHeader eventData={eventData} />
+            </motion.div>
             <p className={styles.privateEventText}>{eventData?.err_message}</p>
-          </motion.div>
+          </>
         )}
 
         {eventData && eventData?.form?.length > 0 ? (
@@ -308,9 +310,11 @@ const EventPage = () => {
             </div>
           </div>
         ) : (
-          <div className={styles.center}>
-            <HashLoader color={'#46BF75'} size={50} />
-          </div>
+          !(eventData && eventData.title) && (
+            <div className={styles.center}>
+              <HashLoader color={'#46BF75'} size={50} />
+            </div>
+          )
         )}
       </Theme>
     </>

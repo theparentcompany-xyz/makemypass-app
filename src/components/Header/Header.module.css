@@ -65,11 +65,15 @@ header {
 
 @media screen and (max-width: 768px) {
   .headerComponent {
-    justify-content: center;
+    justify-content: space-between;
     padding-bottom: 0;
   }
   .userName {
     font-size: 0.6rem;
+  }
+
+  .logo {
+    display: none;
   }
 }
 
