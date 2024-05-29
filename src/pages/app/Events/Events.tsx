@@ -17,7 +17,6 @@ const Events = () => {
     y: number;
   }
 
-  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState<Position>({ x: 0, y: 0 });
   const [showModal, setShowModal] = useState(false);
@@ -50,6 +49,8 @@ const Events = () => {
   useEffect(() => {
     getEvents(setEvents);
   }, []);
+
+  const navigate = useNavigate();
 
   const handleClick = (eventName: string) => {
     getEventId(eventName?.toLowerCase(), navigate);
