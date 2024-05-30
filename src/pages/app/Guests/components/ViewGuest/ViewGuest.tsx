@@ -280,22 +280,29 @@ const ViewGuest = ({
           )}
         </div>
 
-        <hr className={styles.line} />
-        <div
-          className={styles.invitedBy}
-          style={{
-            justifyContent: 'flex-start',
-            columnGap: '4px',
-          }}
-        >
-          {formData['amount'] && (
-            <p className={styles.invitedByText}>{`Paid Rs.${formData['amount']}`}</p>
-          )}
-          {formData['ticket_count'] && (
-            <p className={styles.invitedByText}>{` for ${formData['ticket_count']} tickets.`}</p>
-          )}
-        </div>
-        <hr className={styles.line} />
+        {Number(formData['amount']) > 0 && (
+          <>
+            <hr className={styles.line} />
+            <div
+              className={styles.invitedBy}
+              style={{
+                justifyContent: 'flex-start',
+                columnGap: '4px',
+              }}
+            >
+              {formData['amount'] && (
+                <p className={styles.invitedByText}>{`Paid Rs.${formData['amount']}`}</p>
+              )}
+              {formData['ticket_count'] && (
+                <p
+                  className={styles.invitedByText}
+                >{` for ${formData['ticket_count']} tickets.`}</p>
+              )}
+            </div>
+            <hr className={styles.line} />
+          </>
+        )}
+
         <div className={styles.bottomSection}>
           {Object.keys(formData).map((key: string) => {
             const fieldName = formFields.find((field) => field.field_key === key)?.title;

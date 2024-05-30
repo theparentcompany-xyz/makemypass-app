@@ -107,9 +107,11 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                 </div>
               )}
             </div>
-            <a href='#formFields'>
-              <button className={styles.registerButton}>Register Now!</button>
-            </a>
+            {eventData && eventData?.form?.length > 0 && (
+              <a href='#formFields'>
+                <button className={styles.registerButton}>Register Now!</button>
+              </a>
+            )}
           </div>
         </div>
       </motion.div>

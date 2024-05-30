@@ -82,6 +82,7 @@ export const generateOTP = async (
       toast.error(error.response.data.message.general[0]);
       if (error.response.data.statusCode === 1001) {
         setIsRegistered(false);
+        preRegister(email, setIsOtpSent);
       }
     });
 };
