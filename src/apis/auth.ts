@@ -2,11 +2,13 @@ import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { buildVerse, makeMyPass } from '../../services/urls';
 import { Dispatch } from 'react';
+import { errorType } from '../pages/auth/Login/types';
 
 export const login = async (
   email: string,
   password: string,
   setIsAuthenticated: (arg0: boolean) => void,
+  setError: Dispatch<React.SetStateAction<errorType | undefined>>,
   isOtpSent?: boolean,
   setIsRegistered?: Dispatch<React.SetStateAction<boolean>>,
   passwordRef?: React.RefObject<HTMLInputElement>,
@@ -43,7 +45,13 @@ export const login = async (
       onboardUser();
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0]);
+      setError({
+        email: error.response.data.message.email ? error.response.data.message.email : undefined,
+        password: error.response.data.message.password
+          ? error.response.data.message.password
+          : undefined,
+        otp: error.response.data.message.otp ? error.response.data.message.otp : undefined,
+      });
       if (error.response.data.statusCode === 1001) {
         setIsRegistered && setIsRegistered(false);
         setIsAuthenticated(false);
@@ -79,7 +87,6 @@ export const generateOTP = async (
       return response.data;
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0]);
       if (error.response.data.statusCode === 1001) {
         setIsRegistered(false);
         preRegister(email, setIsOtpSent);
@@ -107,6 +114,7 @@ export const register = async (
   setIsRegistered: Dispatch<React.SetStateAction<boolean>>,
   setIsOtpSent: Dispatch<React.SetStateAction<boolean>>,
   setIsAuthenticated: Dispatch<React.SetStateAction<boolean>>,
+  setError: Dispatch<React.SetStateAction<errorType | undefined>>,
 ) => {
   publicGateway
     .post(buildVerse.register, {
@@ -125,7 +133,13 @@ export const register = async (
       setIsAuthenticated(true);
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Something went wrong');
+      setError({
+        email: error.response.data.message.email ? error.response.data.message.email : undefined,
+        password: error.response.data.message.password
+          ? error.response.data.message.password
+          : undefined,
+        otp: error.response.data.message.otp ? error.response.data.message.otp : undefined,
+      });
     });
 };
 

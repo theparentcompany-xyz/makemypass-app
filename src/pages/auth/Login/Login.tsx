@@ -9,6 +9,7 @@ import InputFIeld from './InputFIeld';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TbAlertTriangleFilled } from 'react-icons/tb';
+import { errorType } from './types';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,22 +25,36 @@ const Login = () => {
 
   const [isRegistered, setIsRegistered] = useState(true);
 
+  const [error, setError] = useState<errorType>();
+
   const ruri = window.location.href.split('=')[1];
 
   const handleSubmit = () => {
+    setError({
+      email: '',
+      password: '',
+      otp: '',
+    });
     if (isRegistered) {
       if (isPassword && emailRef.current?.value && passwordRef.current?.value)
         login(
           emailRef.current?.value,
           passwordRef.current?.value,
           setIsAuthenticated,
+          setError,
           isOtpSent,
           setIsRegistered,
           passwordRef,
           setIsPassword,
         );
       else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
-        login(emailRef.current?.value, otpRef.current?.value, setIsAuthenticated, isOtpSent);
+        login(
+          emailRef.current?.value,
+          otpRef.current?.value,
+          setIsAuthenticated,
+          setError,
+          isOtpSent,
+        );
       else if (!isOtpSent && emailRef.current?.value)
         generateOTP(emailRef.current?.value, setIsOtpSent, setIsRegistered, 'Login');
     } else {
@@ -51,6 +66,7 @@ const Login = () => {
           setIsRegistered,
           setIsOtpSent,
           setIsAuthenticated,
+          setError,
         );
     }
   };
@@ -111,27 +127,50 @@ const Login = () => {
                   placeholder='Enter your Email*'
                   icon={<GoPerson color='#A4A4A4' />}
                 />
+                {error && error.email && <p className={styles.alertMessage}>{error.email}</p>}
 
                 {isPassword && !isOtpSent && (
-                  <InputFIeld
-                    ref={passwordRef}
-                    type='password'
-                    name='password'
-                    id='password'
-                    placeholder='Enter your Password*'
-                    icon={<LuKey color='#A4A4A4' />}
-                  />
+                  <>
+                    <InputFIeld
+                      ref={passwordRef}
+                      type='password'
+                      name='password'
+                      id='password'
+                      placeholder='Enter your Password*'
+                      icon={<LuKey color='#A4A4A4' />}
+                      onChange={() =>
+                        setError({
+                          email: '',
+                          password: '',
+                          otp: '',
+                        })
+                      }
+                    />
+                    {error && error.password && (
+                      <p className={styles.alertMessage}>{error.password}</p>
+                    )}
+                  </>
                 )}
 
                 {isOtpSent && !isPassword && (
-                  <InputFIeld
-                    ref={otpRef}
-                    type='number'
-                    name='otp'
-                    id='otp'
-                    placeholder='Enter OTP*'
-                    icon={<LuKey color='#A4A4A4' />}
-                  />
+                  <>
+                    <InputFIeld
+                      ref={otpRef}
+                      type='number'
+                      name='otp'
+                      id='otp'
+                      placeholder='Enter OTP*'
+                      icon={<LuKey color='#A4A4A4' />}
+                      onChange={() =>
+                        setError({
+                          email: '',
+                          password: '',
+                          otp: '',
+                        })
+                      }
+                    />
+                    {error && error.otp && <p className={styles.alertMessage}>{error.otp}</p>}
+                  </>
                 )}
               </div>
 
