@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { CouponData, DiscountData, Tickets } from '../../types';
-import { EventType, TicketType } from '../../../../../apis/types';
+import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
 import styles from './CouponForm.module.css';
 import { discountedTicketPrice, getIcon } from '../../constants';
 import InputFIeld from '../../../../auth/Login/InputFIeld';
@@ -12,6 +12,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import SelectDate from '../../../../../components/SelectDate/SelectDate';
 import toast from 'react-hot-toast';
 import { findMinDate } from '../../../../../common/commonFunctions';
+import { validateCondition } from '../../../../../components/DynamicForm/condition';
 
 const CouponForm = ({
   ticketInfo,
@@ -27,6 +28,8 @@ const CouponForm = ({
   setSelectedDate,
   selectedDate,
   updateTicketCount,
+  formData,
+  setNoTickets,
 }: {
   ticketInfo: { [key: string]: TicketType };
   setTickets: React.Dispatch<React.SetStateAction<Tickets[]>>;
@@ -41,6 +44,8 @@ const CouponForm = ({
   setSelectedDate: React.Dispatch<React.SetStateAction<string | null | undefined>>;
   selectedDate: string | null | undefined;
   updateTicketCount: (ticketId: string, increment: boolean) => void;
+  formData: FormDataType;
+  setNoTickets: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const handleDateChange = (date: string | null | undefined | Date) => {
     let newDate;
@@ -152,11 +157,15 @@ const CouponForm = ({
           const hasCapacity = ticketInfo[ticketType].entry_date.find(
             (entry) => entry.date === selectedDate,
           )?.capacity;
+
           return (
-            ((hasCapacity && hasCapacity > 0) || !hasCapacity) && (
+            ((hasCapacity && hasCapacity > 0) || !hasCapacity) &&
+            eventData &&
+            validateCondition(ticketInfo[ticketType], formData, eventData?.form) && (
               <div
                 key={ticketType}
                 onClick={() => {
+                  setNoTickets(false);
                   if (eventData?.select_multi_ticket) {
                     let newTicketIds = []; //temporary variable to store new ticket ids for amount updation
 

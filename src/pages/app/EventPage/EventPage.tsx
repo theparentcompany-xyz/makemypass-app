@@ -15,9 +15,11 @@ import EventHeader from './components/EventHeader/EventHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
 import CouponForm from './components/CouponForm/CouponForm';
 import { Helmet } from 'react-helmet';
+import toast from 'react-hot-toast';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
+  const [noTickets, setNoTickets] = useState<boolean>(true);
 
   const [tickets, setTickets] = useState<Tickets[]>([]);
 
@@ -30,7 +32,7 @@ const EventPage = () => {
   const [amount, setAmount] = useState<string>('');
   const [success, setSuccess] = useState<string>('');
 
-  const [formNumber, setFormNumber] = useState<number>(1);
+  const [formNumber, setFormNumber] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState<string | null>();
   // const [hasEvent, setHasEvent] = useState<boolean>(true);
 
@@ -248,6 +250,8 @@ const EventPage = () => {
                   setSelectedDate={setSelectedDate}
                   selectedDate={selectedDate}
                   updateTicketCount={updateTicketCount}
+                  formData={formData}
+                  setNoTickets={setNoTickets}
                 />
               )}
 
@@ -282,30 +286,35 @@ const EventPage = () => {
                         );
                       }
                     } else {
-                      console.log('tickets', tickets);
-                      submitForm({
-                        eventId: eventData.id,
-                        tickets,
-                        formData,
-                        coupon,
-                        setSuccess,
-                        setFormNumber,
-                        setFormData,
-                        setAmount,
-                        setFormErrors,
-                        setCoupon,
-                        setEventData,
-                        eventTitle,
-                        selectedDate,
-                        setDiscount,
-                      });
+                      if (!noTickets)
+                        submitForm({
+                          eventId: eventData.id,
+                          tickets,
+                          formData,
+                          coupon,
+                          setSuccess,
+                          setFormNumber,
+                          setFormData,
+                          setAmount,
+                          setFormErrors,
+                          setCoupon,
+                          setEventData,
+                          eventTitle,
+                          selectedDate,
+                          setDiscount,
+                        });
+                      else {
+                        toast.error("You don't have selectable tickets.");
+                      }
                     }
                   }}
                   className={styles.submitButton}
                 >
                   {formNumber === 0 && !(hasZeroPriceTicket || eventData?.select_multi_ticket)
                     ? 'Next'
-                    : 'Register Now'}
+                    : !noTickets
+                      ? 'Register Now'
+                      : 'No Tickets Available'}
                 </motion.button>
               </div>
             </div>
