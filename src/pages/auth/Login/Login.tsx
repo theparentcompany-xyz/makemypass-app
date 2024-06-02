@@ -205,6 +205,35 @@ const Login = () => {
                 >
                   Login with {isPassword ? 'OTP' : 'Password'}
                 </p>
+                {isOtpSent && (
+                  <button
+                    className={styles.submitButton}
+                    style={{
+                      minHeight: '2.3rem',
+                      width: 'fit-content',
+                    }}
+                    onClick={() => {
+                      if (emailRef.current?.value === '' || emailRef.current?.value === undefined) {
+                        setError({
+                          email: 'Email is required',
+                          password: '',
+                          otp: '',
+                        });
+                        return;
+                      }
+                      if (isRegistered)
+                        generateOTP(
+                          emailRef.current?.value,
+                          setIsOtpSent,
+                          setIsRegistered,
+                          'Login',
+                        );
+                      else preRegister(emailRef.current?.value, setIsOtpSent);
+                    }}
+                  >
+                    Resend
+                  </button>
+                )}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   onClick={handleSubmit}
