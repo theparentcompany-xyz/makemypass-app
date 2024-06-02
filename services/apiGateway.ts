@@ -115,7 +115,7 @@ export const connectPrivateSocket = ({
   type,
 }: {
   url: string;
-  type: string;
+  type?: string;
 }): Promise<WebSocket> => {
   const baseURL = (import.meta.env.VITE_WEBSOCKET_URL as string) + 'makemypass/';
 
