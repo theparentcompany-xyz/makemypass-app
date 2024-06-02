@@ -22,6 +22,10 @@ import Glance from '../../../components/Glance/Glance';
 import Header from '../../../components/EventHeader/EventHeader';
 import Modal from '../../../components/Modal/Modal';
 import { MdOutlinePublishedWithChanges } from 'react-icons/md';
+import { editEvent } from '../../../apis/events';
+import { IoCopyOutline } from 'react-icons/io5';
+import toast from 'react-hot-toast';
+import { getVisibility } from '../../../apis/insights';
 
 ChartJS.register(
   CategoryScale,
@@ -38,7 +42,7 @@ ChartJS.register(
   ArcElement,
 );
 
-const Insights = () => {
+const Insights = ({ type }: { type?: string }) => {
   const [message, setMessage] = useState<AnalyticsData>();
 
   const [lineData, setLineData] = useState<ChartData>();
@@ -77,9 +81,14 @@ const Insights = () => {
   }, []);
 
   useEffect(() => {
+    if (!type) getVisibility(eventId, setIsPublished);
+  }, [eventId, type]);
+
+  useEffect(() => {
     if (eventId)
       connectPrivateSocket({
         url: makeMyPassSocket.analytics(eventId),
+        type: type,
       }).then((ws) => {
         ws.onmessage = (event) => {
           const lineBarData = JSON.parse(event.data).response;
@@ -152,6 +161,12 @@ const Insights = () => {
       });
   }, [eventId]);
 
+  const publishPage = () => {
+    const eventData = new FormData();
+    eventData.append('is_public_insight', isPublished ? 'false' : 'true');
+    editEvent({ eventId, eventData, setIsPublished });
+  };
+
   return (
     <Theme>
       <>
@@ -165,22 +180,94 @@ const Insights = () => {
               <div className={styles.modalHeader}>
                 <p className={styles.modalHeaderText}>Publish</p>
               </div>
-              <div>
-                <div className={styles.sectionContent}>
-                  <MdOutlinePublishedWithChanges size={25} color='white' />
-                  <p className={styles.sectionText}>Publish a static website for this event</p>
+              {!isPublished ? (
+                <div>
+                  <div className={styles.sectionContent1}>
+                    <MdOutlinePublishedWithChanges size={25} color='white' />
+                    <p className={styles.sectionText}>Publish a static website for this event</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      publishPage();
+                    }}
+                    className={styles.publishButton}
+                  >
+                    Publish
+                  </button>
                 </div>
-              </div>
-              <button className={styles.publishButton}>Publish</button>
+              ) : (
+                <div>
+                  <div className={styles.sectionContent}>
+                    <div className={styles.publicLinkField}>
+                      <input
+                        className={styles.publicLink}
+                        value={`https://www.makemypass.com/event/kozhikodeexpo`}
+                        readOnly
+                      />
+                      <IoCopyOutline
+                        onClick={() => {
+                          navigator.clipboard.writeText(
+                            `https://www.makemypass.com/event/kozhikodeexpo`,
+                          );
+                          toast.success('Link copied to clipboard');
+                        }}
+                      />
+                    </div>
+                    <div className={styles.alert}>Live on the web</div>
+
+                    <div className={styles.publicLinkField}>
+                      <textarea
+                        rows={5}
+                        className={styles.publicLink}
+                        value={`<iframe src="https://www.example.com" width="600" height="400" frameborder="0" scrolling="no"></iframe>
+                        `}
+                        readOnly
+                      />
+                      <IoCopyOutline
+                        onClick={() => {
+                          navigator.clipboard.writeText(
+                            `https://www.makemypass.com/event/kozhikodeexpo`,
+                          );
+                          toast.success('Link copied to clipboard');
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.buttons}>
+                    <p
+                      onClick={() => {
+                        publishPage();
+                        setShowPublishModal(false);
+                      }}
+                    >
+                      Unpublish
+                    </p>
+                    <button
+                      onClick={() => {
+                        publishPage();
+                      }}
+                      style={{
+                        maxWidth: '100px',
+                      }}
+                      className={styles.publishButton}
+                    >
+                      View Site
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </Modal>
         )}
+
         {lineData && lineData2 && pieData ? (
           <>
             <div className={styles.insightsOuterContainer}>
               <div className={styles.glanceContainer}>
                 <Header />
-                <Glance tab='insights' setShowPublishModal={setShowPublishModal} />
+                {type != 'public' && (
+                  <Glance tab='insights' setShowPublishModal={setShowPublishModal} />
+                )}
               </div>
 
               <div className={styles.insightsContainer}>

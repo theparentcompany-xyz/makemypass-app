@@ -110,10 +110,20 @@ privateGateway.interceptors.response.use(
     e).If the statusCode is not 1000, it resolves the Promise with the original WebSocket.
 */
 
-export const connectPrivateSocket = ({ url }: { url: string }): Promise<WebSocket> => {
+export const connectPrivateSocket = ({
+  url,
+  type,
+}: {
+  url: string;
+  type: string;
+}): Promise<WebSocket> => {
   const baseURL = (import.meta.env.VITE_WEBSOCKET_URL as string) + 'makemypass/';
 
-  let wsUrl = `${baseURL}${url}?Authorization=Bearer ${localStorage.getItem('accessToken')}&timezone=${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
+  let wsUrl = '';
+  if (type === 'public')
+    wsUrl = `${baseURL}${url}?timezone=${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
+  else
+    wsUrl = `${baseURL}${url}?Authorization=Bearer ${localStorage.getItem('accessToken')}&timezone=${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
 
   return new Promise((resolve) => {
     const ws = new WebSocket(wsUrl);

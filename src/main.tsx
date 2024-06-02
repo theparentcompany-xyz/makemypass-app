@@ -67,6 +67,10 @@ const routes = [
     element: <ProfilePage />,
   },
   {
+    path: '/:eventTitle/public/insights',
+    element: <Insights type='public' />,
+  },
+  {
     path: '/',
     element: <AuthCheck />,
     children: [

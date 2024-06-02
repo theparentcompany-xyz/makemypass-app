@@ -14,7 +14,7 @@ const Glance = ({
   setShowPublishModal,
 }: {
   tab: string;
-  setShowPublishModal: Dispatch<SetStateAction<boolean>>;
+  setShowPublishModal?: Dispatch<SetStateAction<boolean>>;
 }) => {
   const eventData = JSON.parse(sessionStorage.getItem('eventData')!);
 
@@ -175,7 +175,7 @@ const Glance = ({
               <SecondaryButton
                 buttonText='Share'
                 onClick={() => {
-                  setShowPublishModal(true);
+                  if (setShowPublishModal) setShowPublishModal(true);
                 }}
               />
             )}
