@@ -20,6 +20,8 @@ import { ChartData, AnalyticsData } from './types';
 import Theme from '../../../components/Theme/Theme';
 import Glance from '../../../components/Glance/Glance';
 import Header from '../../../components/EventHeader/EventHeader';
+import Modal from '../../../components/Modal/Modal';
+import { MdOutlinePublishedWithChanges } from 'react-icons/md';
 
 ChartJS.register(
   CategoryScale,
@@ -47,6 +49,9 @@ const Insights = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
+
+  const [showPublishModal, setShowPublishModal] = useState(false);
+  const [isPublished, setIsPublished] = useState(false);
 
   const options = {
     responsive: true,
@@ -150,12 +155,32 @@ const Insights = () => {
   return (
     <Theme>
       <>
+        {showPublishModal && (
+          <Modal
+            onClose={() => {
+              setShowPublishModal(false);
+            }}
+          >
+            <div className={styles.publicEventModal}>
+              <div className={styles.modalHeader}>
+                <p className={styles.modalHeaderText}>Publish</p>
+              </div>
+              <div>
+                <div className={styles.sectionContent}>
+                  <MdOutlinePublishedWithChanges size={25} color='white' />
+                  <p className={styles.sectionText}>Publish a static website for this event</p>
+                </div>
+              </div>
+              <button className={styles.publishButton}>Publish</button>
+            </div>
+          </Modal>
+        )}
         {lineData && lineData2 && pieData ? (
           <>
             <div className={styles.insightsOuterContainer}>
               <div className={styles.glanceContainer}>
                 <Header />
-                <Glance tab='insights' />
+                <Glance tab='insights' setShowPublishModal={setShowPublishModal} />
               </div>
 
               <div className={styles.insightsContainer}>
