@@ -35,6 +35,14 @@ const Login = () => {
       password: '',
       otp: '',
     });
+    if (isPassword && !passwordRef.current?.value) {
+      setError({
+        email: '',
+        password: 'Password is required',
+        otp: '',
+      });
+      return;
+    }
     if (isRegistered) {
       if (isPassword && emailRef.current?.value && passwordRef.current?.value)
         login(

@@ -49,8 +49,10 @@ export const login = async (
         email: error.response.data.message.email ? error.response.data.message.email : undefined,
         password: error.response.data.message.password
           ? error.response.data.message.password
-          : undefined,
-        otp: error.response.data.message.otp ? error.response.data.message.otp : undefined,
+          : error.response.data.message.general[0],
+        otp: error.response.data.message.otp
+          ? error.response.data.message.otp
+          : error.response.data.message.general[0],
       });
       if (error.response.data.statusCode === 1001) {
         setIsRegistered && setIsRegistered(false);
