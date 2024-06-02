@@ -218,25 +218,45 @@ const CouponForm = ({
                         .length > 0;
 
                     if (ticketAlreadyThere) {
-                      setTickets(
-                        tickets.map((ticket) => ({
-                          ...ticket,
-                          my_ticket: ticket.ticket_id === ticketInfo[ticketType].id ? true : false,
-                        })),
-                      );
+                      if (eventData?.is_grouped_ticket)
+                        setTickets(
+                          tickets.map((ticket) => ({
+                            ...ticket,
+                            my_ticket:
+                              ticket.ticket_id === ticketInfo[ticketType].id ? true : false,
+                          })),
+                        );
+                      else
+                        setTickets([
+                          {
+                            ticket_id: ticketInfo[ticketType].id,
+                            count: 1,
+                            my_ticket: true,
+                          },
+                        ]);
                     } else {
-                      const updatedTickets = tickets.map((ticket) => ({
-                        ...ticket,
-                        my_ticket: false,
-                      }));
+                      if (eventData?.is_grouped_ticket) {
+                        const updatedTickets = tickets.map((ticket) => ({
+                          ...ticket,
+                          my_ticket: false,
+                        }));
 
-                      updatedTickets.push({
-                        ticket_id: ticketInfo[ticketType].id,
-                        count: 1,
-                        my_ticket: true,
-                      });
+                        updatedTickets.push({
+                          ticket_id: ticketInfo[ticketType].id,
+                          count: 1,
+                          my_ticket: true,
+                        });
 
-                      setTickets(updatedTickets);
+                        setTickets(updatedTickets);
+                      } else {
+                        setTickets([
+                          {
+                            ticket_id: ticketInfo[ticketType].id,
+                            count: 1,
+                            my_ticket: true,
+                          },
+                        ]);
+                      }
                     }
 
                     if (
