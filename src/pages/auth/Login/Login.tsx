@@ -25,6 +25,8 @@ const Login = () => {
 
   const [isRegistered, setIsRegistered] = useState(true);
 
+  const [timer, setTimer] = useState(120);
+
   const [error, setError] = useState<errorType>();
 
   const ruri = window.location.href.split('=')[1];
@@ -78,6 +80,23 @@ const Login = () => {
         );
     }
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prevTimer) => prevTimer - 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (timer === 0) {
+      setTimer(120);
+      setIsOtpSent(false);
+    }
+  }, [timer]);
 
   useEffect(() => {
     if (localStorage.getItem('accessToken')) setIsAuthenticated(true);
@@ -134,6 +153,10 @@ const Login = () => {
                   id='email'
                   placeholder='Enter your Email*'
                   icon={<GoPerson color='#A4A4A4' />}
+                  onChange={() => {
+                    setTimer(120);
+                    setIsOtpSent(false);
+                  }}
                 />
                 {error && error.email && <p className={styles.alertMessage}>{error.email}</p>}
 
@@ -211,6 +234,8 @@ const Login = () => {
                     style={{
                       minHeight: '2.3rem',
                       width: 'fit-content',
+                      display: 'flex',
+                      whiteSpace: 'nowrap',
                     }}
                     onClick={() => {
                       if (emailRef.current?.value === '' || emailRef.current?.value === undefined) {
@@ -230,8 +255,9 @@ const Login = () => {
                         );
                       else preRegister(emailRef.current?.value, setIsOtpSent);
                     }}
+                    disabled={timer > 0} // Disable button when timer is still running
                   >
-                    Resend
+                    {timer > 0 ? `Resend (${timer}s)` : 'Resend'}
                   </button>
                 )}
                 <motion.button
