@@ -84,7 +84,8 @@ export type FormFieldType = {
 export interface TicketType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [x: string]: any;
-  description: ReactNode;
+  description: string;
+  approval_required: boolean;
   id: string;
   price: number;
   show_price?: number;
