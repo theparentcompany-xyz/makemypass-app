@@ -67,12 +67,13 @@ export const setUserData = async ({ formData, token, setLoading }: { formData: F
     })
     .then(() => {
       toast.success('Profile Updated Successfully');
-      setLoading && setLoading(false);
     })
     .catch((error) => {
       toast.error(error?.response?.data?.message.general[0] || 'Error in Updating Profile');
+    })
+    .finally(() => {
       setLoading && setLoading(false);
-    });
+    })
 };
 
 
