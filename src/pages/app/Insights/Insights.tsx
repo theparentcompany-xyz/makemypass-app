@@ -462,15 +462,17 @@ const Insights = ({ type }: { type?: string }) => {
                           <div>
                             <p className={styles.total}>Page Visits</p>
                             <p className={styles.count}>
-                              {message?.page_visit.total ? message?.page_visit.total : '-'}{' '}
+                              {message?.page_visit.register_page.total
+                                ? message?.page_visit.register_page.total
+                                : '-'}{' '}
                               <span>Visits</span>
                             </p>
                           </div>
                           <div>
                             <p className={styles.total}>Unique Visits</p>
                             <p className={styles.count}>
-                              {message?.page_visit.total_unique
-                                ? message?.page_visit.total_unique
+                              {message?.page_visit.register_page.total_unique
+                                ? message?.page_visit.register_page.total_unique
                                 : '-'}{' '}
                               <span>Visits</span>
                             </p>
@@ -483,8 +485,8 @@ const Insights = ({ type }: { type?: string }) => {
                           <p className={styles.week}>Yesterday</p>
                           <p className={styles.wcount}>
                             {' '}
-                            {message?.page_visit.yesterday
-                              ? message?.page_visit.yesterday
+                            {message?.page_visit.register_page.yesterday
+                              ? message?.page_visit.register_page.yesterday
                               : '-'}{' '}
                           </p>
                         </div>
@@ -492,8 +494,8 @@ const Insights = ({ type }: { type?: string }) => {
                           <p className={styles.week}>This week</p>
                           <p className={styles.wcount}>
                             {' '}
-                            {message?.page_visit.this_week
-                              ? message?.page_visit.this_week
+                            {message?.page_visit.register_page.this_week
+                              ? message?.page_visit.register_page.this_week
                               : '-'}{' '}
                           </p>
                         </div>
@@ -502,9 +504,11 @@ const Insights = ({ type }: { type?: string }) => {
                         <p className={styles.live}>Conversion Rate Vs Page Visit</p>
                         <p className={styles.lcount}>
                           {' '}
-                          {message?.page_visit.conversion_rate_vs_page_visit
-                            ? Math.round(message?.page_visit.conversion_rate_vs_page_visit * 100) /
-                              100
+                          {message?.page_visit.register_page.conversion_rate_vs_page_visit
+                            ? Math.round(
+                                message?.page_visit.register_page.conversion_rate_vs_page_visit *
+                                  100,
+                              ) / 100
                             : '-'}
                           %
                         </p>

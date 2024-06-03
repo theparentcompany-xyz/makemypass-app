@@ -41,11 +41,13 @@ export type AnalyticsData = {
     Afternoon: number;
   };
   page_visit: {
-    total: number | null;
-    yesterday: number | null;
-    this_week: number | null;
-    conversion_rate_vs_page_visit: number | null;
-    total_unique: number | null;
+    register_page: {
+      total: number | null;
+      yesterday: number | null;
+      this_week: number | null;
+      conversion_rate_vs_page_visit: number | null;
+      total_unique: number | null;
+    };
   };
   referral_analytics: {
     [key: string]: {
