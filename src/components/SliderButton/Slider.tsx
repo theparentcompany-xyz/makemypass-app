@@ -2,15 +2,30 @@ import styles from './Slider.module.css';
 
 type Props = {
   checked: boolean;
-  text: string;
+  text?: string;
   onChange: () => void;
+  labelStyle?: React.CSSProperties;
+  sliderStyle?: React.CSSProperties;
 };
 
-const Slider = ({ checked, onChange, text }: Props) => {
+const Slider = ({ checked, onChange, text, labelStyle, sliderStyle }: Props) => {
+  if (!text) {
+    return (
+      <label className={styles.switch} style={sliderStyle}>
+        <input type='checkbox' checked={checked} onChange={onChange} />
+        <span className={`${styles.slider} ${styles.round}`}></span>
+      </label>
+    );
+  }
+
   return (
     <div className={styles.container}>
-      <label className={styles.text}>{text}</label>
-      <label className={styles.switch}>
+      {text && (
+        <label className={styles.text} style={labelStyle}>
+          {text}
+        </label>
+      )}
+      <label className={styles.switch} style={sliderStyle}>
         <input type='checkbox' checked={checked} onChange={onChange} />
         <span className={`${styles.slider} ${styles.round}`}></span>
       </label>
