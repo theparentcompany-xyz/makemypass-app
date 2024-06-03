@@ -9,7 +9,7 @@
   background: #1b2725;
   padding: 1rem;
 
-  max-width: 26rem;
+  max-width: 20rem;
   margin-bottom: 1rem;
   position: fixed;
   z-index: 100;
@@ -24,7 +24,7 @@
   font-family: 'Inter', sans-serif;
   font-style: normal;
   color: white;
-
+  width: 100%;
   text-align: center;
 }
 
@@ -135,6 +135,14 @@
 @media (max-width: 720px) {
   /* Your CSS code for devices with width less than 720px goes here */
   .onClickModal {
+    width: 90%;
+  }
+}
+
+@media (max-width: 400px) {
+  /* Your CSS code for devices with width less than 720px goes here */
+  .onClickModal {
     margin: 1rem;
+    width: auto;
   }
 }

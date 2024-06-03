@@ -74,7 +74,7 @@ export type FormFieldType = {
     extension_types: string[];
     max_no_of_files: number;
   };
-  condition?: {
+  conditions?: {
     field: string;
     value: string;
     operator: string;
@@ -100,6 +100,11 @@ export interface TicketType {
     capacity: number;
     price: number;
     show_price?: number;
+  }[];
+  condition?: {
+    field: string;
+    value: string;
+    operator: string;
   }[];
 }
 
@@ -144,6 +149,12 @@ export interface EventType {
   is_multiple_checkin: boolean;
   approval_required: boolean;
   status: string;
+
+  speakers?: {
+    name: string;
+    image: string;
+    position: string;
+  }[];
 }
 
 export type EventDetails = {

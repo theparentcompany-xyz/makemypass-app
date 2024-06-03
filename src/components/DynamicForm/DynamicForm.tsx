@@ -14,6 +14,7 @@ import SelectDate from '../SelectDate/SelectDate';
 import { Tickets } from '../../pages/app/EventPage/types';
 import toast from 'react-hot-toast';
 import { findMinDate } from '../../common/commonFunctions';
+import { validateCondition } from './condition';
 const DynamicForm = ({
   formFields,
   formErrors,
@@ -91,85 +92,6 @@ const DynamicForm = ({
         );
     }
   }, [eventData]);
-
-  const validateCondition = (field: FormFieldType) => {
-    let valid = true;
-
-    if (field.condition) {
-      field.condition.forEach((condition) => {
-        const fieldName = formFields
-          .find((field) => field.id === condition.field)
-          ?.field_key.toLowerCase();
-
-        const fieldValue = fieldName ? formData[fieldName] : undefined;
-
-        if (condition.operator === 'empty' && !fieldValue) {
-          valid = true;
-        } else if (fieldValue) {
-          switch (condition.operator) {
-            case '=':
-              valid = fieldValue === condition.value;
-              break;
-            case '!=':
-              valid = fieldValue !== condition.value;
-              break;
-            case '>=':
-              valid = Number(fieldValue) >= Number(condition.value);
-              break;
-            case '>':
-              valid = Number(fieldValue) > Number(condition.value);
-              break;
-            case '<':
-              valid = Number(fieldValue) < Number(condition.value);
-              break;
-            case '<=':
-              valid = Number(fieldValue) <= Number(condition.value);
-              break;
-            case 'in':
-              if (Array.isArray(fieldValue)) {
-                valid = fieldValue?.includes(condition.value);
-              } else valid = condition.value?.includes(fieldValue);
-              break;
-            case 'not in':
-              if (Array.isArray(fieldValue)) {
-                valid = !fieldValue?.includes(condition.value);
-              } else valid = !condition.value?.includes(fieldValue);
-              break;
-            case 'empty':
-              valid = fieldValue === '';
-              break;
-            case 'not empty':
-              valid = fieldValue !== '';
-              break;
-            case 'contains':
-              if (typeof fieldValue === 'string' && typeof condition.value === 'string')
-                valid = fieldValue
-                  .toLocaleLowerCase()
-                  ?.includes(condition.value.toLocaleLowerCase());
-              break;
-            case 'not contains':
-              if (typeof fieldValue === 'string' && typeof condition.value === 'string')
-                valid = !fieldValue
-                  .toLocaleLowerCase()
-                  ?.includes(condition.value.toLocaleLowerCase());
-              break;
-            default:
-              valid = true;
-              break;
-          }
-        } else {
-          valid = false;
-        }
-
-        if (!valid) {
-          const currentField = field.field_key;
-          delete formData[currentField];
-        }
-      });
-    }
-
-    return valid;
-  };
 
   const handleAudioSubmit = (recordedBlob: Blob | null) => {
     if (recordedBlob && eventData?.id) {
@@ -375,7 +297,7 @@ const DynamicForm = ({
         {!showScanner &&
           formFields?.map((field: FormFieldType) => {
             const fieldTitle = field?.title + (field.required ? '*' : '');
-            if (!validateCondition(field) || field.hidden) return null;
+            if (!validateCondition(field, formData, formFields) || field.hidden) return null;
             if (field.type === 'text' || field.type === 'email' || field.type === 'phonenumber') {
               return (
                 <InputFIeld

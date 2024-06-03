@@ -129,8 +129,13 @@ const EditEvent = () => {
 
       changedData['place'] = 'null';
     }
-    editEvent(eventId, changedData, setFormErrors);
-    console.log(changedData);
+
+    const formData = new FormData();
+    for (const key in changedData) {
+      formData.append(key, changedData[key]);
+    }
+
+    editEvent({ eventId, eventData: formData, setFormErrors });
   };
 
   const agreeToDelete = () => {

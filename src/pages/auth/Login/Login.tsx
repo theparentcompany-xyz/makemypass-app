@@ -9,6 +9,7 @@ import InputFIeld from './InputFIeld';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TbAlertTriangleFilled } from 'react-icons/tb';
+import { errorType } from './types';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,22 +25,46 @@ const Login = () => {
 
   const [isRegistered, setIsRegistered] = useState(true);
 
+  const [timer, setTimer] = useState(120);
+
+  const [error, setError] = useState<errorType>();
+
   const ruri = window.location.href.split('=')[1];
 
   const handleSubmit = () => {
+    setError({
+      email: '',
+      password: '',
+      otp: '',
+    });
+    if (isPassword && !passwordRef.current?.value) {
+      setError({
+        email: '',
+        password: 'Password is required',
+        otp: '',
+      });
+      return;
+    }
     if (isRegistered) {
       if (isPassword && emailRef.current?.value && passwordRef.current?.value)
         login(
           emailRef.current?.value,
           passwordRef.current?.value,
           setIsAuthenticated,
+          setError,
           isOtpSent,
           setIsRegistered,
           passwordRef,
           setIsPassword,
         );
       else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
-        login(emailRef.current?.value, otpRef.current?.value, setIsAuthenticated, isOtpSent);
+        login(
+          emailRef.current?.value,
+          otpRef.current?.value,
+          setIsAuthenticated,
+          setError,
+          isOtpSent,
+        );
       else if (!isOtpSent && emailRef.current?.value)
         generateOTP(emailRef.current?.value, setIsOtpSent, setIsRegistered, 'Login');
     } else {
@@ -51,9 +76,27 @@ const Login = () => {
           setIsRegistered,
           setIsOtpSent,
           setIsAuthenticated,
+          setError,
         );
     }
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prevTimer) => prevTimer - 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (timer === 0) {
+      setTimer(120);
+      setIsOtpSent(false);
+    }
+  }, [timer]);
 
   useEffect(() => {
     if (localStorage.getItem('accessToken')) setIsAuthenticated(true);
@@ -110,28 +153,55 @@ const Login = () => {
                   id='email'
                   placeholder='Enter your Email*'
                   icon={<GoPerson color='#A4A4A4' />}
+                  onChange={() => {
+                    setTimer(120);
+                    setIsOtpSent(false);
+                  }}
                 />
+                {error && error.email && <p className={styles.alertMessage}>{error.email}</p>}
 
                 {isPassword && !isOtpSent && (
-                  <InputFIeld
-                    ref={passwordRef}
-                    type='password'
-                    name='password'
-                    id='password'
-                    placeholder='Enter your Password*'
-                    icon={<LuKey color='#A4A4A4' />}
-                  />
+                  <>
+                    <InputFIeld
+                      ref={passwordRef}
+                      type='password'
+                      name='password'
+                      id='password'
+                      placeholder='Enter your Password*'
+                      icon={<LuKey color='#A4A4A4' />}
+                      onChange={() =>
+                        setError({
+                          email: '',
+                          password: '',
+                          otp: '',
+                        })
+                      }
+                    />
+                    {error && error.password && (
+                      <p className={styles.alertMessage}>{error.password}</p>
+                    )}
+                  </>
                 )}
 
                 {isOtpSent && !isPassword && (
-                  <InputFIeld
-                    ref={otpRef}
-                    type='number'
-                    name='otp'
-                    id='otp'
-                    placeholder='Enter OTP*'
-                    icon={<LuKey color='#A4A4A4' />}
-                  />
+                  <>
+                    <InputFIeld
+                      ref={otpRef}
+                      type='number'
+                      name='otp'
+                      id='otp'
+                      placeholder='Enter OTP*'
+                      icon={<LuKey color='#A4A4A4' />}
+                      onChange={() =>
+                        setError({
+                          email: '',
+                          password: '',
+                          otp: '',
+                        })
+                      }
+                    />
+                    {error && error.otp && <p className={styles.alertMessage}>{error.otp}</p>}
+                  </>
                 )}
               </div>
 
@@ -158,6 +228,38 @@ const Login = () => {
                 >
                   Login with {isPassword ? 'OTP' : 'Password'}
                 </p>
+                {isOtpSent && (
+                  <button
+                    className={styles.submitButton}
+                    style={{
+                      minHeight: '2.3rem',
+                      width: 'fit-content',
+                      display: 'flex',
+                      whiteSpace: 'nowrap',
+                    }}
+                    onClick={() => {
+                      if (emailRef.current?.value === '' || emailRef.current?.value === undefined) {
+                        setError({
+                          email: 'Email is required',
+                          password: '',
+                          otp: '',
+                        });
+                        return;
+                      }
+                      if (isRegistered)
+                        generateOTP(
+                          emailRef.current?.value,
+                          setIsOtpSent,
+                          setIsRegistered,
+                          'Login',
+                        );
+                      else preRegister(emailRef.current?.value, setIsOtpSent);
+                    }}
+                    disabled={timer > 0} // Disable button when timer is still running
+                  >
+                    {timer > 0 ? `Resend (${timer}s)` : 'Resend'}
+                  </button>
+                )}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   onClick={handleSubmit}

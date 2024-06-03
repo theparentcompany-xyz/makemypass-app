@@ -12,7 +12,7 @@ import {
   ArcElement,
 } from 'chart.js';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
@@ -20,6 +20,15 @@ import { ChartData, AnalyticsData } from './types';
 import Theme from '../../../components/Theme/Theme';
 import Glance from '../../../components/Glance/Glance';
 import Header from '../../../components/EventHeader/EventHeader';
+import Modal from '../../../components/Modal/Modal';
+import { MdOutlinePublishedWithChanges } from 'react-icons/md';
+import { editEvent } from '../../../apis/events';
+import { IoCopyOutline } from 'react-icons/io5';
+import toast from 'react-hot-toast';
+import { getVisibility } from '../../../apis/insights';
+import { getEventInfo } from '../../../apis/publicpage';
+import { useParams } from 'react-router';
+import { EventType } from '../../../apis/types';
 
 ChartJS.register(
   CategoryScale,
@@ -36,7 +45,7 @@ ChartJS.register(
   ArcElement,
 );
 
-const Insights = () => {
+const Insights = ({ type }: { type?: string }) => {
   const [message, setMessage] = useState<AnalyticsData>();
 
   const [lineData, setLineData] = useState<ChartData>();
@@ -46,7 +55,16 @@ const Insights = () => {
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
-  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
+  const eventId = useRef<string>('');
+
+  if (sessionStorage.getItem('eventData'))
+    eventId.current = JSON.parse(sessionStorage.getItem('eventData')!)?.event_id;
+
+  const [eventData, setEventData] = useState<EventType>();
+  const { eventTitle } = useParams();
+
+  const [showPublishModal, setShowPublishModal] = useState(false);
+  const [isPublished, setIsPublished] = useState(false);
 
   const options = {
     responsive: true,
@@ -69,12 +87,28 @@ const Insights = () => {
     return () => {
       socket?.close();
     };
-  }, []);
+  });
 
   useEffect(() => {
+    if (type === 'public' && eventTitle) {
+      getEventInfo(eventTitle, setEventData);
+    }
+  }, [type, eventTitle]);
+
+  useEffect(() => {
+    if (eventData || eventId.current) {
+      if (eventData && eventData.id) getVisibility(eventData.id, setIsPublished);
+      else getVisibility(eventId.current, setIsPublished);
+    }
+  }, [eventData, type, eventId]);
+
+  useEffect(() => {
+    if (eventData && eventData.id) eventId.current = eventData.id;
+
     if (eventId)
       connectPrivateSocket({
-        url: makeMyPassSocket.analytics(eventId),
+        url: makeMyPassSocket.analytics(eventId.current),
+        type: type,
       }).then((ws) => {
         ws.onmessage = (event) => {
           const lineBarData = JSON.parse(event.data).response;
@@ -145,17 +179,115 @@ const Insights = () => {
 
         setSocket(ws);
       });
-  }, [eventId]);
+  }, [eventId, eventData]);
+
+  const publishPage = () => {
+    const eventData = new FormData();
+    eventData.append('is_public_insight', isPublished ? 'false' : 'true');
+    editEvent({ eventId: eventId.current, eventData, setIsPublished });
+  };
 
   return (
     <Theme>
       <>
+        {showPublishModal && (
+          <Modal
+            onClose={() => {
+              setShowPublishModal(false);
+            }}
+          >
+            <div className={styles.publicEventModal}>
+              <div className={styles.modalHeader}>
+                <p className={styles.modalHeaderText}>Publish</p>
+              </div>
+              {!isPublished ? (
+                <div>
+                  <div className={styles.sectionContent1}>
+                    <MdOutlinePublishedWithChanges size={25} color='white' />
+                    <p className={styles.sectionText}>Publish a static website for this event</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      publishPage();
+                    }}
+                    className={styles.publishButton}
+                  >
+                    Publish
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <div className={styles.sectionContent}>
+                    <div className={styles.publicLinkField}>
+                      <input
+                        className={styles.publicLink}
+                        value={`https://www.makemypass.com/event/kozhikodeexpo`}
+                        readOnly
+                      />
+                      <IoCopyOutline
+                        onClick={() => {
+                          navigator.clipboard.writeText(
+                            `https://www.makemypass.com/event/kozhikodeexpo`,
+                          );
+                          toast.success('Link copied to clipboard');
+                        }}
+                      />
+                    </div>
+                    <div className={styles.alert}>Live on the web</div>
+
+                    <div className={styles.publicLinkField}>
+                      <textarea
+                        rows={5}
+                        className={styles.publicLink}
+                        value={`<iframe src="https://www.example.com" width="600" height="400" frameborder="0" scrolling="no"></iframe>
+                        `}
+                        readOnly
+                      />
+                      <IoCopyOutline
+                        onClick={() => {
+                          navigator.clipboard.writeText(
+                            `https://www.makemypass.com/event/kozhikodeexpo`,
+                          );
+                          toast.success('Link copied to clipboard');
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.buttons}>
+                    <p
+                      onClick={() => {
+                        publishPage();
+                        setShowPublishModal(false);
+                      }}
+                    >
+                      Unpublish
+                    </p>
+                    <button
+                      onClick={() => {
+                        publishPage();
+                      }}
+                      style={{
+                        maxWidth: '100px',
+                      }}
+                      className={styles.publishButton}
+                    >
+                      View Site
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </Modal>
+        )}
+
         {lineData && lineData2 && pieData ? (
           <>
             <div className={styles.insightsOuterContainer}>
               <div className={styles.glanceContainer}>
                 <Header />
-                <Glance tab='insights' />
+                {type != 'public' && (
+                  <Glance tab='insights' setShowPublishModal={setShowPublishModal} />
+                )}
               </div>
 
               <div className={styles.insightsContainer}>

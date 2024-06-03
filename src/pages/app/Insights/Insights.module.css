@@ -332,3 +332,121 @@
   height: 70vh;
   margin-bottom: 3rem;
 }
+
+.publicEventModal {
+  width: 100%;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sectionContent,
+.sectionContent1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 1rem;
+
+  min-height: 4rem;
+}
+
+.sectionContent1 {
+  justify-content: center;
+  align-items: center;
+}
+
+.sectionText {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 1rem;
+}
+
+.publishButton {
+  background: #fdfdfd;
+  color: rgb(43, 42, 42);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 1rem;
+
+  width: 100%;
+}
+
+.publicLinkField {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.02);
+  padding-right: 1rem;
+}
+
+.publicLink {
+  flex-grow: 1;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-weight: 400;
+  line-height: 1.5;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  resize: none;
+}
+
+.publicLink:focus {
+  outline: none;
+}
+
+.IoCopyOutline {
+  color: white;
+  cursor: pointer;
+}
+
+.gif {
+  width: 3.5rem;
+  filter: grayscale(100%);
+  color: #2383e2;
+}
+
+.alert {
+  font-size: 0.8rem;
+  margin-top: 0.75rem;
+  text-align: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #3b93eb;
+  padding-left: 0.5rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.buttons p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 0.75rem;
+}

@@ -57,7 +57,7 @@ export const getEventId = async (
                 navigate(`/${eventName.toLowerCase()}/spinwheel/`);
               }
 
-              // localStorage.setItem('eventData', JSON.stringify(eventData));
+              console.log(eventData);
               sessionStorage.setItem('eventData', JSON.stringify(eventData));
             })
             .catch((error) => {
@@ -165,7 +165,17 @@ export const getEvent = (
     });
 };
 
-export const editEvent = (eventId: string, eventData: object,setFormErrors?:Dispatch<React.SetStateAction<ErrorMessages>>) => {
+export const editEvent = ({
+  eventId,
+  eventData,
+  setIsPublished,
+  setFormErrors,
+}: {
+  eventId: string;
+  eventData: FormData;
+  setIsPublished?: Dispatch<boolean>;
+  setFormErrors?: Dispatch<ErrorMessages>;
+}) => {
   privateGateway
     .patch(makeMyPass.editEvent(eventId), eventData, {
       headers: {
@@ -174,13 +184,15 @@ export const editEvent = (eventId: string, eventData: object,setFormErrors?:Disp
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Event Updated Successfully');
-      setTimeout(() => {
-        window.location.href = `/${response.data.response.name}/manage`;
-      }, 1000);
+      // setTimeout(() => {
+      //   window.location.href = `/${response.data.response.name}/manage`;
+      // }, 1000);
+      setIsPublished && setIsPublished(eventData.get('is_public_insight') === 'true');
     })
     .catch((error) => {
-        setFormErrors && setFormErrors(error.response.data.message);
-        toast.error(error?.response?.data?.message?.general[0] || 'Unable to process the request');
+      setIsPublished && setIsPublished(false);
+      setFormErrors && setFormErrors(error.response.data.message);
+      toast.error(error?.response?.data?.message?.general[0] || 'Unable to process the request');
     });
 };
 
@@ -195,7 +207,7 @@ export const deleteEvent = (eventId: string) => {
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-    }); 
+    });
 };
 
 export const duplicateEvent = async (eventId: string) => {

@@ -31,7 +31,11 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
               alt='banner image depecting event information'
             />
           )}
-          <div>
+          <div
+            style={{
+              width: '100%',
+            }}
+          >
             <p className={styles.eventTitle}>{eventData?.title}</p>
             {eventData?.hosts && eventData?.hosts.length > 0 && (
               <div className={styles.hostedBy}>
@@ -184,6 +188,33 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
           </div>
         )}
       </div>
+
+      {eventData?.speakers && eventData?.speakers.length > 0 && (
+        <div className={styles.row1}>
+          <div className={styles.speakersContainer}>
+            <p className={styles.speakersHeading}>Our Speakers</p>
+            <div className={styles.speakersListing}>
+              {eventData.speakers.map((speaker) => {
+                return (
+                  <div className={styles.speakerContainer}>
+                    {speaker.image && (
+                      <img
+                        src={speaker.image}
+                        alt='speaker profile'
+                        className={styles.speakerProfilePic}
+                      />
+                    )}
+                    <div className={styles.speakerInfo}>
+                      <p className={styles.speakerName}>{speaker.name}</p>
+                      <p className={styles.speakerPosition}>{speaker.position}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

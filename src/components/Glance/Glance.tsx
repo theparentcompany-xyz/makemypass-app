@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styles from './Glance.module.css';
 import { connectPrivateSocket } from '../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../services/urls';
@@ -7,8 +7,15 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { formatDate } from '../../common/commonFunctions';
 
 import PoppingText from './components/PoppingText';
+import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 
-const Glance = ({ tab }: { tab: string }) => {
+const Glance = ({
+  tab,
+  setShowPublishModal,
+}: {
+  tab: string;
+  setShowPublishModal?: Dispatch<SetStateAction<boolean>>;
+}) => {
   const eventData = JSON.parse(sessionStorage.getItem('eventData')!);
 
   type progressDataType = {
@@ -164,6 +171,14 @@ const Glance = ({ tab }: { tab: string }) => {
                 </>
               )}
             </ol>
+            {tab === 'insights' && (
+              <SecondaryButton
+                buttonText='Share'
+                onClick={() => {
+                  if (setShowPublishModal) setShowPublishModal(true);
+                }}
+              />
+            )}
           </div>
         </div>
       )}

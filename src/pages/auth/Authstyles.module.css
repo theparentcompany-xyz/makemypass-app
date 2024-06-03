@@ -107,7 +107,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  column-gap: 1rem;
+  column-gap: 0.5rem;
 }
 
 .formFooter p {
@@ -129,7 +129,7 @@
   font-family: 'Inter', sans-serif;
   background: rgba(255, 255, 255, 0.08);
 
-  width: 9rem;
+  width: 8rem;
 
   float: right;
 }
