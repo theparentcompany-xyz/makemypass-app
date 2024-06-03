@@ -19,7 +19,7 @@ import toast from 'react-hot-toast';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
-  const [noTickets, setNoTickets] = useState<boolean>(true);
+  const [noTickets, setNoTickets] = useState<boolean>(false);
 
   const [tickets, setTickets] = useState<Tickets[]>([]);
 
