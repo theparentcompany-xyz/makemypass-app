@@ -31,7 +31,11 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
               alt='banner image depecting event information'
             />
           )}
-          <div>
+          <div
+            style={{
+              width: '100%',
+            }}
+          >
             <p className={styles.eventTitle}>{eventData?.title}</p>
             {eventData?.hosts && eventData?.hosts.length > 0 && (
               <div className={styles.hostedBy}>
