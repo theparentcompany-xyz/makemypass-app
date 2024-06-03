@@ -21,7 +21,7 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData') || '');
   const [ticketData, setTicketData] = useState<TicketOptions>();
   const [tickets, setTickets] = useState<TicketType[]>([]);
-  const [selectedTicket, setSelectedTicket] = useState<TicketType | null>(null);
+  const [selectedTicket, setSelectedTicket] = useState<TicketType>();
   const [isOpen, setIsOpen] = useState(false);
   const [settingNewTicket, setSettingNewTicket] = useState(false);
   const onNewTicket = () => {
@@ -44,6 +44,9 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
       platform_fee_from_user: false,
       currency: '',
       entry_date: [],
+      code_prefix: '',
+      code_digits: 0,
+      maintain_code_order: false,
     };
     setTickets((prevTickets) => [newTicket, ...prevTickets]);
   };
@@ -114,23 +117,34 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
             <label className={styles.optionLabel}>No of digits</label>
             <input
               className={styles.optionInput}
-              placeholder='Eg, PS123'
-              value={selectedTicket?.code_prefix}
+              placeholder=''
+              value={selectedTicket?.code_digits}
               onChange={(e) =>
-                setSelectedTicket({ ...selectedTicket, code_prefix: e.target.value } as TicketType)
+                setSelectedTicket({
+                  ...selectedTicket,
+                  code_digits: Number(e.target.value),
+                } as TicketType)
               }
             />
           </div>
           <div className={styles.modalTicketOption}>
             <div className={styles.modalTicketSliderLabel}>
-              <p className={styles.ticketSliderLabel}>Require Approval</p>
+              <p className={styles.ticketSliderLabel}>Maintain Order</p>
               <p className={styles.ticketSliderSubLabel}>The tickets will be generated in order</p>
             </div>
 
-            <Slider checked={true} onChange={() => {}} />
+            <Slider
+              checked={selectedTicket?.maintain_code_order as boolean}
+              onChange={() => {
+                setSelectedTicket({
+                  ...selectedTicket,
+                  maintain_code_order: !selectedTicket?.maintain_code_order,
+                } as TicketType);
+              }}
+            />
           </div>
           <button className={styles.cancelButton} onClick={() => setIsOpen(false)}>
-            Cancel
+            Back
           </button>
         </Modal>
       )}
