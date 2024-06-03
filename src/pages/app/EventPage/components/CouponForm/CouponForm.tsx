@@ -58,6 +58,8 @@ const CouponForm = ({
 
   useEffect(() => {
     if (eventData) handleDateChange(findMinDate(eventData));
+
+    setNoTickets(true);
   }, [eventData]);
 
   return (
@@ -164,12 +166,12 @@ const CouponForm = ({
             validateCondition(ticketInfo[ticketType], formData, eventData?.form)
           ) {
             setNoTickets(false);
-            if (index === 0) {
-              setTickets([
-                { ticket_id: eventData?.tickets[ticketType].id, count: 1, my_ticket: true },
-              ]);
-              setAmount(eventData?.tickets[ticketType].price.toString());
-            }
+
+            setTickets([
+              { ticket_id: eventData?.tickets[ticketType].id, count: 1, my_ticket: true },
+            ]);
+            setAmount(eventData?.tickets[ticketType].price.toString());
+
             return (
               <div
                 key={ticketType}

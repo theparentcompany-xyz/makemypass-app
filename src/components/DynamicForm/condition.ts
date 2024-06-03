@@ -21,52 +21,52 @@ export const validateCondition = (
         } else if (fieldValue) {
           switch (condition.operator) {
             case '=':
-              valid = fieldValue === condition.value;
+              valid = valid && fieldValue === condition.value;
               break;
             case '!=':
-              valid = fieldValue !== condition.value;
+              valid = valid && fieldValue !== condition.value;
               break;
             case '>=':
-              valid = Number(fieldValue) >= Number(condition.value);
+              valid = valid && Number(fieldValue) >= Number(condition.value);
               break;
             case '>':
-              valid = Number(fieldValue) > Number(condition.value);
+              valid = valid && Number(fieldValue) > Number(condition.value);
               break;
             case '<':
-              valid = Number(fieldValue) < Number(condition.value);
+              valid = valid && Number(fieldValue) < Number(condition.value);
               break;
             case '<=':
-              valid = Number(fieldValue) <= Number(condition.value);
+              valid = valid && Number(fieldValue) <= Number(condition.value);
               break;
             case 'in':
               if (typeof condition.value === 'string')
                 if (Array.isArray(fieldValue)) {
                   valid = fieldValue?.includes(condition.value);
-                } else valid = condition.value?.includes(fieldValue);
+                } else valid = valid && condition.value?.includes(fieldValue);
               break;
             case 'not in':
               if (typeof condition.value === 'string')
                 if (Array.isArray(fieldValue)) {
-                  valid = !fieldValue?.includes(condition.value);
-                } else valid = !condition.value?.includes(fieldValue);
+                  valid = valid && !fieldValue?.includes(condition.value);
+                } else valid = valid && !condition.value?.includes(fieldValue);
               break;
             case 'empty':
-              valid = fieldValue === '';
+              valid = valid && fieldValue === '';
               break;
             case 'not empty':
-              valid = fieldValue !== '';
+              valid = valid && fieldValue !== '';
               break;
             case 'contains':
               if (typeof fieldValue === 'string' && typeof condition.value === 'string')
-                valid = fieldValue
-                  .toLocaleLowerCase()
-                  ?.includes(condition.value.toLocaleLowerCase());
+                valid =
+                  valid &&
+                  fieldValue.toLocaleLowerCase()?.includes(condition.value.toLocaleLowerCase());
               break;
             case 'not contains':
               if (typeof fieldValue === 'string' && typeof condition.value === 'string')
-                valid = !fieldValue
-                  .toLocaleLowerCase()
-                  ?.includes(condition.value.toLocaleLowerCase());
+                valid =
+                  valid &&
+                  !fieldValue.toLocaleLowerCase()?.includes(condition.value.toLocaleLowerCase());
               break;
             default:
               valid = true;
