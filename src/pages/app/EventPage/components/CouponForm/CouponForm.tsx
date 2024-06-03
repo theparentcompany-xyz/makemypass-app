@@ -155,7 +155,7 @@ const CouponForm = ({
           <p className={styles.eventDescription}>Select a ticket type to register for the event.</p>
         </div>
 
-        {Object.keys(ticketInfo)?.map((ticketType, index) => {
+        {Object.keys(ticketInfo)?.map((ticketType) => {
           const hasCapacity = ticketInfo[ticketType].entry_date.find(
             (entry) => entry.date === selectedDate,
           )?.capacity;
