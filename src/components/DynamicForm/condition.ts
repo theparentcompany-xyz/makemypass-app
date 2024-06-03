@@ -14,12 +14,7 @@ export const validateCondition = (
           .find((field) => field.id === condition.field)
           ?.field_key.toLowerCase();
 
-        console.log('fieldName', fieldName);
-
         const fieldValue = fieldName ? formData[fieldName] : undefined;
-
-        console.log('fieldValue', fieldValue);
-        console.log('condition', fieldValue === condition.value);
 
         if (condition.operator === 'empty' && !fieldValue) {
           valid = true;

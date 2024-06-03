@@ -12,7 +12,7 @@ import {
   ArcElement,
 } from 'chart.js';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
@@ -26,6 +26,9 @@ import { editEvent } from '../../../apis/events';
 import { IoCopyOutline } from 'react-icons/io5';
 import toast from 'react-hot-toast';
 import { getVisibility } from '../../../apis/insights';
+import { getEventInfo } from '../../../apis/publicpage';
+import { useParams } from 'react-router';
+import { EventType } from '../../../apis/types';
 
 ChartJS.register(
   CategoryScale,
@@ -52,7 +55,13 @@ const Insights = ({ type }: { type?: string }) => {
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
-  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
+  const eventId = useRef<string>('');
+
+  if (sessionStorage.getItem('eventData'))
+    eventId.current = JSON.parse(sessionStorage.getItem('eventData')!)?.event_id;
+
+  const [eventData, setEventData] = useState<EventType>();
+  const { eventTitle } = useParams();
 
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [isPublished, setIsPublished] = useState(false);
@@ -78,16 +87,27 @@ const Insights = ({ type }: { type?: string }) => {
     return () => {
       socket?.close();
     };
-  }, []);
+  });
 
   useEffect(() => {
-    if (!type) getVisibility(eventId, setIsPublished);
-  }, [eventId, type]);
+    if (type === 'public' && eventTitle) {
+      getEventInfo(eventTitle, setEventData);
+    }
+  }, [type, eventTitle]);
 
   useEffect(() => {
+    if (eventData || eventId.current) {
+      if (eventData && eventData.id) getVisibility(eventData.id, setIsPublished);
+      else getVisibility(eventId.current, setIsPublished);
+    }
+  }, [eventData, type, eventId]);
+
+  useEffect(() => {
+    if (eventData && eventData.id) eventId.current = eventData.id;
+
     if (eventId)
       connectPrivateSocket({
-        url: makeMyPassSocket.analytics(eventId),
+        url: makeMyPassSocket.analytics(eventId.current),
         type: type,
       }).then((ws) => {
         ws.onmessage = (event) => {
@@ -159,12 +179,12 @@ const Insights = ({ type }: { type?: string }) => {
 
         setSocket(ws);
       });
-  }, [eventId]);
+  }, [eventId, eventData]);
 
   const publishPage = () => {
     const eventData = new FormData();
     eventData.append('is_public_insight', isPublished ? 'false' : 'true');
-    editEvent({ eventId, eventData, setIsPublished });
+    editEvent({ eventId: eventId.current, eventData, setIsPublished });
   };
 
   return (

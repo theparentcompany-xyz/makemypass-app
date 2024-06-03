@@ -51,8 +51,8 @@ const FormBuilder = () => {
 
     const fields = formFields.reduce((acc: { value: string; label: string }[], field) => {
       if (
-        currentField.condition.length >= 0 &&
-        (!currentField.condition.find((condition) => condition.field === field.id) || fieldId)
+        currentField.conditions.length >= 0 &&
+        (!currentField.conditions.find((condition) => condition.field === field.id) || fieldId)
       )
         if (field.id !== currentField.id && !hasPassed) {
           acc.push({
@@ -317,13 +317,13 @@ const FormBuilder = () => {
                           }}
                         >
                           <Slider
-                            checked={formFields[Number(field)].condition.length > 0}
+                            checked={formFields[Number(field)].conditions.length > 0}
                             text={''}
                             onChange={() => {
                               updateFormFieldValue(
                                 formFields[Number(field)],
                                 'condition',
-                                formFields[Number(field)].condition.length > 0
+                                formFields[Number(field)].conditions.length > 0
                                   ? []
                                   : [
                                       {
@@ -341,9 +341,9 @@ const FormBuilder = () => {
                         </div>
                       )}
 
-                      {formFields[Number(field)].condition.length > 0 && (
+                      {formFields[Number(field)].conditions.length > 0 && (
                         <div className={styles.conditions}>
-                          {formFields[Number(field)].condition.map((condition) => (
+                          {formFields[Number(field)].conditions.map((condition) => (
                             <div className={styles.conditionRow}>
                               <p className={styles.when}>When</p>
                               <div className={styles.conditionsSelect}>
@@ -357,7 +357,7 @@ const FormBuilder = () => {
                                     updateFormFieldValue(
                                       formFields[Number(field)],
                                       'condition',
-                                      formFields[Number(field)].condition.map((cond) => {
+                                      formFields[Number(field)].conditions.map((cond) => {
                                         if (cond.field === condition.field) {
                                           return {
                                             ...cond,
@@ -381,7 +381,7 @@ const FormBuilder = () => {
                                     updateFormFieldValue(
                                       formFields[Number(field)],
                                       'condition',
-                                      formFields[Number(field)].condition.map((cond) => {
+                                      formFields[Number(field)].conditions.map((cond) => {
                                         if (cond.field === condition.field) {
                                           return {
                                             ...cond,
@@ -401,7 +401,7 @@ const FormBuilder = () => {
                                     updateFormFieldValue(
                                       formFields[Number(field)],
                                       'condition',
-                                      formFields[Number(field)].condition.map((cond) => {
+                                      formFields[Number(field)].conditions.map((cond) => {
                                         if (cond.field === condition.field) {
                                           return {
                                             ...cond,
@@ -421,7 +421,7 @@ const FormBuilder = () => {
                                     updateFormFieldValue(
                                       formFields[Number(field)],
                                       'condition',
-                                      formFields[Number(field)].condition.filter(
+                                      formFields[Number(field)].conditions.filter(
                                         (cond) => cond.field !== condition.field,
                                       ),
                                     );
@@ -447,7 +447,7 @@ const FormBuilder = () => {
                                     color='#606264'
                                     onClick={() => {
                                       updateFormFieldValue(formFields[Number(field)], 'condition', [
-                                        ...formFields[Number(field)].condition,
+                                        ...formFields[Number(field)].conditions,
                                         {
                                           field: '',
                                           operator: '',
