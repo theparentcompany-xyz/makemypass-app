@@ -171,7 +171,7 @@ const Glance = ({
                 </>
               )}
             </ol>
-            {tab === 'insights' && (
+            {tab === 'insights' && import.meta.env.VITE_CURRENT_ENV === 'dev' && (
               <SecondaryButton
                 buttonText='Share'
                 onClick={() => {
