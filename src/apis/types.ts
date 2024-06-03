@@ -149,6 +149,12 @@ export interface EventType {
   is_multiple_checkin: boolean;
   approval_required: boolean;
   status: string;
+
+  speakers?: {
+    name: string;
+    image: string;
+    position: string;
+  }[];
 }
 
 export type EventDetails = {

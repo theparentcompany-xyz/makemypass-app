@@ -188,6 +188,33 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
           </div>
         )}
       </div>
+
+      <div className={styles.row1}>
+        <div className={styles.speakersContainer}>
+          <p className={styles.speakersHeading}>Our Speakers</p>
+          <div className={styles.speakersListing}>
+            {eventData?.speakers &&
+              eventData?.speakers.length > 0 &&
+              eventData.speakers.map((speaker) => {
+                return (
+                  <div className={styles.speakerContainer}>
+                    {speaker.image && (
+                      <img
+                        src={speaker.image}
+                        alt='speaker profile'
+                        className={styles.speakerProfilePic}
+                      />
+                    )}
+                    <div className={styles.speakerInfo}>
+                      <p className={styles.speakerName}>{speaker.name}</p>
+                      <p className={styles.speakerPosition}>{speaker.position}</p>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
