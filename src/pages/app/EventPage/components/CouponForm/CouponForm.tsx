@@ -153,7 +153,7 @@ const CouponForm = ({
           <p className={styles.eventDescription}>Select a ticket type to register for the event.</p>
         </div>
 
-        {Object.keys(ticketInfo)?.map((ticketType) => {
+        {Object.keys(ticketInfo)?.map((ticketType, index) => {
           const hasCapacity = ticketInfo[ticketType].entry_date.find(
             (entry) => entry.date === selectedDate,
           )?.capacity;
@@ -164,6 +164,12 @@ const CouponForm = ({
             validateCondition(ticketInfo[ticketType], formData, eventData?.form)
           ) {
             setNoTickets(false);
+            if (index === 0) {
+              setTickets([
+                { ticket_id: eventData?.tickets[ticketType].id, count: 1, my_ticket: true },
+              ]);
+              setAmount(eventData?.tickets[ticketType].price.toString());
+            }
             return (
               <div
                 key={ticketType}
