@@ -7,7 +7,7 @@ export interface Field {
   options: string[];
   property: object;
   required: boolean;
-  condition: {
+  conditions: {
     field: string;
     operator: string;
     value: string;

@@ -1,5 +1,5 @@
 import toast from 'react-hot-toast';
-import { privateGateway, publicGateway } from '../../services/apiGateway';
+import { publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Dispatch, SetStateAction } from 'react';
 
