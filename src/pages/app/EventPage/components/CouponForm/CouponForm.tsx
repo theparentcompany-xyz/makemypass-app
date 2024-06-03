@@ -158,14 +158,16 @@ const CouponForm = ({
             (entry) => entry.date === selectedDate,
           )?.capacity;
 
-          return (
+          if (
             ((hasCapacity && hasCapacity > 0) || !hasCapacity) &&
             eventData &&
-            validateCondition(ticketInfo[ticketType], formData, eventData?.form) && (
+            validateCondition(ticketInfo[ticketType], formData, eventData?.form)
+          ) {
+            setNoTickets(false);
+            return (
               <div
                 key={ticketType}
                 onClick={() => {
-                  setNoTickets(false);
                   if (eventData?.select_multi_ticket) {
                     let newTicketIds = []; //temporary variable to store new ticket ids for amount updation
 
@@ -462,8 +464,8 @@ const CouponForm = ({
 
                 <p className={styles.cardText}>{eventData?.title?.toUpperCase()}</p>
               </div>
-            )
-          );
+            );
+          }
         })}
       </motion.div>
     </>
