@@ -3,6 +3,7 @@ import Theme from '../../../components/Theme/Theme';
 import styles from './EventGlance.module.css';
 import Glance from '../../../components/Glance/Glance';
 import { IoLocationOutline } from 'react-icons/io5';
+import { ImTicket } from 'react-icons/im';
 import { HiUserGroup } from 'react-icons/hi2';
 import { FaWrench } from 'react-icons/fa6';
 import { BsQrCodeScan } from 'react-icons/bs';
@@ -18,6 +19,7 @@ import { getEvent } from '../../../apis/events';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import EventHeader from '../../../components/EventHeader/EventHeader';
+import ManageTickets from './components/ManageTickets/ManageTickets';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -37,6 +39,7 @@ const EventGlance = () => {
     { value: 'Not Going', label: 'Not Going' },
   ];
   const [selectedMulti, setSelectedMulti] = useState<MultiValue<{ value: string }>>([]);
+  const [isTicketsOpen, setIsTicketsOpen] = useState(false);
 
   return (
     <>
@@ -46,6 +49,12 @@ const EventGlance = () => {
             <EventHeader />
             <Glance tab='manage' />
           </div>
+          {isTicketsOpen && (
+            <Modal onClose={() => setIsTicketsOpen(false)} type='side'>
+              <ManageTickets setIsTicketsOpen={setIsTicketsOpen} />
+            </Modal>
+          )}
+
           {selectedMail && (
             <Modal onClose={() => setSelectedMail('')}>
               <div className={styles.modalHeader}>Update Reminder Email</div>
@@ -202,6 +211,14 @@ const EventGlance = () => {
             </div>
 
             <div className={styles.sectionButtons}>
+              {/* <Link to={`/${eventName}/manage/tickets`}> */}
+              <SectionButton
+                buttonText='Tickets'
+                buttonColor='#7662FC'
+                icon={<ImTicket size={25} color='#7662FC' />}
+                onClick={() => setIsTicketsOpen(true)}
+              />
+              {/* </Link> */}
               <Link to={`/${eventName}/guests`}>
                 <SectionButton
                   buttonText='Guest List'
