@@ -189,13 +189,12 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
         )}
       </div>
 
-      <div className={styles.row1}>
-        <div className={styles.speakersContainer}>
-          <p className={styles.speakersHeading}>Our Speakers</p>
-          <div className={styles.speakersListing}>
-            {eventData?.speakers &&
-              eventData?.speakers.length > 0 &&
-              eventData.speakers.map((speaker) => {
+      {eventData?.speakers && eventData?.speakers.length > 0 && (
+        <div className={styles.row1}>
+          <div className={styles.speakersContainer}>
+            <p className={styles.speakersHeading}>Our Speakers</p>
+            <div className={styles.speakersListing}>
+              {eventData.speakers.map((speaker) => {
                 return (
                   <div className={styles.speakerContainer}>
                     {speaker.image && (
@@ -212,9 +211,10 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                   </div>
                 );
               })}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
