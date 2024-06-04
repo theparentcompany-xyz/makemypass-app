@@ -15,11 +15,11 @@ import EventHeader from './components/EventHeader/EventHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
 import CouponForm from './components/CouponForm/CouponForm';
 import { Helmet } from 'react-helmet';
-import toast from 'react-hot-toast';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const [noTickets, setNoTickets] = useState<boolean>(false);
+  console.log('noTickets', noTickets);
 
   const [tickets, setTickets] = useState<Tickets[]>([]);
 
