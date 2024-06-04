@@ -312,9 +312,7 @@ const EventPage = () => {
                 >
                   {formNumber === 0 && !(hasZeroPriceTicket || eventData?.select_multi_ticket)
                     ? 'Next'
-                    : !noTickets
-                      ? 'Register Now'
-                      : 'No Tickets Available'}
+                    : 'Register Now'}
                 </motion.button>
               </div>
             </div>
