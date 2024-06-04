@@ -80,8 +80,8 @@ const CouponForm = ({
         tempList.push(ticket);
       }
     });
-    setFilteredTickets([])
-    console.log(discount)
+    setFilteredTickets([]);
+    console.log(discount);
     tempList.forEach((ticket) => {
       if (ticket.entry_date && ticket.entry_date.length > 0) {
         ticket.entry_date.forEach((date) => {
@@ -446,9 +446,7 @@ const CouponForm = ({
                         </p>
                         <p className={styles.originalPrice}>
                           <del>
-                            M.R.P. {filteredTicket.currency}{' '}
-                            {filteredTicket.entry_date.find((entry) => entry.date === selectedDate)
-                              ?.price || filteredTicket.price}
+                            {filteredTicket.currency} {filteredTicket.show_price}
                           </del>
                         </p>
                       </div>
@@ -456,62 +454,16 @@ const CouponForm = ({
 
                   <div className={styles.priceData}>
                     <p className={styles.ticketPrice}>
-                      {discountedTicketPrice(
-                        Number(
-                          filteredTicket.entry_date.find((entry) => entry.date === selectedDate)
-                            ?.price || filteredTicket.price,
-                        ),
-                        discount,
-                        filteredTicket.id,
-                      ) === 0
-                        ? 'FREE'
-                        : `${filteredTicket.currency} ${discountedTicketPrice(
-                            Number(
-                              filteredTicket.entry_date.find((entry) => entry.date === selectedDate)
-                                ?.price || filteredTicket.price,
-                            ),
-                            discount,
-                            filteredTicket.id,
-                          )}`}
+                      {filteredTicket.currency} {filteredTicket.price}
                     </p>
                     <p className={styles.extraCharges}>
-                      {filteredTicket.platform_fee_from_user &&
-                        Number(
-                          filteredTicket.entry_date.find((entry) => entry.date === selectedDate)
-                            ?.price || filteredTicket.price,
-                        ) > 0 &&
-                        discountedTicketPrice(
-                          Number(
-                            filteredTicket.entry_date.find((entry) => entry.date === selectedDate)
-                              ?.price || filteredTicket.price,
-                          ),
-                          discount,
-                          filteredTicket.id,
-                        ) !== 0 && (
-                          <p className={styles.extraCharges}>
-                            {filteredTicket.platform_fee}% extra charges
-                          </p>
-                        )}
+                      {filteredTicket.platform_fee_from_user && filteredTicket.price > 0 && (
+                        <p className={styles.extraCharges}>
+                          {filteredTicket.platform_fee}% extra charges
+                        </p>
+                      )}
                     </p>
                   </div>
-                  {
-                    /*Check for Show price if discount value is 0 and show it if available*/
-                    !discount.discount_value &&
-                      (filteredTicket.entry_date.find((entry) => entry.date == selectedDate)
-                        ?.show_price ||
-                        filteredTicket.show_price) && (
-                        <div className={styles.discountData}>
-                          <p className={styles.marketingOriginalPrice}>
-                            <del>
-                              M.R.P. {filteredTicket.currency}{' '}
-                              {filteredTicket.entry_date.find((entry) => entry.date == selectedDate)
-                                ?.show_price || filteredTicket.show_price}{' '}
-                              {/*Show price if available*/}
-                            </del>
-                          </p>
-                        </div>
-                      )
-                  }
                 </div>
 
                 <p className={styles.cardText}>{eventData?.title?.toUpperCase()}</p>
