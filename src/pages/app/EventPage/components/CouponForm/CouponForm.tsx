@@ -56,6 +56,8 @@ const CouponForm = ({
     }
   };
 
+  const [firstRender, setFirstRender] = React.useState(true);
+
   useEffect(() => {
     if (eventData) handleDateChange(findMinDate(eventData));
 
@@ -165,12 +167,15 @@ const CouponForm = ({
             eventData &&
             validateCondition(ticketInfo[ticketType], formData, eventData?.form)
           ) {
-            setNoTickets(false);
+            if (firstRender) {
+              setNoTickets(false);
 
-            setTickets([
-              { ticket_id: eventData?.tickets[ticketType].id, count: 1, my_ticket: true },
-            ]);
-            setAmount(eventData?.tickets[ticketType].price.toString());
+              setTickets([
+                { ticket_id: eventData?.tickets[ticketType].id, count: 1, my_ticket: true },
+              ]);
+              setAmount(eventData?.tickets[ticketType].price.toString());
+              setFirstRender(false);
+            }
 
             return (
               <div
