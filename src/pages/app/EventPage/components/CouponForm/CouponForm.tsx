@@ -3,7 +3,7 @@ import { CouponData, DiscountData, Tickets } from '../../types';
 import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
 import styles from './CouponForm.module.css';
 import { getIcon } from '../../constants';
-import InputFIeld from '../../../../auth/Login/InputFIeld';
+import InputField from '../../../../auth/Login/InputField.tsx';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { motion } from 'framer-motion';
 import { applyCoupon } from '../../../../../apis/publicpage';
@@ -71,7 +71,7 @@ const CouponForm = ({
         return ticket;
       });
       if (newTicket) {
-        updatedTickets.push({ ticket_id: currentTicketId, count: 1, my_ticket: true});
+        updatedTickets.push({ ticket_id: currentTicketId, count: 1, my_ticket: true });
       }
     } else {
       setTickets([{ ticket_id: currentTicketId, count: 1, my_ticket: true }]);
@@ -139,10 +139,6 @@ const CouponForm = ({
   };
 
   useEffect(() => {
-    console.log(filteredTickets);
-  }, [filteredTickets]);
-
-  useEffect(() => {
     getTickets();
   }, [eventData]);
 
@@ -164,7 +160,7 @@ const CouponForm = ({
             border: discount.discount_value > 0 ? '2px solid #46BF75' : '2px solid #2A3533',
           }}
         >
-          <InputFIeld
+          <InputField
             name="coupon_code"
             placeholder="Coupon Code"
             id="coupon_code"
@@ -210,6 +206,11 @@ const CouponForm = ({
                   setCoupon({
                     ...coupon,
                     error: 'Please enter a coupon code',
+                  });
+                  setDiscount({
+                    discount_value: 0,
+                    discount_type: 'error',
+                    ticket: [],
                   });
                 }
               }}
@@ -268,7 +269,7 @@ const CouponForm = ({
                 key={filteredTicket.id}
 
                 onClick={() => {
-                  selectTicket(filteredTicket.id)
+                  selectTicket(filteredTicket.id);
                 }}
                 className={styles.ticketType}
                 style={{

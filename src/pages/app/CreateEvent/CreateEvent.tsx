@@ -1,7 +1,7 @@
 import styles from './CreateEvent.module.css';
 import Theme from '../../../components/Theme/Theme';
 import { createEvent } from '../../../apis/events';
-import InputFIeld from '../../../pages/auth/Login/InputFIeld';
+import InputField from '../../auth/Login/InputField.tsx';
 import { useState } from 'react';
 
 const CreateEvent = () => {
@@ -18,7 +18,7 @@ const CreateEvent = () => {
         <div className={styles.inputContainer}>
           <h1 className={styles.heading}>Create Event</h1>
           <div className={styles.eventInput}>
-            <InputFIeld
+            <InputField
               placeholder='Event Name'
               type={'text'}
               name={'name'}

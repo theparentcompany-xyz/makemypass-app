@@ -1,7 +1,7 @@
 import { Dispatch, useEffect } from 'react';
 import { ErrorMessages, FormDataType, FormFieldType, TicketType } from '../../apis/types';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
-import InputFIeld from '../../pages/auth/Login/InputFIeld';
+import InputField from '../../pages/auth/Login/InputField.tsx';
 import styles from './DynamicForm.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { postAudio } from '../../apis/publicpage';
@@ -283,7 +283,7 @@ const DynamicForm = ({
               return null;
             if (field.type === 'text' || field.type === 'email' || field.type === 'phonenumber') {
               return (
-                <InputFIeld
+                <InputField
                   name={field.field_key}
                   placeholder={field?.title}
                   id={field.id}
