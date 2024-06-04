@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { CouponData, DiscountData, TicketOptions, Tickets } from '../pages/app/EventPage/types';
-import { Dispatch } from 'react';
+import React, { Dispatch } from 'react';
 import {
   ErrorMessages,
   EventType,
@@ -20,21 +20,21 @@ declare global {
 }
 
 export const submitForm = async ({
-  eventId,
-  tickets,
-  formData,
-  coupon,
-  setSuccess,
-  setFormNumber,
-  setFormData,
-  setFormErrors,
-  response,
-  setCoupon,
-  setEventData,
-  eventTitle,
-  selectedDate,
-  setDiscount,
-}: {
+                                   eventId,
+                                   tickets,
+                                   formData,
+                                   coupon,
+                                   setSuccess,
+                                   setFormNumber,
+                                   setFormData,
+                                   setFormErrors,
+                                   response,
+                                   setCoupon,
+                                   setEventData,
+                                   eventTitle,
+                                   selectedDate,
+                                   setDiscount,
+                                 }: {
   eventId: string;
   tickets: Tickets[];
   formData: FormDataType;
@@ -102,7 +102,7 @@ export const submitForm = async ({
           description: 'Event Registration',
           image: '/pwa/maskable.webp',
           order_id: paymentId,
-          handler: function (response: RazorpayPaymentDetails) {
+          handler: function(response: RazorpayPaymentDetails) {
             console.log(response);
 
             const audio = new Audio('/sounds/gpay.mp3');
@@ -129,7 +129,7 @@ export const submitForm = async ({
                   setFormNumber && setFormNumber(0);
                   setFormData && setFormData({});
                   setDiscount &&
-                    setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
+                  setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
                   if (setEventData && eventTitle) getEventInfo(eventTitle, setEventData);
                 }, 5000);
 
@@ -289,19 +289,21 @@ export const getFormFields = async (
     });
 };
 
-export const postAudio = async (eventId: string, recordedBlob: Blob) => {
+export const postAudio = async (eventId: string, recordedBlob: Blob, formData: FormDataType, setFormData: React.Dispatch<FormDataType>) => {
   const form = new FormData();
   const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.mp3', {
     type: 'audio/mp3',
   });
   form.append('file', file);
-  publicGateway
-    .post(makeMyPass.parseFromAudio(eventId), form, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    .catch((error) => {
-      console.error(error.response.data.message.general[0]);
-    });
+  publicGateway.post(makeMyPass.parseFromAudio(eventId), form, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  }).then((response) => {
+    console.log(response.data.response.data);
+    const newFormData: FormDataType = { ...formData, ...response?.data?.response?.data };
+    setFormData(newFormData);
+  }).catch((error) => {
+    console.error(error.response.data.message.general[0]);
+  });
 };

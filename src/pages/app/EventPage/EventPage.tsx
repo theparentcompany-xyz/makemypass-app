@@ -221,6 +221,7 @@ const EventPage = () => {
                         formData={formData}
                         onFieldChange={onFieldChange}
                         eventData={eventData}
+                        setFormData={setFormData}
                       />
                     )}
                   </div>

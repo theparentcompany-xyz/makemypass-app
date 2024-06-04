@@ -1,4 +1,4 @@
-import { Dispatch, useEffect } from 'react';
+import React, { Dispatch, useEffect } from 'react';
 import { ErrorMessages, FormDataType, FormFieldType, TicketType } from '../../apis/types';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
 import InputField from '../../pages/auth/Login/InputField.tsx';
@@ -19,6 +19,7 @@ const DynamicForm = ({
   formFields,
   formErrors,
   formData,
+  setFormData,
   onFieldChange,
   ticketInfo,
   setTickets,
@@ -37,6 +38,7 @@ const DynamicForm = ({
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
   formData: FormDataType;
+  setFormData?: React.Dispatch<React.SetStateAction<FormDataType>>;
   onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
   setCashInHand?: React.Dispatch<React.SetStateAction<boolean>>;
   cashInHand?: boolean;
@@ -72,8 +74,8 @@ const DynamicForm = ({
   }, [eventData]);
 
   const handleAudioSubmit = (recordedBlob: Blob | null) => {
-    if (recordedBlob && eventData?.id) {
-      postAudio(eventData?.id, recordedBlob);
+    if (recordedBlob && eventData?.id && formData && setFormData) {
+      postAudio(eventData?.id, recordedBlob, formData, setFormData);
     }
   };
   return (
