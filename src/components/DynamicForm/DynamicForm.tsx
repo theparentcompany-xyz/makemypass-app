@@ -127,8 +127,9 @@ const DynamicForm = ({
                   <div className={styles.tickets}>
                     {Object.keys(ticketInfo).map((key) => {
                       return (
-                        (ticketInfo[key].entry_date.find((entry) => entry.date === selectedDate)
-                          ?.capacity ?? 0) > 0 && (
+                        (ticketInfo[key].entry_date.length === 0 ||
+                          (ticketInfo[key].entry_date.find((entry) => entry.date === selectedDate)
+                            ?.capacity ?? 0) > 0) && (
                           <div className={styles.ticket}>
                             <p key={key} className={styles.ticketDetails}>
                               {key} - {ticketInfo[key]?.currency}{' '}
@@ -149,6 +150,7 @@ const DynamicForm = ({
                                 }
 
                                 if (
+                                  ticketInfo[key].entry_date.length !== 0 &&
                                   event.target.value != '' &&
                                   Number(event.target.value) >
                                     (ticketInfo[key].entry_date.find(
@@ -198,7 +200,7 @@ const DynamicForm = ({
                                   0,
                                 );
 
-                                if (ticketCount && ticketCount > 0) {
+                                if (ticketCount && ticketCount > 0 && ticketInfo[key].price > 0) {
                                   setCashInHand && setCashInHand(true);
                                 } else {
                                   setCashInHand && setCashInHand(false);
@@ -206,14 +208,16 @@ const DynamicForm = ({
                               }}
                             />
 
-                            <p className={styles.ticketCount}>
-                              {
-                                ticketInfo[key].entry_date.find(
-                                  (entry) => entry.date === selectedDate,
-                                )?.capacity
-                              }{' '}
-                              tickets left
-                            </p>
+                            {ticketInfo[key].entry_date.length > 0 && (
+                              <p className={styles.ticketCount}>
+                                {
+                                  ticketInfo[key].entry_date.find(
+                                    (entry) => entry.date === selectedDate,
+                                  )?.capacity
+                                }{' '}
+                                tickets left
+                              </p>
+                            )}
                           </div>
                         )
                       );
