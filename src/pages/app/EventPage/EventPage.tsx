@@ -81,23 +81,21 @@ const EventPage = () => {
           [field.id]: field.field_key,
         };
       });
-    }
 
-    if (eventData?.tickets) {
-      eventData.tickets.forEach((ticket) => {
-        ticket.conditions?.forEach((condtion) => {
-          setTicketConditionalFields((prevState) => {
-            return [...prevState, formIdToKey[condtion.field]];
+      if (eventData?.tickets) {
+        setTicketConditionalFields([])
+        eventData.tickets.forEach((ticket) => {
+          ticket.conditions?.forEach((condition) => {
+            setTicketConditionalFields((prevState) => {
+              return [...prevState, formIdToKey[condition.field]];
+            });
           });
         });
-      });
+        checkDirectRegister();
+      }
     }
 
-    // console.log(ticketConditionalFields);
-
     if (eventData?.coupon) setCoupon(eventData?.coupon);
-
-    checkDirectRegister();
   }, [eventData]);
 
   useEffect(() => {
@@ -132,22 +130,23 @@ const EventPage = () => {
     }
   }, [newTickets]);
 
+  useEffect(() => {
+    if (ticketConditionalFields.some(field => field in formData)) {
+      checkDirectRegister();
+    }
+  }, [formData]);
+
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
-    setFormData({
-      ...formData,
+    setFormData(prevFormData => ({
+      ...prevFormData,
       [fieldName]: fieldValue,
-    });
+    }));
 
     if (formErrors[fieldName]) {
       setFormErrors({
         ...formErrors,
         [fieldName]: '',
       });
-    }
-
-    console.log('ticketConditionalFields', ticketConditionalFields);
-    if (ticketConditionalFields.includes(fieldName)) {
-      checkDirectRegister(formData);
     }
   };
 
@@ -173,15 +172,12 @@ const EventPage = () => {
     }
   };
 
-  const checkDirectRegister = (formData: FormDataType) => {
+  const checkDirectRegister = () => {
     const filteredTicket: TicketType[] = [];
 
     eventData?.tickets.forEach((ticket) => {
       if (ticket.conditions && ticket.conditions.length > 0) {
-        console.log(ticket.conditions);
-
         if (validateCondition(ticket.conditions, formData, eventData.form)) {
-          console.log('Workavannae!');
           filteredTicket.push(ticket);
         }
       } else {
@@ -196,7 +192,6 @@ const EventPage = () => {
       filteredTicket[0].entry_date.length == 0
     ) {
       setDirectRegister(filteredTicket[0].id);
-      console.log('BLa Bal');
       setTickets([
         {
           ticket_id: filteredTicket[0].id,
@@ -210,12 +205,12 @@ const EventPage = () => {
   return (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>{eventData?.title}</title>
-        <link rel='shortcut icon' href={eventData?.logo ?? '/favicon.ico'} type='image/x-icon' />
-        <meta name='title' content={eventData?.title} />
+        <link rel="shortcut icon" href={eventData?.logo ?? '/favicon.ico'} type="image/x-icon" />
+        <meta name="title" content={eventData?.title} />
         <meta
-          name='description'
+          name="description"
           content={
             eventData?.description
               ? eventData?.description
@@ -223,7 +218,7 @@ const EventPage = () => {
           }
         />
       </Helmet>
-      <Theme type='eventForm'>
+      <Theme type="eventForm">
         <SuccessModal
           success={success}
           setSuccess={setSuccess}
@@ -266,7 +261,7 @@ const EventPage = () => {
                   transition={{ duration: 0.5 }}
                   className={styles.eventForm}
                 >
-                  <div className={styles.eventFormInnerContainer} id='formFields'>
+                  <div className={styles.eventFormInnerContainer} id="formFields">
                     <div>
                       <p className={styles.eventFormTitle}>Registration Form</p>
                       <p className={styles.eventHeaderDescription}>
@@ -323,7 +318,7 @@ const EventPage = () => {
                   initial={{ opacity: 0, y: 35 }}
                   animate={{ opacity: 1, y: 0 }}
                   whileTap={{ scale: 0.95 }}
-                  type='submit'
+                  type="submit"
                   onClick={() => {
                     if (formNumber === 0 && !directRegister) {
                       {
@@ -371,7 +366,7 @@ const EventPage = () => {
         ) : (
           !(eventData && eventData.title) && (
             <div className={styles.center}>
-              <HashLoader color='#46BF75' size={50} />
+              <HashLoader color="#46BF75" size={50} />
             </div>
           )
         )}

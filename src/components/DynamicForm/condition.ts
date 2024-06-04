@@ -9,7 +9,7 @@ export const validateCondition = (
 
   if (conditions) {
     // console.log('conditions', conditions);
-    console.log('formData', formData);
+    // console.log('formData', formData);
     // console.log('formFields', formFields);
 
     conditions.forEach(

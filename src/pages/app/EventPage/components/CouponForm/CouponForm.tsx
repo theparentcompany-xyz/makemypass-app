@@ -62,7 +62,6 @@ const CouponForm = ({
 
   const [ticketsWithId, setTicketsWithId] = useState({});
   const [filteredTickets, setFilteredTickets] = useState<TicketType[]>([]);
-  // const [couponResponse, setCouponResponse] = useState();
 
   useEffect(() => {
     if (eventData) handleDateChange(findMinDate(eventData));
@@ -81,9 +80,10 @@ const CouponForm = ({
         tempList.push(ticket);
       }
     });
-
+    setFilteredTickets([])
+    console.log(discount)
     tempList.forEach((ticket) => {
-      if (ticket.entry_date) {
+      if (ticket.entry_date && ticket.entry_date.length > 0) {
         ticket.entry_date.forEach((date) => {
           if (selectedDate === date.date) {
             const updatedTicket = {
@@ -107,8 +107,16 @@ const CouponForm = ({
   };
 
   useEffect(() => {
+    console.log(filteredTickets);
+  }, [filteredTickets]);
+
+  useEffect(() => {
     getTickets();
   }, [eventData]);
+
+  useEffect(() => {
+    getTickets();
+  }, [discount]);
 
   return (
     <>
@@ -179,7 +187,7 @@ const CouponForm = ({
         </motion.div>
       )}
 
-      {eventData && eventData.tickets[0]?.entry_date && (
+      {eventData?.tickets[0]?.entry_date && eventData?.tickets[0]?.entry_date.length > 0 && (
         <SelectDate
           eventData={eventData}
           selectedDate={selectedDate}
