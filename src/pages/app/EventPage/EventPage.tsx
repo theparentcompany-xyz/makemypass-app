@@ -135,7 +135,6 @@ const EventPage = () => {
 
   const updateTicketCount = (ticketId: string, increment: boolean) => {
     let newTicket = true;
-
     const updatedTickets = tickets.map((ticket) => {
       if (ticket.ticket_id === ticketId && ticket.count >= 0) {
         newTicket = false;
@@ -150,8 +149,8 @@ const EventPage = () => {
     if (newTicket) {
       updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: false });
     }
-    if (updatedTickets.length > 0) {
-      setNewTickets(updatedTickets);
+    if (updatedTickets) {
+      setTickets(updatedTickets);
     }
   };
 
@@ -266,13 +265,11 @@ const EventPage = () => {
 
               {(eventData.tickets || eventData.select_multi_ticket) && formNumber === 1 && (
                 <CouponForm
-                  ticketInfo={eventData.tickets}
                   setTickets={setTickets}
                   tickets={tickets}
                   eventId={eventData.id}
                   discount={discount}
                   setDiscount={setDiscount}
-                  setAmount={setAmount}
                   eventData={eventData}
                   setCoupon={setCoupon}
                   coupon={coupon}

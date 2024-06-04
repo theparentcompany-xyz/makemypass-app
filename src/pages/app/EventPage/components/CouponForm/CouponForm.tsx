@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CouponData, DiscountData, Tickets } from '../../types';
 import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
 import styles from './CouponForm.module.css';
-import { discountedTicketPrice, getIcon } from '../../constants';
+import { getIcon } from '../../constants';
 import InputFIeld from '../../../../auth/Login/InputFIeld';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { motion } from 'framer-motion';
@@ -15,13 +15,11 @@ import { findMinDate } from '../../../../../common/commonFunctions';
 import { validateCondition } from '../../../../../components/DynamicForm/condition';
 
 const CouponForm = ({
-                      ticketInfo,
                       setTickets,
                       tickets,
                       eventId,
                       discount,
                       setDiscount,
-                      setAmount,
                       eventData,
                       setCoupon,
                       coupon,
@@ -31,13 +29,11 @@ const CouponForm = ({
                       formData,
                       setNoTickets,
                     }: {
-  ticketInfo: TicketType[];
   setTickets: React.Dispatch<React.SetStateAction<Tickets[]>>;
   tickets: Tickets[];
   eventId: string;
   discount: DiscountData;
   setDiscount: React.Dispatch<React.SetStateAction<DiscountData>>;
-  setAmount: React.Dispatch<React.SetStateAction<string>>;
   eventData: EventType | undefined;
   setCoupon: React.Dispatch<React.SetStateAction<CouponData>>;
   coupon: CouponData;
@@ -57,17 +53,33 @@ const CouponForm = ({
 
     getTickets();
   };
-
-  // const [firstRender, setFirstRender] = React.useState(true);
-
-  const [ticketsWithId, setTicketsWithId] = useState({});
   const [filteredTickets, setFilteredTickets] = useState<TicketType[]>([]);
 
   useEffect(() => {
     if (eventData) handleDateChange(findMinDate(eventData));
-
     setNoTickets(true);
   }, [eventData]);
+
+  const selectTicket = (currentTicketId: string) => {
+    if (eventData?.select_multi_ticket) {
+      let newTicket = true;
+      const updatedTickets = tickets.map((ticket) => {
+        if (ticket.ticket_id === ticketId) {
+          newTicket = false;
+          return {
+            ...ticket,
+            count: ticket.count == 0 ? 1 : ticket.count, my_ticket: true,
+          };
+        }
+        return ticket;
+      });
+      if (newTicket) {
+        updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: true});
+      }
+    } else {
+      setTickets([{ ticket_id: currentTicketId, count: 1, my_ticket: true }]);
+    }
+  };
 
   const getTickets = () => {
     const tempList: TicketType[] = [];
@@ -257,126 +269,9 @@ const CouponForm = ({
             return (
               <div
                 key={filteredTicket.id}
+
                 onClick={() => {
-                  if (eventData?.select_multi_ticket) {
-                    let newTicketIds = []; //temporary variable to store new ticket ids for amount updation
-
-                    if (
-                      tickets.filter((ticket) => ticket.ticket_id === filteredTicket.id).length > 0
-                    ) {
-                      setTickets(
-                        tickets.filter((ticket) => ticket.ticket_id !== filteredTicket.id),
-                      );
-                      newTicketIds = tickets.filter(
-                        (ticket) => ticket.ticket_id !== filteredTicket.id,
-                      );
-                    } else {
-                      setTickets([
-                        ...tickets,
-                        {
-                          ticket_id: filteredTicket.id,
-                          count: 1,
-                          my_ticket: true,
-                        },
-                      ]);
-                      newTicketIds = [...tickets, filteredTicket.id];
-                    }
-
-                    if (
-                      discount.discount_value > 0 &&
-                      discount.ticket.includes(filteredTicket.id)
-                    ) {
-                      const amount = newTicketIds.reduce((acc, ticket) => {
-                        const ticketId = typeof ticket === 'string' ? ticket : ticket.ticket_id;
-                        return (
-                          acc +
-                          discountedTicketPrice(
-                            Object.values(ticketInfo).filter(
-                              (ticktype) => ticktype.id === ticketId,
-                            )[0].price,
-                            discount,
-                            ticketId,
-                          )
-                        );
-                      }, 0);
-                      setAmount(amount.toString());
-                    } else {
-                      const amount = newTicketIds.reduce((acc, id) => {
-                        return (
-                          acc +
-                          Number(
-                            Object.values(ticketInfo).filter((ticktype) => ticktype.id === id)[0]
-                              .price,
-                          )
-                        );
-                      }, 0);
-                      setAmount(amount.toString());
-                    }
-                  } else {
-                    const ticketAlreadyThere =
-                      tickets.filter((ticket) => ticket.ticket_id === filteredTicket.id).length > 0;
-
-                    if (ticketAlreadyThere) {
-                      if (eventData?.is_grouped_ticket)
-                        setTickets(
-                          tickets.map((ticket) => ({
-                            ...ticket,
-                            my_ticket: ticket.ticket_id === filteredTicket.id ? true : false,
-                          })),
-                        );
-                      else
-                        setTickets([
-                          {
-                            ticket_id: filteredTicket.id,
-                            count: 1,
-                            my_ticket: true,
-                          },
-                        ]);
-                    } else {
-                      if (eventData?.is_grouped_ticket) {
-                        const updatedTickets = tickets.map((ticket) => ({
-                          ...ticket,
-                          my_ticket: false,
-                        }));
-
-                        updatedTickets.push({
-                          ticket_id: filteredTicket.id,
-                          count: 1,
-                          my_ticket: true,
-                        });
-
-                        setTickets(updatedTickets);
-                      } else {
-                        setTickets([
-                          {
-                            ticket_id: filteredTicket.id,
-                            count: 1,
-                            my_ticket: true,
-                          },
-                        ]);
-                      }
-                    }
-
-                    if (discount.discount_value > 0 && discount.ticket.includes(filteredTicket.id))
-                      setAmount(
-                        discountedTicketPrice(
-                          Number(
-                            filteredTicket.entry_date.find((entry) => entry.date === selectedDate)
-                              ?.price || filteredTicket.price,
-                          ),
-                          discount,
-                          filteredTicket.id,
-                        ).toString(),
-                      );
-                    else {
-                      setAmount(
-                        (
-                          filteredTicket.entry_date.find((entry) => entry.date === selectedDate)
-                            ?.price || filteredTicket.price
-                        ).toString(),
-                      );
-                    }
-                  }
+                  selectTicket(filteredTicket.id)
                 }}
                 className={styles.ticketType}
                 style={{
@@ -387,11 +282,12 @@ const CouponForm = ({
                     : '2px solid #2A3533',
                 }}
               >
-                {eventData?.select_multi_ticket && tickets && (
+                {eventData?.select_multi_ticket && (
                   <>
                     <div className={styles.ticketCountContainer}>
                       <div className="row" style={{
-                          columnGap: 0,}}>
+                        columnGap: 0,
+                      }}>
                         <button
                           className={styles.ticketCountUpdateButton}
                           onClick={() => {
@@ -411,11 +307,7 @@ const CouponForm = ({
                               (ticket) => ticket.ticket_id === filteredTicket.id,
                             )?.count;
 
-                            const ticketLimit = filteredTicket.entry_date?.find(
-                              (entryDate) => entryDate.date === selectedDate,
-                            )?.capacity;
-
-                            if (currentTicketCount === ticketLimit) {
+                            if (currentTicketCount === filteredTicket.capacity) {
                               toast.error('Ticket limit reached');
                               return;
                             }
