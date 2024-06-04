@@ -1,0 +1,76 @@
+
+.ticketBox{
+    margin-top: 0.5rem;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.04);
+    width: 20rem;
+    padding: 0.5rem;
+    min-width: 20rem;
+    user-select: none;
+    transition: all 0.2s;
+}
+
+.ticketBox.selected {
+    background: #1b2725;
+    border: 2px solid #f3f3f359;
+}
+
+@media screen and (max-width: 435px) {
+    .ticketBox{
+            scroll-snap-align: start;
+    }
+}
+
+.ticketInfo{
+    margin: 0.5rem;
+    color: #f3f3f3;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.ticket{
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.04);
+    width: 50%;
+    height: 4rem;
+}
+
+.availableDot{
+    background-color: #00ff006e;/*#ff00008e*/
+    border-radius: 50%;
+    font-size: 0.2rem;
+    padding: 0.2rem;
+}
+
+.ticketFooter{
+    display: flex;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 0.25rem;
+    align-items: center;
+}
+
+.ticketFooterLeft{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 0.5rem;
+    color: #f3f3f3;
+    font-size: 0.8rem;
+}
+
+.ticketFooterRight{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.closeTicketLabel{
+    color: #f3f3f3;
+    font-size: 0.8rem;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+}

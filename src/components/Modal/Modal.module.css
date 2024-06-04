@@ -28,6 +28,38 @@
   text-align: center;
 }
 
+
+.sideModal{
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: #1b2725;
+    padding: 1rem;
+    position: fixed;
+    z-index: 100;
+    backdrop-filter: blur(800px);
+  
+    top: 50%;
+    left: auto;
+    right: 0;
+    bottom: 0;
+    transform: translateY(-50%);
+  
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    color: white;
+    width: 50%;
+    height: calc(100vh - 2rem);
+    overflow-y: scroll;
+    overflow-x: scroll;  
+    outline: none; 
+}
+
+
 .modalHeader {
   font-weight: 600;
   font-size: 1.25rem;
@@ -137,6 +169,16 @@
   .onClickModal {
     width: 90%;
   }
+  .sideModal {
+    width: 95%;
+  }
+}
+
+@media (max-width: 500px) {
+  .sideModal {
+    padding: 1rem;
+    width: 93%;
+  }
 }
 
 @media (max-width: 400px) {
@@ -144,5 +186,9 @@
   .onClickModal {
     margin: 1rem;
     width: auto;
+  }
+  .sideModal {
+    padding: 1rem;
+    width: 92%;
   }
 }
