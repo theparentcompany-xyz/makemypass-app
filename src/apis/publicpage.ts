@@ -27,7 +27,6 @@ export const submitForm = async ({
   setSuccess,
   setFormNumber,
   setFormData,
-  setAmount,
   setFormErrors,
   response,
   setCoupon,
@@ -43,7 +42,6 @@ export const submitForm = async ({
   setSuccess?: React.Dispatch<React.SetStateAction<string>>;
   setFormNumber?: React.Dispatch<React.SetStateAction<number>>;
   setFormData?: React.Dispatch<React.SetStateAction<FormDataType>>;
-  setAmount?: React.Dispatch<React.SetStateAction<string>>;
   setFormErrors?: Dispatch<ErrorMessages>;
   response?: unknown;
   setCoupon?: React.Dispatch<CouponData>;
@@ -130,7 +128,6 @@ export const submitForm = async ({
                   setSuccess && setSuccess('');
                   setFormNumber && setFormNumber(0);
                   setFormData && setFormData({});
-                  setAmount && setAmount('');
                   setDiscount &&
                     setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
                   if (setEventData && eventTitle) getEventInfo(eventTitle, setEventData);
@@ -159,7 +156,6 @@ export const submitForm = async ({
           setFormNumber && setFormNumber(0);
           setFormData && setFormData({});
           setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
-          setAmount && setAmount('');
         }, 5000);
 
         setCoupon && setCoupon({ status: '', description: '' });

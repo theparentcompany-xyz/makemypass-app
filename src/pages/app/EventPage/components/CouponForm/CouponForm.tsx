@@ -27,7 +27,6 @@ const CouponForm = ({
                       selectedDate,
                       updateTicketCount,
                       formData,
-                      setNoTickets,
                     }: {
   setTickets: React.Dispatch<React.SetStateAction<Tickets[]>>;
   tickets: Tickets[];
@@ -41,7 +40,6 @@ const CouponForm = ({
   selectedDate: string | null | undefined;
   updateTicketCount: (ticketId: string, increment: boolean) => void;
   formData: FormDataType;
-  setNoTickets: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const handleDateChange = (date: string | null | undefined | Date) => {
     let newDate;
@@ -57,14 +55,13 @@ const CouponForm = ({
 
   useEffect(() => {
     if (eventData) handleDateChange(findMinDate(eventData));
-    setNoTickets(true);
   }, [eventData]);
 
   const selectTicket = (currentTicketId: string) => {
     if (eventData?.select_multi_ticket) {
       let newTicket = true;
       const updatedTickets = tickets.map((ticket) => {
-        if (ticket.ticket_id === ticketId) {
+        if (ticket.ticket_id === currentTicketId) {
           newTicket = false;
           return {
             ...ticket,
@@ -74,7 +71,7 @@ const CouponForm = ({
         return ticket;
       });
       if (newTicket) {
-        updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: true});
+        updatedTickets.push({ ticket_id: currentTicketId, count: 1, my_ticket: true});
       }
     } else {
       setTickets([{ ticket_id: currentTicketId, count: 1, my_ticket: true }]);

@@ -4,13 +4,10 @@ import Theme from '../../../components/Theme/Theme';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
-// import { getEventId } from '../../../apis/events';
 import { getEventInfo, submitForm, validateRsvp } from '../../../apis/publicpage';
 import { CouponData, DiscountData, Tickets } from './types';
 import { motion } from 'framer-motion';
-// import { showRazorpay } from './components/Razorpay';
 import { EventType, FormDataType, TicketType } from '../../../apis/types';
-import { discountedTicketPrice } from './constants';
 import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import EventHeader from './components/EventHeader/EventHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
@@ -21,17 +18,12 @@ import { validateCondition } from '../../../components/DynamicForm/condition';
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
-  const [noTickets, setNoTickets] = useState<boolean>(false);
-
   const [tickets, setTickets] = useState<Tickets[]>([]);
 
   const [eventData, setEventData] = useState<EventType>();
   const [formErrors, setFormErrors] = useState<any>({});
 
-  const [newTickets, setNewTickets] = useState<Tickets[]>([]);
-
   const [formData, setFormData] = useState<FormDataType>({});
-  const [amount, setAmount] = useState<string>('');
   const [success, setSuccess] = useState<string>('');
 
   const [formNumber, setFormNumber] = useState<number>(0);
@@ -105,13 +97,6 @@ const EventPage = () => {
 
     scrollToTop();
   }, [success]);
-
-
-  useEffect(() => {
-    if (newTickets.length > 0) {
-      setTickets(newTickets);
-    }
-  }, [newTickets]);
 
   useEffect(() => {
     if (ticketConditionalFields.some(field => field in formData)) {
@@ -277,7 +262,6 @@ const EventPage = () => {
                   selectedDate={selectedDate}
                   updateTicketCount={updateTicketCount}
                   formData={formData}
-                  setNoTickets={setNoTickets}
                 />
               )}
 
@@ -319,7 +303,6 @@ const EventPage = () => {
                         setSuccess,
                         setFormNumber,
                         setFormData,
-                        setAmount,
                         setFormErrors,
                         setCoupon,
                         setEventData,

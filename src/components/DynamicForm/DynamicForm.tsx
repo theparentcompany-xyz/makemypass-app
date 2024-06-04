@@ -69,28 +69,6 @@ const DynamicForm = ({
   useEffect(() => {
     if (eventData) handleDateChange(findMinDate(eventData));
 
-    if (eventData && eventData.tickets) {
-      Object.keys(eventData.tickets).map((key) => {
-        const ticket = eventData.tickets[key];
-        const ticketsTemp = [];
-        if (ticket) {
-          ticketsTemp.push({
-            ticket_id: eventData.tickets[key].id,
-            count: 0,
-            my_ticket: false,
-          });
-        }
-      });
-
-      setTickets &&
-        setTickets(
-          Object.keys(eventData.tickets).map((key) => ({
-            ticket_id: eventData.tickets[key].id,
-            count: 0,
-            my_ticket: false,
-          })),
-        );
-    }
   }, [eventData]);
 
   const handleAudioSubmit = (recordedBlob: Blob | null) => {
