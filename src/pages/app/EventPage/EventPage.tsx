@@ -118,27 +118,6 @@ const EventPage = () => {
     }
   };
 
-  const updateTicketCount = (ticketId: string, increment: boolean) => {
-    let newTicket = true;
-    const updatedTickets = tickets.map((ticket) => {
-      if (ticket.ticket_id === ticketId && ticket.count >= 0) {
-        newTicket = false;
-        return {
-          ...ticket,
-          count: increment ? ticket.count + 1 : ticket.count > 0 ? ticket.count - 1 : 0,
-        };
-      }
-      return ticket;
-    });
-
-    if (newTicket) {
-      updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: false });
-    }
-    if (updatedTickets) {
-      setTickets(updatedTickets);
-    }
-  };
-
   const checkDirectRegister = () => {
     const filteredTicket: TicketType[] = [];
 
@@ -252,7 +231,6 @@ const EventPage = () => {
                 <CouponForm
                   setTickets={setTickets}
                   tickets={tickets}
-                  eventId={eventData.id}
                   discount={discount}
                   setDiscount={setDiscount}
                   eventData={eventData}
@@ -260,7 +238,6 @@ const EventPage = () => {
                   coupon={coupon}
                   setSelectedDate={setSelectedDate}
                   selectedDate={selectedDate}
-                  updateTicketCount={updateTicketCount}
                   formData={formData}
                 />
               )}

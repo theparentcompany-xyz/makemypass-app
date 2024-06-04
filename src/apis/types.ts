@@ -150,6 +150,7 @@ export interface EventType {
   is_online: boolean;
   is_grouped_ticket: boolean;
   is_multiple_checkin: boolean;
+  is_sub_event: boolean;
   approval_required: boolean;
   status: string;
 

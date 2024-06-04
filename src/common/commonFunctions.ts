@@ -139,41 +139,37 @@ export function convertDate(date: Date | undefined) {
 }
 
 export const findMinDate = (eventData: EventType): Date | null => {
-  let minDate: Date = new Date(); // Initialize minDate with current date
+  const todayDate: Date = new Date();
+  let minDate: Date | null = null;
 
-  let hasTickets = false;
-  Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
-    ticketInfo.entry_date.find((entry) => {
-      if (entry.capacity > 0 && entry.date === minDate.toISOString().split('T')[0]) {
-        console.log('found');
-        hasTickets = true;
-        return true;
+  eventData.tickets.forEach((ticket: TicketType) => {
+    ticket.entry_date.forEach((entry) => {
+      const entryDate = new Date(entry.date);
+      if (entryDate >= todayDate && (entry.capacity === null || entry.capacity > 0)) {
+        if (minDate === null || entryDate < minDate) {
+          minDate = entryDate;
+        }
       }
     });
   });
-
-  const currentDate = new Date(); // Get current date
-  Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
-    ticketInfo.entry_date.forEach((entry) => {
-      const date = new Date(entry.date);
-      if (date >= currentDate && (!hasTickets || (date < minDate && entry.capacity > 0))) {
-        minDate = date;
-      }
-    });
-  });
-
   return minDate;
 };
 
-export const findMaxDate = (eventData: EventType) => {
-  let maxDate: Date | null = null; // Initialize maxDate with null
-  Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
-    ticketInfo.entry_date.forEach((entry) => {
-      const date = new Date(entry.date);
-      if ((!maxDate || date > maxDate) && entry.capacity > 0) {
-        maxDate = date;
+
+export const findMaxDate = (eventData: EventType): Date | null => {
+  const todayDate: Date = new Date();
+  let maxDate: Date | null = null;
+
+  eventData.tickets.forEach((ticket: TicketType) => {
+    ticket.entry_date.forEach((entry) => {
+      const entryDate = new Date(entry.date);
+      if (entryDate > todayDate && (entry.capacity === null || entry.capacity > 0)) {
+        if (maxDate === null || entryDate > maxDate) {
+          maxDate = entryDate;
+        }
       }
     });
   });
   return maxDate;
 };
+

@@ -26,7 +26,7 @@ const SelectDate = ({
           type !== 'addGuest' ? styles.selectDateContainer : styles.selectDateContainerAddGuest
         }
       >
-        {eventData.is_grouped_ticket && (
+        {(
           <>
             <p className={styles.ticketTypesTitle}>Select Date</p>
             <p className={styles.eventDescription}>Select a date to register for the event.</p>

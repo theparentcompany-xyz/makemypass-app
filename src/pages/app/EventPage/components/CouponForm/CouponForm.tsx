@@ -17,7 +17,6 @@ import { validateCondition } from '../../../../../components/DynamicForm/conditi
 const CouponForm = ({
                       setTickets,
                       tickets,
-                      eventId,
                       discount,
                       setDiscount,
                       eventData,
@@ -25,20 +24,17 @@ const CouponForm = ({
                       coupon,
                       setSelectedDate,
                       selectedDate,
-                      updateTicketCount,
                       formData,
                     }: {
   setTickets: React.Dispatch<React.SetStateAction<Tickets[]>>;
   tickets: Tickets[];
-  eventId: string;
   discount: DiscountData;
   setDiscount: React.Dispatch<React.SetStateAction<DiscountData>>;
-  eventData: EventType | undefined;
+  eventData: EventType;
   setCoupon: React.Dispatch<React.SetStateAction<CouponData>>;
   coupon: CouponData;
   setSelectedDate: React.Dispatch<React.SetStateAction<string | null | undefined>>;
   selectedDate: string | null | undefined;
-  updateTicketCount: (ticketId: string, increment: boolean) => void;
   formData: FormDataType;
 }) => {
   const handleDateChange = (date: string | null | undefined | Date) => {
@@ -48,16 +44,12 @@ const CouponForm = ({
     if (newDate && eventData) {
       setSelectedDate(newDate.toISOString().split('T')[0]);
     }
-
     getTickets();
   };
   const [filteredTickets, setFilteredTickets] = useState<TicketType[]>([]);
+  const [newTickets, setNewTickets] = useState<Tickets[]>([]);
 
-  useEffect(() => {
-    if (eventData) handleDateChange(findMinDate(eventData));
-  }, [eventData]);
-
-  const selectTicket = (currentTicketId: string) => {
+  const onSelectTicket = (currentTicketId: string) => {
     if (eventData?.select_multi_ticket) {
       let newTicket = true;
       const updatedTickets = tickets.map((ticket) => {
@@ -67,15 +59,41 @@ const CouponForm = ({
             ...ticket,
             count: ticket.count == 0 ? 1 : ticket.count, my_ticket: true,
           };
+        } else {
+          return {
+            ...ticket,
+            my_ticket: false,
+          };
         }
-        return ticket;
       });
       if (newTicket) {
         updatedTickets.push({ ticket_id: currentTicketId, count: 1, my_ticket: true });
       }
+      setTickets(updatedTickets);
+    } else if (eventData?.is_sub_event) {
+      setTickets((prevTickets) => [...prevTickets, { ticket_id: currentTicketId, count: 1, my_ticket: true }]);
     } else {
       setTickets([{ ticket_id: currentTicketId, count: 1, my_ticket: true }]);
     }
+  };
+
+  const updateTicketCount = (ticketId: string, increment: boolean) => {
+    let newTicket = true;
+    const updatedTickets: Tickets[] = tickets.map((ticket) => {
+      if (ticket.ticket_id === ticketId && ticket.count >= 0) {
+        newTicket = false;
+        return {
+          ...ticket,
+          count: increment ? ticket.count + 1 : ticket.count > 0 ? ticket.count - 1 : 0,
+        };
+      }
+      return ticket;
+    });
+
+    if (newTicket) {
+      updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: false });
+    }
+    setNewTickets(updatedTickets);
   };
 
   const getTickets = () => {
@@ -139,12 +157,30 @@ const CouponForm = ({
   };
 
   useEffect(() => {
-    getTickets();
+    if (eventData) {
+      handleDateChange(findMinDate(eventData));
+      getTickets();
+    }
   }, [eventData]);
 
   useEffect(() => {
     getTickets();
   }, [discount]);
+
+  useEffect(() => {
+    getTickets();
+  }, [selectedDate]);
+
+  useEffect(() => {
+    setTickets(newTickets);
+  }, [newTickets]);
+
+  useEffect(() => {
+    if (tickets.length === 0 && filteredTickets.length > 0) {
+      const defaultTicket = filteredTickets.find((ticket: TicketType) => ticket.default_selected) || filteredTickets[0];
+      setTickets([{ ticket_id: defaultTicket.id, count: 1, my_ticket: true }]);
+    }
+  }, [filteredTickets]);
 
   return (
     <>
@@ -201,7 +237,7 @@ const CouponForm = ({
           <div>
             <SecondaryButton
               onClick={() => {
-                if (coupon.value) applyCoupon(eventId, coupon, setDiscount, setCoupon);
+                if (coupon.value) applyCoupon(eventData.id, coupon, setDiscount, setCoupon);
                 else {
                   setCoupon({
                     ...coupon,
@@ -249,27 +285,14 @@ const CouponForm = ({
             (entry) => entry.date === selectedDate,
           )?.capacity;
 
-          if (
-            ((hasCapacity && hasCapacity > 0) || !hasCapacity) &&
-            eventData &&
-            validateCondition(filteredTicket.conditions, formData, eventData?.form)
-          ) {
-            // if (firstRender) {
-            //   setNoTickets(false);
-
-            //   setTickets([
-            //     { ticket_id: eventData?.tickets[ticketType].id, count: 1, my_ticket: true },
-            //   ]);
-            //   setAmount(eventData?.tickets[ticketType].price.toString());
-            //   setFirstRender(false);
-            // }
-
+          if (((hasCapacity && hasCapacity > 0) || !hasCapacity) && eventData &&
+            validateCondition(filteredTicket.conditions, formData, eventData?.form)) {
             return (
               <div
                 key={filteredTicket.id}
 
                 onClick={() => {
-                  selectTicket(filteredTicket.id);
+                  onSelectTicket(filteredTicket.id);
                 }}
                 className={styles.ticketType}
                 style={{
