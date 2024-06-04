@@ -18,6 +18,7 @@ import { Helmet } from 'react-helmet';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
+
   const [noTickets, setNoTickets] = useState<boolean>(false);
   console.log('noTickets', noTickets);
 
@@ -34,7 +35,6 @@ const EventPage = () => {
 
   const [formNumber, setFormNumber] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState<string | null>();
-  // const [hasEvent, setHasEvent] = useState<boolean>(true);
 
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
@@ -51,45 +51,21 @@ const EventPage = () => {
     error: '',
   });
 
+  const [eventNotFound, setEventNotFound] = useState<boolean>(false);
+
   const [searchParams] = useSearchParams();
   const typeParam = searchParams.get('type');
-
-  useEffect(() => {
-    if (eventTitle) getEventInfo(eventTitle, setEventData);
-  }, [eventTitle]);
-
-  useEffect(() => {
-    if (eventData?.coupon) setCoupon(eventData?.coupon);
-  }, [eventData]);
 
   const location = useLocation();
   const newSearchParams = new URLSearchParams(location.search);
 
   useEffect(() => {
-    const scrollToTop = () => {
-      window.scrollTo(0, 0);
-    };
-
-    scrollToTop();
-  }, [success]);
+    if (eventTitle) getEventInfo(eventTitle, setEventData, setEventNotFound);
+  }, [eventTitle]);
 
   useEffect(() => {
-    if (discount.discount_value > 0) {
-      //* Does all the ticket prices are added
-      setAmount(discountedTicketPrice(Number(amount), discount, tickets[0].ticket_id).toString());
-    } else {
-      if (eventData?.tickets && tickets) {
-        let ticketPrice = 0;
-        Object.keys(eventData?.tickets)?.map((ticketType) => {
-          if (tickets.find((ticket) => ticket.ticket_id === eventData?.tickets[ticketType].id)) {
-            ticketPrice += eventData?.tickets[ticketType].price;
-          }
-        });
-
-        setAmount(ticketPrice.toString());
-      }
-    }
-  }, [discount]);
+    if (eventData?.coupon) setCoupon(eventData?.coupon);
+  }, [eventData]);
 
   useEffect(() => {
     if (eventData?.tickets) {
@@ -119,6 +95,38 @@ const EventPage = () => {
       }, {}),
     );
   }, [eventData?.form]);
+
+  useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo(0, 0);
+    };
+
+    scrollToTop();
+  }, [success]);
+
+  useEffect(() => {
+    if (discount.discount_value > 0) {
+      //* Does all the ticket prices are added
+      setAmount(discountedTicketPrice(Number(amount), discount, tickets[0].ticket_id).toString());
+    } else {
+      if (eventData?.tickets && tickets) {
+        let ticketPrice = 0;
+        Object.keys(eventData?.tickets)?.map((ticketType) => {
+          if (tickets.find((ticket) => ticket.ticket_id === eventData?.tickets[ticketType].id)) {
+            ticketPrice += eventData?.tickets[ticketType].price;
+          }
+        });
+
+        setAmount(ticketPrice.toString());
+      }
+    }
+  }, [discount]);
+
+  useEffect(() => {
+    if (newTickets.length > 0) {
+      setTickets(newTickets);
+    }
+  }, [newTickets]);
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
     setFormData({
@@ -156,12 +164,6 @@ const EventPage = () => {
     }
   };
 
-  useEffect(() => {
-    if (newTickets.length > 0) {
-      setTickets(newTickets);
-    }
-  }, [newTickets]);
-
   return (
     <>
       <Helmet>
@@ -184,6 +186,7 @@ const EventPage = () => {
           setSuccess={setSuccess}
           hasShortlisting={eventData?.shortlist}
         />
+
         {eventData?.err_message && (
           <>
             <motion.div
@@ -192,6 +195,11 @@ const EventPage = () => {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
               className={styles.eventPageContainer}
+              style={{
+                maxWidth: '32rem',
+                margin: 'auto',
+                padding: '0 1rem',
+              }}
             >
               <EventHeader eventData={eventData} />
             </motion.div>
@@ -313,10 +321,17 @@ const EventPage = () => {
               </div>
             </div>
           </div>
+        ) : eventNotFound ? (
+          <div className={styles.eventPageContainer}>
+            <p className={`${styles.privateEventText} ${styles.center}`}>
+              This event does not have any registration form. Please contact the event organizer for
+              more information.
+            </p>
+          </div>
         ) : (
           !(eventData && eventData.title) && (
             <div className={styles.center}>
-              <HashLoader color={'#46BF75'} size={50} />
+              <HashLoader color='#46BF75' size={50} />
             </div>
           )
         )}

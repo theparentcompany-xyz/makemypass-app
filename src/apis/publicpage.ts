@@ -253,16 +253,15 @@ export const validateRsvp = async (
 export const getEventInfo = async (
   eventTitle: string,
   setEventData: Dispatch<React.SetStateAction<EventType | undefined>>,
+  setEventNotFound?: Dispatch<React.SetStateAction<boolean>>,
 ) => {
   privateGateway
     .get(makeMyPass.getEventInfo(eventTitle))
     .then((response) => {
       setEventData(response.data.response);
-      console.log('API Response', response.data.response.tickets);
-      // return response.data.response;
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Info');
+      if (error.response.data.statusCode === 404) setEventNotFound && setEventNotFound(true);
     });
 };
 
