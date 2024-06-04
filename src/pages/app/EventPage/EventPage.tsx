@@ -286,35 +286,29 @@ const EventPage = () => {
                         );
                       }
                     } else {
-                      if (!noTickets)
-                        submitForm({
-                          eventId: eventData.id,
-                          tickets,
-                          formData,
-                          coupon,
-                          setSuccess,
-                          setFormNumber,
-                          setFormData,
-                          setAmount,
-                          setFormErrors,
-                          setCoupon,
-                          setEventData,
-                          eventTitle,
-                          selectedDate,
-                          setDiscount,
-                        });
-                      else {
-                        toast.error("You don't have selectable tickets.");
-                      }
+                      submitForm({
+                        eventId: eventData.id,
+                        tickets,
+                        formData,
+                        coupon,
+                        setSuccess,
+                        setFormNumber,
+                        setFormData,
+                        setAmount,
+                        setFormErrors,
+                        setCoupon,
+                        setEventData,
+                        eventTitle,
+                        selectedDate,
+                        setDiscount,
+                      });
                     }
                   }}
                   className={styles.submitButton}
                 >
                   {formNumber === 0 && !(hasZeroPriceTicket || eventData?.select_multi_ticket)
                     ? 'Next'
-                    : !noTickets
-                      ? 'Register Now'
-                      : 'No Tickets Available'}
+                    : 'Register Now'}
                 </motion.button>
               </div>
             </div>
