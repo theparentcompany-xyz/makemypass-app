@@ -52,6 +52,7 @@ const EventPage = () => {
 
   const [eventNotFound, setEventNotFound] = useState<boolean>(false);
   const [directRegister, setDirectRegister] = useState<boolean | string>(false);
+  const [ticketConditionalFields, setTicketConditionalFields] = useState<string[]>([]);
 
   const [searchParams] = useSearchParams();
   const typeParam = searchParams.get('type');
@@ -60,43 +61,44 @@ const EventPage = () => {
   const newSearchParams = new URLSearchParams(location.search);
 
   let formIdToKey: { [key: string]: string } = {};
-  const ticketConditionalFields: string[] = [];
 
   useEffect(() => {
     if (eventTitle) getEventInfo(eventTitle, setEventData, setEventNotFound);
-    console.log('noTickets', noTickets);
   }, [eventTitle]);
 
   useEffect(() => {
-    setFormData(
-      eventData?.form.reduce((data: any, field: any) => {
-        data[field.field_key] = newSearchParams.get(field.field_key) || '';
-        return data;
-      }, {}),
-    );
+    if (eventData?.form) {
+      setFormData(
+        eventData?.form.reduce((data: any, field: any) => {
+          data[field.field_key] = newSearchParams.get(field.field_key) || '';
+          return data;
+        }, {}),
+      );
 
-    eventData?.form.map((field) => {
-      formIdToKey = {
-        ...formIdToKey,
-        [field.id]: field.field_key,
-      };
-    });
-  }, [eventData?.form]);
+      eventData?.form.forEach((field) => {
+        formIdToKey = {
+          ...formIdToKey,
+          [field.id]: field.field_key,
+        };
+      });
+    }
 
-  useEffect(() => {
-    if (eventData?.coupon) setCoupon(eventData?.coupon);
-    checkDirectRegister();
-  }, [eventData]);
-
-  useEffect(() => {
     if (eventData?.tickets) {
       eventData.tickets.forEach((ticket) => {
         ticket.conditions?.forEach((condtion) => {
-          ticketConditionalFields.push(formIdToKey[condtion.field]);
+          setTicketConditionalFields((prevState) => {
+            return [...prevState, formIdToKey[condtion.field]];
+          });
         });
       });
     }
-  }, [eventData?.tickets]);
+
+    // console.log(ticketConditionalFields);
+
+    if (eventData?.coupon) setCoupon(eventData?.coupon);
+
+    checkDirectRegister();
+  }, [eventData]);
 
   useEffect(() => {
     const scrollToTop = () => {
@@ -143,8 +145,9 @@ const EventPage = () => {
       });
     }
 
+    console.log('ticketConditionalFields', ticketConditionalFields);
     if (ticketConditionalFields.includes(fieldName)) {
-      checkDirectRegister();
+      checkDirectRegister(formData);
     }
   };
 
@@ -170,12 +173,15 @@ const EventPage = () => {
     }
   };
 
-  const checkDirectRegister = () => {
+  const checkDirectRegister = (formData: FormDataType) => {
     const filteredTicket: TicketType[] = [];
 
-    eventData?.tickets.map((ticket) => {
-      if (ticket.conditions) {
+    eventData?.tickets.forEach((ticket) => {
+      if (ticket.conditions && ticket.conditions.length > 0) {
+        console.log(ticket.conditions);
+
         if (validateCondition(ticket.conditions, formData, eventData.form)) {
+          console.log('Workavannae!');
           filteredTicket.push(ticket);
         }
       } else {
@@ -187,9 +193,10 @@ const EventPage = () => {
       filteredTicket.length === 1 &&
       filteredTicket[0].price == 0 &&
       !eventData?.select_multi_ticket &&
-      !filteredTicket[0].entry_date
+      filteredTicket[0].entry_date.length == 0
     ) {
       setDirectRegister(filteredTicket[0].id);
+      console.log('BLa Bal');
       setTickets([
         {
           ticket_id: filteredTicket[0].id,
