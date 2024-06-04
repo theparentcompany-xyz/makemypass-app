@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styles from './EventPage.module.css';
 import Theme from '../../../components/Theme/Theme';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
@@ -8,19 +9,19 @@ import { getEventInfo, submitForm, validateRsvp } from '../../../apis/publicpage
 import { CouponData, DiscountData, Tickets } from './types';
 import { motion } from 'framer-motion';
 // import { showRazorpay } from './components/Razorpay';
-import { EventType, FormDataType } from '../../../apis/types';
+import { EventType, FormDataType, TicketType } from '../../../apis/types';
 import { discountedTicketPrice } from './constants';
 import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import EventHeader from './components/EventHeader/EventHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
 import CouponForm from './components/CouponForm/CouponForm';
 import { Helmet } from 'react-helmet';
+import { validateCondition } from '../../../components/DynamicForm/condition';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
   const [noTickets, setNoTickets] = useState<boolean>(false);
-  console.log('noTickets', noTickets);
 
   const [tickets, setTickets] = useState<Tickets[]>([]);
 
@@ -42,8 +43,6 @@ const EventPage = () => {
     ticket: [],
   });
 
-  const [hasZeroPriceTicket, setHasZeroPriceTicket] = useState(false);
-
   const [coupon, setCoupon] = useState<CouponData>({
     status: '',
     description: '',
@@ -52,6 +51,7 @@ const EventPage = () => {
   });
 
   const [eventNotFound, setEventNotFound] = useState<boolean>(false);
+  const [directRegister, setDirectRegister] = useState<boolean | string>(false);
 
   const [searchParams] = useSearchParams();
   const typeParam = searchParams.get('type');
@@ -59,33 +59,13 @@ const EventPage = () => {
   const location = useLocation();
   const newSearchParams = new URLSearchParams(location.search);
 
+  let formIdToKey: { [key: string]: string } = {};
+  const ticketConditionalFields: string[] = [];
+
   useEffect(() => {
     if (eventTitle) getEventInfo(eventTitle, setEventData, setEventNotFound);
+    console.log('noTickets', noTickets);
   }, [eventTitle]);
-
-  useEffect(() => {
-    if (eventData?.coupon) setCoupon(eventData?.coupon);
-  }, [eventData]);
-
-  useEffect(() => {
-    if (eventData?.tickets) {
-      Object.keys(eventData?.tickets)?.map((ticketType) => {
-        if (eventData?.tickets[ticketType].default_selected) {
-          setTickets([{ ticket_id: eventData?.tickets[ticketType].id, count: 1, my_ticket: true }]);
-          setAmount(eventData?.tickets[ticketType].price.toString());
-        }
-      });
-
-      const responseKeys = Object.keys(eventData?.tickets);
-      if (responseKeys.length === 1) {
-        const ticketKey = responseKeys[0];
-        const ticket = eventData?.tickets[ticketKey];
-        if (ticket.price === 0) {
-          setHasZeroPriceTicket(true);
-        }
-      }
-    }
-  }, [eventData?.tickets]);
 
   useEffect(() => {
     setFormData(
@@ -94,7 +74,29 @@ const EventPage = () => {
         return data;
       }, {}),
     );
+
+    eventData?.form.map((field) => {
+      formIdToKey = {
+        ...formIdToKey,
+        [field.id]: field.field_key,
+      };
+    });
   }, [eventData?.form]);
+
+  useEffect(() => {
+    if (eventData?.coupon) setCoupon(eventData?.coupon);
+    checkDirectRegister();
+  }, [eventData]);
+
+  useEffect(() => {
+    if (eventData?.tickets) {
+      eventData.tickets.forEach((ticket) => {
+        ticket.conditions?.forEach((condtion) => {
+          ticketConditionalFields.push(formIdToKey[condtion.field]);
+        });
+      });
+    }
+  }, [eventData?.tickets]);
 
   useEffect(() => {
     const scrollToTop = () => {
@@ -140,6 +142,10 @@ const EventPage = () => {
         [fieldName]: '',
       });
     }
+
+    if (ticketConditionalFields.includes(fieldName)) {
+      checkDirectRegister();
+    }
   };
 
   const updateTicketCount = (ticketId: string, increment: boolean) => {
@@ -162,6 +168,36 @@ const EventPage = () => {
     if (updatedTickets.length > 0) {
       setNewTickets(updatedTickets);
     }
+  };
+
+  const checkDirectRegister = () => {
+    const filteredTicket: TicketType[] = [];
+
+    eventData?.tickets.map((ticket) => {
+      if (ticket.conditions) {
+        if (validateCondition(ticket.conditions, formData, eventData.form)) {
+          filteredTicket.push(ticket);
+        }
+      } else {
+        filteredTicket.push(ticket);
+      }
+    });
+
+    if (
+      filteredTicket.length === 1 &&
+      filteredTicket[0].price == 0 &&
+      !eventData?.select_multi_ticket &&
+      !filteredTicket[0].entry_date
+    ) {
+      setDirectRegister(filteredTicket[0].id);
+      setTickets([
+        {
+          ticket_id: filteredTicket[0].id,
+          count: 1,
+          my_ticket: true,
+        },
+      ]);
+    } else setDirectRegister(false);
   };
 
   return (
@@ -282,9 +318,8 @@ const EventPage = () => {
                   whileTap={{ scale: 0.95 }}
                   type='submit'
                   onClick={() => {
-                    if (formNumber === 0 && !hasZeroPriceTicket) {
+                    if (formNumber === 0 && !directRegister) {
                       {
-                        console.log('event id', eventData.id);
                         validateRsvp(
                           eventData.id,
                           formData,
@@ -314,9 +349,7 @@ const EventPage = () => {
                   }}
                   className={styles.submitButton}
                 >
-                  {formNumber === 0 && !(hasZeroPriceTicket || eventData?.select_multi_ticket)
-                    ? 'Next'
-                    : 'Register Now'}
+                  {formNumber === 0 && !directRegister ? 'Next' : 'Register'}
                 </motion.button>
               </div>
             </div>

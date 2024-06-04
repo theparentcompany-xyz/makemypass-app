@@ -301,7 +301,8 @@ const DynamicForm = ({
         {!showScanner &&
           formFields?.map((field: FormFieldType) => {
             const fieldTitle = field?.title + (field.required ? '*' : '');
-            if (!validateCondition(field, formData, formFields) || field.hidden) return null;
+            if (!validateCondition(field.conditions, formData, formFields) || field.hidden)
+              return null;
             if (field.type === 'text' || field.type === 'email' || field.type === 'phonenumber') {
               return (
                 <InputFIeld

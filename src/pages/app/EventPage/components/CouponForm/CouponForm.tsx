@@ -165,7 +165,7 @@ const CouponForm = ({
           if (
             ((hasCapacity && hasCapacity > 0) || !hasCapacity) &&
             eventData &&
-            validateCondition(ticketInfo[ticketType], formData, eventData?.form)
+            validateCondition(ticketInfo[ticketType].conditions, formData, eventData?.form)
           ) {
             if (firstRender) {
               setNoTickets(false);
