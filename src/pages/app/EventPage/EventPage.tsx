@@ -106,23 +106,6 @@ const EventPage = () => {
     scrollToTop();
   }, [success]);
 
-  useEffect(() => {
-    if (discount.discount_value > 0) {
-      //* Does all the ticket prices are added
-      setAmount(discountedTicketPrice(Number(amount), discount, tickets[0].ticket_id).toString());
-    } else {
-      if (eventData?.tickets && tickets) {
-        let ticketPrice = 0;
-        Object.keys(eventData?.tickets)?.map((ticketType) => {
-          if (tickets.find((ticket) => ticket.ticket_id === eventData?.tickets[ticketType].id)) {
-            ticketPrice += eventData?.tickets[ticketType].price;
-          }
-        });
-
-        setAmount(ticketPrice.toString());
-      }
-    }
-  }, [discount]);
 
   useEffect(() => {
     if (newTickets.length > 0) {

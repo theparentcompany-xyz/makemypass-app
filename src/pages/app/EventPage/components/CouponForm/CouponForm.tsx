@@ -15,22 +15,22 @@ import { findMinDate } from '../../../../../common/commonFunctions';
 import { validateCondition } from '../../../../../components/DynamicForm/condition';
 
 const CouponForm = ({
-  ticketInfo,
-  setTickets,
-  tickets,
-  eventId,
-  discount,
-  setDiscount,
-  setAmount,
-  eventData,
-  setCoupon,
-  coupon,
-  setSelectedDate,
-  selectedDate,
-  updateTicketCount,
-  formData,
-  setNoTickets,
-}: {
+                      ticketInfo,
+                      setTickets,
+                      tickets,
+                      eventId,
+                      discount,
+                      setDiscount,
+                      setAmount,
+                      eventData,
+                      setCoupon,
+                      coupon,
+                      setSelectedDate,
+                      selectedDate,
+                      updateTicketCount,
+                      formData,
+                      setNoTickets,
+                    }: {
   ticketInfo: TicketType[];
   setTickets: React.Dispatch<React.SetStateAction<Tickets[]>>;
   tickets: Tickets[];
@@ -81,7 +81,8 @@ const CouponForm = ({
       }
     });
     setFilteredTickets([]);
-    console.log(discount);
+
+    const tempList2: TicketType[] = [];
     tempList.forEach((ticket) => {
       if (ticket.entry_date && ticket.entry_date.length > 0) {
         ticket.entry_date.forEach((date) => {
@@ -92,11 +93,33 @@ const CouponForm = ({
               price: date.price ? date.price : ticket.price,
               show_price: date.show_price ? date.show_price : ticket.show_price,
             };
-
-            setFilteredTickets((prevTickets) => {
-              return [...prevTickets, updatedTicket];
-            });
+            tempList2.push(updatedTicket);
           }
+        });
+      } else {
+        tempList2.push(ticket);
+      }
+    });
+
+    tempList2.forEach((ticket) => {
+      // TODO: move to type to enum (amount, percent)
+      if (discount?.discount_type === 'percentage' && discount.ticket.includes(ticket.id)) {
+        const updatedTicket = {
+          ...ticket,
+          price: ticket.price - (ticket.price * Number(discount.discount_value) / 100),
+          show_price: ticket.price,
+        };
+        setFilteredTickets((prevTickets) => {
+          return [...prevTickets, updatedTicket];
+        });
+      } else if (discount?.discount_type === 'amount' && discount.ticket.includes(ticket.id)) {
+        const updatedTicket = {
+          ...ticket,
+          price: ticket.price - Number(discount.discount_value),
+          show_price: ticket.price,
+        };
+        setFilteredTickets((prevTickets) => {
+          return [...prevTickets, updatedTicket];
         });
       } else {
         setFilteredTickets((prevTickets) => {
@@ -133,10 +156,10 @@ const CouponForm = ({
           }}
         >
           <InputFIeld
-            name='coupon_code'
-            placeholder='Coupon Code'
-            id='coupon_code'
-            key='coupon_code'
+            name="coupon_code"
+            placeholder="Coupon Code"
+            id="coupon_code"
+            key="coupon_code"
             error={[coupon.error ?? '']}
             onChange={(e) => {
               setCoupon({
@@ -145,7 +168,7 @@ const CouponForm = ({
                 value: e.target.value,
               });
             }}
-            type='text'
+            type="text"
             icon={getIcon('coupon_code')}
             required={true}
             description={coupon.description}
@@ -181,7 +204,7 @@ const CouponForm = ({
                   });
                 }
               }}
-              buttonText='Validate Code'
+              buttonText="Validate Code"
             />
           </div>
         </motion.div>
@@ -367,12 +390,8 @@ const CouponForm = ({
                 {eventData?.select_multi_ticket && tickets && (
                   <>
                     <div className={styles.ticketCountContainer}>
-                      <div
-                        className='row'
-                        style={{
-                          columnGap: 0,
-                        }}
-                      >
+                      <div className="row" style={{
+                          columnGap: 0,}}>
                         <button
                           className={styles.ticketCountUpdateButton}
                           onClick={() => {
@@ -407,16 +426,12 @@ const CouponForm = ({
                         </button>
                       </div>
 
-                      {filteredTicket.entry_date?.map((entryDate) => {
-                        return (
-                          entryDate.date === selectedDate &&
-                          entryDate.capacity <= 10 && (
-                            <div key={entryDate.date} className={styles.dateContainer}>
-                              <p className={styles.capacity}>{entryDate.capacity} tickets left</p>
-                            </div>
-                          )
-                        );
-                      })}
+                      {/*TODO: add this outside this*/}
+                      {filteredTicket.capacity <= 10 && (
+                        <div className={styles.dateContainer}>
+                          <p className={styles.capacity}>{filteredTicket.capacity} tickets left</p>
+                        </div>
+                      )}
                     </div>
                   </>
                 )}
@@ -434,9 +449,7 @@ const CouponForm = ({
                 </div>
 
                 <div className={styles.ticketPriceData}>
-                  {discount.discount_value > 0 &&
-                    (filteredTicket.entry_date.find((entry) => entry.date === selectedDate)
-                      ?.price || filteredTicket.price) > 0 &&
+                  {discount.discount_value > 0 && filteredTicket.price > 0 &&
                     discount.ticket.includes(filteredTicket.id) && (
                       <div className={styles.discountData}>
                         <p className={styles.discountAmount}>
