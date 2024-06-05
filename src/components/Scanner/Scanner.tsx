@@ -4,7 +4,6 @@ import styles from './Scanner.module.css';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import toast from 'react-hot-toast';
 import { Dispatch } from 'react';
-import Loader from '../Loader';
 import { HashLoader } from 'react-spinners';
 
 const Scanner = ({
@@ -20,7 +19,7 @@ const Scanner = ({
   trigger: boolean;
   setTrigger: (trigger: boolean) => void;
   scanCount: number;
-  checking: boolean;
+  checking?: boolean;
 }) => {
   const navigate = useNavigate();
   return (

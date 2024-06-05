@@ -3,7 +3,7 @@ import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInH
 import styles from './ScanQR.module.css';
 
 import { useEffect, useState } from 'react';
-import { checkInUser, getCheckInCount, preview } from '../../../../../apis/scan';
+import { checkInUser, getCheckInCount } from '../../../../../apis/scan';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import { CgClose } from 'react-icons/cg';
 import Modal from '../../../../../components/Modal/Modal';
