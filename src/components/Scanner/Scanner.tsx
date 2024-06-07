@@ -31,7 +31,7 @@ const Scanner = ({
             <SecondaryButton
               buttonText='Close'
               onClick={() => {
-                navigate(-1);
+                navigate('/');
               }}
             />
           </div>

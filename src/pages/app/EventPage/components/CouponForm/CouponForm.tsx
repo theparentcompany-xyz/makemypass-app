@@ -11,7 +11,7 @@ import { applyCoupon } from '../../../../../apis/publicpage';
 import 'react-datepicker/dist/react-datepicker.css';
 import SelectDate from '../../../../../components/SelectDate/SelectDate';
 import toast from 'react-hot-toast';
-import { findMinDate } from '../../../../../common/commonFunctions';
+import { findMinDate, isSelectDateNeeded } from '../../../../../common/commonFunctions';
 import { validateCondition } from '../../../../../components/DynamicForm/condition';
 
 const CouponForm = ({
@@ -259,7 +259,7 @@ const CouponForm = ({
         </div>
       </motion.div>
 
-      {eventData?.tickets[0]?.entry_date && eventData?.tickets[0]?.entry_date.length > 0 && (
+      {isSelectDateNeeded(eventData) && (
         <SelectDate
           eventData={eventData}
           selectedDate={selectedDate}
