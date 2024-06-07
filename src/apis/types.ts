@@ -114,7 +114,7 @@ export interface TicketType {
 }
 
 interface CouponType {
-  status: string;
+  status: boolean;
   description: string;
   value?: string;
   error?: string;

@@ -15,17 +15,17 @@ import { findMinDate } from '../../../../../common/commonFunctions';
 import { validateCondition } from '../../../../../components/DynamicForm/condition';
 
 const CouponForm = ({
-                      setTickets,
-                      tickets,
-                      discount,
-                      setDiscount,
-                      eventData,
-                      setCoupon,
-                      coupon,
-                      setSelectedDate,
-                      selectedDate,
-                      formData,
-                    }: {
+  setTickets,
+  tickets,
+  discount,
+  setDiscount,
+  eventData,
+  setCoupon,
+  coupon,
+  setSelectedDate,
+  selectedDate,
+  formData,
+}: {
   setTickets: React.Dispatch<React.SetStateAction<Tickets[]>>;
   tickets: Tickets[];
   discount: DiscountData;
@@ -57,7 +57,8 @@ const CouponForm = ({
           newTicket = false;
           return {
             ...ticket,
-            count: ticket.count == 0 ? 1 : ticket.count, my_ticket: true,
+            count: ticket.count == 0 ? 1 : ticket.count,
+            my_ticket: true,
           };
         } else {
           return {
@@ -71,7 +72,10 @@ const CouponForm = ({
       }
       setTickets(updatedTickets);
     } else if (eventData?.is_sub_event) {
-      setTickets((prevTickets) => [...prevTickets, { ticket_id: currentTicketId, count: 1, my_ticket: true }]);
+      setTickets((prevTickets) => [
+        ...prevTickets,
+        { ticket_id: currentTicketId, count: 1, my_ticket: true },
+      ]);
     } else {
       setTickets([{ ticket_id: currentTicketId, count: 1, my_ticket: true }]);
     }
@@ -133,7 +137,7 @@ const CouponForm = ({
       if (discount?.discount_type === 'percentage' && discount.ticket.includes(ticket.id)) {
         const updatedTicket = {
           ...ticket,
-          price: ticket.price - (ticket.price * Number(discount.discount_value) / 100),
+          price: ticket.price - (ticket.price * Number(discount.discount_value)) / 100,
           show_price: ticket.price,
         };
         setFilteredTickets((prevTickets) => {
@@ -177,84 +181,83 @@ const CouponForm = ({
 
   useEffect(() => {
     if (tickets.length === 0 && filteredTickets.length > 0) {
-      const defaultTicket = filteredTickets.find((ticket: TicketType) => ticket.default_selected) || filteredTickets[0];
+      const defaultTicket =
+        filteredTickets.find((ticket: TicketType) => ticket.default_selected) || filteredTickets[0];
       setTickets([{ ticket_id: defaultTicket.id, count: 1, my_ticket: true }]);
     }
   }, [filteredTickets]);
 
   return (
     <>
-      {coupon.status && (
-        <motion.div
-          initial={{ opacity: 0, y: 35 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.5 }}
-          className={`${styles.row} ${styles.ticketType}`}
-          style={{
-            marginTop: '0rem',
-            border: discount.discount_value > 0 ? '2px solid #46BF75' : '2px solid #2A3533',
+      <motion.div
+        initial={{ opacity: 0, y: 35 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.5 }}
+        className={`${styles.row} ${styles.ticketType}`}
+        style={{
+          marginTop: '0rem',
+          border: discount.discount_value > 0 ? '2px solid #46BF75' : '2px solid #2A3533',
+        }}
+      >
+        <InputField
+          name='coupon_code'
+          placeholder='Coupon Code'
+          id='coupon_code'
+          key='coupon_code'
+          error={[coupon.error ?? '']}
+          onChange={(e) => {
+            setCoupon({
+              ...coupon,
+              error: '',
+              value: e.target.value,
+            });
           }}
-        >
-          <InputField
-            name="coupon_code"
-            placeholder="Coupon Code"
-            id="coupon_code"
-            key="coupon_code"
-            error={[coupon.error ?? '']}
-            onChange={(e) => {
-              setCoupon({
-                ...coupon,
-                error: '',
-                value: e.target.value,
-              });
-            }}
-            type="text"
-            icon={getIcon('coupon_code')}
-            required={true}
-            description={coupon.description}
+          type='text'
+          icon={getIcon('coupon_code')}
+          required={true}
+          description={coupon.description}
+          style={{
+            marginTop: '-1rem',
+            border:
+              discount.discount_value > 0 && discount.ticket.length > 0
+                ? '2px solid #46BF75'
+                : '2px solid #2A3533',
+          }}
+        />
+        {discount.discount_type && discount.discount_value > 0 && (
+          <p
             style={{
-              marginTop: '-1rem',
-              border:
-                discount.discount_value > 0 && discount.ticket.length > 0
-                  ? '2px solid #46BF75'
-                  : '2px solid #2A3533',
+              marginTop: '-1.75rem',
             }}
-          />
-          {discount.discount_type && discount.discount_value > 0 && (
-            <p
-              style={{
-                marginTop: '-1.75rem',
-              }}
-              className={styles.discountText}
-            >
-              {discount.discount_type.toLowerCase() === 'percentage'
-                ? `${discount.discount_value}% discount applied`
-                : `${discount.discount_value} ${filteredTickets[0].currency} discount applied`}
-            </p>
-          )}
+            className={styles.discountText}
+          >
+            {discount.discount_type.toLowerCase() === 'percentage'
+              ? `${discount.discount_value}% discount applied`
+              : `${discount.discount_value} ${filteredTickets[0].currency} discount applied`}
+          </p>
+        )}
 
-          <div>
-            <SecondaryButton
-              onClick={() => {
-                if (coupon.value) applyCoupon(eventData.id, coupon, setDiscount, setCoupon);
-                else {
-                  setCoupon({
-                    ...coupon,
-                    error: 'Please enter a coupon code',
-                  });
-                  setDiscount({
-                    discount_value: 0,
-                    discount_type: 'error',
-                    ticket: [],
-                  });
-                }
-              }}
-              buttonText="Validate Code"
-            />
-          </div>
-        </motion.div>
-      )}
+        <div>
+          <SecondaryButton
+            onClick={() => {
+              if (coupon.value) applyCoupon(eventData.id, coupon, setDiscount, setCoupon);
+              else {
+                setCoupon({
+                  ...coupon,
+                  error: 'Please enter a coupon code',
+                });
+                setDiscount({
+                  discount_value: 0,
+                  discount_type: 'error',
+                  ticket: [],
+                });
+              }
+            }}
+            buttonText='Validate Coupon'
+          />
+        </div>
+      </motion.div>
 
       {eventData?.tickets[0]?.entry_date && eventData?.tickets[0]?.entry_date.length > 0 && (
         <SelectDate
@@ -285,12 +288,14 @@ const CouponForm = ({
             (entry) => entry.date === selectedDate,
           )?.capacity;
 
-          if (((hasCapacity && hasCapacity > 0) || !hasCapacity) && eventData &&
-            validateCondition(filteredTicket.conditions, formData, eventData?.form)) {
+          if (
+            ((hasCapacity && hasCapacity > 0) || !hasCapacity) &&
+            eventData &&
+            validateCondition(filteredTicket.conditions, formData, eventData?.form)
+          ) {
             return (
               <div
                 key={filteredTicket.id}
-
                 onClick={() => {
                   onSelectTicket(filteredTicket.id);
                 }}
@@ -306,9 +311,12 @@ const CouponForm = ({
                 {eventData?.select_multi_ticket && (
                   <>
                     <div className={styles.ticketCountContainer}>
-                      <div className="row" style={{
-                        columnGap: 0,
-                      }}>
+                      <div
+                        className='row'
+                        style={{
+                          columnGap: 0,
+                        }}
+                      >
                         <button
                           className={styles.ticketCountUpdateButton}
                           onClick={() => {
@@ -362,7 +370,8 @@ const CouponForm = ({
                 </div>
 
                 <div className={styles.ticketPriceData}>
-                  {discount.discount_value > 0 && filteredTicket.price > 0 &&
+                  {discount.discount_value > 0 &&
+                    filteredTicket.price > 0 &&
                     discount.ticket.includes(filteredTicket.id) && (
                       <div className={styles.discountData}>
                         <p className={styles.discountAmount}>

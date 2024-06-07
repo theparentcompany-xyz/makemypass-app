@@ -20,21 +20,21 @@ declare global {
 }
 
 export const submitForm = async ({
-                                   eventId,
-                                   tickets,
-                                   formData,
-                                   coupon,
-                                   setSuccess,
-                                   setFormNumber,
-                                   setFormData,
-                                   setFormErrors,
-                                   response,
-                                   setCoupon,
-                                   setEventData,
-                                   eventTitle,
-                                   selectedDate,
-                                   setDiscount,
-                                 }: {
+  eventId,
+  tickets,
+  formData,
+  coupon,
+  setSuccess,
+  setFormNumber,
+  setFormData,
+  setFormErrors,
+  response,
+
+  setEventData,
+  eventTitle,
+  selectedDate,
+  setDiscount,
+}: {
   eventId: string;
   tickets: Tickets[];
   formData: FormDataType;
@@ -44,7 +44,7 @@ export const submitForm = async ({
   setFormData?: React.Dispatch<React.SetStateAction<FormDataType>>;
   setFormErrors?: Dispatch<ErrorMessages>;
   response?: unknown;
-  setCoupon?: React.Dispatch<CouponData>;
+
   setEventData?: React.Dispatch<React.SetStateAction<EventType | undefined>>;
   eventTitle?: string;
   selectedDate?: string | null;
@@ -102,7 +102,7 @@ export const submitForm = async ({
           description: 'Event Registration',
           image: '/pwa/maskable.webp',
           order_id: paymentId,
-          handler: function(response: RazorpayPaymentDetails) {
+          handler: function (response: RazorpayPaymentDetails) {
             console.log(response);
 
             const audio = new Audio('/sounds/gpay.mp3');
@@ -129,11 +129,9 @@ export const submitForm = async ({
                   setFormNumber && setFormNumber(0);
                   setFormData && setFormData({});
                   setDiscount &&
-                  setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
+                    setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
                   if (setEventData && eventTitle) getEventInfo(eventTitle, setEventData);
-                }, 5000);
-
-                setCoupon && setCoupon({ status: '', description: '' });
+                }, 2000);
               })
               .catch((error) => {
                 toast.error(
@@ -156,9 +154,7 @@ export const submitForm = async ({
           setFormNumber && setFormNumber(0);
           setFormData && setFormData({});
           setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
-        }, 5000);
-
-        setCoupon && setCoupon({ status: '', description: '' });
+        }, 2000);
       }
     })
     .catch((error) => {
@@ -289,21 +285,29 @@ export const getFormFields = async (
     });
 };
 
-export const postAudio = async (eventId: string, recordedBlob: Blob, formData: FormDataType, setFormData: React.Dispatch<FormDataType>) => {
+export const postAudio = async (
+  eventId: string,
+  recordedBlob: Blob,
+  formData: FormDataType,
+  setFormData: React.Dispatch<FormDataType>,
+) => {
   const form = new FormData();
   const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.mp3', {
     type: 'audio/mp3',
   });
   form.append('file', file);
-  publicGateway.post(makeMyPass.parseFromAudio(eventId), form, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  }).then((response) => {
-    console.log(response.data.response.data);
-    const newFormData: FormDataType = { ...formData, ...response?.data?.response?.data };
-    setFormData(newFormData);
-  }).catch((error) => {
-    console.error(error.response.data.message.general[0]);
-  });
+  publicGateway
+    .post(makeMyPass.parseFromAudio(eventId), form, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((response) => {
+      console.log(response.data.response.data);
+      const newFormData: FormDataType = { ...formData, ...response?.data?.response?.data };
+      setFormData(newFormData);
+    })
+    .catch((error) => {
+      console.error(error.response.data.message.general[0]);
+    });
 };

@@ -14,7 +14,7 @@ export const customStyles = {
     fontStyle: 'normal',
     fontWeight: 400,
     fontSize: '0.9rem',
-    maxWidth: '25rem',
+    // maxWidth: '25rem',
     minWidth: '10rem',
   }),
 
@@ -38,7 +38,7 @@ export const customStyles = {
     ':hover': {
       backgroundColor: ' rgba(147, 149, 151, 0.13);',
     },
-    maxWidth: '24rem',
+    // maxWidth: '24rem',
   }),
 
   multiValue: (provided: any) => ({

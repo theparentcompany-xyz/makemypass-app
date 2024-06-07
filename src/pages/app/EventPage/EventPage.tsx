@@ -36,9 +36,9 @@ const EventPage = () => {
   });
 
   const [coupon, setCoupon] = useState<CouponData>({
-    status: '',
-    description: '',
-    value: '',
+    status: eventData?.coupon.status ? true : false,
+    description: eventData?.coupon.description ?? '',
+    value: eventData?.coupon.value ?? '',
     error: '',
   });
 
@@ -75,7 +75,7 @@ const EventPage = () => {
       });
 
       if (eventData?.tickets) {
-        setTicketConditionalFields([])
+        setTicketConditionalFields([]);
         eventData.tickets.forEach((ticket) => {
           ticket.conditions?.forEach((condition) => {
             setTicketConditionalFields((prevState) => {
@@ -99,13 +99,13 @@ const EventPage = () => {
   }, [success]);
 
   useEffect(() => {
-    if (ticketConditionalFields.some(field => field in formData)) {
+    if (ticketConditionalFields.some((field) => field in formData)) {
       checkDirectRegister();
     }
   }, [formData]);
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
-    setFormData(prevFormData => ({
+    setFormData((prevFormData) => ({
       ...prevFormData,
       [fieldName]: fieldValue,
     }));
@@ -151,12 +151,12 @@ const EventPage = () => {
   return (
     <>
       <Helmet>
-        <meta charSet="utf-8" />
+        <meta charSet='utf-8' />
         <title>{eventData?.title}</title>
-        <link rel="shortcut icon" href={eventData?.logo ?? '/favicon.ico'} type="image/x-icon" />
-        <meta name="title" content={eventData?.title} />
+        <link rel='shortcut icon' href={eventData?.logo ?? '/favicon.ico'} type='image/x-icon' />
+        <meta name='title' content={eventData?.title} />
         <meta
-          name="description"
+          name='description'
           content={
             eventData?.description
               ? eventData?.description
@@ -164,7 +164,7 @@ const EventPage = () => {
           }
         />
       </Helmet>
-      <Theme type="eventForm">
+      <Theme type='eventForm'>
         <SuccessModal
           success={success}
           setSuccess={setSuccess}
@@ -207,7 +207,7 @@ const EventPage = () => {
                   transition={{ duration: 0.5 }}
                   className={styles.eventForm}
                 >
-                  <div className={styles.eventFormInnerContainer} id="formFields">
+                  <div className={styles.eventFormInnerContainer} id='formFields'>
                     <div>
                       <p className={styles.eventFormTitle}>Registration Form</p>
                       <p className={styles.eventHeaderDescription}>
@@ -260,7 +260,7 @@ const EventPage = () => {
                   initial={{ opacity: 0, y: 35 }}
                   animate={{ opacity: 1, y: 0 }}
                   whileTap={{ scale: 0.95 }}
-                  type="submit"
+                  type='submit'
                   onClick={() => {
                     if (formNumber === 0 && !directRegister) {
                       {
@@ -282,7 +282,6 @@ const EventPage = () => {
                         setFormNumber,
                         setFormData,
                         setFormErrors,
-                        setCoupon,
                         setEventData,
                         eventTitle,
                         selectedDate,
@@ -307,7 +306,7 @@ const EventPage = () => {
         ) : (
           !(eventData && eventData.title) && (
             <div className={styles.center}>
-              <HashLoader color="#46BF75" size={50} />
+              <HashLoader color='#46BF75' size={50} />
             </div>
           )
         )}
