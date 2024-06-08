@@ -47,6 +47,7 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
       code_prefix: '',
       code_digits: 0,
       maintain_code_order: false,
+      is_active: false,
     };
     setTickets((prevTickets) => [newTicket, ...prevTickets]);
   };
@@ -78,6 +79,22 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
     }
   };
 
+  const closeTicket = (ticketInfo: TicketType) => {
+    const matchingTicket = tickets.find((ticket) => ticket.id === ticketInfo?.id);
+    if (matchingTicket && selectedTicket) {
+      console.log(eventId, matchingTicket?.id, { is_active: !matchingTicket?.is_active });
+      setTickets((prevTickets) => {
+        return prevTickets.map((ticket) => {
+          if (ticket.id === matchingTicket.id) {
+            return { ...ticket, is_active: !ticket.is_active };
+          }
+          return ticket;
+        });
+      });
+      editTicket(eventId, matchingTicket?.id, { is_active: !matchingTicket?.is_active });
+    }
+  };
+
   useEffect(() => {
     if (eventId && !ticketData) getTickets(eventId, setTicketData);
   }, [eventId, ticketData]);
@@ -95,7 +112,7 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
       });
     }
   }, [ticketData]);
-  console.log(selectedTicket);
+  console.log(tickets);
   return (
     <>
       {isOpen && (
@@ -165,7 +182,8 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
                 <TicketBox
                   key={ticket.id}
                   ticketInfo={ticket}
-                  onClick={() => setSelectedTicket(ticket)}
+                  closeTicket={closeTicket}
+                  onClick={() => ticket.id != selectedTicket?.id && setSelectedTicket(ticket)}
                   selected={selectedTicket?.id == ticket.id}
                 />
               ) : null;
