@@ -155,7 +155,6 @@ export const findMinDate = (eventData: EventType): Date | null => {
   return minDate;
 };
 
-
 export const findMaxDate = (eventData: EventType): Date | null => {
   const todayDate: Date = new Date();
   let maxDate: Date | null = null;
@@ -173,3 +172,9 @@ export const findMaxDate = (eventData: EventType): Date | null => {
   return maxDate;
 };
 
+export const isSelectDateNeeded = (eventData: EventType): boolean => {
+  const minDate = findMinDate(eventData);
+  const maxDate = findMaxDate(eventData);
+  console.log(minDate !== null && maxDate !== null && minDate < maxDate && minDate < new Date());
+  return minDate !== null && maxDate !== null && minDate < maxDate;
+};

@@ -198,7 +198,7 @@ export const initateRefund = async (
 export const getGuestInfo = async (
   eventId: string,
   setFormField: Dispatch<React.SetStateAction<FormFieldType[]>>,
-  setTicketInfo: Dispatch<React.SetStateAction<TicketType | undefined>>,
+  setTicketInfo: Dispatch<React.SetStateAction<TicketType[] | undefined>>,
 ) => {
   privateGateway
     .get(makeMyPass.addGuestInfo(eventId))

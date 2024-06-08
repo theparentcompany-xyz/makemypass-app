@@ -22,7 +22,11 @@ import {
   TicketType,
 } from '../../../apis/types';
 import { getCategories } from '../../../apis/events';
-import { transformTableData } from '../../../common/commonFunctions';
+import {
+  findMinDate,
+  isSelectDateNeeded,
+  transformTableData,
+} from '../../../common/commonFunctions';
 
 import { GuestsType, ResentTicket, SelectedGuest } from './types';
 import { TableType } from '../../../components/Table/types';
@@ -44,6 +48,10 @@ import toast from 'react-hot-toast';
 import { getEventInfo } from '../../../apis/publicpage';
 import { useParams } from 'react-router';
 import { Tickets } from '../EventPage/types';
+import SelectDate from '../../../components/SelectDate/SelectDate';
+import SelectTIcket from './components/SelectTicket/SelectTIcket';
+import ScanTicket from './components/ScanTicket/ScanTicket';
+import Scanner from '../../../components/Scanner/Scanner';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -54,11 +62,10 @@ const Guests = () => {
   const [formFields, setFormFields] = useState<FormFieldType[]>([]);
   const [formErrors, setFormErrors] = useState<ErrorMessages>({});
   const [formData, setFormData] = useState<FormDataType>({});
-  const [ticketInfo, setTicketInfo] = useState<TicketType>();
+  const [ticketInfo, setTicketInfo] = useState<TicketType[]>();
   const [tickets, setTickets] = useState<Tickets[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>();
-  const [cashInHand, setCashInHand] = useState(false);
   const [ticketCode, setTicketCode] = useState<string>('');
   const [showScanner, setShowScanner] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string>('');
@@ -204,6 +211,18 @@ const Guests = () => {
     }
   }, [ticketCode]);
 
+  const handleDateChange = (date: string | null | undefined | Date) => {
+    let newDate;
+    if (date) newDate = new Date(date);
+    if (newDate && eventData && setSelectedDate) {
+      setSelectedDate(newDate.toISOString().split('T')[0]);
+    }
+  };
+
+  useEffect(() => {
+    if (eventData) handleDateChange(findMinDate(eventData));
+  }, [eventData]);
+
   return (
     <Theme>
       {selectedGuestId && formData && selectedGuestId.id && selectedGuestId.type == 'view' && (
@@ -218,6 +237,7 @@ const Guests = () => {
           />
         </>
       )}
+
       {selectedGuestId && selectedGuestId.type === 'add' && (
         <Modal onClose={onClose}>
           <div
@@ -228,63 +248,127 @@ const Guests = () => {
             }}
           >
             <p className={styles.modalHeader}>Add Guest</p>
-            <DynamicForm
-              formFields={formFields}
-              formErrors={formErrors}
-              formData={formData}
-              onFieldChange={onFieldChange}
-              setCashInHand={setCashInHand}
-              cashInHand={cashInHand}
-              ticketInfo={ticketInfo}
-              setTickets={setTickets}
-              eventData={eventData}
-              ticketCode={ticketCode}
-              setTicketCode={setTicketCode}
-              showScanner={showScanner}
-              setShowScanner={setShowScanner}
-              selectedGuestId={selectedGuestId}
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-              tickets={tickets}
-            />
+            {!showScanner ? (
+              <>
+                {eventData && isSelectDateNeeded(eventData) && (
+                  <SelectDate
+                    eventData={eventData}
+                    selectedDate={selectedDate}
+                    handleDateChange={handleDateChange}
+                    type='addGuest'
+                    value={formData['entry_date']}
+                    onFieldChange={(fieldName, fieldValue) => onFieldChange(fieldName, fieldValue)}
+                  />
+                )}
 
-            {!showScanner && (
-              <div className={styles.buttons}>
-                <p
-                  onClick={() => {
-                    if (tickets.some((ticket) => ticket.count > 0))
-                      addGuest(
-                        eventId,
-                        tickets,
-                        formData,
-                        setFormErrors,
-                        setSelectedGuestId,
-                        selectedDate,
-                      );
-                    else {
-                      toast.error('Please select atleast one ticket');
-                    }
+                {ticketInfo && (
+                  <>
+                    <SelectTIcket
+                      ticketInfo={ticketInfo}
+                      selectedDate={selectedDate}
+                      tickets={tickets}
+                      setTickets={setTickets}
+                    />
+                    <ScanTicket
+                      ticketCode={ticketCode}
+                      setTicketCode={setTicketCode}
+                      setShowScanner={setShowScanner}
+                    />
+                  </>
+                )}
+
+                <div
+                  style={{
+                    marginBottom: '1rem',
                   }}
-                  className={styles.button}
                 >
-                  Add
-                </p>
-                <p
-                  onClick={() => {
-                    setSelectedGuestId({
-                      id: '',
-                      type: '',
-                    });
-                  }}
-                  className={styles.button}
-                >
-                  Cancel
-                </p>
-              </div>
+                  <p className={styles.formLabel}>Cash In Hand*</p>
+                  <div className={styles.checkboxContainer}>
+                    <>
+                      <div className={styles.checkbox}>
+                        <input
+                          type='radio'
+                          id='is_cash_in_hand'
+                          name='is_cash_in_hand'
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onFieldChange('is_cash_in_hand', e.target.checked ? 'true' : 'false');
+                          }}
+                          className={styles.checkboxInput}
+                        />
+                        <label>Yes</label>
+                      </div>
+                      <div className={styles.checkbox}>
+                        <input
+                          type='radio'
+                          id='is_cash_in_hand'
+                          name='is_cash_in_hand'
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onFieldChange('is_cash_in_hand', e.target.checked ? 'false' : 'true');
+                          }}
+                          className={styles.checkboxInput}
+                          defaultChecked
+                        />
+                        <label>No</label>
+                      </div>
+                    </>
+                  </div>
+                </div>
+
+                <DynamicForm
+                  formFields={formFields}
+                  formErrors={formErrors}
+                  formData={formData}
+                  onFieldChange={onFieldChange}
+                />
+
+                <div className={styles.buttons}>
+                  <p
+                    onClick={() => {
+                      if (tickets.some((ticket) => ticket.count > 0))
+                        addGuest(
+                          eventId,
+                          tickets,
+                          formData,
+                          setFormErrors,
+                          setSelectedGuestId,
+                          selectedDate,
+                        );
+                      else {
+                        toast.error('Please select atleast one ticket');
+                      }
+                    }}
+                    className={styles.button}
+                  >
+                    Add
+                  </p>
+                  <p
+                    onClick={() => {
+                      setSelectedGuestId({
+                        id: '',
+                        type: '',
+                      });
+                    }}
+                    className={styles.button}
+                  >
+                    Cancel
+                  </p>
+                </div>
+              </>
+            ) : (
+              <Scanner
+                ticketId={ticketCode}
+                setTicketId={setTicketCode}
+                trigger={true}
+                setTrigger={() => {
+                  if (setShowScanner) setShowScanner(false);
+                }}
+                scanCount={0}
+              />
             )}
           </div>
         </Modal>
       )}
+
       {guests ? (
         <>
           {resentTicket && resentTicket.status && (
@@ -333,18 +417,26 @@ const Guests = () => {
             <Modal onClose={onClose}>
               <div className={styles.userInfoModalContainer}>
                 <p className={styles.modalHeader}>Edit Guest</p>
-                <DynamicForm
-                  formFields={formFields}
-                  formErrors={formErrors}
-                  formData={formData}
-                  onFieldChange={onFieldChange}
-                  setCashInHand={setCashInHand}
-                  cashInHand={cashInHand}
-                  ticketInfo={ticketInfo}
-                  setTickets={setTickets}
-                  selectedGuestId={selectedGuestId}
-                  eventData={eventData}
-                />
+                <div className={styles.formFields}>
+                  {eventData && isSelectDateNeeded(eventData) && (
+                    <SelectDate
+                      eventData={eventData}
+                      selectedDate={selectedDate}
+                      handleDateChange={handleDateChange}
+                      type='addGuest'
+                      value={formData['entry_date']}
+                      onFieldChange={(fieldName, fieldValue) =>
+                        onFieldChange(fieldName, fieldValue)
+                      }
+                    />
+                  )}
+                  <DynamicForm
+                    formFields={formFields}
+                    formErrors={formErrors}
+                    formData={formData}
+                    onFieldChange={onFieldChange}
+                  />
+                </div>
 
                 {!showScanner && (
                   <div className={styles.buttons}>

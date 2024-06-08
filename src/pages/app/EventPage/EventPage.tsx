@@ -4,7 +4,7 @@ import Theme from '../../../components/Theme/Theme';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
-import { getEventInfo, submitForm, validateRsvp } from '../../../apis/publicpage';
+import { getEventInfo, postAudio, submitForm, validateRsvp } from '../../../apis/publicpage';
 import { CouponData, DiscountData, Tickets } from './types';
 import { motion } from 'framer-motion';
 import { EventType, FormDataType, TicketType } from '../../../apis/types';
@@ -14,6 +14,7 @@ import SuccessModal from './components/SuccessModal/SuccessModal';
 import CouponForm from './components/CouponForm/CouponForm';
 import { Helmet } from 'react-helmet';
 import { validateCondition } from '../../../components/DynamicForm/condition';
+import AudioRecorder from '../../../components/DynamicForm/components/AudioRecorder/AudioRecorder';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -148,6 +149,12 @@ const EventPage = () => {
     } else setDirectRegister(false);
   };
 
+  const handleAudioSubmit = (recordedBlob: Blob | null) => {
+    if (recordedBlob && eventData?.id && formData && setFormData) {
+      postAudio(eventData?.id, recordedBlob, formData, setFormData);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -215,14 +222,15 @@ const EventPage = () => {
                       </p>
                     </div>
                     {formData && eventData && (
-                      <DynamicForm
-                        formFields={eventData.form}
-                        formErrors={formErrors}
-                        formData={formData}
-                        onFieldChange={onFieldChange}
-                        eventData={eventData}
-                        setFormData={setFormData}
-                      />
+                      <div className={styles.formFields}>
+                        <AudioRecorder handleSubmit={handleAudioSubmit} />
+                        <DynamicForm
+                          formFields={eventData.form}
+                          formErrors={formErrors}
+                          formData={formData}
+                          onFieldChange={onFieldChange}
+                        />
+                      </div>
                     )}
                   </div>
                 </motion.div>
