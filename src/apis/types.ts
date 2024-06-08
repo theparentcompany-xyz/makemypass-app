@@ -220,3 +220,15 @@ export type ConditionType = {
   value: string;
   operator: string;
 };
+
+
+
+export type MailType = {
+  attachment: string;
+  body: string;
+  email_type: string;
+  id: string;
+  subject: string;
+  type: string;
+  updated_at: string;
+};
