@@ -85,6 +85,7 @@ export interface TicketType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [x: string]: any;
   title: string;
+  is_active: boolean;
   description: string;
   approval_required: boolean;
   code_prefix: string;
