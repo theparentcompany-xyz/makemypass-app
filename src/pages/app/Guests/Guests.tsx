@@ -1,5 +1,5 @@
 import styles from './Guests.module.css';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Theme from '../../../components/Theme/Theme';
 import Glance from '../../../components/Glance/Glance';
@@ -22,11 +22,7 @@ import {
   TicketType,
 } from '../../../apis/types';
 import { getCategories } from '../../../apis/events';
-import {
-  findMinDate,
-  isSelectDateNeeded,
-  transformTableData,
-} from '../../../common/commonFunctions';
+import { findMinDate, transformTableData } from '../../../common/commonFunctions';
 
 import { GuestsType, ResentTicket, SelectedGuest } from './types';
 import { TableType } from '../../../components/Table/types';
@@ -49,9 +45,10 @@ import { getEventInfo } from '../../../apis/publicpage';
 import { useParams } from 'react-router';
 import { Tickets } from '../EventPage/types';
 import SelectDate from '../../../components/SelectDate/SelectDate';
-import SelectTIcket from './components/SelectTicket/SelectTIcket';
+import SelectTicket from './components/SelectTicket/SelectTicket';
 import ScanTicket from './components/ScanTicket/ScanTicket';
 import Scanner from '../../../components/Scanner/Scanner';
+import { filterTickets } from '../../../common/coreLogics';
 
 const Guests = () => {
   const [guests, setGuests] = useState<GuestsType[]>([]);
@@ -63,6 +60,7 @@ const Guests = () => {
   const [formErrors, setFormErrors] = useState<ErrorMessages>({});
   const [formData, setFormData] = useState<FormDataType>({});
   const [ticketInfo, setTicketInfo] = useState<TicketType[]>();
+
   const [tickets, setTickets] = useState<Tickets[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>();
@@ -223,6 +221,21 @@ const Guests = () => {
     if (eventData) handleDateChange(findMinDate(eventData));
   }, [eventData]);
 
+  const [filteredTickets, setFilteredTickets] = React.useState<TicketType[]>([]);
+
+  useEffect(() => {
+    filterTickets({
+      eventData,
+      selectedDate,
+      setFilteredTickets,
+      formData,
+    });
+  }, [selectedDate]);
+
+  useEffect(() => {
+    console.log(tickets);
+  }, [tickets]);
+
   return (
     <Theme>
       {selectedGuestId && formData && selectedGuestId.id && selectedGuestId.type == 'view' && (
@@ -250,7 +263,7 @@ const Guests = () => {
             <p className={styles.modalHeader}>Add Guest</p>
             {!showScanner ? (
               <>
-                {eventData && isSelectDateNeeded(eventData) && (
+                {eventData && findMinDate(eventData) && (
                   <SelectDate
                     eventData={eventData}
                     selectedDate={selectedDate}
@@ -261,10 +274,10 @@ const Guests = () => {
                   />
                 )}
 
-                {ticketInfo && (
+                {filteredTickets && (
                   <>
-                    <SelectTIcket
-                      ticketInfo={ticketInfo}
+                    <SelectTicket
+                      filteredTickets={filteredTickets}
                       selectedDate={selectedDate}
                       tickets={tickets}
                       setTickets={setTickets}
