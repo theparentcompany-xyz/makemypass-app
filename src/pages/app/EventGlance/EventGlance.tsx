@@ -19,12 +19,25 @@ import toast from 'react-hot-toast';
 import EventHeader from '../../../components/EventHeader/EventHeader';
 import ManageTickets from './components/ManageTickets/ManageTickets';
 import { LuMail, LuPencil } from 'react-icons/lu';
-import { listMails } from '../../../apis/mails';
+import { listMails, updateMail } from '../../../apis/mails';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [eventTitle, setEventTitle] = useState('');
   const [eventData, setEventData] = useState<EventType>();
+
+  const onUpdateEmail = () => {
+    const matchingMail = mails.find((mail) => mail.id === selectedMail?.id);
+    if (!matchingMail || !selectedMail) return;
+
+    const changedData: Record<string, any> = Object.entries(selectedMail as Record<string, any>)
+      .filter(([key, value]) => matchingMail?.[key as keyof MailType] !== value)
+      .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
+
+    updateMail(eventId, selectedMail?.id as string, changedData);
+    console.log(changedData);
+  };
+
   useEffect(() => {
     if (eventId) getEvent(eventId, setEventTitle, setEventData);
   }, [eventId]);
@@ -71,6 +84,9 @@ const EventGlance = () => {
                       placeholder='Enter Subject'
                       className={styles.input}
                       value={selectedMail?.subject}
+                      onChange={(e) =>
+                        setSelectedMail({ ...selectedMail, subject: e.target.value })
+                      }
                     />
                   </div>
 
@@ -81,13 +97,16 @@ const EventGlance = () => {
                       placeholder='Enter Email Body'
                       className={styles.textarea}
                       value={selectedMail?.body}
+                      onChange={(e) => setSelectedMail({ ...selectedMail, body: e.target.value })}
                     />
                   </div>
                 </div>
               </div>
 
               <div className={styles.buttonContainer}>
-                <button className={styles.button}>Update Reminder</button>
+                <button className={styles.button} onClick={onUpdateEmail}>
+                  Update Reminder
+                </button>
                 <button className={styles.button}>Send Now</button>
                 <button className={styles.button} onClick={() => setSelectedMail(undefined)}>
                   Cancel
