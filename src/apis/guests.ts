@@ -202,7 +202,10 @@ export const getGuestInfo = async (
   privateGateway
     .get(makeMyPass.addGuestInfo(eventId))
     .then((response) => {
-      setEventFormData(response.data.response);
+      setEventFormData({
+        id: eventId,
+        ...response.data.response,
+      });
     })
     .catch(() => {
       toast.error('Something went wrong');

@@ -117,8 +117,8 @@ const EventForm = ({
   };
 
   const handleAudioSubmit = (recordedBlob: Blob | null) => {
-    if (recordedBlob && localEventId && formData && setFormData) {
-      postAudio(localEventId, recordedBlob, formData, setFormData);
+    if (recordedBlob && eventFormData.id && formData && setFormData) {
+      postAudio(eventFormData.id, recordedBlob, formData, setFormData);
     }
   };
 
@@ -136,10 +136,6 @@ const EventForm = ({
     }
   };
 
-  let localEventId = '';
-  if (sessionStorage.getItem('eventFormData') !== null)
-    localEventId = JSON.parse(sessionStorage.getItem('eventFormData')!).event_id;
-
   return (
     <>
       {formNumber === 0 && (
@@ -148,7 +144,7 @@ const EventForm = ({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.5 }}
-          className={styles.eventForms}
+          className={!type ? styles.eventForm : undefined}
         >
           <div className={styles.eventFormInnerContainer} id='formFields'>
             <div>
@@ -212,11 +208,17 @@ const EventForm = ({
           onClick={() => {
             if (formNumber === 0 && !directRegister) {
               {
-                validateRsvp(localEventId, formData, setFormNumber, setFormErrors, selectedDate);
+                validateRsvp(
+                  eventFormData.id,
+                  formData,
+                  setFormNumber,
+                  setFormErrors,
+                  selectedDate,
+                );
               }
             } else {
               submitForm({
-                eventId: localEventId,
+                eventId: eventFormData.id,
                 tickets,
                 formData,
                 coupon,
