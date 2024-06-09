@@ -12,22 +12,21 @@ import 'react-datepicker/dist/react-datepicker.css';
 import SelectDate from '../../../../../components/SelectDate/SelectDate';
 import toast from 'react-hot-toast';
 import { findMinDate } from '../../../../../common/commonFunctions';
-import { validateCondition } from '../../../../../components/DynamicForm/condition';
 import { filterTickets } from '../../../../../common/coreLogics.ts';
 import { FormEventData } from '../../../Guests/types.ts';
 
 const CouponForm = ({
-  setTickets,
-  tickets,
-  discount,
-  setDiscount,
-  eventFormData,
-  setCoupon,
-  coupon,
-  setSelectedDate,
-  selectedDate,
-  formData,
-}: {
+                      setTickets,
+                      tickets,
+                      discount,
+                      setDiscount,
+                      eventFormData,
+                      setCoupon,
+                      coupon,
+                      setSelectedDate,
+                      selectedDate,
+                      formData,
+                    }: {
   setTickets: React.Dispatch<React.SetStateAction<Tickets[]>>;
   tickets: Tickets[];
   discount: DiscountData;
@@ -155,7 +154,7 @@ const CouponForm = ({
 
   return (
     <>
-      { coupon.status && <motion.div
+      {coupon.status && <motion.div
         initial={{ opacity: 0, y: 35 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
@@ -167,10 +166,10 @@ const CouponForm = ({
         }}
       >
         <InputField
-          name='coupon_code'
-          placeholder='Coupon Code'
-          id='coupon_code'
-          key='coupon_code'
+          name="coupon_code"
+          placeholder="Coupon Code"
+          id="coupon_code"
+          key="coupon_code"
           error={[coupon.error ?? '']}
           onChange={(e) => {
             setCoupon({
@@ -179,7 +178,7 @@ const CouponForm = ({
               value: e.target.value,
             });
           }}
-          type='text'
+          type="text"
           icon={getIcon('coupon_code')}
           required={true}
           description={coupon.description}
@@ -220,7 +219,7 @@ const CouponForm = ({
                 });
               }
             }}
-            buttonText='Validate Coupon'
+            buttonText="Validate Coupon"
           />
         </div>
       </motion.div>}
@@ -250,125 +249,98 @@ const CouponForm = ({
         </div>
 
         {filteredTickets?.map((filteredTicket) => {
-          const hasCapacity = filteredTicket.entry_date.find(
-            (entry) => entry.date === selectedDate,
-          )?.capacity;
+          return (
+            // TODO: disable ticket if capacity <= 0
+            <div key={filteredTicket.id} onClick={() => {
+              onSelectTicket(filteredTicket.id);
+            }} className={styles.ticketType} style={{
+              border: tickets.find(
+                (ticket) => ticket.my_ticket && ticket.ticket_id === filteredTicket.id,
+              ) ? '2px solid #FFFFFF' : '2px solid #2A3533', // TODO: change this to class
+            }}>
+              {eventFormData?.select_multi_ticket && (
+                <>
+                  <div className={styles.ticketCountContainer}>
+                    <div className="row" style={{ columnGap: 0 }}>
+                      <button className={styles.ticketCountUpdateButton} onClick={() => {
+                        updateTicketCount(filteredTicket.id, false);
+                      }}>
+                        -
+                      </button>
+                      <p className={styles.ticketCount}>
+                        {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)
+                          ?.count ?? 0}
+                      </p>
+                      <button className={styles.ticketCountUpdateButton} onClick={() => {
+                        const currentTicketCount = tickets.find(
+                          (ticket) => ticket.ticket_id === filteredTicket.id,
+                        )?.count;
 
-          if (
-            ((hasCapacity && hasCapacity > 0) || !hasCapacity) &&
-            eventFormData &&
-            validateCondition(filteredTicket.conditions, formData, eventFormData?.form)
-          ) {
-            return (
-              <div
-                key={filteredTicket.id}
-                onClick={() => {
-                  onSelectTicket(filteredTicket.id);
-                }}
-                className={styles.ticketType}
-                style={{
-                  border: tickets.find(
-                    (ticket) => ticket.my_ticket && ticket.ticket_id === filteredTicket.id,
-                  )
-                    ? '2px solid #FFFFFF'
-                    : '2px solid #2A3533',
-                }}
-              >
-                {eventFormData?.select_multi_ticket && (
-                  <>
-                    <div className={styles.ticketCountContainer}>
-                      <div
-                        className='row'
-                        style={{
-                          columnGap: 0,
-                        }}
-                      >
-                        <button
-                          className={styles.ticketCountUpdateButton}
-                          onClick={() => {
-                            updateTicketCount(filteredTicket.id, false);
-                          }}
-                        >
-                          -
-                        </button>
-                        <p className={styles.ticketCount}>
-                          {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)
-                            ?.count ?? 0}
-                        </p>
-                        <button
-                          className={styles.ticketCountUpdateButton}
-                          onClick={() => {
-                            const currentTicketCount = tickets.find(
-                              (ticket) => ticket.ticket_id === filteredTicket.id,
-                            )?.count;
-
-                            if (currentTicketCount === filteredTicket.capacity) {
-                              toast.error('Ticket limit reached');
-                              return;
-                            }
-                            updateTicketCount(filteredTicket.id, true);
-                          }}
-                        >
-                          +
-                        </button>
-                      </div>
-
-                      {/*TODO: add this outside this*/}
-                      {filteredTicket.capacity <= 10 && (
-                        <div className={styles.dateContainer}>
-                          <p className={styles.capacity}>{filteredTicket.capacity} tickets left</p>
-                        </div>
-                      )}
+                        if (currentTicketCount === filteredTicket.capacity) {
+                          toast.error('Ticket limit reached');
+                          return;
+                        }
+                        updateTicketCount(filteredTicket.id, true);
+                      }}>
+                        +
+                      </button>
                     </div>
-                  </>
-                )}
 
-                <div className={styles.passText}>
-                  <p className={styles.ticketTypeTitle}>{filteredTicket.title?.toUpperCase()}</p>
-                  <p className={styles.ticketTypeDescription}>{filteredTicket.description}</p>
-                  <div className={styles.perks}>
-                    {Object.keys(filteredTicket.perks)?.map((perk) => (
-                      <div key={perk} className={styles.perk}>
-                        {perk}: {filteredTicket.perks[perk]}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className={styles.ticketPriceData}>
-                  {discount.discount_value > 0 &&
-                    filteredTicket.price > 0 &&
-                    discount.ticket.includes(filteredTicket.id) && (
-                      <div className={styles.discountData}>
-                        <p className={styles.discountAmount}>
-                          {discount.discount_type.toLowerCase() === 'percentage'
-                            ? `${discount.discount_value}% off`
-                            : `${filteredTicket.currency} ${discount.discount_value} off`}
-                        </p>
-                        <p className={styles.originalPrice}>
-                          <del>
-                            {filteredTicket.currency} {filteredTicket.show_price}
-                          </del>
-                        </p>
+                    {/*TODO: add this outside this*/}
+                    {filteredTicket.capacity <= 10 && (
+                      <div className={styles.dateContainer}>
+                        <p className={styles.capacity}>{filteredTicket.capacity} tickets left</p>
                       </div>
                     )}
-
-                  <div className={styles.priceData}>
-                    <p className={styles.ticketPrice}>
-                      {filteredTicket.currency} {filteredTicket.price}
-                    </p>
-                    <p className={styles.extraCharges}>
-                      {filteredTicket.platform_fee_from_user && filteredTicket.price > 0 && (
-                        <p className={styles.extraCharges}>
-                          {filteredTicket.platform_fee}% extra charges
-                        </p>
-                      )}
-                    </p>
                   </div>
+                </>
+              )}
+
+              <div className={styles.passText}>
+                <p className={styles.ticketTypeTitle}>{filteredTicket.title?.toUpperCase()}</p>
+                <p className={styles.ticketTypeDescription}>{filteredTicket.description}</p>
+                <div className={styles.perks}>
+                  {Object.keys(filteredTicket.perks)?.map((perk) => (
+                    <div key={perk} className={styles.perk}>
+                      {perk}: {filteredTicket.perks[perk]}
+                    </div>
+                  ))}
                 </div>
               </div>
-            );
-          }
+
+              <div className={styles.ticketPriceData}>
+                {discount.discount_value > 0 &&
+                  filteredTicket.price > 0 &&
+                  discount.ticket.includes(filteredTicket.id) && (
+                    <div className={styles.discountData}>
+                      <p className={styles.discountAmount}>
+                        {discount.discount_type.toLowerCase() === 'percentage'
+                          ? `${discount.discount_value}% off`
+                          : `${filteredTicket.currency} ${discount.discount_value} off`}
+                      </p>
+                      <p className={styles.originalPrice}>
+                        <del>
+                          {filteredTicket.currency} {filteredTicket.show_price}
+                        </del>
+                      </p>
+                    </div>
+                  )}
+
+                <div className={styles.priceData}>
+                  <p className={styles.ticketPrice}>
+                    {filteredTicket.currency} {filteredTicket.price}
+                  </p>
+                  <p className={styles.extraCharges}>
+                    {filteredTicket.platform_fee_from_user && filteredTicket.price > 0 && (
+                      <p className={styles.extraCharges}>
+                        {filteredTicket.platform_fee}% extra charges
+                      </p>
+                    )}
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
         })}
       </motion.div>
     </>

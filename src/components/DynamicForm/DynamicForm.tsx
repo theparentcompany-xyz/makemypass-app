@@ -5,12 +5,13 @@ import styles from './DynamicForm.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import Select, { MultiValue } from 'react-select';
 import { validateCondition } from './condition';
+
 const DynamicForm = ({
-  formFields,
-  formErrors,
-  formData,
-  onFieldChange,
-}: {
+                       formFields,
+                       formErrors,
+                       formData,
+                       onFieldChange,
+                     }: {
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
   formData: FormDataType;
@@ -154,17 +155,17 @@ const DynamicForm = ({
                   <Select
                     isMulti
                     styles={customStyles}
-                    name='colors'
+                    name="colors"
                     value={
                       Array.isArray(formData[field.field_key])
                         ? selectValues.filter((option) =>
-                            (formData[field.field_key] as string[])?.includes(option.value),
-                          )
+                          (formData[field.field_key] as string[])?.includes(option.value),
+                        )
                         : []
                     }
                     options={selectValues}
-                    className='basic-multi-select'
-                    classNamePrefix='select'
+                    className="basic-multi-select"
+                    classNamePrefix="select"
                     onChange={(selectedOption: MultiValue<{ value: string }>) =>
                       onFieldChange(
                         field.field_key,
@@ -187,7 +188,7 @@ const DynamicForm = ({
                   {field.options?.map((option: string) => (
                     <div key={option} className={styles.radio}>
                       <input
-                        type='radio'
+                        type="radio"
                         id={option}
                         name={field.field_key}
                         value={option}
@@ -226,7 +227,7 @@ const DynamicForm = ({
               >
                 <p className={styles.formLabel}>{fieldTitle}</p>
                 <input
-                  type='file'
+                  type="file"
                   id={field.field_key}
                   accept={field.property?.extension_types.join(',') ?? ''}
                   name={field?.title}
@@ -247,7 +248,7 @@ const DynamicForm = ({
               >
                 <p className={styles.formLabel}>{fieldTitle}</p>
                 <input
-                  type='date'
+                  type="date"
                   id={field.field_key}
                   name={field?.title}
                   value={formData[field.field_key]}
@@ -267,7 +268,7 @@ const DynamicForm = ({
               >
                 <p className={styles.formLabel}>{fieldTitle}</p>
                 <input
-                  type='datetime-local'
+                  type="datetime-local"
                   id={field.field_key}
                   name={field?.title}
                   value={formData[field.field_key]}
@@ -287,7 +288,7 @@ const DynamicForm = ({
               >
                 <p className={styles.formLabel}>{fieldTitle}</p>
                 <input
-                  type='time'
+                  type="time"
                   id={field.field_key}
                   name={field?.title}
                   value={formData[field.field_key]}
@@ -307,7 +308,7 @@ const DynamicForm = ({
               >
                 <p className={styles.formLabel}>{fieldTitle}</p>
                 <input
-                  type='number'
+                  type="number"
                   id={field.field_key}
                   name={field?.title}
                   value={formData[field.field_key]}
@@ -350,7 +351,7 @@ const DynamicForm = ({
                     <>
                       <div key={option} className={styles.checkbox}>
                         <input
-                          type='checkbox'
+                          type="checkbox"
                           id={option}
                           name={field.field_key}
                           value={option}
