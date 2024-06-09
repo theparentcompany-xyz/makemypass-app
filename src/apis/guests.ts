@@ -1,9 +1,9 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
+import { FormEventData, ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
-import { ErrorMessages, FileType, FormDataType, FormFieldType, TicketType } from './types';
+import { ErrorMessages, FileType, FormDataType } from './types';
 import { isArray } from 'chart.js/helpers';
 
 export const resentEventTicket = async (
@@ -197,14 +197,12 @@ export const initateRefund = async (
 
 export const getGuestInfo = async (
   eventId: string,
-  setFormField: Dispatch<React.SetStateAction<FormFieldType[]>>,
-  setTicketInfo: Dispatch<React.SetStateAction<TicketType[] | undefined>>,
+  setEventFormData: Dispatch<React.SetStateAction<FormEventData | undefined>>,
 ) => {
   privateGateway
     .get(makeMyPass.addGuestInfo(eventId))
     .then((response) => {
-      setFormField(response.data.response.form);
-      setTicketInfo(response.data.response.tickets);
+      setEventFormData(response.data.response);
     })
     .catch(() => {
       toast.error('Something went wrong');
