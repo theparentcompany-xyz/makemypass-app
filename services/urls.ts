@@ -120,8 +120,10 @@ export const makeMyPass = {
 
   //Mail URLS
   listMails: (eventId: string) => makeMyPassURL(`/event/${eventId}/communication/list-event-mail/`),
-  getMail: (eventId: string, mailId: string) => makeMyPassURL(`/event/${eventId}/communication/get-event-mail/${mailId}/`),
-  updateMail: (eventId: string, mailId: string) => makeMyPassURL(`/event/${eventId}/communication/update-event-mail/${mailId}/`),
+  getMail: (eventId: string, mailId: string) =>
+    makeMyPassURL(`/event/${eventId}/communication/get-event-mail/${mailId}/`),
+  updateMail: (eventId: string, mailId: string) =>
+    makeMyPassURL(`/event/${eventId}/communication/update-event-mail/${mailId}/`),
 };
 
 export const makeMyPassSocket = {
