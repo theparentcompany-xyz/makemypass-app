@@ -108,7 +108,6 @@
 } */
 
 .userInfoModalContainer {
-  max-height: 40rem;
   overflow-y: auto;
   overflow-x: hidden;
   min-width: 20rem;

@@ -5,6 +5,7 @@ import styles from './DynamicForm.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import Select, { MultiValue } from 'react-select';
 import { validateCondition } from './condition';
+import { useEffect } from 'react';
 
 const DynamicForm = ({
   formFields,
@@ -13,9 +14,9 @@ const DynamicForm = ({
   onFieldChange,
 }: {
   formFields: FormFieldType[];
+  formErrors: ErrorMessages;
   formData: FormDataType;
   onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
-  formErrors?: ErrorMessages;
 }) => {
   const variants = {
     initial: { opacity: 0, y: -10 },

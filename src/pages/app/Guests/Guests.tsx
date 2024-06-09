@@ -10,6 +10,7 @@ import { makeMyPassSocket } from '../../../../services/urls';
 import {
   downloadCSVData,
   downloadTicket,
+  editSubmissons,
   getGuestInfo,
   resentEventTicket,
 } from '../../../apis/guests';
@@ -35,6 +36,7 @@ import Scanner from '../../../components/Scanner/Scanner';
 import EventForm from '../EventPage/components/EventForm/EventForm';
 import { useParams } from 'react-router';
 import DynamicForm from '../../../components/DynamicForm/DynamicForm';
+import EditGuest from './components/EditGuest/EditGuest';
 
 const Guests = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -213,21 +215,17 @@ const Guests = () => {
         </Modal>
       )}
 
-      {selectedGuestId && selectedGuestId.type === 'edit' && (
-        <Modal title='Edit Guest' onClose={onClose} type='side'>
-          <div className={styles.userInfoModalContainer}>
-            {formData && eventFormData && (
-              <div className={styles.formFields}>
-                {eventFormData?.parse_audio && <AudioRecorder handleSubmit={handleAudioSubmit} />}
-                <DynamicForm
-                  formFields={eventFormData.form}
-                  formData={formData}
-                  onFieldChange={onFieldChange}
-                />
-              </div>
-            )}
-          </div>
-        </Modal>
+      {selectedGuestId && eventFormData && selectedGuestId.type === 'edit' && (
+        <EditGuest
+          formData={formData}
+          setFormData={setFormData}
+          eventFormData={eventFormData}
+          selectedGuest={selectedGuest}
+          selectedGuestId={selectedGuestId}
+          setSelectedGuestId={setSelectedGuestId}
+          eventId={eventId}
+          onClose={onClose}
+        />
       )}
 
       {guests ? (
