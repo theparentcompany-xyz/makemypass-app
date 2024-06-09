@@ -84,6 +84,7 @@ export type FormFieldType = {
 export interface TicketType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [x: string]: any;
+  title: string;
   description: string;
   approval_required: boolean;
   code_prefix: string;
@@ -105,7 +106,7 @@ export interface TicketType {
     price: number;
     show_price?: number;
   }[];
-  condition?: {
+  conditions?: {
     field: string;
     value: string;
     operator: string;
@@ -113,7 +114,7 @@ export interface TicketType {
 }
 
 interface CouponType {
-  status: string;
+  status: boolean;
   description: string;
   value?: string;
   error?: string;
@@ -139,9 +140,7 @@ export interface EventType {
   place: string;
   hosts: HostType[];
   form: FormFieldType[];
-  tickets: {
-    [key: string]: TicketType;
-  };
+  tickets: TicketType[];
   shortlist: boolean;
   coupon: CouponType;
   parse_audio?: boolean;
@@ -151,6 +150,7 @@ export interface EventType {
   is_online: boolean;
   is_grouped_ticket: boolean;
   is_multiple_checkin: boolean;
+  is_sub_event: boolean;
   approval_required: boolean;
   status: string;
 
@@ -212,4 +212,10 @@ export type PreviewData = {
   tickets: {
     [key: string]: number;
   };
+};
+
+export type ConditionType = {
+  field: string;
+  value: string;
+  operator: string;
 };

@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { getEventId } from '../apis/events';
-import { EventType, TicketType } from '../apis/types';
+import { TicketType } from '../apis/types';
+import { FormEventData } from '../pages/app/Guests/types';
 interface transformTableDataType {
   [key: string]: string;
 }
@@ -138,40 +139,34 @@ export function convertDate(date: Date | undefined) {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-export const findMinDate = (eventData: EventType): Date | null => {
-  let minDate: Date = new Date(); // Initialize minDate with current date
+export const findMinDate = (eventFormData: FormEventData): Date | null => {
+  const todayDate: Date = new Date();
+  let minDate: Date | null = null;
 
-  let hasTickets = false;
-  Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
-    ticketInfo.entry_date.find((entry) => {
-      if (entry.capacity > 0 && entry.date === minDate.toISOString().split('T')[0]) {
-        console.log('found');
-        hasTickets = true;
-        return true;
+  eventFormData.tickets.forEach((ticket: TicketType) => {
+    ticket.entry_date.forEach((entry) => {
+      const entryDate = new Date(entry.date);
+      if (entryDate >= todayDate && (entry.capacity === null || entry.capacity > 0)) {
+        if (minDate === null || entryDate < minDate) {
+          minDate = entryDate;
+        }
       }
     });
   });
-
-  const currentDate = new Date(); // Get current date
-  Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
-    ticketInfo.entry_date.forEach((entry) => {
-      const date = new Date(entry.date);
-      if (date >= currentDate && (!hasTickets || (date < minDate && entry.capacity > 0))) {
-        minDate = date;
-      }
-    });
-  });
-
   return minDate;
 };
 
-export const findMaxDate = (eventData: EventType) => {
-  let maxDate: Date | null = null; // Initialize maxDate with null
-  Object.values(eventData.tickets).forEach((ticketInfo: TicketType) => {
-    ticketInfo.entry_date.forEach((entry) => {
-      const date = new Date(entry.date);
-      if ((!maxDate || date > maxDate) && entry.capacity > 0) {
-        maxDate = date;
+export const findMaxDate = (eventFormData: FormEventData): Date | null => {
+  const todayDate: Date = new Date();
+  let maxDate: Date | null = null;
+
+  eventFormData.tickets.forEach((ticket: TicketType) => {
+    ticket.entry_date.forEach((entry) => {
+      const entryDate = new Date(entry.date);
+      if (entryDate > todayDate && (entry.capacity === null || entry.capacity > 0)) {
+        if (maxDate === null || entryDate > maxDate) {
+          maxDate = entryDate;
+        }
       }
     });
   });

@@ -118,7 +118,7 @@
   display: block;
   margin: auto;
   margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .submitButton {
@@ -160,5 +160,7 @@
   .formContainer {
     overflow: auto;
     max-height: 100%;
+    max-width: 32rem;
+    width: 100%;
   }
 }

@@ -5,7 +5,7 @@ import { IoIosArrowRoundForward } from 'react-icons/io';
 import Theme from '../../../components/Theme/Theme';
 import { useEffect, useRef, useState } from 'react';
 import { login, generateOTP, preRegister, register } from '../../../apis/auth';
-import InputFIeld from './InputFIeld';
+import InputField from './InputField.tsx';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TbAlertTriangleFilled } from 'react-icons/tb';
@@ -146,7 +146,7 @@ const Login = () => {
                   )}
                 </div>
                 <br />
-                <InputFIeld
+                <InputField
                   ref={emailRef}
                   type='email'
                   name='email'
@@ -162,7 +162,7 @@ const Login = () => {
 
                 {isPassword && !isOtpSent && (
                   <>
-                    <InputFIeld
+                    <InputField
                       ref={passwordRef}
                       type='password'
                       name='password'
@@ -185,7 +185,7 @@ const Login = () => {
 
                 {isOtpSent && !isPassword && (
                   <>
-                    <InputFIeld
+                    <InputField
                       ref={otpRef}
                       type='number'
                       name='otp'

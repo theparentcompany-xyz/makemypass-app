@@ -60,7 +60,7 @@
   display: flex;
   flex-direction: column;
 
-  width: 25rem;
+  min-width: 25rem;
 }
 
 .formLabel {
@@ -146,7 +146,7 @@
   }
 
   .formInput {
-    max-width: 20.5rem;
+    /* max-width: 20.5rem; */
     width: 100%;
   }
 
@@ -172,6 +172,12 @@
     color: #a4a4a4;
     font-size: 0.75rem;
     font-weight: 400;
+  }
+}
+
+@media (max-width: 500px) {
+  .formInput {
+    min-width: none;
   }
 }
 

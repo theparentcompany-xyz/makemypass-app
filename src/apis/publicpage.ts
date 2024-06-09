@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { CouponData, DiscountData, TicketOptions, Tickets } from '../pages/app/EventPage/types';
-import { Dispatch } from 'react';
+import React, { Dispatch } from 'react';
 import {
   ErrorMessages,
   EventType,
@@ -27,10 +27,9 @@ export const submitForm = async ({
   setSuccess,
   setFormNumber,
   setFormData,
-  setAmount,
   setFormErrors,
   response,
-  setCoupon,
+
   setEventData,
   eventTitle,
   selectedDate,
@@ -43,10 +42,9 @@ export const submitForm = async ({
   setSuccess?: React.Dispatch<React.SetStateAction<string>>;
   setFormNumber?: React.Dispatch<React.SetStateAction<number>>;
   setFormData?: React.Dispatch<React.SetStateAction<FormDataType>>;
-  setAmount?: React.Dispatch<React.SetStateAction<string>>;
   setFormErrors?: Dispatch<ErrorMessages>;
   response?: unknown;
-  setCoupon?: React.Dispatch<CouponData>;
+
   setEventData?: React.Dispatch<React.SetStateAction<EventType | undefined>>;
   eventTitle?: string;
   selectedDate?: string | null;
@@ -130,13 +128,10 @@ export const submitForm = async ({
                   setSuccess && setSuccess('');
                   setFormNumber && setFormNumber(0);
                   setFormData && setFormData({});
-                  setAmount && setAmount('');
                   setDiscount &&
                     setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
                   if (setEventData && eventTitle) getEventInfo(eventTitle, setEventData);
-                }, 5000);
-
-                setCoupon && setCoupon({ status: '', description: '' });
+                }, 2000);
               })
               .catch((error) => {
                 toast.error(
@@ -159,10 +154,7 @@ export const submitForm = async ({
           setFormNumber && setFormNumber(0);
           setFormData && setFormData({});
           setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
-          setAmount && setAmount('');
-        }, 5000);
-
-        setCoupon && setCoupon({ status: '', description: '' });
+        }, 2000);
       }
     })
     .catch((error) => {
@@ -254,16 +246,15 @@ export const validateRsvp = async (
 export const getEventInfo = async (
   eventTitle: string,
   setEventData: Dispatch<React.SetStateAction<EventType | undefined>>,
+  setEventNotFound?: Dispatch<React.SetStateAction<boolean>>,
 ) => {
   privateGateway
     .get(makeMyPass.getEventInfo(eventTitle))
     .then((response) => {
       setEventData(response.data.response);
-      console.log('API Response', response.data.response.tickets);
-      // return response.data.response;
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Info');
+      if (error.response.data.statusCode === 404) setEventNotFound && setEventNotFound(true);
     });
 };
 
@@ -295,7 +286,12 @@ export const getFormFields = async (
     });
 };
 
-export const postAudio = async (eventId: string, recordedBlob: Blob) => {
+export const postAudio = async (
+  eventId: string,
+  recordedBlob: Blob,
+  formData: FormDataType,
+  setFormData: React.Dispatch<FormDataType>,
+) => {
   const form = new FormData();
   const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.mp3', {
     type: 'audio/mp3',
@@ -306,6 +302,11 @@ export const postAudio = async (eventId: string, recordedBlob: Blob) => {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+    })
+    .then((response) => {
+      console.log(response.data.response.data);
+      const newFormData: FormDataType = { ...formData, ...response?.data?.response?.data };
+      setFormData(newFormData);
     })
     .catch((error) => {
       console.error(error.response.data.message.general[0]);
