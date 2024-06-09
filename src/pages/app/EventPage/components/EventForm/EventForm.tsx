@@ -159,7 +159,7 @@ const EventForm = ({
             </div>
             {formData && eventFormData && (
               <div className={styles.formFields}>
-                <AudioRecorder handleSubmit={handleAudioSubmit} />
+                {eventFormData?.parse_audio && <AudioRecorder handleSubmit={handleAudioSubmit} />}
                 <DynamicForm
                   formFields={eventFormData.form}
                   formErrors={formErrors}

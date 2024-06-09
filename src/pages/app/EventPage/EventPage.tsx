@@ -93,7 +93,8 @@ const EventPage = () => {
                   tickets: eventData.tickets,
                   select_multi_ticket: eventData.select_multi_ticket ?? false,
                   is_sub_event: eventData.is_sub_event ?? false,
-                  coupon: eventData.coupon,
+                  parse_audio: eventData.parse_audio ?? false,
+                  coupon: eventData.coupon ?? false,
                 }}
                 setSuccess={setSuccess}
                 setEventData={setEventData}

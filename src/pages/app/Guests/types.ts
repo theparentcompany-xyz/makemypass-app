@@ -29,5 +29,6 @@ export interface FormEventData {
   tickets: TicketType[];
   select_multi_ticket: boolean;
   is_sub_event: boolean;
+  parse_audio: boolean;
   coupon: CouponData;
 }
