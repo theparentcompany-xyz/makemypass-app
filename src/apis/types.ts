@@ -221,8 +221,6 @@ export type ConditionType = {
   operator: string;
 };
 
-
-
 export type MailType = {
   attachment: string;
   body: string;

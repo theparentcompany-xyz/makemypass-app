@@ -1,5 +1,4 @@
 .ticketTypes {
-  max-width: 30rem;
   width: 100%;
   margin: auto;
   position: relative;
@@ -18,7 +17,7 @@
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
 
-  max-width: 25rem;
+  /* max-width: 25rem; */
 
   display: flex;
   flex-direction: row;
@@ -182,12 +181,12 @@
   text-align: left;
 }
 
-.marketingOriginalPrice{
-    font-size: 0.8rem;
-      font-weight: 400;
-      color: #e67474;
-      font-family: 'Inter', sans-serif;
-      text-align: left;
+.marketingOriginalPrice {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #e67474;
+  font-family: 'Inter', sans-serif;
+  text-align: left;
 }
 
 .row {
@@ -196,7 +195,6 @@
   align-items: start;
   column-gap: 0.25rem;
   flex-wrap: wrap;
-  max-width: 25rem;
   row-gap: 1rem;
   justify-content: flex-start;
 }

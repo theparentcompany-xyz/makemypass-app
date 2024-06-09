@@ -33,9 +33,12 @@ export const getUserInfo = async (
     });
 };
 
-export const updateProfile = async ({ data }: { [k: string]: FormData; }, setLoading?: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const updateProfile = async (
+  { data }: { [k: string]: FormData },
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   setLoading && setLoading(true);
-  const toastId  = toast.loading('Updating Profile...');
+  const toastId = toast.loading('Updating Profile...');
   return privateGateway
     .put(buildVerse.updateProfile, data, {
       headers: {
@@ -44,20 +47,28 @@ export const updateProfile = async ({ data }: { [k: string]: FormData; }, setLoa
     })
     .then(() => {
       toast.success('Profile Updated Successfully', {
-          id: toastId,
+        id: toastId,
       });
     })
     .catch((error) => {
       toast.error(error.response?.data?.message?.general[0] || 'Error in Updating Profile', {
-          id: toastId,
+        id: toastId,
       });
     })
     .finally(() => {
       setLoading && setLoading(false);
-    })
+    });
 };
 
-export const setUserData = async ({ formData, token, setLoading }: { formData: FormData; token: string; setLoading?: React.Dispatch<React.SetStateAction<boolean>> }) => {
+export const setUserData = async ({
+  formData,
+  token,
+  setLoading,
+}: {
+  formData: FormData;
+  token: string;
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   setLoading && setLoading(true);
   return privateGateway
     .post(buildVerse.setUserData(token), formData, {
@@ -73,16 +84,15 @@ export const setUserData = async ({ formData, token, setLoading }: { formData: F
     })
     .finally(() => {
       setLoading && setLoading(false);
-    })
+    });
 };
 
-
-export const getProfileInfo = (): Promise<{ 
+export const getProfileInfo = (): Promise<{
   name?: string;
   email?: string;
   profile_pic?: string;
 }> => {
-   return privateGateway
+  return privateGateway
     .get(buildVerse.profileInfo)
     .then((response) => {
       console.log(response.data);
@@ -91,4 +101,4 @@ export const getProfileInfo = (): Promise<{
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Error in Fetching Profile Info');
     });
-}
+};
