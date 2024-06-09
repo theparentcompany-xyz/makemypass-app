@@ -37,7 +37,7 @@ const EventForm = ({
   const [directRegister, setDirectRegister] = useState<boolean | string>(false);
   const [ticketConditionalFields, setTicketConditionalFields] = useState<string[]>([]);
   const [coupon, setCoupon] = useState<CouponData>({
-    status: eventFormData?.coupon.status ? true : false,
+    status: eventFormData?.coupon.status,
     description: eventFormData?.coupon.description ?? '',
     value: eventFormData?.coupon.value ?? '',
     error: '',

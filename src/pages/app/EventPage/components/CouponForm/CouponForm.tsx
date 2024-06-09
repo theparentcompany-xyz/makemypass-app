@@ -155,7 +155,7 @@ const CouponForm = ({
 
   return (
     <>
-      <motion.div
+      { coupon.status && <motion.div
         initial={{ opacity: 0, y: 35 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
@@ -223,7 +223,7 @@ const CouponForm = ({
             buttonText='Validate Coupon'
           />
         </div>
-      </motion.div>
+      </motion.div>}
 
       {findMinDate(eventFormData) && (
         <SelectDate
