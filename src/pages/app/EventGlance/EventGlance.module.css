@@ -245,6 +245,10 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.scheduleIcon{
+  cursor: pointer;
+}
+
 .scheduleHeading {
   font-size: 0.95rem;
   font-weight: 300;

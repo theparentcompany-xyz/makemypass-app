@@ -85,6 +85,7 @@ export interface TicketType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [x: string]: any;
   title: string;
+  is_active: boolean;
   description: string;
   approval_required: boolean;
   code_prefix: string;
@@ -218,4 +219,16 @@ export type ConditionType = {
   field: string;
   value: string;
   operator: string;
+};
+
+
+
+export type MailType = {
+  attachment: string;
+  body: string;
+  email_type: string;
+  id: string;
+  subject: string;
+  type: string;
+  updated_at: string;
 };

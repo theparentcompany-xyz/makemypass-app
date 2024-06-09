@@ -6,9 +6,10 @@ type Props = {
   ticketInfo: TicketType;
   onClick: () => void;
   selected: boolean;
+  closeTicket: (ticketInfo: TicketType) => void;
 };
 
-const TicketBox = ({ ticketInfo, onClick, selected }: Props) => {
+const TicketBox = ({ ticketInfo, onClick, selected, closeTicket }: Props) => {
   return (
     <>
       <div className={`${styles.ticketBox} ${selected ? styles.selected : ''}`} onClick={onClick}>
@@ -27,7 +28,13 @@ const TicketBox = ({ ticketInfo, onClick, selected }: Props) => {
           </div>
           <div className={styles.ticketFooterRight}>
             <label className={styles.closeTicketLabel}>Close Ticket</label>
-            <Slider checked={true} onChange={() => {}} sliderStyle={{ transform: 'scale(0.7)' }} />
+            <Slider
+              checked={ticketInfo.is_active}
+              onChange={() => {
+                closeTicket(ticketInfo);
+              }}
+              sliderStyle={{ transform: 'scale(0.7)' }}
+            />
           </div>
         </div>
       </div>
