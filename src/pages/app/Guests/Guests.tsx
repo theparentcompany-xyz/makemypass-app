@@ -10,67 +10,45 @@ import { makeMyPassSocket } from '../../../../services/urls';
 import {
   downloadCSVData,
   downloadTicket,
-  editSubmissons,
   getGuestInfo,
   resentEventTicket,
 } from '../../../apis/guests';
-import {
-  ErrorMessages,
-  EventType,
-  FormDataType,
-  FormFieldType,
-  TicketType,
-} from '../../../apis/types';
+import { FormDataType } from '../../../apis/types';
 import { getCategories } from '../../../apis/events';
-import {
-  findMinDate,
-  isSelectDateNeeded,
-  transformTableData,
-} from '../../../common/commonFunctions';
+import { transformTableData } from '../../../common/commonFunctions';
 
-import { GuestsType, ResentTicket, SelectedGuest } from './types';
+import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from './types';
 import { TableType } from '../../../components/Table/types';
 
 import { RiSearchLine } from 'react-icons/ri';
 import { HashLoader } from 'react-spinners';
 
 import Table from '../../../components/Table/Table';
-
-import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import ViewGuest from './components/ViewGuest/ViewGuest';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import { addGuest } from '../../../apis/guest';
 import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
 import { isArray } from 'chart.js/helpers';
 import Modal from '../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
-import { getEventInfo } from '../../../apis/publicpage';
-import { useParams } from 'react-router';
-import { Tickets } from '../EventPage/types';
-import SelectDate from '../../../components/SelectDate/SelectDate';
-import SelectTIcket from './components/SelectTicket/SelectTIcket';
-import ScanTicket from './components/ScanTicket/ScanTicket';
 import Scanner from '../../../components/Scanner/Scanner';
+import EventForm from '../EventPage/components/EventForm/EventForm';
+import { useParams } from 'react-router';
 
 const Guests = () => {
+  const { eventTitle } = useParams<{ eventTitle: string }>();
   const [guests, setGuests] = useState<GuestsType[]>([]);
   const [guestsTableData, setGuestsTableData] = useState<TableType[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
-  const [formFields, setFormFields] = useState<FormFieldType[]>([]);
-  const [formErrors, setFormErrors] = useState<ErrorMessages>({});
+  const [eventFormData, setEventFormData] = useState<FormEventData>();
   const [formData, setFormData] = useState<FormDataType>({});
-  const [ticketInfo, setTicketInfo] = useState<TicketType[]>();
-  const [tickets, setTickets] = useState<Tickets[]>([]);
+  // const [tickets, setTickets] = useState<Tickets[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>();
   const [ticketCode, setTicketCode] = useState<string>('');
   const [showScanner, setShowScanner] = useState<boolean>(false);
-  const [selectedDate, setSelectedDate] = useState<string>('');
-
-  const [eventData, setEventData] = useState<EventType>();
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
@@ -93,11 +71,6 @@ const Guests = () => {
   const { event_id: eventId, current_user_role: userRole } = JSON.parse(
     sessionStorage.getItem('eventData')!,
   );
-
-  const { eventTitle } = useParams<{ eventTitle: string }>();
-  useEffect(() => {
-    if (eventTitle) getEventInfo(eventTitle, setEventData);
-  }, [eventTitle]);
 
   useEffect(() => {
     if (eventId && !selectedGuestId?.id) {
@@ -128,6 +101,7 @@ const Guests = () => {
   useEffect(() => {
     if (eventId) {
       getCategories(eventId, setCategories);
+      getGuestInfo(eventId, setEventFormData);
     }
     return () => {
       socket?.close();
@@ -139,7 +113,6 @@ const Guests = () => {
       selectedGuestId?.id &&
       (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view')
     ) {
-      getGuestInfo(eventId, setFormFields, setTicketInfo);
       getGuestData();
     } else if (
       selectedGuestId?.id &&
@@ -176,25 +149,6 @@ const Guests = () => {
     resentEventTicket(resentTicket, setResentTicket);
   };
 
-  const handleSubmissionEdit = () => {
-    if (selectedGuest)
-      editSubmissons(eventId, formData, setSelectedGuestId, setFormData, setFormErrors);
-  };
-
-  const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
-    setFormData({
-      ...formData,
-      [fieldName]: fieldValue,
-    });
-
-    if (formErrors[fieldName]) {
-      setFormErrors({
-        ...formErrors,
-        [fieldName]: [],
-      });
-    }
-  };
-
   const onClose = () => {
     setSelectedGuestId({
       id: '',
@@ -211,149 +165,44 @@ const Guests = () => {
     }
   }, [ticketCode]);
 
-  const handleDateChange = (date: string | null | undefined | Date) => {
-    let newDate;
-    if (date) newDate = new Date(date);
-    if (newDate && eventData && setSelectedDate) {
-      setSelectedDate(newDate.toISOString().split('T')[0]);
-    }
-  };
-
-  useEffect(() => {
-    if (eventData) handleDateChange(findMinDate(eventData));
-  }, [eventData]);
-
   return (
     <Theme>
-      {selectedGuestId && formData && selectedGuestId.id && selectedGuestId.type == 'view' && (
-        <>
-          <div onClick={onClose} className={styles.backgroundBlur}></div>
-          <ViewGuest
-            formFields={formFields}
-            formData={formData}
-            setSelectedGuestId={setSelectedGuestId}
-            eventId={eventId}
-            setResentTicket={setResentTicket}
-          />
-        </>
-      )}
+      {eventFormData &&
+        selectedGuestId &&
+        formData &&
+        selectedGuestId.id &&
+        selectedGuestId.type == 'view' && (
+          <>
+            <div onClick={onClose} className={styles.backgroundBlur}></div>
+            <ViewGuest
+              formFields={eventFormData.form}
+              formData={formData}
+              setSelectedGuestId={setSelectedGuestId}
+              eventId={eventId}
+              setResentTicket={setResentTicket}
+            />
+          </>
+        )}
 
       {selectedGuestId && selectedGuestId.type === 'add' && (
-        <Modal onClose={onClose}>
+        <Modal onClose={onClose} type='side'>
           <div
             className={styles.userInfoModalContainer}
             style={{
-              maxHeight: '40rem',
-              padding: '1rem 0',
+              maxHeight: '100%',
+              padding: '2rem 0',
             }}
           >
-            <p className={styles.modalHeader}>Add Guest</p>
             {!showScanner ? (
-              <>
-                {eventData && isSelectDateNeeded(eventData) && (
-                  <SelectDate
-                    eventData={eventData}
-                    selectedDate={selectedDate}
-                    handleDateChange={handleDateChange}
+              eventFormData && (
+                <>
+                  <EventForm
+                    eventFormData={eventFormData}
+                    eventTitle={eventTitle}
                     type='addGuest'
-                    value={formData['entry_date']}
-                    onFieldChange={(fieldName, fieldValue) => onFieldChange(fieldName, fieldValue)}
                   />
-                )}
-
-                {ticketInfo && (
-                  <>
-                    <SelectTIcket
-                      ticketInfo={ticketInfo}
-                      selectedDate={selectedDate}
-                      tickets={tickets}
-                      setTickets={setTickets}
-                    />
-                    <ScanTicket
-                      ticketCode={ticketCode}
-                      setTicketCode={setTicketCode}
-                      setShowScanner={setShowScanner}
-                    />
-                  </>
-                )}
-
-                <div
-                  style={{
-                    marginBottom: '1rem',
-                  }}
-                >
-                  <p className={styles.formLabel}>Cash In Hand*</p>
-                  <div className={styles.checkboxContainer}>
-                    <>
-                      <div className={styles.checkbox}>
-                        <input
-                          type='radio'
-                          id='is_cash_in_hand'
-                          name='is_cash_in_hand'
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            onFieldChange('is_cash_in_hand', e.target.checked ? 'true' : 'false');
-                          }}
-                          className={styles.checkboxInput}
-                        />
-                        <label>Yes</label>
-                      </div>
-                      <div className={styles.checkbox}>
-                        <input
-                          type='radio'
-                          id='is_cash_in_hand'
-                          name='is_cash_in_hand'
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            onFieldChange('is_cash_in_hand', e.target.checked ? 'false' : 'true');
-                          }}
-                          className={styles.checkboxInput}
-                          defaultChecked
-                        />
-                        <label>No</label>
-                      </div>
-                    </>
-                  </div>
-                </div>
-
-                <DynamicForm
-                  formFields={formFields}
-                  formErrors={formErrors}
-                  formData={formData}
-                  onFieldChange={onFieldChange}
-                />
-
-                <div className={styles.buttons}>
-                  <p
-                    onClick={() => {
-                      if (tickets.some((ticket) => ticket.count > 0))
-                        addGuest(
-                          eventId,
-                          tickets,
-                          formData,
-                          setFormErrors,
-                          setSelectedGuestId,
-                          selectedDate,
-                        );
-                      else {
-                        toast.error('Please select atleast one ticket');
-                      }
-                    }}
-                    className={styles.button}
-                  >
-                    Add
-                  </p>
-                  <p
-                    onClick={() => {
-                      setSelectedGuestId({
-                        id: '',
-                        type: '',
-                      });
-                    }}
-                    className={styles.button}
-                  >
-                    Cancel
-                  </p>
-                </div>
-              </>
+                </>
+              )
             ) : (
               <Scanner
                 ticketId={ticketCode}
@@ -413,57 +262,6 @@ const Guests = () => {
               </div>
             </Modal>
           )}
-          {selectedGuestId && selectedGuestId.type === 'edit' && (
-            <Modal onClose={onClose}>
-              <div className={styles.userInfoModalContainer}>
-                <p className={styles.modalHeader}>Edit Guest</p>
-                <div className={styles.formFields}>
-                  {eventData && isSelectDateNeeded(eventData) && (
-                    <SelectDate
-                      eventData={eventData}
-                      selectedDate={selectedDate}
-                      handleDateChange={handleDateChange}
-                      type='addGuest'
-                      value={formData['entry_date']}
-                      onFieldChange={(fieldName, fieldValue) =>
-                        onFieldChange(fieldName, fieldValue)
-                      }
-                    />
-                  )}
-                  <DynamicForm
-                    formFields={formFields}
-                    formErrors={formErrors}
-                    formData={formData}
-                    onFieldChange={onFieldChange}
-                  />
-                </div>
-
-                {!showScanner && (
-                  <div className={styles.buttons}>
-                    <p
-                      onClick={() => {
-                        handleSubmissionEdit();
-                      }}
-                      className={styles.button}
-                    >
-                      Edit
-                    </p>
-                    <p
-                      onClick={() => {
-                        setSelectedGuestId({
-                          id: '',
-                          type: '',
-                        });
-                      }}
-                      className={styles.button}
-                    >
-                      Cancel
-                    </p>
-                  </div>
-                )}
-              </div>
-            </Modal>
-          )}
 
           <div className={styles.guestsContainer}>
             <Header />
@@ -501,7 +299,6 @@ const Guests = () => {
                     <SecondaryButton
                       buttonText='Add Guests +'
                       onClick={() => {
-                        getGuestInfo(eventId, setFormFields, setTicketInfo);
                         setSelectedGuestId({
                           id: '',
                           type: 'add',

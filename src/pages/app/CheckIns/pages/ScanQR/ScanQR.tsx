@@ -3,7 +3,7 @@ import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInH
 import styles from './ScanQR.module.css';
 
 import { useEffect, useState } from 'react';
-import { checkInUser, getCheckInCount, preview } from '../../../../../apis/scan';
+import { checkInUser, getCheckInCount } from '../../../../../apis/scan';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import { CgClose } from 'react-icons/cg';
 import Modal from '../../../../../components/Modal/Modal';
@@ -23,6 +23,8 @@ const ScanQR = () => {
   const [isTicketSelected, setIsTicketSelected] = useState<boolean>(false);
   const [selectedTicket, setSelectedTicket] = useState<TicketType>();
 
+  const [checking, setChecking] = useState<boolean>(false);
+
   const [previewData, setPreviewData] = useState<PreviewData>({
     name: '',
     entry_date: '',
@@ -39,10 +41,13 @@ const ScanQR = () => {
     }
 
     if (ticketId.length > 0 && trigger) {
-      preview(eventId, ticketId, setPreviewData);
+      // preview(eventId, ticketId, setPreviewData);
+      checkInUser(ticketId, eventId, setMessage, setIsError, selectedTicket, setChecking);
 
       setTimeout(() => {
         setMessage('');
+        setTicketId('');
+        setTrigger(false);
       }, 2250);
     }
   }, [trigger, eventId]);
@@ -168,6 +173,7 @@ const ScanQR = () => {
                 trigger={trigger}
                 setTrigger={setTrigger}
                 scanCount={scanCount}
+                checking={checking}
               />
             </>
           )}

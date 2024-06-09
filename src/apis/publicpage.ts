@@ -178,6 +178,7 @@ export const applyCoupon = async (
       .catch(() => {
         setCoupon({
           ...couponData,
+          value: '',
           error: 'Invalid Coupon Code',
         });
         setDiscount({

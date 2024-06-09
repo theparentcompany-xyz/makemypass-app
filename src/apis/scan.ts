@@ -9,7 +9,11 @@ export const checkInUser = async (
   setMessage?: React.Dispatch<React.SetStateAction<string>>,
   setIsError?: React.Dispatch<React.SetStateAction<boolean>>,
   selectedTicket?: TicketType | undefined,
+  setChecking?: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
+  if (setChecking) {
+    setChecking(true);
+  }
   privateGateway
     .post(makeMyPass.checkInUser(ticketId, eventId), {
       ticket_id: selectedTicket?.id,
@@ -28,6 +32,11 @@ export const checkInUser = async (
         setIsError(true);
       } else {
         toast.error(error.response.data.message.general[0] || 'Check-In Failed');
+      }
+    })
+    .finally(() => {
+      if (setChecking) {
+        setChecking(false);
       }
     });
 };

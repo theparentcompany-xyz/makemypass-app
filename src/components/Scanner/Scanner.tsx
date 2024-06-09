@@ -4,6 +4,7 @@ import styles from './Scanner.module.css';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import toast from 'react-hot-toast';
 import { Dispatch } from 'react';
+import { HashLoader } from 'react-spinners';
 
 const Scanner = ({
   ticketId,
@@ -11,12 +12,14 @@ const Scanner = ({
   trigger,
   setTrigger,
   scanCount,
+  checking,
 }: {
   ticketId: string | undefined;
   setTicketId: Dispatch<React.SetStateAction<string>> | undefined;
   trigger: boolean;
   setTrigger: (trigger: boolean) => void;
   scanCount: number;
+  checking?: boolean;
 }) => {
   const navigate = useNavigate();
   return (
@@ -77,6 +80,13 @@ const Scanner = ({
           }}
         />
       </div>
+
+      {checking && (
+        <div className={styles.checkingContainer}>
+          <HashLoader color='#47c97e' size={50} />
+          <p className={styles.checkingText}>Checking...</p>
+        </div>
+      )}
     </div>
   );
 };

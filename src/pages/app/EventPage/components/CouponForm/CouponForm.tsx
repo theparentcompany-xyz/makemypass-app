@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CouponData, DiscountData, Tickets } from '../../types';
-import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
+import { FormDataType, TicketType } from '../../../../../apis/types';
 import styles from './CouponForm.module.css';
 import { getIcon } from '../../constants';
 import InputField from '../../../../auth/Login/InputField.tsx';
@@ -11,15 +11,17 @@ import { applyCoupon } from '../../../../../apis/publicpage';
 import 'react-datepicker/dist/react-datepicker.css';
 import SelectDate from '../../../../../components/SelectDate/SelectDate';
 import toast from 'react-hot-toast';
-import { findMinDate, isSelectDateNeeded } from '../../../../../common/commonFunctions';
+import { findMinDate } from '../../../../../common/commonFunctions';
 import { validateCondition } from '../../../../../components/DynamicForm/condition';
+import { filterTickets } from '../../../../../common/coreLogics.ts';
+import { FormEventData } from '../../../Guests/types.ts';
 
 const CouponForm = ({
   setTickets,
   tickets,
   discount,
   setDiscount,
-  eventData,
+  eventFormData,
   setCoupon,
   coupon,
   setSelectedDate,
@@ -30,7 +32,7 @@ const CouponForm = ({
   tickets: Tickets[];
   discount: DiscountData;
   setDiscount: React.Dispatch<React.SetStateAction<DiscountData>>;
-  eventData: EventType;
+  eventFormData: FormEventData;
   setCoupon: React.Dispatch<React.SetStateAction<CouponData>>;
   coupon: CouponData;
   setSelectedDate: React.Dispatch<React.SetStateAction<string | null | undefined>>;
@@ -41,16 +43,22 @@ const CouponForm = ({
     let newDate;
     if (date) newDate = new Date(date);
 
-    if (newDate && eventData) {
+    if (newDate && eventFormData) {
       setSelectedDate(newDate.toISOString().split('T')[0]);
     }
-    getTickets();
+    filterTickets({
+      eventFormData,
+      selectedDate,
+      discount,
+      setFilteredTickets,
+      formData,
+    });
   };
   const [filteredTickets, setFilteredTickets] = useState<TicketType[]>([]);
   const [newTickets, setNewTickets] = useState<Tickets[]>([]);
 
   const onSelectTicket = (currentTicketId: string) => {
-    if (eventData?.select_multi_ticket) {
+    if (eventFormData?.select_multi_ticket) {
       let newTicket = true;
       const updatedTickets = tickets.map((ticket) => {
         if (ticket.ticket_id === currentTicketId) {
@@ -71,7 +79,7 @@ const CouponForm = ({
         updatedTickets.push({ ticket_id: currentTicketId, count: 1, my_ticket: true });
       }
       setTickets(updatedTickets);
-    } else if (eventData?.is_sub_event) {
+    } else if (eventFormData?.is_sub_event) {
       setTickets((prevTickets) => [
         ...prevTickets,
         { ticket_id: currentTicketId, count: 1, my_ticket: true },
@@ -100,79 +108,37 @@ const CouponForm = ({
     setNewTickets(updatedTickets);
   };
 
-  const getTickets = () => {
-    const tempList: TicketType[] = [];
-    eventData?.tickets.forEach((ticket) => {
-      if (ticket.conditions) {
-        if (validateCondition(ticket.conditions, formData, eventData.form)) {
-          tempList.push(ticket);
-        }
-      } else {
-        tempList.push(ticket);
-      }
-    });
-    setFilteredTickets([]);
-
-    const tempList2: TicketType[] = [];
-    tempList.forEach((ticket) => {
-      if (ticket.entry_date && ticket.entry_date.length > 0) {
-        ticket.entry_date.forEach((date) => {
-          if (selectedDate === date.date) {
-            const updatedTicket = {
-              ...ticket,
-              capacity: date.capacity ? date.capacity : ticket.capacity,
-              price: date.price ? date.price : ticket.price,
-              show_price: date.show_price ? date.show_price : ticket.show_price,
-            };
-            tempList2.push(updatedTicket);
-          }
-        });
-      } else {
-        tempList2.push(ticket);
-      }
-    });
-
-    tempList2.forEach((ticket) => {
-      // TODO: move to type to enum (amount, percent)
-      if (discount?.discount_type === 'percentage' && discount.ticket.includes(ticket.id)) {
-        const updatedTicket = {
-          ...ticket,
-          price: ticket.price - (ticket.price * Number(discount.discount_value)) / 100,
-          show_price: ticket.price,
-        };
-        setFilteredTickets((prevTickets) => {
-          return [...prevTickets, updatedTicket];
-        });
-      } else if (discount?.discount_type === 'amount' && discount.ticket.includes(ticket.id)) {
-        const updatedTicket = {
-          ...ticket,
-          price: ticket.price - Number(discount.discount_value),
-          show_price: ticket.price,
-        };
-        setFilteredTickets((prevTickets) => {
-          return [...prevTickets, updatedTicket];
-        });
-      } else {
-        setFilteredTickets((prevTickets) => {
-          return [...prevTickets, ticket];
-        });
-      }
-    });
-  };
-
   useEffect(() => {
-    if (eventData) {
-      handleDateChange(findMinDate(eventData));
-      getTickets();
+    if (eventFormData) {
+      handleDateChange(findMinDate(eventFormData));
+      filterTickets({
+        eventFormData,
+        selectedDate,
+        discount,
+        setFilteredTickets,
+        formData,
+      });
     }
-  }, [eventData]);
+  }, [eventFormData]);
 
   useEffect(() => {
-    getTickets();
+    filterTickets({
+      eventFormData,
+      selectedDate,
+      discount,
+      setFilteredTickets,
+      formData,
+    });
   }, [discount]);
 
   useEffect(() => {
-    getTickets();
+    filterTickets({
+      eventFormData,
+      selectedDate,
+      discount,
+      setFilteredTickets,
+      formData,
+    });
   }, [selectedDate]);
 
   useEffect(() => {
@@ -241,7 +207,7 @@ const CouponForm = ({
         <div>
           <SecondaryButton
             onClick={() => {
-              if (coupon.value) applyCoupon(eventData.id, coupon, setDiscount, setCoupon);
+              if (coupon.value) applyCoupon(eventFormData.id, coupon, setDiscount, setCoupon);
               else {
                 setCoupon({
                   ...coupon,
@@ -259,9 +225,9 @@ const CouponForm = ({
         </div>
       </motion.div>
 
-      {isSelectDateNeeded(eventData) && (
+      {findMinDate(eventFormData) && (
         <SelectDate
-          eventData={eventData}
+          eventFormData={eventFormData}
           selectedDate={selectedDate}
           handleDateChange={handleDateChange}
         />
@@ -290,8 +256,8 @@ const CouponForm = ({
 
           if (
             ((hasCapacity && hasCapacity > 0) || !hasCapacity) &&
-            eventData &&
-            validateCondition(filteredTicket.conditions, formData, eventData?.form)
+            eventFormData &&
+            validateCondition(filteredTicket.conditions, formData, eventFormData?.form)
           ) {
             return (
               <div
@@ -308,7 +274,7 @@ const CouponForm = ({
                     : '2px solid #2A3533',
                 }}
               >
-                {eventData?.select_multi_ticket && (
+                {eventFormData?.select_multi_ticket && (
                   <>
                     <div className={styles.ticketCountContainer}>
                       <div
@@ -400,8 +366,6 @@ const CouponForm = ({
                     </p>
                   </div>
                 </div>
-
-                <p className={styles.cardText}>{eventData?.title?.toUpperCase()}</p>
               </div>
             );
           }
