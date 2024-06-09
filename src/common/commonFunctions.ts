@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { getEventId } from '../apis/events';
-import { EventType, TicketType } from '../apis/types';
+import { TicketType } from '../apis/types';
+import { FormEventData } from '../pages/app/Guests/types';
 interface transformTableDataType {
   [key: string]: string;
 }
@@ -138,11 +139,11 @@ export function convertDate(date: Date | undefined) {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-export const findMinDate = (eventData: EventType): Date | null => {
+export const findMinDate = (eventFormData: FormEventData): Date | null => {
   const todayDate: Date = new Date();
   let minDate: Date | null = null;
 
-  eventData.tickets.forEach((ticket: TicketType) => {
+  eventFormData.tickets.forEach((ticket: TicketType) => {
     ticket.entry_date.forEach((entry) => {
       const entryDate = new Date(entry.date);
       if (entryDate >= todayDate && (entry.capacity === null || entry.capacity > 0)) {
@@ -155,11 +156,11 @@ export const findMinDate = (eventData: EventType): Date | null => {
   return minDate;
 };
 
-export const findMaxDate = (eventData: EventType): Date | null => {
+export const findMaxDate = (eventFormData: FormEventData): Date | null => {
   const todayDate: Date = new Date();
   let maxDate: Date | null = null;
 
-  eventData.tickets.forEach((ticket: TicketType) => {
+  eventFormData.tickets.forEach((ticket: TicketType) => {
     ticket.entry_date.forEach((entry) => {
       const entryDate = new Date(entry.date);
       if (entryDate > todayDate && (entry.capacity === null || entry.capacity > 0)) {

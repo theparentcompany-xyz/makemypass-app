@@ -33,8 +33,10 @@ import Modal from '../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
 import Scanner from '../../../components/Scanner/Scanner';
 import EventForm from '../EventPage/components/EventForm/EventForm';
+import { useParams } from 'react-router';
 
 const Guests = () => {
+  const { eventTitle } = useParams<{ eventTitle: string }>();
   const [guests, setGuests] = useState<GuestsType[]>([]);
   const [guestsTableData, setGuestsTableData] = useState<TableType[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -192,14 +194,15 @@ const Guests = () => {
             }}
           >
             {!showScanner ? (
-              <>
-                <EventForm
-                  eventData={eventFormData}
-                  setFormData={setFormData}
-                  formData={formData}
-                  type='addGuest'
-                />
-              </>
+              eventFormData && (
+                <>
+                  <EventForm
+                    eventFormData={eventFormData}
+                    eventTitle={eventTitle}
+                    type='addGuest'
+                  />
+                </>
+              )
             ) : (
               <Scanner
                 ticketId={ticketCode}

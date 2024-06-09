@@ -9,18 +9,19 @@ import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import CouponForm from '../CouponForm/CouponForm';
 import { validateCondition } from '../../../../../components/DynamicForm/condition';
 import { useLocation } from 'react-router';
+import { FormEventData } from '../../../Guests/types';
 
 const EventForm = ({
-  eventData,
+  eventFormData,
   setSuccess,
   setEventData,
   eventTitle,
   type,
 }: {
-  eventData: EventType;
-  setSuccess: Dispatch<React.SetStateAction<string>>;
-  setEventData: Dispatch<React.SetStateAction<EventType | undefined>>;
+  eventFormData: FormEventData;
   eventTitle: string | undefined;
+  setEventData?: Dispatch<React.SetStateAction<EventType | undefined>>;
+  setSuccess?: Dispatch<React.SetStateAction<string>>;
   type?: string;
 }) => {
   const [formData, setFormData] = useState<FormDataType>({});
@@ -36,9 +37,9 @@ const EventForm = ({
   const [directRegister, setDirectRegister] = useState<boolean | string>(false);
   const [ticketConditionalFields, setTicketConditionalFields] = useState<string[]>([]);
   const [coupon, setCoupon] = useState<CouponData>({
-    status: eventData?.coupon.status ? true : false,
-    description: eventData?.coupon.description ?? '',
-    value: eventData?.coupon.value ?? '',
+    status: eventFormData?.coupon.status ? true : false,
+    description: eventFormData?.coupon.description ?? '',
+    value: eventFormData?.coupon.value ?? '',
     error: '',
   });
 
@@ -48,24 +49,24 @@ const EventForm = ({
   const newSearchParams = new URLSearchParams(location.search);
 
   useEffect(() => {
-    if (eventData?.form) {
+    if (eventFormData?.form) {
       setFormData(
-        eventData?.form.reduce((data: any, field: any) => {
+        eventFormData?.form.reduce((data: any, field: any) => {
           data[field.field_key] = newSearchParams.get(field.field_key) || '';
           return data;
         }, {}),
       );
 
-      eventData?.form.forEach((field) => {
+      eventFormData?.form.forEach((field) => {
         formIdToKey = {
           ...formIdToKey,
           [field.id]: field.field_key,
         };
       });
 
-      if (eventData?.tickets) {
+      if (eventFormData?.tickets) {
         setTicketConditionalFields([]);
-        eventData.tickets.forEach((ticket) => {
+        eventFormData.tickets.forEach((ticket) => {
           ticket.conditions?.forEach((condition) => {
             setTicketConditionalFields((prevState) => {
               return [...prevState, formIdToKey[condition.field]];
@@ -76,8 +77,8 @@ const EventForm = ({
       }
     }
 
-    if (eventData?.coupon) setCoupon(eventData?.coupon);
-  }, [eventData]);
+    if (eventFormData?.coupon) setCoupon(eventFormData?.coupon);
+  }, [eventFormData]);
 
   useEffect(() => {
     if (ticketConditionalFields.some((field) => field in formData)) {
@@ -88,9 +89,9 @@ const EventForm = ({
   const checkDirectRegister = () => {
     const filteredTicket: TicketType[] = [];
 
-    eventData?.tickets.forEach((ticket) => {
+    eventFormData?.tickets.forEach((ticket) => {
       if (ticket.conditions && ticket.conditions.length > 0) {
-        if (validateCondition(ticket.conditions, formData, eventData.form)) {
+        if (validateCondition(ticket.conditions, formData, eventFormData.form)) {
           filteredTicket.push(ticket);
         }
       } else {
@@ -101,7 +102,7 @@ const EventForm = ({
     if (
       filteredTicket.length === 1 &&
       filteredTicket[0].price == 0 &&
-      !eventData?.select_multi_ticket &&
+      !eventFormData?.select_multi_ticket &&
       filteredTicket[0].entry_date.length == 0
     ) {
       setDirectRegister(filteredTicket[0].id);
@@ -116,8 +117,8 @@ const EventForm = ({
   };
 
   const handleAudioSubmit = (recordedBlob: Blob | null) => {
-    if (recordedBlob && eventData?.id && formData && setFormData) {
-      postAudio(eventData?.id, recordedBlob, formData, setFormData);
+    if (recordedBlob && localEventId && formData && setFormData) {
+      postAudio(localEventId, recordedBlob, formData, setFormData);
     }
   };
 
@@ -136,8 +137,8 @@ const EventForm = ({
   };
 
   let localEventId = '';
-  if (sessionStorage.getItem('eventData') !== null)
-    localEventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
+  if (sessionStorage.getItem('eventFormData') !== null)
+    localEventId = JSON.parse(sessionStorage.getItem('eventFormData')!).event_id;
 
   return (
     <>
@@ -160,11 +161,11 @@ const EventForm = ({
                   : 'Please fill in the form below to register for the event.'}
               </p>
             </div>
-            {formData && eventData && (
+            {formData && eventFormData && (
               <div className={styles.formFields}>
                 <AudioRecorder handleSubmit={handleAudioSubmit} />
                 <DynamicForm
-                  formFields={eventData.form}
+                  formFields={eventFormData.form}
                   formErrors={formErrors}
                   formData={formData}
                   onFieldChange={onFieldChange}
@@ -175,13 +176,13 @@ const EventForm = ({
         </motion.div>
       )}
 
-      {(eventData.tickets || eventData.select_multi_ticket) && formNumber === 1 && (
+      {(eventFormData.tickets || eventFormData.select_multi_ticket) && formNumber === 1 && (
         <CouponForm
           setTickets={setTickets}
           tickets={tickets}
           discount={discount}
           setDiscount={setDiscount}
-          eventData={eventData}
+          eventFormData={eventFormData}
           setCoupon={setCoupon}
           coupon={coupon}
           setSelectedDate={setSelectedDate}
@@ -211,17 +212,11 @@ const EventForm = ({
           onClick={() => {
             if (formNumber === 0 && !directRegister) {
               {
-                validateRsvp(
-                  eventData.id || localEventId,
-                  formData,
-                  setFormNumber,
-                  setFormErrors,
-                  selectedDate,
-                );
+                validateRsvp(localEventId, formData, setFormNumber, setFormErrors, selectedDate);
               }
             } else {
               submitForm({
-                eventId: eventData.id || localEventId,
+                eventId: localEventId,
                 tickets,
                 formData,
                 coupon,

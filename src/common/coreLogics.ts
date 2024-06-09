@@ -1,24 +1,25 @@
-import { EventType, FormDataType, TicketType } from '../apis/types';
+import { FormDataType, TicketType } from '../apis/types';
 import { validateCondition } from '../components/DynamicForm/condition';
 import { DiscountData } from '../pages/app/EventPage/types';
+import { FormEventData } from '../pages/app/Guests/types';
 
 export const filterTickets = ({
-  eventData,
+  eventFormData,
   selectedDate,
   setFilteredTickets,
   formData,
   discount,
 }: {
-  eventData: EventType | undefined;
+  eventFormData: FormEventData;
   selectedDate: string | undefined | null;
   setFilteredTickets: React.Dispatch<React.SetStateAction<TicketType[]>>;
   formData: FormDataType;
   discount?: DiscountData | undefined;
 }) => {
   const tempList: TicketType[] = [];
-  eventData?.tickets.forEach((ticket) => {
+  eventFormData?.tickets.forEach((ticket: TicketType) => {
     if (ticket.conditions) {
-      if (validateCondition(ticket.conditions, formData, eventData.form)) {
+      if (validateCondition(ticket.conditions, formData, eventFormData.form)) {
         tempList.push(ticket);
       }
     } else {
