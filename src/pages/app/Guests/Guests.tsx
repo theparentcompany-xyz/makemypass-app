@@ -10,7 +10,6 @@ import { makeMyPassSocket } from '../../../../services/urls';
 import {
   downloadCSVData,
   downloadTicket,
-  editSubmissons,
   getGuestInfo,
   resentEventTicket,
 } from '../../../apis/guests';
@@ -35,7 +34,6 @@ import toast from 'react-hot-toast';
 import Scanner from '../../../components/Scanner/Scanner';
 import EventForm from '../EventPage/components/EventForm/EventForm';
 import { useParams } from 'react-router';
-import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import EditGuest from './components/EditGuest/EditGuest';
 
 const Guests = () => {
@@ -47,7 +45,6 @@ const Guests = () => {
 
   const [eventFormData, setEventFormData] = useState<FormEventData>();
   const [formData, setFormData] = useState<FormDataType>({});
-  // const [tickets, setTickets] = useState<Tickets[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>();
   const [ticketCode, setTicketCode] = useState<string>('');

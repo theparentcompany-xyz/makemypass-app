@@ -5,7 +5,6 @@ import styles from './DynamicForm.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import Select, { MultiValue } from 'react-select';
 import { validateCondition } from './condition';
-import { useEffect } from 'react';
 
 const DynamicForm = ({
   formFields,
