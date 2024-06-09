@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import styles from './ManageTickets.module.css';
-import ManageTicketHeader from './components/ManageTicketHeader/ManageTicketHeader';
 import Slider from '../../../../../components/SliderButton/Slider';
 import TicketBox from './components/TicketBox/TicketBox';
 import { TbSettings } from 'react-icons/tb';
@@ -13,11 +12,7 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { HashLoader } from 'react-spinners';
 
-type Props = {
-  setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const ManageTickets = ({ setIsTicketsOpen }: Props) => {
+const ManageTickets = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData') || '');
   const [ticketData, setTicketData] = useState<TicketOptions>();
   const [tickets, setTickets] = useState<TicketType[]>([]);
@@ -168,7 +163,6 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
       {ticketData ? (
         // <Theme>
         <div className={styles.manageTicketsContainer}>
-          <ManageTicketHeader setIsTicketsOpen={setIsTicketsOpen} />
           <div className={styles.ticketHeader}>
             <div className={styles.ticketHeaderTitle}>Current Tickets</div>
             <button className={styles.ticketHeaderButton} onClick={onNewTicket}>

@@ -34,6 +34,7 @@ import toast from 'react-hot-toast';
 import Scanner from '../../../components/Scanner/Scanner';
 import EventForm from '../EventPage/components/EventForm/EventForm';
 import { useParams } from 'react-router';
+import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 
 const Guests = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -185,14 +186,8 @@ const Guests = () => {
         )}
 
       {selectedGuestId && selectedGuestId.type === 'add' && (
-        <Modal onClose={onClose} type='side'>
-          <div
-            className={styles.userInfoModalContainer}
-            style={{
-              maxHeight: '100%',
-              padding: '2rem 0',
-            }}
-          >
+        <Modal title='Add Guest' onClose={onClose} type='side'>
+          <div className={styles.userInfoModalContainer}>
             {!showScanner ? (
               eventFormData && (
                 <>
@@ -213,6 +208,23 @@ const Guests = () => {
                 }}
                 scanCount={0}
               />
+            )}
+          </div>
+        </Modal>
+      )}
+
+      {selectedGuestId && selectedGuestId.type === 'edit' && (
+        <Modal title='Edit Guest' onClose={onClose} type='side'>
+          <div className={styles.userInfoModalContainer}>
+            {formData && eventFormData && (
+              <div className={styles.formFields}>
+                {eventFormData?.parse_audio && <AudioRecorder handleSubmit={handleAudioSubmit} />}
+                <DynamicForm
+                  formFields={eventFormData.form}
+                  formData={formData}
+                  onFieldChange={onFieldChange}
+                />
+              </div>
             )}
           </div>
         </Modal>

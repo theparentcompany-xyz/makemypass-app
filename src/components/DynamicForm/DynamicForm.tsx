@@ -13,9 +13,9 @@ const DynamicForm = ({
   onFieldChange,
 }: {
   formFields: FormFieldType[];
-  formErrors: ErrorMessages;
   formData: FormDataType;
   onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
+  formErrors?: ErrorMessages;
 }) => {
   const variants = {
     initial: { opacity: 0, y: -10 },

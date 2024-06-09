@@ -148,13 +148,9 @@ const EventForm = ({
         >
           <div className={styles.eventFormInnerContainer} id='formFields'>
             <div>
-              <p className={styles.eventFormTitle}>
-                {type ? 'Add Guest' : 'Register for the event'}
-              </p>
+              <p className={styles.eventFormTitle}>{type ? '' : 'Register for the event'}</p>
               <p className={styles.eventHeaderDescription}>
-                {type
-                  ? 'Please add the guest details'
-                  : 'Please fill in the form below to register for the event.'}
+                {type ? '' : 'Please fill in the form below to register for the event.'}
               </p>
             </div>
             {formData && eventFormData && (

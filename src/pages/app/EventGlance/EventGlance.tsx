@@ -63,8 +63,8 @@ const EventGlance = () => {
             <Glance tab='manage' />
           </div>
           {isTicketsOpen && (
-            <Modal onClose={() => setIsTicketsOpen(false)} type='side'>
-              <ManageTickets setIsTicketsOpen={setIsTicketsOpen} />
+            <Modal title='Manage Tickets' onClose={() => setIsTicketsOpen(false)} type='side'>
+              <ManageTickets />
             </Modal>
           )}
 
