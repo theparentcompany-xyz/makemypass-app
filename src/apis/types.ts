@@ -127,18 +127,14 @@ export interface EventType {
   name: string;
   title: string;
   description: string;
-  start_date: string;
-  end_date: string;
-  reg_start_date: string;
-  reg_end_date: string;
   event_start_date: string;
   event_end_date: string;
-  start_time: string;
-  end_time: string;
-  logo: string;
   banner: string;
   location: LocationType;
   place: string;
+  claim_code_message: string;
+  claim_ticked_id: string;
+  already_bought: boolean;
   hosts: HostType[];
   form: FormFieldType[];
   tickets: TicketType[];
@@ -146,15 +142,8 @@ export interface EventType {
   coupon: CouponType;
   parse_audio?: boolean;
   select_multi_ticket?: boolean;
-  capacity?: number;
-  is_private: boolean;
-  is_online: boolean;
-  is_grouped_ticket: boolean;
-  is_multiple_checkin: boolean;
   is_sub_event: boolean;
-  approval_required: boolean;
   status: string;
-
   speakers?: {
     name: string;
     image: string;
