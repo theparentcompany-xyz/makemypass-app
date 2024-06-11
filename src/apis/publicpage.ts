@@ -34,6 +34,7 @@ export const submitForm = async ({
   eventTitle,
   selectedDate,
   setDiscount,
+  setLoading,
 }: {
   eventId: string;
   tickets: Tickets[];
@@ -49,7 +50,9 @@ export const submitForm = async ({
   eventTitle?: string;
   selectedDate?: string | null;
   setDiscount?: React.Dispatch<DiscountData>;
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  setLoading && setLoading(true);
   const selectedDateFormatted = selectedDate
     ? new Date(selectedDate).toISOString().split('T')[0]
     : null;
@@ -137,6 +140,9 @@ export const submitForm = async ({
                 toast.error(
                   error.response.data.message.general[0] || 'Error in Validating Payment',
                 );
+              })
+              .finally(() => {
+                setLoading && setLoading(false);
               });
           },
           theme: {
@@ -160,6 +166,9 @@ export const submitForm = async ({
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Error in Registering Event');
       if (setFormErrors) setFormErrors(error.response.data.message);
+    })
+    .finally(() => {
+      setLoading && setLoading(false);
     });
 };
 

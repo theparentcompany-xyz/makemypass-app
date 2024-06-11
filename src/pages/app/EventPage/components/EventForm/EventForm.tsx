@@ -10,6 +10,7 @@ import CouponForm from '../CouponForm/CouponForm';
 import { validateCondition } from '../../../../../components/DynamicForm/condition';
 import { useLocation } from 'react-router';
 import { FormEventData } from '../../../Guests/types';
+import { PropagateLoader } from 'react-spinners';
 
 const EventForm = ({
   eventFormData,
@@ -24,6 +25,7 @@ const EventForm = ({
   setSuccess?: Dispatch<React.SetStateAction<string>>;
   type?: string;
 }) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({});
   const [formNumber, setFormNumber] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState<string | null>();
@@ -226,12 +228,27 @@ const EventForm = ({
                 eventTitle,
                 selectedDate,
                 setDiscount,
+                setLoading,
               });
             }
           }}
           className={styles.submitButton}
         >
-          {formNumber === 0 && !directRegister ? 'Next' : 'Register'}
+          {loading ? (
+            <PropagateLoader
+              color={'#fff'}
+              loading={loading}
+              size={10}
+              style={{
+                padding: '0.75rem 1.5rem',
+                paddingTop: '0.5rem',
+              }}
+            />
+          ) : formNumber === 0 && !directRegister ? (
+            'Next'
+          ) : (
+            'Register'
+          )}
         </motion.button>
       </div>
     </>
