@@ -273,7 +273,7 @@ export const getEventInfo = async (
       setSuccess &&
         setSuccess((prev) => ({
           ...prev,
-          showModal: true,
+          showModal: false,
           ticketCode: response.data.response.ticket_url,
         }));
     })
