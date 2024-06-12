@@ -24,13 +24,7 @@ const SuccessModal = ({
       >
         {success && (
           <>
-            <Modal
-              style={{
-                maxWidth: '28rem',
-                width: '75%',
-                borderBottom: '4px solid #47c97e',
-              }}
-            >
+            <Modal>
               <div className={styles.modalContainer}>
                 <button
                   onClick={() => {

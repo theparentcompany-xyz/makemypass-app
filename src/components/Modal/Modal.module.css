@@ -14,7 +14,6 @@
   position: fixed;
   z-index: 100;
   backdrop-filter: blur(800px);
-
   top: 50%;
   left: 0;
   right: 0;
