@@ -29,7 +29,7 @@ const TicketBox = ({ ticketInfo, onClick, selected, closeTicket }: Props) => {
           <div className={styles.ticketFooterRight}>
             <label className={styles.closeTicketLabel}>Close Ticket</label>
             <Slider
-              checked={ticketInfo.is_active}
+              checked={!ticketInfo.is_active}
               onChange={() => {
                 closeTicket(ticketInfo);
               }}
