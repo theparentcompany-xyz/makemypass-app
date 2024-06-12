@@ -122,6 +122,11 @@ interface CouponType {
 }
 
 export interface EventType {
+  capacity?: number;
+  is_grouped_ticket: boolean;
+  is_multiple_checkin: boolean;
+  is_private: boolean;
+  approval_required: boolean;
   err_message: ReactNode;
   id: string;
   name: string;
@@ -129,6 +134,10 @@ export interface EventType {
   description: string;
   event_start_date: string;
   event_end_date: string;
+  reg_start_date: string;
+  reg_end_date: string;
+  is_online: boolean;
+  logo: string;
   banner: string;
   location: LocationType;
   place: string;
