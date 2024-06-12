@@ -4,13 +4,14 @@ import styles from '../../EventPage.module.css';
 import { postAudio, submitForm, validateRsvp } from '../../../../../apis/publicpage';
 import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
 import { motion } from 'framer-motion';
-import AudioRecorder from '../../../../../components/DynamicForm/components/AudioRecorder/AudioRecorder';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import CouponForm from '../CouponForm/CouponForm';
 import { validateCondition } from '../../../../../components/DynamicForm/condition';
 import { useLocation } from 'react-router';
 import { FormEventData } from '../../../Guests/types';
 import { PropagateLoader } from 'react-spinners';
+import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
+import { MdKeyboardVoice } from 'react-icons/md';
 
 const EventForm = ({
   eventFormData,
@@ -44,6 +45,7 @@ const EventForm = ({
     value: eventFormData?.coupon.value ?? '',
     error: '',
   });
+  const [showAudioModal, setShowAudioModal] = useState<boolean>(false);
 
   let formIdToKey: { [key: string]: string } = {};
 
@@ -155,9 +157,20 @@ const EventForm = ({
                 {type ? '' : 'Please fill in the form below to register for the event.'}
               </p>
             </div>
+            <div className={styles.voiceButton}>
+              <SecondaryButton
+                onClick={() => {
+                  setFormNumber((prevState) => {
+                    return prevState + 1;
+                  });
+                }}
+                icon={<MdKeyboardVoice size={15} />}
+                buttonText='Record Voice to fill'
+              />
+            </div>
             {formData && eventFormData && (
               <div className={styles.formFields}>
-                {eventFormData?.parse_audio && <AudioRecorder handleSubmit={handleAudioSubmit} />}
+                {/* {eventFormData?.parse_audio && <div>Audio recording</div>} */}
                 <DynamicForm
                   formFields={eventFormData.form}
                   formErrors={formErrors}

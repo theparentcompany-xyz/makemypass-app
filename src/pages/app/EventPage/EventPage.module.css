@@ -57,12 +57,14 @@
   align-items: flex-start;
   justify-content: center;
   width: 100%;
+  position: relative;
 }
 
 .eventFormTitle {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 500;
   color: #fff;
+  margin-bottom: 1rem;
   font-family: 'Inter', sans-serif;
 }
 
@@ -167,4 +169,11 @@
     max-width: 32rem;
     width: 100%;
   }
+}
+
+.voiceButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: -0.5rem;
 }
