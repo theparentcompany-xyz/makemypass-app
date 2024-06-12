@@ -20,6 +20,8 @@ import EventHeader from '../../../components/EventHeader/EventHeader';
 import ManageTickets from './components/ManageTickets/ManageTickets';
 import { LuMail, LuPencil } from 'react-icons/lu';
 import { listMails, updateMail } from '../../../apis/mails';
+import CustomMail from './components/CustomMail/CustomMail';
+import UpdateMail from './components/UpdateMail/UpdateMail';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -34,7 +36,7 @@ const EventGlance = () => {
       .filter(([key, value]) => matchingMail?.[key as keyof MailType] !== value)
       .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
 
-    updateMail(eventId, selectedMail?.id as string, changedData);
+    updateMail(eventId, selectedMail, changedData, setMails);
     console.log(changedData);
   };
 
@@ -42,7 +44,7 @@ const EventGlance = () => {
     if (eventId) getEvent(eventId, setEventTitle, setEventData);
   }, [eventId]);
   const [selectedMail, setSelectedMail] = useState<MailType>();
-
+  const [customMail, setCustomMail] = useState<boolean>(false);
   const eventName = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
   const navigate = useNavigate();
   const [isTicketsOpen, setIsTicketsOpen] = useState(false);
@@ -67,53 +69,27 @@ const EventGlance = () => {
               <ManageTickets />
             </Modal>
           )}
+          {customMail && (
+            <Modal
+              title='Connect Custom Mail'
+              onClose={() => setCustomMail(false)}
+              style={{ zIndex: 1500 }}
+            >
+              <CustomMail setCustomMail={setCustomMail} />
+            </Modal>
+          )}
 
           {selectedMail && (
             <Modal onClose={() => setSelectedMail(undefined)} type='side'>
-              <div className={styles.modalHeader}>Update Reminder Email</div>
-              <div className={styles.modalSubText}>
-                <div className={styles.inputContainers}>
-                  <div className={styles.inputContainer}>
-                    <p className={styles.inputLabel}>The reminder goes Out </p>
-                    <p className={styles.inputSubText}>X hours before the event</p>
-                  </div>
-                  <div className={styles.inputContainer}>
-                    <p className={styles.inputLabel}>Subject</p>
-                    <input
-                      type='text'
-                      placeholder='Enter Subject'
-                      className={styles.input}
-                      value={selectedMail?.subject}
-                      onChange={(e) =>
-                        setSelectedMail({ ...selectedMail, subject: e.target.value })
-                      }
-                    />
-                  </div>
-
-                  <div className={styles.inputContainer}>
-                    <p className={styles.inputLabel}>Body</p>
-
-                    <textarea
-                      placeholder='Enter Email Body'
-                      className={styles.textarea}
-                      value={selectedMail?.body}
-                      onChange={(e) => setSelectedMail({ ...selectedMail, body: e.target.value })}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.buttonContainer}>
-                <button className={styles.button} onClick={onUpdateEmail}>
-                  Update Reminder
-                </button>
-                <button className={styles.button}>Send Now</button>
-                <button className={styles.button} onClick={() => setSelectedMail(undefined)}>
-                  Cancel
-                </button>
-              </div>
+              <UpdateMail
+                selectedMail={selectedMail}
+                setSelectedMail={setSelectedMail}
+                onUpdateEmail={onUpdateEmail}
+                setCustomMail={setCustomMail}
+              />
             </Modal>
           )}
+
           <div className={styles.eventGlance}>
             <div className={styles.bannerContainer}>
               {eventData?.banner ? (
