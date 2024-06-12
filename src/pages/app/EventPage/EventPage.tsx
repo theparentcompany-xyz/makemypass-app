@@ -12,11 +12,17 @@ import EventHeader from './components/EventHeader/EventHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
 import { Helmet } from 'react-helmet';
 import EventForm from './components/EventForm/EventForm';
+import { successModalProps } from './types';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const [eventData, setEventData] = useState<EventType>();
-  const [success, setSuccess] = useState<string>('');
+  const [success, setSuccess] = useState<successModalProps>({
+    showModal: false,
+    ticketCode: '',
+    email: '',
+    eventTitle: '',
+  });
 
   const [eventNotFound, setEventNotFound] = useState<boolean>(false);
 
@@ -24,7 +30,7 @@ const EventPage = () => {
   const typeParam = searchParams.get('type');
 
   useEffect(() => {
-    if (eventTitle) getEventInfo(eventTitle, setEventData, setEventNotFound);
+    if (eventTitle) getEventInfo(eventTitle, setEventData, setEventNotFound, setSuccess);
   }, [eventTitle]);
 
   useEffect(() => {
@@ -40,7 +46,7 @@ const EventPage = () => {
       <Helmet>
         <meta charSet='utf-8' />
         <title>{eventData?.title}</title>
-        <link rel='shortcut icon' href={eventData?.logo ?? '/favicon.ico'} type='image/x-icon' />
+        <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
         <meta name='title' content={eventData?.title} />
         <meta
           name='description'

@@ -1,7 +1,13 @@
 import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { CouponData, DiscountData, TicketOptions, Tickets } from '../pages/app/EventPage/types';
+import {
+  CouponData,
+  DiscountData,
+  TicketOptions,
+  Tickets,
+  successModalProps,
+} from '../pages/app/EventPage/types';
 import React, { Dispatch } from 'react';
 import {
   ErrorMessages,
@@ -40,7 +46,7 @@ export const submitForm = async ({
   tickets: Tickets[];
   formData: FormDataType;
   coupon: CouponData;
-  setSuccess?: React.Dispatch<React.SetStateAction<string>>;
+  setSuccess?: React.Dispatch<React.SetStateAction<successModalProps>>;
   setFormNumber?: React.Dispatch<React.SetStateAction<number>>;
   setFormData?: React.Dispatch<React.SetStateAction<FormDataType>>;
   setFormErrors?: Dispatch<ErrorMessages>;
@@ -117,18 +123,15 @@ export const submitForm = async ({
                 payment_id: response.razorpay_payment_id,
               })
               .then((response) => {
-                setSuccess && setSuccess(response.data.response.code || 'Will be Informed Later');
-
-                if (response.data.response.ticket_url) {
-                  const link = document.createElement('a');
-                  link.href = response.data.response.ticket_url;
-                  link.download = `Event Pass.png`;
-                  document.body.appendChild(link);
-                  link.click();
-                }
+                setSuccess &&
+                  setSuccess((prev) => ({
+                    ...prev,
+                    showModal: true,
+                    email: typeof formData.email === 'string' ? formData.email : '',
+                    ticketCode: response.data.response.ticket_url,
+                  }));
 
                 setTimeout(() => {
-                  setSuccess && setSuccess('');
                   setFormNumber && setFormNumber(0);
                   setFormData && setFormData({});
                   setDiscount &&
@@ -153,10 +156,15 @@ export const submitForm = async ({
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
       } else {
-        setSuccess && setSuccess(response.data.response.code || 'Will be Informed Later');
+        setSuccess &&
+          setSuccess((prev) => ({
+            ...prev,
+            showModal: true,
+            email: typeof formData.email === 'string' ? formData.email : '',
+            ticketCode: response.data.response.ticket_url,
+          }));
 
         setTimeout(() => {
-          setSuccess && setSuccess('');
           setFormNumber && setFormNumber(0);
           setFormData && setFormData({});
           setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
@@ -256,11 +264,18 @@ export const getEventInfo = async (
   eventTitle: string,
   setEventData: Dispatch<React.SetStateAction<EventType | undefined>>,
   setEventNotFound?: Dispatch<React.SetStateAction<boolean>>,
+  setSuccess?: React.Dispatch<React.SetStateAction<successModalProps>>,
 ) => {
   privateGateway
     .get(makeMyPass.getEventInfo(eventTitle))
     .then((response) => {
       setEventData(response.data.response);
+      setSuccess &&
+        setSuccess((prev) => ({
+          ...prev,
+          showModal: true,
+          ticketCode: response.data.response.ticket_url,
+        }));
     })
     .catch((error) => {
       if (error.response.data.statusCode === 404) setEventNotFound && setEventNotFound(true);

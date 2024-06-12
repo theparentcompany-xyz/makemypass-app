@@ -6,7 +6,8 @@
 
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.04);
-  background: #1b2725;
+  background: rgb(37, 37, 37, 0.9);
+
   padding: 1rem;
 
   max-width: 25rem;

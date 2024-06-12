@@ -47,3 +47,10 @@ export type Tickets = {
   count: number;
   my_ticket: boolean;
 };
+
+export type successModalProps = {
+  showModal: boolean;
+  ticketCode: string;
+  email?: string;
+  eventTitle?: string;
+};

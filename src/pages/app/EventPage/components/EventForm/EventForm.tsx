@@ -1,5 +1,5 @@
 import { Dispatch, useEffect, useState } from 'react';
-import { CouponData, DiscountData, Tickets } from '../../types';
+import { CouponData, DiscountData, Tickets, successModalProps } from '../../types';
 import styles from '../../EventPage.module.css';
 import { postAudio, submitForm, validateRsvp } from '../../../../../apis/publicpage';
 import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
@@ -22,7 +22,7 @@ const EventForm = ({
   eventFormData: FormEventData;
   eventTitle: string | undefined;
   setEventData?: Dispatch<React.SetStateAction<EventType | undefined>>;
-  setSuccess?: Dispatch<React.SetStateAction<string>>;
+  setSuccess?: Dispatch<React.SetStateAction<successModalProps>>;
   type?: string;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
