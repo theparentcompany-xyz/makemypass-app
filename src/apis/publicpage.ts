@@ -265,9 +265,12 @@ export const getEventInfo = async (
   setEventData: Dispatch<React.SetStateAction<EventType | undefined>>,
   setEventNotFound?: Dispatch<React.SetStateAction<boolean>>,
   setSuccess?: React.Dispatch<React.SetStateAction<successModalProps>>,
+  claimCode?: string | null,
 ) => {
+  let backendURL = makeMyPass.getEventInfo(eventTitle);
+  if (claimCode) backendURL += `?claim_code=${claimCode}`;
   privateGateway
-    .get(makeMyPass.getEventInfo(eventTitle))
+    .get(backendURL)
     .then((response) => {
       setEventData(response.data.response);
       setSuccess &&

@@ -19,12 +19,14 @@ const EventForm = ({
   setEventData,
   eventTitle,
   type,
+  claimCode,
 }: {
   eventFormData: FormEventData;
   eventTitle: string | undefined;
   setEventData?: Dispatch<React.SetStateAction<EventType | undefined>>;
   setSuccess?: Dispatch<React.SetStateAction<successModalProps>>;
   type?: string;
+  claimCode?: string | null;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({});
@@ -92,6 +94,18 @@ const EventForm = ({
 
   const checkDirectRegister = () => {
     const filteredTicket: TicketType[] = [];
+
+    if (claimCode) {
+      setDirectRegister(claimCode);
+      setTickets([
+        {
+          ticket_id: claimCode,
+          count: 1,
+          my_ticket: true,
+        },
+      ]);
+      return;
+    }
 
     eventFormData?.tickets.forEach((ticket) => {
       if (ticket.conditions && ticket.conditions.length > 0) {

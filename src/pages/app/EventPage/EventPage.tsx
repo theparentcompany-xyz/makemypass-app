@@ -28,9 +28,10 @@ const EventPage = () => {
 
   const [searchParams] = useSearchParams();
   const typeParam = searchParams.get('type');
+  const claimCode = searchParams.get('claim_code');
 
   useEffect(() => {
-    if (eventTitle) getEventInfo(eventTitle, setEventData, setEventNotFound, setSuccess);
+    if (eventTitle) getEventInfo(eventTitle, setEventData, setEventNotFound, setSuccess, claimCode);
   }, [eventTitle]);
 
   useEffect(() => {
@@ -105,6 +106,7 @@ const EventPage = () => {
                 setSuccess={setSuccess}
                 setEventData={setEventData}
                 eventTitle={eventTitle}
+                claimCode={claimCode}
               />
             </div>
           </div>
