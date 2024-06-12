@@ -1,7 +1,7 @@
 import { Dispatch, useEffect, useState } from 'react';
 import { CouponData, DiscountData, Tickets, successModalProps } from '../../types';
 import styles from '../../EventPage.module.css';
-import { postAudio, submitForm, validateRsvp } from '../../../../../apis/publicpage';
+import { submitForm, validateRsvp } from '../../../../../apis/publicpage';
 import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
 import { motion } from 'framer-motion';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
