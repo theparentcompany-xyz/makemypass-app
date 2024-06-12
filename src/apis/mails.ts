@@ -30,19 +30,47 @@ export const getMail = (eventId: string, mailId: string) => {
     });
 };
 
-export const updateMail = (eventId: string, mailId: string, data: Record<string, any>) => {
+export const updateMail = (
+  eventId: string,
+  selectedMail: MailType,
+  data: Record<string, any>,
+  setMails: React.Dispatch<React.SetStateAction<MailType[]>>,
+) => {
   privateGateway
-    .patch(makeMyPass.updateMail(eventId, mailId), data, {
+    .patch(makeMyPass.updateMail(eventId, selectedMail?.id), data, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
     .then((response) => {
+      setMails((mails) => mails.map((mail) => (mail.id === selectedMail.id ? selectedMail : mail)));
       toast.success('Mail updated successfully');
       console.log(response.data.response);
     })
     .catch((error) => {
       toast.error('Error while updating mail');
+      console.log(error);
+    });
+};
+
+export const getMailService = (eventId: string) => {
+  privateGateway
+    .get(makeMyPass.getMailService(eventId))
+    .then((response) => {
+      console.log(response.data.response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const updateMailService = (eventId: string, data: any) => {
+  privateGateway
+    .post(makeMyPass.updateMailService(eventId), data)
+    .then((response) => {
+      console.log(response.data.response);
+    })
+    .catch((error) => {
       console.log(error);
     });
 };
