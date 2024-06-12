@@ -45,7 +45,7 @@ const EventForm = ({
     value: eventFormData?.coupon.value ?? '',
     error: '',
   });
-  const [showAudioModal, setShowAudioModal] = useState<boolean>(false);
+  // const [showAudioModal, setShowAudioModal] = useState<boolean>(false);
 
   let formIdToKey: { [key: string]: string } = {};
 
@@ -120,11 +120,11 @@ const EventForm = ({
     } else setDirectRegister(false);
   };
 
-  const handleAudioSubmit = (recordedBlob: Blob | null) => {
-    if (recordedBlob && eventFormData.id && formData && setFormData) {
-      postAudio(eventFormData.id, recordedBlob, formData, setFormData);
-    }
-  };
+  // const handleAudioSubmit = (recordedBlob: Blob | null) => {
+  //   if (recordedBlob && eventFormData.id && formData && setFormData) {
+  //     postAudio(eventFormData.id, recordedBlob, formData, setFormData);
+  //   }
+  // };
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
     setFormData((prevFormData) => ({
