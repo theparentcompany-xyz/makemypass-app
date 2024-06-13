@@ -80,7 +80,7 @@
   width: 18rem;
 }
 
-.inputLink{
+.inputLink {
   font-weight: 400;
   font-size: 0.8rem;
   margin-top: 0.25rem;
@@ -90,7 +90,7 @@
   user-select: none;
 }
 
-.inputLink:hover{
+.inputLink:hover {
   text-decoration: underline;
 }
 
@@ -145,7 +145,7 @@
   outline: none;
 }
 
-.showPass{
+.showPass {
   display: flex;
   gap: 5px;
 }
