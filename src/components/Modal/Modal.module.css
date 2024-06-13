@@ -59,9 +59,13 @@
 }
 
 .modalHeader {
-  font-weight: 600;
-  font-size: 1.25rem;
-  margin-top: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modalSubText {

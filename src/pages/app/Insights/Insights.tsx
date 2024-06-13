@@ -195,14 +195,12 @@ const Insights = ({ type }: { type?: string }) => {
       <>
         {showPublishModal && (
           <Modal
+            title='Publish'
             onClose={() => {
               setShowPublishModal(false);
             }}
           >
             <div className={styles.publicEventModal}>
-              <div className={styles.modalHeader}>
-                <p className={styles.modalHeaderText}>Publish</p>
-              </div>
               {!isPublished ? (
                 <div>
                   <div className={styles.sectionContent1}>

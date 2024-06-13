@@ -12,6 +12,8 @@ import { FormEventData } from '../../../Guests/types';
 import { PropagateLoader } from 'react-spinners';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { MdKeyboardVoice } from 'react-icons/md';
+import Modal from '../../../../../components/Modal/Modal';
+import { FaMicrophone } from 'react-icons/fa6';
 
 const EventForm = ({
   eventFormData,
@@ -47,7 +49,7 @@ const EventForm = ({
     value: eventFormData?.coupon.value ?? '',
     error: '',
   });
-  // const [showAudioModal, setShowAudioModal] = useState<boolean>(false);
+  const [showAudioModal, setShowAudioModal] = useState<boolean>(false);
 
   let formIdToKey: { [key: string]: string } = {};
 
@@ -81,6 +83,13 @@ const EventForm = ({
         });
         checkDirectRegister();
       }
+    }
+
+    if (claimCode) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        claim_code: claimCode,
+      }));
     }
 
     if (eventFormData?.coupon) setCoupon(eventFormData?.coupon);
@@ -156,6 +165,15 @@ const EventForm = ({
 
   return (
     <>
+      {showAudioModal && (
+        <Modal title='Record your voice' onClose={() => setShowAudioModal(false)}>
+          <div className={styles.voiceModalContainer}>
+            <div className={styles.voiceImage}>
+              <FaMicrophone />
+            </div>
+          </div>
+        </Modal>
+      )}
       {formNumber === 0 && (
         <motion.div
           initial={{ opacity: 0, y: 35 }}
@@ -174,9 +192,7 @@ const EventForm = ({
             <div className={styles.voiceButton}>
               <SecondaryButton
                 onClick={() => {
-                  setFormNumber((prevState) => {
-                    return prevState + 1;
-                  });
+                  setShowAudioModal(true);
                 }}
                 icon={<MdKeyboardVoice size={15} />}
                 buttonText='Record Voice to fill'

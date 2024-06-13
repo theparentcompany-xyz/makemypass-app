@@ -183,9 +183,8 @@ export const submitForm = async ({
       }
 
       if (setFormErrors && error.response.data.message) setFormErrors(error.response.data.message);
-      else {
-        toast.error(error.response.data.message.general[0] || 'Error in Registering Event');
-      }
+      if (error.response.data.message.general[0])
+        toast.error(error.response.data.message.general[0]);
     })
     .finally(() => {
       setLoading && setLoading(false);
