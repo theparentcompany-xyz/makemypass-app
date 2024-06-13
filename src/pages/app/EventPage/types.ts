@@ -54,3 +54,8 @@ export type successModalProps = {
   email?: string;
   eventTitle?: string;
 };
+
+export type AudioControlsType = {
+  showModal: boolean;
+  showAudioControls: boolean;
+};

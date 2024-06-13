@@ -1,5 +1,11 @@
 import { Dispatch, useEffect, useState } from 'react';
-import { CouponData, DiscountData, Tickets, successModalProps } from '../../types';
+import {
+  AudioControlsType,
+  CouponData,
+  DiscountData,
+  Tickets,
+  successModalProps,
+} from '../../types';
 import styles from '../../EventPage.module.css';
 import { submitForm, validateRsvp } from '../../../../../apis/publicpage';
 import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
@@ -13,7 +19,8 @@ import { PropagateLoader } from 'react-spinners';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { MdKeyboardVoice } from 'react-icons/md';
 import Modal from '../../../../../components/Modal/Modal';
-import { FaMicrophone } from 'react-icons/fa6';
+import { FaMicrophone, FaPlay } from 'react-icons/fa6';
+import { IoClose, IoPause } from 'react-icons/io5';
 
 const EventForm = ({
   eventFormData,
@@ -49,7 +56,11 @@ const EventForm = ({
     value: eventFormData?.coupon.value ?? '',
     error: '',
   });
-  const [showAudioModal, setShowAudioModal] = useState<boolean>(false);
+
+  const [audioControls, setAudioControls] = useState<AudioControlsType>({
+    showModal: false,
+    showAudioControls: false,
+  });
 
   let formIdToKey: { [key: string]: string } = {};
 
@@ -163,15 +174,52 @@ const EventForm = ({
     }
   };
 
+  const closeAudioModal = () => {
+    setAudioControls({
+      showModal: false,
+      showAudioControls: false,
+    });
+  };
+
   return (
     <>
-      {showAudioModal && (
-        <Modal title='Record your voice' onClose={() => setShowAudioModal(false)}>
+      {audioControls.showModal && (
+        <Modal title='Record your voice' onClose={closeAudioModal}>
           <div className={styles.voiceModalContainer}>
             <div className={styles.voiceImage}>
-              <FaMicrophone />
+              <FaMicrophone size={50} color='#A0FFC8' />
             </div>
           </div>
+          {audioControls.showAudioControls ? (
+            <div className={styles.voiceButtons}>
+              <button className={styles.inModalVoiceButton}>13.01s</button>
+              <button className={styles.inModalVoiceButton}>
+                <FaPlay />
+              </button>
+              <button className={styles.inModalVoiceButton}>
+                <IoPause />
+              </button>
+              <button className={styles.inModalVoiceButton} onClick={closeAudioModal}>
+                <IoClose />
+              </button>
+            </div>
+          ) : (
+            <div className={styles.voiceButtons}>
+              <button
+                onClick={() => {
+                  setAudioControls({
+                    showModal: true,
+                    showAudioControls: true,
+                  });
+                }}
+                className={styles.inModalVoiceButton}
+              >
+                Tap to record
+              </button>
+            </div>
+          )}
+
+          <button className={styles.voiceSubmitButton}>Submit</button>
         </Modal>
       )}
       {formNumber === 0 && (
@@ -192,7 +240,10 @@ const EventForm = ({
             <div className={styles.voiceButton}>
               <SecondaryButton
                 onClick={() => {
-                  setShowAudioModal(true);
+                  setAudioControls({
+                    showModal: true,
+                    showAudioControls: false,
+                  });
                 }}
                 icon={<MdKeyboardVoice size={15} />}
                 buttonText='Record Voice to fill'
