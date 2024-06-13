@@ -41,6 +41,7 @@ export const submitForm = async ({
   selectedDate,
   setDiscount,
   setLoading,
+  setCoupon,
 }: {
   eventId: string;
   tickets: Tickets[];
@@ -57,6 +58,7 @@ export const submitForm = async ({
   selectedDate?: string | null;
   setDiscount?: React.Dispatch<DiscountData>;
   setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+  setCoupon?: React.Dispatch<React.SetStateAction<CouponData>>;
 }) => {
   setLoading && setLoading(true);
   const selectedDateFormatted = selectedDate
@@ -172,8 +174,19 @@ export const submitForm = async ({
       }
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Registering Event');
-      if (setFormErrors) setFormErrors(error.response.data.message);
+      if (error.response.data.message['coupon_key']) {
+        setCoupon &&
+          setCoupon({
+            ...coupon,
+            error: error.response.data.message['coupon_key'][0],
+          });
+        console.log('ivde');
+      }
+
+      if (setFormErrors && error.response.data.message) setFormErrors(error.response.data.message);
+      else {
+        toast.error(error.response.data.message.general[0] || 'Error in Registering Event');
+      }
     })
     .finally(() => {
       setLoading && setLoading(false);

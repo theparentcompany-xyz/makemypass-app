@@ -256,6 +256,7 @@ const EventForm = ({
                 selectedDate,
                 setDiscount,
                 setLoading,
+                setCoupon,
               });
             }
           }}
