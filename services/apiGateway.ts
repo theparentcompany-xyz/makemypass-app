@@ -50,7 +50,7 @@ privateGateway.interceptors.request.use(
 privateGateway.interceptors.request.use(
   function (config) {
     if (config.url) {
-      if (!config.url.endsWith('/')) {
+      if (!config.url.endsWith('/') && !config.url.includes('?')) {
         config.url += '/';
       }
     }

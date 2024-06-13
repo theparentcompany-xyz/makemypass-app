@@ -115,11 +115,11 @@ const EventForm = ({
   const checkDirectRegister = () => {
     const filteredTicket: TicketType[] = [];
 
-    if (claimCode) {
-      setDirectRegister(claimCode);
+    if (claimCode && eventFormData.claim_ticket_id) {
+      setDirectRegister(eventFormData.claim_ticket_id);
       setTickets([
         {
-          ticket_id: claimCode,
+          ticket_id: eventFormData.claim_ticket_id,
           count: 1,
           my_ticket: true,
         },

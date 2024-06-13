@@ -31,4 +31,5 @@ export interface FormEventData {
   is_sub_event: boolean;
   parse_audio: boolean;
   coupon: CouponData;
+  claim_ticket_id?: string;
 }

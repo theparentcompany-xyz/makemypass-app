@@ -102,6 +102,7 @@ const EventPage = () => {
                   is_sub_event: eventData.is_sub_event ?? false,
                   parse_audio: eventData.parse_audio ?? false,
                   coupon: eventData.coupon ?? false,
+                  claim_ticket_id: eventData.claim_ticked_id,
                 }}
                 setSuccess={setSuccess}
                 setEventData={setEventData}
