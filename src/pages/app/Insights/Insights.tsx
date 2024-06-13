@@ -56,9 +56,12 @@ const Insights = ({ type }: { type?: string }) => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   const eventId = useRef<string>('');
+  const eventName = useRef<string>('');
 
-  if (sessionStorage.getItem('eventData'))
+  if (sessionStorage.getItem('eventData')) {
     eventId.current = JSON.parse(sessionStorage.getItem('eventData')!)?.event_id;
+    eventName.current = JSON.parse(sessionStorage.getItem('eventData')!)?.event_name;
+  }
 
   const [eventData, setEventData] = useState<EventType>();
   const { eventTitle } = useParams();
@@ -221,13 +224,13 @@ const Insights = ({ type }: { type?: string }) => {
                     <div className={styles.publicLinkField}>
                       <input
                         className={styles.publicLink}
-                        value={`https://www.makemypass.com/event/kozhikodeexpo`}
+                        value={`https://www.makemypass.com/${eventName.current}/public/insights`}
                         readOnly
                       />
                       <IoCopyOutline
                         onClick={() => {
                           navigator.clipboard.writeText(
-                            `https://www.makemypass.com/event/kozhikodeexpo`,
+                            `https://www.makemypass.com/${eventName.current}/public/insights`,
                           );
                           toast.success('Link copied to clipboard');
                         }}
@@ -239,14 +242,14 @@ const Insights = ({ type }: { type?: string }) => {
                       <textarea
                         rows={5}
                         className={styles.publicLink}
-                        value={`<iframe src="https://www.example.com" width="600" height="400" frameborder="0" scrolling="no"></iframe>
+                        value={`<iframe src=${`https://www.makemypass.com/${eventName.current}/public/insights`} width="600" height="400" frameborder="0" scrolling="no"></iframe>
                         `}
                         readOnly
                       />
                       <IoCopyOutline
                         onClick={() => {
                           navigator.clipboard.writeText(
-                            `https://www.makemypass.com/event/kozhikodeexpo`,
+                            `<iframe src=${`https://www.makemypass.com/${eventName.current}/public/insights`} width="600" height="400" frameborder="0" scrolling="no"></iframe>`,
                           );
                           toast.success('Link copied to clipboard');
                         }}
@@ -264,7 +267,10 @@ const Insights = ({ type }: { type?: string }) => {
                     </p>
                     <button
                       onClick={() => {
-                        publishPage();
+                        window.open(
+                          `https://www.makemypass.com/${eventName.current}/public/insights`,
+                          '_blank',
+                        );
                       }}
                       style={{
                         maxWidth: '100px',
