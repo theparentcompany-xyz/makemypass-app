@@ -180,7 +180,6 @@ export const submitForm = async ({
             ...coupon,
             error: error.response.data.message['coupon_key'][0],
           });
-        console.log('ivde');
       }
 
       if (setFormErrors && error.response.data.message) setFormErrors(error.response.data.message);
