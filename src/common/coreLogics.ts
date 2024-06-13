@@ -3,6 +3,11 @@ import { validateCondition } from '../components/DynamicForm/condition';
 import { DiscountData } from '../pages/app/EventPage/types';
 import { FormEventData } from '../pages/app/Guests/types';
 
+enum DiscountType {
+  Amount = 'amount',
+  Percentage = 'percentage',
+}
+
 export const filterTickets = ({
   eventFormData,
   selectedDate,
@@ -48,8 +53,10 @@ export const filterTickets = ({
   });
 
   tempList2.forEach((ticket) => {
-    // TODO: move to type to enum (amount, percent)
-    if (discount?.discount_type === 'percentage' && discount.ticket.includes(ticket.id)) {
+    if (
+      discount?.discount_type === DiscountType.Percentage &&
+      discount.ticket.includes(ticket.id)
+    ) {
       const updatedTicket = {
         ...ticket,
         price: ticket.price - (ticket.price * Number(discount.discount_value)) / 100,
@@ -58,7 +65,10 @@ export const filterTickets = ({
       setFilteredTickets((prevTickets) => {
         return [...prevTickets, updatedTicket];
       });
-    } else if (discount?.discount_type === 'amount' && discount.ticket.includes(ticket.id)) {
+    } else if (
+      discount?.discount_type === DiscountType.Amount &&
+      discount.ticket.includes(ticket.id)
+    ) {
       const updatedTicket = {
         ...ticket,
         price: ticket.price - Number(discount.discount_value),

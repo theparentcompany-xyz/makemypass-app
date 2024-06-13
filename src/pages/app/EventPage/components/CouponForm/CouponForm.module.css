@@ -35,6 +35,12 @@
   position: relative;
 }
 
+.dateContainer {
+  position: absolute;
+  right: 30px;
+  bottom: 24px;
+}
+
 .ticketTypeTitle {
   font-size: 1.5rem;
   font-weight: 600;
@@ -293,4 +299,16 @@
   height: 1.5rem;
 
   border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.borderClassWhite {
+  border: 2px solid #ffffff;
+}
+
+.borderClassDefault {
+  border: 2px solid #2a3533;
+}
+
+.borderClassGreen {
+  border: 2px solid #46bf75;
 }

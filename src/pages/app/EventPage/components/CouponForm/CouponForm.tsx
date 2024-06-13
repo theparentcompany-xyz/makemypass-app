@@ -56,6 +56,10 @@ const CouponForm = ({
   const [filteredTickets, setFilteredTickets] = useState<TicketType[]>([]);
   const [newTickets, setNewTickets] = useState<Tickets[]>([]);
 
+  const ticketSoldAlert = () => {
+    toast.error('Ticket sold out');
+  };
+
   const onSelectTicket = (currentTicketId: string) => {
     if (eventFormData?.select_multi_ticket) {
       let newTicket = true;
@@ -163,7 +167,8 @@ const CouponForm = ({
           className={`${styles.row} ${styles.ticketType}`}
           style={{
             marginTop: '0rem',
-            border: discount.discount_value > 0 ? '2px solid #46BF75' : '2px solid #2A3533',
+            border:
+              discount.discount_value > 0 ? styles.borderClassGreen : styles.borderClassDefault,
           }}
         >
           <InputField
@@ -180,8 +185,8 @@ const CouponForm = ({
               marginTop: '-1rem',
               border:
                 discount.discount_value > 0 && discount.ticket.length > 0
-                  ? '2px solid #46BF75'
-                  : '2px solid #2A3533', // TODO move to class
+                  ? styles.borderClassDefault
+                  : styles.borderClassGreen,
             }}
             onChange={(e) => {
               setCoupon({ ...coupon, error: '', value: e.target.value });
@@ -232,19 +237,23 @@ const CouponForm = ({
 
         {filteredTickets?.map((filteredTicket) => {
           return (
-            // TODO: disable ticket if capacity <= 0
             <div
               key={filteredTicket.id}
               onClick={() => {
-                onSelectTicket(filteredTicket.id);
+                filteredTicket.capacity <= 0
+                  ? ticketSoldAlert()
+                  : onSelectTicket(filteredTicket.id);
               }}
               className={styles.ticketType}
               style={{
                 border: tickets.find(
-                  (ticket) => ticket.my_ticket && ticket.ticket_id === filteredTicket.id,
+                  (ticket) =>
+                    ticket.my_ticket &&
+                    ticket.ticket_id === filteredTicket.id &&
+                    filteredTicket.capacity > 0,
                 )
-                  ? '2px solid #FFFFFF'
-                  : '2px solid #2A3533', // TODO: change this to class
+                  ? styles.borderClassWhite
+                  : styles.borderClassDefault,
               }}
             >
               {eventFormData?.select_multi_ticket && (
@@ -254,7 +263,9 @@ const CouponForm = ({
                       <button
                         className={styles.ticketCountUpdateButton}
                         onClick={() => {
-                          updateTicketCount(filteredTicket.id, false);
+                          filteredTicket.capacity <= 0
+                            ? ticketSoldAlert()
+                            : updateTicketCount(filteredTicket.id, false);
                         }}
                       >
                         -
@@ -270,7 +281,10 @@ const CouponForm = ({
                             (ticket) => ticket.ticket_id === filteredTicket.id,
                           )?.count;
 
-                          if (currentTicketCount === filteredTicket.capacity) {
+                          if (
+                            currentTicketCount === filteredTicket.capacity ||
+                            filteredTicket.capacity <= 0
+                          ) {
                             toast.error('Ticket limit reached');
                             return;
                           }
@@ -280,15 +294,14 @@ const CouponForm = ({
                         +
                       </button>
                     </div>
-
-                    {/*TODO: add this outside this*/}
-                    {filteredTicket.capacity <= 10 && (
-                      <div className={styles.dateContainer}>
-                        <p className={styles.capacity}>{filteredTicket.capacity} tickets left</p>
-                      </div>
-                    )}
                   </div>
                 </>
+              )}
+
+              {filteredTicket.capacity && (
+                <div className={styles.dateContainer}>
+                  <p className={styles.capacity}>{filteredTicket.capacity} tickets left</p>
+                </div>
               )}
 
               <div className={styles.passText}>
