@@ -198,3 +198,56 @@
 
   max-width: 18rem;
 }
+
+.googleIcon{
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.5rem;
+  border-radius: 8px;
+  color: #a4a4a445;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ;
+}
+.googleIcon:hover{
+  color: #a4a4a4;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.formAltLoginContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.orContainer {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #a4a4a445;
+  position: relative;
+  border-radius: 8px;
+
+}
+
+.or {
+  font-size: 0.5;
+  padding: 0 10px;
+  color: #a4a4a445;
+  /* Background of the 'or' should match the container background */
+  z-index: 1;
+  /* Ensure 'or' is above the lines */
+}
