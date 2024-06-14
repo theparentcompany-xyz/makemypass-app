@@ -159,3 +159,14 @@ export const hostWithUs = async (name: string, email: string, phone: string) => 
       toast.error(error.response.data.message.general[0]);
     });
 };
+
+export const googleLogin = async () => {
+  publicGateway
+    .get(buildVerse.googleLogin)
+    .then((response) => {
+      toast.success(response.data.message.general[0] || 'Logged in successfully');
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Something went wrong');
+    });
+};
