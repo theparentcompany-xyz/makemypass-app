@@ -240,21 +240,20 @@ const CouponForm = ({
             <div
               key={filteredTicket.id}
               onClick={() => {
+                console.log(filteredTicket);
+
                 filteredTicket.capacity <= 0
                   ? ticketSoldAlert()
                   : onSelectTicket(filteredTicket.id);
               }}
               className={styles.ticketType}
-              style={{
-                border: tickets.find(
-                  (ticket) =>
-                    ticket.my_ticket &&
-                    ticket.ticket_id === filteredTicket.id &&
-                    filteredTicket.capacity > 0,
-                )
-                  ? styles.borderClassWhite
-                  : styles.borderClassDefault,
-              }}
+              style={
+                tickets.find((ticket) => ticket.my_ticket && ticket.ticket_id === filteredTicket.id)
+                  ? {
+                      border: '2px solid #ffffff',
+                    }
+                  : { border: '2px solid #2a3533' }
+              }
             >
               {eventFormData?.select_multi_ticket && (
                 <>
