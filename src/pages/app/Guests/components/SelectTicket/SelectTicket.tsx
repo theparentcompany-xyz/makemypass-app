@@ -2,7 +2,6 @@ import toast from 'react-hot-toast';
 import { TicketType } from '../../../../../apis/types';
 import { Tickets } from '../../../EventPage/types';
 import styles from './SelectTicket.module.css';
-import React, { useEffect } from 'react';
 
 const SelectTicket = ({
   filteredTickets,
@@ -30,7 +29,6 @@ const SelectTicket = ({
             my_ticket: true,
           },
         ]);
-      } else {
       }
     } else {
       toast.error('Ticket capacity exceeded.');
@@ -40,11 +38,6 @@ const SelectTicket = ({
   const ticketSelected = (ticket: TicketType) => {
     return tickets.some((myticket) => myticket.ticket_id === ticket.id && myticket.my_ticket);
   };
-
-  useEffect(() => {
-    console.log('tickets', tickets);
-  }, [tickets]);
-
   return (
     <div
       style={{

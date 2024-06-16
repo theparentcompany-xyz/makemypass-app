@@ -151,7 +151,6 @@ const EventForm = ({
           my_ticket: true,
         },
       ]);
-      console.log('Ticket Set Ayi');
     } else setDirectRegister(false);
   };
 

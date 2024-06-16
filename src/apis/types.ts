@@ -96,7 +96,7 @@ export interface TicketType {
   show_price?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   perks: any;
-  slots_left: number | null;
+  capacity: number;
   default_selected: boolean;
   platform_fee: number;
   platform_fee_from_user: boolean;

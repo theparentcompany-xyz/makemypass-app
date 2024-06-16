@@ -95,7 +95,6 @@ export const getProfileInfo = (): Promise<{
   return privateGateway
     .get(buildVerse.profileInfo)
     .then((response) => {
-      console.log(response.data);
       return response.data.response;
     })
     .catch((error) => {
