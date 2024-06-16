@@ -12,7 +12,9 @@
   font-size: 0.9rem;
   margin-top: 0.25rem;
   color: #bbbaba;
-  align-self: start;
+  max-width: fit-content;
+  min-width: 20rem;
+  align-self: center;
 }
 
 .buttonContainer {
@@ -61,6 +63,7 @@
   justify-content: space-between;
   align-items: flex-start;
   column-gap: 1rem;
+  width: 100%;
 }
 
 .input {

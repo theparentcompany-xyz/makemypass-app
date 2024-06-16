@@ -4,6 +4,13 @@ import { makeMyPass } from '../../services/urls';
 import { MailType } from './types';
 import toast from 'react-hot-toast';
 
+type mailData = {
+  smtp_server: string;
+  smtp_port: string;
+  smtp_username: string;
+  smtp_password: string;
+  from_mail: string;
+};
 export const listMails = (
   eventId: string,
   setMails: React.Dispatch<React.SetStateAction<MailType[]>>,
@@ -12,21 +19,9 @@ export const listMails = (
     .get(makeMyPass.listMails(eventId))
     .then((response) => {
       setMails(response.data.response);
-      console.log(response.data.response);
     })
     .catch((error) => {
-      console.log(error);
-    });
-};
-
-export const getMail = (eventId: string, mailId: string) => {
-  privateGateway
-    .get(makeMyPass.getMail(eventId, mailId))
-    .then((response) => {
-      console.log(response.data.response);
-    })
-    .catch((error) => {
-      console.log(error);
+      toast.error(error?.response?.data?.message?.general[0] || 'Error while fetching mails');
     });
 };
 
@@ -44,33 +39,48 @@ export const updateMail = (
     })
     .then((response) => {
       setMails((mails) => mails.map((mail) => (mail.id === selectedMail.id ? selectedMail : mail)));
-      toast.success('Mail updated successfully');
-      console.log(response.data.response);
+      toast.success(response.data.message.general[0] || 'Mail updated successfully');
     })
     .catch((error) => {
-      toast.error('Error while updating mail');
-      console.log(error);
+      toast.error(error?.response?.data?.message?.general[0] || 'Error while updating mail');
     });
 };
 
-export const getMailService = (eventId: string) => {
+export const getMailService = (
+  eventId: string,
+  setMailData: React.Dispatch<React.SetStateAction<any>>,
+) => {
   privateGateway
     .get(makeMyPass.getMailService(eventId))
     .then((response) => {
-      console.log(response.data.response);
+      setMailData(response.data.response);
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(
+        error?.response?.data?.message?.general[0] || 'Error while fetching mail service',
+      );
     });
 };
 
-export const updateMailService = (eventId: string, data: any) => {
+export const updateMailService = (
+  eventId: string,
+  data: Record<string, any>,
+  setFetchedData: React.Dispatch<React.SetStateAction<mailData | undefined>>,
+  mailData: mailData | undefined,
+) => {
   privateGateway
-    .post(makeMyPass.updateMailService(eventId), data)
+    .post(makeMyPass.updateMailService(eventId), data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     .then((response) => {
-      console.log(response.data.response);
+      toast.success(response.data.message.general[0] || 'Mail service updated successfully');
+      setFetchedData(mailData);
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(
+        error?.response?.data?.message?.general[0] || 'Error while updating mail service',
+      );
     });
 };
