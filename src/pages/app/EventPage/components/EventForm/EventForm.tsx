@@ -19,6 +19,7 @@ import { PropagateLoader } from 'react-spinners';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { MdKeyboardVoice } from 'react-icons/md';
 import AudioRecorder from './components/AudioRecorder';
+import { IoMicOutline } from 'react-icons/io5';
 
 const EventForm = ({
   eventFormData,
@@ -196,21 +197,30 @@ const EventForm = ({
                 {type ? '' : 'Please fill in the form below to register for the event.'}
               </p>
             </div>
-            <div className={styles.voiceButton}>
-              <SecondaryButton
-                onClick={() => {
-                  setShowAudioModal({
-                    showModal: true,
-                    transcribing: false,
-                  });
-                }}
-                icon={<MdKeyboardVoice size={15} />}
-                buttonText='Record Voice to fill'
-              />
-            </div>
             {formData && eventFormData && (
               <div className={styles.formFields}>
-                {/* {eventFormData?.parse_audio && <div>Audio recording</div>} */}
+                <button
+                  onClick={() => {
+                    setShowAudioModal({
+                      showModal: true,
+                      transcribing: false,
+                    });
+                  }}
+                  className={styles.reocordUsingVoiceButton}
+                >
+                  <IoMicOutline
+                    size={20}
+                    style={{
+                      marginRight: '0.5rem',
+                    }}
+                  />
+                  Record Voice to Fill
+                </button>
+                <div className={styles.orContainer}>
+                  <hr />
+                  <p>OR</p>
+                  <hr />
+                </div>
                 <DynamicForm
                   formFields={eventFormData.form}
                   formErrors={formErrors}
