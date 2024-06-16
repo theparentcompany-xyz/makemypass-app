@@ -30,7 +30,7 @@ const DynamicForm = ({
           const fieldTitle = field?.title + (field.required ? '*' : '');
           if (!validateCondition(field.conditions, formData, formFields) || field.hidden)
             return null;
-          if (field.type === 'text' || field.type === 'email' || field.type === 'phonenumber') {
+          if (field.type === 'text' || field.type === 'email' || field.type === 'phone_number') {
             return (
               <InputField
                 name={field.field_key}

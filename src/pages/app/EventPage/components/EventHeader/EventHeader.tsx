@@ -1,4 +1,10 @@
-import { IoContract, IoLocationOutline } from 'react-icons/io5';
+import {
+  IoAlertCircleOutline,
+  IoContract,
+  IoLocationOutline,
+  IoMapOutline,
+  IoPodiumOutline,
+} from 'react-icons/io5';
 import { EventHosts, EventType } from '../../../../../apis/types';
 import styles from './EventHeader.module.css';
 import { motion } from 'framer-motion';
@@ -106,7 +112,13 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                     <IoLocationOutline size={25} className={styles.locationIcon} />
                   </div>
                   <div className={styles.eventDateTimeText}>
-                    <p className={styles.eventDateText}>{eventData?.place}</p>
+                    <p className={styles.eventDateText}>
+                      {' '}
+                      {eventData?.place.substring(0, eventData.place.indexOf(' , '))}
+                    </p>
+                    <p className={styles.eventTimeText}>
+                      {eventData?.place.substring(eventData.place.indexOf(' , ') + 2)}
+                    </p>
                   </div>
                 </div>
               )}
@@ -128,15 +140,15 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
-              style={{
-                padding: '2rem',
-              }}
             >
-              <p className={styles.eventDescHeading}>About the Event</p>
+              <p className={styles.eventDescHeading}>
+                <IoAlertCircleOutline color='white' size={25} />
+                <span>About the Event</span>
+              </p>
+              <hr className={styles.line} />
               <motion.p
                 className={styles.eventDescription}
                 initial={{ height: 'fit-content' }}
-                animate={{ height: showFullDesc ? 'fit-content' : '60px' }}
                 transition={{ duration: 0.5 }}
               >
                 {showFullDesc ? (
@@ -144,7 +156,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                 ) : (
                   <p
                     dangerouslySetInnerHTML={{
-                      __html: eventData?.description?.substring(0, 150).concat('...'),
+                      __html: eventData?.description?.substring(0, 275).concat('...'),
                     }}
                   ></p>
                 )}
@@ -172,8 +184,8 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
         {eventData?.location && (
           <div className={styles.googleContainer}>
             <div className={styles.locationHeader}>
-              <IoLocationOutline size={20} className={styles.locationIcon} />
-              <p>Location</p>
+              <IoMapOutline size={20} className={styles.locationIcon} />
+              <p>View In Map</p>
             </div>
             <iframe
               style={{ width: '100%' }}
@@ -182,7 +194,13 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
 
             <div className={styles.bottomLocationHeader}>
               <div className={styles.eventDateTimeText}>
-                <p className={styles.eventDateText}>{eventData?.place}</p>
+                <p className={styles.eventDateText}>
+                  {' '}
+                  {eventData?.place.substring(0, eventData.place.indexOf(' , '))}
+                </p>
+                <p className={styles.eventTimeText}>
+                  {eventData?.place.substring(eventData.place.indexOf(' , ') + 2)}
+                </p>
               </div>
             </div>
           </div>
@@ -192,7 +210,11 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
       {eventData?.speakers && eventData?.speakers.length > 0 && (
         <div className={styles.row1}>
           <div className={styles.speakersContainer}>
-            <p className={styles.speakersHeading}>Our Speakers</p>
+            <p className={styles.speakersHeading}>
+              <IoPodiumOutline color='white' />
+              <span>Our Speakers</span>
+            </p>
+            <hr className={styles.line} />
             <div className={styles.speakersListing}>
               {eventData.speakers.map((speaker) => {
                 return (
@@ -204,10 +226,14 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                         className={styles.speakerProfilePic}
                       />
                     )}
-                    <div className={styles.speakerInfo}>
+                    <motion.div className={styles.speakerInfo}>
                       <p className={styles.speakerName}>{speaker.name}</p>
-                      <p className={styles.speakerPosition}>{speaker.position}</p>
-                    </div>
+                      <p className={styles.speakerPosition}>
+                        {speaker.position.length > 30
+                          ? `${speaker.position.substring(0, 30)}...`
+                          : speaker.position}
+                      </p>
+                    </motion.div>
                   </div>
                 );
               })}

@@ -145,7 +145,13 @@
   color: white;
   font-family: 'Inter', sans-serif;
   text-align: center;
-  max-width: 24rem;
+  width: 100%;
+}
+
+.formContainer {
+  overflow: auto;
+  max-height: 100%;
+  max-width: 36rem;
   width: 100%;
 }
 

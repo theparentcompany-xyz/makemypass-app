@@ -79,6 +79,7 @@
 }
 
 .eventTimeText {
+  margin-top: 0.5rem;
   max-width: 10rem;
   font-size: 0.7rem;
   font-weight: 400;

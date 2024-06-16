@@ -305,47 +305,49 @@ const CouponForm = ({
                 </div>
               )}
 
-              <div className={styles.passText}>
-                <p className={styles.ticketTypeTitle}>{filteredTicket.title?.toUpperCase()}</p>
-                <p className={styles.ticketTypeDescription}>{filteredTicket.description}</p>
-                <div className={styles.perks}>
-                  {Object.keys(filteredTicket.perks)?.map((perk) => (
-                    <div key={perk} className={styles.perk}>
-                      {perk}: {filteredTicket.perks[perk]}
-                    </div>
-                  ))}
+              <div>
+                <div className={styles.passText}>
+                  <p className={styles.ticketTypeTitle}>{filteredTicket.title?.toUpperCase()}</p>
+                  <p className={styles.ticketTypeDescription}>{filteredTicket.description}</p>
+                  <div className={styles.perks}>
+                    {Object.keys(filteredTicket.perks)?.map((perk) => (
+                      <div key={perk} className={styles.perk}>
+                        {perk}: {filteredTicket.perks[perk]}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className={styles.ticketPriceData}>
-                {discount.discount_value > 0 &&
-                  filteredTicket.price > 0 &&
-                  discount.ticket.includes(filteredTicket.id) && (
-                    <div className={styles.discountData}>
-                      <p className={styles.discountAmount}>
-                        {discount.discount_type.toLowerCase() === 'percentage'
-                          ? `${discount.discount_value}% off`
-                          : `${filteredTicket.currency} ${discount.discount_value} off`}
-                      </p>
-                      <p className={styles.originalPrice}>
-                        <del>
-                          {filteredTicket.currency} {filteredTicket.show_price}
-                        </del>
-                      </p>
-                    </div>
-                  )}
-
-                <div className={styles.priceData}>
-                  <p className={styles.ticketPrice}>
-                    {filteredTicket.currency} {filteredTicket.price}
-                  </p>
-                  <p className={styles.extraCharges}>
-                    {filteredTicket.platform_fee_from_user && filteredTicket.price > 0 && (
-                      <p className={styles.extraCharges}>
-                        {filteredTicket.platform_fee}% extra charges
-                      </p>
+                <div className={styles.ticketPriceData}>
+                  {discount.discount_value > 0 &&
+                    filteredTicket.price > 0 &&
+                    discount.ticket.includes(filteredTicket.id) && (
+                      <div className={styles.discountData}>
+                        <p className={styles.discountAmount}>
+                          {discount.discount_type.toLowerCase() === 'percentage'
+                            ? `${discount.discount_value}% off`
+                            : `${filteredTicket.currency} ${discount.discount_value} off`}
+                        </p>
+                        <p className={styles.originalPrice}>
+                          <del>
+                            {filteredTicket.currency} {filteredTicket.show_price}
+                          </del>
+                        </p>
+                      </div>
                     )}
-                  </p>
+
+                  <div className={styles.priceData}>
+                    <p className={styles.ticketPrice}>
+                      {filteredTicket.currency} {filteredTicket.price}
+                    </p>
+                    <p className={styles.extraCharges}>
+                      {filteredTicket.platform_fee_from_user && filteredTicket.price > 0 && (
+                        <p className={styles.extraCharges}>
+                          {filteredTicket.platform_fee}% extra charges
+                        </p>
+                      )}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
