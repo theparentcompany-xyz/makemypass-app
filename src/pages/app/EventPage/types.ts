@@ -57,5 +57,5 @@ export type successModalProps = {
 
 export type AudioControlsType = {
   showModal: boolean;
-  showAudioControls: boolean;
+  transcribing: boolean;
 };

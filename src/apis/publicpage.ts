@@ -2,6 +2,7 @@ import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import {
+  AudioControlsType,
   CouponData,
   DiscountData,
   TicketOptions,
@@ -202,6 +203,7 @@ export const applyCoupon = async (
         setDiscount(response.data.response);
       })
       .catch(() => {
+        //TODO: check status code and show error message accordingly
         setCoupon({
           ...couponData,
           value: '',
@@ -327,7 +329,12 @@ export const postAudio = async (
   recordedBlob: Blob,
   formData: FormDataType,
   setFormData: React.Dispatch<FormDataType>,
+  setShowAudioModal: React.Dispatch<AudioControlsType>,
 ) => {
+  setShowAudioModal({
+    showModal: true,
+    transcribing: true,
+  });
   const form = new FormData();
   const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.mp3', {
     type: 'audio/mp3',
@@ -342,8 +349,16 @@ export const postAudio = async (
     .then((response) => {
       const newFormData: FormDataType = { ...formData, ...response?.data?.response?.data };
       setFormData(newFormData);
+
+      toast.success('Audio Transcription Successfull');
     })
     .catch((error) => {
       console.error(error.response.data.message.general[0]);
+    })
+    .finally(() => {
+      setShowAudioModal({
+        showModal: false,
+        transcribing: false,
+      });
     });
 };

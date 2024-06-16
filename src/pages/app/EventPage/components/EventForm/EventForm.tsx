@@ -7,7 +7,7 @@ import {
   successModalProps,
 } from '../../types';
 import styles from '../../EventPage.module.css';
-import { submitForm, validateRsvp } from '../../../../../apis/publicpage';
+import { postAudio, submitForm, validateRsvp } from '../../../../../apis/publicpage';
 import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
 import { motion } from 'framer-motion';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
@@ -54,9 +54,10 @@ const EventForm = ({
     value: eventFormData?.coupon.value ?? '',
     error: '',
   });
-  const [audioControls, setAudioControls] = useState<AudioControlsType>({
+
+  const [showAudioModal, setShowAudioModal] = useState<AudioControlsType>({
     showModal: false,
-    showAudioControls: false,
+    transcribing: false,
   });
 
   let formIdToKey: { [key: string]: string } = {};
@@ -151,11 +152,11 @@ const EventForm = ({
     } else setDirectRegister(false);
   };
 
-  // const handleAudioSubmit = (recordedBlob: Blob | null) => {
-  //   if (recordedBlob && eventFormData.id && formData && setFormData) {
-  //     postAudio(eventFormData.id, recordedBlob, formData, setFormData);
-  //   }
-  // };
+  const handleAudioSubmit = (recordedBlob: Blob | null) => {
+    if (recordedBlob && eventFormData.id && formData && setFormData) {
+      postAudio(eventFormData.id, recordedBlob, formData, setFormData, setShowAudioModal);
+    }
+  };
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
     setFormData((prevFormData) => ({
@@ -173,8 +174,12 @@ const EventForm = ({
 
   return (
     <>
-      {audioControls.showModal && (
-        <AudioRecorder audioControls={audioControls} setAudioControls={setAudioControls} />
+      {showAudioModal.showModal && (
+        <AudioRecorder
+          showAudioModal={showAudioModal}
+          setShowAudioModal={setShowAudioModal}
+          handleAudioSubmit={handleAudioSubmit}
+        />
       )}
       {formNumber === 0 && (
         <motion.div
@@ -194,9 +199,9 @@ const EventForm = ({
             <div className={styles.voiceButton}>
               <SecondaryButton
                 onClick={() => {
-                  setAudioControls({
+                  setShowAudioModal({
                     showModal: true,
-                    showAudioControls: false,
+                    transcribing: false,
                   });
                 }}
                 icon={<MdKeyboardVoice size={15} />}

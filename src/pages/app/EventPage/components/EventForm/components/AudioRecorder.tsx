@@ -1,22 +1,40 @@
 import styles from './AudioRecorder.module.css';
 import Modal from '../../../../../../components/Modal/Modal';
-import { FaMicrophone, FaPlay } from 'react-icons/fa6';
-import { IoClose, IoPause } from 'react-icons/io5';
+import { FaMicrophone, FaPause, FaPlay, FaStop, FaTrash } from 'react-icons/fa6';
+import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
+import { Dispatch, useEffect } from 'react';
 import { AudioControlsType } from '../../../types';
+import { PropagateLoader } from 'react-spinners';
 
 const AudioRecorder = ({
-  audioControls,
-  setAudioControls,
+  showAudioModal,
+  setShowAudioModal,
+  handleAudioSubmit,
 }: {
-  audioControls: AudioControlsType;
-  setAudioControls: React.Dispatch<React.SetStateAction<AudioControlsType>>;
+  showAudioModal: AudioControlsType;
+  setShowAudioModal: Dispatch<React.SetStateAction<AudioControlsType>>;
+  handleAudioSubmit: (recordedBlob: Blob | null) => void;
 }) => {
+  const recorderControls = useVoiceVisualizer();
+  const {
+    // ... (Extracted controls and states, if necessary)
+    recordedBlob,
+    error,
+    audioRef,
+  } = recorderControls;
+
   const closeAudioModal = () => {
-    setAudioControls({
+    setShowAudioModal({
       showModal: false,
-      showAudioControls: false,
+      transcribing: false,
     });
   };
+
+  useEffect(() => {
+    if (!error) return;
+    console.error(error);
+  }, [error]);
+
   return (
     <>
       <Modal title='Record your voice' onClose={closeAudioModal}>
@@ -25,36 +43,81 @@ const AudioRecorder = ({
             <FaMicrophone size={50} color='#A0FFC8' />
           </div>
         </div>
-        {audioControls.showAudioControls ? (
-          <div className={styles.voiceButtons}>
-            <button className={styles.inModalVoiceButton}>13.01s</button>
-            <button className={styles.inModalVoiceButton}>
-              <FaPlay />
-            </button>
-            <button className={styles.inModalVoiceButton}>
-              <IoPause />
-            </button>
-            <button className={styles.inModalVoiceButton} onClick={closeAudioModal}>
-              <IoClose />
-            </button>
-          </div>
-        ) : (
-          <div className={styles.voiceButtons}>
-            <button
-              onClick={() => {
-                setAudioControls({
-                  showModal: true,
-                  showAudioControls: true,
-                });
-              }}
-              className={styles.inModalVoiceButton}
-            >
+
+        <div className={styles.visualizer}>
+          <VoiceVisualizer
+            ref={audioRef}
+            controls={recorderControls}
+            isControlPanelShown={false}
+            isDefaultUIShown={false}
+            height={'50'}
+          />
+        </div>
+
+        <div className={styles.voiceButtons}>
+          {!recorderControls.isCleared ? (
+            <>
+              <button className={styles.inModalVoiceButton} onClick={recorderControls.clearCanvas}>
+                {<FaTrash />}
+              </button>
+            </>
+          ) : (
+            <button className={styles.inModalVoiceButton} onClick={recorderControls.startRecording}>
               Tap to record
             </button>
-          </div>
-        )}
+          )}
+          {recorderControls.isRecordingInProgress && (
+            <>
+              <button className={styles.inModalVoiceButton}>
+                {recorderControls.formattedRecordingTime}
+              </button>
+              <button
+                className={styles.inModalVoiceButton}
+                onClick={recorderControls.stopRecording}
+              >
+                {<FaStop />}
+              </button>
+              <button
+                className={styles.inModalVoiceButton}
+                onClick={recorderControls.togglePauseResume}
+              >
+                {recorderControls.isPausedRecording ? <FaPlay /> : <FaPause />}
+              </button>
+            </>
+          )}
+          {recorderControls.isAvailableRecordedAudio && (
+            <>
+              <button
+                className={styles.inModalVoiceButton}
+                onClick={recorderControls.togglePauseResume}
+              >
+                {recorderControls.isPausedRecordedAudio ? <FaPlay /> : <FaPause />}
+              </button>
+            </>
+          )}
+        </div>
 
-        <button className={styles.voiceSubmitButton}>Submit</button>
+        {(recorderControls.isRecordingInProgress || recorderControls.isAvailableRecordedAudio) && (
+          <button
+            className={styles.voiceSubmitButton}
+            onClick={() => handleAudioSubmit(recordedBlob)}
+            disabled={!recorderControls.isAvailableRecordedAudio}
+          >
+            {showAudioModal.transcribing ? (
+              <PropagateLoader
+                color={'#fff'}
+                loading={showAudioModal.transcribing}
+                size={10}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  paddingTop: '0.5rem',
+                }}
+              />
+            ) : (
+              'Fill Form'
+            )}
+          </button>
+        )}
       </Modal>
     </>
   );
