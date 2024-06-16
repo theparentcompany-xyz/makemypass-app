@@ -23,7 +23,7 @@ header {
   justify-content: space-between;
   align-items: center;
 
-  max-width: 80rem;
+  max-width: 75rem;
 
   margin: auto;
 }
@@ -135,4 +135,8 @@ header {
 
 .dropdown:hover .dropdownContent {
   display: block;
+}
+
+.timeText {
+  font-size: 0.9rem;
 }

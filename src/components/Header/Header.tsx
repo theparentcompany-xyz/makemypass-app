@@ -36,19 +36,22 @@ const Header = ({ type }: { type?: string | undefined }) => {
       },
     },
   };
+  const currentTime = new Date();
+  const hours = currentTime.getHours();
+  const minutes = currentTime.getMinutes();
+  const timezoneOffset = currentTime.getTimezoneOffset();
+  const timezoneOffsetHours = Math.abs(Math.floor(timezoneOffset / 60));
+  const timezoneOffsetMinutes = Math.abs(timezoneOffset % 60);
+  const timezoneSign = timezoneOffset > 0 ? '-' : '+';
+
+  const formattedTimezone = `GMT${timezoneSign}${timezoneOffsetHours.toString().padStart(2, '0')}:${timezoneOffsetMinutes.toString().padStart(2, '0')}`;
+
+  const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${formattedTimezone}`;
+
   return (
     <>
       <header>
-        <div
-          className={styles.headerComponent}
-          style={
-            type === 'eventForm'
-              ? {
-                  justifyContent: 'center',
-                }
-              : {}
-          }
-        >
+        <div className={styles.headerComponent}>
           <Link to='/home'>
             <div className={styles.mainLogo}>
               <img src='/app/logoText.webp' alt='makemypass brand logo' className={styles.header} />
@@ -66,7 +69,7 @@ const Header = ({ type }: { type?: string | undefined }) => {
               </span>
             </div>
           </Link>
-          {type != 'eventForm' && (
+          {type != 'eventForm' ? (
             <>
               {type != 'landing' ? (
                 isAuthenticated ? (
@@ -141,6 +144,8 @@ const Header = ({ type }: { type?: string | undefined }) => {
                 </div>
               )}
             </>
+          ) : (
+            <div className={styles.timeText}>{formattedTime}</div>
           )}
         </div>
       </header>

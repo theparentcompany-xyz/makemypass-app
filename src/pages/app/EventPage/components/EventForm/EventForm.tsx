@@ -199,28 +199,33 @@ const EventForm = ({
             </div>
             {formData && eventFormData && (
               <div className={styles.formFields}>
-                <button
-                  onClick={() => {
-                    setShowAudioModal({
-                      showModal: true,
-                      transcribing: false,
-                    });
-                  }}
-                  className={styles.reocordUsingVoiceButton}
-                >
-                  <IoMicOutline
-                    size={20}
-                    style={{
-                      marginRight: '0.5rem',
-                    }}
-                  />
-                  Record Voice to Fill
-                </button>
-                <div className={styles.orContainer}>
-                  <hr />
-                  <p>OR</p>
-                  <hr />
-                </div>
+                {eventFormData.parse_audio && (
+                  <>
+                    {' '}
+                    <button
+                      onClick={() => {
+                        setShowAudioModal({
+                          showModal: true,
+                          transcribing: false,
+                        });
+                      }}
+                      className={styles.reocordUsingVoiceButton}
+                    >
+                      <IoMicOutline
+                        size={18}
+                        style={{
+                          marginRight: '0.5rem',
+                        }}
+                      />
+                      Record Voice to Fill
+                    </button>
+                    <div className={styles.orContainer}>
+                      <hr />
+                      <p>OR</p>
+                      <hr />
+                    </div>
+                  </>
+                )}
                 <DynamicForm
                   formFields={eventFormData.form}
                   formErrors={formErrors}
