@@ -5,6 +5,7 @@ import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
 import { Dispatch, useEffect } from 'react';
 import { AudioControlsType } from '../../../types';
 import { PropagateLoader } from 'react-spinners';
+import toast from 'react-hot-toast';
 
 const AudioRecorder = ({
   showAudioModal,
@@ -32,7 +33,7 @@ const AudioRecorder = ({
 
   useEffect(() => {
     if (!error) return;
-    console.error(error);
+    toast.error('Audio input not detected');
   }, [error]);
 
   return (
