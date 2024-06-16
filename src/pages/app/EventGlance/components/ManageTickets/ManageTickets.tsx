@@ -33,7 +33,7 @@ const ManageTickets = () => {
       id: '',
       price: 0,
       perks: undefined,
-      slots_left: null,
+      capacity: 0,
       default_selected: false,
       platform_fee: 0,
       platform_fee_from_user: false,
@@ -70,14 +70,12 @@ const ManageTickets = () => {
         delete changedData['description'];
 
       editTicket(eventId, selectedTicket?.id as string, changedData);
-      console.log(changedData);
     }
   };
 
   const closeTicket = (ticketInfo: TicketType) => {
     const matchingTicket = tickets.find((ticket) => ticket.id === ticketInfo?.id);
     if (matchingTicket && selectedTicket) {
-      console.log(eventId, matchingTicket?.id, { is_active: !matchingTicket?.is_active });
       setTickets((prevTickets) => {
         return prevTickets.map((ticket) => {
           if (ticket.id === matchingTicket.id) {
@@ -107,7 +105,6 @@ const ManageTickets = () => {
       });
     }
   }, [ticketData]);
-  console.log(tickets);
   return (
     <>
       {isOpen && (

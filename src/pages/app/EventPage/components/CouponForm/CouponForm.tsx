@@ -111,6 +111,16 @@ const CouponForm = ({
     setNewTickets(updatedTickets);
   };
 
+  const isTicketActive = (filteredTicket: TicketType) => {
+    const isActive = tickets.find(
+      (ticket) =>
+        ticket.my_ticket && ticket.ticket_id === filteredTicket.id && filteredTicket.capacity > 0,
+    );
+
+    if (isActive) return true;
+    else return false;
+  };
+
   useEffect(() => {
     if (eventFormData) {
       handleDateChange(findMinDate(eventFormData));
@@ -244,17 +254,8 @@ const CouponForm = ({
                   ? ticketSoldAlert()
                   : onSelectTicket(filteredTicket.id);
               }}
-              className={styles.ticketType}
-              style={{
-                border: tickets.find(
-                  (ticket) =>
-                    ticket.my_ticket &&
-                    ticket.ticket_id === filteredTicket.id &&
-                    filteredTicket.capacity > 0,
-                )
-                  ? styles.borderClassWhite
-                  : styles.borderClassDefault,
-              }}
+              className={`${styles.ticketType} ${isTicketActive(filteredTicket) ? styles.borderClassWhite : styles.borderClassDefault}`}
+              style={filteredTicket.capacity <= 0 ? { opacity: '0.5' } : undefined}
             >
               {eventFormData?.select_multi_ticket && (
                 <>
@@ -298,7 +299,7 @@ const CouponForm = ({
                 </>
               )}
 
-              {filteredTicket.capacity && (
+              {filteredTicket.capacity >= 0 && (
                 <div className={styles.dateContainer}>
                   <p className={styles.capacity}>{filteredTicket.capacity} tickets left</p>
                 </div>

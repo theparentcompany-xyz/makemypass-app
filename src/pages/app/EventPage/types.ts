@@ -27,7 +27,7 @@ type TicketType = {
     [key: string]: number;
   };
   limit: number | null;
-  slots_left: number;
+  capacity: number;
   default_selected: boolean;
   platform_fee: number;
   platform_fee_from_user: boolean;

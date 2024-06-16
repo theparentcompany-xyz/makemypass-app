@@ -75,9 +75,7 @@ const FormBuilder = () => {
     updateFormFieldValue(field, 'options', updatedOptions);
   };
 
-  useEffect(() => {
-    console.log(formFields);
-  }, [formFields]);
+  useEffect(() => {}, [formFields]);
 
   return (
     <>
@@ -284,7 +282,6 @@ const FormBuilder = () => {
                                     const updatedOptions = formFields[Number(field)].options;
                                     updatedOptions.push(newOptionValue);
 
-                                    console.log(updatedOptions);
                                     updateFormFieldValue(
                                       formFields[Number(field)],
                                       'options',

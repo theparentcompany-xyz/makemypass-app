@@ -68,7 +68,6 @@ const Overview = () => {
     const selectedGuestData = recentRegistrations.filter(
       (guest) => guest?.id === selectedGuestId?.id,
     );
-    console.log(selectedGuestData);
     setSelectedGuest(selectedGuestData[0]);
     setFormData(selectedGuestData[0]);
   };
@@ -88,7 +87,6 @@ const Overview = () => {
   }, []);
 
   useEffect(() => {
-    console.log(selectedGuestId);
     if (selectedGuestId?.id && (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view'))
       getGuestData();
     else if (

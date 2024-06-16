@@ -37,7 +37,6 @@ const EventGlance = () => {
       .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
 
     updateMail(eventId, selectedMail, changedData, setMails);
-    console.log(changedData);
   };
 
   useEffect(() => {
@@ -53,7 +52,6 @@ const EventGlance = () => {
   useEffect(() => {
     if (eventId) {
       listMails(eventId, setMails);
-      console.log(mails);
     }
   }, [eventId]);
   return (

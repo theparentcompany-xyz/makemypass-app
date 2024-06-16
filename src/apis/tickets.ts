@@ -31,7 +31,6 @@ export const createTicket = async (eventId: string, ticket: TicketType) => {
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Ticket Created Successfully');
       window.location.reload();
-      console.log(response.data.response);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
@@ -45,7 +44,6 @@ export const editTicket = async (eventId: string, ticketId: string, changedData:
       },
     })
     .then((response) => {
-      console.log(response.data.response);
       // window.location.reload();
       toast.success(response.data.message.general[0] || 'Ticket Updated Successfully');
     })
@@ -62,7 +60,6 @@ export const deleteTicket = async (eventId: string, ticketId: string) => {
       toast.success(response?.data?.message?.general[0] || 'Ticket Deleted Successfully', {
         id: toastId,
       });
-      console.log(response.data.response);
     })
     .catch((error) => {
       toast.error(error?.response?.data?.message?.general[0] || 'Unable to process the request', {

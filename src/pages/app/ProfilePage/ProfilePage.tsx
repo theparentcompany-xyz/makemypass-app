@@ -29,7 +29,6 @@ const ProfilePage = () => {
         NameRef.current!.value = userInfo.name ?? '';
         EmailRef.current!.value = userInfo.email ?? '';
       }
-      console.log(userInfo);
     };
     fetchData();
   }, []);

@@ -8,10 +8,6 @@ export const validateCondition = (
   let valid = true;
 
   if (conditions) {
-    // console.log('conditions', conditions);
-    // console.log('formData', formData);
-    // console.log('formFields', formFields);
-
     conditions.forEach(
       (condition: { field: string; operator: string; value: string | string[] }) => {
         const fieldName = formFields
