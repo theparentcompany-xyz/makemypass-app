@@ -65,6 +65,7 @@ export type FormFieldType = {
   field_key: string;
   description?: string;
   options?: string[];
+  validate?: boolean;
   integration?: {
     url: string;
     method: string;

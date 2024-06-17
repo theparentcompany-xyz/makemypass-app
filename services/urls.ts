@@ -93,6 +93,7 @@ export const makeMyPass = {
   initateRefund: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/initiate-refund/${eventRegisterId}/`),
   addGuestInfo: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/form-info/`),
+  sendVerfication: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/send-verification/`),
 
   //Payment and Coupons
   validatePayment: makeMyPassURL(`/public-form/validate-payment/`),

@@ -290,6 +290,7 @@ export const getEventInfo = async (
           showModal: false,
           ticketCode: response.data.response.ticket_url,
         }));
+      sessionStorage.setItem('eventId', response.data.response.id);
     })
     .catch((error) => {
       if (error.response.data.statusCode === 404) setEventNotFound && setEventNotFound(true);
@@ -372,5 +373,21 @@ export const postAudio = async (
         transcribing: false,
         noData: true,
       });
+    });
+};
+
+export const sendVerfication = async (contactType: string, contactInfo: string) => {
+  const eventId = sessionStorage.getItem('eventId');
+  if (!eventId) return;
+  publicGateway
+    .post(makeMyPass.sendVerfication(eventId), {
+      contact_type: contactType,
+      contact_info: contactInfo,
+    })
+    .then(() => {
+      toast.success('Verification Email Sent');
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0]);
     });
 };

@@ -5,6 +5,7 @@ import styles from './DynamicForm.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import Select, { MultiValue } from 'react-select';
 import { validateCondition } from './condition';
+import ValidateInput from '../ValidateInput/ValidateInput.tsx';
 
 const DynamicForm = ({
   formFields,
@@ -31,7 +32,23 @@ const DynamicForm = ({
           if (!validateCondition(field.conditions, formData, formFields) || field.hidden)
             return null;
           if (field.type === 'text' || field.type === 'email' || field.type === 'phone_number') {
-            return (
+            return field.validate ? (
+              <ValidateInput
+                name={field.field_key}
+                placeholder={field?.title}
+                id={field.id}
+                key={field.id}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange(field.field_key, e.target.value)
+                }
+                error={formErrors[field.field_key]}
+                value={formData[field.field_key] || ''}
+                type={field.type}
+                icon={getIcon(field.field_key)}
+                required={field.required}
+                description={field.description}
+              />
+            ) : (
               <InputField
                 name={field.field_key}
                 placeholder={field?.title}
