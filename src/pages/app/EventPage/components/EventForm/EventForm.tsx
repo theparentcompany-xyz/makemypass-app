@@ -16,8 +16,6 @@ import { validateCondition } from '../../../../../components/DynamicForm/conditi
 import { useLocation } from 'react-router';
 import { FormEventData } from '../../../Guests/types';
 import { PropagateLoader } from 'react-spinners';
-import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
-import { MdKeyboardVoice } from 'react-icons/md';
 import AudioRecorder from './components/AudioRecorder';
 import { IoMicOutline } from 'react-icons/io5';
 
@@ -59,6 +57,7 @@ const EventForm = ({
   const [showAudioModal, setShowAudioModal] = useState<AudioControlsType>({
     showModal: false,
     transcribing: false,
+    noData: false,
   });
 
   let formIdToKey: { [key: string]: string } = {};
@@ -207,6 +206,7 @@ const EventForm = ({
                         setShowAudioModal({
                           showModal: true,
                           transcribing: false,
+                          noData: false,
                         });
                       }}
                       className={styles.reocordUsingVoiceButton}

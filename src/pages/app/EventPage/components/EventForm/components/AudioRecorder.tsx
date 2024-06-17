@@ -17,17 +17,13 @@ const AudioRecorder = ({
   handleAudioSubmit: (recordedBlob: Blob | null) => void;
 }) => {
   const recorderControls = useVoiceVisualizer();
-  const {
-    // ... (Extracted controls and states, if necessary)
-    recordedBlob,
-    error,
-    audioRef,
-  } = recorderControls;
+  const { recordedBlob, error, audioRef } = recorderControls;
 
   const closeAudioModal = () => {
     setShowAudioModal({
       showModal: false,
       transcribing: false,
+      noData: false,
     });
   };
 
@@ -36,23 +32,32 @@ const AudioRecorder = ({
     toast.error('Audio input not detected');
   }, [error]);
 
+  useEffect(() => {
+    if (showAudioModal.noData) {
+      recorderControls.clearCanvas();
+    }
+  }, [showAudioModal.noData]);
+
   return (
     <>
       <Modal title='Record your voice' onClose={closeAudioModal}>
         <div className={styles.voiceModalContainer}>
           <div className={styles.voiceImage}>
-            <FaMicrophone size={50} color='#A0FFC8' />
+            <FaMicrophone className={styles.micImage} size={50} color='#A0FFC8' />
+            <div className={styles.visualizer}>
+              <VoiceVisualizer
+                ref={audioRef}
+                controls={recorderControls}
+                isControlPanelShown={false}
+                isDefaultUIShown={false}
+                height={'50'}
+                mainBarColor='#5E5D5D'
+                barWidth={3}
+                rounded={5}
+                speed={2}
+              />
+            </div>
           </div>
-        </div>
-
-        <div className={styles.visualizer}>
-          <VoiceVisualizer
-            ref={audioRef}
-            controls={recorderControls}
-            isControlPanelShown={false}
-            isDefaultUIShown={false}
-            height={'50'}
-          />
         </div>
 
         <div className={styles.voiceButtons}>
@@ -63,7 +68,16 @@ const AudioRecorder = ({
               </button>
             </>
           ) : (
-            <button className={styles.inModalVoiceButton} onClick={recorderControls.startRecording}>
+            <button
+              className={styles.inModalVoiceButton}
+              onClick={() => {
+                recorderControls.startRecording();
+                setShowAudioModal({
+                  ...showAudioModal,
+                  noData: false,
+                });
+              }}
+            >
               Tap to record
             </button>
           )}
@@ -98,11 +112,26 @@ const AudioRecorder = ({
           )}
         </div>
 
+        <p className={styles.noDataAlert}>
+          {showAudioModal.noData
+            ? 'We found no field from your audio to fill in, Kindly record again.'
+            : ''}
+        </p>
+
         {(recorderControls.isRecordingInProgress || recorderControls.isAvailableRecordedAudio) && (
           <button
             className={styles.voiceSubmitButton}
             onClick={() => handleAudioSubmit(recordedBlob)}
-            disabled={!recorderControls.isAvailableRecordedAudio}
+            disabled={
+              !recorderControls.isAvailableRecordedAudio ||
+              showAudioModal.transcribing ||
+              recorderControls.isRecordingInProgress
+            }
+            style={
+              !recorderControls.isAvailableRecordedAudio || recorderControls.isRecordingInProgress
+                ? { opacity: 0.5 }
+                : {}
+            }
           >
             {showAudioModal.transcribing ? (
               <PropagateLoader
@@ -115,7 +144,7 @@ const AudioRecorder = ({
                 }}
               />
             ) : (
-              'Fill Form'
+              'Submit'
             )}
           </button>
         )}

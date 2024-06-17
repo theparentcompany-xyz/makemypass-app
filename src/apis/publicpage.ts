@@ -334,6 +334,7 @@ export const postAudio = async (
   setShowAudioModal({
     showModal: true,
     transcribing: true,
+    noData: false,
   });
   const form = new FormData();
   const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.mp3', {
@@ -350,15 +351,26 @@ export const postAudio = async (
       const newFormData: FormDataType = { ...formData, ...response?.data?.response?.data };
       setFormData(newFormData);
 
-      toast.success('Audio Transcription Successfull');
+      if (Object.keys(response?.data?.response?.data).length === 0) {
+        setShowAudioModal({
+          showModal: true,
+          transcribing: false,
+          noData: true,
+        });
+      } else {
+        setShowAudioModal({
+          showModal: false,
+          transcribing: false,
+          noData: false,
+        });
+      }
     })
     .catch((error) => {
-      console.error(error.response.data.message.general[0]);
-    })
-    .finally(() => {
+      toast.error(error.response.data.message.general[0]);
       setShowAudioModal({
-        showModal: false,
+        showModal: true,
         transcribing: false,
+        noData: true,
       });
     });
 };

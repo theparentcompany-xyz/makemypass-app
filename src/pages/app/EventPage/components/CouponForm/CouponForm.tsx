@@ -4,7 +4,6 @@ import { FormDataType, TicketType } from '../../../../../apis/types';
 import styles from './CouponForm.module.css';
 import { getIcon } from '../../constants';
 import InputField from '../../../../auth/Login/InputField.tsx';
-import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { motion } from 'framer-motion';
 import { applyCoupon } from '../../../../../apis/publicpage';
 
@@ -168,63 +167,6 @@ const CouponForm = ({
 
   return (
     <>
-      {coupon.status && (
-        <motion.div
-          initial={{ opacity: 0, y: 35 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.5 }}
-          className={`${styles.row} ${styles.ticketType}`}
-          style={{
-            marginTop: '0rem',
-            border:
-              discount.discount_value > 0 ? styles.borderClassGreen : styles.borderClassDefault,
-          }}
-        >
-          <InputField
-            name='coupon_code'
-            placeholder='Coupon Code'
-            id='coupon_code'
-            key='coupon_code'
-            error={[coupon.error ?? '']}
-            type='text'
-            icon={getIcon('coupon_code')}
-            required={true}
-            description={coupon.description}
-            style={{
-              marginTop: '-1rem',
-              border:
-                discount.discount_value > 0 && discount.ticket.length > 0
-                  ? styles.borderClassDefault
-                  : styles.borderClassGreen,
-            }}
-            onChange={(e) => {
-              setCoupon({ ...coupon, error: '', value: e.target.value });
-            }}
-          />
-          {discount.discount_type && discount.discount_value > 0 && (
-            <p style={{ marginTop: '-1.75rem' }} className={styles.discountText}>
-              {discount.discount_type.toLowerCase() === 'percentage'
-                ? `${discount.discount_value}% discount applied`
-                : `${discount.discount_value} ${filteredTickets[0].currency} discount applied`}
-            </p>
-          )}
-
-          <div>
-            <SecondaryButton
-              buttonText='Validate Coupon'
-              onClick={() => {
-                if (coupon.value) applyCoupon(eventFormData.id, coupon, setDiscount, setCoupon);
-                else {
-                  setCoupon({ ...coupon, error: 'Please enter a coupon code' });
-                  setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
-                }
-              }}
-            />
-          </div>
-        </motion.div>
-      )}
-
       {findMinDate(eventFormData) && (
         <SelectDate
           eventFormData={eventFormData}
@@ -354,6 +296,65 @@ const CouponForm = ({
           );
         })}
       </motion.div>
+
+      {coupon.status && (
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.5 }}
+          className={`${styles.row} ${styles.ticketType}`}
+          style={{
+            marginTop: '0rem',
+            border:
+              discount.discount_value > 0 ? styles.borderClassGreen : styles.borderClassDefault,
+          }}
+        >
+          <p className={styles.couponHeader}>Have a Coupon Code?</p>
+          <p className={styles.couponDescription}>{coupon.description}</p>
+          <InputField
+            name='coupon_code'
+            placeholder='Coupon Code'
+            id='coupon_code'
+            key='coupon_code'
+            error={[coupon.error ?? '']}
+            type='text'
+            icon={getIcon('coupon_code')}
+            style={{
+              marginTop: '-1rem',
+              border:
+                discount.discount_value > 0 && discount.ticket.length > 0
+                  ? styles.borderClassDefault
+                  : styles.borderClassGreen,
+            }}
+            onChange={(e) => {
+              setCoupon({ ...coupon, error: '', value: e.target.value });
+            }}
+          />
+          {discount.discount_type && discount.discount_value > 0 && (
+            <p style={{ marginTop: '-1.75rem' }} className={styles.discountText}>
+              {discount.discount_type.toLowerCase() === 'percentage'
+                ? `${discount.discount_value}% discount applied`
+                : `${discount.discount_value} ${filteredTickets[0].currency} discount applied`}
+            </p>
+          )}
+
+          <div>
+            <button
+              className={styles.validateButton}
+              onClick={() => {
+                if (coupon.value) applyCoupon(eventFormData.id, coupon, setDiscount, setCoupon);
+                else {
+                  setCoupon({ ...coupon, error: 'Please enter a coupon code' });
+                  setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
+                }
+              }}
+            >
+              Validate Coupon
+            </button>
+          </div>
+        </motion.div>
+      )}
     </>
   );
 };

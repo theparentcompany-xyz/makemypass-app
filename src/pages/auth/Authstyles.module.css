@@ -59,7 +59,7 @@
   text-align: left;
   display: flex;
   flex-direction: column;
-
+  width: 100%;
   min-width: 25rem;
 }
 
@@ -199,7 +199,7 @@
   max-width: 18rem;
 }
 
-.googleIcon{
+.googleIcon {
   width: 100%;
   background: rgba(255, 255, 255, 0.04);
   padding: 0.5rem;
@@ -210,14 +210,14 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: all 0.2s ;
+  transition: all 0.2s;
 }
-.googleIcon:hover{
+.googleIcon:hover {
   color: #a4a4a4;
   background: rgba(255, 255, 255, 0.08);
 }
 
-.formAltLoginContainer{
+.formAltLoginContainer {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -240,7 +240,6 @@
   background-color: #a4a4a445;
   position: relative;
   border-radius: 8px;
-
 }
 
 .or {
