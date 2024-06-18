@@ -115,8 +115,6 @@ const CouponForm = ({
       (ticket) => ticket.my_ticket && ticket.ticket_id === filteredTicket.id,
     );
 
-    if (filteredTicket.capacity && filteredTicket.capacity <= 0) return false;
-
     if (isActive) return true;
     else return false;
   };
