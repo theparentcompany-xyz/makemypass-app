@@ -65,6 +65,7 @@ export type FormFieldType = {
   field_key: string;
   description?: string;
   options?: string[];
+  validate?: boolean;
   integration?: {
     url: string;
     method: string;
@@ -84,6 +85,8 @@ export type FormFieldType = {
 export interface TicketType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [x: string]: any;
+  title: string;
+  is_active: boolean;
   description: string;
   approval_required: boolean;
   code_prefix: string;
@@ -94,7 +97,7 @@ export interface TicketType {
   show_price?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   perks: any;
-  slots_left: number | null;
+  capacity: number;
   default_selected: boolean;
   platform_fee: number;
   platform_fee_from_user: boolean;
@@ -105,7 +108,7 @@ export interface TicketType {
     price: number;
     show_price?: number;
   }[];
-  condition?: {
+  conditions?: {
     field: string;
     value: string;
     operator: string;
@@ -113,47 +116,44 @@ export interface TicketType {
 }
 
 interface CouponType {
-  status: string;
+  status: boolean;
   description: string;
   value?: string;
   error?: string;
 }
 
 export interface EventType {
+  capacity?: number;
+  is_grouped_ticket: boolean;
+  is_multiple_checkin: boolean;
+  is_private: boolean;
+  approval_required: boolean;
   err_message: ReactNode;
   id: string;
   name: string;
   title: string;
   description: string;
-  start_date: string;
-  end_date: string;
-  reg_start_date: string;
-  reg_end_date: string;
   event_start_date: string;
   event_end_date: string;
-  start_time: string;
-  end_time: string;
+  reg_start_date: string;
+  reg_end_date: string;
+  is_online: boolean;
   logo: string;
   banner: string;
   location: LocationType;
   place: string;
+  claim_code_message: string;
+  claim_ticked_id: string;
+  already_bought: boolean;
   hosts: HostType[];
   form: FormFieldType[];
-  tickets: {
-    [key: string]: TicketType;
-  };
+  tickets: TicketType[];
   shortlist: boolean;
   coupon: CouponType;
   parse_audio?: boolean;
   select_multi_ticket?: boolean;
-  capacity?: number;
-  is_private: boolean;
-  is_online: boolean;
-  is_grouped_ticket: boolean;
-  is_multiple_checkin: boolean;
-  approval_required: boolean;
+  is_sub_event: boolean;
   status: string;
-
   speakers?: {
     name: string;
     image: string;
@@ -212,4 +212,20 @@ export type PreviewData = {
   tickets: {
     [key: string]: number;
   };
+};
+
+export type ConditionType = {
+  field: string;
+  value: string;
+  operator: string;
+};
+
+export type MailType = {
+  attachment: string;
+  body: string;
+  email_type: string;
+  id: string;
+  subject: string;
+  type: string;
+  updated_at: string;
 };

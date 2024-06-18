@@ -93,6 +93,7 @@ export const makeMyPass = {
   initateRefund: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/initiate-refund/${eventRegisterId}/`),
   addGuestInfo: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/form-info/`),
+  sendVerfication: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/send-verification/`),
 
   //Payment and Coupons
   validatePayment: makeMyPassURL(`/public-form/validate-payment/`),
@@ -117,6 +118,18 @@ export const makeMyPass = {
   formBuilderGetForm: (eventId: string) => makeMyPassURL(`/form-builder/${eventId}/get-form/`),
   formBuilderUpdateForm: (eventId: string) =>
     makeMyPassURL(`/form-builder/${eventId}/update-form/`),
+
+  //Mail URLS
+  listMails: (eventId: string) => makeMyPassURL(`/event/${eventId}/communication/list-event-mail/`),
+  getMail: (eventId: string, mailId: string) =>
+    makeMyPassURL(`/event/${eventId}/communication/get-event-mail/${mailId}/`),
+  updateMail: (eventId: string, mailId: string) =>
+    makeMyPassURL(`/event/${eventId}/communication/update-event-mail/${mailId}/`),
+
+  //Custom Mail
+  getMailService: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/get-email-service/`),
+  updateMailService: (eventId: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/update-email-service/`),
 };
 
 export const makeMyPassSocket = {
@@ -138,4 +151,5 @@ export const buildVerse = {
   updateProfile: buildVerseURL('/update-profile/'),
   profileInfo: buildVerseURL('/profile-info/'),
   setUserData: (token: string) => buildVerseURL(`/set-user-data/${token}`),
+  googleLogin: buildVerseURL('/google-login/'),
 };

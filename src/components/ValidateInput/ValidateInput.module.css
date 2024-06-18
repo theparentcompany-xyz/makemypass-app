@@ -1,0 +1,114 @@
+.formInput {
+  margin-bottom: 1rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 25rem;
+}
+
+.formLabel {
+  color: #a4a4a4;
+  font-size: 0.875rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+}
+
+.inputField {
+  margin-top: 0.25rem;
+  border-radius: 8px;
+  border: none;
+  padding: 0.75rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+
+  display: flex;
+}
+
+.inputField input,
+.inputField textarea {
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  margin-left: 0.45rem;
+  font-weight: 400;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: start;
+}
+
+.inputField input:focus {
+  border: none;
+  outline: none;
+}
+
+@media (max-width: 720px) {
+  .formInput {
+    /* max-width: 20.5rem; */
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .formInput {
+    min-width: none;
+  }
+}
+
+.errorText {
+  color: #f04b4b;
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.fieldDescription {
+  color: #a4a4a4;
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+
+  max-width: 18rem;
+}
+
+.inputValidationField {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: 'Inter';
+  position: relative;
+
+  column-gap: 0.5rem;
+}
+
+.inputField {
+  margin-top: 0.25rem;
+  border-radius: 8px;
+  border: none;
+  padding: 0.75rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  width: 100%;
+  display: flex;
+  font-family: 'Inter', sans-serif;
+  color: white;
+}
+
+.validateInputButton {
+  font-family: 'Inter', sans-serif;
+  border: none;
+  background: transparent;
+  padding: 14px 20px;
+
+  border-radius: 10px;
+  color: #a4a4a487;
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}

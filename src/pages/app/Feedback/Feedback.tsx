@@ -10,7 +10,6 @@ import { motion } from 'framer-motion';
 import { EventType, FormDataType, FormFieldType } from '../../../apis/types';
 import DynamicForm from '../../../components/DynamicForm/DynamicForm';
 import EventHeader from '../EventPage/components/EventHeader/EventHeader';
-import SuccessModal from '../EventPage/components/SuccessModal/SuccessModal';
 import type { Data } from '../../../apis/feedback';
 import { Helmet } from 'react-helmet';
 
@@ -99,11 +98,6 @@ const EventPage = () => {
         />
       </Helmet>
       <Theme type='eventForm'>
-        <SuccessModal
-          success={success}
-          setSuccess={setSuccess}
-          hasShortlisting={eventData?.shortlist}
-        />
         {eventData?.is_private && (
           <motion.div
             initial={{ opacity: 0, y: 35 }}

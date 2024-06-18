@@ -1,11 +1,13 @@
 import styles from './ManageTicketHeader.module.css';
 import { motion } from 'framer-motion';
 
-type Props = {
-  setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const ManageTicketHeader = ({ setIsTicketsOpen }: Props) => {
+const ManageTicketHeader = ({
+  title,
+  onClose,
+}: {
+  title: string | undefined;
+  onClose?: () => void;
+}) => {
   return (
     <>
       <motion.div
@@ -17,13 +19,13 @@ const ManageTicketHeader = ({ setIsTicketsOpen }: Props) => {
       >
         <button
           onClick={() => {
-            setIsTicketsOpen(false);
+            onClose && onClose();
           }}
           className={styles.backButton}
         >
           {'<'}
         </button>
-        <p className={styles.manageTicketHeading}>Manage Tickets</p>
+        <p className={styles.manageTicketHeading}>{title}</p>
       </motion.div>
 
       <div className={styles.checkInActions}></div>

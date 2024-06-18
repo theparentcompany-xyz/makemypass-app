@@ -12,6 +12,10 @@
   column-gap: 1rem;
 }
 
+.formFields {
+  width: 100%;
+}
+
 .eventHeaderContainer {
   position: sticky;
   top: 0;
@@ -53,12 +57,14 @@
   align-items: flex-start;
   justify-content: center;
   width: 100%;
+  position: relative;
 }
 
 .eventFormTitle {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 500;
   color: #fff;
+  margin-bottom: 1rem;
   font-family: 'Inter', sans-serif;
 }
 
@@ -118,7 +124,7 @@
   display: block;
   margin: auto;
   margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .submitButton {
@@ -139,7 +145,13 @@
   color: white;
   font-family: 'Inter', sans-serif;
   text-align: center;
-  max-width: 24rem;
+  width: 100%;
+}
+
+.formContainer {
+  overflow: auto;
+  max-height: 100%;
+  max-width: 36rem;
   width: 100%;
 }
 
@@ -160,5 +172,52 @@
   .formContainer {
     overflow: auto;
     max-height: 100%;
+    max-width: 32rem;
+    width: 100%;
   }
+}
+
+.voiceButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: -0.5rem;
+}
+
+.reocordUsingVoiceButton {
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+
+  font-size: 0.9rem;
+  padding: 0.6rem 1.5rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  margin: 1rem auto;
+
+  color: white;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  width: 100%;
+}
+
+.orContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  column-gap: 1rem;
+  margin-top: 1rem;
+}
+
+.orContainer hr {
+  width: 100%;
+  border: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
 }

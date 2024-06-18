@@ -16,7 +16,7 @@ interface FormProps {
   style?: React.CSSProperties;
 }
 
-const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProps }, ref) => {
+const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProps }, ref) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -56,4 +56,4 @@ const InputFIeld = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
   );
 });
 
-export default InputFIeld;
+export default InputField;

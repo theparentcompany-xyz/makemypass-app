@@ -15,7 +15,6 @@ import { makeMyPass } from '../../services/urls';
 //           perkNames.push(perk);
 //         }
 //       }
-//       console.log(perkNames);
 //       setPerks(perkNames);
 //     })
 //     .catch((error) => {

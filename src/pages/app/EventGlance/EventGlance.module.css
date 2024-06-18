@@ -5,7 +5,6 @@
 .bannerContainer {
   margin-top: 1rem;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
 
   display: flex;
@@ -79,6 +78,7 @@
 }
 
 .eventTimeText {
+  margin-top: 0.5rem;
   max-width: 10rem;
   font-size: 0.7rem;
   font-weight: 400;
@@ -245,6 +245,10 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.scheduleIcon {
+  cursor: pointer;
+}
+
 .scheduleHeading {
   font-size: 0.95rem;
   font-weight: 300;
@@ -357,6 +361,20 @@
   margin-top: 0.25rem;
 
   width: 18rem;
+}
+
+.inputLink {
+  font-weight: 400;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  padding-left: 0.5rem;
+  color: #bbbaba;
+  cursor: pointer;
+  user-select: none;
+}
+
+.inputLink:hover {
+  text-decoration: underline;
 }
 
 .inputSubText {

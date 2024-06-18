@@ -57,7 +57,6 @@ export const getEventId = async (
                 navigate(`/${eventName.toLowerCase()}/spinwheel/`);
               }
 
-              console.log(eventData);
               sessionStorage.setItem('eventData', JSON.stringify(eventData));
             })
             .catch((error) => {

@@ -11,18 +11,11 @@
     color: #47c97e;
   }
 }
-
-.tickachu {
-  max-height: 8rem;
-}
-
 .modalTexts {
   color: white;
   font-family: 'Inter', sans-serif;
   text-align: center;
-  max-width: 20rem;
-  width: 75%;
-  text-align: left;
+  text-align: center;
 }
 
 .modalContainer {
@@ -31,42 +24,6 @@
   align-items: center;
   flex-wrap: wrap;
   column-gap: 1rem;
-}
-
-.modalSubText {
-  color: #4eff99;
-  font-family: Inter;
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 28.73px; /* 106.169% */
-
-  text-align: left;
-}
-
-.modalText {
-  font-size: 0.85rem;
-  font-weight: 400;
-  line-height: 1.1rem;
-  opacity: 0.5;
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  margin-top: 0.25rem;
-  text-align: left;
-  margin-bottom: 0.5rem;
-}
-
-.ticketCode {
-  font-size: 0.85rem;
-  font-weight: 500;
-  opacity: 0.7;
-  font-family: 'Inter', sans-serif;
-  text-align: left;
-}
-
-.ticketCode span {
-  color: #4eff99;
-  opacity: 1;
 }
 
 .closeButton {
@@ -97,10 +54,91 @@
     width: 100%;
     text-align: left;
   }
+}
 
-  .modalSubText,
-  .ticketCode,
-  .modalText {
-    text-align: center;
-  }
+.modalTitle {
+  font-size: 1.2rem;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: #fff;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.bookingConfirmedSubText {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.bookingConfirmedSecondaryText {
+  font-size: 0.9rem;
+  font-weight: 300;
+  font-family: 'Inter', sans-serif;
+  display: block;
+  margin: 1rem auto;
+}
+
+.downloadTicketButton {
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #d2d4d7;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+}
+
+.downloadTicketButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.downloadTicketButton span {
+  margin-left: 0.5rem;
+}
+
+.viewTicketButton {
+  margin-top: 0.5rem;
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+}
+
+.contactUs {
+  font-size: 0.9rem;
+  font-weight: 300;
+  font-family: 'Inter', sans-serif;
+  max-width: 23rem;
+  display: block;
+  margin: 0.5rem auto;
+}
+
+.nextButton {
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #d2d4d7;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }

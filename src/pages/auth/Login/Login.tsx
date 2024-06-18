@@ -4,12 +4,13 @@ import { LuKey } from 'react-icons/lu';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import Theme from '../../../components/Theme/Theme';
 import { useEffect, useRef, useState } from 'react';
-import { login, generateOTP, preRegister, register } from '../../../apis/auth';
-import InputFIeld from './InputFIeld';
+import { login, generateOTP, preRegister, register, googleLogin } from '../../../apis/auth';
+import InputField from './InputField.tsx';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TbAlertTriangleFilled } from 'react-icons/tb';
 import { errorType } from './types';
+import { FaGoogle } from 'react-icons/fa6';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -111,6 +112,10 @@ const Login = () => {
     if (!isRegistered) setIsOtpSent(false);
   }, [isRegistered]);
 
+  function handleGoogleLogin(): void {
+    googleLogin();
+  }
+
   return (
     <>
       <Theme>
@@ -146,7 +151,7 @@ const Login = () => {
                   )}
                 </div>
                 <br />
-                <InputFIeld
+                <InputField
                   ref={emailRef}
                   type='email'
                   name='email'
@@ -162,7 +167,7 @@ const Login = () => {
 
                 {isPassword && !isOtpSent && (
                   <>
-                    <InputFIeld
+                    <InputField
                       ref={passwordRef}
                       type='password'
                       name='password'
@@ -185,7 +190,7 @@ const Login = () => {
 
                 {isOtpSent && !isPassword && (
                   <>
-                    <InputFIeld
+                    <InputField
                       ref={otpRef}
                       type='number'
                       name='otp'
@@ -276,6 +281,17 @@ const Login = () => {
                     <IoIosArrowRoundForward size={25} color='#A4A4A4' />
                   </span>
                 </motion.button>
+              </div>
+              <div className={styles.orContainer}>
+                <div className={styles.line}></div>
+                <div className={styles.or}>or</div>
+                <div className={styles.line}></div>
+              </div>
+              <div className={styles.formAltLoginContainer}>
+                <div className={styles.googleIcon} onClick={() => handleGoogleLogin()}>
+                  <FaGoogle />
+                  Continue with Google
+                </div>
               </div>
             </motion.div>
             <motion.img

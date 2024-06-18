@@ -67,6 +67,11 @@ const EditEvent = () => {
     if (autocompleteRef.current) {
       const place = autocompleteRef.current.getPlace();
       setPlaceName(place.name || '');
+      if (place.name && place.vicinity)
+        setPlaceName(
+          place.name + ' , ' + place.vicinity.substring(place.vicinity.lastIndexOf(',') + 1),
+        );
+      else if (place.name) setPlaceName(place.name);
       if (place.geometry) {
         setLocation({
           lat: place.geometry.location?.lat() || 0,

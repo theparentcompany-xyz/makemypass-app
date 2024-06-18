@@ -1,14 +1,14 @@
-import { FormDataType, FormFieldType, TicketType } from '../../apis/types';
+import { ConditionType, FormDataType, FormFieldType } from '../../apis/types';
 
 export const validateCondition = (
-  field: FormFieldType | TicketType,
+  conditions: ConditionType[] | undefined,
   formData: FormDataType,
   formFields: FormFieldType[],
 ) => {
   let valid = true;
 
-  if (field.conditions) {
-    field.conditions.forEach(
+  if (conditions) {
+    conditions.forEach(
       (condition: { field: string; operator: string; value: string | string[] }) => {
         const fieldName = formFields
           .find((field) => field.id === condition.field)
@@ -76,10 +76,10 @@ export const validateCondition = (
           valid = false;
         }
 
-        if (!valid) {
-          const currentField = field.field_key;
-          delete formData[currentField];
-        }
+        // if (!valid) {
+        //   const currentField = field.field_key;
+        //   delete formData[currentField];
+        // }
       },
     );
   }

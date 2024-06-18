@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import styles from './ManageTickets.module.css';
-import ManageTicketHeader from './components/ManageTicketHeader/ManageTicketHeader';
 import Slider from '../../../../../components/SliderButton/Slider';
 import TicketBox from './components/TicketBox/TicketBox';
 import { TbSettings } from 'react-icons/tb';
@@ -13,11 +12,7 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { HashLoader } from 'react-spinners';
 
-type Props = {
-  setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const ManageTickets = ({ setIsTicketsOpen }: Props) => {
+const ManageTickets = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData') || '');
   const [ticketData, setTicketData] = useState<TicketOptions>();
   const [tickets, setTickets] = useState<TicketType[]>([]);
@@ -38,7 +33,7 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
       id: '',
       price: 0,
       perks: undefined,
-      slots_left: null,
+      capacity: 0,
       default_selected: false,
       platform_fee: 0,
       platform_fee_from_user: false,
@@ -47,6 +42,7 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
       code_prefix: '',
       code_digits: 0,
       maintain_code_order: false,
+      is_active: false,
     };
     setTickets((prevTickets) => [newTicket, ...prevTickets]);
   };
@@ -74,7 +70,21 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
         delete changedData['description'];
 
       editTicket(eventId, selectedTicket?.id as string, changedData);
-      console.log(changedData);
+    }
+  };
+
+  const closeTicket = (ticketInfo: TicketType) => {
+    const matchingTicket = tickets.find((ticket) => ticket.id === ticketInfo?.id);
+    if (matchingTicket && selectedTicket) {
+      setTickets((prevTickets) => {
+        return prevTickets.map((ticket) => {
+          if (ticket.id === matchingTicket.id) {
+            return { ...ticket, is_active: !ticket.is_active };
+          }
+          return ticket;
+        });
+      });
+      editTicket(eventId, matchingTicket?.id, { is_active: !matchingTicket?.is_active });
     }
   };
 
@@ -95,7 +105,6 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
       });
     }
   }, [ticketData]);
-  console.log(selectedTicket);
   return (
     <>
       {isOpen && (
@@ -151,7 +160,6 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
       {ticketData ? (
         // <Theme>
         <div className={styles.manageTicketsContainer}>
-          <ManageTicketHeader setIsTicketsOpen={setIsTicketsOpen} />
           <div className={styles.ticketHeader}>
             <div className={styles.ticketHeaderTitle}>Current Tickets</div>
             <button className={styles.ticketHeaderButton} onClick={onNewTicket}>
@@ -165,7 +173,8 @@ const ManageTickets = ({ setIsTicketsOpen }: Props) => {
                 <TicketBox
                   key={ticket.id}
                   ticketInfo={ticket}
-                  onClick={() => setSelectedTicket(ticket)}
+                  closeTicket={closeTicket}
+                  onClick={() => ticket.id != selectedTicket?.id && setSelectedTicket(ticket)}
                   selected={selectedTicket?.id == ticket.id}
                 />
               ) : null;

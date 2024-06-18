@@ -13,7 +13,7 @@ export type DiscountData = {
 };
 
 export type CouponData = {
-  status: string;
+  status: boolean;
   description: string;
   value?: string;
   error?: string;
@@ -27,7 +27,7 @@ type TicketType = {
     [key: string]: number;
   };
   limit: number | null;
-  slots_left: number;
+  capacity: number;
   default_selected: boolean;
   platform_fee: number;
   platform_fee_from_user: boolean;
@@ -46,4 +46,17 @@ export type Tickets = {
   ticket_id: string;
   count: number;
   my_ticket: boolean;
+};
+
+export type successModalProps = {
+  showModal: boolean;
+  ticketCode: string;
+  email?: string;
+  eventTitle?: string;
+};
+
+export type AudioControlsType = {
+  showModal: boolean;
+  transcribing: boolean;
+  noData: boolean;
 };

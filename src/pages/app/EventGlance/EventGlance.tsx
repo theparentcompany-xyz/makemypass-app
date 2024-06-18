@@ -11,36 +11,49 @@ import SectionButton from '../../../components/SectionButton/SectionButton';
 // import { LuClock, LuPencil } from 'react-icons/lu';
 import { useEffect, useState } from 'react';
 import Modal from '../../../components/Modal/Modal';
-import Select from 'react-select';
-import { MultiValue } from 'react-select';
-import { customStyles, getDay, getMonthAbbreviation } from '../EventPage/constants';
-import { EventType } from '../../../apis/types';
+import { getDay, getMonthAbbreviation } from '../EventPage/constants';
+import { EventType, MailType } from '../../../apis/types';
 import { getEvent } from '../../../apis/events';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import EventHeader from '../../../components/EventHeader/EventHeader';
 import ManageTickets from './components/ManageTickets/ManageTickets';
+import { LuMail, LuPencil } from 'react-icons/lu';
+import { listMails, updateMail } from '../../../apis/mails';
+import CustomMail from './components/CustomMail/CustomMail';
+import UpdateMail from './components/UpdateMail/UpdateMail';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [eventTitle, setEventTitle] = useState('');
   const [eventData, setEventData] = useState<EventType>();
+
+  const onUpdateEmail = () => {
+    const matchingMail = mails.find((mail) => mail.id === selectedMail?.id);
+    if (!matchingMail || !selectedMail) return;
+
+    const changedData: Record<string, any> = Object.entries(selectedMail as Record<string, any>)
+      .filter(([key, value]) => matchingMail?.[key as keyof MailType] !== value)
+      .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
+
+    updateMail(eventId, selectedMail, changedData, setMails);
+  };
+
   useEffect(() => {
     if (eventId) getEvent(eventId, setEventTitle, setEventData);
   }, [eventId]);
-  const [selectedMail, setSelectedMail] = useState('');
-
+  const [selectedMail, setSelectedMail] = useState<MailType>();
+  const [customMail, setCustomMail] = useState<boolean>(false);
   const eventName = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
   const navigate = useNavigate();
-  const selectValues = [
-    { value: 'Going', label: 'Going' },
-    { value: 'Invited', label: 'Invited' },
-    { value: 'Maybe', label: 'Maybe' },
-    { value: 'Not Going', label: 'Not Going' },
-  ];
-  const [selectedMulti, setSelectedMulti] = useState<MultiValue<{ value: string }>>([]);
   const [isTicketsOpen, setIsTicketsOpen] = useState(false);
+  const [mails, setMails] = useState<MailType[]>([]);
 
+  useEffect(() => {
+    if (eventId) {
+      listMails(eventId, setMails);
+    }
+  }, [eventId]);
   return (
     <>
       <Theme>
@@ -50,64 +63,31 @@ const EventGlance = () => {
             <Glance tab='manage' />
           </div>
           {isTicketsOpen && (
-            <Modal onClose={() => setIsTicketsOpen(false)} type='side'>
-              <ManageTickets setIsTicketsOpen={setIsTicketsOpen} />
+            <Modal title='Manage Tickets' onClose={() => setIsTicketsOpen(false)} type='side'>
+              <ManageTickets />
+            </Modal>
+          )}
+          {customMail && (
+            <Modal
+              title='Connect Custom Mail'
+              onClose={() => setCustomMail(false)}
+              style={{ zIndex: 1500 }}
+            >
+              <CustomMail setCustomMail={setCustomMail} />
             </Modal>
           )}
 
           {selectedMail && (
-            <Modal onClose={() => setSelectedMail('')}>
-              <div className={styles.modalHeader}>Update Reminder Email</div>
-              <div className={styles.modalSubText}>
-                <div className={styles.inputContainers}>
-                  <div className={styles.inputContainer}>
-                    <p className={styles.inputLabel}>When should the reminder go out?</p>
-                    <input
-                      type='datetime-local'
-                      placeholder='Enter Email'
-                      className={styles.input}
-                    />
-                    <p className={styles.inputSubText}>X hours before the event</p>
-                  </div>
-
-                  <div className={styles.inputContainer}>
-                    <p className={styles.inputLabel}>Send to guests who are:</p>
-
-                    <Select
-                      isMulti
-                      styles={customStyles}
-                      name='colors'
-                      value={selectedMulti}
-                      options={selectValues.filter((elem) => !(elem.value in selectedMulti))}
-                      className={styles['basic-multi-select']}
-                      classNamePrefix='select'
-                      onChange={(selectedOption: MultiValue<{ value: string }>) => {
-                        setSelectedMulti(selectedOption);
-                      }}
-                    />
-                  </div>
-                  <div className={styles.inputContainer}>
-                    <p className={styles.inputLabel}>Subject</p>
-                    <input type='text' placeholder='Enter Subject' className={styles.input} />
-                  </div>
-
-                  <div className={styles.inputContainer}>
-                    <p className={styles.inputLabel}>Body</p>
-
-                    <textarea placeholder='Enter Email Body' className={styles.textarea} />
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.buttonContainer}>
-                <button className={styles.button}>Update Reminder</button>
-                <button className={styles.button}>Send Now</button>
-                <button className={styles.button} onClick={() => setSelectedMail('')}>
-                  Cancel
-                </button>
-              </div>
+            <Modal onClose={() => setSelectedMail(undefined)} type='side'>
+              <UpdateMail
+                selectedMail={selectedMail}
+                setSelectedMail={setSelectedMail}
+                onUpdateEmail={onUpdateEmail}
+                setCustomMail={setCustomMail}
+              />
             </Modal>
           )}
+
           <div className={styles.eventGlance}>
             <div className={styles.bannerContainer}>
               {eventData?.banner ? (
@@ -244,57 +224,31 @@ const EventGlance = () => {
               </Link>
             </div>
 
-            {/* <div className={styles.sendMailsContainer}>
-                <div className={styles.sendMailsText}>
-                  <p className={styles.sendMailsHeading}>Send Mails</p>
-                  <p className={styles.sendMailsSubHeading}>Send Mails to participants </p>
-                </div>
-                <div className={styles.scheduleContainer}>
-                  <div className={styles.scheduleBox}>
+            <div className={styles.sendMailsContainer}>
+              <div className={styles.sendMailsText}>
+                <p className={styles.sendMailsHeading}>Send Mails</p>
+                <p className={styles.sendMailsSubHeading}>Send Mails to participants </p>
+              </div>
+              <div className={styles.scheduleContainer}>
+                {mails.map((mail, key) => (
+                  <div className={styles.scheduleBox} key={key}>
                     <div className='row'>
-                      <LuClock color='#939597' size={20} className={styles.scheduleIcon} />
+                      <LuMail color='#939597' size={20} className={styles.scheduleIcon} />
                       <div className={styles.scheduleText}>
-                        <p className={styles.scheduleHeading}>⏰ Final is starting tomorrow</p>
-                        <p className={styles.scheduleSubHeading}>
-                          To: Going · <span>Scheduled: Apr 9, 11:00 PM</span>
-                        </p>
+                        <p className={styles.scheduleHeading}>{mail.type}</p>
+                        <p className={styles.scheduleSubHeading}>{mail.subject}</p>
                       </div>
                     </div>
                     <LuPencil
                       color='#939597'
                       size={20}
                       className={styles.scheduleIcon}
-                      onClick={() => {
-                        setSelectedMail('assas');
-                      }}
+                      onClick={() => setSelectedMail(mail)}
                     />
                   </div>
-                  <div className={styles.scheduleBox}>
-                    <div className='row'>
-                      <LuClock color='#939597' size={20} className={styles.scheduleIcon} />
-                      <div className={styles.scheduleText}>
-                        <p className={styles.scheduleHeading}>⏰ Final is starting tomorrow</p>
-                        <p className={styles.scheduleSubHeading}>
-                          To: Going · <span>Scheduled: Apr 9, 11:00 PM</span>
-                        </p>
-                      </div>
-                    </div>
-                    <LuPencil color='#939597' size={20} className={styles.scheduleIcon} />
-                  </div>
-                  <div className={styles.scheduleBox}>
-                    <div className='row'>
-                      <LuClock color='#939597' size={20} className={styles.scheduleIcon} />
-                      <div className={styles.scheduleText}>
-                        <p className={styles.scheduleHeading}>⏰ Final is starting tomorrow</p>
-                        <p className={styles.scheduleSubHeading}>
-                          To: Going · <span>Scheduled: Apr 9, 11:00 PM</span>
-                        </p>
-                      </div>
-                    </div>
-                    <LuPencil color='#939597' size={20} className={styles.scheduleIcon} />
-                  </div>
-                </div>
-              </div> */}
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </Theme>

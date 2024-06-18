@@ -337,15 +337,6 @@
   width: 100%;
 }
 
-.modalHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 .sectionContent,
 .sectionContent1 {
   display: flex;
@@ -375,7 +366,7 @@
   border: none;
   border-radius: 8px;
   padding: 0.5rem 1rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   cursor: pointer;
   margin-top: 1rem;
 

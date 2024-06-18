@@ -1,8 +1,15 @@
 import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { CouponData, DiscountData, TicketOptions, Tickets } from '../pages/app/EventPage/types';
-import { Dispatch } from 'react';
+import {
+  AudioControlsType,
+  CouponData,
+  DiscountData,
+  TicketOptions,
+  Tickets,
+  successModalProps,
+} from '../pages/app/EventPage/types';
+import React, { Dispatch } from 'react';
 import {
   ErrorMessages,
   EventType,
@@ -27,31 +34,34 @@ export const submitForm = async ({
   setSuccess,
   setFormNumber,
   setFormData,
-  setAmount,
   setFormErrors,
   response,
-  setCoupon,
+
   setEventData,
   eventTitle,
   selectedDate,
   setDiscount,
+  setLoading,
+  setCoupon,
 }: {
   eventId: string;
   tickets: Tickets[];
   formData: FormDataType;
   coupon: CouponData;
-  setSuccess?: React.Dispatch<React.SetStateAction<string>>;
+  setSuccess?: React.Dispatch<React.SetStateAction<successModalProps>>;
   setFormNumber?: React.Dispatch<React.SetStateAction<number>>;
   setFormData?: React.Dispatch<React.SetStateAction<FormDataType>>;
-  setAmount?: React.Dispatch<React.SetStateAction<string>>;
   setFormErrors?: Dispatch<ErrorMessages>;
   response?: unknown;
-  setCoupon?: React.Dispatch<CouponData>;
+
   setEventData?: React.Dispatch<React.SetStateAction<EventType | undefined>>;
   eventTitle?: string;
   selectedDate?: string | null;
   setDiscount?: React.Dispatch<DiscountData>;
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+  setCoupon?: React.Dispatch<React.SetStateAction<CouponData>>;
 }) => {
+  setLoading && setLoading(true);
   const selectedDateFormatted = selectedDate
     ? new Date(selectedDate).toISOString().split('T')[0]
     : null;
@@ -105,8 +115,6 @@ export const submitForm = async ({
           image: '/pwa/maskable.webp',
           order_id: paymentId,
           handler: function (response: RazorpayPaymentDetails) {
-            console.log(response);
-
             const audio = new Audio('/sounds/gpay.mp3');
             audio.play();
 
@@ -116,32 +124,29 @@ export const submitForm = async ({
                 payment_id: response.razorpay_payment_id,
               })
               .then((response) => {
-                setSuccess && setSuccess(response.data.response.code || 'Will be Informed Later');
-
-                if (response.data.response.ticket_url) {
-                  const link = document.createElement('a');
-                  link.href = response.data.response.ticket_url;
-                  link.download = `Event Pass.png`;
-                  document.body.appendChild(link);
-                  link.click();
-                }
+                setSuccess &&
+                  setSuccess((prev) => ({
+                    ...prev,
+                    showModal: true,
+                    email: typeof formData.email === 'string' ? formData.email : '',
+                    ticketCode: response.data.response.ticket_url,
+                  }));
 
                 setTimeout(() => {
-                  setSuccess && setSuccess('');
                   setFormNumber && setFormNumber(0);
                   setFormData && setFormData({});
-                  setAmount && setAmount('');
                   setDiscount &&
                     setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
                   if (setEventData && eventTitle) getEventInfo(eventTitle, setEventData);
-                }, 5000);
-
-                setCoupon && setCoupon({ status: '', description: '' });
+                }, 2000);
               })
               .catch((error) => {
                 toast.error(
                   error.response.data.message.general[0] || 'Error in Validating Payment',
                 );
+              })
+              .finally(() => {
+                setLoading && setLoading(false);
               });
           },
           theme: {
@@ -152,22 +157,36 @@ export const submitForm = async ({
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
       } else {
-        setSuccess && setSuccess(response.data.response.code || 'Will be Informed Later');
+        setSuccess &&
+          setSuccess((prev) => ({
+            ...prev,
+            showModal: true,
+            email: typeof formData.email === 'string' ? formData.email : '',
+            ticketCode: response.data.response.ticket_url,
+          }));
 
         setTimeout(() => {
-          setSuccess && setSuccess('');
           setFormNumber && setFormNumber(0);
           setFormData && setFormData({});
           setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
-          setAmount && setAmount('');
-        }, 5000);
-
-        setCoupon && setCoupon({ status: '', description: '' });
+        }, 2000);
       }
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Registering Event');
-      if (setFormErrors) setFormErrors(error.response.data.message);
+      if (error.response.data.message['coupon_key']) {
+        setCoupon &&
+          setCoupon({
+            ...coupon,
+            error: error.response.data.message['coupon_key'][0],
+          });
+      }
+
+      if (setFormErrors && error.response.data.message) setFormErrors(error.response.data.message);
+      if (error.response.data.message.general[0])
+        toast.error(error.response.data.message.general[0]);
+    })
+    .finally(() => {
+      setLoading && setLoading(false);
     });
 };
 
@@ -184,6 +203,7 @@ export const applyCoupon = async (
         setDiscount(response.data.response);
       })
       .catch(() => {
+        //TODO: check status code and show error message accordingly
         setCoupon({
           ...couponData,
           value: '',
@@ -254,16 +274,26 @@ export const validateRsvp = async (
 export const getEventInfo = async (
   eventTitle: string,
   setEventData: Dispatch<React.SetStateAction<EventType | undefined>>,
+  setEventNotFound?: Dispatch<React.SetStateAction<boolean>>,
+  setSuccess?: React.Dispatch<React.SetStateAction<successModalProps>>,
+  claimCode?: string | null,
 ) => {
+  let backendURL = makeMyPass.getEventInfo(eventTitle);
+  if (claimCode) backendURL += `?claim_code=${claimCode}`;
   privateGateway
-    .get(makeMyPass.getEventInfo(eventTitle))
+    .get(backendURL)
     .then((response) => {
       setEventData(response.data.response);
-      console.log('API Response', response.data.response.tickets);
-      // return response.data.response;
+      setSuccess &&
+        setSuccess((prev) => ({
+          ...prev,
+          showModal: false,
+          ticketCode: response.data.response.ticket_url,
+        }));
+      sessionStorage.setItem('eventId', response.data.response.id);
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Info');
+      if (error.response.data.statusCode === 404) setEventNotFound && setEventNotFound(true);
     });
 };
 
@@ -295,7 +325,18 @@ export const getFormFields = async (
     });
 };
 
-export const postAudio = async (eventId: string, recordedBlob: Blob) => {
+export const postAudio = async (
+  eventId: string,
+  recordedBlob: Blob,
+  formData: FormDataType,
+  setFormData: React.Dispatch<FormDataType>,
+  setShowAudioModal: React.Dispatch<AudioControlsType>,
+) => {
+  setShowAudioModal({
+    showModal: true,
+    transcribing: true,
+    noData: false,
+  });
   const form = new FormData();
   const file = new File([await convertWebmToWav(recordedBlob)], 'recorded.mp3', {
     type: 'audio/mp3',
@@ -307,7 +348,46 @@ export const postAudio = async (eventId: string, recordedBlob: Blob) => {
         'Content-Type': 'multipart/form-data',
       },
     })
+    .then((response) => {
+      const newFormData: FormDataType = { ...formData, ...response?.data?.response?.data };
+      setFormData(newFormData);
+
+      if (Object.keys(response?.data?.response?.data).length === 0) {
+        setShowAudioModal({
+          showModal: true,
+          transcribing: false,
+          noData: true,
+        });
+      } else {
+        setShowAudioModal({
+          showModal: false,
+          transcribing: false,
+          noData: false,
+        });
+      }
+    })
     .catch((error) => {
-      console.error(error.response.data.message.general[0]);
+      toast.error(error.response.data.message.general[0]);
+      setShowAudioModal({
+        showModal: true,
+        transcribing: false,
+        noData: true,
+      });
+    });
+};
+
+export const sendVerfication = async (contactType: string, contactInfo: string) => {
+  const eventId = sessionStorage.getItem('eventId');
+  if (!eventId) return;
+  publicGateway
+    .post(makeMyPass.sendVerfication(eventId), {
+      contact_type: contactType,
+      contact_info: contactInfo,
+    })
+    .then(() => {
+      toast.success('Verification Email Sent');
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0]);
     });
 };
