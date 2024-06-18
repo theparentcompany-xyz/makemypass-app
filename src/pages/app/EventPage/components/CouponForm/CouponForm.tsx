@@ -112,12 +112,10 @@ const CouponForm = ({
 
   const isTicketActive = (filteredTicket: TicketType) => {
     const isActive = tickets.find(
-      (ticket) =>
-        ticket.my_ticket &&
-        ticket.ticket_id === filteredTicket.id &&
-        filteredTicket.capacity &&
-        filteredTicket.capacity > 0,
+      (ticket) => ticket.my_ticket && ticket.ticket_id === filteredTicket.id,
     );
+
+    if (filteredTicket.capacity && filteredTicket.capacity <= 0) return false;
 
     if (isActive) return true;
     else return false;
