@@ -22,7 +22,6 @@ import { LuMail, LuPencil } from 'react-icons/lu';
 import { listMails, updateMail } from '../../../apis/mails';
 import CustomMail from './components/CustomMail/CustomMail';
 import UpdateMail from './components/UpdateMail/UpdateMail';
-import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { sentTextMail } from '../../../apis/postevent';
 
 const EventGlance = () => {
