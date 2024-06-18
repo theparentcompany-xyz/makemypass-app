@@ -135,7 +135,7 @@ export const getIcon = (type: string) => {
           }}
         />
       );
-    case 'phone_number':
+    case 'phonenumber':
       return (
         <IoCallOutline
           size={20}

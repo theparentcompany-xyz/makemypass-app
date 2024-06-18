@@ -3,7 +3,7 @@ export type tableType = {
   registered_at: string;
   name: string;
   email: string;
-  phone_number: string;
+  phonenumber: string;
   district: string;
   category: string;
   organization: string;
