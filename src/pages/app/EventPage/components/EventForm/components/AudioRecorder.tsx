@@ -42,7 +42,17 @@ const AudioRecorder = ({
     <>
       <Modal title='Record your voice' onClose={closeAudioModal}>
         <div className={styles.voiceModalContainer}>
-          <div className={styles.voiceImage}>
+          <div
+            className={styles.voiceImage}
+            onClick={() => {
+              recorderControls.startRecording();
+              setShowAudioModal({
+                ...showAudioModal,
+                transcribing: false,
+                noData: false,
+              });
+            }}
+          >
             <FaMicrophone className={styles.micImage} size={50} color='#A0FFC8' />
             <div className={styles.visualizer}>
               <VoiceVisualizer
@@ -74,6 +84,7 @@ const AudioRecorder = ({
                 recorderControls.startRecording();
                 setShowAudioModal({
                   ...showAudioModal,
+                  transcribing: false,
                   noData: false,
                 });
               }}
