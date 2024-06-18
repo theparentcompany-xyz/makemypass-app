@@ -18,7 +18,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
 
   const navigate = useNavigate();
   return (
-    <div className={styles.eventHeaderContainer}>
+    <div className={`styles.eventHeaderContainer ${eventData?.err_message && styles.closedEvent}`}>
       <motion.div
         initial={{ opacity: 0, y: 35 }}
         animate={{ opacity: 1, y: 0 }}

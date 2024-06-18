@@ -22,11 +22,17 @@ import { LuMail, LuPencil } from 'react-icons/lu';
 import { listMails, updateMail } from '../../../apis/mails';
 import CustomMail from './components/CustomMail/CustomMail';
 import UpdateMail from './components/UpdateMail/UpdateMail';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import { sentTextMail } from '../../../apis/postevent';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [eventTitle, setEventTitle] = useState('');
   const [eventData, setEventData] = useState<EventType>();
+  const [confirmTestMail, setConfirmTestMail] = useState({
+    status: false,
+    mailId: '',
+  });
 
   const onUpdateEmail = () => {
     const matchingMail = mails.find((mail) => mail.id === selectedMail?.id);
@@ -85,6 +91,45 @@ const EventGlance = () => {
                 onUpdateEmail={onUpdateEmail}
                 setCustomMail={setCustomMail}
               />
+            </Modal>
+          )}
+
+          {confirmTestMail.status && (
+            <Modal
+              title='Test Mail'
+              onClose={() =>
+                setConfirmTestMail({
+                  status: false,
+                  mailId: '',
+                })
+              }
+            >
+              <div className={styles.modalContainer}>
+                <div className={styles.sectionContent1}>
+                  <p className={styles.sectionText}>Are you sure you want to sent</p>
+                </div>
+                <div className={styles.modalButtons}>
+                  <button
+                    className={styles.confirmButton}
+                    onClick={() => {
+                      sentTextMail(eventId, confirmTestMail.mailId);
+                    }}
+                  >
+                    Publish
+                  </button>
+                  <button
+                    onClick={() => {
+                      setConfirmTestMail({
+                        status: false,
+                        mailId: '',
+                      });
+                    }}
+                    className={styles.cancelButton}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
             </Modal>
           )}
 
@@ -239,12 +284,23 @@ const EventGlance = () => {
                         <p className={styles.scheduleSubHeading}>{mail.subject}</p>
                       </div>
                     </div>
-                    <LuPencil
-                      color='#939597'
-                      size={20}
-                      className={styles.scheduleIcon}
-                      onClick={() => setSelectedMail(mail)}
-                    />
+                    <div className={styles.mailActions}>
+                      <LuPencil
+                        color='#939597'
+                        size={20}
+                        className={styles.scheduleIcon}
+                        onClick={() => setSelectedMail(mail)}
+                      />
+                      <SecondaryButton
+                        onClick={() => {
+                          setConfirmTestMail({
+                            status: true,
+                            mailId: mail.id,
+                          });
+                        }}
+                        buttonText='Test Mail'
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
