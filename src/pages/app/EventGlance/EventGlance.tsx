@@ -115,7 +115,7 @@ const EventGlance = () => {
                       sentTextMail(eventId, confirmTestMail.mailId);
                     }}
                   >
-                    Publish
+                    Send
                   </button>
                   <button
                     onClick={() => {
@@ -280,7 +280,20 @@ const EventGlance = () => {
                     <div className='row'>
                       <LuMail color='#939597' size={20} className={styles.scheduleIcon} />
                       <div className={styles.scheduleText}>
-                        <p className={styles.scheduleHeading}>{mail.type}</p>
+                        <p className={styles.scheduleHeading}>
+                          {mail.type}{' '}
+                          <span
+                            className={styles.testMail}
+                            onClick={() => {
+                              setConfirmTestMail({
+                                status: true,
+                                mailId: mail.id,
+                              });
+                            }}
+                          >
+                            Test Mail
+                          </span>
+                        </p>
                         <p className={styles.scheduleSubHeading}>{mail.subject}</p>
                       </div>
                     </div>
@@ -290,15 +303,6 @@ const EventGlance = () => {
                         size={20}
                         className={styles.scheduleIcon}
                         onClick={() => setSelectedMail(mail)}
-                      />
-                      <SecondaryButton
-                        onClick={() => {
-                          setConfirmTestMail({
-                            status: true,
-                            mailId: mail.id,
-                          });
-                        }}
-                        buttonText='Test Mail'
                       />
                     </div>
                   </div>

@@ -27,6 +27,9 @@ const Modal = ({ children, onClose, style, type, title, ...inputProps }: ModalPr
           {title && (
             <div className={styles.modalHeader}>
               <p className={styles.modalHeaderText}>{title}</p>
+              <button onClick={onClose} className={styles.closeButton}>
+                X
+              </button>
             </div>
           )}
           {children}

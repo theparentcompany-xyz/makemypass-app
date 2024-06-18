@@ -492,6 +492,13 @@
   width: 100%;
 }
 
+.testMail {
+  font-size: 0.8rem;
+  text-decoration: underline;
+  color: #fff;
+  opacity: 0.5;
+}
+
 .modalContainer {
   display: flex;
   flex-direction: column;
