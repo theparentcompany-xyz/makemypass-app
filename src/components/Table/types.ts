@@ -2,7 +2,7 @@ export type TableType = {
   is_approved: any;
   amount: number;
   check_in_date: string;
-  phone_number: string;
+  phonenumber: string;
   id: string;
   name: string;
   email: string;

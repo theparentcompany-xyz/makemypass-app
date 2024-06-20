@@ -55,7 +55,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
                 {item.name}
               </p>
               <p className={styles.rowEmail}>{item.email?.split('@')[0]}</p>
-              <p className={styles.rowEmail}>{item.phone_number}</p>
+              <p className={styles.rowEmail}>{item.phonenumber}</p>
               {item.check_in_date && (
                 <div className={styles.icon}>
                   <FaCheck color='white' size={12} />
@@ -201,7 +201,7 @@ const Table = ({
       (item) =>
         item.name?.toLowerCase().includes(keyword) ||
         item.email?.toLowerCase().includes(keyword) ||
-        item.phone_number?.toLowerCase().includes(keyword),
+        item.phonenumber?.toLowerCase().includes(keyword),
     );
   }, [tableData, search]);
 

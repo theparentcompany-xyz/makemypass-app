@@ -107,7 +107,7 @@ export const makeMyPass = {
   updatePerk: (ticketCode: string) => makeMyPassURL(`/checkin/update-perk/${ticketCode}/`),
 
   //Post Event Communication
-  sentPostMail: (eventId: string) => makeMyPassURL(`/communication/${eventId}/manage-post-event/`),
+  sentPostMail: (eventId: string) => makeMyPassURL(`/event/${eventId}/communication/send-post-event-mail/`),
   getPostEventFields: (eventId: string) =>
     makeMyPassURL(`/feedback/get-post-event-fields/${eventId}/`),
   submitFeedback: (eventId: string) => makeMyPassURL(`/feedback/submit-feedback/${eventId}/`),
@@ -121,6 +121,8 @@ export const makeMyPass = {
 
   //Mail URLS
   listMails: (eventId: string) => makeMyPassURL(`/event/${eventId}/communication/list-event-mail/`),
+  sentTestMail: (eventId: string, mailId: string) =>
+    makeMyPassURL(`/event/${eventId}/communication/send-test-mail/${mailId}`),
   getMail: (eventId: string, mailId: string) =>
     makeMyPassURL(`/event/${eventId}/communication/get-event-mail/${mailId}/`),
   updateMail: (eventId: string, mailId: string) =>

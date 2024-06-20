@@ -66,7 +66,7 @@ const EventPage = () => {
         />
 
         {eventData?.err_message && (
-          <>
+          <div>
             <motion.div
               initial={{ opacity: 0, y: 35 }}
               animate={{ opacity: 1, y: 0 }}
@@ -82,7 +82,7 @@ const EventPage = () => {
               <EventHeader eventData={eventData} />
             </motion.div>
             <p className={styles.privateEventText}>{eventData?.err_message}</p>
-          </>
+          </div>
         )}
 
         {eventData && eventData?.form?.length > 0 ? (

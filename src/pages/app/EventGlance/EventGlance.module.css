@@ -445,3 +445,64 @@
     transform: translateX(-1.4rem);
   }
 }
+
+.mailActions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  column-gap: 0.5rem;
+}
+
+.modalButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+}
+
+.confirmButton {
+  background: #fdfdfd;
+  color: rgb(43, 42, 42);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  max-width: 5rem;
+  width: 100%;
+}
+
+.cancelButton {
+  color: #fdfdfd;
+  background: rgb(43, 42, 42);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  max-width: 5rem;
+  width: 100%;
+}
+
+.testMail {
+  font-size: 0.8rem;
+  text-decoration: underline;
+  color: #fff;
+  opacity: 0.5;
+}
+
+.modalContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}

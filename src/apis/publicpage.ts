@@ -367,11 +367,11 @@ export const postAudio = async (
       }
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0]);
+      toast.error(error.response.data.message.general[0] || 'Error in Transcribing Audio');
       setShowAudioModal({
         showModal: true,
         transcribing: false,
-        noData: true,
+        noData: false,
       });
     });
 };

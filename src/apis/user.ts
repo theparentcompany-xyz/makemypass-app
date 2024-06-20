@@ -23,7 +23,7 @@ export const getUserInfo = async (
         category: response.data.response.category,
         name: response.data.response.name,
         email: response.data.response.email,
-        phone: response.data.response.phone_number,
+        phone: response.data.response.phonenumber,
         district: response.data.response.district,
         organization: response.data.response.organization,
       });

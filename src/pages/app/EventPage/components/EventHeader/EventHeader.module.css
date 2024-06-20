@@ -390,3 +390,10 @@
 .speakerContainer:hover .speakerPosition {
   display: block;
 }
+
+.closedEvent {
+  max-width: 31rem;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
