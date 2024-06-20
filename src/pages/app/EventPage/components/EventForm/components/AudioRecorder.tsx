@@ -53,7 +53,7 @@ const AudioRecorder = ({
               });
             }}
           >
-            <FaMicrophone className={styles.micImage} size={50} color='#A0FFC8' />
+            {recorderControls.isCleared && <FaMicrophone className={styles.micImage} size={50} />}
             <div className={styles.visualizer}>
               <VoiceVisualizer
                 ref={audioRef}
@@ -61,7 +61,7 @@ const AudioRecorder = ({
                 isControlPanelShown={false}
                 isDefaultUIShown={false}
                 height={'50'}
-                mainBarColor='#5E5D5D'
+                mainBarColor='#A0FFC8'
                 barWidth={3}
                 rounded={5}
                 speed={2}

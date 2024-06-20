@@ -368,12 +368,10 @@ export const postAudio = async (
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Error in Transcribing Audio');
-    })
-    .finally(() => {
       setShowAudioModal({
         showModal: true,
         transcribing: false,
-        noData: true,
+        noData: false,
       });
     });
 };
