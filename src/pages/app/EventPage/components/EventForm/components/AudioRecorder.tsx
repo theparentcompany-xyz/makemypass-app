@@ -5,6 +5,7 @@ import { Dispatch, useEffect } from 'react';
 import { AudioControlsType } from '../../../types';
 import { PropagateLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
+import { FaMicrophone } from 'react-icons/fa6';
 
 const AudioRecorder = ({
   showAudioModal,
@@ -57,7 +58,9 @@ const AudioRecorder = ({
       <Modal title='Record your voice' onClose={closeAudioModal}>
         <div className={styles.voiceModalContainer}>
           <div className={styles.voiceImage} onClick={() => {}}>
-            {recorderControls.isCleared && <FaMicrophone className={styles.micImage} size={50} />}
+            {(recorderControls.isCleared || !recorderControls.isRecordingInProgress) && (
+              <FaMicrophone className={styles.micImage} size={50} />
+            )}
             <div className={styles.visualizer}>
               <VoiceVisualizer
                 ref={audioRef}
