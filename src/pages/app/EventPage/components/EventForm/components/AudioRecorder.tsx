@@ -57,6 +57,7 @@ const AudioRecorder = ({
       <Modal title='Record your voice' onClose={closeAudioModal}>
         <div className={styles.voiceModalContainer}>
           <div className={styles.voiceImage} onClick={() => {}}>
+            {recorderControls.isCleared && <FaMicrophone className={styles.micImage} size={50} />}
             <div className={styles.visualizer}>
               <VoiceVisualizer
                 ref={audioRef}
