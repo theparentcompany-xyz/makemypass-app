@@ -4,9 +4,7 @@ import Slider from '../../../../../components/SliderButton/Slider';
 import TicketBox from './components/TicketBox/TicketBox';
 import { TbSettings } from 'react-icons/tb';
 import { EventType, TicketType } from '../../../../../apis/types';
-import { getTickets } from '../../../../../apis/publicpage';
-import { TicketOptions } from '../../../EventPage/types';
-import { getTicket, editTicket, createTicket, deleteTicket } from '../../../../../apis/tickets';
+import { editTicket, createTicket, deleteTicket, getTickets } from '../../../../../apis/tickets';
 import Modal from '../../../../../components/Modal/Modal';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -14,11 +12,12 @@ import { HashLoader } from 'react-spinners';
 
 const ManageTickets = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData') || '');
-  const [ticketData, setTicketData] = useState<TicketOptions>();
+  const [ticketData, setTicketData] = useState<TicketType[]>();
   const [tickets, setTickets] = useState<TicketType[]>([]);
   const [selectedTicket, setSelectedTicket] = useState<TicketType>();
   const [isOpen, setIsOpen] = useState(false);
   const [settingNewTicket, setSettingNewTicket] = useState(false);
+
   const onNewTicket = () => {
     if (settingNewTicket) {
       toast.error('Please save changes before adding new ticket');
@@ -99,12 +98,9 @@ const ManageTickets = () => {
   }, [tickets.length]);
 
   useEffect(() => {
-    if (ticketData && eventId && tickets.length === 0) {
-      Object.keys(ticketData).forEach((key) => {
-        getTicket(eventId, ticketData[key].id, setTickets);
-      });
-    }
+    setTickets(ticketData || []);
   }, [ticketData]);
+
   return (
     <>
       {isOpen && (
