@@ -60,7 +60,18 @@ const AudioRecorder = ({
           <div className={styles.voiceImage} onClick={() => {}}>
             {(recorderControls.isCleared ||
               (!recorderControls.isRecordingInProgress && !recordedBlob)) && (
-              <FaMicrophone className={styles.micImage} size={50} />
+              <FaMicrophone
+                onClick={() => {
+                  recorderControls.startRecording();
+                  setShowAudioModal({
+                    ...showAudioModal,
+                    transcribing: false,
+                    noData: false,
+                  });
+                }}
+                className={styles.micImage}
+                size={50}
+              />
             )}
             <div className={styles.visualizer}>
               <VoiceVisualizer
