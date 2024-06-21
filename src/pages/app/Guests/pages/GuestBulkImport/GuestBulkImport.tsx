@@ -5,7 +5,6 @@ import Theme from '../../../../../components/Theme/Theme';
 import BulkImportHeader from '../../components/BulkImportHeader/BulkImportHeader';
 import Header from '../../../../../components/EventHeader/EventHeader';
 import { customStyles } from '../../../../../pages/app/EventPage/constants';
-import { getTickets } from '../../../../../apis/publicpage';
 import { TicketOptions } from '../../../EventPage/types';
 import Select from 'react-select';
 import { motion } from 'framer-motion';
@@ -16,7 +15,7 @@ import GenericTable from '../../../../../components/Table/GenericTable';
 
 const GuestBulkImport = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
-  const [ticketInfo, setTicketInfo] = useState<TicketOptions>();
+  const [ticketInfo] = useState<TicketOptions>();
   const [ticketId, setTicketId] = useState<string>('');
   const [fileStatus, setFileStatus] = useState<FileType[]>([]);
 
@@ -36,7 +35,7 @@ const GuestBulkImport = () => {
 
   useEffect(() => {
     if (eventId) {
-      getTickets(eventId, setTicketInfo);
+      // getTickets(eventId, setTicketInfo);
       getFileStatus(eventId, setFileStatus);
     }
   }, [eventId]);
