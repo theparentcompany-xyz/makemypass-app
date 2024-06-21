@@ -38,22 +38,26 @@ const AudioRecorder = ({
     }
   }, [showAudioModal.noData]);
 
+  useEffect(() => {
+    recorderControls.startRecording();
+    setShowAudioModal({
+      ...showAudioModal,
+      transcribing: false,
+      noData: false,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (recordedBlob) {
+      handleAudioSubmit(recordedBlob);
+    }
+  }, [recordedBlob]);
+
   return (
     <>
       <Modal title='Record your voice' onClose={closeAudioModal}>
         <div className={styles.voiceModalContainer}>
-          <div
-            className={styles.voiceImage}
-            onClick={() => {
-              recorderControls.startRecording();
-              setShowAudioModal({
-                ...showAudioModal,
-                transcribing: false,
-                noData: false,
-              });
-            }}
-          >
-            {recorderControls.isCleared && <FaMicrophone className={styles.micImage} size={50} />}
+          <div className={styles.voiceImage} onClick={() => {}}>
             <div className={styles.visualizer}>
               <VoiceVisualizer
                 ref={audioRef}
@@ -70,59 +74,6 @@ const AudioRecorder = ({
           </div>
         </div>
 
-        <div className={styles.voiceButtons}>
-          {!recorderControls.isCleared ? (
-            <>
-              <button className={styles.inModalVoiceButton} onClick={recorderControls.clearCanvas}>
-                {<FaTrash />}
-              </button>
-            </>
-          ) : (
-            <button
-              className={styles.inModalVoiceButton}
-              onClick={() => {
-                recorderControls.startRecording();
-                setShowAudioModal({
-                  ...showAudioModal,
-                  transcribing: false,
-                  noData: false,
-                });
-              }}
-            >
-              Tap to record
-            </button>
-          )}
-          {recorderControls.isRecordingInProgress && (
-            <>
-              <button className={styles.inModalVoiceButton}>
-                {recorderControls.formattedRecordingTime}
-              </button>
-              <button
-                className={styles.inModalVoiceButton}
-                onClick={recorderControls.stopRecording}
-              >
-                {<FaStop />}
-              </button>
-              <button
-                className={styles.inModalVoiceButton}
-                onClick={recorderControls.togglePauseResume}
-              >
-                {recorderControls.isPausedRecording ? <FaPlay /> : <FaPause />}
-              </button>
-            </>
-          )}
-          {recorderControls.isAvailableRecordedAudio && (
-            <>
-              <button
-                className={styles.inModalVoiceButton}
-                onClick={recorderControls.togglePauseResume}
-              >
-                {recorderControls.isPausedRecordedAudio ? <FaPlay /> : <FaPause />}
-              </button>
-            </>
-          )}
-        </div>
-
         <p className={styles.noDataAlert}>
           {showAudioModal.noData
             ? 'We found no field from your audio to fill in, Kindly record again.'
@@ -132,17 +83,10 @@ const AudioRecorder = ({
         {(recorderControls.isRecordingInProgress || recorderControls.isAvailableRecordedAudio) && (
           <button
             className={styles.voiceSubmitButton}
-            onClick={() => handleAudioSubmit(recordedBlob)}
-            disabled={
-              !recorderControls.isAvailableRecordedAudio ||
-              showAudioModal.transcribing ||
-              recorderControls.isRecordingInProgress
-            }
-            style={
-              !recorderControls.isAvailableRecordedAudio || recorderControls.isRecordingInProgress
-                ? { opacity: 0.5 }
-                : {}
-            }
+            onClick={() => {
+              recorderControls.stopRecording();
+              handleAudioSubmit(recordedBlob);
+            }}
           >
             {showAudioModal.transcribing ? (
               <PropagateLoader
