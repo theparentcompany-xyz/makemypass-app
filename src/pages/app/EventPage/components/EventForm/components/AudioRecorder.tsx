@@ -1,6 +1,5 @@
 import styles from './AudioRecorder.module.css';
 import Modal from '../../../../../../components/Modal/Modal';
-import { FaMicrophone, FaPause, FaPlay, FaStop, FaTrash } from 'react-icons/fa6';
 import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
 import { Dispatch, useEffect } from 'react';
 import { AudioControlsType } from '../../../types';
