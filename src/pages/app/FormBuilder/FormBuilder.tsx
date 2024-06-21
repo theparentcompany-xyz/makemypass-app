@@ -44,11 +44,11 @@ const FormBuilder = () => {
     ]);
   };
 
-  const updateFormStateVariable = () => {
-    setFormFields((prevForm) => {
-     ...prevForm 
-    });
-  };
+  // const updateFormStateVariable = () => {
+  //   setFormFields((prevForm) => {
+  //    ...prevForm
+  //   });
+  // };
 
   const getFormFields = (currentField: Field, fieldId?: string) => {
     let hasPassed = false;
@@ -79,7 +79,7 @@ const FormBuilder = () => {
     updateFormFieldValue(field, 'options', updatedOptions);
   };
 
-  useEffect(() => {}, [formFields]);
+  // useEffect(() => {}, [formFields]);
 
   return (
     <>

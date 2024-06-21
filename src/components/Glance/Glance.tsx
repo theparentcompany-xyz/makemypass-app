@@ -24,6 +24,15 @@ const Glance = ({
     value: number;
   }[];
 
+  type TabType = {
+    title: string;
+    roles: string[];
+  };
+
+  type TabsType = {
+    [key: string]: TabType;
+  };
+
   const navigate = useNavigate();
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -105,7 +114,7 @@ const Glance = ({
       });
   }, [eventId, backendURL, totalGuests]);
 
-  const tabs = {
+  const tabs: TabsType = {
     overview: {
       title: 'Overview',
       roles: ['Admin', 'Owner', 'Volunteer'],
@@ -123,22 +132,23 @@ const Glance = ({
       title: 'In-Event',
       roles: ['Admin', 'Owner', 'Volunteer'],
     },
-    // formbuilder: {
-    //   title: 'Form Builder',
-    //   roles: ['Admin', 'Owner'],
-    // },
     manage: {
       title: 'Event Page',
       roles: ['Admin', 'Owner'],
     },
-
     checkins: {
       title: 'Check-Ins',
       roles: ['Admin', 'Owner', 'Volunteer'],
     },
-
     // feedback: 'Feedbacks',
   };
+
+  if (import.meta.env.VITE_CURRENT_ENV === 'dev') {
+    tabs.formbuilder = {
+      title: 'Form Builder',
+      roles: ['Admin', 'Owner'],
+    };
+  }
 
   const userRoles = eventData.current_user_role;
 
