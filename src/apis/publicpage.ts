@@ -5,7 +5,6 @@ import {
   AudioControlsType,
   CouponData,
   DiscountData,
-  TicketOptions,
   Tickets,
   successModalProps,
 } from '../pages/app/EventPage/types';
@@ -294,20 +293,6 @@ export const getEventInfo = async (
     })
     .catch((error) => {
       if (error.response.data.statusCode === 404) setEventNotFound && setEventNotFound(true);
-    });
-};
-
-export const getTickets = async (
-  eventId: string,
-  setTicketInfo: React.Dispatch<React.SetStateAction<TicketOptions | undefined>>,
-) => {
-  privateGateway
-    .get(makeMyPass.getTicketInfo(eventId))
-    .then((response) => {
-      setTicketInfo(response.data.response.tickets);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Fetching Tickets');
     });
 };
 
