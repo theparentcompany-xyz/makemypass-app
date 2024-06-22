@@ -6,7 +6,7 @@ import {
   CouponData,
   DiscountData,
   Tickets,
-  successModalProps,
+  SuccessModalProps,
 } from '../pages/app/EventPage/types';
 import React, { Dispatch } from 'react';
 import {
@@ -47,7 +47,7 @@ export const submitForm = async ({
   tickets: Tickets[];
   formData: FormDataType;
   coupon: CouponData;
-  setSuccess?: React.Dispatch<React.SetStateAction<successModalProps>>;
+  setSuccess?: React.Dispatch<React.SetStateAction<SuccessModalProps>>;
   setFormNumber?: React.Dispatch<React.SetStateAction<number>>;
   setFormData?: React.Dispatch<React.SetStateAction<FormDataType>>;
   setFormErrors?: Dispatch<ErrorMessages>;
@@ -116,7 +116,12 @@ export const submitForm = async ({
           handler: function (response: RazorpayPaymentDetails) {
             const audio = new Audio('/sounds/gpay.mp3');
             audio.play();
-
+            setSuccess &&
+              setSuccess((prev) => ({
+                ...prev,
+                showModal: true,
+                loading: true,
+              }));
             publicGateway
               .post(makeMyPass.validatePayment, {
                 order_id: response.razorpay_order_id,
@@ -126,9 +131,10 @@ export const submitForm = async ({
                 setSuccess &&
                   setSuccess((prev) => ({
                     ...prev,
-                    showModal: true,
-                    email: typeof formData.email === 'string' ? formData.email : '',
-                    ticketCode: response.data.response.ticket_url,
+                    ticketURL: response.data.response.ticket_url,
+                    followupMessage: response.data.response.followup_msg,
+                    eventRegisterId: response.data.response.event_register_id,
+                    loading: false,
                   }));
 
                 setTimeout(() => {
@@ -143,6 +149,12 @@ export const submitForm = async ({
                 toast.error(
                   error.response.data.message.general[0] || 'Error in Validating Payment',
                 );
+                setSuccess &&
+                  setSuccess((prev) => ({
+                    ...prev,
+                    showModal: false,
+                    loading: false,
+                  }));
               })
               .finally(() => {
                 setLoading && setLoading(false);
@@ -160,8 +172,10 @@ export const submitForm = async ({
           setSuccess((prev) => ({
             ...prev,
             showModal: true,
-            email: typeof formData.email === 'string' ? formData.email : '',
-            ticketCode: response.data.response.ticket_url,
+            ticketURL: response.data.response.ticket_url,
+            followupMessage: response.data.response.followup_msg,
+            eventRegisterId: response.data.response.event_register_id,
+            loading: false,
           }));
 
         setTimeout(() => {
@@ -274,7 +288,7 @@ export const getEventInfo = async (
   eventTitle: string,
   setEventData: Dispatch<React.SetStateAction<EventType | undefined>>,
   setEventNotFound?: Dispatch<React.SetStateAction<boolean>>,
-  setSuccess?: React.Dispatch<React.SetStateAction<successModalProps>>,
+  setSuccess?: React.Dispatch<React.SetStateAction<SuccessModalProps>>,
   claimCode?: string | null,
 ) => {
   let backendURL = makeMyPass.getEventInfo(eventTitle);
@@ -287,7 +301,8 @@ export const getEventInfo = async (
         setSuccess((prev) => ({
           ...prev,
           showModal: false,
-          ticketCode: response.data.response.ticket_url,
+          eventTitle: response.data.response.title,
+          loading: false,
         }));
       sessionStorage.setItem('eventId', response.data.response.id);
     })

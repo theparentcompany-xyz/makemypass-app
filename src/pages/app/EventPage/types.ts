@@ -48,11 +48,13 @@ export type Tickets = {
   my_ticket: boolean;
 };
 
-export type successModalProps = {
+export type SuccessModalProps = {
   showModal: boolean;
-  ticketCode: string;
-  email?: string;
   eventTitle?: string;
+  eventRegisterId?: string;
+  followupMessage?: string;
+  ticketURL?: string;
+  loading?: boolean;
 };
 
 export type AudioControlsType = {

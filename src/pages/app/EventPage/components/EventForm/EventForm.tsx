@@ -4,7 +4,7 @@ import {
   CouponData,
   DiscountData,
   Tickets,
-  successModalProps,
+  SuccessModalProps,
 } from '../../types';
 import styles from '../../EventPage.module.css';
 import { postAudio, submitForm, validateRsvp } from '../../../../../apis/publicpage';
@@ -30,7 +30,7 @@ const EventForm = ({
   eventFormData: FormEventData;
   eventTitle: string | undefined;
   setEventData?: Dispatch<React.SetStateAction<EventType | undefined>>;
-  setSuccess?: Dispatch<React.SetStateAction<successModalProps>>;
+  setSuccess?: Dispatch<React.SetStateAction<SuccessModalProps>>;
   type?: string;
   claimCode?: string | null;
 }) => {
@@ -217,7 +217,7 @@ const EventForm = ({
                           marginRight: '0.5rem',
                         }}
                       />
-                      Record Voice to Fill(Beta)
+                      Record Voice to Fill (Beta)
                     </button>
                     <div className={styles.orContainer}>
                       <hr />

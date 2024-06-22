@@ -66,7 +66,7 @@ const PrivacyPolicy = () => {
           <h4>9. Contact Us</h4>
           <p>
             If you have any questions about this Privacy Policy, please contact us at
-            makemypass.com@gmail.com.
+            hello@makemypass.com.
           </p>
         </div>
       </Theme>

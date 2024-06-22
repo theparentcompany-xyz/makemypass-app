@@ -73,8 +73,7 @@ const TermsConditions = () => {
 
         <h4>10. Contact Us</h4>
         <p>
-          If you have any questions about these Terms, please contact us at
-          makemypass.com@gmail.com.
+          If you have any questions about these Terms, please contact us at hello@makemypass.com.
         </p>
       </div>
     </Theme>

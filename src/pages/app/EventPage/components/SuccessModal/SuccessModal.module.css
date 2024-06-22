@@ -142,3 +142,12 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+  min-height: 20rem;
+}

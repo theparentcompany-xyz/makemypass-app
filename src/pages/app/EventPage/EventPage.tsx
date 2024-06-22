@@ -12,16 +12,15 @@ import EventHeader from './components/EventHeader/EventHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
 import { Helmet } from 'react-helmet';
 import EventForm from './components/EventForm/EventForm';
-import { successModalProps } from './types';
+import { SuccessModalProps } from './types';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const [eventData, setEventData] = useState<EventType>();
-  const [success, setSuccess] = useState<successModalProps>({
+  const [success, setSuccess] = useState<SuccessModalProps>({
     showModal: false,
-    ticketCode: '',
-    email: '',
-    eventTitle: '',
+    eventTitle: eventData?.title,
+    loading: false,
   });
 
   const [eventNotFound, setEventNotFound] = useState<boolean>(false);
@@ -59,11 +58,7 @@ const EventPage = () => {
         />
       </Helmet>
       <Theme type='eventForm'>
-        <SuccessModal
-          success={success}
-          setSuccess={setSuccess}
-          hasShortlisting={eventData?.shortlist}
-        />
+        <SuccessModal success={success} setSuccess={setSuccess} />
 
         {eventData?.err_message && (
           <div>
