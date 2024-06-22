@@ -217,7 +217,7 @@ const EventForm = ({
                           marginRight: '0.5rem',
                         }}
                       />
-                      Record Voice to Fill
+                      Record Voice to Fill(Beta)
                     </button>
                     <div className={styles.orContainer}>
                       <hr />
