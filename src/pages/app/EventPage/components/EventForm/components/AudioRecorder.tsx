@@ -89,6 +89,22 @@ const AudioRecorder = ({
           </div>
         </div>
 
+        {showAudioModal.noData && (
+          <button
+            className={styles.inModalVoiceButton}
+            onClick={() => {
+              recorderControls.startRecording();
+              setShowAudioModal({
+                ...showAudioModal,
+                transcribing: false,
+                noData: false,
+              });
+            }}
+          >
+            Tap to record
+          </button>
+        )}
+
         <p className={styles.noDataAlert}>
           {showAudioModal.noData
             ? 'We found no field from your audio to fill in, Kindly record again.'

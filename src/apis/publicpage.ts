@@ -356,7 +356,7 @@ export const postAudio = async (
       setShowAudioModal({
         showModal: true,
         transcribing: false,
-        noData: false,
+        noData: true,
       });
     });
 };
