@@ -150,7 +150,7 @@ export interface EventType {
   tickets: TicketType[];
   shortlist: boolean;
   coupon: CouponType;
-  parse_audio?: boolean;
+  parse_audio: boolean;
   select_multi_ticket?: boolean;
   is_sub_event: boolean;
   status: string;

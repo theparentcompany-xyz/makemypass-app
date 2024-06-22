@@ -1,5 +1,7 @@
-.eventGlance {
-  padding: 0 1.25rem;
+@media (max-width: 1355px) {
+  .eventGlance {
+    padding: 0 1.25rem;
+  }
 }
 
 .bannerContainer {

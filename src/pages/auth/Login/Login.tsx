@@ -286,7 +286,7 @@ const Login = () => {
                 <>
                   <div className={styles.orContainer}>
                     <div className={styles.line}></div>
-                    <div className={styles.or}>or</div>
+                    <div className={styles.or}>OR</div>
                     <div className={styles.line}></div>
                   </div>
                   <div className={styles.formAltLoginContainer}>

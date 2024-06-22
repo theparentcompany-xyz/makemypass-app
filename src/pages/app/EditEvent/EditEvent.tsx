@@ -450,6 +450,21 @@ const EditEvent = () => {
                   <div className={styles.optionsContainer}>
                     <div className={styles.option}>
                       <label>
+                        <TbUserCheck size={20} color='#949597' /> Audio Form Fill
+                      </label>
+                      <Slider
+                        checked={eventData.parse_audio}
+                        text={''}
+                        onChange={() =>
+                          setEventData({
+                            ...eventData,
+                            parse_audio: !eventData.parse_audio,
+                          })
+                        }
+                      />
+                    </div>
+                    <div className={styles.option}>
+                      <label>
                         <TbUserCheck size={20} color='#949597' /> Require Approval
                       </label>
                       <Slider
@@ -558,15 +573,7 @@ const EditEvent = () => {
                       </div>
                     </div>
                   </div>
-                  <div className={styles.backgroundOption}>
-                    {/* <input
-                      type='color'
-                      className={styles.backgroundColorInput}
-                      value={selectedColor}
-                      onChange={(e) => setSelectedColor(e.target.value)}
-                    />
-                    <label>Background Color</label> */}
-                  </div>
+
                   <div className={styles.uploadLogoContainerParent}>
                     <div className={styles.uploadLogoContainer}>
                       <div>
