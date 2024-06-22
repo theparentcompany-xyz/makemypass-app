@@ -19,7 +19,7 @@ const Footer = () => {
               <img
                 className={styles.tpclogo}
                 src='/app/hoomans.png'
-                alt='the parent company logo'
+                alt='the hoomans project logo'
               />
             </a>
             <div className={styles.socialIcons}>

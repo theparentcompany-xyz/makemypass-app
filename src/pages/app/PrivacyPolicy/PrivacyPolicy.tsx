@@ -10,9 +10,9 @@ const PrivacyPolicy = () => {
 
           <h4>1. Introduction</h4>
           <p>
-            This Privacy Policy explains how The Parent Company, operating the website
-            makemypass.com (referred to as "us", "we", or "our"), collects, uses, and discloses
-            information about you when you use our Service, MakeMyPass.
+            This Privacy Policy explains how Hoomans Project, operating the website makemypass.com
+            (referred to as "us", "we", or "our"), collects, uses, and discloses information about
+            you when you use our Service, MakeMyPass.
           </p>
 
           <h4>2. Information Collection</h4>
