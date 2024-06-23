@@ -72,20 +72,20 @@ const ManageTickets = () => {
     }
   };
 
-  const closeTicket = (ticketInfo: TicketType) => {
-    const matchingTicket = tickets.find((ticket) => ticket.id === ticketInfo?.id);
-    if (matchingTicket && selectedTicket) {
-      setTickets((prevTickets) => {
-        return prevTickets.map((ticket) => {
-          if (ticket.id === matchingTicket.id) {
-            return { ...ticket, is_active: !ticket.is_active };
-          }
-          return ticket;
-        });
-      });
-      editTicket(eventId, matchingTicket?.id, { is_active: !matchingTicket?.is_active });
-    }
-  };
+  // const closeTicket = (ticketInfo: TicketType) => {
+  //   const matchingTicket = tickets.find((ticket) => ticket.id === ticketInfo?.id);
+  //   if (matchingTicket && selectedTicket) {
+  //     setTickets((prevTickets) => {
+  //       return prevTickets.map((ticket) => {
+  //         if (ticket.id === matchingTicket.id) {
+  //           return { ...ticket, is_active: !ticket.is_active };
+  //         }
+  //         return ticket;
+  //       });
+  //     });
+  //     editTicket(eventId, matchingTicket?.id, { is_active: !matchingTicket?.is_active });
+  //   }
+  // };
 
   useEffect(() => {
     if (eventId && !ticketData) getTickets(eventId, setTicketData);
@@ -99,6 +99,9 @@ const ManageTickets = () => {
 
   useEffect(() => {
     setTickets(ticketData || []);
+    ticketData?.forEach((ticket) => {
+      if (ticket.default_selected) setSelectedTicket(ticket);
+    });
   }, [ticketData]);
 
   return (
@@ -169,8 +172,9 @@ const ManageTickets = () => {
                 <TicketBox
                   key={ticket.id}
                   ticketInfo={ticket}
-                  closeTicket={closeTicket}
-                  onClick={() => ticket.id != selectedTicket?.id && setSelectedTicket(ticket)}
+                  onClick={() => {
+                    ticket.id != selectedTicket?.id && setSelectedTicket(Object.assign({}, ticket));
+                  }}
                   selected={selectedTicket?.id == ticket.id}
                 />
               ) : null;
@@ -276,7 +280,7 @@ const ManageTickets = () => {
                       Include Platform fee{' '}
                       <span
                         className={styles.feeReminder}
-                      >{`( ₹${selectedTicket?.platform_fee} )`}</span>
+                      >{`( ₹${((selectedTicket?.platform_fee / 100) * selectedTicket?.price).toFixed(2)} )`}</span>
                     </p>
                     <Slider
                       checked={selectedTicket?.platform_fee_from_user}
@@ -286,6 +290,18 @@ const ManageTickets = () => {
                             ...selectedTicket,
                             platform_fee_from_user: !selectedTicket.platform_fee_from_user,
                           } as TicketType);
+                      }}
+                    />
+                  </div>
+                  <div className={styles.ticketSlider}>
+                    <p className={styles.ticketSliderLabel}>Close Ticket</p>
+                    <Slider
+                      checked={!selectedTicket?.is_active}
+                      onChange={() => {
+                        setSelectedTicket({
+                          ...selectedTicket,
+                          is_active: !selectedTicket.is_active,
+                        } as TicketType);
                       }}
                     />
                   </div>
