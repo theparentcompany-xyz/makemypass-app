@@ -183,9 +183,9 @@ export const editEvent = ({
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Event Updated Successfully');
-      // setTimeout(() => {
-      //   window.location.href = `/${response.data.response.name}/manage`;
-      // }, 1000);
+      setTimeout(() => {
+        window.location.href = `/${response.data.response.name}/manage`;
+      }, 1000);
       setIsPublished && setIsPublished(eventData.get('is_public_insight') === 'true');
     })
     .catch((error) => {

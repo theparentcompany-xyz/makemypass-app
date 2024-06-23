@@ -3,20 +3,17 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { TicketType } from './types';
 
-export const getTicket = async (
+export const getTickets = async (
   eventId: string,
-  ticketId: string,
-  setTickets: React.Dispatch<React.SetStateAction<TicketType[]>>,
+  setTicketInfo: React.Dispatch<React.SetStateAction<TicketType[] | undefined>>,
 ) => {
   privateGateway
-    .get(makeMyPass.getTicket(eventId, ticketId))
+    .get(makeMyPass.getTicketInfo(eventId))
     .then((response) => {
-      setTickets((curr) => {
-        return [...curr, response.data.response];
-      });
+      setTicketInfo(response.data.response.tickets);
     })
     .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+      toast.error(error.response.data.message.general[0] || 'Error in Fetching Tickets');
     });
 };
 

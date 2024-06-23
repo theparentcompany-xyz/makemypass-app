@@ -200,7 +200,7 @@
 }
 
 .googleIcon {
-  width: 100%;
+  width: 95%;
   background: rgba(255, 255, 255, 0.04);
   padding: 0.5rem;
   border-radius: 8px;
@@ -237,7 +237,7 @@
 .line {
   flex-grow: 1;
   height: 2px;
-  background-color: #a4a4a445;
+  background-color: #99989845;
   position: relative;
   border-radius: 8px;
 }

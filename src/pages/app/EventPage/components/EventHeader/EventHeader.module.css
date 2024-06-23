@@ -56,6 +56,14 @@
   position: relative;
 }
 
+.eventDescriptionContainer ul {
+  margin-left: 1rem;
+}
+
+.eventDescriptionContainer ul > li {
+  margin-left: 1rem;
+}
+
 .eventDataContainer2 {
   max-width: 30rem;
   width: 100%;

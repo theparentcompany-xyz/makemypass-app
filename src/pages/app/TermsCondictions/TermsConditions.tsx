@@ -9,8 +9,8 @@ const TermsConditions = () => {
 
         <h4>1. Introduction</h4>
         <p>
-          Welcome to MakeMyPass (the "Service"), operated by The Parent Company (referred to as
-          "us", "we", or "our"). Our website is available at
+          Welcome to MakeMyPass (the "Service"), operated by Hoomans Project (referred to as "us",
+          "we", or "our"). Our website is available at
           <a href='http://makemypass.com'>makemypass.com</a>. This Terms of Service agreement
           governs your use of our Service.
         </p>
@@ -73,8 +73,7 @@ const TermsConditions = () => {
 
         <h4>10. Contact Us</h4>
         <p>
-          If you have any questions about these Terms, please contact us at
-          makemypass.com@gmail.com.
+          If you have any questions about these Terms, please contact us at hello@makemypass.com.
         </p>
       </div>
     </Theme>

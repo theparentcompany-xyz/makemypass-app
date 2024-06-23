@@ -126,9 +126,14 @@
   margin: 0;
   padding: 0;
   column-gap: 0.5rem;
-
-  overflow: auto;
   padding-bottom: 1rem;
+}
+
+@media screen and (max-width: 496px) {
+  .tabs ol {
+    overflow: auto;
+    padding-bottom: 1rem;
+  }
 }
 
 .tab {
