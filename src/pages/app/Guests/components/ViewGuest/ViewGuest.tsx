@@ -13,6 +13,7 @@ import { formatDate } from '../../../../../common/commonFunctions';
 import { isArray } from 'chart.js/helpers';
 import { deleteSubmission, initateRefund } from '../../../../../apis/guests';
 import { FaTrash } from 'react-icons/fa';
+import Modal from '../../../../../components/Modal/Modal';
 
 const ViewGuest = ({
   formFields,
@@ -33,7 +34,7 @@ const ViewGuest = ({
     confirm: false,
     value: false,
   });
-
+  const [deleteModal, setDeleteModal] = useState(false);
   const [initateRefundClicked, setInitateRefundClicked] = useState(false);
 
   return (
@@ -43,6 +44,38 @@ const ViewGuest = ({
       exit={{ y: -10, opacity: 0 }}
       className={styles.viewGuestsContainer}
     >
+      {deleteModal && (
+        <>
+          <Modal
+            title='Delete Submission'
+            onClose={() => {
+              setDeleteModal(false);
+            }}
+          >
+            <div className={styles.deleteModal}>
+              <p className={styles.deleteModalText}>
+                Are you sure you want to delete this submission?
+              </p>
+              <div className={styles.deleteModalButtons}>
+                <SecondaryButton
+                  buttonText='Cancel'
+                  onClick={() => {
+                    setDeleteModal(false);
+                  }}
+                />
+                <SecondaryButton
+                  buttonText='Delete'
+                  onClick={() => {
+                    deleteSubmission(eventId, formData['id'] as string);
+                    setSelectedGuestId(null);
+                    setDeleteModal(false);
+                  }}
+                />
+              </div>
+            </div>
+          </Modal>
+        </>
+      )}
       <div className={styles.closeButton}>
         <SecondaryButton
           buttonText='Close'
@@ -238,18 +271,17 @@ const ViewGuest = ({
                   <span>Check-In User</span>
                 </div>
               )}
-              <div
-                className={styles.icon}
-                onClick={() => {
-                  deleteSubmission(eventId, formData['id'] as string);
-                  setSelectedGuestId(null);
-                }}
-              >
-                <FaTrash size={20} color='#8E8E8E' />
-                <span>Delete Submission</span>
-              </div>
             </div>
           )}
+          <div
+            className={styles.deleteIcon}
+            onClick={() => {
+              setDeleteModal(true);
+            }}
+          >
+            <FaTrash size={15} color='#8E8E8E' />
+            <span> Delete Submission</span>
+          </div>
           <br />
           {import.meta.env.VITE_CURRENT_ENV === 'dev' &&
             Number(formData['amount']) > 0 &&
