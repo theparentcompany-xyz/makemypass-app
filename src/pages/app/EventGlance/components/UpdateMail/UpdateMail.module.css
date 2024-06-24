@@ -126,7 +126,6 @@
 
 .textarea {
   margin-top: 0.25rem;
-  margin-right: 5rem;
   border-radius: 8px;
   border: none;
   padding: 0.75rem 0.75rem;
@@ -135,9 +134,16 @@
   font-family: 'Inter', sans-serif;
   color: white;
   height: 200px;
-  width: 95%;
-  max-width: 24rem;
+  width: 30rem;
   resize: none;
+}
+
+@media screen and (max-width: 500px) {
+  .textarea {
+    width: 95%;
+    max-width: 24rem;
+  }
+  
 }
 
 .textarea:focus {
