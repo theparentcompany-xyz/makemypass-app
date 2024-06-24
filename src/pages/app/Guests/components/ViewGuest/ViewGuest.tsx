@@ -11,7 +11,8 @@ import { FaCheck } from 'react-icons/fa6';
 import { checkInUser } from '../../../../../apis/scan';
 import { formatDate } from '../../../../../common/commonFunctions';
 import { isArray } from 'chart.js/helpers';
-import { initateRefund } from '../../../../../apis/guests';
+import { deleteSubmission, initateRefund } from '../../../../../apis/guests';
+import { FaTrash } from 'react-icons/fa';
 
 const ViewGuest = ({
   formFields,
@@ -237,6 +238,16 @@ const ViewGuest = ({
                   <span>Check-In User</span>
                 </div>
               )}
+              <div
+                className={styles.icon}
+                onClick={() => {
+                  deleteSubmission(eventId, formData['id'] as string);
+                  setSelectedGuestId(null);
+                }}
+              >
+                <FaTrash size={20} color='#8E8E8E' />
+                <span>Delete Submission</span>
+              </div>
             </div>
           )}
           <br />
