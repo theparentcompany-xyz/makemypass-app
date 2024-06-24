@@ -1,7 +1,7 @@
 import React from 'react';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { MailType } from './types';
+import { listMailType, MailType } from './types';
 import toast from 'react-hot-toast';
 
 type mailData = {
@@ -11,9 +11,10 @@ type mailData = {
   smtp_password: string;
   from_mail: string;
 };
+
 export const listMails = (
   eventId: string,
-  setMails: React.Dispatch<React.SetStateAction<MailType[]>>,
+  setMails: React.Dispatch<React.SetStateAction<listMailType[]>>,
 ) => {
   privateGateway
     .get(makeMyPass.listMails(eventId))
@@ -25,11 +26,26 @@ export const listMails = (
     });
 };
 
+export const getMail = (
+  eventId: string,
+  mailId: string,
+  setMail: React.Dispatch<React.SetStateAction<MailType | undefined>>,
+) => {
+  privateGateway
+    .get(makeMyPass.getMail(eventId, mailId))
+    .then((response) => {
+      setMail(response.data);
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.message?.general[0] || 'Error while fetching mail');
+    });
+};
+
 export const updateMail = (
   eventId: string,
   selectedMail: MailType,
   data: Record<string, any>,
-  setMails: React.Dispatch<React.SetStateAction<MailType[]>>,
+  setMails: React.Dispatch<React.SetStateAction<listMailType[]>>,
 ) => {
   privateGateway
     .patch(makeMyPass.updateMail(eventId, selectedMail?.id), data, {
@@ -38,7 +54,17 @@ export const updateMail = (
       },
     })
     .then((response) => {
-      setMails((mails) => mails.map((mail) => (mail.id === selectedMail.id ? selectedMail : mail)));
+      setMails((mails) =>
+        mails.map((mail) =>
+          mail.id === selectedMail.id
+            ? {
+                id: selectedMail.id,
+                type: selectedMail.type,
+                subject: selectedMail.subject,
+              }
+            : mail,
+        ),
+      );
       toast.success(response.data.message.general[0] || 'Mail updated successfully');
     })
     .catch((error) => {
