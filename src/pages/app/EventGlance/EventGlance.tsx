@@ -12,14 +12,14 @@ import SectionButton from '../../../components/SectionButton/SectionButton';
 import { useEffect, useState } from 'react';
 import Modal from '../../../components/Modal/Modal';
 import { getDay, getMonthAbbreviation } from '../EventPage/constants';
-import { EventType, MailType } from '../../../apis/types';
+import { EventType, listMailType } from '../../../apis/types';
 import { getEvent } from '../../../apis/events';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import EventHeader from '../../../components/EventHeader/EventHeader';
 import ManageTickets from './components/ManageTickets/ManageTickets';
 import { LuMail, LuPencil } from 'react-icons/lu';
-import { listMails, updateMail } from '../../../apis/mails';
+import { listMails } from '../../../apis/mails';
 import CustomMail from './components/CustomMail/CustomMail';
 import UpdateMail from './components/UpdateMail/UpdateMail';
 import { sentTextMail } from '../../../apis/postevent';
@@ -33,26 +33,15 @@ const EventGlance = () => {
     mailId: '',
   });
 
-  const onUpdateEmail = () => {
-    const matchingMail = mails.find((mail) => mail.id === selectedMail?.id);
-    if (!matchingMail || !selectedMail) return;
-
-    const changedData: Record<string, any> = Object.entries(selectedMail as Record<string, any>)
-      .filter(([key, value]) => matchingMail?.[key as keyof MailType] !== value)
-      .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
-
-    updateMail(eventId, selectedMail, changedData, setMails);
-  };
-
   useEffect(() => {
     if (eventId) getEvent(eventId, setEventTitle, setEventData);
   }, [eventId]);
-  const [selectedMail, setSelectedMail] = useState<MailType>();
+  const [selectedMail, setSelectedMail] = useState<listMailType>();
   const [customMail, setCustomMail] = useState<boolean>(false);
   const eventName = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
   const navigate = useNavigate();
   const [isTicketsOpen, setIsTicketsOpen] = useState(false);
-  const [mails, setMails] = useState<MailType[]>([]);
+  const [mails, setMails] = useState<listMailType[]>([]);
 
   useEffect(() => {
     if (eventId) {
@@ -86,9 +75,9 @@ const EventGlance = () => {
             <Modal onClose={() => setSelectedMail(undefined)} type='side'>
               <UpdateMail
                 selectedMail={selectedMail}
-                setSelectedMail={setSelectedMail}
-                onUpdateEmail={onUpdateEmail}
                 setCustomMail={setCustomMail}
+                setSelectedMail={setSelectedMail}
+                setMails={setMails}
               />
             </Modal>
           )}
