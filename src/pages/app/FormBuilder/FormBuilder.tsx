@@ -44,11 +44,9 @@ const FormBuilder = () => {
     ]);
   };
 
-  // const updateFormStateVariable = () => {
-  //   setFormFields((prevForm) => {
-  //    ...prevForm
-  //   });
-  // };
+  const updateFormStateVariable = () => {
+    setFormFields([ ...formFields ]);
+  };
 
   const getFormFields = (currentField: Field, fieldId?: string) => {
     let hasPassed = false;
@@ -181,7 +179,6 @@ const FormBuilder = () => {
                           value={field.title}
                           onChange={(event) => {
                             field.title = event.target.value;
-                            console.log(field.title);
                             updateFormStateVariable();
                           }}
                         />
@@ -210,7 +207,7 @@ const FormBuilder = () => {
                                 onChange={(event) => {
                                   const updatedOptions = field.options;
                                   updatedOptions[index] = event.target.value;
-                                  updateFormFieldValue(field, 'options', updatedOptions);
+                                  field.options = updatedOptions;
                                 }}
                               />
                               <IoCloseSharp
