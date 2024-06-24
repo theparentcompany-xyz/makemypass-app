@@ -229,3 +229,9 @@ export type MailType = {
   type: string;
   updated_at: string;
 };
+
+export type listMailType = {
+  id: string;
+  type: string;
+  subject: string;
+};
