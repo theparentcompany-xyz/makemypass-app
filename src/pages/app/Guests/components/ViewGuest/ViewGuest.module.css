@@ -201,7 +201,18 @@
   column-gap: 0.25rem;
   cursor: pointer;
 }
+.deleteIcon{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.25rem;
 
+  font-size: 0.75rem;
+  margin-top: 1rem;
+  color: #d2d2d2;
+  cursor: pointer;
+}
 .guestActionButtons span {
   font-size: 0.68rem;
   font-weight: 400;
@@ -225,4 +236,23 @@
 .invitedBy p {
   margin: 0.5rem 0;
   font-size: 0.8rem;
+}
+
+
+.deleteModal{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  row-gap: 1rem;
+}
+
+.deleteModalButtons{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 1rem;
+  margin-top: 1rem; 
 }
