@@ -58,15 +58,6 @@ const VoiceInput = ({
   }, [showAudioModal.noData]);
 
   useEffect(() => {
-    recorderControls.startRecording();
-    setShowAudioModal({
-      ...showAudioModal,
-      transcribing: false,
-      noData: false,
-    });
-  }, []);
-
-  useEffect(() => {
     if (recordedBlob && showAudioModal.showModal) {
       handleAudioSubmit(recordedBlob);
     }
