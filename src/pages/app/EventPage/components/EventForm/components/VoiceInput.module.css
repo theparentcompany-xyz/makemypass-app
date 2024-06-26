@@ -36,6 +36,12 @@
   width: 100%;
 }
 
+.reocordUsingVoiceButton span {
+  font-size: 0.8rem;
+  opacity: 0.5;
+  margin-left: 0.25rem;
+}
+
 .buttonsContainer {
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
@@ -49,6 +55,8 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  overflow: hidden;
 }
 
 .cancelButton {
@@ -56,8 +64,8 @@
   padding: 0.6rem 1.5rem;
 
   border-radius: 8px 0 0 8px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.02);
 
   color: white;
 }
@@ -67,8 +75,8 @@
   padding: 0.6rem 1.5rem;
 
   border-radius: 0 8px 8px 0;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.02);
 
   color: white;
 }
@@ -79,4 +87,26 @@
   font-weight: 400;
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
+}
+
+.vizualizer {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100%;
+  z-index: -10;
+}
+
+.durationContainer {
+  position: relative;
+  width: 100%;
+}
+
+.duration {
+  position: relative;
+  font-size: 0.875rem;
+  opacity: 0.5;
+  top: -6px;
+  left: 0;
+  display: inline;
 }

@@ -4,7 +4,7 @@ import styles from './VoiceInput.module.css';
 import { Dispatch, useEffect, useState } from 'react';
 import { AudioControlsType } from '../../../types';
 import { postAudio } from '../../../../../../apis/publicpage';
-import { useVoiceVisualizer } from 'react-voice-visualizer';
+import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
 import toast from 'react-hot-toast';
 import { PropagateLoader } from 'react-spinners';
 import { FormEventData } from '../../../../Guests/types';
@@ -84,45 +84,64 @@ const VoiceInput = ({
           }}
           className={styles.reocordUsingVoiceButton}
         >
-          <IoMicOutline
-            size={18}
-            style={{
-              marginRight: '0.5rem',
-            }}
-          />
-          Record Voice to Fill (Beta)
-        </button>
-      ) : (
-        <div className={styles.buttonsContainer}>
-          <button className={styles.cancelButton} onClick={closeAudioModal}>
-            Cancel
-          </button>
-          <p>{recorderControls.formattedRecordingTime}s</p>
-          <button
-            className={styles.submitButton}
-            onClick={() => {
-              recorderControls.stopRecording();
-              setShowAudioModal({
-                ...showAudioModal,
-                showModal: true,
-              });
-            }}
-          >
-            {showAudioModal.transcribing ? (
-              <PropagateLoader
-                color={'#fff'}
-                loading={showAudioModal.transcribing}
-                size={10}
+          {showAudioModal.transcribing ? (
+            <PropagateLoader
+              color={'#fff'}
+              loading={showAudioModal.transcribing}
+              size={10}
+              style={{
+                padding: '0.75rem 1.5rem',
+                paddingTop: '0.5rem',
+              }}
+            />
+          ) : (
+            <>
+              <IoMicOutline
+                size={18}
                 style={{
-                  padding: '0.75rem 1.5rem',
-                  paddingTop: '0.5rem',
+                  marginRight: '0.5rem',
                 }}
               />
-            ) : (
-              'Submit'
-            )}
-          </button>
-        </div>
+              Record Voice to Fill <span>(Beta)</span>
+            </>
+          )}
+        </button>
+      ) : (
+        <>
+          <div className={styles.buttonsContainer}>
+            <button className={styles.cancelButton} onClick={closeAudioModal}>
+              Cancel
+            </button>
+            <div className={styles.durationContainer}>
+              <p className={styles.duration}>{recorderControls.formattedRecordingTime}s</p>
+              <div className={styles.vizualizer}>
+                <VoiceVisualizer
+                  ref={audioRef}
+                  controls={recorderControls}
+                  isControlPanelShown={false}
+                  isDefaultUIShown={false}
+                  height={'50'}
+                  mainBarColor='#A0FFC8'
+                  barWidth={3}
+                  rounded={5}
+                  speed={2}
+                />
+              </div>
+            </div>
+            <button
+              className={styles.submitButton}
+              onClick={() => {
+                recorderControls.stopRecording();
+                setShowAudioModal({
+                  ...showAudioModal,
+                  showModal: true,
+                });
+              }}
+            >
+              Submit
+            </button>
+          </div>
+        </>
       )}
       <p className={styles.noDataAlert}>
         {showAudioModal.noData
