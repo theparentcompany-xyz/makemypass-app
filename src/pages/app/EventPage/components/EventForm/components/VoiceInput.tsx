@@ -25,6 +25,8 @@ const VoiceInput = ({
     }
   };
 
+  const [permissionError, setPermissionError] = useState<boolean>(false);
+
   const [showAudioModal, setShowAudioModal] = useState<AudioControlsType>({
     showModal: false,
     transcribing: false,
@@ -44,8 +46,9 @@ const VoiceInput = ({
   };
 
   useEffect(() => {
-    if (!error) return;
-    toast.error('Audio input not detected');
+    if (error) {
+      setPermissionError(true);
+    }
   }, [error]);
 
   useEffect(() => {
@@ -75,6 +78,11 @@ const VoiceInput = ({
       {!(recorderControls.isRecordingInProgress || recorderControls.isAvailableRecordedAudio) ? (
         <button
           onClick={() => {
+            if (permissionError) {
+              toast.error('Audio permission denied');
+              return;
+            }
+
             recorderControls.startRecording();
             setShowAudioModal({
               ...showAudioModal,
