@@ -1,0 +1,82 @@
+.orContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  column-gap: 1rem;
+  margin-top: 1rem;
+}
+
+.orContainer hr {
+  width: 100%;
+  border: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.reocordUsingVoiceButton {
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+
+  font-size: 0.9rem;
+  padding: 0.6rem 1.5rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  margin: 1rem auto;
+
+  color: white;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  width: 100%;
+}
+
+.buttonsContainer {
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+  text-align: center;
+  width: 100%;
+
+  margin: 1rem auto;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cancelButton {
+  font-size: 0.9rem;
+  padding: 0.6rem 1.5rem;
+
+  border-radius: 8px 0 0 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+
+  color: white;
+}
+
+.submitButton {
+  font-size: 0.9rem;
+  padding: 0.6rem 1.5rem;
+
+  border-radius: 0 8px 8px 0;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+
+  color: white;
+}
+
+.noDataAlert {
+  color: #f04b4b;
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}

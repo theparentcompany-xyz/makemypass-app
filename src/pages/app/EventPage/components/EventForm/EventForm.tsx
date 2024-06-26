@@ -1,13 +1,7 @@
 import { Dispatch, useEffect, useState } from 'react';
-import {
-  AudioControlsType,
-  CouponData,
-  DiscountData,
-  Tickets,
-  SuccessModalProps,
-} from '../../types';
+import { CouponData, DiscountData, Tickets, SuccessModalProps } from '../../types';
 import styles from '../../EventPage.module.css';
-import { postAudio, submitForm, validateRsvp } from '../../../../../apis/publicpage';
+import { submitForm, validateRsvp } from '../../../../../apis/publicpage';
 import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
 import { motion } from 'framer-motion';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
@@ -16,8 +10,7 @@ import { validateCondition } from '../../../../../components/DynamicForm/conditi
 import { useLocation } from 'react-router';
 import { FormEventData } from '../../../Guests/types';
 import { PropagateLoader } from 'react-spinners';
-import AudioRecorder from './components/AudioRecorder';
-import { IoMicOutline } from 'react-icons/io5';
+import VoiceInput from './components/VoiceInput';
 
 const EventForm = ({
   eventFormData,
@@ -52,12 +45,6 @@ const EventForm = ({
     description: eventFormData?.coupon.description ?? '',
     value: eventFormData?.coupon.value ?? '',
     error: '',
-  });
-
-  const [showAudioModal, setShowAudioModal] = useState<AudioControlsType>({
-    showModal: false,
-    transcribing: false,
-    noData: false,
   });
 
   let formIdToKey: { [key: string]: string } = {};
@@ -152,12 +139,6 @@ const EventForm = ({
     } else setDirectRegister(false);
   };
 
-  const handleAudioSubmit = (recordedBlob: Blob | null) => {
-    if (recordedBlob && eventFormData.id && formData && setFormData) {
-      postAudio(eventFormData.id, recordedBlob, formData, setFormData, setShowAudioModal);
-    }
-  };
-
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -174,13 +155,6 @@ const EventForm = ({
 
   return (
     <>
-      {showAudioModal.showModal && (
-        <AudioRecorder
-          showAudioModal={showAudioModal}
-          setShowAudioModal={setShowAudioModal}
-          handleAudioSubmit={handleAudioSubmit}
-        />
-      )}
       {formNumber === 0 && (
         <motion.div
           initial={{ opacity: 0, y: 35 }}
@@ -199,32 +173,11 @@ const EventForm = ({
             {formData && eventFormData && (
               <div className={styles.formFields}>
                 {eventFormData.parse_audio && (
-                  <>
-                    {' '}
-                    <button
-                      onClick={() => {
-                        setShowAudioModal({
-                          showModal: true,
-                          transcribing: false,
-                          noData: false,
-                        });
-                      }}
-                      className={styles.reocordUsingVoiceButton}
-                    >
-                      <IoMicOutline
-                        size={18}
-                        style={{
-                          marginRight: '0.5rem',
-                        }}
-                      />
-                      Record Voice to Fill (Beta)
-                    </button>
-                    <div className={styles.orContainer}>
-                      <hr />
-                      <p>OR</p>
-                      <hr />
-                    </div>
-                  </>
+                  <VoiceInput
+                    eventFormData={eventFormData}
+                    formData={formData}
+                    setFormData={setFormData}
+                  />
                 )}
                 <DynamicForm
                   formFields={eventFormData.form}
