@@ -15,7 +15,8 @@ const TicketBox = ({ ticketInfo, onClick, selected }: Props) => {
         <div className={styles.ticketInfo}>
           <p className={styles.ticketName}>{ticketInfo.title}</p>
           <p className={styles.ticketType}>
-            1000 {ticketInfo.capacity ? '/' + ticketInfo.capacity : ''} <br />
+            {ticketInfo.registration_count ? ticketInfo.registration_count : 'None'}
+            {ticketInfo.capacity ? '/' + ticketInfo.capacity : ''} <br />
             Registered
           </p>
         </div>
