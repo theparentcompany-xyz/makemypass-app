@@ -17,7 +17,7 @@
 
 .reocordUsingVoiceButton {
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 2px solid #47c97e;
   background: rgba(255, 255, 255, 0.04);
 
   font-size: 0.9rem;
