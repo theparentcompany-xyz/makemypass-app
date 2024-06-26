@@ -143,9 +143,7 @@ const VoiceInput = ({
         </>
       )}
       <p className={styles.noDataAlert}>
-        {showAudioModal.noData
-          ? 'We found no field from your audio to fill in, Kindly record again.'
-          : ''}
+        {showAudioModal.noData ? 'No data found in your audio. Please record again.' : ''}
       </p>
       <div className={styles.orContainer}>
         <hr />
