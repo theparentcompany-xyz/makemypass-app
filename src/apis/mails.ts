@@ -97,7 +97,7 @@ export const updateMailService = (
   privateGateway
     .post(makeMyPass.updateMailService(eventId), data, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
       },
     })
     .then((response) => {
