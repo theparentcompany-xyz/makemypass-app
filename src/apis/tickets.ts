@@ -19,29 +19,34 @@ export const getTickets = async (
 
 export const createTicket = async (eventId: string, ticket: TicketType) => {
   delete ticket['new'];
-  privateGateway
-    .post(makeMyPass.createTicket(eventId), ticket, {
+  try {
+    const response = await privateGateway.post(makeMyPass.createTicket(eventId), ticket, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    })
-    .then((response) => {
-      toast.success(response.data.message.general[0] || 'Ticket Created Successfully');
-      window.location.reload();
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
+
+    toast.success(response.data.message.general[0] || 'Ticket Created Successfully');
+    return response.data.response.ticket_id as string;
+  } catch (error: any) {
+    toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+  }
 };
-export const editTicket = async (eventId: string, ticketId: string, changedData: Object) => {
+export const editTicket = async (
+  eventId: string,
+  selectedTicket: TicketType,
+  changedData: Object,
+  setTickets: React.Dispatch<React.SetStateAction<TicketType[]>>,
+) => {
   privateGateway
-    .patch(makeMyPass.editTicket(eventId, ticketId), changedData, {
+    .patch(makeMyPass.editTicket(eventId, selectedTicket?.id), changedData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
     .then((response) => {
       // window.location.reload();
+      setTickets((prev) => prev.map((t) => (t.id === selectedTicket.id ? selectedTicket : t)));
       toast.success(response.data.message.general[0] || 'Ticket Updated Successfully');
     })
     .catch((error) => {
@@ -49,11 +54,16 @@ export const editTicket = async (eventId: string, ticketId: string, changedData:
     });
 };
 
-export const deleteTicket = async (eventId: string, ticketId: string) => {
+export const deleteTicket = async (
+  eventId: string,
+  ticketId: string,
+  setTickets: React.Dispatch<React.SetStateAction<TicketType[]>>,
+) => {
   const toastId = toast.loading('Deleting Ticket...');
   privateGateway
     .delete(makeMyPass.deleteTicket(eventId, ticketId))
     .then((response) => {
+      setTickets((prev) => prev.filter((t) => t.id !== ticketId));
       toast.success(response?.data?.message?.general[0] || 'Ticket Deleted Successfully', {
         id: toastId,
       });
