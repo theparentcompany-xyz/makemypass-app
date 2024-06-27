@@ -18,6 +18,8 @@ const ManageTickets = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [settingNewTicket, setSettingNewTicket] = useState(false);
 
+  const getDeepCopy = (obj: any) => JSON.parse(JSON.stringify(obj));
+
   const onNewTicket = () => {
     if (settingNewTicket) {
       toast.error('Please save changes before adding new ticket');
@@ -25,36 +27,55 @@ const ManageTickets = () => {
     }
     setSettingNewTicket(true);
     const newTicket: TicketType = {
+      ...(getDeepCopy(tickets.find((t) => t.default_selected == true)) as TicketType),
       new: true,
       title: 'New Ticket',
       description: '',
-      approval_required: false,
       id: '',
-      price: 0,
-      perks: undefined,
-      capacity: 0,
-      default_selected: false,
-      platform_fee: 0,
-      platform_fee_from_user: false,
-      currency: '',
-      entry_date: [],
-      code_prefix: '',
-      code_digits: 0,
-      maintain_code_order: false,
-      is_active: false,
+      // approval_required: false,
+      // price: 0,
+      // perks: undefined,
+      // registration_count: 0,
+      // capacity: 0,
+      // default_selected: false,
+      // platform_fee: 0,
+      // platform_fee_from_user: false,
+      // currency: '',
+      // entry_date: [],
+      // code_prefix: '',
+      // code_digits: 0,
+      // maintain_code_order: false,
+      // is_active: true,
     };
     setTickets((prevTickets) => [newTicket, ...prevTickets]);
   };
 
-  const addTicket = () => {
+  const addTicket = async () => {
     if (settingNewTicket && tickets[0]?.new === true) {
-      createTicket(eventId, tickets[0]);
+      const newTicketId = await createTicket(eventId, selectedTicket as TicketType);
+      if (newTicketId) {
+        setTickets((prevTickets) => [
+          { ...(selectedTicket as TicketType), id: newTicketId },
+          ...prevTickets.filter((t) => t.id != ''),
+        ]);
+        setSettingNewTicket(false);
+        setSelectedTicket(undefined);
+      }
     }
   };
 
   const onDeleteTicket = () => {
+    if (selectedTicket && selectedTicket.new == true) {
+      setTickets((prevTickets) => prevTickets.filter((t) => t.new != true));
+      setSettingNewTicket(false);
+      toast.success('Ticket deleted successfully');
+      setSelectedTicket(undefined);
+      return;
+    }
+
     if (selectedTicket) {
-      deleteTicket(eventId, selectedTicket.id);
+      deleteTicket(eventId, selectedTicket.id, setTickets);
+      setSelectedTicket(undefined);
     }
   };
 
@@ -68,11 +89,11 @@ const ManageTickets = () => {
       if (changedData?.description == '' && matchingTicket?.description == null)
         delete changedData['description'];
 
-      editTicket(eventId, selectedTicket?.id as string, changedData);
+      editTicket(eventId, selectedTicket as TicketType, changedData, setTickets);
     }
   };
 
-  // const closeTicket = (ticketInfo: TicketType) => {
+  // const changeDefaultSelected = (ticketInfo: TicketType) => {
   //   const matchingTicket = tickets.find((ticket) => ticket.id === ticketInfo?.id);
   //   if (matchingTicket && selectedTicket) {
   //     setTickets((prevTickets) => {
@@ -110,7 +131,7 @@ const ManageTickets = () => {
         <Modal onClose={() => setIsOpen(false)} style={{ zIndex: 999 }}>
           <h3 className={styles.modalTitle}>Advanced Setting</h3>
           <div className={styles.advancedOptions}>
-            <label className={styles.optionLabel}>Ticket Title</label>
+            <label className={styles.optionLabel}>Code Prefix</label>
             <input
               className={styles.optionInput}
               placeholder='Eg, PS123'
@@ -176,6 +197,9 @@ const ManageTickets = () => {
                     ticket.id != selectedTicket?.id && setSelectedTicket(Object.assign({}, ticket));
                   }}
                   selected={selectedTicket?.id == ticket.id}
+                  closed={
+                    selectedTicket?.id == ticket.id ? !selectedTicket?.is_active : !ticket.is_active
+                  }
                 />
               ) : null;
             })}
@@ -227,6 +251,53 @@ const ManageTickets = () => {
                 />
               </div>
               <div className={styles.ticketSlider}>
+                <p className={styles.ticketSliderLabel}>Limit Capacity</p>
+                <Slider
+                  checked={selectedTicket?.capacity > 0}
+                  onChange={() => {
+                    if (selectedTicket?.capacity > 0) {
+                      setSelectedTicket({
+                        ...selectedTicket,
+                        capacity: 0,
+                      } as TicketType);
+                    }
+                    if (!selectedTicket?.capacity) {
+                      const sameIdTicket = tickets.find((t) => t.id === selectedTicket?.id);
+
+                      setSelectedTicket({
+                        ...selectedTicket,
+                        capacity:
+                          sameIdTicket && sameIdTicket?.capacity > 0 ? sameIdTicket.capacity : 100,
+                      } as TicketType);
+                    }
+                  }}
+                />
+              </div>
+              {selectedTicket?.capacity > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  className={styles.ticketSlider}
+                >
+                  <div className={styles.ticketCapacityContainer}>
+                    <label className={styles.ticketCapacityLabel}>Capacity</label>
+                    <input
+                      type='number'
+                      placeholder='0'
+                      value={selectedTicket?.capacity}
+                      onChange={(e) =>
+                        setSelectedTicket({
+                          ...selectedTicket,
+                          capacity: Number(e.target.value),
+                        } as TicketType)
+                      }
+                      className={styles.ticketCapacityInput}
+                    />
+                  </div>
+                </motion.div>
+              )}
+              <div className={styles.ticketSlider}>
                 <p className={styles.ticketSliderLabel}>Paid Ticket</p>
                 <Slider
                   checked={selectedTicket?.price > 0}
@@ -237,7 +308,7 @@ const ManageTickets = () => {
                         price: 0,
                       } as TicketType);
                     }
-                    if (selectedTicket?.price === 0) {
+                    if (!selectedTicket?.price) {
                       const sameIdTicket = tickets.find((t) => t.id === selectedTicket?.id);
                       setSelectedTicket({
                         ...selectedTicket,
@@ -249,10 +320,9 @@ const ManageTickets = () => {
               </div>
               {selectedTicket?.price > 0 && (
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
                   className={styles.ticketPriceDependentContainer}
                 >
                   <div className={styles.ticketPriceContainer}>
