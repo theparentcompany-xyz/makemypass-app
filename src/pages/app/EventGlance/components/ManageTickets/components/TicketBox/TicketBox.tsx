@@ -5,9 +5,10 @@ type Props = {
   ticketInfo: TicketType;
   onClick: () => void;
   selected: boolean;
+  closed: boolean;
 };
 
-const TicketBox = ({ ticketInfo, onClick, selected }: Props) => {
+const TicketBox = ({ ticketInfo, onClick, selected, closed }: Props) => {
   return (
     <>
       <div className={`${styles.ticketBox} ${selected ? styles.selected : ''}`} onClick={onClick}>
@@ -24,16 +25,26 @@ const TicketBox = ({ ticketInfo, onClick, selected }: Props) => {
           <div className={styles.ticketFooterLeft}>
             {' '}
             <span
-              className={styles.availableDot + ' ' + (!ticketInfo.is_active && styles.unavailable)}
+              className={
+                styles.availableDot +
+                ' ' +
+                ((closed ||
+                  (ticketInfo?.capacity &&
+                    ticketInfo?.registration_count >= ticketInfo?.capacity)) &&
+                  styles.unavailable)
+              }
             ></span>
+            {(closed ||
+              (ticketInfo?.capacity && ticketInfo?.registration_count >= ticketInfo?.capacity)) &&
+              'Not '}
             Available
           </div>
           <div className={styles.ticketFooterRight}>
-            {/* <label className={styles.closeTicketLabel}>Close Ticket</label>
+            {/* <label className={styles.closeTicketLabel}>Default Selected</label>
             <Slider
-              checked={!ticketInfo.is_active}
+              checked={!ticketInfo.default_selected}
               onChange={() => {
-                closeTicket(ticketInfo);
+                 handleTicketDefaultSelect(ticketInfo);
               }}
               sliderStyle={{ transform: 'scale(0.7)' }}
             /> */}
