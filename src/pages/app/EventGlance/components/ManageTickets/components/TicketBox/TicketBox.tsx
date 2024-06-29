@@ -1,14 +1,24 @@
 import styles from './TicketBox.module.css';
 import { TicketType } from '../../../../../../../apis/types';
+import Slider from '../../../../../../../components/SliderButton/Slider';
 
 type Props = {
   ticketInfo: TicketType;
   onClick: () => void;
   selected: boolean;
   closed: boolean;
+  handleDefaultSelected: (ticketId: string) => void;
+  checkUnsavedChanges: () => boolean;
 };
 
-const TicketBox = ({ ticketInfo, onClick, selected, closed }: Props) => {
+const TicketBox = ({
+  ticketInfo,
+  onClick,
+  selected,
+  closed,
+  handleDefaultSelected,
+  checkUnsavedChanges,
+}: Props) => {
   return (
     <>
       <div className={`${styles.ticketBox} ${selected ? styles.selected : ''}`} onClick={onClick}>
@@ -40,14 +50,14 @@ const TicketBox = ({ ticketInfo, onClick, selected, closed }: Props) => {
             Available
           </div>
           <div className={styles.ticketFooterRight}>
-            {/* <label className={styles.closeTicketLabel}>Default Selected</label>
+            <label className={styles.closeTicketLabel}>Default Selected</label>
             <Slider
-              checked={!ticketInfo.default_selected}
+              checked={ticketInfo.default_selected}
               onChange={() => {
-                 handleTicketDefaultSelect(ticketInfo);
+                if (!checkUnsavedChanges()) handleDefaultSelected(ticketInfo?.id);
               }}
               sliderStyle={{ transform: 'scale(0.7)' }}
-            /> */}
+            />
           </div>
         </div>
       </div>
