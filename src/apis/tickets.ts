@@ -46,15 +46,21 @@ export const editTicket = async (
     })
     .then((response) => {
       // window.location.reload();
-      setTickets((prev) =>
-        prev.map((t) =>
-          t.id === selectedTicket.id
-            ? changedData.default_selected === true
-              ? { ...selectedTicket, default_selected: true }
-              : selectedTicket
-            : t,
-        ),
-      );
+
+      if (changedData.default_selected === true) {
+        setTickets((prev) =>
+          prev.map((t) =>
+            t.id === selectedTicket.id
+              ? changedData.default_selected === true
+                ? { ...selectedTicket, default_selected: true }
+                : selectedTicket
+              : { ...t, default_selected: false },
+          ),
+        );
+      } else {
+        setTickets((prev) => prev.map((t) => (t.id === selectedTicket.id ? selectedTicket : t)));
+      }
+
       toast.success(response.data.message.general[0] || 'Ticket Updated Successfully');
     })
     .catch((error) => {
