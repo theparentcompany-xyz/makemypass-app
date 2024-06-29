@@ -18,6 +18,7 @@ const ManageTickets = () => {
   const [selectedTicket, setSelectedTicket] = useState<TicketType>();
   const [isOpen, setIsOpen] = useState(false);
   const [isChangedModal, setIsChangedModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [settingNewTicket, setSettingNewTicket] = useState(false);
   const [ticketPair, setTicketPair] = useState<TicketType[]>();
   const getDeepCopy = (obj: any) => JSON.parse(JSON.stringify(obj));
@@ -227,6 +228,38 @@ const ManageTickets = () => {
               <button
                 onClick={() => {
                   setIsChangedModal(false);
+                }}
+                className={styles.cancelButton}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
+      {deleteModal && (
+        <Modal onClose={() => setDeleteModal(false)} style={{ zIndex: 999 }}>
+          <div className={styles.modalContainer}>
+            {/* Get Confirmation to continue event though user has not saved changes.*/}
+            <div className={styles.sectionContent1}>
+              <p className={styles.sectionSubTitle}>
+                Are you sure you want to Delete{' '}
+                {selectedTicket?.title ? selectedTicket?.title : 'this ticket'}?
+              </p>
+            </div>
+            <div className={styles.modalButtons}>
+              <button
+                className={styles.confirmButton}
+                onClick={() => {
+                  onDeleteTicket();
+                  setDeleteModal(false);
+                }}
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => {
+                  setDeleteModal(false);
                 }}
                 className={styles.cancelButton}
               >
@@ -447,7 +480,7 @@ const ManageTickets = () => {
               </div>
 
               <div className={styles.buttonContainer}>
-                <button className={styles.deleteButton} onClick={onDeleteTicket}>
+                <button className={styles.deleteButton} onClick={() => setDeleteModal(true)}>
                   Delete
                 </button>
                 <div className={styles.buttonGroup}>
