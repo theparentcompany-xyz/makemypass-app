@@ -9,15 +9,17 @@ import Modal from '../../../../../components/Modal/Modal';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { HashLoader } from 'react-spinners';
+import { isEqual } from 'lodash';
 
 const ManageTickets = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData') || '');
-  const [ticketData, setTicketData] = useState<TicketType[]>();
+  const [ticketData, setTicketData] = useState<TicketType[]>([]);
   const [tickets, setTickets] = useState<TicketType[]>([]);
   const [selectedTicket, setSelectedTicket] = useState<TicketType>();
   const [isOpen, setIsOpen] = useState(false);
+  const [isChangedModal, setIsChangedModal] = useState(false);
   const [settingNewTicket, setSettingNewTicket] = useState(false);
-
+  const [ticketPair, setTicketPair] = useState<TicketType[]>();
   const getDeepCopy = (obj: any) => JSON.parse(JSON.stringify(obj));
 
   const onNewTicket = () => {
@@ -32,6 +34,7 @@ const ManageTickets = () => {
       title: 'New Ticket',
       description: '',
       id: '',
+      default_selected: false,
       // approval_required: false,
       // price: 0,
       // perks: undefined,
@@ -54,9 +57,9 @@ const ManageTickets = () => {
     if (settingNewTicket && tickets[0]?.new === true) {
       const newTicketId = await createTicket(eventId, selectedTicket as TicketType);
       if (newTicketId) {
-        setTickets((prevTickets) => [
+        setTicketData((prevTickets) => [
           { ...(selectedTicket as TicketType), id: newTicketId },
-          ...prevTickets.filter((t) => t.id != ''),
+          ...prevTickets,
         ]);
         setSettingNewTicket(false);
         setSelectedTicket(undefined);
@@ -74,13 +77,13 @@ const ManageTickets = () => {
     }
 
     if (selectedTicket) {
-      deleteTicket(eventId, selectedTicket.id, setTickets);
+      deleteTicket(eventId, selectedTicket.id, setTicketData);
       setSelectedTicket(undefined);
     }
   };
 
   const updateTicket = () => {
-    const matchingTicket = tickets.find((ticket) => ticket.id === selectedTicket?.id);
+    const matchingTicket = ticketData.find((ticket) => ticket.id === selectedTicket?.id);
     if (matchingTicket) {
       const changedData: Record<string, any> = Object.entries(selectedTicket as Record<string, any>)
         .filter(([key, value]) => matchingTicket?.[key as keyof EventType] !== value)
@@ -89,27 +92,37 @@ const ManageTickets = () => {
       if (changedData?.description == '' && matchingTicket?.description == null)
         delete changedData['description'];
 
-      editTicket(eventId, selectedTicket as TicketType, changedData, setTickets);
+      editTicket(eventId, selectedTicket as TicketType, changedData, setTicketData);
     }
   };
 
-  // const changeDefaultSelected = (ticketInfo: TicketType) => {
-  //   const matchingTicket = tickets.find((ticket) => ticket.id === ticketInfo?.id);
-  //   if (matchingTicket && selectedTicket) {
-  //     setTickets((prevTickets) => {
-  //       return prevTickets.map((ticket) => {
-  //         if (ticket.id === matchingTicket.id) {
-  //           return { ...ticket, is_active: !ticket.is_active };
-  //         }
-  //         return ticket;
-  //       });
-  //     });
-  //     editTicket(eventId, matchingTicket?.id, { is_active: !matchingTicket?.is_active });
-  //   }
-  // };
+  const checkUnsavedChanges = () => {
+    console.log(
+      selectedTicket as TicketType,
+      ticketData?.find((t) => t.id === selectedTicket?.id),
+    );
+    return !isEqual(
+      selectedTicket,
+      ticketData?.find((t) => t.id === selectedTicket?.id),
+    );
+  };
+
+  const changeDefaultSelected = (ticketId: string) => {
+    setTickets(
+      tickets.map((ticket) =>
+        ticket.id === ticketId
+          ? { ...ticket, default_selected: true }
+          : { ...ticket, default_selected: false },
+      ),
+    );
+    setSelectedTicket({
+      ...tickets.find((t) => t.id === ticketId),
+      default_selected: true,
+    } as TicketType);
+  };
 
   useEffect(() => {
-    if (eventId && !ticketData) getTickets(eventId, setTicketData);
+    if (eventId && !ticketData.length) getTickets(eventId, setTicketData);
   }, [eventId, ticketData]);
 
   useEffect(() => {
@@ -124,6 +137,10 @@ const ManageTickets = () => {
       if (ticket.default_selected) setSelectedTicket(ticket);
     });
   }, [ticketData]);
+
+  useEffect(() => {
+    console.log(tickets);
+  }, [tickets]);
 
   return (
     <>
@@ -177,7 +194,49 @@ const ManageTickets = () => {
           </button>
         </Modal>
       )}
-      {ticketData ? (
+      {isChangedModal && (
+        <Modal onClose={() => setIsChangedModal(false)} style={{ zIndex: 999 }}>
+          <div className={styles.modalContainer}>
+            {/* Get Confirmation to continue event though user has not saved changes.*/}
+            <div className={styles.sectionContent1}>
+              <p className={styles.sectionTitle}>You have unsaved changes</p>
+              <p className={styles.sectionSubTitle}>
+                Are you sure you want to continue without saving?
+              </p>
+            </div>
+            <div className={styles.modalButtons}>
+              <button
+                className={styles.confirmButton}
+                onClick={() => {
+                  setIsChangedModal(false);
+                  const [tempTicket, tempSelectedTicket] = ticketPair as TicketType[];
+                  changeDefaultSelected(
+                    ticketData.find((t) => t.default_selected == true)?.id as string,
+                  );
+                  tempTicket.id != tempSelectedTicket?.id &&
+                    setSelectedTicket(
+                      Object.assign(
+                        {},
+                        ticketData.find((t) => t.id == tempTicket.id),
+                      ),
+                    );
+                }}
+              >
+                Continue
+              </button>
+              <button
+                onClick={() => {
+                  setIsChangedModal(false);
+                }}
+                className={styles.cancelButton}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
+      {ticketData.length ? (
         // <Theme>
         <div className={styles.manageTicketsContainer}>
           <div className={styles.ticketHeader}>
@@ -194,12 +253,21 @@ const ManageTickets = () => {
                   key={ticket.id}
                   ticketInfo={ticket}
                   onClick={() => {
-                    ticket.id != selectedTicket?.id && setSelectedTicket(Object.assign({}, ticket));
+                    if (ticket.id != selectedTicket?.id) {
+                      if (checkUnsavedChanges()) {
+                        setIsChangedModal(true);
+                        setTicketPair([ticket, selectedTicket as TicketType]);
+                        return;
+                      }
+                      setSelectedTicket(Object.assign({}, ticket));
+                    }
                   }}
                   selected={selectedTicket?.id == ticket.id}
                   closed={
                     selectedTicket?.id == ticket.id ? !selectedTicket?.is_active : !ticket.is_active
                   }
+                  handleDefaultSelected={changeDefaultSelected}
+                  checkUnsavedChanges={checkUnsavedChanges}
                 />
               ) : null;
             })}
