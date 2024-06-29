@@ -32,7 +32,7 @@ const ValidateData = () => {
     <Theme>
       <div className={styles.validateContainer}>
         {verified.isVerified ? (
-          <RiVerifiedBadgeFill color='#47c97e' size={50} />
+          <RiVerifiedBadgeFill color='#47c97e' size={75} />
         ) : verified.error ? (
           <MdError color='#f04b4b' size={50} />
         ) : (
@@ -43,7 +43,7 @@ const ValidateData = () => {
         </p>
         <p className={styles.helperText}>
           {verified.isVerified
-            ? 'You have successfully verified your data. You can continue to fill the form'
+            ? 'Data verified. You can continue to fill the form'
             : verified.error
               ? 'There was an error verifying your data.'
               : 'Verifying your data...'}
