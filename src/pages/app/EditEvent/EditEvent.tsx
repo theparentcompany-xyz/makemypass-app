@@ -3,14 +3,13 @@ import Theme from '../../../components/Theme/Theme';
 import { customStyles } from '../EventPage/constants';
 import { GrLocation } from 'react-icons/gr';
 import { getEvent, editEvent, deleteEvent } from '../../../apis/events';
-import { TbUserCheck, TbWorld } from 'react-icons/tb';
+import { TbMicrophone, TbUserCheck, TbWorld } from 'react-icons/tb';
 import { TbMailStar } from 'react-icons/tb';
 import { BiArrowToTop } from 'react-icons/bi';
 import { LuPencil } from 'react-icons/lu';
 import { FiGlobe } from 'react-icons/fi';
 import { HiOutlineUserGroup } from 'react-icons/hi2';
 import { BsTicketDetailed } from 'react-icons/bs';
-import { PiArrowsSplit } from 'react-icons/pi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { HashLoader } from 'react-spinners';
@@ -133,6 +132,10 @@ const EditEvent = () => {
       changedData['location[lng]'] = 'null';
 
       changedData['place'] = 'null';
+    }
+
+    if (changedData?.select_multi_ticket == false) {
+      changedData.is_grouped_ticket = false;
     }
 
     const formData = new FormData();
@@ -450,7 +453,7 @@ const EditEvent = () => {
                   <div className={styles.optionsContainer}>
                     <div className={styles.option}>
                       <label>
-                        <TbUserCheck size={20} color='#949597' /> Audio Form Fill
+                        <TbMicrophone size={20} color='#949597' /> Audio Form Fill
                       </label>
                       <Slider
                         checked={eventData.parse_audio}
@@ -520,22 +523,7 @@ const EditEvent = () => {
                     </div>
                     <div className={styles.option}>
                       <label>
-                        <BsTicketDetailed size={20} color='#949597' /> Grouped Ticket
-                      </label>
-                      <Slider
-                        checked={eventData.is_grouped_ticket}
-                        text={''}
-                        onChange={() =>
-                          setEventData({
-                            ...eventData,
-                            is_grouped_ticket: !eventData.is_grouped_ticket,
-                          })
-                        }
-                      />
-                    </div>
-                    <div className={styles.option}>
-                      <label>
-                        <PiArrowsSplit size={20} color='#949597' /> Add Sub-Event
+                        <BsTicketDetailed size={20} color='#949597' /> Allow Multi Ticket
                       </label>
                       <Slider
                         checked={eventData.select_multi_ticket as boolean}
@@ -548,6 +536,45 @@ const EditEvent = () => {
                         }
                       />
                     </div>
+                    {eventData.select_multi_ticket && (
+                      <motion.div
+                        className={styles.subOption}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <label>
+                          <BsTicketDetailed size={20} color='#949597' /> Grouped Ticket
+                        </label>
+                        <Slider
+                          checked={eventData.is_grouped_ticket}
+                          text={''}
+                          onChange={() =>
+                            setEventData({
+                              ...eventData,
+                              is_grouped_ticket: !eventData.is_grouped_ticket,
+                            })
+                          }
+                        />
+                      </motion.div>
+                    )}
+
+                    {/* <div className={styles.option}>
+                      <label>
+                        <PiArrowsSplit size={20} color='#949597' /> Add Sub-Event
+                      </label>
+                      <Slider
+                        checked={eventData.is_sub_event as boolean}
+                        text={''}
+                        onChange={() =>
+                          setEventData({
+                            ...eventData,
+                            is_sub_event: !eventData.is_sub_event,
+                          })
+                        }
+                      />
+                    </div> */}
                     <div className={styles.option}>
                       <label>
                         {' '}

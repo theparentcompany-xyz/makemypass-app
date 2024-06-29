@@ -293,20 +293,20 @@ const ManageTickets = () => {
                       }}
                     />
                   </div>
-                  <div className={styles.ticketSlider}>
-                    <p className={styles.ticketSliderLabel}>Close Ticket</p>
-                    <Slider
-                      checked={!selectedTicket?.is_active}
-                      onChange={() => {
-                        setSelectedTicket({
-                          ...selectedTicket,
-                          is_active: !selectedTicket.is_active,
-                        } as TicketType);
-                      }}
-                    />
-                  </div>
                 </motion.div>
               )}
+              <div className={styles.ticketSlider}>
+                <p className={styles.ticketSliderLabel}>Close Ticket</p>
+                <Slider
+                  checked={!selectedTicket?.is_active}
+                  onChange={() => {
+                    setSelectedTicket({
+                      ...selectedTicket,
+                      is_active: !selectedTicket.is_active,
+                    } as TicketType);
+                  }}
+                />
+              </div>
 
               <div className={styles.buttonContainer}>
                 <button className={styles.deleteButton} onClick={onDeleteTicket}>
