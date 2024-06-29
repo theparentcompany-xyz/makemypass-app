@@ -5,7 +5,7 @@ import { TicketType } from './types';
 
 export const getTickets = async (
   eventId: string,
-  setTicketInfo: React.Dispatch<React.SetStateAction<TicketType[] | undefined>>,
+  setTicketInfo: React.Dispatch<React.SetStateAction<TicketType[]>>,
 ) => {
   privateGateway
     .get(makeMyPass.getTicketInfo(eventId))
@@ -35,7 +35,7 @@ export const createTicket = async (eventId: string, ticket: TicketType) => {
 export const editTicket = async (
   eventId: string,
   selectedTicket: TicketType,
-  changedData: Object,
+  changedData: Record<string, any>,
   setTickets: React.Dispatch<React.SetStateAction<TicketType[]>>,
 ) => {
   privateGateway
@@ -46,7 +46,15 @@ export const editTicket = async (
     })
     .then((response) => {
       // window.location.reload();
-      setTickets((prev) => prev.map((t) => (t.id === selectedTicket.id ? selectedTicket : t)));
+      setTickets((prev) =>
+        prev.map((t) =>
+          t.id === selectedTicket.id
+            ? changedData.default_selected === true
+              ? { ...selectedTicket, default_selected: true }
+              : selectedTicket
+            : t,
+        ),
+      );
       toast.success(response.data.message.general[0] || 'Ticket Updated Successfully');
     })
     .catch((error) => {
