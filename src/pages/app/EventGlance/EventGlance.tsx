@@ -194,12 +194,16 @@ const EventGlance = () => {
                     )}
                   </div>
                   <div className={styles.eventPlace}>
-                    <div className={styles.locationBox}>
-                      <IoLocationOutline size={25} className={styles.locationIcon} />
-                    </div>
-                    <div className={styles.eventDateTimeText}>
-                      <p className={styles.eventDateText}>{eventData?.place}</p>
-                    </div>
+                    {eventData?.place && (
+                      <>
+                        <div className={styles.locationBox}>
+                          <IoLocationOutline size={25} className={styles.locationIcon} />
+                        </div>
+                        <div className={styles.eventDateTimeText}>
+                          <p className={styles.eventDateText}>{eventData?.place}</p>
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className={styles.buttons}>
                     <button
