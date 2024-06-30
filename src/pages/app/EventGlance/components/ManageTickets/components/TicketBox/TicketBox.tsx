@@ -8,7 +8,7 @@ type Props = {
   selected: boolean;
   closed: boolean;
   handleDefaultSelected: (ticketId: string) => void;
-  checkUnsavedChanges: () => boolean;
+  hasUnsavedChanges: () => boolean;
 };
 
 const TicketBox = ({
@@ -17,7 +17,7 @@ const TicketBox = ({
   selected,
   closed,
   handleDefaultSelected,
-  checkUnsavedChanges,
+  hasUnsavedChanges,
 }: Props) => {
   return (
     <>
@@ -45,7 +45,8 @@ const TicketBox = ({
               }
             ></span>
             {(closed ||
-              (ticketInfo?.capacity && ticketInfo?.registration_count >= ticketInfo?.capacity)) &&
+              (ticketInfo?.capacity != 0 &&
+                ticketInfo?.registration_count >= ticketInfo?.capacity)) &&
               'Not '}
             Available
           </div>
@@ -54,7 +55,7 @@ const TicketBox = ({
             <Slider
               checked={ticketInfo.default_selected}
               onChange={() => {
-                if (!checkUnsavedChanges()) handleDefaultSelected(ticketInfo?.id);
+                if (!hasUnsavedChanges()) handleDefaultSelected(ticketInfo?.id);
               }}
               sliderStyle={{ transform: 'scale(0.7)' }}
             />
