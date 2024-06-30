@@ -46,6 +46,7 @@ export const updateMail = (
   selectedMail: MailType,
   data: Record<string, any>,
   setMails: React.Dispatch<React.SetStateAction<listMailType[]>>,
+  setMailData: React.Dispatch<React.SetStateAction<MailType | undefined>>,
 ) => {
   privateGateway
     .patch(makeMyPass.updateMail(eventId, selectedMail?.id), data, {
@@ -58,13 +59,18 @@ export const updateMail = (
         mails.map((mail) =>
           mail.id === selectedMail.id
             ? {
-                id: selectedMail.id,
+                id: response?.data?.response?.id ? response.data.response.id : selectedMail.id,
                 type: selectedMail.type,
                 subject: selectedMail.subject,
               }
             : mail,
         ),
       );
+      setMailData({
+        ...selectedMail,
+        id: response?.data?.response?.id ? response.data.response.id : selectedMail.id,
+      } as MailType);
+
       toast.success(response.data.message.general[0] || 'Mail updated successfully');
     })
     .catch((error) => {
