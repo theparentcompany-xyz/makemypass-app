@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { forwardRef, useImperativeHandle, useEffect, useState } from 'react';
 import styles from './ManageTickets.module.css';
 import Slider from '../../../../../components/SliderButton/Slider';
 import TicketBox from './components/TicketBox/TicketBox';
@@ -11,12 +11,24 @@ import toast from 'react-hot-toast';
 import { HashLoader } from 'react-spinners';
 import { isEqual } from 'lodash';
 
-const ManageTickets = () => {
-  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData') || '');
+export interface ChildProps {
+  setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface ChildRef {
+  closeTicketModal: () => void;
+}
+
+const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, ref) => {
+  const { event_id: eventId, event_name: eventName } = JSON.parse(
+    sessionStorage.getItem('eventData') || '',
+  );
+  const [hasFetched, setHasFetched] = useState(false);
   const [ticketData, setTicketData] = useState<TicketType[]>([]);
   const [tickets, setTickets] = useState<TicketType[]>([]);
   const [selectedTicket, setSelectedTicket] = useState<TicketType>();
   const [isOpen, setIsOpen] = useState(false);
+  const [wantToClose, setWantToClose] = useState(false);
   const [isChangedModal, setIsChangedModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [settingNewTicket, setSettingNewTicket] = useState(false);
@@ -29,29 +41,54 @@ const ManageTickets = () => {
       return;
     }
     setSettingNewTicket(true);
-    const newTicket: TicketType = {
-      ...(getDeepCopy(tickets.find((t) => t.default_selected == true)) as TicketType),
-      new: true,
-      title: 'New Ticket',
-      description: '',
-      id: '',
-      default_selected: false,
-      // approval_required: false,
-      // price: 0,
-      // perks: undefined,
-      // registration_count: 0,
-      // capacity: 0,
-      // default_selected: false,
-      // platform_fee: 0,
-      // platform_fee_from_user: false,
-      // currency: '',
-      // entry_date: [],
-      // code_prefix: '',
-      // code_digits: 0,
-      // maintain_code_order: false,
-      // is_active: true,
-    };
-    setTickets((prevTickets) => [newTicket, ...prevTickets]);
+    if (tickets.findIndex((t) => t.default_selected == true) != -1) {
+      const newTicket: TicketType = {
+        ...(getDeepCopy(tickets.find((t) => t.default_selected == true)) as TicketType),
+        new: true,
+        title: 'New Ticket',
+        description: '',
+        id: '',
+        default_selected: false,
+        registration_count: 0,
+        // approval_required: false,
+        // price: 0,
+        // perks: undefined,
+        // registration_count: 0,
+        // capacity: 0,
+        // default_selected: false,
+        // platform_fee: 0,
+        // platform_fee_from_user: false,
+        // currency: '',
+        // entry_date: [],
+        // code_prefix: '',
+        // code_digits: 0,
+        // maintain_code_order: false,
+        // is_active: true,
+      };
+      setTickets((prevTickets) => [newTicket, ...prevTickets]);
+    } else {
+      const newTicket: TicketType = {
+        new: true,
+        title: 'New Ticket',
+        description: '',
+        id: '',
+        approval_required: false,
+        price: 0,
+        perks: undefined,
+        registration_count: 0,
+        capacity: 0,
+        default_selected: true,
+        platform_fee: 0,
+        platform_fee_from_user: false,
+        currency: '',
+        entry_date: [],
+        code_prefix: eventName.slice(0, 3).toUpperCase(),
+        code_digits: 6,
+        maintain_code_order: false,
+        is_active: true,
+      };
+      setTickets((prevTickets) => [newTicket, ...prevTickets]);
+    }
   };
 
   const addTicket = async () => {
@@ -69,6 +106,8 @@ const ManageTickets = () => {
   };
 
   const onDeleteTicket = () => {
+    const changeDefaultTo = tickets.find((ticket) => ticket.id != selectedTicket?.id);
+
     if (selectedTicket && selectedTicket.new == true) {
       setTickets((prevTickets) => prevTickets.filter((t) => t.new != true));
       setSettingNewTicket(false);
@@ -78,15 +117,28 @@ const ManageTickets = () => {
     }
 
     if (selectedTicket) {
-      deleteTicket(eventId, selectedTicket.id, setTicketData);
+      deleteTicket(eventId, selectedTicket.id, setTicketData).then(() => {
+        if (selectedTicket?.default_selected && tickets.length > 1) {
+          editTicket(
+            eventId,
+            changeDefaultTo as TicketType,
+            { default_selected: true },
+            setTicketData,
+          ).then(() => {
+            changeDefaultSelected(changeDefaultTo?.id as string);
+            setSelectedTicket(changeDefaultTo);
+          });
+        }
+      });
       setSelectedTicket(undefined);
     }
   };
 
-  const updateTicket = () => {
-    const matchingTicket = ticketData.find((ticket) => ticket.id === selectedTicket?.id);
+  const updateTicket = (specificUpdate?: TicketType) => {
+    const selection = specificUpdate || selectedTicket;
+    const matchingTicket = ticketData.find((ticket) => ticket.id === selection?.id);
     if (matchingTicket) {
-      const changedData: Record<string, any> = Object.entries(selectedTicket as Record<string, any>)
+      const changedData: Record<string, any> = Object.entries(selection as Record<string, any>)
         .filter(([key, value]) => matchingTicket?.[key as keyof EventType] !== value)
         .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
 
@@ -97,11 +149,8 @@ const ManageTickets = () => {
     }
   };
 
-  const checkUnsavedChanges = () => {
-    console.log(
-      selectedTicket as TicketType,
-      ticketData?.find((t) => t.id === selectedTicket?.id),
-    );
+  const hasUnsavedChanges = () => {
+    if (selectedTicket?.new) return true;
     return !isEqual(
       selectedTicket,
       ticketData?.find((t) => t.id === selectedTicket?.id),
@@ -122,8 +171,24 @@ const ManageTickets = () => {
     } as TicketType);
   };
 
+  const closeTicketModal = () => {
+    if (!hasUnsavedChanges()) {
+      setIsTicketsOpen(false);
+    } else {
+      setIsChangedModal(true);
+      setWantToClose(true);
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    closeTicketModal,
+  }));
+
   useEffect(() => {
-    if (eventId && !ticketData.length) getTickets(eventId, setTicketData);
+    if (eventId && !ticketData.length && !hasFetched) {
+      getTickets(eventId, setTicketData);
+      setHasFetched(true);
+    }
   }, [eventId, ticketData]);
 
   useEffect(() => {
@@ -210,6 +275,12 @@ const ManageTickets = () => {
                 className={styles.confirmButton}
                 onClick={() => {
                   setIsChangedModal(false);
+                  if (wantToClose) {
+                    setIsTicketsOpen(false);
+                    setWantToClose(false);
+                    return;
+                  }
+
                   const [tempTicket, tempSelectedTicket] = ticketPair as TicketType[];
                   changeDefaultSelected(
                     ticketData.find((t) => t.default_selected == true)?.id as string,
@@ -269,7 +340,7 @@ const ManageTickets = () => {
           </div>
         </Modal>
       )}
-      {ticketData.length ? (
+      {ticketData.length || hasFetched ? (
         // <Theme>
         <div className={styles.manageTicketsContainer}>
           <div className={styles.ticketHeader}>
@@ -287,7 +358,7 @@ const ManageTickets = () => {
                   ticketInfo={ticket}
                   onClick={() => {
                     if (ticket.id != selectedTicket?.id) {
-                      if (checkUnsavedChanges()) {
+                      if (hasUnsavedChanges()) {
                         setIsChangedModal(true);
                         setTicketPair([ticket, selectedTicket as TicketType]);
                         return;
@@ -300,7 +371,7 @@ const ManageTickets = () => {
                     selectedTicket?.id == ticket.id ? !selectedTicket?.is_active : !ticket.is_active
                   }
                   handleDefaultSelected={changeDefaultSelected}
-                  checkUnsavedChanges={checkUnsavedChanges}
+                  hasUnsavedChanges={hasUnsavedChanges}
                 />
               ) : null;
             })}
@@ -491,7 +562,7 @@ const ManageTickets = () => {
                   </button>
                   <button
                     className={styles.updateButton}
-                    onClick={selectedTicket?.new ? addTicket : updateTicket}
+                    onClick={() => (selectedTicket?.new ? addTicket() : updateTicket())}
                   >
                     {selectedTicket?.new ? 'Create Ticket' : 'Update Ticket'}
                   </button>
@@ -506,6 +577,6 @@ const ManageTickets = () => {
       )}
     </>
   );
-};
+});
 
 export default ManageTickets;
