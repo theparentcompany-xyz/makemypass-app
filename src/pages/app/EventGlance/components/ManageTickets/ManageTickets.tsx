@@ -204,10 +204,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     });
   }, [ticketData]);
 
-  useEffect(() => {
-    console.log(tickets);
-  }, [tickets]);
-
   return (
     <>
       {isOpen && (
