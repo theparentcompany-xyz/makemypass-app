@@ -97,6 +97,7 @@ export interface TicketType {
   show_price?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   perks: any;
+  registration_count: number;
   capacity: number;
   default_selected: boolean;
   platform_fee: number;
@@ -223,6 +224,7 @@ export type ConditionType = {
 export type MailType = {
   attachment: string;
   body: string;
+  description: string;
   email_type: string;
   id: string;
   subject: string;

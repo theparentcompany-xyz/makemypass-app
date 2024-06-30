@@ -76,8 +76,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
           <div className={styles.modalSubText}>
             <div className={styles.inputContainers}>
               <div className={styles.inputContainer}>
-                <p className={styles.inputLabel}>The reminder goes Out </p>
-                <p className={styles.inputSubText}>X hours before the event</p>
+                <p className={styles.inputLabel}>{mailData.description}</p>
               </div>
               <div className={styles.inputContainer}>
                 <p className={styles.inputLabel}>Subject</p>
