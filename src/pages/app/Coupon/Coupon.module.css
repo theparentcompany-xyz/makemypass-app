@@ -1,0 +1,22 @@
+.couponModal {
+  min-width: 30rem;
+}
+
+.fieldHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.line {
+  margin: auto;
+  height: 1px;
+  background: #a4a4a4;
+  opacity: 0.2;
+  border: none;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
