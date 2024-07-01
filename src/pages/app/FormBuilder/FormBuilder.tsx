@@ -11,7 +11,7 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 
 import { useEffect, useState } from 'react';
 import { getForm, updateForm } from '../../../apis/formbuilder';
-import { ChangeType, Field } from './types';
+import { ChangeType, Field, FieldType } from './types';
 import SelectComponent from './SelectComponent';
 import { IoCloseSharp } from 'react-icons/io5';
 import { conditions } from './constant';
@@ -241,12 +241,11 @@ const FormBuilder = () => {
                         />
                       </div>
 
-                      {/*TODO: move types to enum like*/}
                       {field.options &&
-                        (field.type === 'radio' ||
-                          field.type === 'checkbox' ||
-                          field.type === 'singleselect' ||
-                          field.type === 'multiselect') && (
+                        (field.type === FieldType.Radio ||
+                          field.type === FieldType.Checkbox ||
+                          field.type === FieldType.SingleSelect ||
+                          field.type === FieldType.MultiSelect) && (
                           <div className={styles.customFieldOption}>
                             {field.options.map((option, index) => (
                               <div className='row'>
