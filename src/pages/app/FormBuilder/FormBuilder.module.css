@@ -263,3 +263,15 @@
   font-size: 0.9rem;
   margin-left: 0.5rem;
 }
+
+.changeTypeButton {
+  position: relative;
+  display: inline-block;
+}
+
+.changeTypeContainer {
+  margin-top: 2rem;
+  margin-left: 5rem;
+  position: absolute;
+  z-index: 51;
+}

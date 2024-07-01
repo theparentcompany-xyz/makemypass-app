@@ -19,6 +19,8 @@ import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
 import { LiaExchangeAltSolid } from 'react-icons/lia';
 import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { AnimatePresence } from 'framer-motion';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -116,7 +118,6 @@ const FormBuilder = () => {
         <div className={styles.builderContainer}>
           <EventHeader />
           <Glance tab='formbuilder' />
-          {changeType.showModal && <ChangeTypeModal setChangeType={setChangeType} />}
           <div className={styles.requiredFieldsHeader}>
             <div className={styles.customFieldsContainer}>
               <div className={styles.customFieldsHeader}>
@@ -141,19 +142,7 @@ const FormBuilder = () => {
                       <div className={styles.row1}>
                         <RxDragHandleDots2 size={25} color='#606264' />
                         <div>
-                          <p className={styles.customFieldLabel}>
-                            {field.type.toUpperCase()}
-                            <span
-                              onClick={() => {
-                                setChangeType({
-                                  showModal: true,
-                                  currentType: field.type,
-                                });
-                              }}
-                            >
-                              <LiaExchangeAltSolid color='white' />
-                            </span>
-                          </p>
+                          <p className={styles.customFieldLabel}>{field.type.toUpperCase()}</p>
                           <p className={styles.customFieldType}>
                             <BsAlphabetUppercase size={25} /> {field.title}
                           </p>
@@ -172,7 +161,26 @@ const FormBuilder = () => {
                       <div className={styles.row}>
                         <div className={styles.row1}>
                           <RxDragHandleDots2 size={25} color='#606264' />
-                          <p className={styles.customFieldLabel}>{field.type.toUpperCase()}</p>
+                          <p className={styles.customFieldLabel}>
+                            {field.type.toUpperCase()}
+                            <span
+                              onClick={() => {
+                                setChangeType({
+                                  showModal: !changeType.showModal,
+                                  currentType: field.type,
+                                });
+                              }}
+                              className={styles.changeTypeButton}
+                            >
+                              {
+                                changeType.showModal ? (
+                                  <FaChevronDown color='white' />
+                                ) : (
+                                  <FaChevronUp color='white' />
+                                ) // change the icon based on the state
+                              }
+                            </span>
+                          </p>
                         </div>
 
                         <div className={styles.expandedRight}>
@@ -217,6 +225,16 @@ const FormBuilder = () => {
                           )}
                         </div>
                       </div>
+                      <AnimatePresence>
+                        <div className={styles.changeTypeContainer}>
+                          {changeType.showModal && (
+                            <ChangeTypeModal
+                              setChangeType={setChangeType}
+                              changeType={changeType}
+                            />
+                          )}
+                        </div>
+                      </AnimatePresence>
 
                       <div className={styles.customFieldName}>
                         <input
