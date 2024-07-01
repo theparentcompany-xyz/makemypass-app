@@ -30,7 +30,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   const [wantToClose, setWantToClose] = useState(false);
   const [isChangedModal, setIsChangedModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [settingNewTicket, setSettingNewTicket] = useState(false);
   const [limitCapacity, setLimitCapacity] = useState(true);
   const [paidTicket, setPaidTicket] = useState(true);
   const [ticketPair, setTicketPair] = useState<TicketType[]>();
