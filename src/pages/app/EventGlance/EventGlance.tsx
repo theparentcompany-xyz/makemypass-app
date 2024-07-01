@@ -9,7 +9,7 @@ import { FaWrench } from 'react-icons/fa6';
 import { BsQrCodeScan } from 'react-icons/bs';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 // import { LuClock, LuPencil } from 'react-icons/lu';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Modal from '../../../components/Modal/Modal';
 import { getDay, getMonthAbbreviation } from '../EventPage/constants';
 import { EventType, listMailType } from '../../../apis/types';
@@ -23,15 +23,22 @@ import { listMails } from '../../../apis/mails';
 import CustomMail from './components/CustomMail/CustomMail';
 import UpdateMail from './components/UpdateMail/UpdateMail';
 import { sentTextMail } from '../../../apis/postevent';
-
+import { ChildRef } from './components/ManageTickets/ManageTickets';
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
+  const modalRef = useRef<ChildRef>(null);
   const [eventTitle, setEventTitle] = useState('');
   const [eventData, setEventData] = useState<EventType>();
   const [confirmTestMail, setConfirmTestMail] = useState({
     status: false,
     mailId: '',
   });
+
+  const handleCloseTicketModal = () => {
+    if (modalRef.current) {
+      modalRef.current.closeTicketModal();
+    }
+  };
 
   useEffect(() => {
     if (eventId) getEvent(eventId, setEventTitle, setEventData);
@@ -57,8 +64,14 @@ const EventGlance = () => {
             <Glance tab='manage' />
           </div>
           {isTicketsOpen && (
-            <Modal title='Manage Tickets' onClose={() => setIsTicketsOpen(false)} type='side'>
-              <ManageTickets />
+            <Modal
+              title='Manage Tickets'
+              onClose={() => {
+                handleCloseTicketModal();
+              }}
+              type='side'
+            >
+              <ManageTickets setIsTicketsOpen={setIsTicketsOpen} ref={modalRef} />
             </Modal>
           )}
           {customMail && (
@@ -194,12 +207,16 @@ const EventGlance = () => {
                     )}
                   </div>
                   <div className={styles.eventPlace}>
-                    <div className={styles.locationBox}>
-                      <IoLocationOutline size={25} className={styles.locationIcon} />
-                    </div>
-                    <div className={styles.eventDateTimeText}>
-                      <p className={styles.eventDateText}>{eventData?.place}</p>
-                    </div>
+                    {eventData?.place && (
+                      <>
+                        <div className={styles.locationBox}>
+                          <IoLocationOutline size={25} className={styles.locationIcon} />
+                        </div>
+                        <div className={styles.eventDateTimeText}>
+                          <p className={styles.eventDateText}>{eventData?.place}</p>
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className={styles.buttons}>
                     <button

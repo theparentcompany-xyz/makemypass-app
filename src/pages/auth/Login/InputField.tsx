@@ -33,6 +33,7 @@ const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
         {icon}
         <input
           {...inputProps}
+          type={inputProps.type}
           placeholder={`${inputProps.placeholder}`}
           ref={ref}
           style={{
