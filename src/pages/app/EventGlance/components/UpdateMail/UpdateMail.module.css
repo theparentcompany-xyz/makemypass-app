@@ -126,7 +126,6 @@
 
 .textarea {
   margin-top: 0.25rem;
-  margin-right: 5rem;
   border-radius: 8px;
   border: none;
   padding: 0.75rem 0.75rem;
@@ -135,9 +134,100 @@
   font-family: 'Inter', sans-serif;
   color: white;
   height: 200px;
-  width: 95%;
-  max-width: 24rem;
+  width: 30rem;
   resize: none;
+}
+
+.previewContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 1rem;
+  margin-top: 1rem;
+}
+
+.previewBox{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  row-gap: 0.5rem;
+  align-items: center;
+  column-gap: 1rem;
+  width: 10rem;
+  height: 8rem;
+  padding: 1rem;
+  border: #bbbaba60 1px dashed;
+  border-radius: 16px;
+}
+
+.uploadContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  column-gap: 1rem;
+  margin-top: 1rem;
+}
+
+.fileInput {
+  margin-top: 0.25rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* padding: 0.5rem 0.5rem; */
+  background: rgba(255, 255, 255, 0.04);
+  width: 40%;
+  display: flex;
+  font-family: 'Inter', sans-serif;
+  color: #a4a4a4;
+}
+
+.fileInput::file-selector-button {
+  font-family: 'Inter', sans-serif;
+  margin-right: 20px;
+  border: none;
+  background: transparent;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #a4a4a487;
+  background: #1b2725ca;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.fileInput::file-selector-button:hover {
+  color: #a4a4a4;
+  background: #1b2725;
+}
+
+.uploadContainer input[type='file'] {
+  color: rgba(0, 0, 0, 0)
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: #a4a4a487;
+  background: #1b2725ca;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.closeButton:hover {
+  color: #a4a4a4;
+  background: #1b2725;
+  transform: scale(1.1);
+}
+
+@media screen and (max-width: 500px) {
+  .textarea {
+    width: 95%;
+    max-width: 24rem;
+  }
+  
 }
 
 .textarea:focus {

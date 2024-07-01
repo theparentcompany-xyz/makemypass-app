@@ -1,0 +1,25 @@
+.validateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  width: 100%;
+}
+
+.helperText {
+  margin-top: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  margin-top: 1rem;
+  color: white;
+  opacity: 0.8;
+}
+
+.errorMessage {
+  color: #f04b4b;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
+}

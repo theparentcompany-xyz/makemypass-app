@@ -211,3 +211,14 @@ export const getGuestInfo = async (
       toast.error('Something went wrong');
     });
 };
+
+export const deleteSubmission = async (eventId: string, submissionId: string) => {
+  privateGateway
+    .delete(makeMyPass.deleteSubmission(eventId, submissionId))
+    .then((response) => {
+      toast.success(response.data.message.general[0] || 'Submission deleted successfully');
+    })
+    .catch(() => {
+      toast.error('Something went wrong, Couldnt Delete Submission');
+    });
+};

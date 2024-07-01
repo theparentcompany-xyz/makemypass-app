@@ -43,8 +43,7 @@ const Header = ({ type }: { type?: string | undefined }) => {
   const timezoneOffsetHours = Math.abs(Math.floor(timezoneOffset / 60));
   const timezoneOffsetMinutes = Math.abs(timezoneOffset % 60);
   const timezoneSign = timezoneOffset > 0 ? '-' : '+';
-
-  const formattedTimezone = `GMT${timezoneSign}${timezoneOffsetHours.toString().padStart(2, '0')}:${timezoneOffsetMinutes.toString().padStart(2, '0')}`;
+  const formattedTimezone = `GMT${timezoneSign}${(timezoneOffsetHours - 1).toString().padStart(2, '0')}:${timezoneOffsetMinutes.toString().padStart(2, '0')}`;
 
   const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${formattedTimezone}`;
 

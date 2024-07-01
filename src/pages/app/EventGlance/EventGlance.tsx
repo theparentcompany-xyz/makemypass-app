@@ -9,23 +9,24 @@ import { FaWrench } from 'react-icons/fa6';
 import { BsQrCodeScan } from 'react-icons/bs';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 // import { LuClock, LuPencil } from 'react-icons/lu';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Modal from '../../../components/Modal/Modal';
 import { getDay, getMonthAbbreviation } from '../EventPage/constants';
-import { EventType, MailType } from '../../../apis/types';
+import { EventType, listMailType } from '../../../apis/types';
 import { getEvent } from '../../../apis/events';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import EventHeader from '../../../components/EventHeader/EventHeader';
 import ManageTickets from './components/ManageTickets/ManageTickets';
 import { LuMail, LuPencil } from 'react-icons/lu';
-import { listMails, updateMail } from '../../../apis/mails';
+import { listMails } from '../../../apis/mails';
 import CustomMail from './components/CustomMail/CustomMail';
 import UpdateMail from './components/UpdateMail/UpdateMail';
 import { sentTextMail } from '../../../apis/postevent';
-
+import { ChildRef } from './components/ManageTickets/ManageTickets';
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
+  const modalRef = useRef<ChildRef>(null);
   const [eventTitle, setEventTitle] = useState('');
   const [eventData, setEventData] = useState<EventType>();
   const [confirmTestMail, setConfirmTestMail] = useState({
@@ -33,26 +34,21 @@ const EventGlance = () => {
     mailId: '',
   });
 
-  const onUpdateEmail = () => {
-    const matchingMail = mails.find((mail) => mail.id === selectedMail?.id);
-    if (!matchingMail || !selectedMail) return;
-
-    const changedData: Record<string, any> = Object.entries(selectedMail as Record<string, any>)
-      .filter(([key, value]) => matchingMail?.[key as keyof MailType] !== value)
-      .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
-
-    updateMail(eventId, selectedMail, changedData, setMails);
+  const handleCloseTicketModal = () => {
+    if (modalRef.current) {
+      modalRef.current.closeTicketModal();
+    }
   };
 
   useEffect(() => {
     if (eventId) getEvent(eventId, setEventTitle, setEventData);
   }, [eventId]);
-  const [selectedMail, setSelectedMail] = useState<MailType>();
+  const [selectedMail, setSelectedMail] = useState<listMailType>();
   const [customMail, setCustomMail] = useState<boolean>(false);
   const eventName = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
   const navigate = useNavigate();
   const [isTicketsOpen, setIsTicketsOpen] = useState(false);
-  const [mails, setMails] = useState<MailType[]>([]);
+  const [mails, setMails] = useState<listMailType[]>([]);
 
   useEffect(() => {
     if (eventId) {
@@ -68,8 +64,14 @@ const EventGlance = () => {
             <Glance tab='manage' />
           </div>
           {isTicketsOpen && (
-            <Modal title='Manage Tickets' onClose={() => setIsTicketsOpen(false)} type='side'>
-              <ManageTickets />
+            <Modal
+              title='Manage Tickets'
+              onClose={() => {
+                handleCloseTicketModal();
+              }}
+              type='side'
+            >
+              <ManageTickets setIsTicketsOpen={setIsTicketsOpen} ref={modalRef} />
             </Modal>
           )}
           {customMail && (
@@ -86,9 +88,9 @@ const EventGlance = () => {
             <Modal onClose={() => setSelectedMail(undefined)} type='side'>
               <UpdateMail
                 selectedMail={selectedMail}
-                setSelectedMail={setSelectedMail}
-                onUpdateEmail={onUpdateEmail}
                 setCustomMail={setCustomMail}
+                setSelectedMail={setSelectedMail}
+                setMails={setMails}
               />
             </Modal>
           )}
@@ -205,12 +207,16 @@ const EventGlance = () => {
                     )}
                   </div>
                   <div className={styles.eventPlace}>
-                    <div className={styles.locationBox}>
-                      <IoLocationOutline size={25} className={styles.locationIcon} />
-                    </div>
-                    <div className={styles.eventDateTimeText}>
-                      <p className={styles.eventDateText}>{eventData?.place}</p>
-                    </div>
+                    {eventData?.place && (
+                      <>
+                        <div className={styles.locationBox}>
+                          <IoLocationOutline size={25} className={styles.locationIcon} />
+                        </div>
+                        <div className={styles.eventDateTimeText}>
+                          <p className={styles.eventDateText}>{eventData?.place}</p>
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className={styles.buttons}>
                     <button

@@ -28,6 +28,7 @@ import CreateEvent from './pages/app/CreateEvent/CreateEvent';
 import EventGlance from './pages/app/EventGlance/EventGlance';
 import EditEvent from './pages/app/EditEvent/EditEvent';
 import FormBuilder from './pages/app/FormBuilder/FormBuilder';
+import ValidateData from './pages/app/ValidateData/ValidateData';
 
 // import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 // import SpinWheel from './pages/app/SpinWheel/SpinWheel';
@@ -69,6 +70,11 @@ const routes = [
   {
     path: '/:eventTitle/public/insights',
     element: <Insights type='public' />,
+  },
+
+  {
+    path: '/validate-participant/',
+    element: <ValidateData />,
   },
   {
     path: '/',

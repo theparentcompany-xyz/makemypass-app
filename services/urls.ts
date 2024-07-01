@@ -27,6 +27,8 @@ export const makeMyPass = {
   resentTicket: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/resent-ticket/`),
   editSubmission: (eventId: string, submissionId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/edit-submission/${submissionId}`),
+  deleteSubmission: (eventId: string, submissionId: string) =>
+    makeMyPassURL(`/manage-guest/${eventId}/delete-submission/${submissionId}`),
   downloadTicket: (eventId: string, ticketCode: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/download-ticket/${ticketCode}`),
   userInfo: (eventId: string, ticketCode: string) =>
@@ -94,6 +96,8 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-guest/${eventId}/initiate-refund/${eventRegisterId}/`),
   addGuestInfo: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/form-info/`),
   sendVerfication: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/send-verification/`),
+  verifyParticipant: (verificationCode: string) =>
+    makeMyPassURL(`/public-form/verify-participant/${verificationCode}/`),
 
   //Payment and Coupons
   validatePayment: makeMyPassURL(`/public-form/validate-payment/`),
@@ -107,7 +111,8 @@ export const makeMyPass = {
   updatePerk: (ticketCode: string) => makeMyPassURL(`/checkin/update-perk/${ticketCode}/`),
 
   //Post Event Communication
-  sentPostMail: (eventId: string) => makeMyPassURL(`/event/${eventId}/communication/send-post-event-mail/`),
+  sentPostMail: (eventId: string) =>
+    makeMyPassURL(`/event/${eventId}/communication/send-post-event-mail/`),
   getPostEventFields: (eventId: string) =>
     makeMyPassURL(`/feedback/get-post-event-fields/${eventId}/`),
   submitFeedback: (eventId: string) => makeMyPassURL(`/feedback/submit-feedback/${eventId}/`),

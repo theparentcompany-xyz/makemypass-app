@@ -55,9 +55,15 @@
   /* Rounded slider handle */
 }
 
-input:checked + .slider {
+.slider.checked {
   background-color: #4caf50;
   /* Green background color when checked */
+}
+
+.slider.checked:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }
 
 input:focus + .slider {
@@ -65,8 +71,3 @@ input:focus + .slider {
   /* Green box shadow when focused */
 }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}

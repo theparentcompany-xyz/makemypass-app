@@ -1,15 +1,24 @@
 import styles from './TicketBox.module.css';
-import Slider from '../../../../../../../components/SliderButton/Slider';
 import { TicketType } from '../../../../../../../apis/types';
+import Slider from '../../../../../../../components/SliderButton/Slider';
 
 type Props = {
   ticketInfo: TicketType;
   onClick: () => void;
   selected: boolean;
-  closeTicket: (ticketInfo: TicketType) => void;
+  closed: boolean;
+  handleDefaultSelected: (ticketId: string) => void;
+  hasUnsavedChanges: () => boolean;
 };
 
-const TicketBox = ({ ticketInfo, onClick, selected, closeTicket }: Props) => {
+const TicketBox = ({
+  ticketInfo,
+  onClick,
+  selected,
+  closed,
+  handleDefaultSelected,
+  hasUnsavedChanges,
+}: Props) => {
   return (
     <>
       <div className={`${styles.ticketBox} ${selected ? styles.selected : ''}`} onClick={onClick}>
@@ -17,21 +26,36 @@ const TicketBox = ({ ticketInfo, onClick, selected, closeTicket }: Props) => {
         <div className={styles.ticketInfo}>
           <p className={styles.ticketName}>{ticketInfo.title}</p>
           <p className={styles.ticketType}>
-            1000 / {ticketInfo.capacity || ' Unlimited'} <br />
+            {ticketInfo.registration_count}
+            {ticketInfo.capacity ? '/' + ticketInfo.capacity : ''} <br />
             Registered
           </p>
         </div>
         <div className={styles.ticketFooter}>
           <div className={styles.ticketFooterLeft}>
             {' '}
-            <span className={styles.availableDot}></span>Available
+            <span
+              className={
+                styles.availableDot +
+                ' ' +
+                ((closed ||
+                  (ticketInfo?.capacity &&
+                    ticketInfo?.registration_count >= ticketInfo?.capacity)) &&
+                  styles.unavailable)
+              }
+            ></span>
+            {(closed ||
+              (ticketInfo?.capacity != 0 &&
+                ticketInfo?.registration_count >= ticketInfo?.capacity)) &&
+              'Not '}
+            Available
           </div>
           <div className={styles.ticketFooterRight}>
-            <label className={styles.closeTicketLabel}>Close Ticket</label>
+            <label className={styles.closeTicketLabel}>Default Selected</label>
             <Slider
-              checked={!ticketInfo.is_active}
+              checked={ticketInfo.default_selected}
               onChange={() => {
-                closeTicket(ticketInfo);
+                if (!hasUnsavedChanges()) handleDefaultSelected(ticketInfo?.id);
               }}
               sliderStyle={{ transform: 'scale(0.7)' }}
             />
