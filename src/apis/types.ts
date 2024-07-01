@@ -224,7 +224,7 @@ export type ConditionType = {
 export type MailType = {
   attachment: string;
   body: string;
-  description: string;
+  type_description: string;
   email_type: string;
   id: string;
   subject: string;
