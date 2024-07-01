@@ -1,9 +1,16 @@
-import { downloadFile } from '../../apis/guests';
 import { formatDate } from '../../common/commonFunctions';
 import styles from './Table.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
 
-const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; tableData: any[] }) => {
+const GenericTable = ({
+  tableHeading,
+  tableData,
+  secondaryButton,
+}: {
+  tableHeading: string;
+  tableData: any[];
+  secondaryButton?: React.ReactElementu;
+}) => {
   const formattedKeys =
     tableData.length > 0
       ? Object.keys(tableData[0]).map((key) => {
@@ -14,8 +21,6 @@ const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; table
           return formattedKey;
         })
       : [];
-
-  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
   return (
     <>
@@ -28,6 +33,7 @@ const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; table
       >
         <div className={styles.tableHeader}>
           <p className={styles.tableHeading}>{tableHeading}</p>
+          {secondaryButton && secondaryButton}
         </div>
 
         <div className={styles.tableContainer}>
@@ -49,28 +55,18 @@ const GenericTable = ({ tableHeading, tableData }: { tableHeading: string; table
                       {Object.keys(data).map((key) =>
                         key.includes('id') || key.includes('Id') ? null : (
                           <>
-                            <td className={styles.rowName}>
-                              {typeof data[key] == 'string' && !isNaN(new Date(data[key]).getTime())
-                                ? formatDate(data[key])
-                                : data[key]}
-                            </td>
+                            {typeof data[key] === 'string' && key.includes('at') ? (
+                              <td className={styles.rowName}>{formatDate(data[key])}</td>
+                            ) : typeof data[key] === 'boolean' ? (
+                              <td className={`${styles.rowName} ${styles.rowType}`}>
+                                {data[key] ? 'Active' : 'Inactive'}
+                              </td>
+                            ) : (
+                              <td className={styles.rowName}>{data[key] ?? 0}</td>
+                            )}
                           </>
                         ),
                       )}
-                      <td
-                        onClick={() => {
-                          downloadFile(eventId, data.file_id, 'uploaded');
-                        }}
-                      >
-                        Uploaded
-                      </td>
-                      <td
-                        onClick={() => {
-                          downloadFile(eventId, data.file_id, 'processed');
-                        }}
-                      >
-                        Processed
-                      </td>
                     </tr>
                   ))}
 
