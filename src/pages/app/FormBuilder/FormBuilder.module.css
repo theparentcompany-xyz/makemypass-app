@@ -34,6 +34,10 @@
   white-space: nowrap;
 }
 
+.customFieldLabel span {
+  margin-left: 0.5rem;
+}
+
 .requiredHeading {
   display: flex;
   align-items: center;

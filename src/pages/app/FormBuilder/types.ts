@@ -16,3 +16,25 @@ export interface Field {
   team_field: boolean;
   description: string | null;
 }
+
+export interface ChangeType {
+  showModal: boolean;
+  currentType: string;
+}
+
+export enum FieldType {
+  Text = 'text',
+  Email = 'email',
+  PhoneNumber = 'phonenumber',
+  SingleSelect = 'singleselect',
+  TextArea = 'textarea',
+  MultiSelect = 'multiselect',
+  Radio = 'radio',
+  File = 'file',
+  Date = 'date',
+  DateTime = 'datetime',
+  Time = 'time',
+  Number = 'number',
+  Rating = 'rating',
+  Checkbox = 'checkbox',
+}
