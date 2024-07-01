@@ -29,6 +29,7 @@ import EventGlance from './pages/app/EventGlance/EventGlance';
 import EditEvent from './pages/app/EditEvent/EditEvent';
 import FormBuilder from './pages/app/FormBuilder/FormBuilder';
 import ValidateData from './pages/app/ValidateData/ValidateData';
+import Coupon from './pages/app/Coupon/Coupon';
 
 // import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 // import SpinWheel from './pages/app/SpinWheel/SpinWheel';
@@ -154,6 +155,10 @@ const routes = [
       {
         path: '/:eventTitle/formbuilder',
         element: <RoleChecker roles={[role.ADMIN, role.OWNER]} children={<FormBuilder />} />,
+      },
+      {
+        path: '/:eventTitle/coupon',
+        element: <RoleChecker roles={[role.ADMIN, role.OWNER]} children={<Coupon />} />,
       },
       // {
       //   path: `/:eventTitle/checkins/claimgifts`,

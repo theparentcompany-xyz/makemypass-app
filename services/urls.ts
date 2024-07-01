@@ -137,6 +137,9 @@ export const makeMyPass = {
   getMailService: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/get-email-service/`),
   updateMailService: (eventId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/update-email-service/`),
+
+  //CouponCRUD
+  listCoupons: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/list-coupons/`),
 };
 
 export const makeMyPassSocket = {

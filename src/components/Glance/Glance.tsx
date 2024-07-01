@@ -140,6 +140,11 @@ const Glance = ({
       title: 'Check-Ins',
       roles: ['Admin', 'Owner', 'Volunteer'],
     },
+
+    coupon: {
+      title: 'Coupon',
+      roles: ['Admin', 'Owner', 'Volunteer'],
+    },
     // feedback: 'Feedbacks',
   };
 
