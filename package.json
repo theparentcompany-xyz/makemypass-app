@@ -39,7 +39,8 @@
     "react-select": "^5.8.0",
     "react-spinners": "^0.13.8",
     "react-voice-visualizer": "^1.8.1",
-    "react-window": "^1.8.10"
+    "react-window": "^1.8.10",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/google-map-react": "^2.1.10",

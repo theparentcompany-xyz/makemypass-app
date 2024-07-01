@@ -14,16 +14,14 @@ import { getForm, updateForm } from '../../../apis/formbuilder';
 import { Field } from './types';
 import SelectComponent from './SelectComponent';
 import { IoCloseSharp } from 'react-icons/io5';
-import { IoIosSave } from 'react-icons/io';
 import { conditions } from './constant';
 import toast from 'react-hot-toast';
+import { v4 as uuidv4 } from 'uuid';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [formFields, setFormFields] = useState<Field[]>([]);
   const [selectedField, setSelectedField] = useState<Field>({} as Field);
-  const [newOption, setNewOption] = useState(false);
-  const [newOptionValue, setNewOptionValue] = useState('');
 
   useEffect(() => {
     getForm(event_id, setFormFields);
@@ -45,7 +43,7 @@ const FormBuilder = () => {
   };
 
   const updateFormStateVariable = () => {
-    setFormFields([ ...formFields ]);
+    setFormFields([...formFields]);
   };
 
   const getFormFields = (currentField: Field, fieldId?: string) => {
@@ -72,9 +70,36 @@ const FormBuilder = () => {
   };
 
   const removeOption = (field: Field, index: number) => {
-    const updatedOptions = field.options;
-    updatedOptions.splice(index, 1);
-    updateFormFieldValue(field, 'options', updatedOptions);
+    field.options.splice(index, 1);
+    updateFormStateVariable();
+  };
+
+  const addOption = (field: Field) => {
+    field.options.push('');
+    updateFormStateVariable();
+  };
+
+  const addCondition = (field: Field) => {
+    field.conditions.push({ field: '', operator: '', value: '' });
+    updateFormStateVariable();
+  };
+
+  const addField = () => {
+    const defaultField = {
+      'id': uuidv4(),
+      'type': 'text',
+      'title': 'Name',
+      'hidden': false,
+      'unique': false,
+      'options': [],
+      'property': {},
+      'required': true,
+      'field_key': 'name',
+      'conditions': [],
+      'team_field': false,
+      'description': null,
+    };
+    setFormFields([...formFields, defaultField]);
   };
 
   // useEffect(() => {}, [formFields]);
@@ -84,7 +109,7 @@ const FormBuilder = () => {
       <Theme>
         <div className={styles.builderContainer}>
           <EventHeader />
-          <Glance tab='formbuilder' />
+          <Glance tab="formbuilder" />
           <div className={styles.requiredFieldsHeader}>
             <div className={styles.customFieldsContainer}>
               <div className={styles.customFieldsHeader}>
@@ -95,7 +120,7 @@ const FormBuilder = () => {
                       backgroundColor: '#FF9641',
                     }}
                   >
-                    <FaAddressCard size={20} color='#ffffff' />
+                    <FaAddressCard size={20} color="#ffffff" />
                   </div>
                   <p className={styles.customFieldsText}>Custom Fields</p>
                 </div>
@@ -107,11 +132,11 @@ const FormBuilder = () => {
                   return field.id !== selectedField.id ? (
                     <div className={styles.customField}>
                       <div className={styles.row1}>
-                        <RxDragHandleDots2 size={25} color='#606264' />
+                        <RxDragHandleDots2 size={25} color="#606264" />
                         <div>
-                          <p className={styles.customFieldLabel}>{field.title}</p>
+                          <p className={styles.customFieldLabel}>{field.type.toUpperCase()}</p>
                           <p className={styles.customFieldType}>
-                            <BsAlphabetUppercase size={25} /> {field.description}
+                            <BsAlphabetUppercase size={25} /> {field.title}
                           </p>
                         </div>
                       </div>
@@ -120,15 +145,15 @@ const FormBuilder = () => {
                           setSelectedField(field);
                         }}
                         size={20}
-                        color='#606264'
+                        color="#606264"
                       />
                     </div>
                   ) : (
                     <div className={styles.customFieldExp}>
                       <div className={styles.row}>
                         <div className={styles.row1}>
-                          <RxDragHandleDots2 size={25} color='#606264' />
-                          <p className={styles.customFieldLabel}>{field.title}</p>
+                          <RxDragHandleDots2 size={25} color="#606264" />
+                          <p className={styles.customFieldLabel}>{field.type.toUpperCase()}</p>
                         </div>
 
                         <div className={styles.expandedRight}>
@@ -155,17 +180,19 @@ const FormBuilder = () => {
                           {field.hidden ? (
                             <FaRegEyeSlash
                               size={25}
-                              color='#606264'
+                              color="#606264"
                               onClick={() => {
                                 field.hidden = !field.hidden;
+                                updateFormStateVariable();
                               }}
                             />
                           ) : (
                             <FaRegEye
                               size={25}
-                              color='#606264'
+                              color="#606264"
                               onClick={() => {
                                 field.hidden = !field.hidden;
+                                updateFormStateVariable();
                               }}
                             />
                           )}
@@ -174,8 +201,8 @@ const FormBuilder = () => {
 
                       <div className={styles.customFieldName}>
                         <input
-                          type='text'
-                          placeholder='Field Name'
+                          type="text"
+                          placeholder="Field Name"
                           value={field.title}
                           onChange={(event) => {
                             field.title = event.target.value;
@@ -185,8 +212,8 @@ const FormBuilder = () => {
                       </div>
                       <div className={styles.customFieldName}>
                         <input
-                          type='text'
-                          placeholder='Add Some help text.'
+                          type="text"
+                          placeholder="Add Some help text."
                           value={field.description || ''}
                           onChange={(event) => {
                             field.description = event.target.value;
@@ -195,19 +222,22 @@ const FormBuilder = () => {
                         />
                       </div>
 
-                      {field.options && (field.type === 'radio' || field.type === 'checkbox') && (
+                      {/*TODO: move types to enum like*/}
+                      {field.options && (field.type === 'radio' || field.type === 'checkbox' ||
+                        field.type === 'singleselect' || field.type === 'multiselect') && (
                         <div className={styles.customFieldOption}>
                           {field.options.map((option, index) => (
-                            <div className='row'>
+                            <div className="row">
                               <input
                                 className={styles.optionInput}
-                                type='text'
-                                placeholder='Option'
+                                type="text"
+                                placeholder="Option"
                                 value={option}
                                 onChange={(event) => {
                                   const updatedOptions = field.options;
                                   updatedOptions[index] = event.target.value;
                                   field.options = updatedOptions;
+                                  updateFormStateVariable();
                                 }}
                               />
                               <IoCloseSharp
@@ -215,36 +245,13 @@ const FormBuilder = () => {
                                   removeOption(field, index);
                                 }}
                                 size={20}
-                                color='#606264'
+                                color="#606264"
                               />
                             </div>
                           ))}
-                          {newOption && (
-                            <div className='row'>
-                              <input
-                                className={styles.optionInput}
-                                type='text'
-                                placeholder='Option'
-                                onChange={(event) => {
-                                  setNewOptionValue(event.target.value);
-                                }}
-                              />
-                              <IoIosSave
-                                onClick={() => {
-                                  const updatedOptions = field.options;
-                                  updatedOptions.push(newOptionValue);
-
-                                  updateFormFieldValue(field, 'options', updatedOptions);
-                                  setNewOption(false);
-                                }}
-                                size={20}
-                                color='#606264'
-                              />
-                            </div>
-                          )}
                           <p
                             onClick={() => {
-                              setNewOption(true);
+                              addOption(field);
                             }}
                             className={styles.addOption}
                           >
@@ -271,12 +278,12 @@ const FormBuilder = () => {
                                 field.conditions.length > 0
                                   ? []
                                   : [
-                                      {
-                                        field: '',
-                                        operator: '',
-                                        value: '',
-                                      },
-                                    ],
+                                    {
+                                      field: '',
+                                      operator: '',
+                                      value: '',
+                                    },
+                                  ],
                               );
                             }}
                           />
@@ -336,8 +343,8 @@ const FormBuilder = () => {
                                   }}
                                 />
                                 <input
-                                  type='text'
-                                  placeholder='Enter a Value'
+                                  type="text"
+                                  placeholder="Enter a Value"
                                   value={condition.value}
                                   onChange={(event) => {
                                     updateFormFieldValue(
@@ -358,7 +365,7 @@ const FormBuilder = () => {
 
                                 <RiDeleteBinLine
                                   size={20}
-                                  color='#606264'
+                                  color="#606264"
                                   onClick={() => {
                                     updateFormFieldValue(
                                       field,
@@ -376,7 +383,7 @@ const FormBuilder = () => {
                                     marginLeft: '0.5rem',
                                   }}
                                   size={20}
-                                  color='#606264'
+                                  color="#606264"
                                 />
 
                                 {getFormFields(field, condition.field).length > 0 && (
@@ -385,7 +392,7 @@ const FormBuilder = () => {
                                       marginLeft: '0.5rem',
                                     }}
                                     size={20}
-                                    color='#606264'
+                                    color="#606264"
                                     onClick={() => {
                                       updateFormFieldValue(field, 'condition', [
                                         ...field.conditions,
@@ -411,9 +418,12 @@ const FormBuilder = () => {
                   );
                 })}
 
-                <button className={styles.addQuestionButton}>
-                  <span>+</span>
-                  {''}Add Question
+                <button
+                  onClick={() => {
+                    addField();
+                  }}
+                  className={styles.addQuestionButton}>
+                  <span>+</span>Add Question
                 </button>
                 <button
                   onClick={() => {
