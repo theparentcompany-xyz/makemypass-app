@@ -342,6 +342,7 @@ export const postAudio = async (
     type: 'audio/mp3',
   });
   form.append('file', file);
+  form.append('previous_form', JSON.stringify(formData)
   publicGateway
     .post(makeMyPass.parseFromAudio(eventId), form, {
       headers: {
