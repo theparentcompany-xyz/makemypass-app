@@ -183,10 +183,7 @@ export const editEvent = ({
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Event Updated Successfully');
-      if (!setIsPublished)
-        setTimeout(() => {
-          window.location.href = `/${response.data.response.name}/manage`;
-        }, 1000);
+      if (!setIsPublished) window.location.href = `/${response.data.response.name}/manage`;
       setIsPublished && setIsPublished(eventData.get('is_public_insight') === 'true');
     })
     .catch((error) => {
