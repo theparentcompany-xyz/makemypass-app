@@ -196,16 +196,31 @@ const Table = ({
 
   const filteredData = useMemo(() => {
     let keyword = '';
-    if (search) keyword = search.toLowerCase();
+    let field = '';
+    if (search) {
+      if (search.includes('from:')) {
+        field = (search.match(/from:(\S+)/) || [])[1] || '';
+        field = field.trim().toLowerCase();
+        console.log(field);
+        if (search.includes('has:')) {
+          keyword = (search.match(/has:(.+)$/) || [])[1]?.trim() || '';
+          keyword = keyword.trim().toLowerCase();
+          console.log(keyword);
+        }
+      } else keyword = search.toLowerCase();
+    }
+
     return tableData.filter(
       (item) =>
         item.name?.toLowerCase().includes(keyword) ||
         item.email?.toLowerCase().includes(keyword) ||
-        item.phonenumber?.toLowerCase().includes(keyword),
+        item.phonenumber?.toLowerCase().includes(keyword) ||
+        (field && item[field]?.toLowerCase().includes(keyword)),
     );
   }, [tableData, search]);
 
   const groupBy = (filteredData: TableType[], key: string) => {
+    console.log(filteredData);
     return filteredData.reduce((result: { [key: string]: TableType[] }, currentValue) => {
       (result[currentValue[key]] = result[currentValue[key]] || []).push(currentValue);
       return result;

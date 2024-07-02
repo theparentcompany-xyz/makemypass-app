@@ -136,7 +136,10 @@ const Guests = () => {
       amount: 'amount',
       is_approved: 'is_approved',
       team_id: 'team_id',
+      muid: 'muid',
     };
+
+    console.log(guests);
 
     if (guests) {
       const transformedData = transformTableData(guestsTableMapping, guests);
