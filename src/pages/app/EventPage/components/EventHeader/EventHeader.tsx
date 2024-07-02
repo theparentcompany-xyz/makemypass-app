@@ -43,7 +43,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
             }}
           >
             <p className={styles.eventTitle}>{eventData?.title}</p>
-            {eventData?.hosts && eventData?.hosts.length > 0 && (
+            {/* {eventData?.hosts && eventData?.hosts.length > 0 && (
               <div className={styles.hostedBy}>
                 <span>Hosted By:</span>
                 {eventData.hosts.map((eventHost: EventHosts) => {
@@ -61,7 +61,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                   );
                 })}
               </div>
-            )}
+            )} */}
             <div className={styles.eventDatePlace}>
               <div className={styles.eventDate}>
                 {eventData?.event_start_date && (
