@@ -58,7 +58,7 @@ const SuccessModal = ({
                       {success.followupMessage}
                     </p>
 
-                    {success.ticketURL && (
+                    {/* {success.ticketURL && (
                       <>
                         <button
                           onClick={() => {
@@ -77,7 +77,7 @@ const SuccessModal = ({
                           View Ticket
                         </button>
                       </>
-                    )}
+                    )} */}
 
                     <p className={styles.contactUs}>
                       If you have any questions or need assistance, please contact us at
