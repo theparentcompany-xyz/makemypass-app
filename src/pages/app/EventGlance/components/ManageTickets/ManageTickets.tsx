@@ -126,6 +126,18 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     if (!paidTicket) {
       selection = { ...selection, price: 0 } as TicketType;
     }
+    if (isNaN(selection?.capacity as number)) {
+      selection = { ...selection, capacity: null } as TicketType;
+      if (!specificUpdate) {
+      }
+      setLimitCapacity(false);
+    }
+
+    if (selection?.price == null || (selection?.price == 0 && paidTicket)) {
+      selection = { ...selection, price: 0 } as TicketType;
+      setPaidTicket(false);
+    }
+
     if (matchingTicket) {
       const changedData: Record<string, any> = Object.entries(selection as Record<string, any>)
         .filter(([key, value]) => matchingTicket?.[key as keyof EventType] !== value)
@@ -134,26 +146,26 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       if (changedData?.description == '' && matchingTicket?.description == null)
         delete changedData['description'];
 
-      if (isNaN(changedData?.price) && paidTicket) {
-        changedData['price'] = 0;
-        if (matchingTicket?.price == 0) delete changedData['price'];
-        setPaidTicket(false);
-      }
-
-      if (isNaN(changedData?.capacity)) {
-        changedData['capacity'] = null;
-        if (matchingTicket?.capacity == null) {
-          delete changedData['capacity'];
-        }
-        setLimitCapacity(false);
-      }
       const formData = new FormData();
       for (const key in changedData) {
         formData.append(key, changedData[key]);
       }
       console.log(changedData);
-      editTicket(eventId, selectedTicket as TicketType, formData, setTicketData).then(() => {
-        if (isNaN(changedData?.capacity)) {
+      editTicket(eventId, selection as TicketType, formData, setTicketData).then(() => {
+        setLimitCapacity(true);
+
+        if (changedData?.capacity == null && changedData?.price == 0) {
+          setTicketData((prevTickets) =>
+            prevTickets.map((ticket) =>
+              ticket.id == selection?.id
+                ? ({ ...ticket, capacity: null, price: 0 } as unknown as TicketType)
+                : ticket,
+            ),
+          );
+          setSelectedTicket({ ...selection, capacity: null, price: 0 } as unknown as TicketType);
+          setPaidTicket(false);
+          return;
+        } else if (changedData?.capacity == null) {
           setTicketData((prevTickets) =>
             prevTickets.map((ticket) =>
               ticket.id == selection?.id
@@ -161,15 +173,15 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                 : ticket,
             ),
           );
-        }
-        if (isNaN(changedData?.price)) {
+          setSelectedTicket({ ...selection, capacity: null } as unknown as TicketType);
+        } else if (changedData?.price == 0) {
           setTicketData((prevTickets) =>
             prevTickets.map((ticket) =>
-              ticket.id == selection?.id
-                ? ({ ...ticket, price: 0 } as unknown as TicketType)
-                : ticket,
+              ticket.id == selection?.id ? ({ ...ticket, price: 0 } as TicketType) : ticket,
             ),
           );
+          setSelectedTicket({ ...selection, price: 0 } as TicketType);
+          setPaidTicket(false);
         }
       });
     }
@@ -230,6 +242,8 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       });
     }
   }, [ticketData]);
+
+  console.log(ticketData);
 
   console.log('price:', selectedTicket?.price, 'capacity:', selectedTicket?.capacity);
   console.log(paidTicket);
@@ -452,7 +466,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                 <Slider
                   checked={selectedTicket?.capacity != null && limitCapacity}
                   onChange={() => {
-                    if (selectedTicket?.capacity > 0) {
+                    if (selectedTicket?.capacity != null && selectedTicket?.capacity > 0) {
                       setSelectedTicket({
                         ...selectedTicket,
                         capacity: null,
@@ -463,10 +477,12 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                       setSelectedTicket({
                         ...selectedTicket,
                         capacity:
-                          sameIdTicket && sameIdTicket?.capacity > 0 ? sameIdTicket.capacity : 100,
+                          sameIdTicket?.capacity && sameIdTicket?.capacity > 0
+                            ? sameIdTicket.capacity
+                            : 100,
                       } as TicketType);
                     }
-                    if (isNaN(selectedTicket?.capacity)) {
+                    if (isNaN(selectedTicket?.capacity as number)) {
                       setLimitCapacity((prev) => !prev);
                     }
                   }}
