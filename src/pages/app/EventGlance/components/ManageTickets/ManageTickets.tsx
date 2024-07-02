@@ -128,8 +128,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     }
     if (isNaN(selection?.capacity as number)) {
       selection = { ...selection, capacity: null } as TicketType;
-      if (!specificUpdate) {
-      }
       setLimitCapacity(false);
     }
 
@@ -153,8 +151,8 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       console.log(changedData);
       editTicket(eventId, selection as TicketType, formData, setTicketData).then(() => {
         setLimitCapacity(true);
-
-        if (changedData?.capacity == null && changedData?.price == 0) {
+        const capacityExists = Object.keys(changedData).includes('capacity');
+        if (capacityExists && changedData?.capacity == null && changedData?.price == 0) {
           setTicketData((prevTickets) =>
             prevTickets.map((ticket) =>
               ticket.id == selection?.id
@@ -165,7 +163,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
           setSelectedTicket({ ...selection, capacity: null, price: 0 } as unknown as TicketType);
           setPaidTicket(false);
           return;
-        } else if (changedData?.capacity == null) {
+        } else if (capacityExists && changedData?.capacity == null) {
           setTicketData((prevTickets) =>
             prevTickets.map((ticket) =>
               ticket.id == selection?.id
