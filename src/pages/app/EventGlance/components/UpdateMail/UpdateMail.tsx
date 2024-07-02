@@ -76,7 +76,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
           <div className={styles.modalSubText}>
             <div className={styles.inputContainers}>
               <div className={styles.inputContainer}>
-                <p className={styles.inputLabel}>{mailData.description}</p>
+                <p className={styles.inputLabel}>{mailData.type_description}</p>
               </div>
               <div className={styles.inputContainer}>
                 <p className={styles.inputLabel}>Subject</p>

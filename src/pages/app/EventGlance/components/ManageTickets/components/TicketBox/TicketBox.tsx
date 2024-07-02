@@ -27,7 +27,7 @@ const TicketBox = ({
           <p className={styles.ticketName}>{ticketInfo.title}</p>
           <p className={styles.ticketType}>
             {ticketInfo.registration_count}
-            {ticketInfo.capacity ? '/' + ticketInfo.capacity : ''} <br />
+            {ticketInfo.capacity != null ? '/' + ticketInfo.capacity : ''} <br />
             Registered
           </p>
         </div>
@@ -39,13 +39,13 @@ const TicketBox = ({
                 styles.availableDot +
                 ' ' +
                 ((closed ||
-                  (ticketInfo?.capacity &&
+                  (ticketInfo?.capacity != null &&
                     ticketInfo?.registration_count >= ticketInfo?.capacity)) &&
                   styles.unavailable)
               }
             ></span>
             {(closed ||
-              (ticketInfo?.capacity != 0 &&
+              (ticketInfo?.capacity != null &&
                 ticketInfo?.registration_count >= ticketInfo?.capacity)) &&
               'Not '}
             Available

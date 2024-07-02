@@ -143,6 +143,12 @@ const EditEvent = () => {
       formData.append(key, changedData[key]);
     }
 
+    for (const key in changedData) {
+      if (['event_name', 'logo', 'title'].includes(key)) {
+        sessionStorage.clear();
+      }
+    }
+
     editEvent({ eventId, eventData: formData, setFormErrors });
   };
 
