@@ -197,6 +197,7 @@ const Table = ({
   const filteredData = useMemo(() => {
     let keyword = '';
     let field = '';
+
     if (search) {
       if (search.includes('from:')) {
         field = (search.match(/from:(\S+)/) || [])[1] || '';
@@ -210,13 +211,15 @@ const Table = ({
       } else keyword = search.toLowerCase();
     }
 
-    return tableData.filter(
-      (item) =>
-        item.name?.toLowerCase().includes(keyword) ||
-        item.email?.toLowerCase().includes(keyword) ||
-        item.phonenumber?.toLowerCase().includes(keyword) ||
-        (field && item[field]?.toLowerCase().includes(keyword)),
-    );
+    if (field) {
+      return tableData.filter((item) => item[field]?.toLowerCase().includes(keyword));
+    } else
+      return tableData.filter(
+        (item) =>
+          item.name?.toLowerCase().includes(keyword) ||
+          item.email?.toLowerCase().includes(keyword) ||
+          item.phonenumber?.toLowerCase().includes(keyword),
+      );
   }, [tableData, search]);
 
   const groupBy = (filteredData: TableType[], key: string) => {
@@ -250,7 +253,9 @@ const Table = ({
         className={styles.tableOuterContainer}
       >
         <div className={styles.tableHeader}>
-          <p className={styles.tableHeading}>{tableHeading}</p>
+          <p className={styles.tableHeading}>
+            {tableHeading}({filteredData.length})
+          </p>
           {secondaryButton && secondaryButton}
         </div>
 

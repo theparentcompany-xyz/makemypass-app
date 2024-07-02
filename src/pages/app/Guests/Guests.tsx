@@ -15,7 +15,6 @@ import {
 } from '../../../apis/guests';
 import { FormDataType } from '../../../apis/types';
 import { getCategories } from '../../../apis/events';
-import { transformTableData } from '../../../common/commonFunctions';
 
 import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from './types';
 import { TableType } from '../../../components/Table/types';
