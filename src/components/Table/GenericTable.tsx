@@ -9,7 +9,7 @@ const GenericTable = ({
 }: {
   tableHeading: string;
   tableData: any[];
-  secondaryButton?: React.ReactElementu;
+  secondaryButton?: React.ReactElement;
 }) => {
   const formattedKeys =
     tableData.length > 0
