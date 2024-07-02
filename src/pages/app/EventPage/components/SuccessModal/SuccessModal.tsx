@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import styles from './SuccessModal.module.css';
 import Modal from '../../../../../components/Modal/Modal';
 import { Dispatch, SetStateAction } from 'react';
-import { BsDownload } from 'react-icons/bs';
 import { SuccessModalProps } from '../../types';
 import { HashLoader } from 'react-spinners';
 
@@ -13,18 +12,18 @@ const SuccessModal = ({
   success: SuccessModalProps;
   setSuccess: Dispatch<SetStateAction<SuccessModalProps>>;
 }) => {
-  const downloadTicket = async (ticketURL: string | undefined) => {
-    if (!ticketURL) return;
-    const response = await fetch(ticketURL);
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'EventTicket');
-    document.body.appendChild(link);
-    link.click();
-    if (link.parentNode) link.parentNode.removeChild(link);
-  };
+  // const downloadTicket = async (ticketURL: string | undefined) => {
+  //   if (!ticketURL) return;
+  //   const response = await fetch(ticketURL);
+  //   const blob = await response.blob();
+  //   const url = window.URL.createObjectURL(blob);
+  //   const link = document.createElement('a');
+  //   link.href = url;
+  //   link.setAttribute('download', 'EventTicket');
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   if (link.parentNode) link.parentNode.removeChild(link);
+  // };
 
   return (
     <div>
