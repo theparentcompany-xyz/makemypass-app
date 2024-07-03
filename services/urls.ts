@@ -96,6 +96,8 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-guest/${eventId}/initiate-refund/${eventRegisterId}/`),
   addGuestInfo: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/form-info/`),
   sendVerfication: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/send-verification/`),
+  verifyParticipant: (verificationCode: string) =>
+    makeMyPassURL(`/public-form/verify-participant/${verificationCode}/`),
 
   //Payment and Coupons
   validatePayment: makeMyPassURL(`/public-form/validate-payment/`),
@@ -135,6 +137,9 @@ export const makeMyPass = {
   getMailService: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/get-email-service/`),
   updateMailService: (eventId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/update-email-service/`),
+
+  //CouponCRUD
+  listCoupons: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/list-coupons/`),
 };
 
 export const makeMyPassSocket = {

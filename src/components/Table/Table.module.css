@@ -103,8 +103,8 @@
   color: #47c97e;
   font-family: 'Inter', sans-serif;
   font-size: 0.7rem;
-  padding: 0.25rem 0.5rem;
   margin-left: 0.15rem;
+  text-align: center;
 }
 
 .rowDate {

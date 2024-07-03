@@ -296,6 +296,25 @@
   column-gap: 0.5rem;
 }
 
+.subOption{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.subOption label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+}
+
 .capcityInput {
   width: fit-content;
   text-align: right;
