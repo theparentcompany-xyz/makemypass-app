@@ -5,7 +5,7 @@ import {
   IoMapOutline,
   IoPodiumOutline,
 } from 'react-icons/io5';
-import { EventHosts, EventType } from '../../../../../apis/types';
+import { EventType } from '../../../../../apis/types';
 import styles from './EventHeader.module.css';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
