@@ -5,7 +5,7 @@ import {
   IoMapOutline,
   IoPodiumOutline,
 } from 'react-icons/io5';
-import { EventHosts, EventType } from '../../../../../apis/types';
+import { EventType } from '../../../../../apis/types';
 import styles from './EventHeader.module.css';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
@@ -43,7 +43,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
             }}
           >
             <p className={styles.eventTitle}>{eventData?.title}</p>
-            {eventData?.hosts && eventData?.hosts.length > 0 && (
+            {/* {eventData?.hosts && eventData?.hosts.length > 0 && (
               <div className={styles.hostedBy}>
                 <span>Hosted By:</span>
                 {eventData.hosts.map((eventHost: EventHosts) => {
@@ -61,7 +61,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                   );
                 })}
               </div>
-            )}
+            )} */}
             <div className={styles.eventDatePlace}>
               <div className={styles.eventDate}>
                 {eventData?.event_start_date && (
