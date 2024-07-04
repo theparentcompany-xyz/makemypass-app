@@ -9,6 +9,7 @@ import Modal from '../../../../../components/Modal/Modal';
 import { motion } from 'framer-motion';
 import { HashLoader } from 'react-spinners';
 import { isEqual } from 'lodash';
+import toast from 'react-hot-toast';
 
 export interface ChildProps {
   setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -105,22 +106,15 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     if (selectedTicket) {
       deleteTicket(eventId, selectedTicket.id, setTicketData).then(() => {
         if (selectedTicket?.default_selected && tickets.length > 1) {
-          editTicket(
-            eventId,
-            changeDefaultTo as TicketType,
-            { default_selected: true },
-            setTicketData,
-          ).then(() => {
-            changeDefaultSelected(changeDefaultTo?.id as string);
-            setSelectedTicket(changeDefaultTo);
-          });
+          changeDefaultSelected(changeDefaultTo?.id as string);
+        } else {
+          setSelectedTicket(undefined);
         }
       });
-      setSelectedTicket(undefined);
     }
   };
 
-  const updateTicket = (specificUpdate?: TicketType) => {
+  const updateTicket = async (specificUpdate?: TicketType) => {
     let selection = specificUpdate || selectedTicket;
     const matchingTicket = ticketData.find((ticket) => ticket.id === selection?.id);
     if (!paidTicket) {
@@ -194,17 +188,29 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   };
 
   const changeDefaultSelected = (ticketId: string) => {
-    setTickets(
-      tickets.map((ticket) =>
-        ticket.id === ticketId
-          ? { ...ticket, default_selected: true }
-          : { ...ticket, default_selected: false },
-      ),
-    );
-    setSelectedTicket({
-      ...tickets.find((t) => t.id === ticketId),
-      default_selected: true,
-    } as TicketType);
+    if (tickets.find((ticket) => ticket.id === ticketId && ticket.default_selected)) return;
+    editTicket(
+      eventId,
+      tickets.find((t) => t.id === ticketId) as TicketType,
+      { default_selected: true },
+      setTicketData,
+    )
+      .then(() => {
+        setTicketData(
+          ticketData.map((ticket) =>
+            ticket.id === ticketId
+              ? { ...ticket, default_selected: true }
+              : { ...ticket, default_selected: false },
+          ),
+        );
+        setSelectedTicket({
+          ...tickets.find((t) => t.id === ticketId),
+          default_selected: true,
+        } as TicketType);
+      })
+      .catch(() => {
+        toast.error('Failed to set default ticket');
+      });
   };
 
   const closeTicketModal = () => {
@@ -248,8 +254,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   return (
     <>
       {isOpen && (
-        <Modal onClose={() => setIsOpen(false)} style={{ zIndex: 999 }}>
-          <h3 className={styles.modalTitle}>Advanced Setting</h3>
+        <Modal title='Advanced Setting' onClose={() => setIsOpen(false)} style={{ zIndex: 999 }}>
           <div className={styles.advancedOptions}>
             <label className={styles.optionLabel}>Code Prefix</label>
             <input
@@ -298,7 +303,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         </Modal>
       )}
       {isChangedModal && (
-        <Modal onClose={() => setIsChangedModal(false)} style={{ zIndex: 999 }}>
+        <Modal title=' ' onClose={() => setIsChangedModal(false)} style={{ zIndex: 999 }}>
           <div className={styles.modalContainer}>
             {/* Get Confirmation to continue event though user has not saved changes.*/}
             <div className={styles.sectionContent1}>
@@ -317,11 +322,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                     setWantToClose(false);
                     return;
                   }
-
                   const [tempTicket, tempSelectedTicket] = ticketPair as TicketType[];
-                  changeDefaultSelected(
-                    ticketData.find((t) => t.default_selected == true)?.id as string,
-                  );
                   tempTicket.id != tempSelectedTicket?.id &&
                     setSelectedTicket(
                       Object.assign(
@@ -331,22 +332,37 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                     );
                 }}
               >
-                Continue
+                Continue without saving
               </button>
               <button
                 onClick={() => {
                   setIsChangedModal(false);
+                  const [tempTicket, tempSelectedTicket] = ticketPair as TicketType[];
+                  tempTicket.id != tempSelectedTicket?.id &&
+                    updateTicket(tempSelectedTicket as TicketType).then(() => {
+                      setSelectedTicket(
+                        Object.assign(
+                          {},
+                          ticketData.find((t) => t.id == tempTicket.id),
+                        ),
+                      );
+                    });
+                  if (wantToClose) {
+                    setIsTicketsOpen(false);
+                    setWantToClose(false);
+                    return;
+                  }
                 }}
                 className={styles.cancelButton}
               >
-                Cancel
+                Save changes and continue
               </button>
             </div>
           </div>
         </Modal>
       )}
       {deleteModal && (
-        <Modal onClose={() => setDeleteModal(false)} style={{ zIndex: 999 }}>
+        <Modal title=' ' onClose={() => setDeleteModal(false)} style={{ zIndex: 999 }}>
           <div className={styles.modalContainer}>
             {/* Get Confirmation to continue event though user has not saved changes.*/}
             <div className={styles.sectionContent1}>
@@ -603,7 +619,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                     Advanced Settings
                   </button>
                   <button className={styles.updateButton} onClick={() => updateTicket()}>
-                    {selectedTicket?.new ? 'Create Ticket' : 'Update Ticket'}
+                    {'Update Ticket'}
                   </button>
                 </div>
               </div>
