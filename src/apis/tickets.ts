@@ -60,8 +60,9 @@ export const editTicket = async (
       } else {
         setTickets((prev) => prev.map((t) => (t.id === selectedTicket.id ? selectedTicket : t)));
       }
-
-      toast.success(response.data.message.general[0] || 'Ticket Updated Successfully');
+      changedData.default_selected === true
+        ? toast.success(response?.data?.message?.general[0] || 'Default Ticket Changed')
+        : toast.success(response?.data?.message?.general[0] || 'Ticket Updated Successfully');
     })
     .catch((error) => {
       toast.error(error?.response?.data?.message?.general[0] || 'Unable to process the request');
