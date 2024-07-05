@@ -9,6 +9,7 @@ import Modal from '../../../../../components/Modal/Modal';
 import { motion } from 'framer-motion';
 import { HashLoader } from 'react-spinners';
 import { isEqual } from 'lodash';
+import toast from 'react-hot-toast';
 
 export interface ChildProps {
   setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -105,27 +106,30 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     if (selectedTicket) {
       deleteTicket(eventId, selectedTicket.id, setTicketData).then(() => {
         if (selectedTicket?.default_selected && tickets.length > 1) {
-          editTicket(
-            eventId,
-            changeDefaultTo as TicketType,
-            { default_selected: true },
-            setTicketData,
-          ).then(() => {
-            changeDefaultSelected(changeDefaultTo?.id as string);
-            setSelectedTicket(changeDefaultTo);
-          });
+          changeDefaultSelected(changeDefaultTo?.id as string);
+        } else {
+          setSelectedTicket(undefined);
         }
       });
-      setSelectedTicket(undefined);
     }
   };
 
-  const updateTicket = (specificUpdate?: TicketType) => {
+  const updateTicket = async (specificUpdate?: TicketType) => {
     let selection = specificUpdate || selectedTicket;
     const matchingTicket = ticketData.find((ticket) => ticket.id === selection?.id);
     if (!paidTicket) {
       selection = { ...selection, price: 0 } as TicketType;
     }
+    if (isNaN(selection?.capacity as number)) {
+      selection = { ...selection, capacity: null } as TicketType;
+      setLimitCapacity(false);
+    }
+
+    if (selection?.price == null || (selection?.price == 0 && paidTicket)) {
+      selection = { ...selection, price: 0 } as TicketType;
+      setPaidTicket(false);
+    }
+
     if (matchingTicket) {
       const changedData: Record<string, any> = Object.entries(selection as Record<string, any>)
         .filter(([key, value]) => matchingTicket?.[key as keyof EventType] !== value)
@@ -134,26 +138,26 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       if (changedData?.description == '' && matchingTicket?.description == null)
         delete changedData['description'];
 
-      if (isNaN(changedData?.price) && paidTicket) {
-        changedData['price'] = 0;
-        if (matchingTicket?.price == 0) delete changedData['price'];
-        setPaidTicket(false);
-      }
-
-      if (isNaN(changedData?.capacity)) {
-        changedData['capacity'] = null;
-        if (matchingTicket?.capacity == null) {
-          delete changedData['capacity'];
-        }
-        setLimitCapacity(false);
-      }
       const formData = new FormData();
       for (const key in changedData) {
         formData.append(key, changedData[key]);
       }
       console.log(changedData);
-      editTicket(eventId, selectedTicket as TicketType, formData, setTicketData).then(() => {
-        if (isNaN(changedData?.capacity)) {
+      editTicket(eventId, selection as TicketType, formData, setTicketData).then(() => {
+        setLimitCapacity(true);
+        const capacityExists = Object.keys(changedData).includes('capacity');
+        if (capacityExists && changedData?.capacity == null && changedData?.price == 0) {
+          setTicketData((prevTickets) =>
+            prevTickets.map((ticket) =>
+              ticket.id == selection?.id
+                ? ({ ...ticket, capacity: null, price: 0 } as unknown as TicketType)
+                : ticket,
+            ),
+          );
+          setSelectedTicket({ ...selection, capacity: null, price: 0 } as unknown as TicketType);
+          setPaidTicket(false);
+          return;
+        } else if (capacityExists && changedData?.capacity == null) {
           setTicketData((prevTickets) =>
             prevTickets.map((ticket) =>
               ticket.id == selection?.id
@@ -161,15 +165,15 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                 : ticket,
             ),
           );
-        }
-        if (isNaN(changedData?.price)) {
+          setSelectedTicket({ ...selection, capacity: null } as unknown as TicketType);
+        } else if (changedData?.price == 0) {
           setTicketData((prevTickets) =>
             prevTickets.map((ticket) =>
-              ticket.id == selection?.id
-                ? ({ ...ticket, price: 0 } as unknown as TicketType)
-                : ticket,
+              ticket.id == selection?.id ? ({ ...ticket, price: 0 } as TicketType) : ticket,
             ),
           );
+          setSelectedTicket({ ...selection, price: 0 } as TicketType);
+          setPaidTicket(false);
         }
       });
     }
@@ -184,17 +188,29 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   };
 
   const changeDefaultSelected = (ticketId: string) => {
-    setTickets(
-      tickets.map((ticket) =>
-        ticket.id === ticketId
-          ? { ...ticket, default_selected: true }
-          : { ...ticket, default_selected: false },
-      ),
-    );
-    setSelectedTicket({
-      ...tickets.find((t) => t.id === ticketId),
-      default_selected: true,
-    } as TicketType);
+    if (tickets.find((ticket) => ticket.id === ticketId && ticket.default_selected)) return;
+    editTicket(
+      eventId,
+      tickets.find((t) => t.id === ticketId) as TicketType,
+      { default_selected: true },
+      setTicketData,
+    )
+      .then(() => {
+        setTicketData(
+          ticketData.map((ticket) =>
+            ticket.id === ticketId
+              ? { ...ticket, default_selected: true }
+              : { ...ticket, default_selected: false },
+          ),
+        );
+        setSelectedTicket({
+          ...tickets.find((t) => t.id === ticketId),
+          default_selected: true,
+        } as TicketType);
+      })
+      .catch(() => {
+        toast.error('Failed to set default ticket');
+      });
   };
 
   const closeTicketModal = () => {
@@ -231,13 +247,14 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     }
   }, [ticketData]);
 
+  console.log(ticketData);
+
   console.log('price:', selectedTicket?.price, 'capacity:', selectedTicket?.capacity);
   console.log(paidTicket);
   return (
     <>
       {isOpen && (
-        <Modal onClose={() => setIsOpen(false)} style={{ zIndex: 999 }}>
-          <h3 className={styles.modalTitle}>Advanced Setting</h3>
+        <Modal title='Advanced Setting' onClose={() => setIsOpen(false)} style={{ zIndex: 999 }}>
           <div className={styles.advancedOptions}>
             <label className={styles.optionLabel}>Code Prefix</label>
             <input
@@ -286,7 +303,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         </Modal>
       )}
       {isChangedModal && (
-        <Modal onClose={() => setIsChangedModal(false)} style={{ zIndex: 999 }}>
+        <Modal title=' ' onClose={() => setIsChangedModal(false)} style={{ zIndex: 999 }}>
           <div className={styles.modalContainer}>
             {/* Get Confirmation to continue event though user has not saved changes.*/}
             <div className={styles.sectionContent1}>
@@ -305,11 +322,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                     setWantToClose(false);
                     return;
                   }
-
                   const [tempTicket, tempSelectedTicket] = ticketPair as TicketType[];
-                  changeDefaultSelected(
-                    ticketData.find((t) => t.default_selected == true)?.id as string,
-                  );
                   tempTicket.id != tempSelectedTicket?.id &&
                     setSelectedTicket(
                       Object.assign(
@@ -319,22 +332,37 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                     );
                 }}
               >
-                Continue
+                Continue without saving
               </button>
               <button
                 onClick={() => {
                   setIsChangedModal(false);
+                  const [tempTicket, tempSelectedTicket] = ticketPair as TicketType[];
+                  tempTicket.id != tempSelectedTicket?.id &&
+                    updateTicket(tempSelectedTicket as TicketType).then(() => {
+                      setSelectedTicket(
+                        Object.assign(
+                          {},
+                          ticketData.find((t) => t.id == tempTicket.id),
+                        ),
+                      );
+                    });
+                  if (wantToClose) {
+                    setIsTicketsOpen(false);
+                    setWantToClose(false);
+                    return;
+                  }
                 }}
                 className={styles.cancelButton}
               >
-                Cancel
+                Save changes and continue
               </button>
             </div>
           </div>
         </Modal>
       )}
       {deleteModal && (
-        <Modal onClose={() => setDeleteModal(false)} style={{ zIndex: 999 }}>
+        <Modal title=' ' onClose={() => setDeleteModal(false)} style={{ zIndex: 999 }}>
           <div className={styles.modalContainer}>
             {/* Get Confirmation to continue event though user has not saved changes.*/}
             <div className={styles.sectionContent1}>
@@ -452,7 +480,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                 <Slider
                   checked={selectedTicket?.capacity != null && limitCapacity}
                   onChange={() => {
-                    if (selectedTicket?.capacity > 0) {
+                    if (selectedTicket?.capacity != null && selectedTicket?.capacity > 0) {
                       setSelectedTicket({
                         ...selectedTicket,
                         capacity: null,
@@ -463,10 +491,12 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                       setSelectedTicket({
                         ...selectedTicket,
                         capacity:
-                          sameIdTicket && sameIdTicket?.capacity > 0 ? sameIdTicket.capacity : 100,
+                          sameIdTicket?.capacity && sameIdTicket?.capacity > 0
+                            ? sameIdTicket.capacity
+                            : 100,
                       } as TicketType);
                     }
-                    if (isNaN(selectedTicket?.capacity)) {
+                    if (isNaN(selectedTicket?.capacity as number)) {
                       setLimitCapacity((prev) => !prev);
                     }
                   }}
@@ -589,7 +619,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                     Advanced Settings
                   </button>
                   <button className={styles.updateButton} onClick={() => updateTicket()}>
-                    {selectedTicket?.new ? 'Create Ticket' : 'Update Ticket'}
+                    {'Update Ticket'}
                   </button>
                 </div>
               </div>

@@ -182,3 +182,14 @@ input {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+.numberInput{
+  margin-top: 0.25rem;
+  border-radius: 8px;
+  border: none;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  width: 93%;
+  display: flex;
+  font-family: 'Inter', sans-serif;
+  color: #a4a4a4;
+}
