@@ -1,5 +1,6 @@
 import Select from 'react-select';
 import { customStyles } from '../EventPage/constants';
+import { MdClear } from 'react-icons/md';
 
 const SelectComponent = ({
   backgroundColor,
@@ -20,6 +21,7 @@ const SelectComponent = ({
       <Select
         className='basic-single'
         classNamePrefix='select'
+        isClearable={true}
         name='role'
         onChange={onChange}
         options={options}

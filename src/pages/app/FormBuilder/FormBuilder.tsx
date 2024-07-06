@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { AnimatePresence } from 'framer-motion';
+import { cond } from 'lodash';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -32,21 +33,6 @@ const FormBuilder = () => {
   useEffect(() => {
     getForm(event_id, setFormFields);
   }, [event_id]);
-
-  const updateFormFieldValue = (
-    field: Field,
-    key: string,
-    value: string | boolean | string[] | { field: string; operator: string; value: string }[],
-  ) => {
-    setFormFields([
-      ...formFields.slice(0, formFields.indexOf(field)),
-      {
-        ...field,
-        [key]: value,
-      },
-      ...formFields.slice(formFields.indexOf(field) + 1),
-    ]);
-  };
 
   const updateFormStateVariable = () => {
     setFormFields([...formFields]);
@@ -351,7 +337,11 @@ const FormBuilder = () => {
                                   options={getFormFields(field, condition.field)}
                                   value={condition.field}
                                   onChange={(option: { value: string; label: string }) => {
-                                    condition.field = option.value;
+                                    if (!option) condition.field = '';
+                                    else condition.field = option.value;
+
+                                    console.log(condition);
+
                                     updateFormStateVariable();
                                   }}
                                 />
@@ -364,7 +354,8 @@ const FormBuilder = () => {
                                   ]}
                                   value={condition.operator}
                                   onChange={(option: { value: string; label: string }) => {
-                                    condition.operator = option.value;
+                                    if (!option) condition.operator = '';
+                                    else condition.operator = option.value;
                                     updateFormStateVariable();
                                   }}
                                 />
