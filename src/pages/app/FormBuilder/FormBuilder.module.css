@@ -273,5 +273,5 @@
   margin-top: 2rem;
   margin-left: 5rem;
   position: absolute;
-  z-index: 51;
+  z-index: 99999;
 }

@@ -149,7 +149,27 @@ const FormBuilder = () => {
                       <div className={styles.row1}>
                         <RxDragHandleDots2 size={25} color='#606264' />
                         <div>
-                          <p className={styles.customFieldLabel}>{field.type.toUpperCase()}</p>
+                          <p className={styles.customFieldLabel}>
+                            {field.type.toUpperCase()}{' '}
+                            <span
+                              onClick={() => {
+                                setSelectedField(field);
+                                setChangeType({
+                                  showModal: true,
+                                  currentType: field.type,
+                                });
+                              }}
+                              className={styles.changeTypeButton}
+                            >
+                              {
+                                changeType.showModal && selectedField === field ? (
+                                  <FaChevronDown size={15} color='white' />
+                                ) : (
+                                  <FaChevronUp size={15} color='white' />
+                                ) // change the icon based on the state
+                              }
+                            </span>
+                          </p>
                           <p className={styles.customFieldType}>
                             <BsAlphabetUppercase size={25} /> {field.title}
                           </p>
@@ -181,9 +201,9 @@ const FormBuilder = () => {
                             >
                               {
                                 changeType.showModal ? (
-                                  <FaChevronDown color='white' />
+                                  <FaChevronDown size={15} color='white' />
                                 ) : (
-                                  <FaChevronUp color='white' />
+                                  <FaChevronUp size={15} color='white' />
                                 ) // change the icon based on the state
                               }
                             </span>
@@ -339,8 +359,6 @@ const FormBuilder = () => {
                                   onChange={(option: { value: string; label: string }) => {
                                     if (!option) condition.field = '';
                                     else condition.field = option.value;
-
-                                    console.log(condition);
 
                                     updateFormStateVariable();
                                   }}
