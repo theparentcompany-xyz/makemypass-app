@@ -87,11 +87,6 @@ const FormBuilder = () => {
     updateFormStateVariable();
   };
 
-  const addCondition = (field: Field) => {
-    field.conditions.push({ field: '', operator: '', value: '' });
-    updateFormStateVariable();
-  };
-
   const addField = () => {
     const defaultField = {
       id: uuidv4(),
@@ -110,14 +105,41 @@ const FormBuilder = () => {
     setFormFields([...formFields, defaultField]);
   };
 
-  // useEffect(() => {}, [formFields]);
+  const addOrRemoveCondition = (field: Field) => {
+    if (field.conditions.length > 0) {
+      field.conditions = [];
+    } else {
+      field.conditions = [{
+        field: '',
+        operator: '',
+        value: '',
+      }];
+    }
+    updateFormStateVariable();
+  };
+
+  const addCondition = (field: Field) => {
+    field.conditions.push({
+      field: '',
+      operator: '',
+      value: '',
+    });
+    updateFormStateVariable();
+  };
+
+  const removeCondition = (field: Field, index: number) => {
+    console.log(field.conditions);
+    field.conditions.splice(index, 1);
+    updateFormStateVariable();
+    console.log(field.conditions);
+  };
 
   return (
     <>
       <Theme>
         <div className={styles.builderContainer}>
           <EventHeader />
-          <Glance tab='formbuilder' />
+          <Glance tab="formbuilder" />
           <div className={styles.requiredFieldsHeader}>
             <div className={styles.customFieldsContainer}>
               <div className={styles.customFieldsHeader}>
@@ -128,19 +150,18 @@ const FormBuilder = () => {
                       backgroundColor: '#FF9641',
                     }}
                   >
-                    <FaAddressCard size={20} color='#ffffff' />
+                    <FaAddressCard size={20} color="#ffffff" />
                   </div>
                   <p className={styles.customFieldsText}>Custom Fields</p>
                 </div>
               </div>
 
               <div className={styles.customFields}>
-                {formFields.map((field) => {
-                  console.log(formFields);
+                {formFields.map((field, idx ) => {
                   return field.id !== selectedField.id ? (
-                    <div className={styles.customField}>
+                    <div className={styles.customField} key={idx}>
                       <div className={styles.row1}>
-                        <RxDragHandleDots2 size={25} color='#606264' />
+                        <RxDragHandleDots2 size={25} color="#606264" />
                         <div>
                           <p className={styles.customFieldLabel}>{field.type.toUpperCase()}</p>
                           <p className={styles.customFieldType}>
@@ -153,14 +174,14 @@ const FormBuilder = () => {
                           setSelectedField(field);
                         }}
                         size={20}
-                        color='#606264'
+                        color="#606264"
                       />
                     </div>
                   ) : (
-                    <div className={styles.customFieldExp}>
+                    <div className={styles.customFieldExp} key={idx}>
                       <div className={styles.row}>
                         <div className={styles.row1}>
-                          <RxDragHandleDots2 size={25} color='#606264' />
+                          <RxDragHandleDots2 size={25} color="#606264" />
                           <p className={styles.customFieldLabel}>
                             {field.type.toUpperCase()}
                             <span
@@ -174,9 +195,9 @@ const FormBuilder = () => {
                             >
                               {
                                 changeType.showModal ? (
-                                  <FaChevronDown color='white' />
+                                  <FaChevronDown color="white" />
                                 ) : (
-                                  <FaChevronUp color='white' />
+                                  <FaChevronUp color="white" />
                                 ) // change the icon based on the state
                               }
                             </span>
@@ -207,7 +228,7 @@ const FormBuilder = () => {
                           {field.hidden ? (
                             <FaRegEyeSlash
                               size={25}
-                              color='#606264'
+                              color="#606264"
                               onClick={() => {
                                 field.hidden = !field.hidden;
                                 updateFormStateVariable();
@@ -216,7 +237,7 @@ const FormBuilder = () => {
                           ) : (
                             <FaRegEye
                               size={25}
-                              color='#606264'
+                              color="#606264"
                               onClick={() => {
                                 field.hidden = !field.hidden;
                                 updateFormStateVariable();
@@ -238,8 +259,8 @@ const FormBuilder = () => {
 
                       <div className={styles.customFieldName}>
                         <input
-                          type='text'
-                          placeholder='Field Name'
+                          type="text"
+                          placeholder="Field Name"
                           value={field.title}
                           onChange={(event) => {
                             field.title = event.target.value;
@@ -249,8 +270,8 @@ const FormBuilder = () => {
                       </div>
                       <div className={styles.customFieldName}>
                         <input
-                          type='text'
-                          placeholder='Add Some help text.'
+                          type="text"
+                          placeholder="Add Some help text."
                           value={field.description || ''}
                           onChange={(event) => {
                             field.description = event.target.value;
@@ -266,11 +287,11 @@ const FormBuilder = () => {
                           field.type === FieldType.MultiSelect) && (
                           <div className={styles.customFieldOption}>
                             {field.options.map((option, index) => (
-                              <div className='row'>
+                              <div className="row" key={index}>
                                 <input
                                   className={styles.optionInput}
-                                  type='text'
-                                  placeholder='Option'
+                                  type="text"
+                                  placeholder="Option"
                                   value={option}
                                   onChange={(event) => {
                                     const updatedOptions = field.options;
@@ -284,7 +305,7 @@ const FormBuilder = () => {
                                     removeOption(field, index);
                                   }}
                                   size={20}
-                                  color='#606264'
+                                  color="#606264"
                                 />
                               </div>
                             ))}
@@ -311,19 +332,7 @@ const FormBuilder = () => {
                             checked={field.conditions.length > 0}
                             text={''}
                             onChange={() => {
-                              updateFormFieldValue(
-                                field,
-                                'condition',
-                                field.conditions.length > 0
-                                  ? []
-                                  : [
-                                      {
-                                        field: '',
-                                        operator: '',
-                                        value: '',
-                                      },
-                                    ],
-                              );
+                              addOrRemoveCondition(field);
                             }}
                           />
                           <p className={styles.customFieldLabel}>
@@ -334,27 +343,16 @@ const FormBuilder = () => {
 
                       {field.conditions.length > 0 && (
                         <div className={styles.conditions}>
-                          {field.conditions.map((condition) => (
-                            <div className={styles.conditionRow}>
+                          {field.conditions.map((condition, idx) => (
+                            <div className={styles.conditionRow} key={idx}>
                               <p className={styles.when}>When</p>
                               <div className={styles.conditionsSelect}>
                                 <SelectComponent
                                   options={getFormFields(field, condition.field)}
                                   value={condition.field}
                                   onChange={(option: { value: string; label: string }) => {
-                                    updateFormFieldValue(
-                                      field,
-                                      'condition',
-                                      field.conditions.map((cond) => {
-                                        if (cond.field === condition.field) {
-                                          return {
-                                            ...cond,
-                                            field: option.value,
-                                          };
-                                        }
-                                        return cond;
-                                      }),
-                                    );
+                                    condition.field = option.value;
+                                    updateFormStateVariable();
                                   }}
                                 />
                                 <SelectComponent
@@ -366,54 +364,25 @@ const FormBuilder = () => {
                                   ]}
                                   value={condition.operator}
                                   onChange={(option: { value: string; label: string }) => {
-                                    updateFormFieldValue(
-                                      field,
-                                      'condition',
-                                      field.conditions.map((cond) => {
-                                        if (cond.field === condition.field) {
-                                          return {
-                                            ...cond,
-                                            operator: option.value,
-                                          };
-                                        }
-                                        return cond;
-                                      }),
-                                    );
+                                    condition.operator = option.value;
+                                    updateFormStateVariable();
                                   }}
                                 />
                                 <input
-                                  type='text'
-                                  placeholder='Enter a Value'
+                                  type="text"
+                                  placeholder="Enter a Value"
                                   value={condition.value}
                                   onChange={(event) => {
-                                    updateFormFieldValue(
-                                      field,
-                                      'condition',
-                                      field.conditions.map((cond) => {
-                                        if (cond.field === condition.field) {
-                                          return {
-                                            ...cond,
-                                            value: event.target.value,
-                                          };
-                                        }
-                                        return cond;
-                                      }),
-                                    );
+                                    condition.value = event.target.value;
+                                    updateFormStateVariable();
                                   }}
                                 />
 
                                 <RiDeleteBinLine
                                   size={20}
-                                  color='#606264'
+                                  color="#606264"
                                   onClick={() => {
-                                    updateFormFieldValue(
-                                      field,
-                                      'condition',
-                                      field.conditions.filter(
-                                        (cond) => cond.field !== condition.field,
-                                      ),
-                                    );
-                                    toast.success('Condition Removed Successfully');
+                                    removeCondition(field, idx);
                                   }}
                                 />
 
@@ -422,28 +391,19 @@ const FormBuilder = () => {
                                     marginLeft: '0.5rem',
                                   }}
                                   size={20}
-                                  color='#606264'
+                                  color="#606264"
                                 />
 
-                                {getFormFields(field, condition.field).length > 0 && (
-                                  <LuPlus
-                                    style={{
-                                      marginLeft: '0.5rem',
-                                    }}
-                                    size={20}
-                                    color='#606264'
-                                    onClick={() => {
-                                      updateFormFieldValue(field, 'condition', [
-                                        ...field.conditions,
-                                        {
-                                          field: '',
-                                          operator: '',
-                                          value: '',
-                                        },
-                                      ]);
-                                    }}
-                                  />
-                                )}
+                                <LuPlus
+                                  style={{
+                                    marginLeft: '0.5rem',
+                                  }}
+                                  size={20}
+                                  color="#606264"
+                                  onClick={() => {
+                                    addCondition(field);
+                                  }}
+                                />
                               </div>
                             </div>
                           ))}
