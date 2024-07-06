@@ -1,6 +1,5 @@
 import Select from 'react-select';
 import { customStyles } from '../EventPage/constants';
-import { MdClear } from 'react-icons/md';
 
 const SelectComponent = ({
   backgroundColor,
