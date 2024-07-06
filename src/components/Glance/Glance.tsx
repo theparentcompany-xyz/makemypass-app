@@ -123,10 +123,10 @@ const Glance = ({
       title: 'In-Event',
       roles: ['Admin', 'Owner', 'Volunteer'],
     },
-    // formbuilder: {
-    //   title: 'Form Builder',
-    //   roles: ['Admin', 'Owner'],
-    // },
+    formbuilder: {
+      title: 'Form Builder',
+      roles: ['Admin', 'Owner'],
+    },
     manage: {
       title: 'Event Page',
       roles: ['Admin', 'Owner'],
@@ -137,10 +137,10 @@ const Glance = ({
       roles: ['Admin', 'Owner', 'Volunteer'],
     },
 
-    // coupon: {
-    //   title: 'Coupon',
-    //   roles: ['Admin', 'Owner', 'Volunteer'],
-    // },
+    coupon: {
+      title: 'Coupon',
+      roles: ['Admin', 'Owner', 'Volunteer'],
+    },
 
     // feedback: 'Feedbacks',
   };

@@ -1,7 +1,7 @@
 .container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 5px;
   margin-left: 5px;
   margin-right: 5px;
@@ -70,4 +70,3 @@ input:focus + .slider {
   box-shadow: 0 0 1px #cccccc1c;
   /* Green box shadow when focused */
 }
-

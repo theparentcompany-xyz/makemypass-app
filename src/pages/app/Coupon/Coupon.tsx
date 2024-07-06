@@ -10,6 +10,7 @@ import Modal from '../../../components/Modal/Modal';
 import InputField from '../../auth/Login/InputField';
 import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
+import Slider from '../../../components/SliderButton/Slider';
 
 const Coupon = () => {
   type CouponModalType = {
@@ -97,6 +98,52 @@ const Coupon = () => {
                 />
 
                 <hr className={styles.line} />
+
+                <div className={styles.discountUses}>
+                  <p className={styles.fieldHeader}>Maximum discount uses</p>
+                  <InputField
+                    type='text'
+                    name='Discount Uses'
+                    id='discountUses'
+                    placeholder='Enter Discount Uses'
+                    description='Limit number of times this discount can be used in total'
+                    icon={<></>}
+                    required={true}
+                    onChange={() => {}}
+                    value=''
+                  />
+                  <Slider checked={true} onChange={() => {}} text='Limit to one use per customer' />
+                </div>
+                <hr className={styles.line} />
+
+                <div className={styles.dates}>
+                  <p className={styles.fieldHeader}>Dates</p>
+                  <InputField
+                    type='datetime-local'
+                    name='Start Date'
+                    id='startDate'
+                    placeholder='Start Date and time'
+                    icon={<></>}
+                    required={true}
+                    onChange={() => {}}
+                    value=''
+                  />
+                  <InputField
+                    type='datetime-local'
+                    name='End Date'
+                    id='endDate'
+                    placeholder='Start Date and time'
+                    icon={<></>}
+                    required={true}
+                    onChange={() => {}}
+                    value=''
+                  />
+                </div>
+              </div>
+
+              <div className={styles.buttons}>
+                <SecondaryButton buttonText='Discard Coupon' onClick={() => {}} />
+                <SecondaryButton buttonText='Save Coupon' onClick={() => {}} />
               </div>
             </div>
           </Modal>
