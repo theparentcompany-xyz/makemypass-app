@@ -275,3 +275,7 @@
   position: absolute;
   z-index: 99999;
 }
+
+li {
+  list-style-type: none;
+}
