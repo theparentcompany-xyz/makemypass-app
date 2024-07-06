@@ -1,5 +1,6 @@
 .couponModal {
   min-width: 30rem;
+  margin-bottom: 2rem;
 }
 
 .fieldHeader {
@@ -19,4 +20,11 @@
   border: none;
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1rem;
+  gap: 1rem;
 }

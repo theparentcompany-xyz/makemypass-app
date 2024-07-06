@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from 'react';
-import Modal from '../../../../components/Modal/Modal';
 import { HexColors, IconsMapping } from '../constant';
 import { ChangeType, FieldType } from '../types';
 import styles from './ChangeTypeModal.module.css';

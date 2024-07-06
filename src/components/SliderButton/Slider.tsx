@@ -29,7 +29,9 @@ const Slider = ({ checked, onChange, text, labelStyle, sliderStyle }: Props) => 
       )}
       <label className={styles.switch} style={sliderStyle}>
         <input type='checkbox' checked={checked} onChange={onChange} />
-        <span className={`${styles.slider} ${styles.round}`}></span>
+        <span
+          className={`${styles.slider} ${styles.round} ${checked ? `${styles.checked}` : ''}`}
+        ></span>
       </label>
     </div>
   );

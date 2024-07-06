@@ -15,7 +15,6 @@ import {
 } from '../../../apis/guests';
 import { FormDataType } from '../../../apis/types';
 import { getCategories } from '../../../apis/events';
-import { transformTableData } from '../../../common/commonFunctions';
 
 import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from './types';
 import { TableType } from '../../../components/Table/types';
@@ -39,7 +38,6 @@ import EditGuest from './components/EditGuest/EditGuest';
 const Guests = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const [guests, setGuests] = useState<GuestsType[]>([]);
-  const [guestsTableData, setGuestsTableData] = useState<TableType[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
@@ -123,27 +121,6 @@ const Guests = () => {
         downloadTicket(eventId, selectedGuestId?.id, selectedGuest?.name);
       else toast.error('Ticket download failed');
   }, [selectedGuestId]);
-
-  useEffect(() => {
-    const guestsTableMapping = {
-      id: 'id',
-      name: 'name',
-      email: 'email',
-      category: 'category',
-      registered_at: 'date',
-      check_in_date: 'check_in_date',
-      phonenumber: 'phonenumber',
-      amount: 'amount',
-      is_approved: 'is_approved',
-      team_id: 'team_id',
-    };
-
-    if (guests) {
-      const transformedData = transformTableData(guestsTableMapping, guests);
-
-      setGuestsTableData(transformedData as unknown as TableType[]);
-    }
-  }, [guests]);
 
   const handleTicketResend = () => {
     resentEventTicket(resentTicket, setResentTicket);
@@ -295,8 +272,10 @@ const Guests = () => {
                 tableHeading='Recent Guests'
                 tableData={
                   currentCategory
-                    ? guestsTableData.filter((guest) => guest.category === currentCategory)
-                    : guestsTableData
+                    ? (guests.filter(
+                        (guest) => guest.category === currentCategory,
+                      ) as unknown as TableType[])
+                    : (guests as unknown as TableType[])
                 }
                 search={searchKeyword}
                 setResentTicket={setResentTicket}

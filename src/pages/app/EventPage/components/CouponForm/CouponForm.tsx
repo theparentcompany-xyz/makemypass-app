@@ -229,7 +229,7 @@ const CouponForm = ({
 
                           if (
                             currentTicketCount === filteredTicket.capacity ||
-                            filteredTicket.capacity <= 0
+                            (filteredTicket.capacity != null && filteredTicket.capacity <= 0)
                           ) {
                             toast.error('Ticket limit reached');
                             return;

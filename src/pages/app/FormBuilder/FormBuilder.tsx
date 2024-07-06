@@ -15,9 +15,7 @@ import { ChangeType, Field, FieldType } from './types';
 import SelectComponent from './SelectComponent';
 import { IoCloseSharp } from 'react-icons/io5';
 import { conditions } from './constant';
-import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
-import { LiaExchangeAltSolid } from 'react-icons/lia';
 import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { AnimatePresence } from 'framer-motion';
@@ -109,11 +107,13 @@ const FormBuilder = () => {
     if (field.conditions.length > 0) {
       field.conditions = [];
     } else {
-      field.conditions = [{
-        field: '',
-        operator: '',
-        value: '',
-      }];
+      field.conditions = [
+        {
+          field: '',
+          operator: '',
+          value: '',
+        },
+      ];
     }
     updateFormStateVariable();
   };
@@ -139,7 +139,7 @@ const FormBuilder = () => {
       <Theme>
         <div className={styles.builderContainer}>
           <EventHeader />
-          <Glance tab="formbuilder" />
+          <Glance tab='formbuilder' />
           <div className={styles.requiredFieldsHeader}>
             <div className={styles.customFieldsContainer}>
               <div className={styles.customFieldsHeader}>
@@ -150,18 +150,18 @@ const FormBuilder = () => {
                       backgroundColor: '#FF9641',
                     }}
                   >
-                    <FaAddressCard size={20} color="#ffffff" />
+                    <FaAddressCard size={20} color='#ffffff' />
                   </div>
                   <p className={styles.customFieldsText}>Custom Fields</p>
                 </div>
               </div>
 
               <div className={styles.customFields}>
-                {formFields.map((field, idx ) => {
+                {formFields.map((field, idx) => {
                   return field.id !== selectedField.id ? (
                     <div className={styles.customField} key={idx}>
                       <div className={styles.row1}>
-                        <RxDragHandleDots2 size={25} color="#606264" />
+                        <RxDragHandleDots2 size={25} color='#606264' />
                         <div>
                           <p className={styles.customFieldLabel}>{field.type.toUpperCase()}</p>
                           <p className={styles.customFieldType}>
@@ -174,14 +174,14 @@ const FormBuilder = () => {
                           setSelectedField(field);
                         }}
                         size={20}
-                        color="#606264"
+                        color='#606264'
                       />
                     </div>
                   ) : (
                     <div className={styles.customFieldExp} key={idx}>
                       <div className={styles.row}>
                         <div className={styles.row1}>
-                          <RxDragHandleDots2 size={25} color="#606264" />
+                          <RxDragHandleDots2 size={25} color='#606264' />
                           <p className={styles.customFieldLabel}>
                             {field.type.toUpperCase()}
                             <span
@@ -195,9 +195,9 @@ const FormBuilder = () => {
                             >
                               {
                                 changeType.showModal ? (
-                                  <FaChevronDown color="white" />
+                                  <FaChevronDown color='white' />
                                 ) : (
-                                  <FaChevronUp color="white" />
+                                  <FaChevronUp color='white' />
                                 ) // change the icon based on the state
                               }
                             </span>
@@ -228,7 +228,7 @@ const FormBuilder = () => {
                           {field.hidden ? (
                             <FaRegEyeSlash
                               size={25}
-                              color="#606264"
+                              color='#606264'
                               onClick={() => {
                                 field.hidden = !field.hidden;
                                 updateFormStateVariable();
@@ -237,7 +237,7 @@ const FormBuilder = () => {
                           ) : (
                             <FaRegEye
                               size={25}
-                              color="#606264"
+                              color='#606264'
                               onClick={() => {
                                 field.hidden = !field.hidden;
                                 updateFormStateVariable();
@@ -259,8 +259,8 @@ const FormBuilder = () => {
 
                       <div className={styles.customFieldName}>
                         <input
-                          type="text"
-                          placeholder="Field Name"
+                          type='text'
+                          placeholder='Field Name'
                           value={field.title}
                           onChange={(event) => {
                             field.title = event.target.value;
@@ -270,8 +270,8 @@ const FormBuilder = () => {
                       </div>
                       <div className={styles.customFieldName}>
                         <input
-                          type="text"
-                          placeholder="Add Some help text."
+                          type='text'
+                          placeholder='Add Some help text.'
                           value={field.description || ''}
                           onChange={(event) => {
                             field.description = event.target.value;
@@ -287,11 +287,11 @@ const FormBuilder = () => {
                           field.type === FieldType.MultiSelect) && (
                           <div className={styles.customFieldOption}>
                             {field.options.map((option, index) => (
-                              <div className="row" key={index}>
+                              <div className='row' key={index}>
                                 <input
                                   className={styles.optionInput}
-                                  type="text"
-                                  placeholder="Option"
+                                  type='text'
+                                  placeholder='Option'
                                   value={option}
                                   onChange={(event) => {
                                     const updatedOptions = field.options;
@@ -305,7 +305,7 @@ const FormBuilder = () => {
                                     removeOption(field, index);
                                   }}
                                   size={20}
-                                  color="#606264"
+                                  color='#606264'
                                 />
                               </div>
                             ))}
@@ -369,8 +369,8 @@ const FormBuilder = () => {
                                   }}
                                 />
                                 <input
-                                  type="text"
-                                  placeholder="Enter a Value"
+                                  type='text'
+                                  placeholder='Enter a Value'
                                   value={condition.value}
                                   onChange={(event) => {
                                     condition.value = event.target.value;
@@ -380,7 +380,7 @@ const FormBuilder = () => {
 
                                 <RiDeleteBinLine
                                   size={20}
-                                  color="#606264"
+                                  color='#606264'
                                   onClick={() => {
                                     removeCondition(field, idx);
                                   }}
@@ -391,7 +391,7 @@ const FormBuilder = () => {
                                     marginLeft: '0.5rem',
                                   }}
                                   size={20}
-                                  color="#606264"
+                                  color='#606264'
                                 />
 
                                 <LuPlus
@@ -399,7 +399,7 @@ const FormBuilder = () => {
                                     marginLeft: '0.5rem',
                                   }}
                                   size={20}
-                                  color="#606264"
+                                  color='#606264'
                                   onClick={() => {
                                     addCondition(field);
                                   }}
