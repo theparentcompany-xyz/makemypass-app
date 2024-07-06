@@ -31,7 +31,7 @@ const DynamicForm = ({
           const fieldTitle = field?.title + (field.required ? '*' : '');
           if (!validateCondition(field.conditions, formData, formFields) || field.hidden)
             return null;
-          if (field.type === 'text' || field.type === 'email' || field.type === 'phonenumber') {
+          if (field.type === 'text' || field.type === 'email') {
             return field.validate ? (
               <ValidateInput
                 name={field.field_key}
@@ -64,6 +64,56 @@ const DynamicForm = ({
                 required={field.required}
                 description={field.description}
               />
+            );
+          } else if (field.type === 'phone') {
+            return (
+              <>
+                <div
+                  style={{
+                    marginBottom: '1rem',
+                  }}
+                >
+                  <p className={styles.formLabel}>{fieldTitle}</p>
+                  <input
+                    type='number'
+                    id={field.field_key}
+                    name={field?.title}
+                    value={formData[field.field_key]}
+                    placeholder={field?.title}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onFieldChange(field.field_key, e.target.value)
+                    }
+                    className={styles.numberInput}
+                    accept=''
+                    pattern='^\d{10}$'
+                  />
+                  {/* <input
+                    type='text' // Change to 'text' to use the pattern attribute for validation
+                    id={field.field_key}
+                    name={field?.title}
+                    value={formData[field.field_key]}
+                    placeholder={field?.title}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onFieldChange(field.field_key, e.target.value)
+                    }
+                    className={styles.numberInput}
+                     // Regex pattern for phone numbers of length 10
+                  /> */}
+                  <AnimatePresence>
+                    {formErrors[field.field_key] && (
+                      <motion.p
+                        variants={variants}
+                        transition={{
+                          duration: 0.2,
+                        }}
+                        className={styles.errorText}
+                      >
+                        {formErrors[field.field_key][0]}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </>
             );
           } else if (field.type === 'singleselect') {
             return (
@@ -329,11 +379,25 @@ const DynamicForm = ({
                   id={field.field_key}
                   name={field?.title}
                   value={formData[field.field_key]}
+                  placeholder={field?.title}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     onFieldChange(field.field_key, e.target.value)
                   }
-                  className={styles.dateInput}
+                  className={styles.numberInput}
                 />
+                <AnimatePresence>
+                  {formErrors[field.field_key] && (
+                    <motion.p
+                      variants={variants}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={styles.errorText}
+                    >
+                      {formErrors[field.field_key][0]}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
               </div>
             );
           } else if (field.type === 'rating') {

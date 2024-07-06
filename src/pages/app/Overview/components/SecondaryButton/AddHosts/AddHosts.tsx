@@ -1,4 +1,4 @@
-import React, { SetStateAction } from 'react';
+import React, { SetStateAction, useEffect } from 'react';
 import styles from './AddHosts.module.css';
 import { hostData } from '../../../Overview/types';
 
@@ -55,6 +55,10 @@ const AddHosts = ({
       fontSize: '0.9rem',
     }),
   };
+
+  useEffect(() => {
+    console.log(hostData);
+  });
 
   return (
     <Modal onClose={onClose}>
