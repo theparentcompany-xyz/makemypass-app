@@ -5,7 +5,7 @@ import Glance from '../../../../components/Glance/Glance';
 
 import styles from './Overview.module.css';
 import SectionButton from '../../../../components/SectionButton/SectionButton';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { hostData, hostId, hostList, recentRegistration } from './types';
 
@@ -63,7 +63,7 @@ const Overview = () => {
   });
 
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
-
+  const addRef = useRef<boolean>(false);
   const getGuestData = () => {
     const selectedGuestData = recentRegistrations.filter(
       (guest) => guest?.id === selectedGuestId?.id,
@@ -195,6 +195,7 @@ const Overview = () => {
   }, [hostId]);
 
   const addHost = () => {
+    addRef.current = true;
     setOpenAddModal(true);
   };
 
@@ -255,11 +256,14 @@ const Overview = () => {
                 onSubmit();
               }
               setHostData({ email: '', role: '', is_private: true });
+              addRef.current = false;
             }}
             onClose={() => {
               setOpenAddModal(false);
               setHostData({ email: '', role: '', is_private: true });
+              addRef.current = false;
             }}
+            add={addRef.current}
           />
         )}
         {openDeleteModal && (
