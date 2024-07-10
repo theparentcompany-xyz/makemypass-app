@@ -151,25 +151,19 @@ const FormBuilder = () => {
                             <div className={styles.row1}>
                               <RxDragHandleDots2 size={25} color='#606264' id={field.id} />
                               <div>
-                                <p className={styles.customFieldLabel}>
+                                <p
+                                  className={styles.customFieldLabel}
+                                  onClick={() => {
+                                    setSelectedField(field);
+                                    setChangeType({
+                                      showModal: true,
+                                      currentType: field.type,
+                                    });
+                                  }}
+                                >
                                   {field.type.toUpperCase()}{' '}
-                                  <span
-                                    onClick={() => {
-                                      setSelectedField(field);
-                                      setChangeType({
-                                        showModal: true,
-                                        currentType: field.type,
-                                      });
-                                    }}
-                                    className={styles.changeTypeButton}
-                                  >
-                                    {
-                                      changeType.showModal && selectedField === field ? (
-                                        <FaChevronDown size={15} color='white' />
-                                      ) : (
-                                        <FaChevronUp size={15} color='white' />
-                                      ) // change the icon based on the state
-                                    }
+                                  <span className={styles.changeTypeButton}>
+                                    <FaChevronDown size={15} color='white' />
                                   </span>
                                 </p>
                                 <p className={styles.customFieldType}>
@@ -190,24 +184,18 @@ const FormBuilder = () => {
                             <div className={styles.row}>
                               <div className={styles.row1}>
                                 <RxDragHandleDots2 size={25} color='#606264' />
-                                <p className={styles.customFieldLabel}>
+                                <p
+                                  className={styles.customFieldLabel}
+                                  onClick={() => {
+                                    setChangeType({
+                                      showModal: !changeType.showModal,
+                                      currentType: field.type,
+                                    });
+                                  }}
+                                >
                                   {field.type.toUpperCase()}
-                                  <span
-                                    onClick={() => {
-                                      setChangeType({
-                                        showModal: !changeType.showModal,
-                                        currentType: field.type,
-                                      });
-                                    }}
-                                    className={styles.changeTypeButton}
-                                  >
-                                    {
-                                      changeType.showModal ? (
-                                        <FaChevronDown size={15} color='white' />
-                                      ) : (
-                                        <FaChevronUp size={15} color='white' />
-                                      ) // change the icon based on the state
-                                    }
+                                  <span className={styles.changeTypeButton}>
+                                    <FaChevronDown size={15} color='white' />
                                   </span>
                                 </p>
                               </div>
