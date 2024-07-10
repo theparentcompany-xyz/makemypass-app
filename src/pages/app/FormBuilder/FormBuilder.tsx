@@ -17,7 +17,7 @@ import { IoCloseSharp } from 'react-icons/io5';
 import { conditions } from './constant';
 import { v4 as uuidv4 } from 'uuid';
 import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaChevronDown } from 'react-icons/fa';
 import { AnimatePresence, Reorder } from 'framer-motion';
 
 const FormBuilder = () => {
