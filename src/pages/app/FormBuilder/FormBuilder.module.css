@@ -34,6 +34,10 @@
   white-space: nowrap;
 }
 
+.customFieldLabel span {
+  margin-left: 0.5rem;
+}
+
 .requiredHeading {
   display: flex;
   align-items: center;
@@ -120,6 +124,20 @@
 .requiredCheckbox {
   display: flex;
   align-items: center;
+}
+
+.requiredCheckbox input[type='number'] {
+  width: 2rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  padding-left: 1rem;
+  font-weight: 400;
+  margin-right: 1rem;
 }
 
 .expandedRight {
@@ -258,4 +276,20 @@
   margin-top: 1rem;
   font-size: 0.9rem;
   margin-left: 0.5rem;
+}
+
+.changeTypeButton {
+  position: relative;
+  display: inline-block;
+}
+
+.changeTypeContainer {
+  margin-top: 2rem;
+  margin-left: 5rem;
+  position: absolute;
+  z-index: 99999;
+}
+
+li {
+  list-style-type: none;
 }

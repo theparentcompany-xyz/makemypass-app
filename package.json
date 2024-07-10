@@ -41,7 +41,8 @@
     "react-select": "^5.8.0",
     "react-spinners": "^0.13.8",
     "react-voice-visualizer": "^1.8.1",
-    "react-window": "^1.8.10"
+    "react-window": "^1.8.10",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/google-map-react": "^2.1.10",
@@ -50,6 +51,7 @@
     "@types/react-dom": "^18.2.17",
     "@types/react-helmet": "^6.1.11",
     "@types/react-window": "^1.8.8",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "@vitejs/plugin-react": "^4.2.1",

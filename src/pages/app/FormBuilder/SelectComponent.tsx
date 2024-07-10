@@ -22,6 +22,7 @@ const SelectComponent = ({
       <Select
         className='basic-single'
         classNamePrefix='select'
+        isClearable={true}
         name='role'
         onChange={onChange}
         options={options}

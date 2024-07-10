@@ -60,7 +60,7 @@ export type FormFieldType = {
   type: string;
   title: string;
   hidden: boolean;
-  unique: boolean;
+  unique: number;
   required: boolean;
   field_key: string;
   description?: string;

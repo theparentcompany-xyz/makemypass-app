@@ -77,7 +77,7 @@ const Events = () => {
                 }}
                 className={styles.button}
               >
-                Create Event
+                Create Duplicate
               </p>
               <p
                 onClick={() => {
