@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
 import { FaChevronDown } from 'react-icons/fa';
 import { AnimatePresence, Reorder } from 'framer-motion';
+import InputField from '../../auth/Login/InputField';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -76,7 +77,7 @@ const FormBuilder = () => {
       type: 'text',
       title: 'Name',
       hidden: false,
-      unique: false,
+      unique: 0,
       options: [],
       property: {},
       required: true,
@@ -203,11 +204,12 @@ const FormBuilder = () => {
                               <div className={styles.expandedRight}>
                                 <div className={styles.requiredCheckbox}>
                                   Unique
-                                  <Slider
-                                    checked={field.unique}
-                                    text={''}
-                                    onChange={() => {
-                                      field.unique = !field.unique;
+                                  <input
+                                    type='number'
+                                    value={field.unique}
+                                    onChange={(event) => {
+                                      field.unique = parseInt(event.target.value);
+                                      updateFormStateVariable();
                                     }}
                                   />
                                 </div>

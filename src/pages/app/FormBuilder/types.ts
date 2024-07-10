@@ -3,7 +3,7 @@ export interface Field {
   type: string;
   title: string;
   hidden: boolean;
-  unique: boolean;
+  unique: number;
   options: string[];
   property: object;
   required: boolean;

@@ -126,6 +126,20 @@
   align-items: center;
 }
 
+.requiredCheckbox input[type='number'] {
+  width: 2rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  padding-left: 1rem;
+  font-weight: 400;
+  margin-right: 1rem;
+}
+
 .expandedRight {
   display: flex;
   flex-direction: row;
