@@ -21,7 +21,7 @@ const Coupon = () => {
 
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [couponModal, setCouponModal] = useState<CouponModalType>({
-    showModal: true,
+    showModal: false,
   });
 
   const couponTypes = [
@@ -158,7 +158,7 @@ const Coupon = () => {
 
                 <hr className={styles.line} />
 
-                <div className={styles.discountUses}>
+                {/* <div className={styles.discountUses}>
                   <p className={styles.fieldHeader}>Maximum Discount Uses</p>
                   <InputField
                     type='textarea'
@@ -209,7 +209,7 @@ const Coupon = () => {
                       value={newCouponData.end_date}
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <div className={styles.buttons}>
@@ -229,7 +229,7 @@ const Coupon = () => {
             </div>
           </Modal>
         )}
-        {coupons.length > 0 && (
+        {coupons.length > 0 ? (
           <div className={styles.couponListingContainer}>
             <GenericTable
               tableHeading='Coupons'
@@ -242,6 +242,16 @@ const Coupon = () => {
                   }}
                 />
               }
+            />
+          </div>
+        ) : (
+          <div className={styles.noCoupon}>
+            <p className={styles.noCouponText}>No Coupons Available</p>
+            <SecondaryButton
+              buttonText='+ Add New Coupon Code'
+              onClick={() => {
+                setCouponModal({ showModal: true });
+              }}
             />
           </div>
         )}
