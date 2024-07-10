@@ -25,4 +25,5 @@ export type CreateCouponType = {
     value: string;
     operator: string;
   }[];
+  [key: string]: any;
 };
