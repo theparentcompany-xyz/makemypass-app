@@ -12,11 +12,13 @@ const AddHosts = ({
   setHostData,
   onSubmit,
   onClose,
+  add,
 }: {
   hostData: hostData;
   setHostData: React.Dispatch<SetStateAction<hostData>>;
   onSubmit: () => void;
   onClose: () => void;
+  add: boolean;
 }) => {
   const handleRoleChange = (event: any) => {
     const selectedRole = event.value;
@@ -63,7 +65,7 @@ const AddHosts = ({
   return (
     <Modal onClose={onClose}>
       <div className={styles.userInfoModalContainer}>
-        <p className={styles.modalHeader}>Edit Host</p>
+        <p className={styles.modalHeader}>{add ? 'Add Host' : 'Edit Host'}</p>
         <div className={styles.inputContainers}>
           <div className={styles.inputContainer}>
             <p className={styles.inputLabel}>Email</p>
@@ -104,7 +106,7 @@ const AddHosts = ({
               checked={!hostData?.is_private}
               onChange={() => {
                 setHostData((prevState) => ({
-                  ...prevState!,
+                  ...prevState,
                   is_private: !hostData.is_private,
                 }));
               }}
