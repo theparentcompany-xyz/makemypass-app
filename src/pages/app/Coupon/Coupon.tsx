@@ -12,6 +12,7 @@ import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
 import { TicketType } from '../../../apis/types';
 import { getTickets } from '../../../apis/tickets';
+import Slider from '../../../components/SliderButton/Slider';
 
 const Coupon = () => {
   type CouponModalType = {
@@ -22,12 +23,24 @@ const Coupon = () => {
   const [couponModal, setCouponModal] = useState<CouponModalType>({
     showModal: true,
   });
+
+  const couponTypes = [
+    {
+      value: 'precentage',
+      label: 'Percentage',
+    },
+    {
+      value: 'amount',
+      label: 'Amount',
+    },
+  ];
   const [tickets, setTickets] = useState<TicketType[]>([]); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [coupons, setCoupons] = useState<CouponType[]>([]);
 
   const [newCouponData, setNewCouponData] = useState<CreateCouponType>({
     code: '',
     value: 0,
+    type: 'amount',
     tickets: [],
     description: '',
     active: true,
@@ -70,19 +83,34 @@ const Coupon = () => {
                 <hr className={styles.line} />
 
                 <div className={styles.discountContainer}>
-                  <InputField
-                    type='text'
-                    name='Discount Value'
-                    id='discount'
-                    placeholder='Enter Discount Value'
-                    icon={<></>}
-                    required={true}
-                    onChange={(event) => {
-                      setNewCouponData({ ...newCouponData, value: parseInt(event.target.value) });
-                    }}
-                    value={newCouponData.value.toString()}
-                  />
-
+                  <div className={styles.discountValue}>
+                    <InputField
+                      type='text'
+                      name='Discount Value'
+                      id='discount'
+                      placeholder='Enter Discount Value'
+                      icon={<></>}
+                      required={true}
+                      onChange={(event) => {
+                        setNewCouponData({ ...newCouponData, value: parseInt(event.target.value) });
+                      }}
+                      value={newCouponData.value.toString()}
+                    />
+                    <Select
+                      styles={customStyles}
+                      name='colors'
+                      className={styles.basicSelect}
+                      classNamePrefix='select'
+                      options={couponTypes}
+                      onChange={(selectedOption) => {
+                        if (selectedOption)
+                          setNewCouponData({
+                            ...newCouponData,
+                            type: selectedOption.value,
+                          });
+                      }}
+                    />
+                  </div>
                   <>
                     <div
                       style={{
@@ -127,6 +155,61 @@ const Coupon = () => {
                   }}
                   value={newCouponData.description}
                 />
+
+                <hr className={styles.line} />
+
+                <div className={styles.discountUses}>
+                  <p className={styles.fieldHeader}>Maximum Discount Uses</p>
+                  <InputField
+                    type='textarea'
+                    name='Conditions'
+                    id='conditions'
+                    placeholder='Limit number of times this discount can be used in total'
+                    icon={<></>}
+                    required={true}
+                    onChange={(event) => {
+                      setNewCouponData({ ...newCouponData, conditions: event.target.value });
+                    }}
+                    value={newCouponData.conditions}
+                  />
+                </div>
+
+                <div className={styles.limitOne}>
+                  <Slider checked={true} onChange={() => {}} text='Limit to one use per customer' />
+                </div>
+
+                <hr className={styles.line} />
+
+                <div className={styles.eventDates}>
+                  <p className={styles.fieldHeader}>Event Dates</p>
+
+                  <div className={styles.eventDate}>
+                    <InputField
+                      type='date'
+                      name='Start Date'
+                      id='startDate'
+                      placeholder='Start Date'
+                      icon={<></>}
+                      required={true}
+                      onChange={(event) => {
+                        setNewCouponData({ ...newCouponData, start_date: event.target.value });
+                      }}
+                      value={newCouponData.start_date}
+                    />
+                    <InputField
+                      type='date'
+                      name='End Date'
+                      id='endDate'
+                      placeholder='End Date'
+                      icon={<></>}
+                      required={true}
+                      onChange={(event) => {
+                        setNewCouponData({ ...newCouponData, end_date: event.target.value });
+                      }}
+                      value={newCouponData.end_date}
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className={styles.buttons}>

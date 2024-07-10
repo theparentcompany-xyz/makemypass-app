@@ -28,3 +28,13 @@
   margin-top: 1rem;
   gap: 1rem;
 }
+
+.discountValue {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.basicSelect {
+  margin-top: 0.75rem;
+}

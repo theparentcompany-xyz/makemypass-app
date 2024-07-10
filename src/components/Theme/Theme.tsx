@@ -11,11 +11,6 @@ const Theme = ({ type, children }: { type?: string | undefined; children: React.
   return (
     <AnimatePresence>
       <div className={styles.themeContainer}>
-        <div className={styles.gradient}>
-          <div className={styles.grad2}></div>
-          <div className={styles.grad3}></div>
-        </div>
-
         <Header type={type} />
         <div className={styles.childrenContainer}>{children}</div>
 
