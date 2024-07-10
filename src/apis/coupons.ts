@@ -18,15 +18,24 @@ export const listCoupons = async (
     });
 };
 
-export const createCoupon = async (eventId: string, data: CreateCouponType) => {
+export const createCoupon = async (
+  eventId: string,
+  data: CreateCouponType,
+  setCoupons: Dispatch<SetStateAction<CouponType[]>>,
+) => {
   const backendFormData = new FormData();
-
+  console.log(data);
   Object.keys(data).forEach((key) => {
     let value = data[key];
 
     if (!(value instanceof FileList)) {
       if (Array.isArray(value) && value.length > 0) {
-        value.forEach((value) => backendFormData.append(key + '[]', value));
+        value.forEach((value) =>
+          backendFormData.append(
+            key + '[]',
+            typeof value === 'object' ? JSON.stringify(value) : value,
+          ),
+        );
       } else {
         value = data[key].toString();
       }
@@ -47,9 +56,8 @@ export const createCoupon = async (eventId: string, data: CreateCouponType) => {
         'Content-Type': 'multipart/form-data',
       },
     })
-    .then((response) => {
-      console.log(response);
-      return response;
+    .then(() => {
+      listCoupons(eventId, setCoupons);
     })
     .catch((error) => {
       console.log(error);

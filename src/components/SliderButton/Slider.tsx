@@ -24,7 +24,7 @@ const Slider = ({ checked, onChange, text, labelStyle, sliderStyle }: Props) => 
     <div className={styles.container}>
       {text && (
         <label className={styles.text} style={labelStyle}>
-          {text} {checked ? 'ON' : 'OFF'}
+          {text}
         </label>
       )}
       <label className={styles.switch} style={sliderStyle}>

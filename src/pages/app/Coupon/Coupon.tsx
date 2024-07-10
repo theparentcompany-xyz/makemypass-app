@@ -10,27 +10,24 @@ import Modal from '../../../components/Modal/Modal';
 import InputField from '../../auth/Login/InputField';
 import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
-import { TicketType } from '../../../apis/types';
+import { FormFieldType, TicketType } from '../../../apis/types';
 import { getTickets } from '../../../apis/tickets';
 import Slider from '../../../components/SliderButton/Slider';
 import { LuPlus } from 'react-icons/lu';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import SelectComponent from '../FormBuilder/SelectComponent';
+import { getFormFields } from '../../../apis/publicpage';
+import { conditions } from '../FormBuilder/constant';
 
 const Coupon = () => {
   type CouponModalType = {
     showModal: boolean;
   };
 
-  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
-  const [couponModal, setCouponModal] = useState<CouponModalType>({
-    showModal: true,
-  });
-
   const couponTypes = [
     {
-      value: 'precentage',
+      value: 'percentage',
       label: 'Percentage',
     },
     {
@@ -38,30 +35,31 @@ const Coupon = () => {
       label: 'Amount',
     },
   ];
+
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
+  const [couponModal, setCouponModal] = useState<CouponModalType>({
+    showModal: false,
+  });
+
   const [tickets, setTickets] = useState<TicketType[]>([]); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [coupons, setCoupons] = useState<CouponType[]>([]);
-
+  const [formFields, setFormFields] = useState<FormFieldType[]>([]); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [newCouponData, setNewCouponData] = useState<CreateCouponType>({
     code: '',
     value: 0,
     type: 'amount',
     tickets: [],
     description: '',
-    active: true,
+    is_active: true,
     count: 0,
-    conditions: [
-      {
-        field: '',
-        value: '',
-        operator: '',
-      },
-    ],
+    conditions: [],
     is_private: false,
   });
 
   useEffect(() => {
     listCoupons(eventId, setCoupons);
     getTickets(eventId, setTickets);
+    getFormFields(eventId, setFormFields);
   }, []);
 
   return (
@@ -202,64 +200,92 @@ const Coupon = () => {
                     text='Show Ticket in Form'
                   />
                   <Slider
-                    checked={newCouponData.is_private}
+                    checked={newCouponData.is_active}
                     onChange={() => {
-                      setNewCouponData({ ...newCouponData, is_private: !newCouponData.is_private });
+                      setNewCouponData({ ...newCouponData, is_active: !newCouponData.is_private });
                     }}
                     text='Activate Ticket'
                   />
                 </div>
               </div>
 
+              <hr className={styles.line} />
+
               <div className={styles.conditions}>
+                <p className={styles.fieldHeader}>Customer Eligiblity</p>
+                <Slider
+                  checked={newCouponData.conditions.length > 0}
+                  onChange={() => {
+                    if (newCouponData.conditions.length > 0) newCouponData.conditions = [];
+                    else
+                      newCouponData.conditions.push({
+                        field: '',
+                        value: '',
+                        operator: '',
+                      });
+
+                    setNewCouponData({ ...newCouponData });
+                  }}
+                  text='Show coupon only when conditions are met'
+                />
                 {newCouponData.conditions.length >= 0 && (
                   <div className={styles.conditions}>
                     {newCouponData.conditions.map((condition, idx) => (
                       <div className={styles.conditionRow} key={idx}>
-                        <p className={styles.when}>When</p>
+                        <p className={styles.when}>{idx === 0 ? 'When' : 'And'}</p>
                         <div className={styles.conditionsSelect}>
                           <SelectComponent
-                            // options={getFormFields(field, condition.field)}
+                            options={
+                              formFields.length > 0
+                                ? formFields.map((field) => ({
+                                    value: field.id,
+                                    label: field.title,
+                                  }))
+                                : []
+                            }
                             value={condition.field}
                             onChange={(option: { value: string; label: string }) => {
                               if (!option) condition.field = '';
                               else condition.field = option.value;
 
-                              // updateFormStateVariable();
+                              setNewCouponData({ ...newCouponData });
                             }}
                             isSmall={true}
                           />
                           <SelectComponent
-                            // options={[
-                            //   ...conditions.map((condition) => ({
-                            //     value: condition.value,
-                            //     label: condition.label,
-                            //   })),
-                            // ]}
+                            options={[
+                              ...conditions.map((condition) => ({
+                                value: condition.value,
+                                label: condition.label,
+                              })),
+                            ]}
                             value={condition.operator}
-                            // onChange={(option: { value: string; label: string }) => {
-                            //   if (!option) condition.operator = '';
-                            //   else condition.oaperator = option.value;
-                            //   updateFormStateVariable();
-                            // }}
+                            onChange={(option: { value: string; label: string }) => {
+                              if (!option) condition.operator = '';
+                              else condition.operator = option.value;
+
+                              setNewCouponData({ ...newCouponData });
+                            }}
                             isSmall={true}
                           />
                           <input
                             type='text'
                             placeholder='Enter a Value'
                             value={condition.value}
-                            // onChange={(event) => {
-                            //   condition.value = event.target.value;
-                            //   updateFormStateVariable();
-                            // }}
+                            onChange={(event) => {
+                              condition.value = event.target.value;
+
+                              setNewCouponData({ ...newCouponData });
+                            }}
                           />
 
                           <RiDeleteBinLine
                             size={20}
                             color='#606264'
-                            // onClick={() => {
-                            //   removeCondition(field, idx);
-                            // }}
+                            onClick={() => {
+                              newCouponData.conditions.splice(idx, 1);
+                              setNewCouponData({ ...newCouponData });
+                            }}
                           />
 
                           <RxDragHandleDots2
@@ -276,9 +302,14 @@ const Coupon = () => {
                             }}
                             size={20}
                             color='#606264'
-                            // onClick={() => {
-                            //   addCondition(field);
-                            // }}
+                            onClick={() => {
+                              newCouponData.conditions.push({
+                                field: '',
+                                value: '',
+                                operator: '',
+                              });
+                              setNewCouponData({ ...newCouponData });
+                            }}
                           />
                         </div>
                       </div>
@@ -292,12 +323,35 @@ const Coupon = () => {
                   buttonText='Discard Coupon'
                   onClick={() => {
                     setCouponModal({ showModal: false });
+                    setNewCouponData({
+                      code: '',
+                      value: 0,
+                      type: 'amount',
+                      tickets: [],
+                      description: '',
+                      is_active: true,
+                      count: 0,
+                      conditions: [],
+                      is_private: false,
+                    });
                   }}
                 />
                 <SecondaryButton
                   buttonText='Save Coupon'
                   onClick={() => {
-                    createCoupon(eventId, newCouponData);
+                    createCoupon(eventId, newCouponData, setCoupons);
+                    setCouponModal({ showModal: false });
+                    setNewCouponData({
+                      code: '',
+                      value: 0,
+                      type: 'amount',
+                      tickets: [],
+                      description: '',
+                      is_active: true,
+                      count: 0,
+                      conditions: [],
+                      is_private: false,
+                    });
                   }}
                 />
               </div>
