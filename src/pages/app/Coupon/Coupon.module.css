@@ -51,3 +51,10 @@
   color: #a4a4a4;
   font-family: 'Inter';
 }
+
+.limitOne {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 1rem;
+  column-gap: 1rem;
+}

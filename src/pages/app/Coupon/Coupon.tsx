@@ -21,7 +21,7 @@ const Coupon = () => {
 
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [couponModal, setCouponModal] = useState<CouponModalType>({
-    showModal: false,
+    showModal: true,
   });
 
   const couponTypes = [
@@ -44,7 +44,9 @@ const Coupon = () => {
     tickets: [],
     description: '',
     active: true,
+    count: 0,
     conditions: '',
+    is_private: false,
   });
 
   useEffect(() => {
@@ -62,7 +64,12 @@ const Coupon = () => {
             title='Add New Coupon Code'
             onClose={() => setCouponModal({ showModal: false })}
           >
-            <div className={styles.couponModal}>
+            <div
+              className={styles.couponModal}
+              style={{
+                maxWidth: '30rem',
+              }}
+            >
               <div className={styles.couponCodeInput}>
                 <p className={styles.fieldHeader}>Amount off Ticket</p>
 
@@ -158,58 +165,40 @@ const Coupon = () => {
 
                 <hr className={styles.line} />
 
-                {/* <div className={styles.discountUses}>
+                <div className={styles.discountUses}></div>
+
+                <div className={styles.discountUses}>
                   <p className={styles.fieldHeader}>Maximum Discount Uses</p>
                   <InputField
-                    type='textarea'
+                    type='text'
                     name='Conditions'
                     id='conditions'
                     placeholder='Limit number of times this discount can be used in total'
                     icon={<></>}
                     required={true}
                     onChange={(event) => {
-                      setNewCouponData({ ...newCouponData, conditions: event.target.value });
+                      setNewCouponData({ ...newCouponData, count: Number(event.target.value) });
                     }}
-                    value={newCouponData.conditions}
+                    value={newCouponData.count.toString()}
                   />
                 </div>
 
                 <div className={styles.limitOne}>
-                  <Slider checked={true} onChange={() => {}} text='Limit to one use per customer' />
+                  <Slider
+                    checked={newCouponData.is_private}
+                    onChange={() => {
+                      setNewCouponData({ ...newCouponData, is_private: !newCouponData.is_private });
+                    }}
+                    text='Show Ticket in Form'
+                  />
+                  <Slider
+                    checked={newCouponData.is_private}
+                    onChange={() => {
+                      setNewCouponData({ ...newCouponData, is_private: !newCouponData.is_private });
+                    }}
+                    text='Activate Ticket'
+                  />
                 </div>
-
-                <hr className={styles.line} />
-
-                <div className={styles.eventDates}>
-                  <p className={styles.fieldHeader}>Event Dates</p>
-
-                  <div className={styles.eventDate}>
-                    <InputField
-                      type='date'
-                      name='Start Date'
-                      id='startDate'
-                      placeholder='Start Date'
-                      icon={<></>}
-                      required={true}
-                      onChange={(event) => {
-                        setNewCouponData({ ...newCouponData, start_date: event.target.value });
-                      }}
-                      value={newCouponData.start_date}
-                    />
-                    <InputField
-                      type='date'
-                      name='End Date'
-                      id='endDate'
-                      placeholder='End Date'
-                      icon={<></>}
-                      required={true}
-                      onChange={(event) => {
-                        setNewCouponData({ ...newCouponData, end_date: event.target.value });
-                      }}
-                      value={newCouponData.end_date}
-                    />
-                  </div>
-                </div> */}
               </div>
 
               <div className={styles.buttons}>
