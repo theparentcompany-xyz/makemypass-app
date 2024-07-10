@@ -6,6 +6,7 @@ const SelectComponent = ({
   options,
   onChange,
   value,
+  isSmall,
 }: {
   backgroundColor?: string;
   options?: {
@@ -14,6 +15,7 @@ const SelectComponent = ({
   }[];
   onChange?: any;
   value?: string;
+  isSmall?: boolean;
 }) => {
   return (
     <>
@@ -33,9 +35,9 @@ const SelectComponent = ({
             fontFamily: 'Inter, sans-serif',
             fontStyle: 'normal',
             fontWeight: 400,
-            fontSize: '0.9rem',
+            fontSize: isSmall ? '0.7rem' : '0.9rem',
             zIndex: 1000,
-            width: '12rem',
+            width: isSmall ? '100px' : '12rem',
           }),
           menu: (provided: any) => ({
             ...provided,

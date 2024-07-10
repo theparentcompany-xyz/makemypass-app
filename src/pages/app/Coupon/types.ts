@@ -13,12 +13,16 @@ export default CouponType;
 
 export type CreateCouponType = {
   code: string;
+  type: 'percentage' | 'amount';
   value: number;
   tickets: string[];
   description: string;
   active: boolean;
   count: number;
   is_private: boolean;
-  conditions: string;
-  [key: string]: string | number | boolean | string[];
+  conditions: {
+    field: string;
+    value: string;
+    operator: string;
+  }[];
 };

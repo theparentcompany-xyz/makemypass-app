@@ -13,6 +13,10 @@ import Select from 'react-select';
 import { TicketType } from '../../../apis/types';
 import { getTickets } from '../../../apis/tickets';
 import Slider from '../../../components/SliderButton/Slider';
+import { LuPlus } from 'react-icons/lu';
+import { RxDragHandleDots2 } from 'react-icons/rx';
+import { RiDeleteBinLine } from 'react-icons/ri';
+import SelectComponent from '../FormBuilder/SelectComponent';
 
 const Coupon = () => {
   type CouponModalType = {
@@ -45,7 +49,13 @@ const Coupon = () => {
     description: '',
     active: true,
     count: 0,
-    conditions: '',
+    conditions: [
+      {
+        field: '',
+        value: '',
+        operator: '',
+      },
+    ],
     is_private: false,
   });
 
@@ -113,7 +123,7 @@ const Coupon = () => {
                         if (selectedOption)
                           setNewCouponData({
                             ...newCouponData,
-                            type: selectedOption.value,
+                            type: selectedOption.value as 'percentage' | 'amount',
                           });
                       }}
                     />
@@ -199,6 +209,82 @@ const Coupon = () => {
                     text='Activate Ticket'
                   />
                 </div>
+              </div>
+
+              <div className={styles.conditions}>
+                {newCouponData.conditions.length >= 0 && (
+                  <div className={styles.conditions}>
+                    {newCouponData.conditions.map((condition, idx) => (
+                      <div className={styles.conditionRow} key={idx}>
+                        <p className={styles.when}>When</p>
+                        <div className={styles.conditionsSelect}>
+                          <SelectComponent
+                            // options={getFormFields(field, condition.field)}
+                            value={condition.field}
+                            onChange={(option: { value: string; label: string }) => {
+                              if (!option) condition.field = '';
+                              else condition.field = option.value;
+
+                              // updateFormStateVariable();
+                            }}
+                            isSmall={true}
+                          />
+                          <SelectComponent
+                            // options={[
+                            //   ...conditions.map((condition) => ({
+                            //     value: condition.value,
+                            //     label: condition.label,
+                            //   })),
+                            // ]}
+                            value={condition.operator}
+                            // onChange={(option: { value: string; label: string }) => {
+                            //   if (!option) condition.operator = '';
+                            //   else condition.oaperator = option.value;
+                            //   updateFormStateVariable();
+                            // }}
+                            isSmall={true}
+                          />
+                          <input
+                            type='text'
+                            placeholder='Enter a Value'
+                            value={condition.value}
+                            // onChange={(event) => {
+                            //   condition.value = event.target.value;
+                            //   updateFormStateVariable();
+                            // }}
+                          />
+
+                          <RiDeleteBinLine
+                            size={20}
+                            color='#606264'
+                            // onClick={() => {
+                            //   removeCondition(field, idx);
+                            // }}
+                          />
+
+                          <RxDragHandleDots2
+                            style={{
+                              marginLeft: '0.5rem',
+                            }}
+                            size={20}
+                            color='#606264'
+                          />
+
+                          <LuPlus
+                            style={{
+                              marginLeft: '0.5rem',
+                            }}
+                            size={20}
+                            color='#606264'
+                            // onClick={() => {
+                            //   addCondition(field);
+                            // }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className={styles.buttons}>
