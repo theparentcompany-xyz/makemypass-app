@@ -274,7 +274,7 @@ const FormBuilder = () => {
                                 value={field.title}
                                 onChange={(event) => {
                                   field.title = event.target.value;
-                                  field.field_key = event.target.value.toLowerCase();
+                                  field.field_key = event.target.value.toLowerCase().replace(/ /g, '_');
                                   updateFormStateVariable();
                                 }}
                               />
