@@ -31,7 +31,8 @@
 }
 
 .customFieldLabel {
-  white-space: nowrap;
+  font-size: 0.9rem;
+  color: #989999;
 }
 
 .customFieldLabel span {
@@ -173,11 +174,10 @@
 
 .conditionRow {
   margin-top: 0.5rem;
-  padding-left: 1.5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
 }
 
@@ -185,6 +185,7 @@
   margin-top: 0.5rem;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
   width: 100%;
@@ -263,6 +264,8 @@
   font-family: 'Inter', sans-serif;
   column-gap: 0.5rem;
   font-size: 0.9rem;
+
+  width: 2rem;
 }
 
 .optionInput:focus {
