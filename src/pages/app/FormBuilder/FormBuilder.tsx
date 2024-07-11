@@ -21,7 +21,7 @@ import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
 import { FaChevronDown } from 'react-icons/fa';
 import { AnimatePresence, Reorder } from 'framer-motion';
 import InputField from '../../auth/Login/InputField';
-import { MdOutlineSdStorage } from 'react-icons/md';
+import { MdDelete, MdOutlineSdStorage } from 'react-icons/md';
 import { customStyles } from '../EventPage/constants';
 
 const FormBuilder = () => {
@@ -168,6 +168,15 @@ const FormBuilder = () => {
                               </div>
                             </div>
                             <LuPencil size={20} color='#606264' />
+
+                            <MdDelete
+                              size={20}
+                              color='#606264'
+                              onClick={() => {
+                                formFields.splice(idx, 1);
+                                updateFormStateVariable();
+                              }}
+                            />
                           </div>
                         ) : (
                           <div className={styles.customFieldExp} key={idx}>
@@ -219,6 +228,14 @@ const FormBuilder = () => {
                                     }}
                                   />
                                 )}
+                                <MdDelete
+                                  size={20}
+                                  color='#606264'
+                                  onClick={() => {
+                                    formFields.splice(idx, 1);
+                                    updateFormStateVariable();
+                                  }}
+                                />
                               </div>
                             </div>
                             <AnimatePresence>
