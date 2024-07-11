@@ -22,33 +22,33 @@ export interface ConditionType {
 
 export function getConditions(type: string): ConditionType[] {
   switch (type) {
-    case FieldType.Text:
-    case FieldType.Email:
-    case FieldType.PhoneNumber:
-    case FieldType.SingleSelect:
-    case FieldType.TextArea:
-    case FieldType.MultiSelect:
-    case FieldType.Radio:
+    case FieldType.text:
+    case FieldType.email:
+    case FieldType.phone:
+    case FieldType.singleselect:
+    case FieldType.textarea:
+    case FieldType.multiselect:
+    case FieldType.radio:
       return conditions.filter((condition) =>
         ['=', '!=', 'in', 'not in', 'empty', 'not empty', 'contains', 'not contains'].includes(
           condition.value,
         ),
       );
-    case FieldType.Number:
+    case FieldType.number:
       return conditions.filter((condition) =>
         ['=', '!=', 'in', 'not in', 'empty', 'not empty', '>', '>=', '<', '<='].includes(
           condition.value,
         ),
       );
-    case FieldType.Date:
-    case FieldType.DateTime:
-    case FieldType.Time:
+    case FieldType.date:
+    case FieldType.datetime:
+    case FieldType.time:
       return conditions.filter((condition) =>
         ['=', '!=', '>', '>=', '<', '<='].includes(condition.value),
       );
-    case FieldType.File:
-    case FieldType.Rating:
-    case FieldType.Checkbox:
+    case FieldType.file:
+    case FieldType.rating:
+    case FieldType.checkbox:
       return conditions.filter((condition) =>
         ['=', '!=', 'empty', 'not empty'].includes(condition.value),
       );
@@ -109,37 +109,37 @@ export const conditions = [
 ];
 
 export const IconsMapping: Record<string, IconType> = {
-  Text: MdTextFields,
-  Email: MdEmail,
-  PhoneNumber: MdPhone,
-  SingleSelect: MdArrowDropDown,
-  TextArea: MdSubject,
-  MultiSelect: MdArrowDropDown,
-  Radio: MdRadioButtonChecked,
-  File: MdAttachFile,
-  Date: MdCalendarToday,
-  DateTime: MdCalendarToday,
-  Time: MdAccessTime,
-  Number: Md123,
-  Rating: MdStar,
-  Checkbox: MdCheckBox,
+  text: MdTextFields,
+  email: MdEmail,
+  phone: MdPhone,
+  singleselect: MdArrowDropDown,
+  textarea: MdSubject,
+  multiselect: MdArrowDropDown,
+  radio: MdRadioButtonChecked,
+  file: MdAttachFile,
+  date: MdCalendarToday,
+  datetime: MdCalendarToday,
+  time: MdAccessTime,
+  number: Md123,
+  rating: MdStar,
+  checkbox: MdCheckBox,
 };
 
 export const HexColors: Record<string, string> = {
-  Text: '#DE3163',
-  Email: '#BB2DC7',
-  PhoneNumber: '#325FFA',
-  SingleSelect: '#682FFF',
-  TextArea: '#CC62D5',
-  MultiSelect: '#325FFA',
-  Radio: '#EC660D',
-  File: '#07A460',
-  Date: '#D19D20',
-  DateTime: '#939597',
-  Time: '#325FFA',
-  Number: '#E83B47',
-  Rating: '#DE3163',
-  Checkbox: '#BB2DC7',
+  text: '#DE3163',
+  email: '#BB2DC7',
+  phone: '#325FFA',
+  singleselect: '#682FFF',
+  textarea: '#CC62D5',
+  multiselect: '#325FFA',
+  radio: '#EC660D',
+  file: '#07A460',
+  date: '#D19D20',
+  datetime: '#939597',
+  time: '#325FFA',
+  number: '#E83B47',
+  rating: '#DE3163',
+  checkbox: '#BB2DC7',
 };
 
 export const FileExtensions = [

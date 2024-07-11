@@ -9,19 +9,19 @@ const changeTypeModal = (field: Field, newType: FieldType) => {
   if (field.type === newType) return;
 
   const optionTypes = [
-    FieldType.SingleSelect,
-    FieldType.MultiSelect,
-    FieldType.Radio,
-    FieldType.Checkbox,
+    FieldType.singleselect,
+    FieldType.multiselect,
+    FieldType.radio,
+    FieldType.checkbox,
   ];
   if (optionTypes.includes(field.type as FieldType)) {
     if (!optionTypes.includes(newType)) {
       field.options = [];
     }
   }
-  if (field.type == FieldType.File) {
+  if (field.type == FieldType.file) {
     field.property = {};
-  } else if (newType == FieldType.File) {
+  } else if (newType == FieldType.file) {
     field.property = {
       extension_types: [],
       max_size: 5000,
@@ -63,12 +63,10 @@ const ChangeTypeModal = ({
               key={type}
               onClick={() => {
                 setShowChangeTypeModal(false);
-                changeTypeModal(field, FieldType[type as keyof typeof FieldType]);
+                changeTypeModal(field, type as FieldType);
               }}
               style={
-                field && field.type === FieldType[type as keyof typeof FieldType]
-                  ? { border: `2px solid #565B63` }
-                  : {}
+                field && field.type === (type as FieldType) ? { border: `2px solid #565B63` } : {}
               }
             >
               <span
@@ -78,7 +76,7 @@ const ChangeTypeModal = ({
               >
                 {IconComponent && <IconComponent size={20} color={HexColor} />}
               </span>
-              {type}
+              {FieldType[type as keyof typeof FieldType]}
             </p>
           );
         })}

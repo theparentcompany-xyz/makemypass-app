@@ -65,7 +65,7 @@ const FormBuilder = () => {
   const addField = () => {
     const defaultField = {
       id: uuidv4(),
-      type: FieldType.Text,
+      type: FieldType.text,
       title: 'Name',
       hidden: false,
       unique: null,
@@ -171,19 +171,20 @@ const FormBuilder = () => {
                               <div>
                                 <p
                                   className={styles.customFieldLabel}
+                                  style={{
+                                    whiteSpace: 'nowrap',
+                                  }}
                                   onClick={() => {
                                     setSelectedField(field);
                                     setShowChangeTypeModal(true);
                                   }}
                                 >
-                                  {field.type.toUpperCase()}{' '}
+                                  {FieldType[field.type as unknown as keyof typeof FieldType]}
                                   <span className={styles.changeTypeButton}>
                                     <FaChevronDown size={15} color='white' />
                                   </span>
                                 </p>
-                                <p className={styles.customFieldType}>
-                                  {field.title}
-                                </p>
+                                <p className={styles.customFieldType}>{field.title}</p>
                               </div>
                             </div>
                             <LuPencil size={20} color='#606264' />
@@ -273,7 +274,9 @@ const FormBuilder = () => {
                                 value={field.title}
                                 onChange={(event) => {
                                   field.title = event.target.value;
-                                  field.field_key = event.target.value.toLowerCase().replace(/ /g, '_');
+                                  field.field_key = event.target.value
+                                    .toLowerCase()
+                                    .replace(/ /g, '_');
                                   updateFormStateVariable();
                                 }}
                               />
@@ -291,10 +294,10 @@ const FormBuilder = () => {
                             </div>
 
                             {field.options &&
-                              (field.type === FieldType.Radio ||
-                                field.type === FieldType.Checkbox ||
-                                field.type === FieldType.SingleSelect ||
-                                field.type === FieldType.MultiSelect) && (
+                              (field.type === FieldType.radio ||
+                                field.type === FieldType.checkbox ||
+                                field.type === FieldType.singleselect ||
+                                field.type === FieldType.multiselect) && (
                                 <div className={styles.customFieldOption}>
                                   {field.options.map((option, index) => (
                                     <div className='row' key={index}>
@@ -344,7 +347,7 @@ const FormBuilder = () => {
                                 />
                               </div>
 
-                              {field.type === FieldType.File && (
+                              {field.type === FieldType.file && (
                                 <Slider
                                   checked={field.property.is_multiple}
                                   text={'Allow Multiple Files'}
@@ -355,7 +358,7 @@ const FormBuilder = () => {
                                 />
                               )}
                             </div>
-                            {field.type === FieldType.File && (
+                            {field.type === FieldType.file && (
                               <div className={styles.customFieldOption}>
                                 <div className={styles.customFieldOptionRow}>
                                   <div>
@@ -392,11 +395,10 @@ const FormBuilder = () => {
                                       icon={<MdOutlineSdStorage size={20} color='#606264' />}
                                       type='number'
                                       placeholder='Enter max file size(kb)'
-                                      value={
-                                        field?.property?.max_size.toString()
-                                      }
+                                      value={field?.property?.max_size.toString()}
                                       onChange={(event) => {
-                                        if (parseInt(event.target.value) > 5000) event.target.value = '5000';
+                                        if (parseInt(event.target.value) > 5000)
+                                          event.target.value = '5000';
                                         field.property.max_size = parseInt(event.target.value);
                                         updateFormStateVariable();
                                       }}
