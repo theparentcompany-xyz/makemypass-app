@@ -10,7 +10,7 @@ const PoppingText = ({
   todayCheckIns?: number;
 }) => {
   return (
-    <motion.p
+    <motion.div
       animate={{
         scale: [1, 1.25, 1],
         marginRight: [0, 5, 0],
@@ -24,7 +24,7 @@ const PoppingText = ({
       <p style={totalGuests >= targetGuests ? { color: '#47c97e' } : { color: '#fdfdfd' }}>
         {todayCheckIns && todayCheckIns >= 0 ? todayCheckIns : totalGuests}
       </p>
-    </motion.p>
+    </motion.div>
   );
 };
 
