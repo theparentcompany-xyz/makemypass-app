@@ -149,7 +149,14 @@ const Glance = ({
       title: 'Coupon',
       roles: ['Admin', 'Owner', 'Volunteer'],
     },
-    // feedback: 'Feedbacks',
+    // feedback: {
+    //   title: 'Feedback',
+    //   roles: ['Admin', 'Owner'],
+    // },
+    postevent: {
+      title: 'Post Event',
+      roles: ['Admin', 'Owner'],
+    },
   };
 
   if (import.meta.env.VITE_CURRENT_ENV === 'dev') {

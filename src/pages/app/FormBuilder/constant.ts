@@ -15,8 +15,12 @@ import {
 } from 'react-icons/md';
 import { FieldType } from './types.ts';
 
+export interface ConditionType {
+  value: string;
+  label: string;
+}
 
-export function getConditions(type: string): Condition[] {
+export function getConditions(type: string): ConditionType[] {
   switch (type) {
     case FieldType.Text:
     case FieldType.Email:
@@ -25,24 +29,28 @@ export function getConditions(type: string): Condition[] {
     case FieldType.TextArea:
     case FieldType.MultiSelect:
     case FieldType.Radio:
-      return conditions.filter(condition =>
-        ['=', '!=', 'in', 'not in', 'empty', 'not empty', 'contains', 'not contains'].includes(condition.value)
+      return conditions.filter((condition) =>
+        ['=', '!=', 'in', 'not in', 'empty', 'not empty', 'contains', 'not contains'].includes(
+          condition.value,
+        ),
       );
     case FieldType.Number:
-      return conditions.filter(condition =>
-        ['=', '!=', 'in', 'not in', 'empty', 'not empty', '>', '>=', '<', '<='].includes(condition.value)
+      return conditions.filter((condition) =>
+        ['=', '!=', 'in', 'not in', 'empty', 'not empty', '>', '>=', '<', '<='].includes(
+          condition.value,
+        ),
       );
     case FieldType.Date:
     case FieldType.DateTime:
     case FieldType.Time:
-      return conditions.filter(condition =>
-        ['=', '!=', '>', '>=', '<', '<='].includes(condition.value)
+      return conditions.filter((condition) =>
+        ['=', '!=', '>', '>=', '<', '<='].includes(condition.value),
       );
     case FieldType.File:
     case FieldType.Rating:
     case FieldType.Checkbox:
-      return conditions.filter(condition =>
-        ['=', '!=', 'empty', 'not empty'].includes(condition.value)
+      return conditions.filter((condition) =>
+        ['=', '!=', 'empty', 'not empty'].includes(condition.value),
       );
     default:
       return [];

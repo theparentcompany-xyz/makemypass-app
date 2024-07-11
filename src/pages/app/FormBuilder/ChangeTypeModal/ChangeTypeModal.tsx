@@ -1,43 +1,23 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { HexColors, IconsMapping } from '../constant';
-import { ChangeType, FieldType } from '../types';
+import { Field, FieldType } from '../types';
 import styles from './ChangeTypeModal.module.css';
 import { IconType } from 'react-icons';
 import { motion } from 'framer-motion';
 
 const ChangeTypeModal = ({
-  setChangeType,
-  changeType,
+  setshowChangeTypeModal,
+  field,
 }: {
-  setChangeType: Dispatch<SetStateAction<ChangeType>>;
-  changeType: ChangeType;
+  setshowChangeTypeModal: Dispatch<SetStateAction<boolean>>;
+  field: Field;
 }) => {
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const modal = document.querySelector('.typeContainer');
-      if (modal && !modal.contains(event.target as Node)) {
-        setChangeType((prevChangeType) => ({
-          ...prevChangeType,
-          showModal: false,
-        }));
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [setChangeType]);
   return (
     <>
       <div
         className={styles.backgroundBlur}
         onClick={() => {
-          setChangeType((prevChangeType) => ({
-            ...prevChangeType,
-            showModal: false,
-          }));
+          setshowChangeTypeModal(false);
         }}
       ></div>
       <motion.div
@@ -55,15 +35,14 @@ const ChangeTypeModal = ({
               className={styles.type}
               key={type}
               onClick={() => {
-                setChangeType((prevChangeType) => ({
-                  ...prevChangeType,
-                  showModal: false,
-                  currentType: FieldType[type as keyof typeof FieldType],
-                }));
+                field.type = FieldType[type as keyof typeof FieldType];
+                setshowChangeTypeModal(false);
+
+                console.log(field);
+                console.log('New field type: ', FieldType[type as keyof typeof FieldType]);
               }}
               style={
-                changeType.currentType &&
-                changeType.currentType === FieldType[type as keyof typeof FieldType]
+                field && field.type === FieldType[type as keyof typeof FieldType]
                   ? { border: `2px solid #565B63` }
                   : {}
               }

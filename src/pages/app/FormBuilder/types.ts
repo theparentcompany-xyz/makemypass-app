@@ -17,12 +17,6 @@ export interface Field {
   description: string | null;
 }
 
-export interface ChangeType {
-  showModal: boolean;
-  currentType: string;
-  fieldId: string;
-}
-
 export enum FieldType {
   Text = 'text',
   Email = 'email',
