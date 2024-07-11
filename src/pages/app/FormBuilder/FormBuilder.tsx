@@ -64,12 +64,16 @@ const FormBuilder = () => {
   const addField = () => {
     const defaultField = {
       id: uuidv4(),
-      type: FieldType.Text,
+      type: FieldType.Text as string,
       title: 'Name',
       hidden: false,
       unique: null,
       options: [],
-      property: {},
+      property: {
+        extension_types: [],
+        max_size: 0,
+        is_multiple: false,
+      },
       required: true,
       field_key: 'name',
       conditions: [],
@@ -297,7 +301,7 @@ const FormBuilder = () => {
                                 Unique &nbsp;
                                 <input
                                   type='number'
-                                  value={field.unique}
+                                  value={field.unique ?? undefined}
                                   onChange={(event) => {
                                     if (parseInt(event.target.value) < 1) event.target.value = '1';
                                     field.unique = parseInt(event.target.value);

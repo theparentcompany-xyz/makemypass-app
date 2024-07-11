@@ -8,8 +8,13 @@ import { motion } from 'framer-motion';
 const changeTypeModal = (field: Field, newType: FieldType) => {
   if (field.type === newType) return;
 
-  const optionTypes = [FieldType.SingleSelect, FieldType.MultiSelect, FieldType.Radio, FieldType.Checkbox];
-  if (optionTypes.includes(field.type)) {
+  const optionTypes = [
+    FieldType.SingleSelect,
+    FieldType.MultiSelect,
+    FieldType.Radio,
+    FieldType.Checkbox,
+  ];
+  if (optionTypes.includes(field.type as FieldType)) {
     if (!optionTypes.includes(newType)) {
       field.options = [];
     }
@@ -18,8 +23,10 @@ const changeTypeModal = (field: Field, newType: FieldType) => {
   field.type = newType;
 };
 
-
-const ChangeTypeModal = ({ setShowChangeTypeModal, field }: {
+const ChangeTypeModal = ({
+  setShowChangeTypeModal,
+  field,
+}: {
   setShowChangeTypeModal: Dispatch<SetStateAction<boolean>>;
   field: Field;
 }) => {
