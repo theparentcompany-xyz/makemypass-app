@@ -80,7 +80,7 @@ const EventPage = () => {
           </div>
         )}
 
-        {eventData && eventData?.form?.length > 0 ? (
+        {eventData && !eventData?.err_message && eventData?.form?.length > 0 ? (
           <div className={styles.eventPageContainer}>
             {typeParam !== 'embed' && (
               <div className={styles.eventHeaderContainer}>
