@@ -170,46 +170,46 @@ const Glance = ({
 
   return (
     <AnimatePresence>
-      {eventData && (
-        <div className={styles.tabsContainer}>
-          <div className={styles.tabs}>
-            <ol>
-              {eventData.current_user_role != 'Gamer' && (
-                <>
-                  {Object.keys(tabs)
-                    .filter((tab) => {
-                      return tabs[tab as keyof typeof tabs].roles.includes(userRoles);
-                    })
-                    .map((tab) => (
-                      <div key={tab}>
-                        <motion.li
-                          whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
-                          className={styles.tab}
-                          onClick={() => updateTab(tab)}
-                        >
-                          {tabs[tab as keyof typeof tabs].title}
-                        </motion.li>
-                        {currentTab === tab && (
-                          <motion.div layoutId='tab-indicator' className={styles.active} />
-                        )}
-                      </div>
-                    ))}
-                </>
+      <>
+        {eventData && (
+          <div className={styles.tabsContainer}>
+            <div className={styles.tabs}>
+              <ol>
+                {eventData.current_user_role != 'Gamer' && (
+                  <>
+                    {Object.keys(tabs)
+                      .filter((tab) => {
+                        return tabs[tab as keyof typeof tabs].roles.includes(userRoles);
+                      })
+                      .map((tab, index) => (
+                        <div key={index}>
+                          <motion.li
+                            whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
+                            className={styles.tab}
+                            onClick={() => updateTab(tab)}
+                          >
+                            {tabs[tab as keyof typeof tabs].title}
+                          </motion.li>
+                          {currentTab === tab && (
+                            <motion.div layoutId='tab-indicator' className={styles.active} />
+                          )}
+                        </div>
+                      ))}
+                  </>
+                )}
+              </ol>
+              {tab === 'insights' && (
+                <SecondaryButton
+                  buttonText='Share'
+                  onClick={() => {
+                    if (setShowPublishModal) setShowPublishModal(true);
+                  }}
+                />
               )}
-            </ol>
-            {tab === 'insights' && (
-              <SecondaryButton
-                buttonText='Share'
-                onClick={() => {
-                  if (setShowPublishModal) setShowPublishModal(true);
-                }}
-              />
-            )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <AnimatePresence>
         <div className={styles.glanceContainer}>
           {currentTab &&
             currentTab != 'insights' &&
@@ -248,7 +248,7 @@ const Glance = ({
 
                 <div className={styles.guestsCount}>
                   {totalGuests > 0 && (
-                    <motion.p
+                    <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       className={styles.guests}
@@ -259,11 +259,11 @@ const Glance = ({
                         <p className={styles.popper}>🎉</p>
                       )}
                       <span>&nbsp;unique guests</span>
-                    </motion.p>
+                    </motion.div>
                   )}
                   {currentTab == 'checkin' ||
                     (currentTab == 'inevent' && totalGuests >= 0 && (
-                      <motion.p
+                      <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         className={styles.guests}
@@ -277,11 +277,11 @@ const Glance = ({
                         )}
                         {totalGuests > targetGuests && <p className={styles.popper}>🎉</p>}
                         <span>&nbsp;today's guests</span>
-                      </motion.p>
+                      </motion.div>
                     ))}
 
                   {(currentTab == 'overview' || currentTab == 'guests') && (
-                    <motion.p
+                    <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       className={styles.guests}
@@ -289,16 +289,16 @@ const Glance = ({
                       {shortlistedCount}
 
                       <span>&nbsp;shortlisted</span>
-                    </motion.p>
+                    </motion.div>
                   )}
                 </div>
 
                 <div className={styles.progresBarGraph}>
-                  {progressData.map((data) => (
+                  {progressData.map((data, index) => (
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${(data.value / totalGuests) * 100}%` }}
-                      key={data.type}
+                      key={index}
                       className={styles.progressBar}
                       style={{
                         backgroundColor: data.color,
@@ -309,30 +309,27 @@ const Glance = ({
                 </div>
 
                 <div className={styles.progressLabels}>
-                  <ul>
-                    {progressData.map((data) => (
-                      <>
-                        <motion.li
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          key={data.type}
-                          className={styles.progressLabel}
-                          style={{
-                            color: data.color,
-                          }}
-                        >
-                          <p className={styles.dataCount}>
-                            • ({data.value}) {data.type.substring(0, 8)}..
-                          </p>
-                        </motion.li>
-                      </>
-                    ))}
-                  </ul>
+                  {progressData.map((data, index) => (
+                    <ul key={index}>
+                      <motion.li
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className={styles.progressLabel}
+                        style={{
+                          color: data.color,
+                        }}
+                      >
+                        <p className={styles.dataCount}>
+                          • ({data.value}) {data.type.substring(0, 8)}..
+                        </p>
+                      </motion.li>
+                    </ul>
+                  ))}
                 </div>
               </motion.div>
             )}
         </div>
-      </AnimatePresence>
+      </>
     </AnimatePresence>
   );
 };
