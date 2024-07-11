@@ -5,11 +5,22 @@ import styles from './ChangeTypeModal.module.css';
 import { IconType } from 'react-icons';
 import { motion } from 'framer-motion';
 
-const ChangeTypeModal = ({
-  setshowChangeTypeModal,
-  field,
-}: {
-  setshowChangeTypeModal: Dispatch<SetStateAction<boolean>>;
+const changeTypeModal = (field: Field, newType: FieldType) => {
+  if (field.type === newType) return;
+
+  const optionTypes = [FieldType.SingleSelect, FieldType.MultiSelect, FieldType.Radio, FieldType.Checkbox];
+  if (optionTypes.includes(field.type)) {
+    if (!optionTypes.includes(newType)) {
+      field.options = [];
+    }
+  }
+
+  field.type = newType;
+};
+
+
+const ChangeTypeModal = ({ setShowChangeTypeModal, field }: {
+  setShowChangeTypeModal: Dispatch<SetStateAction<boolean>>;
   field: Field;
 }) => {
   return (
@@ -17,7 +28,7 @@ const ChangeTypeModal = ({
       <div
         className={styles.backgroundBlur}
         onClick={() => {
-          setshowChangeTypeModal(false);
+          setShowChangeTypeModal(false);
         }}
       ></div>
       <motion.div
@@ -35,11 +46,8 @@ const ChangeTypeModal = ({
               className={styles.type}
               key={type}
               onClick={() => {
-                field.type = FieldType[type as keyof typeof FieldType];
-                setshowChangeTypeModal(false);
-
-                console.log(field);
-                console.log('New field type: ', FieldType[type as keyof typeof FieldType]);
+                setShowChangeTypeModal(false);
+                changeTypeModal(field, FieldType[type as keyof typeof FieldType]);
               }}
               style={
                 field && field.type === FieldType[type as keyof typeof FieldType]

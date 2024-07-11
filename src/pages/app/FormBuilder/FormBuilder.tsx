@@ -218,7 +218,7 @@ const FormBuilder = () => {
                                 {showChangeTypeModal && (
                                   <ChangeTypeModal
                                     field={field}
-                                    setshowChangeTypeModal={setShowChangeTypeModal}
+                                    setShowChangeTypeModal={setShowChangeTypeModal}
                                   />
                                 )}
                               </div>
