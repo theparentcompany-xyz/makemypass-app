@@ -1,6 +1,6 @@
 export interface Field {
   id: string;
-  type: string;
+  type: FieldType;
   title: string;
   hidden: boolean;
   unique: number | null;
