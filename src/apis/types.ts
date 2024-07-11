@@ -74,6 +74,8 @@ export type FormFieldType = {
     file_size: number;
     extension_types: string[];
     max_no_of_files: number;
+    is_multiple: boolean;
+    max_size: number;
   };
   conditions?: {
     field: string;

@@ -141,3 +141,24 @@ export const HexColors: Record<string, string> = {
   Rating: '#DE3163',
   Checkbox: '#BB2DC7',
 };
+
+export const FileExtensions = [
+  { value: '.csv', label: '.csv' },
+  { value: '.pdf', label: '.pdf' },
+  { value: '.doc', label: '.doc' },
+  { value: '.docx', label: '.docx' },
+  { value: '.jpg', label: '.jpg' },
+  { value: '.png', label: '.png' },
+  { value: '.jpeg', label: '.jpeg' },
+  { value: '.gif', label: '.gif' },
+  { value: '.xlsx', label: '.xlsx' },
+  { value: '.ppt', label: '.ppt' },
+  { value: '.pptx', label: '.pptx' },
+  { value: '.csv', label: '.csv' },
+  { value: '.txt', label: '.txt' },
+  { value: '.zip', label: '.zip' },
+  { value: '.rar', label: '.rar' },
+  { value: '.tar', label: '.tar' },
+  { value: '.gz', label: '.gz' },
+  { value: '.7z', label: '.7z' },
+];

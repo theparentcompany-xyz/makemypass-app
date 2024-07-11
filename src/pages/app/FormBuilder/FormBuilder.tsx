@@ -8,17 +8,21 @@ import { BsAlphabetUppercase } from 'react-icons/bs';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import { LuPencil, LuPlus } from 'react-icons/lu';
 import { RiDeleteBinLine } from 'react-icons/ri';
+import Select from 'react-select';
 
 import { useEffect, useState } from 'react';
 import { getForm, updateForm } from '../../../apis/formbuilder';
 import { Field, FieldType } from './types';
 import SelectComponent from './SelectComponent';
 import { IoCloseSharp } from 'react-icons/io5';
-import { getConditions } from './constant';
+import { FileExtensions, getConditions } from './constant';
 import { v4 as uuidv4 } from 'uuid';
 import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
 import { FaChevronDown } from 'react-icons/fa';
 import { AnimatePresence, Reorder } from 'framer-motion';
+import InputField from '../../auth/Login/InputField';
+import { MdOutlineSdStorage } from 'react-icons/md';
+import { customStyles } from '../EventPage/constants';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -287,24 +291,83 @@ const FormBuilder = () => {
                                 </div>
                               )}
 
-                            <div
-                              className={styles.requiredCheckbox}
-                              style={{
-                                marginTop: '1rem',
-                                marginLeft: '2rem',
-                              }}
-                            >
-                              Unique &nbsp;
-                              <input
-                                type='number'
-                                value={field.unique}
-                                onChange={(event) => {
-                                  if (parseInt(event.target.value) < 1) event.target.value = '1';
-                                  field.unique = parseInt(event.target.value);
-                                  updateFormStateVariable();
-                                }}
-                              />
+                            <div className={styles.centerRow}>
+                              <div className={styles.requiredCheckbox}>
+                                Unique &nbsp;
+                                <input
+                                  type='number'
+                                  value={field.unique}
+                                  onChange={(event) => {
+                                    if (parseInt(event.target.value) < 1) event.target.value = '1';
+                                    field.unique = parseInt(event.target.value);
+                                    updateFormStateVariable();
+                                  }}
+                                />
+                              </div>
+
+                              {field.type === FieldType.File && (
+                                <Slider
+                                  checked={field.property.is_multiple}
+                                  text={'Allow Multiple Files'}
+                                  onChange={() => {
+                                    field.property.is_multiple = !field.property.is_multiple;
+                                    updateFormStateVariable();
+                                  }}
+                                />
+                              )}
                             </div>
+                            {field.type === FieldType.File && (
+                              <div className={styles.customFieldOption}>
+                                <div className={styles.customFieldOptionRow}>
+                                  <div>
+                                    <label className={styles.customFieldOptionLabel}>
+                                      Allowed Extensions
+                                    </label>
+                                    <p className={styles.formLabel}>
+                                      Select the file extensions allowed.
+                                    </p>
+                                    <Select
+                                      isMulti
+                                      isSearchable
+                                      styles={customStyles}
+                                      options={FileExtensions}
+                                      value={field?.property?.extension_types?.map((ext) => ({
+                                        value: ext,
+                                        label: ext,
+                                      }))}
+                                      onChange={(selectedOptions) => {
+                                        field.property.extension_types = selectedOptions.map(
+                                          (option) => option.value,
+                                        );
+                                        updateFormStateVariable();
+                                      }}
+                                    />
+                                  </div>
+                                  <div>
+                                    <label className={styles.customFieldOptionLabel}>
+                                      Max Size:
+                                    </label>
+                                    <InputField
+                                      name='max_size'
+                                      id='max_size'
+                                      icon={<MdOutlineSdStorage size={20} color='#606264' />}
+                                      type='number'
+                                      placeholder='Enter max file size(kb)'
+                                      value={
+                                        field?.property?.max_size
+                                          ? field?.property?.max_size.toString()
+                                          : '0'
+                                      }
+                                      onChange={(event) => {
+                                        field.property.max_size = parseInt(event.target.value);
+                                        updateFormStateVariable();
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
                             {getConditionalFields(field).length >= 0 && (
                               <div
                                 className={styles.row1}

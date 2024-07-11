@@ -135,9 +135,7 @@
   color: #ffffff;
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
-  padding-left: 1rem;
   font-weight: 400;
-  margin-right: 1rem;
 }
 
 .expandedRight {
@@ -292,4 +290,29 @@
 
 li {
   list-style-type: none;
+}
+
+.customFieldOptionRow,
+.centerRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  column-gap: 1rem;
+}
+
+.centerRow {
+  align-items: center;
+  padding-top: 1rem;
+  padding-left: 1.75rem;
+}
+
+.formLabel {
+  color: #a4a4a4;
+  font-size: 0.875rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 1rem;
 }
