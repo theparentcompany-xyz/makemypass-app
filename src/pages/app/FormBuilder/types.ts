@@ -20,7 +20,7 @@ export interface Field {
 export enum FieldType {
   Text = 'text',
   Email = 'email',
-  PhoneNumber = 'phonenumber',
+  PhoneNumber = 'phone',
   SingleSelect = 'singleselect',
   TextArea = 'textarea',
   MultiSelect = 'multiselect',
