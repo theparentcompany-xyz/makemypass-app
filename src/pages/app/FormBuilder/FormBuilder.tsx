@@ -23,12 +23,14 @@ import { AnimatePresence, Reorder } from 'framer-motion';
 import InputField from '../../auth/Login/InputField';
 import { MdDelete, MdOutlineSdStorage } from 'react-icons/md';
 import { customStyles } from '../EventPage/constants';
+import Modal from '../../../components/Modal/Modal';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [formFields, setFormFields] = useState<Field[]>([]);
   const [selectedField, setSelectedField] = useState<Field>({} as Field);
   const [showChangeTypeModal, setShowChangeTypeModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   useEffect(() => {
     getForm(event_id, setFormFields);
@@ -115,6 +117,28 @@ const FormBuilder = () => {
   return (
     <>
       <Theme>
+        {showConfirmationModal && (
+          <Modal type='center' title='Confirmation' onClose={() => setShowConfirmationModal(false)}>
+            <div className={styles.confirmationModal}>
+              <p>Are you sure you want to delete this field?</p>
+              <div className={styles.confirmationButtons}>
+                <button
+                  onClick={() => {
+                    formFields.splice(
+                      formFields.findIndex((field) => field.id === selectedField.id),
+                      1,
+                    );
+                    updateFormStateVariable();
+                    setShowConfirmationModal(false);
+                  }}
+                >
+                  Yes
+                </button>
+                <button onClick={() => setShowConfirmationModal(false)}>No</button>
+              </div>
+            </div>
+          </Modal>
+        )}
         <div className={styles.builderContainer}>
           <EventHeader />
           <Glance tab='formbuilder' />
@@ -173,8 +197,7 @@ const FormBuilder = () => {
                               size={20}
                               color='#606264'
                               onClick={() => {
-                                formFields.splice(idx, 1);
-                                updateFormStateVariable();
+                                setShowConfirmationModal(true);
                               }}
                             />
                           </div>
@@ -232,8 +255,7 @@ const FormBuilder = () => {
                                   size={20}
                                   color='#606264'
                                   onClick={() => {
-                                    formFields.splice(idx, 1);
-                                    updateFormStateVariable();
+                                    setShowConfirmationModal(true);
                                   }}
                                 />
                               </div>
