@@ -19,6 +19,15 @@ const changeTypeModal = (field: Field, newType: FieldType) => {
       field.options = [];
     }
   }
+  if (field.type == FieldType.File) {
+    field.property = {};
+  } else if (newType == FieldType.File) {
+    field.property = {
+      extension_types: [],
+      max_size: 5000,
+      is_multiple: false,
+    };
+  }
 
   field.type = newType;
 };

@@ -69,11 +69,7 @@ const FormBuilder = () => {
       hidden: false,
       unique: null,
       options: [],
-      property: {
-        extension_types: [],
-        max_size: 0,
-        is_multiple: false,
-      },
+      property: {},
       required: true,
       field_key: 'name',
       conditions: [],
@@ -376,11 +372,10 @@ const FormBuilder = () => {
                                       type='number'
                                       placeholder='Enter max file size(kb)'
                                       value={
-                                        field?.property?.max_size
-                                          ? field?.property?.max_size.toString()
-                                          : '0'
+                                        field?.property?.max_size.toString()
                                       }
                                       onChange={(event) => {
+                                        if (parseInt(event.target.value) > 5000) event.target.value = '5000';
                                         field.property.max_size = parseInt(event.target.value);
                                         updateFormStateVariable();
                                       }}

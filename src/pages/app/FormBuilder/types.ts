@@ -9,7 +9,7 @@ export interface Field {
     extension_types: string[];
     max_size: number;
     is_multiple: boolean;
-  };
+  } | { [key: string]: never };
   required: boolean;
   conditions: {
     field: string;
