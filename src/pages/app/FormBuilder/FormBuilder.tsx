@@ -4,7 +4,6 @@ import Glance from '../../../components/Glance/Glance';
 import Theme from '../../../components/Theme/Theme';
 import styles from './FormBuilder.module.css';
 import Slider from '../../../components/SliderButton/Slider';
-import { BsAlphabetUppercase } from 'react-icons/bs';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import { LuPencil, LuPlus } from 'react-icons/lu';
 import { RiDeleteBinLine } from 'react-icons/ri';
@@ -183,7 +182,7 @@ const FormBuilder = () => {
                                   </span>
                                 </p>
                                 <p className={styles.customFieldType}>
-                                  <BsAlphabetUppercase size={25} /> {field.title}
+                                  {field.title}
                                 </p>
                               </div>
                             </div>
