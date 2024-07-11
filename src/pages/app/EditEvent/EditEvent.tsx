@@ -304,7 +304,7 @@ const EditEvent = () => {
                     )}
                   </AnimatePresence>
                   <div className={styles.urlContainer}>
-                    <label>Public URL: makemypass.com/</label>
+                    <label>Public URL: {window.location.hostname}/</label>
                     <input
                       type='text'
                       className={styles.urlInput}
