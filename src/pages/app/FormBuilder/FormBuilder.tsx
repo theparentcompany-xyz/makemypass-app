@@ -60,7 +60,7 @@ const FormBuilder = () => {
   const addField = () => {
     const defaultField = {
       id: uuidv4(),
-      type: 'text',
+      type: FieldType.Text,
       title: 'Name',
       hidden: false,
       unique: 0,
