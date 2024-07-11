@@ -4,6 +4,54 @@
   }
 }
 
+.eventLinkContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+  justify-content: space-between;
+}
+
+.linkbuttons {
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+.eventLink {
+  width: 81%;
+  border-radius: 8px;
+  border: rgba(255, 255, 255, 0.1) solid 1px;
+  color: #9e9e9e;
+  font-size: 0.9rem;
+  margin: auto;
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  font-family: 'Inter';
+  background: rgba(255, 255, 255, 0.04);
+
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.qrContainer {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.qrText {
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  color: #bbbaba;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  max-width: 15rem;
+}
+
 .bannerContainer {
   margin-top: 1rem;
   border-radius: 12px;

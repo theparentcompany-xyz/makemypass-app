@@ -18,12 +18,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import EventHeader from '../../../components/EventHeader/EventHeader';
 import ManageTickets from './components/ManageTickets/ManageTickets';
-import { LuMail, LuPencil } from 'react-icons/lu';
+import { LuCopy, LuDownload, LuMail, LuPencil, LuQrCode } from 'react-icons/lu';
 import { listMails } from '../../../apis/mails';
 import CustomMail from './components/CustomMail/CustomMail';
 import UpdateMail from './components/UpdateMail/UpdateMail';
 import { sentTextMail } from '../../../apis/postevent';
 import { ChildRef } from './components/ManageTickets/ManageTickets';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const modalRef = useRef<ChildRef>(null);
@@ -49,6 +50,7 @@ const EventGlance = () => {
   const navigate = useNavigate();
   const [isTicketsOpen, setIsTicketsOpen] = useState(false);
   const [mails, setMails] = useState<listMailType[]>([]);
+  const [showQR, setShowQR] = useState(false);
 
   useEffect(() => {
     if (eventId) {
@@ -134,7 +136,56 @@ const EventGlance = () => {
             </Modal>
           )}
 
+          {showQR && (
+            <Modal title='QR Code' onClose={() => setShowQR(false)}>
+              <div className={styles.qrContainer}>
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://${window.location.hostname}/${eventName}`}
+                  alt='QR Code'
+                />
+
+                <p className={styles.qrText}>
+                  Scan this QR code to visit the event page on your mobile device
+                </p>
+
+                <SecondaryButton
+                  buttonText='Download QR'
+                  icon={<LuDownload size={15} />}
+                  onClick={() => {
+                    const link = document.createElement('a');
+                    link.download = 'QR Code.png';
+                    link.href = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://${window.location.hostname}/${eventName}`;
+                    link.click();
+                  }}
+                />
+              </div>
+            </Modal>
+          )}
+
           <div className={styles.eventGlance}>
+            <div className={styles.eventLinkContainer}>
+              <div
+                className={styles.eventLink}
+              >{`https://${window.location.hostname}/${eventName}`}</div>
+              <div className={styles.linkbuttons}>
+                <SecondaryButton
+                  buttonText='Copy Link'
+                  icon={<LuCopy size={15} />}
+                  onClick={() => {
+                    const eventLink = `https://${window.location.hostname}/${eventName}`;
+                    navigator.clipboard.writeText(eventLink);
+                    toast.success('Event link copied to clipboard');
+                  }}
+                />
+                <SecondaryButton
+                  buttonText='Generate QR'
+                  icon={<LuQrCode size={15} />}
+                  onClick={() => {
+                    setShowQR(true);
+                  }}
+                />
+              </div>
+            </div>
             <div className={styles.bannerContainer}>
               {eventData?.banner ? (
                 <img src={eventData?.banner} alt='' className={styles.banner} />

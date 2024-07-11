@@ -45,6 +45,16 @@
   height: 0.5em;
 }
 
+.progressLabels {
+  display: flex;
+  flex-direction: row;
+  list-style-type: disc;
+  font-size: 0.9rem;
+  /* margin-top: 1rem; */
+  column-gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+}
+
 .progressLabel {
   display: flex;
   flex-direction: row;
