@@ -63,7 +63,7 @@ const FormBuilder = () => {
       type: FieldType.Text,
       title: 'Name',
       hidden: false,
-      unique: 0,
+      unique: null,
       options: [],
       property: {},
       required: true,
@@ -298,7 +298,7 @@ const FormBuilder = () => {
                               Unique &nbsp;
                               <input
                                 type='number'
-                                value={field.unique}
+                                value={field.unique ? field.unique : ''}
                                 onChange={(event) => {
                                   if (parseInt(event.target.value) < 1) event.target.value = '1';
                                   field.unique = parseInt(event.target.value);
