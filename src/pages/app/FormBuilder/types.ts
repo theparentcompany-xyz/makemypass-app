@@ -20,6 +20,7 @@ export interface Field {
 export interface ChangeType {
   showModal: boolean;
   currentType: string;
+  fieldId: string;
 }
 
 export enum FieldType {

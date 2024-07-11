@@ -55,10 +55,11 @@ const ChangeTypeModal = ({
               className={styles.type}
               key={type}
               onClick={() => {
-                setChangeType({
+                setChangeType((prevChangeType) => ({
+                  ...prevChangeType,
                   showModal: false,
                   currentType: FieldType[type as keyof typeof FieldType],
-                });
+                }));
               }}
               style={
                 changeType.currentType &&

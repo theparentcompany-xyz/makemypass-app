@@ -13,6 +13,41 @@ import {
   MdStar,
   MdCheckBox,
 } from 'react-icons/md';
+import { FieldType } from './types.ts';
+
+
+export function getConditions(type: string): Condition[] {
+  switch (type) {
+    case FieldType.Text:
+    case FieldType.Email:
+    case FieldType.PhoneNumber:
+    case FieldType.SingleSelect:
+    case FieldType.TextArea:
+    case FieldType.MultiSelect:
+    case FieldType.Radio:
+      return conditions.filter(condition =>
+        ['=', '!=', 'in', 'not in', 'empty', 'not empty', 'contains', 'not contains'].includes(condition.value)
+      );
+    case FieldType.Number:
+      return conditions.filter(condition =>
+        ['=', '!=', 'in', 'not in', 'empty', 'not empty', '>', '>=', '<', '<='].includes(condition.value)
+      );
+    case FieldType.Date:
+    case FieldType.DateTime:
+    case FieldType.Time:
+      return conditions.filter(condition =>
+        ['=', '!=', '>', '>=', '<', '<='].includes(condition.value)
+      );
+    case FieldType.File:
+    case FieldType.Rating:
+    case FieldType.Checkbox:
+      return conditions.filter(condition =>
+        ['=', '!=', 'empty', 'not empty'].includes(condition.value)
+      );
+    default:
+      return [];
+  }
+}
 
 export const conditions = [
   {
