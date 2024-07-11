@@ -1,9 +1,9 @@
 export interface Field {
   id: string;
-  type: string;
+  type: FieldType;
   title: string;
   hidden: boolean;
-  unique: number;
+  unique: number | null;
   options: string[];
   property: {
     extension_types: string[];
@@ -24,7 +24,7 @@ export interface Field {
 export enum FieldType {
   Text = 'text',
   Email = 'email',
-  PhoneNumber = 'phonenumber',
+  PhoneNumber = 'phone',
   SingleSelect = 'singleselect',
   TextArea = 'textarea',
   MultiSelect = 'multiselect',

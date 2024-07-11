@@ -64,10 +64,10 @@ const FormBuilder = () => {
   const addField = () => {
     const defaultField = {
       id: uuidv4(),
-      type: 'text',
+      type: FieldType.Text,
       title: 'Name',
       hidden: false,
-      unique: 0,
+      unique: null,
       options: [],
       property: {},
       required: true,
@@ -222,7 +222,7 @@ const FormBuilder = () => {
                                 {showChangeTypeModal && (
                                   <ChangeTypeModal
                                     field={field}
-                                    setshowChangeTypeModal={setShowChangeTypeModal}
+                                    setShowChangeTypeModal={setShowChangeTypeModal}
                                   />
                                 )}
                               </div>
@@ -235,6 +235,7 @@ const FormBuilder = () => {
                                 value={field.title}
                                 onChange={(event) => {
                                   field.title = event.target.value;
+                                  field.field_key = event.target.value.toLowerCase();
                                   updateFormStateVariable();
                                 }}
                               />
