@@ -5,13 +5,11 @@ export interface Field {
   hidden: boolean;
   unique: number | null;
   options: string[];
-  property:
-    | {
-        extension_types: string[];
-        max_size: number;
-        is_multiple: boolean;
-      }
-    | { [key: string]: never };
+  property: {
+    extension_types: string[];
+    max_size: number;
+    is_multiple: boolean;
+  } | { [key: string]: never };
   required: boolean;
   conditions: {
     field: string;
@@ -24,18 +22,18 @@ export interface Field {
 }
 
 export enum FieldType {
-  'text' = 'Text',
-  'textarea' = 'TextArea',
-  'email' = 'Email',
-  'phone' = 'PhoneNumber',
-  'singleselect' = 'SingleSelect',
-  'multiselect' = 'MultiSelect',
-  'radio' = 'Radio',
-  'checkbox' = 'Checkbox',
-  'number' = 'Number',
-  'datetime' = 'DateTime',
-  'date' = 'Date',
-  'time' = 'Time',
-  'rating' = 'Rating',
-  'file' = 'File',
+  Text = 'text',
+  LongText = 'textarea',
+  Email = 'email',
+  Phone = 'phone',
+  SingleSelect = 'singleselect',
+  MultiSelect = 'multiselect',
+  Radio = 'radio',
+  Checkbox = 'checkbox',
+  Number = 'number',
+  DateTime = 'datetime',
+  Date = 'date',
+  Time = 'time',
+  Rating = 'rating',
+  File = 'file',
 }

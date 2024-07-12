@@ -8,25 +8,21 @@ import { motion } from 'framer-motion';
 const changeTypeModal = (field: Field, newType: FieldType) => {
   if (field.type === newType) return;
 
-  console.log('Changing type from', field.type, 'to', newType);
-
   const optionTypes = [
-    FieldType.singleselect,
-    FieldType.multiselect,
-    FieldType.radio,
-    FieldType.checkbox,
-  ].map((type) => type.toLowerCase());
-
-  console.log('Option types', optionTypes);
+    FieldType.SingleSelect,
+    FieldType.MultiSelect,
+    FieldType.Radio,
+    FieldType.Checkbox,
+  ];
 
   if (optionTypes.includes(field.type as FieldType)) {
     if (!optionTypes.includes(newType)) {
       field.options = [];
     }
   }
-  if (field.type == FieldType.file) {
+  if (field.type == FieldType.File) {
     field.property = {};
-  } else if (newType == FieldType.file) {
+  } else if (newType == FieldType.File) {
     field.property = {
       extension_types: [],
       max_size: 5000,
@@ -60,7 +56,7 @@ const ChangeTypeModal = ({
         transition={{ duration: 0.25 }}
       >
         {Object.keys(FieldType).map((type) => {
-          const IconComponent = IconsMapping[type as keyof typeof IconsMapping] as IconType;
+          const IconComponent = IconsMapping[FieldType[type as keyof typeof FieldType] as FieldType] as IconType;
           const HexColor = HexColors[type as keyof typeof FieldType];
           return (
             <p
@@ -82,7 +78,7 @@ const ChangeTypeModal = ({
               >
                 {IconComponent && <IconComponent size={20} color={HexColor} />}
               </span>
-              {FieldType[type as keyof typeof FieldType]}
+              {type}
             </p>
           );
         })}

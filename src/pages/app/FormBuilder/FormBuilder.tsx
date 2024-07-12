@@ -65,7 +65,7 @@ const FormBuilder = () => {
   const addField = () => {
     const defaultField = {
       id: uuidv4(),
-      type: FieldType.text,
+      type: FieldType.Text,
       title: 'Name',
       hidden: false,
       unique: null,
@@ -179,7 +179,7 @@ const FormBuilder = () => {
                                     setShowChangeTypeModal(true);
                                   }}
                                 >
-                                  {FieldType[field.type as unknown as keyof typeof FieldType]}
+                                  {(Object.keys(FieldType) as Array<keyof typeof FieldType>).find(key => FieldType[key] === field.type)}{' '}
                                   <span className={styles.changeTypeButton}>
                                     <FaChevronDown size={15} color='white' />
                                   </span>
@@ -209,7 +209,7 @@ const FormBuilder = () => {
                                     setShowChangeTypeModal(!showChangeTypeModal);
                                   }}
                                 >
-                                  {FieldType[field.type as unknown as keyof typeof FieldType]}
+                                  {field.type.toUpperCase()}
                                   <span className={styles.changeTypeButton}>
                                     <FaChevronDown size={15} color='white' />
                                   </span>
@@ -293,15 +293,11 @@ const FormBuilder = () => {
                               />
                             </div>
 
-                            {(field.options &&
-                              FieldType[field.type as unknown as keyof typeof FieldType] ==
-                                FieldType.radio) ||
-                              FieldType[field.type as unknown as keyof typeof FieldType] ==
-                                FieldType.checkbox ||
-                              FieldType[field.type as unknown as keyof typeof FieldType] ==
-                                FieldType.singleselect ||
-                              (FieldType[field.type as unknown as keyof typeof FieldType] ==
-                                FieldType.multiselect && (
+                            {field.options &&
+                              (field.type === FieldType.Radio ||
+                                field.type === FieldType.Checkbox ||
+                                field.type === FieldType.SingleSelect ||
+                                field.type === FieldType.MultiSelect) && (
                                 <div className={styles.customFieldOption}>
                                   {field.options.map((option, index) => (
                                     <div className='row' key={index}>
@@ -335,7 +331,7 @@ const FormBuilder = () => {
                                     <span>+</span> Add Option
                                   </p>
                                 </div>
-                              ))}
+                              )}
 
                             <div className={styles.centerRow}>
                               <div className={styles.requiredCheckbox}>
@@ -351,7 +347,7 @@ const FormBuilder = () => {
                                 />
                               </div>
 
-                              {field.type === FieldType.file && (
+                              {field.type === FieldType.File && (
                                 <Slider
                                   checked={field.property.is_multiple}
                                   text={'Allow Multiple Files'}
@@ -362,7 +358,7 @@ const FormBuilder = () => {
                                 />
                               )}
                             </div>
-                            {field.type === FieldType.file && (
+                            {field.type === FieldType.File && (
                               <div className={styles.customFieldOption}>
                                 <div className={styles.customFieldOptionRow}>
                                   <div>
@@ -399,10 +395,11 @@ const FormBuilder = () => {
                                       icon={<MdOutlineSdStorage size={20} color='#606264' />}
                                       type='number'
                                       placeholder='Enter max file size(kb)'
-                                      value={field?.property?.max_size.toString()}
+                                      value={
+                                        field?.property?.max_size.toString()
+                                      }
                                       onChange={(event) => {
-                                        if (parseInt(event.target.value) > 5000)
-                                          event.target.value = '5000';
+                                        if (parseInt(event.target.value) > 5000) event.target.value = '5000';
                                         field.property.max_size = parseInt(event.target.value);
                                         updateFormStateVariable();
                                       }}
