@@ -1,35 +1,39 @@
-// import { Roles } from './types';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { getEventId } from '../src/apis/events';
+import { useState, useEffect } from 'react';
+import { useParams, Navigate } from 'react-router-dom';
+import { setEventInfoLocal } from '../src/apis/events';
+import Loader from '../src/components/Loader.tsx';
 
-const RoleChecker = ({
-  redirectPath,
-  children,
-  roles,
-}: {
-  redirectPath?: JSX.Element;
+interface RoleCheckerProps {
   children: JSX.Element;
   roles: string[];
-}) => {
-  const currentTitle = JSON.parse(sessionStorage.getItem('eventData')!)?.event_name;
-  const currentUserRole = [JSON.parse(sessionStorage.getItem('eventData')!)?.current_user_role];
+}
 
+const RoleChecker = ({ children, roles }: RoleCheckerProps) => {
+  const [currentUserRole, setCurrentUserRole] = useState<string | null>(null);
+  const [readyToRender, setReadyToRender] = useState(false);
   const { eventTitle } = useParams<{ eventTitle: string }>();
-  const navigate = useNavigate();
 
-  if (eventTitle && eventTitle !== currentTitle) {
-    getEventId(eventTitle, navigate, window.location.pathname.slice(1));
-  } else {
-    const hasRoleNoFetch = (roles: string[]) => {
-      return roles.some((role) => currentUserRole.includes(role));
-    };
+  useEffect(() => {
+      const eventData = sessionStorage.getItem('eventData');
+      const currentTitle = eventData ? JSON.parse(eventData).event_name : null;
+      const role = eventData ? JSON.parse(eventData).current_user_role : null;
 
-    if (hasRoleNoFetch(roles)) {
-      return children;
-    } else {
-      return redirectPath ? redirectPath : <Navigate to='/login' replace={true} />;
-    }
+      if (eventTitle && eventTitle !== currentTitle) {
+        setEventInfoLocal(eventTitle).then((data) => {
+          setCurrentUserRole(data.current_user_role);
+          setReadyToRender(true);
+        });
+      } else {
+        setCurrentUserRole(role);
+        setReadyToRender(true);
+      }
+  }, [eventTitle]);
+
+  if (!readyToRender) {
+    return <Loader />;
   }
+
+  return roles.includes(currentUserRole!) ? children : <Navigate to="/" replace={true} />;
 };
 
 export default RoleChecker;

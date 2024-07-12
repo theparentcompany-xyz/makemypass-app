@@ -3,7 +3,6 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { ErrorMessages, Event, EventType } from './types';
 import { Dispatch } from 'react';
-import { NavigateFunction } from 'react-router';
 
 export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<Event[]>>) => {
   privateGateway
@@ -16,110 +15,39 @@ export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<E
     });
 };
 
-export const getEventId = async (
-  eventName: string,
-  navigate?: NavigateFunction,
-  ruri?: string,
-  setEventId?: React.Dispatch<React.SetStateAction<string>>,
-  setCurrentUserRole?: React.Dispatch<React.SetStateAction<string[]>>,
-) => {
-  const localData = sessionStorage.getItem('eventData');
-  const accessToken = localStorage.getItem('accessToken');
+interface EventData {
+  title: string;
+  current_user_role: string;
+  event_name: string;
+  logo: string;
+  event_id: string;
+}
 
-  if (!localData || JSON.parse(localData).event_name !== eventName)
+export const setEventInfoLocal = async (
+  eventName: string,
+): Promise<EventData> => {
+  return new Promise((resolve, reject) => {
     privateGateway
       .get(makeMyPass.getEventId(eventName))
       .then((response) => {
-        if (accessToken)
-          privateGateway
-            .get(makeMyPass.getEvent(response.data.response.id))
-            .then((response) => {
-              const eventData = {
-                title: response.data.response.title,
-                date: response.data.response.date,
-                current_user_role: response.data.response.current_user_role,
-                event_name: response.data.response.name,
-                logo: response.data.response.logo,
-                event_id: response.data.response.id,
-              };
-
-              setEventId && setEventId(response.data.response.id);
-              setCurrentUserRole && setCurrentUserRole([response.data.response.current_user_role]);
-
-              if (navigate)
-                if (ruri) {
-                  navigate(`/${ruri}`);
-                } else if (
-                  response.data.response.current_user_role === 'Admin' ||
-                  response.data.response.current_user_role === 'Owner'
-                ) {
-                  navigate(`/${eventName.toLowerCase()}/overview/`);
-                } else if (response.data.response.current_user_role === 'Volunteer') {
-                  navigate(`/${eventName.toLowerCase()}/checkins/`);
-                } else if (response.data.response.current_user_role === 'Gamer') {
-                  navigate(`/${eventName.toLowerCase()}/spinwheel/`);
-                }
-
-              sessionStorage.setItem('eventData', JSON.stringify(eventData));
-            })
-            .catch((error) => {
-              toast.error(error.response.data.message.general[0] || 'Error in Fetching Event Data');
-            });
+        const eventData: EventData = {
+          title: response.data.response.title,
+          current_user_role: response.data.response.current_user_role,
+          event_name: response.data.response.name,
+          logo: response.data.response.logo,
+          event_id: response.data.response.id,
+        };
+        sessionStorage.setItem('eventData', JSON.stringify(eventData));
+        resolve(eventData);  // Now correctly resolving with an EventData object
       })
-      .catch(() => {
+      .catch((error) => {
         toast.error('Event Not Found');
+        reject(error);  // Reject the promise on error
       });
-  else {
-    const eventData = JSON.parse(localData);
-    setEventId && setEventId(eventData.event_id);
-    setCurrentUserRole && setCurrentUserRole([eventData.current_user_role]);
-
-    if (!navigate) return;
-    if (eventData.current_user_role === 'Admin' || eventData.current_user_role === 'Owner') {
-      navigate(`/${eventName.toLowerCase()}/overview/`);
-    } else if (eventData.current_user_role === 'Volunteer') {
-      navigate(`/${eventName.toLowerCase()}/checkins/`);
-    } else if (eventData.current_user_role === 'Gamer') {
-      navigate(`/${eventName.toLowerCase()}/spinwheel/`);
-    }
-  }
+  });
 };
 
-export const getEventData = async (
-  eventId: string,
-  setEventData: React.Dispatch<
-    React.SetStateAction<{
-      title: string;
-      date: string;
-      current_user_role: string;
-      name: string;
-      logo: string;
-    }>
-  >,
-) => {
-  privateGateway
-    .get(makeMyPass.getEvent(eventId))
-    .then((response) => {
-      setEventData(response.data.response);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-    });
-};
 
-//Api for Loading Home Page Events
-// export const getPublicEvents = async (
-//   setEvents: React.Dispatch<React.SetStateAction<PubllicEvent[]>>,
-// ) => {
-//   publicGateway
-//     .get(makeMyPass.listPublicEvents)
-//     .then((response) => {
-//       setEvents(response.data.response);
-//     })
-//     .catch((error) => {
-//       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-//     });
-// };
 
 export const getCategories = async (
   eventId: string,
@@ -168,11 +96,11 @@ export const getEvent = (
 };
 
 export const editEvent = ({
-  eventId,
-  eventData,
-  setIsPublished,
-  setFormErrors,
-}: {
+                            eventId,
+                            eventData,
+                            setIsPublished,
+                            setFormErrors,
+                          }: {
   eventId: string;
   eventData: FormData;
   setIsPublished?: Dispatch<boolean>;
@@ -215,7 +143,7 @@ export const duplicateEvent = async (eventId: string) => {
     .post(makeMyPass.duplicateEvent(eventId))
     .then((response) => {
       toast.success('Event Duplicated Successfually');
-      getEventId(response.data.response.event_name);
+      setEventInfoLocal(response.data.response.event_name);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');

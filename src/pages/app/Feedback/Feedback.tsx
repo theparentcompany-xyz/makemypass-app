@@ -3,7 +3,7 @@ import Theme from '../../../components/Theme/Theme';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
-import { getEventId } from '../../../apis/events';
+import { setEventInfoLocal } from '../../../apis/events';
 // import { getEventDatas } from '../../../apis/publicpage';
 import { getPostEventFields, getPostEventCategories, submitFeedback } from '../../../apis/feedback';
 import { motion } from 'framer-motion';
@@ -32,14 +32,11 @@ const EventPage = () => {
   const [formNumber] = useState<number>(0);
 
   useEffect(() => {
-    if (eventTitle) getEventId(eventTitle);
-
-    setTimeout(() => {
-      setEventId(JSON.parse(sessionStorage.getItem('eventData') || '{}').event_id);
-      if (eventId) {
-        // getEventDatas(eventId, setEventData);
-      }
-    }, 1000);
+    if (eventTitle)
+      setEventInfoLocal(eventTitle).then((eventData)=>{
+        setEventId(eventData.event_id);
+        }
+      );
   }, [eventTitle, eventId]);
 
   useEffect(() => {

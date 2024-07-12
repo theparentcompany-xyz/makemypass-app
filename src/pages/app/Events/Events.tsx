@@ -3,7 +3,7 @@ import styles from './Events.module.css';
 import { GoPeople } from 'react-icons/go';
 import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
-import { duplicateEvent, getEventId, getEvents } from '../../../apis/events';
+import { duplicateEvent, setEventInfoLocal, getEvents } from '../../../apis/events';
 
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
@@ -53,7 +53,13 @@ const Events = () => {
   const navigate = useNavigate();
 
   const handleClick = (eventName: string) => {
-    getEventId(eventName?.toLowerCase(), navigate);
+    setEventInfoLocal(eventName).then((eventData) => {
+      if (eventData.current_user_role === 'Admin' || eventData.current_user_role === 'Owner') {
+        navigate(`/${eventName}/overview/`);
+      } else if (eventData.current_user_role === 'Volunteer') {
+        navigate(`/${eventName}/checkins/`);
+      }
+    });
   };
 
   const onModalClose = () => {
@@ -126,7 +132,7 @@ const Events = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
                             src={event.logo}
-                            alt='event logo depicting event information'
+                            alt="event logo depicting event information"
                             className={styles.eventImage}
                           />
                         ) : (
@@ -144,8 +150,8 @@ const Events = () => {
                                   setDuplicateEventId(event?.id);
                                 }}
                                 size={15}
-                                color='#ffffff'
-                                className='pointer'
+                                color="#ffffff"
+                                className="pointer"
                               />
                             )}
                           </div>
@@ -159,7 +165,7 @@ const Events = () => {
                           )}
                           <p className={styles.eventGuests}>
                             <span>
-                              <GoPeople color='a4a4a4' />
+                              <GoPeople color="a4a4a4" />
                             </span>
                             {event.members} guests
                           </p>

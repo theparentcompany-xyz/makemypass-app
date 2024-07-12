@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-import { getEventId } from '../apis/events';
 import { TicketType } from '../apis/types';
 import { FormEventData } from '../pages/app/Guests/types';
 interface transformTableDataType {
@@ -22,26 +20,6 @@ export const transformTableData = (
 
     return transformedRegistration;
   });
-};
-
-export const getEventUUID = (eventTitle: string, setEventId: Dispatch<SetStateAction<string>>) => {
-  let eventData = JSON.parse(sessionStorage.getItem('eventData') as string);
-
-  if (!eventData)
-    setTimeout(() => {
-      eventData = JSON.parse(sessionStorage.getItem('eventData') as string);
-
-      if (eventData) {
-        if (eventData.event_name !== eventTitle) {
-          localStorage.removeItem('eventData');
-          getEventId(eventTitle ?? '');
-        } else {
-          setEventId(eventData.event_id);
-        }
-      }
-    }, 2000);
-
-  setEventId(eventData?.event_id);
 };
 
 export const formatDate = (dateString: string, withTime?: boolean, justDate?: boolean) => {

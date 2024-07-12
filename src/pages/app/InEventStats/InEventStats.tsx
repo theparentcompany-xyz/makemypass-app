@@ -19,10 +19,8 @@ import { Line, Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import { ChartData } from '../Insights/types';
 import { GuestsType } from '../Guests/types';
-import { useParams } from 'react-router-dom';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
-import { getEventId } from '../../../apis/events';
 import Confetti from 'react-confetti';
 import { formatDate } from '../../../common/commonFunctions';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
@@ -113,21 +111,9 @@ const InEventStats = () => {
 
   const [guests, setGuests] = useState<GuestsType[]>([]);
   const getLocalEventId = () => {
-    if (eventTitle) {
-      const eventData = JSON.parse(sessionStorage.getItem('eventData') as string);
-
-      if (eventData) {
-        if (eventData.event_name !== eventTitle) {
-          localStorage.removeItem('eventData');
-          getEventId(eventTitle);
-        } else {
-          return eventData.event_id;
-        }
-      }
-    }
+      return JSON.parse(sessionStorage.getItem('eventData') as string).event_id;
   };
 
-  const { eventTitle } = useParams<{ eventTitle: string }>();
   const eventId = getLocalEventId();
   const [socket, setSocket] = useState<WebSocket | null>(null);
 

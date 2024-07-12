@@ -31,6 +31,8 @@ const FormBuilder = () => {
   const [showChangeTypeModal, setShowChangeTypeModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
+  console.log("hereee");
+  console.log(event_id);
   useEffect(() => {
     getForm(event_id, setFormFields);
   }, [event_id]);
