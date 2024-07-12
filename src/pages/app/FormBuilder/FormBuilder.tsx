@@ -209,7 +209,7 @@ const FormBuilder = () => {
                                     setShowChangeTypeModal(!showChangeTypeModal);
                                   }}
                                 >
-                                  {field.type.toUpperCase()}
+                                  {FieldType[field.type as unknown as keyof typeof FieldType]}
                                   <span className={styles.changeTypeButton}>
                                     <FaChevronDown size={15} color='white' />
                                   </span>
@@ -294,10 +294,11 @@ const FormBuilder = () => {
                             </div>
 
                             {field.options &&
-                              (field.type === FieldType.radio ||
-                                field.type === FieldType.checkbox ||
-                                field.type === FieldType.singleselect ||
-                                field.type === FieldType.multiselect) && (
+                              (FieldType[field.type as unknown as keyof typeof FieldType] ==
+                                FieldType.radio ||
+                                FieldType.checkbox ||
+                                FieldType.singleselect ||
+                                FieldType.multiselect) && (
                                 <div className={styles.customFieldOption}>
                                   {field.options.map((option, index) => (
                                     <div className='row' key={index}>
