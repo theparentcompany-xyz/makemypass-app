@@ -24,6 +24,7 @@ const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
       exit={{ opacity: 0, y: 10 }}
       transition={{ duration: 0.2 }}
       className={styles.formInput}
+      style={inputProps.error ? { marginBottom: '0' } : { marginBottom: '1rem' }}
     >
       <label className={styles.formLabel} htmlFor='email'>
         {inputProps.required ? inputProps.placeholder + '*' : inputProps.placeholder}
@@ -43,7 +44,7 @@ const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
         />
       </div>
       <AnimatePresence>
-        {inputProps.error && (
+        {inputProps.error && inputProps.error[0].length > 0 && (
           <motion.p
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}

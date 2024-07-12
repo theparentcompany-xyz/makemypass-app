@@ -24,6 +24,14 @@
   margin-bottom: 0.5rem;
 }
 
+.formDescription {
+  color: #a4a4a4;
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-top: -0.25rem;
+  margin-bottom: 0.5rem;
+}
+
 .formFields {
   overflow: auto;
   overflow-x: hidden;
@@ -182,7 +190,7 @@ input {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
-.numberInput{
+.numberInput {
   margin-top: 0.25rem;
   border-radius: 8px;
   border: none;
