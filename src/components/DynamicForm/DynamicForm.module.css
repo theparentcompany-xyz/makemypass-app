@@ -24,6 +24,21 @@
   margin-bottom: 0.5rem;
 }
 
+.checkboxContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+}
+
+.checkbox label {
+  margin-left: 0.5rem;
+}
+
 .formDescription {
   color: #a4a4a4;
   font-size: 0.8rem;
