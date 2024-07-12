@@ -393,7 +393,7 @@ const DynamicForm = ({
                   {[...Array(5)].map((_, index) => (
                     <span
                       key={index}
-                      className={`${styles.star} ${index < Number(formData[field.field_key]) ? styles.selected : ''}`}
+                      className={`pointer ${styles.star} ${index < Number(formData[field.field_key]) ? styles.selected : ''}`}
                       onClick={() => onFieldChange(field.field_key, String(index + 1))}
                     >
                       {index < Number(formData[field.field_key]) ? '★' : '☆'}

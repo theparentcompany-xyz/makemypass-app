@@ -149,6 +149,7 @@
 }
 
 .showPass {
+  cursor: pointer;
   display: flex;
   gap: 5px;
 }
@@ -160,9 +161,9 @@
   font-size: 1rem;
   position: relative;
 }
-.loader{
+.loader {
   position: relative;
-  margin:auto;
+  margin: auto;
   margin-top: 3.25rem;
   margin-bottom: 3.25rem;
 }

@@ -93,7 +93,7 @@ const ClaimGifts = () => {
               onClick={() => {
                 handleClaimButtonClick(item);
               }}
-              className={styles.button}
+              className={`pointer ${styles.button}`}
             >
               Confirm
             </p>
@@ -101,7 +101,7 @@ const ClaimGifts = () => {
               onClick={() => {
                 setOpenConfirm(false);
               }}
-              className={styles.button}
+              className={`pointer ${styles.button}`}
             >
               Cancel
             </p>
@@ -151,6 +151,7 @@ const ClaimGifts = () => {
                         {item.type === 'unclaimed' && (
                           <div className={styles.icon}>
                             <BsFillRocketTakeoffFill
+                              className='pointer'
                               onClick={() => {
                                 setOpenConfirm(true);
                                 setItem(item);

@@ -79,6 +79,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
                 <>
                   <div className={styles.icon}>
                     <MdEdit
+                      className='pointer'
                       onClick={() => {
                         if (setSelectedGuestId) {
                           setSelectedGuestId((prevState) => ({
@@ -113,6 +114,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
                 <>
                   <div className={styles.icon}>
                     <MdEdit
+                      className='pointer'
                       onClick={() => {
                         if (setHostId) {
                           setHostId((prevState) => ({
@@ -127,6 +129,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
                   </div>
                   <div className={styles.icon}>
                     <MdDelete
+                      className='pointer'
                       onClick={() => {
                         if (setHostId) {
                           setHostId((prevState) => ({

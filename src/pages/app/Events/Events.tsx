@@ -145,6 +145,7 @@ const Events = () => {
                                 }}
                                 size={15}
                                 color='#ffffff'
+                                className='pointer'
                               />
                             )}
                           </div>

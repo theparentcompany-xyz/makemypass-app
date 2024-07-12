@@ -79,7 +79,7 @@ const Header = ({ type }: { type?: string | undefined }) => {
                           onClick={() => {
                             setOpenSettings(!openSettings);
                           }}
-                          className={styles.userName}
+                          className={`pointer ${styles.userName}`}
                         >
                           Hello, {userEmail}
                           <span className={styles.avatar}>

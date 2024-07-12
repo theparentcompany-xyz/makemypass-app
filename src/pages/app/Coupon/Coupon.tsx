@@ -280,6 +280,7 @@ const Coupon = () => {
                           />
 
                           <RiDeleteBinLine
+                            className='pointer'
                             size={20}
                             color='#606264'
                             onClick={() => {
@@ -300,6 +301,7 @@ const Coupon = () => {
                             style={{
                               marginLeft: '0.5rem',
                             }}
+                            className='pointer'
                             size={20}
                             color='#606264'
                             onClick={() => {

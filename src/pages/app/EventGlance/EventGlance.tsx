@@ -64,22 +64,22 @@ const EventGlance = () => {
         <div className={styles.eventGlanceContainer}>
           <div className={styles.eventGlance}>
             <EventHeader />
-            <Glance tab="manage" />
+            <Glance tab='manage' />
           </div>
           {isTicketsOpen && (
             <Modal
-              title="Manage Tickets"
+              title='Manage Tickets'
               onClose={() => {
                 handleCloseTicketModal();
               }}
-              type="side"
+              type='side'
             >
               <ManageTickets setIsTicketsOpen={setIsTicketsOpen} ref={modalRef} />
             </Modal>
           )}
           {customMail && (
             <Modal
-              title="Connect Custom Mail"
+              title='Connect Custom Mail'
               onClose={() => setCustomMail(false)}
               style={{ zIndex: 1500 }}
             >
@@ -88,7 +88,7 @@ const EventGlance = () => {
           )}
 
           {selectedMail && (
-            <Modal onClose={() => setSelectedMail(undefined)} type="side">
+            <Modal onClose={() => setSelectedMail(undefined)} type='side'>
               <UpdateMail
                 selectedMail={selectedMail}
                 setCustomMail={setCustomMail}
@@ -100,7 +100,7 @@ const EventGlance = () => {
 
           {confirmTestMail.status && (
             <Modal
-              title="Test Mail"
+              title='Test Mail'
               onClose={() =>
                 setConfirmTestMail({
                   status: false,
@@ -138,11 +138,11 @@ const EventGlance = () => {
           )}
 
           {showQR && (
-            <Modal title="QR Code" onClose={() => setShowQR(false)}>
+            <Modal title='QR Code' onClose={() => setShowQR(false)}>
               <div className={styles.qrContainer}>
                 <img
                   src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://${window.location.hostname}/${eventName}`}
-                  alt="QR Code"
+                  alt='QR Code'
                 />
 
                 <p className={styles.qrText}>
@@ -150,20 +150,20 @@ const EventGlance = () => {
                 </p>
 
                 <SecondaryButton
-                  buttonText="Download QR"
+                  buttonText='Download QR'
                   icon={<LuDownload size={15} />}
                   onClick={() => {
                     const url = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://${window.location.hostname}/${eventName}`;
 
                     fetch(url)
-                      .then(response => response.blob())
-                      .then(blob => {
+                      .then((response) => response.blob())
+                      .then((blob) => {
                         const link = document.createElement('a');
                         link.href = window.URL.createObjectURL(blob);
                         link.download = 'QR Code.png';
                         link.click();
                       })
-                      .catch(error => console.error('Error downloading the QR code:', error));
+                      .catch((error) => console.error('Error downloading the QR code:', error));
                   }}
                 />
               </div>
@@ -177,7 +177,7 @@ const EventGlance = () => {
               >{`https://${window.location.hostname}/${eventName}`}</div>
               <div className={styles.linkbuttons}>
                 <SecondaryButton
-                  buttonText="Copy Link"
+                  buttonText='Copy Link'
                   icon={<LuCopy size={15} />}
                   onClick={() => {
                     const eventLink = `https://${window.location.hostname}/${eventName}`;
@@ -186,7 +186,7 @@ const EventGlance = () => {
                   }}
                 />
                 <SecondaryButton
-                  buttonText="Generate QR"
+                  buttonText='Generate QR'
                   icon={<LuQrCode size={15} />}
                   onClick={() => {
                     setShowQR(true);
@@ -196,16 +196,16 @@ const EventGlance = () => {
             </div>
             <div className={styles.bannerContainer}>
               {eventData?.banner ? (
-                <img src={eventData?.banner} alt="" className={styles.banner} />
+                <img src={eventData?.banner} alt='' className={styles.banner} />
               ) : (
-                <svg height="250" width="100%" className={styles.banner}>
+                <svg height='250' width='100%' className={styles.banner}>
                   {eventTitle && (
                     <>
-                      <rect width="100%" height="100%" className={styles.banner} />
-                      <text x="40%" y="50%" fill="white" className={styles.svgText}>
+                      <rect width='100%' height='100%' className={styles.banner} />
+                      <text x='40%' y='50%' fill='white' className={styles.svgText}>
                         No Banner.
                       </text>
-                      <text x="10%" y="60%" fill="white" className={styles.svgText}>
+                      <text x='10%' y='60%' fill='white' className={styles.svgText}>
                         Please Edit Event Details to add a banner
                       </text>
                     </>
@@ -302,33 +302,33 @@ const EventGlance = () => {
             <div className={styles.sectionButtons}>
               {/* <Link to={`/${eventName}/manage/tickets`}> */}
               <SectionButton
-                buttonText="Tickets"
-                buttonColor="#7662FC"
-                icon={<ImTicket size={25} color="#7662FC" />}
+                buttonText='Tickets'
+                buttonColor='#7662FC'
+                icon={<ImTicket size={25} color='#7662FC' />}
                 onClick={() => setIsTicketsOpen(true)}
               />
               {/* </Link> */}
               <Link to={`/${eventName}/guests`}>
                 <SectionButton
-                  buttonText="Guest List"
-                  buttonColor="#7662FC"
-                  icon={<HiUserGroup size={25} color="#7662FC" />}
+                  buttonText='Guest List'
+                  buttonColor='#7662FC'
+                  icon={<HiUserGroup size={25} color='#7662FC' />}
                 />
               </Link>
 
               <Link to={`/${eventName}/overview/#hosts`}>
                 <SectionButton
-                  buttonText="Host List"
-                  buttonColor="#C33D7B"
-                  icon={<FaWrench size={25} color="#C33D7B" />}
+                  buttonText='Host List'
+                  buttonColor='#C33D7B'
+                  icon={<FaWrench size={25} color='#C33D7B' />}
                 />
               </Link>
 
               <Link to={`/${eventName}/checkins/`}>
                 <SectionButton
-                  buttonText="Check In"
-                  buttonColor="#5B75FB"
-                  icon={<BsQrCodeScan size={25} color="#5B75FB" />}
+                  buttonText='Check In'
+                  buttonColor='#5B75FB'
+                  icon={<BsQrCodeScan size={25} color='#5B75FB' />}
                 />
               </Link>
             </div>
@@ -340,9 +340,13 @@ const EventGlance = () => {
               </div>
               <div className={styles.scheduleContainer}>
                 {mails.map((mail, key) => (
-                  <div className={styles.scheduleBox} key={key}>
-                    <div className="row">
-                      <LuMail color="#939597" size={20} className={styles.scheduleIcon} />
+                  <div
+                    className={styles.scheduleBox}
+                    key={key}
+                    onClick={() => setSelectedMail(mail)}
+                  >
+                    <div className='row'>
+                      <LuMail color='#939597' size={20} />
                       <div className={styles.scheduleText}>
                         <p className={styles.scheduleHeading}>
                           {mail.type}{' '}
@@ -362,12 +366,7 @@ const EventGlance = () => {
                       </div>
                     </div>
                     <div className={styles.mailActions}>
-                      <LuPencil
-                        color="#939597"
-                        size={20}
-                        className={styles.scheduleIcon}
-                        onClick={() => setSelectedMail(mail)}
-                      />
+                      <LuPencil color='#939597' size={20} className={styles.scheduleIcon} />
                     </div>
                   </div>
                 ))}

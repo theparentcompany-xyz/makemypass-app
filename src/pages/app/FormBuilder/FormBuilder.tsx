@@ -20,7 +20,7 @@ import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
 import { FaChevronDown } from 'react-icons/fa';
 import { AnimatePresence, Reorder } from 'framer-motion';
 import InputField from '../../auth/Login/InputField';
-import { MdDelete, MdOutlineSdStorage } from 'react-icons/md';
+import { MdClose, MdDelete, MdOutlineSdStorage } from 'react-icons/md';
 import { customStyles } from '../EventPage/constants';
 import Modal from '../../../components/Modal/Modal';
 
@@ -160,7 +160,7 @@ const FormBuilder = () => {
                       <Reorder.Item value={field} key={field.id}>
                         {field.id !== selectedField.id ? (
                           <div
-                            className={styles.customField}
+                            className={`pointer ${styles.customField}`}
                             key={idx}
                             onClick={() => {
                               setSelectedField(field);
@@ -170,7 +170,7 @@ const FormBuilder = () => {
                               <RxDragHandleDots2 size={25} color='#606264' id={field.id} />
                               <div>
                                 <p
-                                  className={styles.customFieldLabel}
+                                  className={`pointer ${styles.customFieldLabel}`}
                                   style={{
                                     whiteSpace: 'nowrap',
                                   }}
@@ -179,23 +179,15 @@ const FormBuilder = () => {
                                     setShowChangeTypeModal(true);
                                   }}
                                 >
-                                  {(Object.keys(FieldType) as Array<keyof typeof FieldType>).find(key => FieldType[key] === field.type)}{' '}
-                                  <span className={styles.changeTypeButton}>
-                                    <FaChevronDown size={15} color='white' />
-                                  </span>
+                                  {(Object.keys(FieldType) as Array<keyof typeof FieldType>).find(
+                                    (key) => FieldType[key] === field.type,
+                                  )}{' '}
+                                  <FaChevronDown size={15} color='989999' />
                                 </p>
                                 <p className={styles.customFieldType}>{field.title}</p>
                               </div>
                             </div>
                             <LuPencil size={20} color='#606264' />
-
-                            <MdDelete
-                              size={20}
-                              color='#606264'
-                              onClick={() => {
-                                setShowConfirmationModal(true);
-                              }}
-                            />
                           </div>
                         ) : (
                           <div className={styles.customFieldExp} key={idx}>
@@ -203,52 +195,67 @@ const FormBuilder = () => {
                               <div className={styles.row1}>
                                 <RxDragHandleDots2 size={25} color='#606264' />
                                 <p
-                                  className={styles.customFieldLabel}
+                                  className={`pointer ${styles.customFieldLabel}`}
                                   onClick={() => {
                                     setSelectedField(field);
                                     setShowChangeTypeModal(!showChangeTypeModal);
                                   }}
                                 >
-                                  {(Object.keys(FieldType) as Array<keyof typeof FieldType>).find(key => FieldType[key] === field.type)}
-                                  <span className={styles.changeTypeButton}>
-                                    <FaChevronDown size={15} color='white' />
-                                  </span>
+                                  {(Object.keys(FieldType) as Array<keyof typeof FieldType>).find(
+                                    (key) => FieldType[key] === field.type,
+                                  )}
+
+                                  <FaChevronDown size={15} color='989999' />
                                 </p>
                               </div>
 
                               <div className={styles.expandedRight}>
                                 <div className={styles.requiredCheckbox}>
-                                  Required
                                   <Slider
                                     checked={field.required}
-                                    text={''}
+                                    text={'Required'}
                                     onChange={() => {
                                       field.required = !field.required;
                                       updateFormStateVariable();
                                     }}
                                   />
                                 </div>
-                                {field.hidden ? (
-                                  <FaRegEyeSlash
+
+                                <div className={styles.iconsContainer}>
+                                  {field.hidden ? (
+                                    <FaRegEyeSlash
+                                      className='pointer'
+                                      size={25}
+                                      color='#606264'
+                                      onClick={() => {
+                                        field.hidden = !field.hidden;
+                                        updateFormStateVariable();
+                                      }}
+                                    />
+                                  ) : (
+                                    <FaRegEye
+                                      className='pointer'
+                                      size={25}
+                                      color='#606264'
+                                      onClick={() => {
+                                        field.hidden = !field.hidden;
+                                        updateFormStateVariable();
+                                      }}
+                                    />
+                                  )}
+                                  <MdClose
+                                    className='pointer'
                                     size={25}
                                     color='#606264'
                                     onClick={() => {
-                                      field.hidden = !field.hidden;
-                                      updateFormStateVariable();
+                                      setSelectedField({} as Field);
                                     }}
                                   />
-                                ) : (
-                                  <FaRegEye
-                                    size={25}
-                                    color='#606264'
-                                    onClick={() => {
-                                      field.hidden = !field.hidden;
-                                      updateFormStateVariable();
-                                    }}
-                                  />
-                                )}
+                                </div>
+
                                 <MdDelete
-                                  size={20}
+                                  className={styles.deleteIcon}
+                                  size={25}
                                   color='#606264'
                                   onClick={() => {
                                     setShowConfirmationModal(true);
@@ -314,6 +321,7 @@ const FormBuilder = () => {
                                         }}
                                       />
                                       <IoCloseSharp
+                                        className='pointer'
                                         onClick={() => {
                                           removeOption(field, index);
                                         }}
@@ -326,7 +334,7 @@ const FormBuilder = () => {
                                     onClick={() => {
                                       addOption(field);
                                     }}
-                                    className={styles.addOption}
+                                    className={`pointer ${styles.addOption}`}
                                   >
                                     <span>+</span> Add Option
                                   </p>
@@ -395,11 +403,10 @@ const FormBuilder = () => {
                                       icon={<MdOutlineSdStorage size={20} color='#606264' />}
                                       type='number'
                                       placeholder='Enter max file size(kb)'
-                                      value={
-                                        field?.property?.max_size?.toString()
-                                      }
+                                      value={field?.property?.max_size?.toString()}
                                       onChange={(event) => {
-                                        if (parseInt(event.target.value) > 5000) event.target.value = '5000';
+                                        if (parseInt(event.target.value) > 5000)
+                                          event.target.value = '5000';
                                         field.property.max_size = parseInt(event.target.value);
                                         updateFormStateVariable();
                                       }}
@@ -434,7 +441,7 @@ const FormBuilder = () => {
                               <div className={styles.conditions}>
                                 {field.conditions.map((condition, idx) => (
                                   <div className={styles.conditionRow} key={idx}>
-                                    <p className={styles.when}>When</p>
+                                    <p className={styles.when}>{idx === 0 ? 'When' : 'And'}</p>
                                     <div className={styles.conditionsSelect}>
                                       <SelectComponent
                                         options={getConditionalFields(field)}
@@ -473,6 +480,7 @@ const FormBuilder = () => {
                                       />
 
                                       <RiDeleteBinLine
+                                        className='pointer'
                                         size={20}
                                         color='#606264'
                                         onClick={() => {
@@ -480,6 +488,7 @@ const FormBuilder = () => {
                                         }}
                                       />
                                       <LuPlus
+                                        className='pointer'
                                         style={{
                                           marginLeft: '0.5rem',
                                         }}

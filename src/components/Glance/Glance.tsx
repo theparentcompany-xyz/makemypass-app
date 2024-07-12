@@ -185,7 +185,7 @@ const Glance = ({
                         <div key={index}>
                           <motion.li
                             whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
-                            className={styles.tab}
+                            className={`pointer ${styles.tab}`}
                             onClick={() => updateTab(tab)}
                           >
                             {tabs[tab as keyof typeof tabs].title}
