@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction } from 'react';
 import { HexColors, IconsMapping } from '../constant';
 import { Field, FieldType } from '../types';
 import styles from './ChangeTypeModal.module.css';
-import { IconType } from 'react-icons';
 import { motion } from 'framer-motion';
 
 const changeTypeModal = (field: Field, newType: FieldType) => {
@@ -34,9 +33,9 @@ const changeTypeModal = (field: Field, newType: FieldType) => {
 };
 
 const ChangeTypeModal = ({
-  setShowChangeTypeModal,
-  field,
-}: {
+                           setShowChangeTypeModal,
+                           field,
+                         }: {
   setShowChangeTypeModal: Dispatch<SetStateAction<boolean>>;
   field: Field;
 }) => {
@@ -55,16 +54,15 @@ const ChangeTypeModal = ({
         exit={{ opacity: 0, y: -50 }} // Add exit animation
         transition={{ duration: 0.25 }}
       >
-        {Object.keys(FieldType).map((type) => {
-          const IconComponent = IconsMapping[FieldType[type as keyof typeof FieldType] as FieldType] as IconType;
-          const HexColor = HexColors[type as keyof typeof FieldType];
+        {Object.entries(FieldType).map(([type, value]) => {
+          const IconComponent = IconsMapping[value];
+          const HexColor = HexColors[value];
           return (
             <p
               className={styles.type}
               key={type}
               onClick={() => {
                 setShowChangeTypeModal(false);
-
                 changeTypeModal(field, type as FieldType);
               }}
               style={

@@ -125,22 +125,23 @@ export const IconsMapping: Record<FieldType, IconType> = {
   [FieldType.Checkbox]: MdCheckBox,
 };
 
-export const HexColors: Record<string, string> = {
-  Text: '#DE3163',
-  Email: '#BB2DC7',
-  PhoneNumber: '#325FFA',
-  SingleSelect: '#682FFF',
-  TextArea: '#CC62D5',
-  MultiSelect: '#325FFA',
-  Radio: '#EC660D',
-  File: '#07A460',
-  Date: '#D19D20',
-  DateTime: '#939597',
-  Time: '#325FFA',
-  Number: '#E83B47',
-  Rating: '#DE3163',
-  Checkbox: '#BB2DC7',
+export const HexColors: Record<FieldType, string> = {
+  [FieldType.Text]: '#DE3163',
+  [FieldType.Email]: '#BB2DC7',
+  [FieldType.Phone]: '#325FFA',
+  [FieldType.SingleSelect]: '#682FFF',
+  [FieldType.LongText]: '#CC62D5',
+  [FieldType.MultiSelect]: '#325FFA',
+  [FieldType.Radio]: '#EC660D',
+  [FieldType.File]: '#07A460',
+  [FieldType.Date]: '#D19D20',
+  [FieldType.DateTime]: '#939597',
+  [FieldType.Time]: '#325FFA',
+  [FieldType.Number]: '#E83B47',
+  [FieldType.Rating]: '#DE3163',
+  [FieldType.Checkbox]: '#BB2DC7',
 };
+
 
 export const FileExtensions = [
   { value: '.csv', label: '.csv' },

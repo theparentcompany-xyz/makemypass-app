@@ -209,7 +209,7 @@ const FormBuilder = () => {
                                     setShowChangeTypeModal(!showChangeTypeModal);
                                   }}
                                 >
-                                  {field.type.toUpperCase()}
+                                  {(Object.keys(FieldType) as Array<keyof typeof FieldType>).find(key => FieldType[key] === field.type)}
                                   <span className={styles.changeTypeButton}>
                                     <FaChevronDown size={15} color='white' />
                                   </span>
