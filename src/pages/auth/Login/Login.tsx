@@ -219,6 +219,7 @@ const Login = () => {
 
               <div className={styles.formFooter}>
                 <p
+                  className='pointer'
                   onClick={() => {
                     if (!isPassword) {
                       setIsOtpSent(false);
@@ -290,7 +291,10 @@ const Login = () => {
                     <div className={styles.line}></div>
                   </div>
                   <div className={styles.formAltLoginContainer}>
-                    <div className={styles.googleIcon} onClick={() => handleGoogleLogin()}>
+                    <div
+                      className={`pointer ${styles.googleIcon}`}
+                      onClick={() => handleGoogleLogin()}
+                    >
                       <FaGoogle />
                       Continue with Google
                     </div>

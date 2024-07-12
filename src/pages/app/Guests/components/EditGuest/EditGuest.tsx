@@ -63,7 +63,7 @@ const EditGuest = ({
                 onClick={() => {
                   handleSubmissionEdit();
                 }}
-                className={styles.button}
+                className={`pointer ${styles.button}`}
               >
                 Edit
               </p>
@@ -74,7 +74,7 @@ const EditGuest = ({
                     type: '',
                   });
                 }}
-                className={styles.button}
+                className={`pointer ${styles.button}`}
               >
                 Cancel
               </p>

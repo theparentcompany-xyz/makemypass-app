@@ -29,7 +29,7 @@ const PostEvent = () => {
                   setConfirmModal({ confirm: false, value: false });
                 }, 1000);
               }}
-              className={styles.button}
+              className={`pointer ${styles.button}`}
             >
               Sent Mails
             </p>
@@ -37,7 +37,7 @@ const PostEvent = () => {
               onClick={() => {
                 setConfirmModal({ confirm: false, value: false });
               }}
-              className={styles.button}
+              className={`pointer ${styles.button}`}
             >
               Cancel
             </p>

@@ -223,7 +223,7 @@ const Guests = () => {
                   onClick={() => {
                     handleTicketResend();
                   }}
-                  className={styles.button}
+                  className={`pointer ${styles.button}`}
                 >
                   Resend
                 </p>
@@ -239,7 +239,7 @@ const Guests = () => {
                       type: 'view',
                     });
                   }}
-                  className={styles.button}
+                  className={`pointer ${styles.button}`}
                 >
                   Cancel
                 </p>

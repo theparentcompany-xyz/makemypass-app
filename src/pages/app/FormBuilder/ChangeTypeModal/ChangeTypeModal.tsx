@@ -33,9 +33,9 @@ const changeTypeModal = (field: Field, newType: FieldType) => {
 };
 
 const ChangeTypeModal = ({
-                           setShowChangeTypeModal,
-                           field,
-                         }: {
+  setShowChangeTypeModal,
+  field,
+}: {
   setShowChangeTypeModal: Dispatch<SetStateAction<boolean>>;
   field: Field;
 }) => {
@@ -59,7 +59,7 @@ const ChangeTypeModal = ({
           const HexColor = HexColors[value];
           return (
             <p
-              className={styles.type}
+              className={`pointer ${styles.type}`}
               key={type}
               onClick={() => {
                 setShowChangeTypeModal(false);

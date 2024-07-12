@@ -107,11 +107,11 @@ const LandingPage = () => {
                     onClick={() => {
                       handleSubmit();
                     }}
-                    className={styles.button}
+                    className={`pointer ${styles.button}`}
                   >
                     Host With Us
                   </p>
-                  <p onClick={toggleModal} className={styles.button}>
+                  <p onClick={toggleModal} className={`pointer ${styles.button}`}>
                     Cancel
                   </p>
                 </div>

@@ -116,10 +116,10 @@ const AddHosts = ({
         </div>
 
         <div className={styles.buttons}>
-          <p className={styles.button} onClick={onSubmit}>
+          <p className={`pointer ${styles.button}`} onClick={onSubmit}>
             {hostData.id ? 'Edit Host' : 'Add Host'}
           </p>
-          <p className={styles.button} onClick={onClose}>
+          <p className={`pointer ${styles.button}`} onClick={onClose}>
             Cancel
           </p>
         </div>

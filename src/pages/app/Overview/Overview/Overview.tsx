@@ -289,7 +289,7 @@ const Overview = () => {
                 onClick={() => {
                   removeHostAccount();
                 }}
-                className={styles.button}
+                className={`pointer ${styles.button}`}
               >
                 Remove Host
               </p>
@@ -297,7 +297,7 @@ const Overview = () => {
                 onClick={() => {
                   setOpenDeleteModal(false);
                 }}
-                className={styles.button}
+                className={`pointer ${styles.button}`}
               >
                 Cancel
               </p>

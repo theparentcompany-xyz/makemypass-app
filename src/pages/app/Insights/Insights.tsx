@@ -260,6 +260,7 @@ const Insights = ({ type }: { type?: string }) => {
                         publishPage();
                         setShowPublishModal(false);
                       }}
+                      className='pointer'
                     >
                       Unpublish
                     </p>
