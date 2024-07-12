@@ -293,12 +293,15 @@ const FormBuilder = () => {
                               />
                             </div>
 
-                            {field.options &&
-                              (FieldType[field.type as unknown as keyof typeof FieldType] ==
-                                FieldType.radio ||
+                            {(field.options &&
+                              FieldType[field.type as unknown as keyof typeof FieldType] ==
+                                FieldType.radio) ||
+                              FieldType[field.type as unknown as keyof typeof FieldType] ==
                                 FieldType.checkbox ||
+                              FieldType[field.type as unknown as keyof typeof FieldType] ==
                                 FieldType.singleselect ||
-                                FieldType.multiselect) && (
+                              (FieldType[field.type as unknown as keyof typeof FieldType] ==
+                                FieldType.multiselect && (
                                 <div className={styles.customFieldOption}>
                                   {field.options.map((option, index) => (
                                     <div className='row' key={index}>
@@ -332,7 +335,7 @@ const FormBuilder = () => {
                                     <span>+</span> Add Option
                                   </p>
                                 </div>
-                              )}
+                              ))}
 
                             <div className={styles.centerRow}>
                               <div className={styles.requiredCheckbox}>
