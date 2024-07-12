@@ -64,7 +64,7 @@ const Glance = ({
     if (tab === 'checkins' || tab === 'inevent') {
       setBackendURL(makeMyPassSocket.checkInCounts(eventId));
     } else {
-      if (eventId && (tab === 'overview' || tab === 'guests'))
+      if (eventId && (tab === 'overview' || tab === 'guests' || tab === 'coupon'))
         setBackendURL(makeMyPassSocket.registerCounts(eventId));
     }
   }, [tab, eventId]);

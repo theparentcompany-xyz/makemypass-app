@@ -18,7 +18,8 @@ import { RxDragHandleDots2 } from 'react-icons/rx';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import SelectComponent from '../FormBuilder/SelectComponent';
 import { getFormFields } from '../../../apis/publicpage';
-import { conditions } from '../FormBuilder/constant';
+import { getConditions } from '../FormBuilder/constant';
+import toast from 'react-hot-toast';
 
 const Coupon = () => {
   type CouponModalType = {
@@ -41,9 +42,10 @@ const Coupon = () => {
     showModal: false,
   });
 
-  const [tickets, setTickets] = useState<TicketType[]>([]); // eslint-disable-line @typescript-eslint/no-explicit-any
+  const [tickets, setTickets] = useState<TicketType[]>([]);
   const [coupons, setCoupons] = useState<CouponType[]>([]);
-  const [formFields, setFormFields] = useState<FormFieldType[]>([]); // eslint-disable-line @typescript-eslint/no-explicit-any
+  const [formFields, setFormFields] = useState<FormFieldType[]>([]);
+  const [limitDiscountUsage, setLimitDiscountUsage] = useState(false);
   const [newCouponData, setNewCouponData] = useState<CreateCouponType>({
     code: '',
     value: 0,
@@ -61,6 +63,14 @@ const Coupon = () => {
     getTickets(eventId, setTickets);
     getFormFields(eventId, setFormFields);
   }, []);
+
+  const getFieldType = (fieldId: string) => {
+    const field = formFields.find((f) => f.id === fieldId);
+    if (field) {
+      return field.type;
+    }
+    return '';
+  };
 
   return (
     <>
@@ -111,20 +121,22 @@ const Coupon = () => {
                       }}
                       value={newCouponData.value.toString()}
                     />
-                    <Select
-                      styles={customStyles}
-                      name='colors'
-                      className={styles.basicSelect}
-                      classNamePrefix='select'
-                      options={couponTypes}
-                      onChange={(selectedOption) => {
-                        if (selectedOption)
-                          setNewCouponData({
-                            ...newCouponData,
-                            type: selectedOption.value as 'percentage' | 'amount',
-                          });
-                      }}
-                    />
+                    <div className={styles.discountSelectContainer}>
+                      <Select
+                        styles={customStyles}
+                        name='colors'
+                        className={styles.basicSelect}
+                        classNamePrefix='select'
+                        options={couponTypes}
+                        onChange={(selectedOption) => {
+                          if (selectedOption)
+                            setNewCouponData({
+                              ...newCouponData,
+                              type: selectedOption.value as 'percentage' | 'amount',
+                            });
+                        }}
+                      />
+                    </div>
                   </div>
                   <>
                     <div
@@ -133,6 +145,9 @@ const Coupon = () => {
                       }}
                     >
                       <p className={styles.fieldHeader}>Applies To</p>
+                      <p className={styles.filedDescription}>
+                        if no tickets are selected, coupon will apply to all tickets
+                      </p>
                       <Select
                         isMulti
                         styles={customStyles}
@@ -177,27 +192,39 @@ const Coupon = () => {
 
                 <div className={styles.discountUses}>
                   <p className={styles.fieldHeader}>Maximum Discount Uses</p>
-                  <InputField
-                    type='text'
-                    name='Conditions'
-                    id='conditions'
-                    placeholder='Limit number of times this discount can be used in total'
-                    icon={<></>}
-                    required={true}
-                    onChange={(event) => {
-                      setNewCouponData({ ...newCouponData, count: Number(event.target.value) });
+
+                  {limitDiscountUsage && (
+                    <InputField
+                      type='text'
+                      name='Conditions'
+                      id='conditions'
+                      placeholder='Limit number of times this discount can be used in total'
+                      icon={<></>}
+                      required={true}
+                      onChange={(event) => {
+                        if (Number(event.target.value) < 0) toast.error('Count cannot be negative');
+                        setNewCouponData({ ...newCouponData, count: Number(event.target.value) });
+                      }}
+                      value={newCouponData.count ? newCouponData.count.toString() : ''}
+                    />
+                  )}
+                  <Slider
+                    checked={limitDiscountUsage}
+                    onChange={() => {
+                      setLimitDiscountUsage(!limitDiscountUsage);
+                      if (!limitDiscountUsage) setNewCouponData({ ...newCouponData, count: null });
+                      else setNewCouponData({ ...newCouponData, count: 5 });
                     }}
-                    value={newCouponData.count.toString()}
+                    text='Limit Discount Usage'
                   />
                 </div>
-
                 <div className={styles.limitOne}>
                   <Slider
                     checked={newCouponData.is_private}
                     onChange={() => {
                       setNewCouponData({ ...newCouponData, is_private: !newCouponData.is_private });
                     }}
-                    text='Show Ticket in Form'
+                    text='Show Form in Form'
                   />
                   <Slider
                     checked={newCouponData.is_active}
@@ -254,7 +281,7 @@ const Coupon = () => {
                           />
                           <SelectComponent
                             options={[
-                              ...conditions.map((condition) => ({
+                              ...getConditions(getFieldType(condition.field)).map((condition) => ({
                                 value: condition.value,
                                 label: condition.label,
                               })),

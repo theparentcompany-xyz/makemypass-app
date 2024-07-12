@@ -18,7 +18,7 @@ export type CreateCouponType = {
   tickets: string[];
   description: string;
   is_active: boolean;
-  count: number;
+  count: number | null;
   is_private: boolean;
   conditions: {
     field: string;
