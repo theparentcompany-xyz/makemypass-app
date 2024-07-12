@@ -1,4 +1,3 @@
-import { MdCalendarMonth } from 'react-icons/md';
 import styles from './Hero.module.css';
 import { motion } from 'framer-motion';
 
