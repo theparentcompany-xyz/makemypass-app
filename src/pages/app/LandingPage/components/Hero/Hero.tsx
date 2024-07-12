@@ -1,3 +1,4 @@
+import { MdCalendarMonth } from 'react-icons/md';
 import styles from './Hero.module.css';
 import { motion } from 'framer-motion';
 
@@ -26,16 +27,27 @@ const Hero = () => {
           Unforgettable Moments Commence with Tickets in your Digital Grasp. At MakeMyPass,
           Anticipation Meets Convenience, without the Chaos of Pass Logistics!
         </p>
-        <a href='https://wa.me/6238450178' target='_blank' rel='noopener noreferrer'>
-          <motion.button
-            className={styles.requestDemo}
-            whileHover='hover'
-            variants={boxShadowVariants}
-            initial={false}
+        <div className={styles.row}>
+          <a href='https://wa.me/916238450178' target='_blank' rel='noopener noreferrer'>
+            <motion.button
+              className={styles.requestDemo}
+              whileHover='hover'
+              variants={boxShadowVariants}
+              initial={false}
+            >
+              Talk to Us
+            </motion.button>
+          </a>
+
+          <a
+            className={styles.requestDemoText}
+            href='http://cal.com/adnankattekaden/15min'
+            target='_blank'
+            rel='noopener noreferrer'
           >
-            Request Demo
-          </motion.button>
-        </a>
+            <p className={styles.scheduleDemo}>Schedule a Demo</p>
+          </a>
+        </div>
       </div>
 
       <img
