@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Select, { MultiValue } from 'react-select';
 import { validateCondition } from './condition';
 import ValidateInput from '../ValidateInput/ValidateInput.tsx';
+import toast from 'react-hot-toast';
+import React from 'react';
 
 const variants = {
   initial: { opacity: 0, y: -10 },
@@ -81,6 +83,8 @@ const DynamicForm = ({
   formData: FormDataType;
   onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
 }) => {
+  const fileRef = React.useRef<HTMLInputElement>(null);
+
   return (
     <>
       <div className={styles.formFields}>
@@ -291,9 +295,26 @@ const DynamicForm = ({
                       ? field.property?.extension_types.join(',') ?? ''
                       : ''
                   }
+                  ref={fileRef}
                   name={field?.title}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    if (e.target.files) onFieldChange(field.field_key, e.target.files as any);
+                    let withinSize = true;
+                    Array.from(e.target.files || []).forEach((file) => {
+                      console.log(file);
+
+                      if (file.size <= (field.property?.max_size ?? 0) * 1024) {
+                        withinSize = withinSize && true;
+                      } else {
+                        withinSize = false;
+                      }
+                    });
+
+                    if (e.target.files && withinSize)
+                      onFieldChange(field.field_key, e.target.files as any);
+                    else {
+                      toast.error('File size is too large');
+                      if (fileRef.current) fileRef.current.value = '';
+                    }
                   }}
                   className={styles.fileInput}
                   multiple={field.property?.is_multiple}

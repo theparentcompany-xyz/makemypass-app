@@ -56,7 +56,7 @@ export const editSubmissons = async (
     }
   });
 
-  if (data && !isArray(data.id))
+  if (data && !isArray(data.id) && typeof data.id === 'string')
     privateGateway
       .put(makeMyPass.editSubmission(eventId, data.id), backendFormData, {
         headers: {
