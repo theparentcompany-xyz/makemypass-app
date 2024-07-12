@@ -19,6 +19,7 @@ export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<E
 export const getEventId = async (
   eventName: string,
   navigate?: NavigateFunction,
+  ruri?: string,
   setEventId?: React.Dispatch<React.SetStateAction<string>>,
   setCurrentUserRole?: React.Dispatch<React.SetStateAction<string[]>>,
 ) => {
@@ -45,17 +46,19 @@ export const getEventId = async (
               setEventId && setEventId(response.data.response.id);
               setCurrentUserRole && setCurrentUserRole([response.data.response.current_user_role]);
 
-              if (!navigate) return;
-              if (
-                response.data.response.current_user_role === 'Admin' ||
-                response.data.response.current_user_role === 'Owner'
-              ) {
-                navigate(`/${eventName.toLowerCase()}/overview/`);
-              } else if (response.data.response.current_user_role === 'Volunteer') {
-                navigate(`/${eventName.toLowerCase()}/checkins/`);
-              } else if (response.data.response.current_user_role === 'Gamer') {
-                navigate(`/${eventName.toLowerCase()}/spinwheel/`);
-              }
+              if (navigate)
+                if (ruri) {
+                  navigate(`/${ruri}`);
+                } else if (
+                  response.data.response.current_user_role === 'Admin' ||
+                  response.data.response.current_user_role === 'Owner'
+                ) {
+                  navigate(`/${eventName.toLowerCase()}/overview/`);
+                } else if (response.data.response.current_user_role === 'Volunteer') {
+                  navigate(`/${eventName.toLowerCase()}/checkins/`);
+                } else if (response.data.response.current_user_role === 'Gamer') {
+                  navigate(`/${eventName.toLowerCase()}/spinwheel/`);
+                }
 
               sessionStorage.setItem('eventData', JSON.stringify(eventData));
             })

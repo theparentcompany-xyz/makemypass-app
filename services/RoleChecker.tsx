@@ -13,21 +13,22 @@ const RoleChecker = ({
 }) => {
   const currentTitle = JSON.parse(sessionStorage.getItem('eventData')!)?.event_name;
   const currentUserRole = [JSON.parse(sessionStorage.getItem('eventData')!)?.current_user_role];
-  const { eventTitle } = useParams();
+
+  const { eventTitle } = useParams<{ eventTitle: string }>();
   const navigate = useNavigate();
 
   if (eventTitle && eventTitle !== currentTitle) {
-    getEventId(eventTitle, navigate);
-  }
-
-  const hasRoleNoFetch = (roles: string[]) => {
-    return roles.some((role) => currentUserRole.includes(role));
-  };
-
-  if (hasRoleNoFetch(roles)) {
-    return children;
+    getEventId(eventTitle, navigate, window.location.pathname.slice(1));
   } else {
-    return redirectPath ? redirectPath : <Navigate to='/login' replace={true} />;
+    const hasRoleNoFetch = (roles: string[]) => {
+      return roles.some((role) => currentUserRole.includes(role));
+    };
+
+    if (hasRoleNoFetch(roles)) {
+      return children;
+    } else {
+      return redirectPath ? redirectPath : <Navigate to='/login' replace={true} />;
+    }
   }
 };
 
