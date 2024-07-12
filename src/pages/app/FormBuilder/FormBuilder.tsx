@@ -396,7 +396,7 @@ const FormBuilder = () => {
                                       type='number'
                                       placeholder='Enter max file size(kb)'
                                       value={
-                                        field?.property?.max_size.toString()
+                                        field?.property?.max_size?.toString()
                                       }
                                       onChange={(event) => {
                                         if (parseInt(event.target.value) > 5000) event.target.value = '5000';
