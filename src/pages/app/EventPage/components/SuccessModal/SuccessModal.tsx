@@ -4,26 +4,12 @@ import Modal from '../../../../../components/Modal/Modal';
 import { Dispatch, SetStateAction } from 'react';
 import { SuccessModalProps } from '../../types';
 import { HashLoader } from 'react-spinners';
+import { BsDownload } from 'react-icons/bs';
 
-const SuccessModal = ({
-  success,
-  setSuccess,
-}: {
+const SuccessModal = ({ success, setSuccess }: {
   success: SuccessModalProps;
   setSuccess: Dispatch<SetStateAction<SuccessModalProps>>;
 }) => {
-  // const downloadTicket = async (ticketURL: string | undefined) => {
-  //   if (!ticketURL) return;
-  //   const response = await fetch(ticketURL);
-  //   const blob = await response.blob();
-  //   const url = window.URL.createObjectURL(blob);
-  //   const link = document.createElement('a');
-  //   link.href = url;
-  //   link.setAttribute('download', 'EventTicket');
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   if (link.parentNode) link.parentNode.removeChild(link);
-  // };
 
   return (
     <div>
@@ -57,11 +43,21 @@ const SuccessModal = ({
                       {success.followupMessage}
                     </p>
 
-                    {/* {success.ticketURL && (
+                    {success.ticketURL && (
                       <>
                         <button
                           onClick={() => {
-                            downloadTicket(success.ticketURL);
+                            if (success.ticketURL) {
+                              fetch(success.ticketURL)
+                                .then(response => response.blob())
+                                .then(blob => {
+                                  const link = document.createElement('a');
+                                  link.href = window.URL.createObjectURL(blob);
+                                  link.download = 'Ticket.png';
+                                  link.click();
+                                })
+                                .catch(error => console.error('Error downloading the ticket:', error));
+                            }
                           }}
                           className={styles.downloadTicketButton}
                         >
@@ -76,7 +72,7 @@ const SuccessModal = ({
                           View Ticket
                         </button>
                       </>
-                    )} */}
+                    )}
 
                     <p className={styles.contactUs}>
                       If you have any questions or need assistance, please contact us at
@@ -85,7 +81,7 @@ const SuccessModal = ({
                   </div>
                 ) : (
                   <div className={styles.loaderContainer}>
-                    <HashLoader color='#46BF75' size={50} />
+                    <HashLoader color="#46BF75" size={50} />
                   </div>
                 )}
               </div>
