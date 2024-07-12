@@ -8,12 +8,17 @@ import { motion } from 'framer-motion';
 const changeTypeModal = (field: Field, newType: FieldType) => {
   if (field.type === newType) return;
 
+  console.log('Changing type from', field.type, 'to', newType);
+
   const optionTypes = [
     FieldType.singleselect,
     FieldType.multiselect,
     FieldType.radio,
     FieldType.checkbox,
-  ];
+  ].map((type) => type.toLowerCase());
+
+  console.log('Option types', optionTypes);
+
   if (optionTypes.includes(field.type as FieldType)) {
     if (!optionTypes.includes(newType)) {
       field.options = [];
@@ -63,6 +68,7 @@ const ChangeTypeModal = ({
               key={type}
               onClick={() => {
                 setShowChangeTypeModal(false);
+
                 changeTypeModal(field, type as FieldType);
               }}
               style={
