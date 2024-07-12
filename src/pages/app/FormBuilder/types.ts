@@ -5,11 +5,13 @@ export interface Field {
   hidden: boolean;
   unique: number | null;
   options: string[];
-  property: {
-    extension_types: string[];
-    max_size: number;
-    is_multiple: boolean;
-  } | { [key: string]: never };
+  property:
+    | {
+        extension_types: string[];
+        max_size: number;
+        is_multiple: boolean;
+      }
+    | { [key: string]: never };
   required: boolean;
   conditions: {
     field: string;

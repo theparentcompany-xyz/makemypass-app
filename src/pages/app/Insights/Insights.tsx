@@ -232,6 +232,7 @@ const Insights = ({ type }: { type?: string }) => {
                           );
                           toast.success('Link copied to clipboard');
                         }}
+                        className='pointer'
                       />
                     </div>
                     <div className={styles.alert}>Live on the web</div>
@@ -251,6 +252,7 @@ const Insights = ({ type }: { type?: string }) => {
                           );
                           toast.success('Link copied to clipboard');
                         }}
+                        className='pointer'
                       />
                     </div>
                   </div>

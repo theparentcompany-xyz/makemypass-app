@@ -201,7 +201,7 @@
   column-gap: 0.25rem;
   cursor: pointer;
 }
-.deleteIcon{
+.deleteIcon {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -238,8 +238,7 @@
   font-size: 0.8rem;
 }
 
-
-.deleteModal{
+.deleteModal {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -248,11 +247,11 @@
   row-gap: 1rem;
 }
 
-.deleteModalButtons{
+.deleteModalButtons {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   column-gap: 1rem;
-  margin-top: 1rem; 
+  margin-top: 1rem;
 }

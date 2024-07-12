@@ -142,7 +142,6 @@ export const HexColors: Record<FieldType, string> = {
   [FieldType.Checkbox]: '#BB2DC7',
 };
 
-
 export const FileExtensions = [
   { value: '.csv', label: '.csv' },
   { value: '.pdf', label: '.pdf' },

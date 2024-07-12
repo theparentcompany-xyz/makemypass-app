@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap:8rem;
+  gap: 8rem;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -17,7 +17,6 @@
   .ticketHeader {
     gap: 0;
   }
-  
 }
 
 .ticketHeaderTitle {
@@ -59,8 +58,8 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 @media screen and (min-width: 720px) {
-  .ticketsContainer{
-      max-width: 50vw;
+  .ticketsContainer {
+    max-width: 50vw;
   }
 }
 @media screen and (max-width: 435px) {
@@ -123,7 +122,7 @@
 .settingsButton {
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.04);
-  background: rgba(255, 255, 255, 0.00);
+  background: rgba(255, 255, 255, 0);
   border: none;
   padding: 0.5rem 1rem;
   font-family: 'Inter', sans-serif;
@@ -226,7 +225,7 @@
   max-width: 25rem;
 }
 
-.ticketCapacityContainer{
+.ticketCapacityContainer {
   margin-left: 1rem;
   font-size: 0.9rem;
   color: #d7d7d7;
@@ -241,7 +240,7 @@
   margin-bottom: 0.5rem;
 }
 
-.ticketCapacityInput{
+.ticketCapacityInput {
   font-size: 0.9rem;
   background: rgba(255, 255, 255, 0.04);
   color: #d7d7d7;
@@ -250,7 +249,7 @@
   font-weight: 400;
   color: #d7d7d7;
   outline: none;
-  padding:0.5rem;
+  padding: 0.5rem;
   max-width: 11rem;
   border: none;
   border-radius: 8px;
@@ -322,12 +321,11 @@
   padding-right: 2rem;
 }
 
-.ticketPriceDependentContainer{
-
-  .ticketPriceLabel{
+.ticketPriceDependentContainer {
+  .ticketPriceLabel {
     margin-left: 1rem;
   }
-  .ticketSliderLabel{
+  .ticketSliderLabel {
     margin-left: 1rem;
   }
 }
@@ -368,7 +366,7 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   margin-right: auto;
-  margin-top: 1rem  ;
+  margin-top: 1rem;
 }
 
 .advancedOptions {
@@ -446,7 +444,7 @@
   text-align: left;
 }
 
-.modalButtons{
+.modalButtons {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
@@ -473,7 +471,7 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
-.sectionContent1{
+.sectionContent1 {
   display: flex;
   flex-direction: column;
   gap: 1rem;

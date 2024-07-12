@@ -6,11 +6,13 @@ import { SuccessModalProps } from '../../types';
 import { HashLoader } from 'react-spinners';
 import { BsDownload } from 'react-icons/bs';
 
-const SuccessModal = ({ success, setSuccess }: {
+const SuccessModal = ({
+  success,
+  setSuccess,
+}: {
   success: SuccessModalProps;
   setSuccess: Dispatch<SetStateAction<SuccessModalProps>>;
 }) => {
-
   return (
     <div>
       <motion.div
@@ -49,14 +51,16 @@ const SuccessModal = ({ success, setSuccess }: {
                           onClick={() => {
                             if (success.ticketURL) {
                               fetch(success.ticketURL)
-                                .then(response => response.blob())
-                                .then(blob => {
+                                .then((response) => response.blob())
+                                .then((blob) => {
                                   const link = document.createElement('a');
                                   link.href = window.URL.createObjectURL(blob);
                                   link.download = 'Ticket.png';
                                   link.click();
                                 })
-                                .catch(error => console.error('Error downloading the ticket:', error));
+                                .catch((error) =>
+                                  console.error('Error downloading the ticket:', error),
+                                );
                             }
                           }}
                           className={styles.downloadTicketButton}
@@ -81,7 +85,7 @@ const SuccessModal = ({ success, setSuccess }: {
                   </div>
                 ) : (
                   <div className={styles.loaderContainer}>
-                    <HashLoader color="#46BF75" size={50} />
+                    <HashLoader color='#46BF75' size={50} />
                   </div>
                 )}
               </div>
