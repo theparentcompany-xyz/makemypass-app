@@ -63,7 +63,7 @@ const ChangeTypeModal = ({
               key={type}
               onClick={() => {
                 setShowChangeTypeModal(false);
-                changeTypeModal(field, type as FieldType);
+                changeTypeModal(field, value);
               }}
               style={
                 field && field.type === (type as FieldType) ? { border: `2px solid #565B63` } : {}
