@@ -26,7 +26,7 @@ const Hero = () => {
           Unforgettable Moments Commence with Tickets in your Digital Grasp. At MakeMyPass,
           Anticipation Meets Convenience, without the Chaos of Pass Logistics!
         </p>
-        <a href='https://wa.me/7012679067' target='_blank' rel='noopener noreferrer'>
+        <a href='https://wa.me/6238450178' target='_blank' rel='noopener noreferrer'>
           <motion.button
             className={styles.requestDemo}
             whileHover='hover'

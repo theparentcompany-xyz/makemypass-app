@@ -123,7 +123,6 @@ const Glance = ({
       title: 'Insights',
       roles: ['Admin', 'Owner'],
     },
-
     guests: {
       title: 'Guests',
       roles: ['Admin', 'Owner', 'Volunteer'],
@@ -131,10 +130,6 @@ const Glance = ({
     inevent: {
       title: 'In-Event',
       roles: ['Admin', 'Owner', 'Volunteer'],
-    },
-    formbuilder: {
-      title: 'Form Builder',
-      roles: ['Admin', 'Owner'],
     },
     manage: {
       title: 'Event Page',
@@ -144,24 +139,23 @@ const Glance = ({
       title: 'Check-Ins',
       roles: ['Admin', 'Owner', 'Volunteer'],
     },
-
-    coupon: {
-      title: 'Coupon',
-      roles: ['Admin', 'Owner', 'Volunteer'],
-    },
-    // feedback: {
-    //   title: 'Feedback',
-    //   roles: ['Admin', 'Owner'],
-    // },
-    postevent: {
-      title: 'Post Event',
-      roles: ['Admin', 'Owner'],
-    },
   };
 
   if (import.meta.env.VITE_CURRENT_ENV === 'dev') {
     tabs.formbuilder = {
       title: 'Form Builder',
+      roles: ['Admin', 'Owner'],
+    };
+    tabs.postevent = {
+      title: 'Post Event',
+      roles: ['Admin', 'Owner'],
+    };
+    tabs.coupon = {
+      title: 'Coupon',
+      roles: ['Admin', 'Owner', 'Volunteer'],
+    };
+    tabs.feedback = {
+      title: 'Feedback',
       roles: ['Admin', 'Owner'],
     };
   }
