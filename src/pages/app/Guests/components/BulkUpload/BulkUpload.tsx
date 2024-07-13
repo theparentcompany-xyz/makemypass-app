@@ -29,7 +29,7 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
   }, []);
 
   const generateCSVReport = (fileId: string) => {
-    downloadFile(eventId, fileId, 'processed.xlsx', setFileStatus);
+    downloadFile(eventId, fileId, 'processed.xlsx');
   };
 
   return (
@@ -105,7 +105,7 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
       <button
         className={styles.uploadButton}
         onClick={() => {
-          if (file) uploadFile(eventId, file, selectedTickets);
+          if (file) uploadFile(eventId, file, selectedTickets, setFileStatus);
           else toast.error('Please select a file');
         }}
       >

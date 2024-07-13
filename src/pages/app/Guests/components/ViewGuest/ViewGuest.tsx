@@ -90,7 +90,7 @@ const ViewGuest = ({
             <div className={styles.tsTexts}>
               <p className={styles.name}>
                 <span>
-                  {formData['name']}{' '}
+                  {formData['name'] || formData['fullname']}{' '}
                   <span className={styles.rowType}>{formData['ticket_code']}</span>
                 </span>
                 {formData['is_approved'] && <span className={styles.rowType}>Shortlisted</span>}
@@ -223,7 +223,7 @@ const ViewGuest = ({
                         ...prevState,
                         status: true,
                         guestId: formData['id'],
-                        name: formData['name'],
+                        name: formData['name'] || formData['fullname'],
                       }));
                     }
                   }}

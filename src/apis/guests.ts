@@ -190,7 +190,12 @@ export const getFileStatus = (
     });
 };
 
-export const uploadFile = (eventId: string, file: File, selectedTickets: string[]) => {
+export const uploadFile = (
+  eventId: string,
+  file: File,
+  selectedTickets: string[],
+  setFileStatus: Dispatch<React.SetStateAction<BulkUploadType[]>>,
+) => {
   const formData = new FormData();
   formData.append('file', file);
 
@@ -209,15 +214,13 @@ export const uploadFile = (eventId: string, file: File, selectedTickets: string[
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
+    })
+    .finally(() => {
+      getFileStatus(eventId, setFileStatus);
     });
 };
 
-export const downloadFile = async (
-  eventId: string,
-  fileId: string,
-  field_type: string,
-  setFileStatus: Dispatch<React.SetStateAction<BulkUploadType[]>>,
-) => {
+export const downloadFile = async (eventId: string, fileId: string, field_type: string) => {
   privateGateway
     .get(makeMyPass.downloadBulkUploadCSV(eventId, fileId, field_type))
     .then((response) => {
@@ -232,8 +235,5 @@ export const downloadFile = async (
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
-    })
-    .finally(() => {
-      getFileStatus(eventId, setFileStatus);
     });
 };

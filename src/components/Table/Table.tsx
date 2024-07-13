@@ -52,7 +52,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
             >
               <p className={styles.rowName}>
                 {item.team_id && <span>•</span>}
-                {item.name}
+                {item.fullname || item.name}
               </p>
               <p className={styles.rowEmail}>{item.email?.split('@')[0]}</p>
               <p className={styles.rowEmail}>{item.phonenumber}</p>
@@ -219,7 +219,8 @@ const Table = ({
         (item) =>
           item.name?.toLowerCase().includes(keyword) ||
           item.email?.toLowerCase().includes(keyword) ||
-          item.phonenumber?.toLowerCase().includes(keyword),
+          item.phonenumber?.toLowerCase().includes(keyword) ||
+          item.fullName?.toLowerCase().includes(keyword),
       );
   }, [tableData, search]);
 
