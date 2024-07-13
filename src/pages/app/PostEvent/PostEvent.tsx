@@ -45,26 +45,28 @@ const PostEvent = () => {
         </Modal>
       )}
       <Theme>
-        <Glance tab='postevent' />
-        <p className={styles.text}>Sent Mails</p>
-        <div className={styles.postEventContainer}>
-          <div className={styles.sbutton}>
-            <SectionButton
-              buttonText='Participant'
-              onClick={() => {
-                setConfirmModal({ confirm: true, value: true });
-              }}
-              icon={<LuMailPlus size={28} color='' />}
-            />
-          </div>
-          <div className={styles.sbutton}>
-            <SectionButton
-              buttonText='Non Participant'
-              onClick={() => {
-                setConfirmModal({ confirm: true, value: false });
-              }}
-              icon={<LuMailX size={28} color='' />}
-            />
+        <div className={styles.mainContainer}>
+          <Glance tab='postevent' />
+          <p className={styles.text}>Sent Mails</p>
+          <div className={styles.postEventContainer}>
+            <div className={styles.sbutton}>
+              <SectionButton
+                buttonText='Participant'
+                onClick={() => {
+                  setConfirmModal({ confirm: true, value: true });
+                }}
+                icon={<LuMailPlus size={28} color='' />}
+              />
+            </div>
+            <div className={styles.sbutton}>
+              <SectionButton
+                buttonText='Non Participant'
+                onClick={() => {
+                  setConfirmModal({ confirm: true, value: false });
+                }}
+                icon={<LuMailX size={28} color='' />}
+              />
+            </div>
           </div>
         </div>
       </Theme>

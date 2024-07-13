@@ -21,6 +21,7 @@ const CheckOutScan = () => {
       checkOutUser(ticketId, eventId, setMessage, setIsError, setChecking);
       setTimeout(() => {
         setTicketId('');
+        setTrigger(false);
       }, 2500);
     }
   }, [trigger]);

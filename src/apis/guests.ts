@@ -195,7 +195,7 @@ export const uploadFile = (eventId: string, file: File, selectedTickets: string[
   formData.append('file', file);
 
   selectedTickets.forEach((ticket) => {
-    formData.append('tickets[]', ticket);
+    formData.append('ticket_ids[]', ticket);
   });
 
   privateGateway

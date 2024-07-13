@@ -97,7 +97,7 @@ const ViewGuest = ({
               </p>
               <p className={styles.emailAddress}>{formData['email']}</p>
             </div>
-            <div className={styles.type}>{formData['category']}</div>
+            {formData['category'] && <div className={styles.type}>{formData['category']}</div>}
           </div>
           <div className={styles.tsRow2}>
             <div

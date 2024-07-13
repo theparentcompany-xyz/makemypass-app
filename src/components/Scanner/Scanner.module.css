@@ -30,6 +30,16 @@
   position: relative;
 }
 
+.checkingText {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+
+  margin-top: 1rem;
+  text-align: center;
+  max-width: 25rem;
+  color: #47c97e;
+}
+
 .scanHeader {
   font-size: 1.25rem;
   font-weight: 600;
