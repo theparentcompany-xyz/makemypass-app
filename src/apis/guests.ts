@@ -184,8 +184,7 @@ export const getFileStatus = (
     .then((response) => {
       setFileStatus(response.data.response.files);
     })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Something went wrong');
+    .catch(() => {
       setFileStatus([]);
     });
 };
