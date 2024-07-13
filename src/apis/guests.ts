@@ -3,8 +3,9 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { FormEventData, ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
-import { ErrorMessages, FileType, FormDataType } from './types';
+import { ErrorMessages, FormDataType } from './types';
 import { isArray } from 'chart.js/helpers';
+import { BulkUploadType } from '../pages/app/Guests/components/BulkUpload/types';
 
 export const resentEventTicket = async (
   ticketData: ResentTicket,
@@ -177,7 +178,7 @@ export const getCSVTemplate = (eventId: string) => {
 
 export const getFileStatus = (
   eventId: string,
-  setFileStatus: Dispatch<React.SetStateAction<FileType[]>>,
+  setFileStatus: Dispatch<React.SetStateAction<BulkUploadType[]>>,
 ) => {
   privateGateway
     .get(makeMyPass.getFileStatus(eventId))
@@ -211,16 +212,16 @@ export const uploadFile = (eventId: string, file: File, selectedTickets: string[
     });
 };
 
-export const downloadFile = async (eventId: string, fileId: string, fileType: string) => {
+export const downloadFile = async (eventId: string, fileId: string, field_type: string) => {
   privateGateway
-    .get(makeMyPass.downloadBulkUploadCSV(eventId, fileId, fileType))
+    .get(makeMyPass.downloadBulkUploadCSV(eventId, fileId, field_type))
     .then((response) => {
       const csvData = response.data;
       const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement('a');
       link.setAttribute('href', encodedUri);
-      link.setAttribute('download', `${fileType}.csv`);
+      link.setAttribute('download', `CSVReport.csv`);
       document.body.appendChild(link);
       link.click();
     })

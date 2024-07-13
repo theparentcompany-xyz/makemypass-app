@@ -59,7 +59,7 @@
 }
 
 .logDate {
-  font-size: 0.5rem;
+  font-size: 0.85rem;
   caret-color: #939597;
 }
 
@@ -147,4 +147,26 @@
   color: #a4a4a4;
   text-align: center;
   margin-bottom: 1rem;
+}
+
+.fileStatus {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 0.7rem;
+  font-size: 0.9rem;
+}
+
+.success {
+  color: #47c97e;
+}
+
+.error {
+  color: #fc6568;
+}
+
+.total {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #939597;
 }
