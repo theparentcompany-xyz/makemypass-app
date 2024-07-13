@@ -73,20 +73,24 @@ export const makeMyPass = {
   //Analytics and Reporting
   checkInCount: (eventId: string) => makeMyPassURL(`/analytics/${eventId}/checkin-count/`),
   CSVdata: (event_id: string) => makeMyPassURL(`/manage-event/${event_id}/csv/`),
-  downloadCSVTemplate: (event_id: string) =>
-    makeMyPassURL(`/manage-event/${event_id}/download-csv-template/`),
-  getFileStatus: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-file-status/`),
+
   downloadFormSubmission: (eventId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
   downloadCSV: (eventId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
   getFeedback: (eventId: string) => makeMyPassURL(`/feedback/list-feedback/${eventId}/`),
 
+  //Bulk Import
+  uploadFile: (eventId: string) => makeMyPassURL(`/bulk/${eventId}/import-guest/`),
+  downloadCSVTemplate: (event_id: string) =>
+    makeMyPassURL(`/bulk/${event_id}/import-guest-template/`),
+  getFileStatus: (eventId: string) => makeMyPassURL(`/bulk/${eventId}/list-file-import-guest/`),
+
   //Forms and Submissions
   getFormFields: (evenid: string) => makeMyPassURL(`/manage-event/get-form-fields/${evenid}/`),
   validateRsvp: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/validate-rsvp/`),
   submitForm: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/submit/`),
-  uploadFile: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/csv/`),
+
   getCategories: (eventId: string) =>
     makeMyPassURL(`/manage-event/get-form-categories/${eventId}/`),
   parseFromAudio: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/parse-from-audio/`),

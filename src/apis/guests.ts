@@ -111,74 +111,6 @@ export const downloadCSVData = async (eventId: string) => {
     });
 };
 
-export const getCsvTemplate = (eventId: string) => {
-  privateGateway
-    .get(makeMyPass.downloadCSVTemplate(eventId))
-    .then((response) => {
-      const csvData = response.data;
-      const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
-      link.setAttribute('download', 'template.csv');
-      document.body.appendChild(link);
-      link.click();
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Something went wrong');
-    });
-};
-
-export const getFileStatus = (
-  eventId: string,
-  setFileStatus: Dispatch<React.SetStateAction<FileType[]>>,
-) => {
-  privateGateway
-    .get(makeMyPass.getFileStatus(eventId))
-    .then((response) => {
-      setFileStatus(response.data.response.files);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Something went wrong');
-    });
-};
-
-export const uploadFile = (eventId: string, file: File, ticketId: string) => {
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('ticket_ids', JSON.stringify([ticketId]));
-  privateGateway
-    .post(makeMyPass.uploadFile(eventId), formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    .then((response) => {
-      toast.success(response.data.message.general[0] || 'File uploaded successfully');
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Something went wrong');
-    });
-};
-
-export const downloadFile = async (eventId: string, fileId: string, fileType: string) => {
-  privateGateway
-    .get(makeMyPass.downloadBulkUploadCSV(eventId, fileId, fileType))
-    .then((response) => {
-      const csvData = response.data;
-      const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
-      link.setAttribute('download', `${fileType}.csv`);
-      document.body.appendChild(link);
-      link.click();
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Something went wrong');
-    });
-};
-
 export const initateRefund = async (
   eventId: string,
   eventRegisterId: string,
@@ -220,5 +152,80 @@ export const deleteSubmission = async (eventId: string, submissionId: string) =>
     })
     .catch(() => {
       toast.error('Something went wrong, Couldnt Delete Submission');
+    });
+};
+
+// Bulk Upload APIS
+
+export const getCSVTemplate = (eventId: string) => {
+  privateGateway
+    .get(makeMyPass.downloadCSVTemplate(eventId))
+    .then((response) => {
+      const csvData = response.data;
+      const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'template.csv');
+      document.body.appendChild(link);
+      link.click();
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Something went wrong');
+    });
+};
+
+export const getFileStatus = (
+  eventId: string,
+  setFileStatus: Dispatch<React.SetStateAction<FileType[]>>,
+) => {
+  privateGateway
+    .get(makeMyPass.getFileStatus(eventId))
+    .then((response) => {
+      setFileStatus(response.data.response.files);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Something went wrong');
+      setFileStatus([]);
+    });
+};
+
+export const uploadFile = (eventId: string, file: File, selectedTickets: string[]) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  selectedTickets.forEach((ticket) => {
+    formData.append('ticket_ids[]', ticket);
+  });
+
+  privateGateway
+    .post(makeMyPass.uploadFile(eventId), formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((response) => {
+      toast.success(response.data.message.general[0] || 'File uploaded successfully');
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Something went wrong');
+    });
+};
+
+export const downloadFile = async (eventId: string, fileId: string, fileType: string) => {
+  privateGateway
+    .get(makeMyPass.downloadBulkUploadCSV(eventId, fileId, fileType))
+    .then((response) => {
+      const csvData = response.data;
+      const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `${fileType}.csv`);
+      document.body.appendChild(link);
+      link.click();
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Something went wrong');
     });
 };

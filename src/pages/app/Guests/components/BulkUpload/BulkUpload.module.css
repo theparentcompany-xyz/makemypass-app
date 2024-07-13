@@ -13,9 +13,10 @@
   width: 100%;
 }
 
-.logsHeader {
+.sectionHeader {
   text-align: left;
   margin-top: 1rem;
+  margin-bottom: 0.5rem;
   font-size: 1.05rem;
   font-weight: 500;
   width: 100%;
@@ -28,6 +29,10 @@
 
   max-height: 20rem;
   overflow: auto;
+}
+
+.selectTicket {
+  width: 100%;
 }
 
 .log {
@@ -43,7 +48,7 @@
   border: 1.5px solid rgba(255, 255, 255, 0.08);
   color: #fff;
   font-family: 'Inter', sans-serif;
-  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
 }
 
 .logName {
@@ -104,5 +109,42 @@
   opacity: 0.2;
   border: none;
   margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.fileInput {
+  margin-top: 0.25rem;
+  border-radius: 8px;
+  border: none;
+  padding: 0.5rem 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  width: 95%;
+  display: flex;
+  font-family: 'Inter', sans-serif;
+  color: #a4a4a4;
+}
+
+.fileInput::file-selector-button {
+  font-family: 'Inter', sans-serif;
+  margin-right: 20px;
+  border: none;
+  padding: 10px 20px;
+
+  border-radius: 10px;
+  color: #a4a4a487;
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.fileInput::file-selector-button:hover {
+  color: #a4a4a4;
+  background: #1b2725;
+}
+
+.noLogs {
+  font-size: 0.9rem;
+  color: #a4a4a4;
+  text-align: center;
   margin-bottom: 1rem;
 }
