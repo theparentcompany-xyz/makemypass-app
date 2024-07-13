@@ -24,6 +24,10 @@ export const makeMyPass = {
   // Guest and Ticket Management
   checkInUser: (ticketCode: string, eventId: string) =>
     makeMyPassURL(`/scan-guest/${eventId}/register/${ticketCode}/`),
+  checkInUserVenue: (ticketCode: string, eventId: string) =>
+    makeMyPassURL(`/scan-guest/${eventId}/venue/${ticketCode}/`),
+  listVenues: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/list-venue/`),
+
   resentTicket: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/resent-ticket/`),
   editSubmission: (eventId: string, submissionId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/edit-submission/${submissionId}`),
@@ -90,12 +94,13 @@ export const makeMyPass = {
   getFormFields: (evenid: string) => makeMyPassURL(`/manage-event/get-form-fields/${evenid}/`),
   validateRsvp: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/validate-rsvp/`),
   submitForm: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/submit/`),
+  downloadBulkUploadCSV: (eventId: string, fileId: string, fileType: string) =>
+    makeMyPassURL(`/bulk/${eventId}/download-file/${fileId}/?file_type=${fileType}/`),
 
   getCategories: (eventId: string) =>
     makeMyPassURL(`/manage-event/get-form-categories/${eventId}/`),
   parseFromAudio: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/parse-from-audio/`),
-  downloadBulkUploadCSV: (eventId: string, fileId: string, fileType: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/download_file/${fileId}/?file_type=${fileType}/`),
+
   initateRefund: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/initiate-refund/${eventRegisterId}/`),
   addGuestInfo: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/form-info/`),

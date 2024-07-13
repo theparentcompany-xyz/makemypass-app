@@ -1,0 +1,22 @@
+.venueHeading {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 0.25rem;
+}
+
+.helperText {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-family: 'Inter', sans-serif;
+}
+
+.venues {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}

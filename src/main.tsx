@@ -29,6 +29,7 @@ import EditEvent from './pages/app/EditEvent/EditEvent';
 import FormBuilder from './pages/app/FormBuilder/FormBuilder';
 import ValidateData from './pages/app/ValidateData/ValidateData';
 import Coupon from './pages/app/Coupon/Coupon';
+import Venue from './pages/app/CheckIns/pages/Venue/Venue';
 
 // import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 // import SpinWheel from './pages/app/SpinWheel/SpinWheel';
@@ -110,6 +111,12 @@ const routes = [
         path: '/:eventTitle/checkins/checkin',
         element: (
           <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<CheckIn />} />
+        ),
+      },
+      {
+        path: '/:eventTitle/checkins/checkin/venue',
+        element: (
+          <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<Venue />} />
         ),
       },
       {
