@@ -97,7 +97,7 @@ export const makeMyPass = {
   validateRsvp: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/validate-rsvp/`),
   submitForm: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/submit/`),
   downloadBulkUploadCSV: (eventId: string, fileId: string, file_type: string) =>
-    makeMyPassURL(`/bulk/${eventId}/download-file/${fileId}/?file_type=${file_type}`),
+    makeMyPassURL(`/manage-event/${eventId}/download-file/${fileId}/?file_type=${file_type}`),
 
   getCategories: (eventId: string) =>
     makeMyPassURL(`/manage-event/get-form-categories/${eventId}/`),
