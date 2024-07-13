@@ -139,7 +139,7 @@
 
 .fileInput::file-selector-button:hover {
   color: #a4a4a4;
-  background: #1b2725;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .noLogs {

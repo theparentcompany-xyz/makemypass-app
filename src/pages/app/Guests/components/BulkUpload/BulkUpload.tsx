@@ -29,7 +29,7 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
   }, []);
 
   const generateCSVReport = (fileId: string) => {
-    downloadFile(eventId, fileId, 'processed.xlsx');
+    downloadFile(eventId, fileId, 'processed.xlsx', setFileStatus);
   };
 
   return (

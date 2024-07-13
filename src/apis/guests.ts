@@ -212,7 +212,12 @@ export const uploadFile = (eventId: string, file: File, selectedTickets: string[
     });
 };
 
-export const downloadFile = async (eventId: string, fileId: string, field_type: string) => {
+export const downloadFile = async (
+  eventId: string,
+  fileId: string,
+  field_type: string,
+  setFileStatus: Dispatch<React.SetStateAction<BulkUploadType[]>>,
+) => {
   privateGateway
     .get(makeMyPass.downloadBulkUploadCSV(eventId, fileId, field_type))
     .then((response) => {
@@ -227,5 +232,8 @@ export const downloadFile = async (eventId: string, fileId: string, field_type: 
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
+    })
+    .finally(() => {
+      getFileStatus(eventId, setFileStatus);
     });
 };
