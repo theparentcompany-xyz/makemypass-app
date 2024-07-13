@@ -34,6 +34,7 @@ import Scanner from '../../../components/Scanner/Scanner';
 import EventForm from '../EventPage/components/EventForm/EventForm';
 import { useParams } from 'react-router';
 import EditGuest from './components/EditGuest/EditGuest';
+import BulkUpload from './components/BulkUpload/BulkUpload';
 
 const Guests = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -161,9 +162,27 @@ const Guests = () => {
           </>
         )}
 
+      {selectedGuestId && selectedGuestId.type === 'bulk' && <BulkUpload onClose={onClose} />}
+
       {selectedGuestId && selectedGuestId.type === 'add' && (
         <Modal title='Add Guest' onClose={onClose} type='side'>
           <div className={styles.userInfoModalContainer}>
+            <button
+              className={styles.bulkUploadButton}
+              onClick={() => {
+                setSelectedGuestId({
+                  id: '',
+                  type: 'bulk',
+                });
+              }}
+            >
+              Bulk Upload
+            </button>
+            <div className={styles.orContainer}>
+              <hr />
+              <p>OR</p>
+              <hr />
+            </div>
             {!showScanner ? (
               eventFormData && (
                 <>
@@ -292,6 +311,7 @@ const Guests = () => {
                         setFormData({});
                       }}
                     />
+
                     {(userRole === 'Admin' || userRole === 'Owner') && (
                       <SecondaryButton
                         buttonText='CSV'

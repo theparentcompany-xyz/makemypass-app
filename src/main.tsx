@@ -22,7 +22,6 @@ import EventPage from './pages/app/EventPage/EventPage';
 import PostEvent from './pages/app/PostEvent/PostEvent';
 import ProfilePage from './pages/app/ProfilePage/ProfilePage';
 import RoleChecker from '../services/RoleChecker';
-import GuestBulkImport from './pages/app/Guests/pages/GuestBulkImport/GuestBulkImport';
 import Feedback from './pages/app/Feedback/Feedback';
 import CreateEvent from './pages/app/CreateEvent/CreateEvent';
 import EventGlance from './pages/app/EventGlance/EventGlance';
@@ -100,10 +99,6 @@ const routes = [
         element: (
           <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<Guests />} />
         ),
-      },
-      {
-        path: '/:eventTitle/guests/bulk-import',
-        element: <RoleChecker roles={[role.ADMIN, role.OWNER]} children={<GuestBulkImport />} />,
       },
       {
         path: '/:eventTitle/checkins',
