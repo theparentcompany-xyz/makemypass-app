@@ -69,3 +69,44 @@ export const preview = async (
       toast.error(error.response.data.message.general[0] || 'Error in Fetching Check-In Count');
     });
 };
+
+export const checkOutUser = async (
+  ticketId: string,
+  eventId: string,
+  setMessage?: React.Dispatch<React.SetStateAction<string>>,
+  setIsError?: React.Dispatch<React.SetStateAction<boolean>>,
+  setChecking?: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+  if (setChecking) {
+    setChecking(true);
+  }
+  privateGateway
+    .post(makeMyPass.checkOutUser(ticketId, eventId))
+    .then((response) => {
+      if (setMessage && setIsError) {
+        setMessage(response.data.message.general[0] || 'Check-Out Successful');
+        setIsError(false);
+      } else {
+        toast.success(response.data.message.general[0] || 'Check-Out Successful');
+      }
+    })
+    .catch((error) => {
+      if (setMessage && setIsError) {
+        setMessage(error.response.data.message.general[0] || 'Check-Out Failed');
+        setIsError(true);
+      } else {
+        toast.error(error.response.data.message.general[0] || 'Check-Out Failed');
+      }
+    })
+    .finally(() => {
+      if (setChecking) {
+        setChecking(false);
+      }
+
+      if (setMessage && setIsError)
+        setTimeout(() => {
+          setMessage('');
+          setIsError(false);
+        }, 2500);
+    });
+};

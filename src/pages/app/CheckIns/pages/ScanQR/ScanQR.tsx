@@ -59,7 +59,7 @@ const ScanQR = () => {
           {eventData?.select_multi_ticket && !isTicketSelected ? (
             <>
               <div className={styles.scanContainer}>
-                <CheckInHeader buttonType='back' />
+                <CheckInHeader title='Check-In' buttonType='back' />
 
                 <hr className={styles.line} />
 
@@ -162,7 +162,7 @@ const ScanQR = () => {
               )}
 
               <div className={styles.scanContainer}>
-                <CheckInHeader buttonType='back' />
+                <CheckInHeader title='Check-Out' buttonType='back' />
 
                 <hr className={styles.line} />
               </div>

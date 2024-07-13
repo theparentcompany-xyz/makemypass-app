@@ -23,7 +23,7 @@ const CheckIns = () => {
             <div className='row'>
               <Link to='checkin/scan'>
                 <SectionButton
-                  buttonText='Scan User'
+                  buttonText='Check-In User'
                   buttonColor='#C33D7B'
                   icon={<BsQrCodeScan size={25} color='#5B75FB' />}
                 />
@@ -33,6 +33,13 @@ const CheckIns = () => {
                   buttonText='Venue Check-In'
                   buttonColor='#C33D7B'
                   icon={<FaShop size={25} color='#5B75FB' />}
+                />
+              </Link>
+              <Link to='checkin/checkout'>
+                <SectionButton
+                  buttonText='Check-Out User'
+                  buttonColor='#C33D7B'
+                  icon={<BsQrCodeScan size={25} color='#5B75FB' />}
                 />
               </Link>
               {/* <Link to='claimgifts'>

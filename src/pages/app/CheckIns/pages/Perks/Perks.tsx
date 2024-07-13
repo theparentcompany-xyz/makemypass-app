@@ -67,7 +67,7 @@ const Perks = () => {
           </>
         )}
         <div className={styles.perksContainer}>
-          <CheckInHeader buttonType='back' />
+          <CheckInHeader title='Perks' buttonType='back' />
           <hr className={styles.line} />
           {perks.length > 0 ? (
             <p className={styles.perksHeading}>Available Perks</p>

@@ -30,6 +30,7 @@ import FormBuilder from './pages/app/FormBuilder/FormBuilder';
 import ValidateData from './pages/app/ValidateData/ValidateData';
 import Coupon from './pages/app/Coupon/Coupon';
 import Venue from './pages/app/CheckIns/pages/Venue/Venue';
+import CheckOutScan from './pages/app/CheckIns/pages/CheckOutScan/CheckOutScan';
 
 // import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 // import SpinWheel from './pages/app/SpinWheel/SpinWheel';
@@ -123,6 +124,15 @@ const routes = [
         path: '/:eventTitle/checkins/checkin/scan',
         element: (
           <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<ScanQR />} />
+        ),
+      },
+      {
+        path: '/:eventTitle/checkins/checkin/checkout',
+        element: (
+          <RoleChecker
+            roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]}
+            children={<CheckOutScan />}
+          />
         ),
       },
 

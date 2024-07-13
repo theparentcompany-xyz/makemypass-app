@@ -5,9 +5,11 @@ import { BsQrCodeScan } from 'react-icons/bs';
 import SectionButton from '../../../../../../components/SectionButton/SectionButton';
 
 const CheckInHeader = ({
+  title,
   currentCount,
   buttonType,
 }: {
+  title: string;
   currentCount?: number;
   buttonType?: string;
 }) => {
@@ -23,7 +25,7 @@ const CheckInHeader = ({
         >
           {'<'}
         </button>
-        <p className={styles.checkInHeading}>Check In</p>
+        <p className={styles.checkInHeading}>{title}</p>
       </div>
 
       <div className={styles.checkInActions}>

@@ -81,7 +81,7 @@ const CheckIn = () => {
       <div className={styles.checkInContainer}>
         <Header />
 
-        <CheckInHeader currentCount={recentRegistrations.length} />
+        <CheckInHeader title='Check-In' currentCount={recentRegistrations.length} />
 
         <div className={styles.searchInput}>
           <RiSearchLine color='#5F6063' />

@@ -1,0 +1,21 @@
+.messageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.message {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+
+  margin-top: 1rem;
+  text-align: center;
+  max-width: 25rem;
+}
+
+.checkOutContainer {
+  padding: 0 1.25rem;
+}
