@@ -88,37 +88,3 @@
   margin-top: 2rem;
   column-gap: 0.5rem;
 }
-
-.logs {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.logContainer {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin-top: 1rem;
-  column-gap: 0.5rem;
-  color: white;
-  font-family: 'Inter';
-  font-size: 0.9rem;
-}
-
-.logMessage {
-  color: white;
-  font-family: 'Inter', sans-serif;
-  margin-bottom: 0.25rem;
-}
-
-@media (min-width: 768px) {
-  .logMessage {
-    width: 25rem;
-    color: white;
-    font-family: 'Inter', sans-serif;
-    margin-bottom: 0.25rem;
-  }
-}

@@ -2,10 +2,13 @@ import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { PreviewData } from './types';
+import { formatDate } from '../common/commonFunctions';
+import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
 
 export const checkInUser = async (
   ticketId: string,
   eventId: string,
+  setScanLogs?: React.Dispatch<React.SetStateAction<LogType[]>>,
   setMessage?: React.Dispatch<React.SetStateAction<string>>,
   setIsError?: React.Dispatch<React.SetStateAction<boolean>>,
   setChecking?: React.Dispatch<React.SetStateAction<boolean>>,
@@ -20,6 +23,15 @@ export const checkInUser = async (
     .then((response) => {
       if (setMessage && setIsError) {
         setMessage(response.data.message.general[0] || 'Check-In Successful');
+        if (setScanLogs)
+          setScanLogs((prev) => [
+            ...prev,
+            {
+              message: `${ticketId}: ${response.data.message.general[0]}`,
+              timestamp: formatDate(new Date().toString(), true),
+              hasError: false,
+            },
+          ]);
         setIsError(false);
       } else {
         toast.success(response.data.message.general[0] || 'Check-In Successful');
@@ -29,6 +41,15 @@ export const checkInUser = async (
       if (setMessage && setIsError) {
         setMessage(error.response.data.message.general[0] || 'Check-In Failed');
         setIsError(true);
+        if (setScanLogs)
+          setScanLogs((prev) => [
+            ...prev,
+            {
+              message: `${ticketId}: ${error.response.data.message.general[0]}`,
+              timestamp: formatDate(new Date().toString(), true),
+              hasError: true,
+            },
+          ]);
       } else {
         toast.error(error.response.data.message.general[0] || 'Check-In Failed');
       }

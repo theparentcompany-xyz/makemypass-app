@@ -6,7 +6,7 @@ import styles from './Venue.module.css';
 import { checkInUserVenue, listVenues } from '../../../../../apis/venue';
 import { VenueType } from './types';
 import Scanner from '../../../../../components/Scanner/Scanner';
-import { MdError, MdVerified } from 'react-icons/md';
+import ScanLogs from '../../components/ScanLogs/ScanLogs';
 
 export type LogType = {
   message: string;
@@ -96,25 +96,7 @@ const Venue = () => {
                   setTrigger={setScanTrigger}
                 />
 
-                <div className={styles.logs}>
-                  <p className={styles.venueHeading}>
-                    {scanLogs.length > 0 ? 'Scan Logs' : 'No Scans Yet'}
-                  </p>
-                  {scanLogs
-                    .slice()
-                    .reverse()
-                    .map((log) => (
-                      <div className={styles.logContainer}>
-                        {log.hasError ? (
-                          <MdError color='#f04b4b' size={20} />
-                        ) : (
-                          <MdVerified color='#47c97e' size={20} />
-                        )}
-                        <p className={styles.logMessage}>{log.message}</p>
-                        <p className={styles.logTimestamp}>{log.timestamp}</p>
-                      </div>
-                    ))}
-                </div>
+                <ScanLogs scanLogs={scanLogs} />
               </div>
             )}
           </div>

@@ -12,6 +12,8 @@ import Loader from '../../../../../components/Loader';
 import MultipleTicket from './components/MultipleTicket';
 import Scanner from '../../../../../components/Scanner/Scanner';
 import { LuCheck } from 'react-icons/lu';
+import { LogType } from '../Venue/Venue';
+import ScanLogs from '../../components/ScanLogs/ScanLogs';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -23,6 +25,8 @@ const ScanQR = () => {
   const [isTicketSelected, setIsTicketSelected] = useState<boolean>(false);
 
   const [checking, setChecking] = useState<boolean>(false);
+
+  const [scanLogs, setScanLogs] = useState<LogType[]>([]);
 
   const [previewData, setPreviewData] = useState<PreviewData>({
     name: '',
@@ -41,10 +45,9 @@ const ScanQR = () => {
 
     if (ticketId.length > 0 && trigger) {
       // preview(eventId, ticketId, setPreviewData);
-      checkInUser(ticketId, eventId, setMessage, setIsError, setChecking);
+      checkInUser(ticketId, eventId, setScanLogs, setMessage, setIsError, setChecking);
 
       setTimeout(() => {
-        setMessage('');
         setTicketId('');
         setTrigger(false);
       }, 2250);
@@ -88,14 +91,15 @@ const ScanQR = () => {
                   >
                     <br />
                     <p className={styles.modalSubText}>{message}</p>
-                    <SectionButton
-                      buttonText='Close'
+                    <button
                       onClick={() => {
                         setMessage('');
+                        setIsError(false);
                       }}
-                      buttonColor='red'
-                      icon={<CgClose />}
-                    />
+                      className={styles.modalCloseButton}
+                    >
+                      Close <CgClose />
+                    </button>
                   </Modal>
                 </>
               )}
@@ -148,7 +152,7 @@ const ScanQR = () => {
                             entry_date: '',
                             tickets: {},
                           });
-                          checkInUser(ticketId, eventId, setMessage, setIsError);
+                          checkInUser(ticketId, eventId, setScanLogs, setMessage, setIsError);
                           setTicketId('');
                         }}
                         buttonColor='red'
@@ -160,7 +164,7 @@ const ScanQR = () => {
               )}
 
               <div className={styles.scanContainer}>
-                <CheckInHeader title='Check-Out' buttonType='back' />
+                <CheckInHeader title='Check-In' buttonType='back' />
 
                 <hr className={styles.line} />
               </div>
@@ -173,6 +177,8 @@ const ScanQR = () => {
                 scanCount={scanCount}
                 checking={checking}
               />
+
+              <ScanLogs scanLogs={scanLogs} />
             </>
           )}
         </Theme>
