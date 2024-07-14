@@ -14,6 +14,7 @@ import Scanner from '../../../../../components/Scanner/Scanner';
 import { LuCheck } from 'react-icons/lu';
 import { LogType } from '../Venue/Venue';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
+import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerResponseModal';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -73,36 +74,12 @@ const ScanQR = () => {
             </>
           ) : (
             <>
-              {message && message.length > 0 && (
-                <>
-                  <div className={styles.backgroundBlur}></div>
-                  <Modal
-                    style={
-                      isError
-                        ? {
-                            borderBottom: '3px solid #f71e1e',
-                            background: 'rgba(185, 31, 31, 0.09)',
-                          }
-                        : {
-                            borderBottom: '3px solid #47c97e',
-                            background: 'rgba(31, 185, 31, 0.09)',
-                          }
-                    }
-                  >
-                    <br />
-                    <p className={styles.modalSubText}>{message}</p>
-                    <button
-                      onClick={() => {
-                        setMessage('');
-                        setIsError(false);
-                      }}
-                      className={styles.modalCloseButton}
-                    >
-                      Close <CgClose />
-                    </button>
-                  </Modal>
-                </>
-              )}
+              <ScannerResponseModal
+                message={message}
+                setMessage={setMessage}
+                isError={isError}
+                setIsError={setIsError}
+              />
 
               {previewData && previewData.name && (
                 <>

@@ -7,6 +7,7 @@ import { checkInUserVenue, listVenues } from '../../../../../apis/venue';
 import { VenueType } from './types';
 import Scanner from '../../../../../components/Scanner/Scanner';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
+import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerResponseModal';
 
 export type LogType = {
   message: string;
@@ -24,9 +25,17 @@ const Venue = () => {
 
   const [scanLogs, setScanLogs] = useState<LogType[]>([]);
 
+  const [message, setMessage] = useState<string>('');
+  const [isError, setIsError] = useState<boolean>(false);
+
   useEffect(() => {
     listVenues(eventId, setVenues);
   }, [eventId]);
+
+  useEffect(() => {
+    setMessage(scanLogs.length > 0 ? scanLogs[scanLogs.length - 1].message : '');
+    setIsError(scanLogs.length > 0 ? scanLogs[scanLogs.length - 1].hasError : false);
+  }, [scanLogs]);
 
   useEffect(() => {
     if (ticketId.length > 0 && scanTrigger) {
@@ -43,7 +52,12 @@ const Venue = () => {
       <div className={styles.mainContainer}>
         <EventHeader />
         <Glance tab='checkins' />
-
+        <ScannerResponseModal
+          message={message}
+          setMessage={setMessage}
+          isError={isError}
+          setIsError={setIsError}
+        />
         <div className={styles.venueListingContainer}>
           <div className={styles.venueListing}>
             {!showScanner ? (
