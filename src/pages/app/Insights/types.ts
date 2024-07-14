@@ -15,6 +15,9 @@ export type AnalyticsData = {
   district_percentages: {
     [district: string]: string;
   };
+  venue_analytics: {
+    [venue: string]: number;
+  };
   payment_analytics: {
     paid_user_percentage: string;
     cash_in_hand_users: number;

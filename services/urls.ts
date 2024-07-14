@@ -75,7 +75,7 @@ export const makeMyPass = {
     makeMyPassURL(`/games/${eventId}/claim-gift/${ticketCode}/${date}`),
 
   //Analytics and Reporting
-  checkInCount: (eventId: string) => makeMyPassURL(`/analytics/${eventId}/checkin-count/`),
+  // checkInCount: (eventId: string) => makeMyPassURL(`/analytics/${eventId}/checkin-count/`),
   CSVdata: (event_id: string) => makeMyPassURL(`/manage-event/${event_id}/csv/`),
 
   downloadFormSubmission: (eventId: string) =>
@@ -100,9 +100,11 @@ export const makeMyPass = {
   getCategories: (eventId: string) =>
     makeMyPassURL(`/manage-event/get-form-categories/${eventId}/`),
   parseFromAudio: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/parse-from-audio/`),
-
+  listGuests: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/list-guests/`),
   initateRefund: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/initiate-refund/${eventRegisterId}/`),
+  getGuestInfo: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/`),
   addGuestInfo: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/form-info/`),
   sendVerfication: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/send-verification/`),
   verifyParticipant: (verificationCode: string) =>
@@ -157,7 +159,6 @@ export const makeMyPassSocket = {
   analytics: (eventId: string) => `analytics/${eventId}/insights/`,
   registerCounts: (eventId: string) => `analytics/${eventId}/register-count/`,
   checkInCounts: (eventId: string) => `analytics/${eventId}/checkin-count/`,
-  listGuests: (eventId: string) => `manage-guest/${eventId}/list-guests/`,
   listCheckinGuests: (eventId: string) => `manage-guest/${eventId}/checkin-list-guests/`,
   checkInAnalytics: (eventId: string) => `analytics/${eventId}/checkin-analytics/`,
 };

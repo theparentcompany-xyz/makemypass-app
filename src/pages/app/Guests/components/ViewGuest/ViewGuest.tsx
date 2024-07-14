@@ -245,7 +245,7 @@ const ViewGuest = ({
                   if (setSelectedGuestId) {
                     setSelectedGuestId((prevState) => ({
                       ...prevState,
-                      id: formData['id'],
+                      id: formData['id'].toString(),
                       type: 'download',
                     }));
                   }

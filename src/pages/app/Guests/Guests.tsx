@@ -4,13 +4,12 @@ import { useEffect, useState } from 'react';
 import Theme from '../../../components/Theme/Theme';
 import Glance from '../../../components/Glance/Glance';
 import Header from '../../../components/EventHeader/EventHeader';
-
-import { connectPrivateSocket } from '../../../../services/apiGateway';
-import { makeMyPassSocket } from '../../../../services/urls';
 import {
   downloadCSVData,
   downloadTicket,
   getGuestInfo,
+  getIndividualGuestInfo,
+  listGuests,
   resentEventTicket,
 } from '../../../apis/guests';
 import { FormDataType } from '../../../apis/types';
@@ -39,7 +38,6 @@ import BulkUpload from './components/BulkUpload/BulkUpload';
 const Guests = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const [guests, setGuests] = useState<GuestsType[]>([]);
-  const [socket, setSocket] = useState<WebSocket | null>(null);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
   const [eventFormData, setEventFormData] = useState<FormEventData>();
@@ -62,9 +60,8 @@ const Guests = () => {
   });
 
   const getGuestData = () => {
-    const selectedGuestData = guests.filter((guest) => guest?.id === selectedGuestId?.id);
-    setSelectedGuest(selectedGuestData[0]);
-    setFormData(selectedGuestData[0]);
+    if (selectedGuestId && selectedGuestId.id)
+      getIndividualGuestInfo(eventId, selectedGuestId.id, setFormData, setSelectedGuest);
   };
 
   const { event_id: eventId, current_user_role: userRole } = JSON.parse(
@@ -73,27 +70,7 @@ const Guests = () => {
 
   useEffect(() => {
     if (eventId && !selectedGuestId?.id) {
-      if (socket) socket.close();
-      ``;
-      connectPrivateSocket({
-        url: makeMyPassSocket.listGuests(eventId),
-      }).then((ws) => {
-        ws.onmessage = (event) => {
-          if (JSON.parse(event.data).response.guests)
-            setGuests(JSON.parse(event.data).response.guests);
-          else if (JSON.parse(event.data).response.data) {
-            const newGuest = JSON.parse(event.data).response.data;
-
-            setGuests((prev) => {
-              const updatedGuests = [newGuest, ...prev];
-
-              return updatedGuests;
-            });
-          }
-        };
-
-        setSocket(ws);
-      });
+      listGuests(eventId, setGuests);
     }
   }, [eventId, selectedGuestId]);
 
@@ -102,9 +79,6 @@ const Guests = () => {
       getCategories(eventId, setCategories);
       getGuestInfo(eventId, setEventFormData);
     }
-    return () => {
-      socket?.close();
-    };
   }, [eventId]);
 
   useEffect(() => {
@@ -253,7 +227,7 @@ const Guests = () => {
                     }));
 
                     setSelectedGuestId({
-                      id: resentTicket.guestId,
+                      id: resentTicket.guestId.toString(),
                       type: 'view',
                     });
                   }}

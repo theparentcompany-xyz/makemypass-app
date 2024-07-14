@@ -56,7 +56,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
               </p>
               <p className={styles.rowEmail}>{item.email?.split('@')[0]}</p>
               <p className={styles.rowEmail}>{item.phonenumber}</p>
-              {item.check_in_date && (
+              {item.is_checked_in && (
                 <div className={styles.icon}>
                   <FaCheck color='white' size={12} />
                 </div>

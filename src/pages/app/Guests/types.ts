@@ -19,8 +19,8 @@ export type ResentTicket = {
 };
 
 export type SelectedGuest = {
-  id: string | string[];
-  type: string | string[];
+  id: string;
+  type: string;
 };
 
 export interface FormEventData {

@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { FormEventData, ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
+import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch } from 'react';
 import { ErrorMessages, FormDataType } from './types';
 import { isArray } from 'chart.js/helpers';
@@ -153,6 +153,40 @@ export const deleteSubmission = async (eventId: string, submissionId: string) =>
     })
     .catch(() => {
       toast.error('Something went wrong, Couldnt Delete Submission');
+    });
+};
+
+export const listGuests = async (
+  eventId: string,
+  setGuestList: Dispatch<React.SetStateAction<GuestsType[]>>,
+) => {
+  privateGateway
+    .get(makeMyPass.listGuests(eventId))
+    .then((response) => {
+      setGuestList(response.data.response);
+    })
+    .catch(() => {
+      setGuestList([]);
+    });
+};
+
+export const getIndividualGuestInfo = async (
+  eventId: string,
+  eventRegisterId: string,
+  setEventFormData: Dispatch<React.SetStateAction<FormDataType>>,
+  setSelectedGuest: Dispatch<React.SetStateAction<GuestsType | null>>,
+) => {
+  privateGateway
+    .get(makeMyPass.getGuestInfo(eventId, eventRegisterId))
+    .then((response) => {
+      setEventFormData({
+        id: eventRegisterId,
+        ...response.data.response,
+      });
+      setSelectedGuest(response.data.response);
+    })
+    .catch(() => {
+      toast.error('Something went wrong');
     });
 };
 
