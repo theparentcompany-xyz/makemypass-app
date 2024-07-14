@@ -27,7 +27,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   const { event_id: eventId, event_name: eventName } = JSON.parse(
     sessionStorage.getItem('eventData') || '',
   );
-  const [ticketEditorModal, setTicketEditorModal] = useState(false);
+  // const [ticketEditorModal, setTicketEditorModal] = useState(false);
   const [hasFetched, setHasFetched] = useState(false);
   const [ticketData, setTicketData] = useState<TicketType[]>([]);
   const [tickets, setTickets] = useState<TicketType[]>([]);
@@ -217,9 +217,9 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         toast.error('Failed to set default ticket');
       });
   };
-  const handleTicketClick = (ticketId: string) => {
-    setTicketEditorModal(true);
-  };
+  // const handleTicketClick = (ticketId: string) => {
+  //   setTicketEditorModal(true);
+  // };
 
   const closeTicketModal = () => {
     if (!hasUnsavedChanges()) {
@@ -327,7 +327,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                   }
                   handleDefaultSelected={changeDefaultSelected}
                   hasUnsavedChanges={hasUnsavedChanges}
-                  handleTicketClick={handleTicketClick}
+                  // handleTicketClick={handleTicketClick}
                 />
               ) : null;
             })}
