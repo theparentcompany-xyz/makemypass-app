@@ -105,8 +105,8 @@ const Overview = () => {
         url: makeMyPassSocket.recentRegistrations(eventId),
       }).then((ws) => {
         ws.onmessage = (event) => {
-          if (JSON.parse(event.data).response.guests)
-            setRecentRegistrations(JSON.parse(event.data).response.guests);
+          if (JSON.parse(event.data).response)
+            setRecentRegistrations(JSON.parse(event.data).response);
           else if (JSON.parse(event.data).response.data) {
             const newRegistration = JSON.parse(event.data).response.data;
 

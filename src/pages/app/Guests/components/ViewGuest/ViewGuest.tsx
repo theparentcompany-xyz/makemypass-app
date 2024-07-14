@@ -116,7 +116,19 @@ const ViewGuest = ({
                 <div className={styles.field}>
                   <p className={styles.fieldLabel}>Checked In</p>
                   {!isArray(formData['check_in_date']) && (
-                    <p className={styles.fieldData}>{formatDate(formData['check_in_date'])}</p>
+                    <p className={styles.fieldData}>
+                      {formatDate(formData['check_in_date'], true)}
+                    </p>
+                  )}
+                </div>
+              )}
+              {formData['check_out_date'] && (
+                <div className={styles.field}>
+                  <p className={styles.fieldLabel}>Checked Out</p>
+                  {!isArray(formData['check_out_date']) && (
+                    <p className={styles.fieldData}>
+                      {formatDate(formData['check_out_date'], true)}
+                    </p>
                   )}
                 </div>
               )}

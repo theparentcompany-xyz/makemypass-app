@@ -52,7 +52,7 @@ const Insights = ({ type }: { type?: string }) => {
   const [lineData2, setLineData2] = useState<ChartData>();
   const [entryDateCount, setEntryDateCount] = useState<ChartData>();
   const [pieData, setPieData] = useState<ChartData>();
-
+  const [venueBarData, setVenueBarData] = useState<ChartData>();
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   const eventId = useRef<string>('');
@@ -124,6 +124,18 @@ const Insights = ({ type }: { type?: string }) => {
               {
                 label: 'Daily Analytics',
                 data: Object.values(lineBarData?.analytics || {}),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+              },
+            ],
+          });
+
+          setVenueBarData({
+            labels: Object.keys(lineBarData?.venue_analytics || {}),
+            datasets: [
+              {
+                label: 'Venue Analytics',
+                data: Object.values(lineBarData?.venue_analytics || {}),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
               },
@@ -631,17 +643,12 @@ const Insights = ({ type }: { type?: string }) => {
                   </div>
                 )}
 
-                {Object.entries(message?.venue_analytics || {}).length > 0 && (
-                  <div className={styles.categorySection}>
-                    <p className={styles.rightSectionHeading}>Organization Counts</p>
-
-                    <div className={styles.categories}>
-                      {Object.entries(message?.venue_analytics || {}).map(([key, value]) => (
-                        <div className={styles.category}>
-                          <p className={styles.categoryName}>{key}</p>
-                          <p className={styles.categoryCount}>{value}</p>
-                        </div>
-                      ))}
+                {venueBarData && venueBarData.datasets[0].data.length > 0 && (
+                  <div className={styles.registrationCount}>
+                    <div className={styles.graphContainer}>
+                      {venueBarData && venueBarData.datasets[0].data && (
+                        <Bar options={options} data={venueBarData} />
+                      )}
                     </div>
                   </div>
                 )}
