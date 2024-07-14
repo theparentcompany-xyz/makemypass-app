@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect } from 'react';
+import React, { SetStateAction } from 'react';
 import styles from './AddHosts.module.css';
 import { hostData } from '../../../Overview/types';
 
