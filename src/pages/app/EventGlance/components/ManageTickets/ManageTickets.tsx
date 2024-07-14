@@ -142,7 +142,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       for (const key in changedData) {
         formData.append(key, changedData[key]);
       }
-      console.log(changedData);
       editTicket(eventId, selection as TicketType, formData, setTicketData).then(() => {
         setLimitCapacity(true);
         const capacityExists = Object.keys(changedData).includes('capacity');
@@ -247,10 +246,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     }
   }, [ticketData]);
 
-  console.log(ticketData);
-
-  console.log('price:', selectedTicket?.price, 'capacity:', selectedTicket?.capacity);
-  console.log(paidTicket);
   return (
     <>
       {isOpen && (

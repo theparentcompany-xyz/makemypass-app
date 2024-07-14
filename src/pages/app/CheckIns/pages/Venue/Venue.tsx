@@ -32,7 +32,6 @@ const Venue = () => {
   useEffect(() => {
     if (ticketId.length > 0 && scanTrigger) {
       checkInUserVenue(ticketId, eventId, selectedVenue, setScanLogs);
-      console.log(scanLogs);
 
       setTimeout(() => {
         setTicketId('');
@@ -60,8 +59,9 @@ const Venue = () => {
                 </p>
                 <div className={styles.venues}>
                   {venues.length > 0 &&
-                    venues.map((venue) => (
+                    venues.map((venue, index) => (
                       <div
+                        key={index}
                         className={styles.venue}
                         onClick={() => {
                           setSelectedVenue(venue);

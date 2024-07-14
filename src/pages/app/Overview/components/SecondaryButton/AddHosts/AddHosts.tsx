@@ -58,10 +58,6 @@ const AddHosts = ({
     }),
   };
 
-  useEffect(() => {
-    console.log(hostData);
-  });
-
   return (
     <Modal onClose={onClose}>
       <div className={styles.userInfoModalContainer}>

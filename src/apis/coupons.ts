@@ -7,15 +7,9 @@ export const listCoupons = async (
   eventId: string,
   setCoupons: Dispatch<SetStateAction<CouponType[]>>,
 ) => {
-  privateGateway
-    .get(makeMyPass.listCoupons(eventId))
-    .then((response) => {
-      console.log(response.data.response.coupons);
-      setCoupons(response.data.response.coupons);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  privateGateway.get(makeMyPass.listCoupons(eventId)).then((response) => {
+    setCoupons(response.data.response.coupons);
+  });
 };
 
 export const createCoupon = async (
@@ -24,7 +18,6 @@ export const createCoupon = async (
   setCoupons: Dispatch<SetStateAction<CouponType[]>>,
 ) => {
   const backendFormData = new FormData();
-  console.log(data);
   Object.keys(data).forEach((key) => {
     let value = data[key];
 
@@ -48,8 +41,6 @@ export const createCoupon = async (
     }
   });
 
-  console.log(backendFormData);
-
   return privateGateway
     .post(makeMyPass.createCoupon(eventId), backendFormData, {
       headers: {
@@ -58,8 +49,5 @@ export const createCoupon = async (
     })
     .then(() => {
       listCoupons(eventId, setCoupons);
-    })
-    .catch((error) => {
-      console.log(error);
     });
 };

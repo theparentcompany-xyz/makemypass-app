@@ -27,7 +27,7 @@ const EventHeader = () => {
                 {'<'}
               </button>
             </div>
-            <p className={styles.headerText}>
+            <div className={styles.headerText}>
               {eventData.logo ? (
                 <img
                   className={styles.headerImage}
@@ -35,10 +35,10 @@ const EventHeader = () => {
                   alt='Event logo for the dashboarod'
                 />
               ) : (
-                <div className={styles.headerImage}>{eventData.title.charAt(0).toUpperCase()}</div>
+                <p className={styles.headerImage}>{eventData.title.charAt(0).toUpperCase()}</p>
               )}
               {eventData?.title}
-            </p>
+            </div>
           </div>
           <div className='row'>
             <p className={styles.date}>{eventData?.date}</p>
