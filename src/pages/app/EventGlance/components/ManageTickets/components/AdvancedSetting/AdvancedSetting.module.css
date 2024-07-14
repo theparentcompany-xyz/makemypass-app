@@ -1,0 +1,103 @@
+.advancedOptions {
+  display: flex;
+  flex-direction: row;
+}
+
+.optionsLabel {
+  font-size: 0.9rem;
+  color: #d7d7d7;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #d7d7d7;
+  margin-top: 0.5rem;
+  text-align: left;
+  padding-left: 0.5rem;
+}
+
+.advancedOptions {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 0.5rem 1rem;
+}
+
+.modalTitle {
+  font-size: 1.2rem;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: #fff;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.optionInput {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: #fff;
+  border: none;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+
+  width: 18rem;
+}
+
+.modalTicketOption {
+  margin-top: 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  width: 100%;
+  max-width: 20rem;
+}
+
+.ticketSliderSubLabel {
+  font-size: 0.8rem;
+  color: #d7d7d7;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  margin-top: 0.5rem;
+  text-align: left;
+}
+
+.modalButtons{
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.sectionContent1{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem;
+}
+.cancelButton {
+  margin-top: 1rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #d2d4d7;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
