@@ -219,21 +219,3 @@ export const uploadFile = (
       getFileStatus(eventId, setFileStatus);
     });
 };
-
-export const downloadFile = async (eventId: string, fileId: string, field_type: string) => {
-  privateGateway
-    .get(makeMyPass.downloadBulkUploadCSV(eventId, fileId, field_type))
-    .then((response) => {
-      const csvData = response.data;
-      const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
-      link.setAttribute('download', `CSVReport.csv`);
-      document.body.appendChild(link);
-      link.click();
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Something went wrong');
-    });
-};

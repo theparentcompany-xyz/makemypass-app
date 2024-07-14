@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  downloadFile,
-  getCSVTemplate,
-  getFileStatus,
-  uploadFile,
-} from '../../../../../apis/guests';
+import { getCSVTemplate, getFileStatus, uploadFile } from '../../../../../apis/guests';
 import { TicketType } from '../../../../../apis/types';
 import Modal from '../../../../../components/Modal/Modal';
 import { customStyles } from '../../../EventPage/constants';
@@ -28,8 +23,18 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
     getFileStatus(eventId, setFileStatus);
   }, []);
 
-  const generateCSVReport = (fileId: string) => {
-    downloadFile(eventId, fileId, 'processed.xlsx');
+  const generateCSVReport = async (reportPath: string) => {
+    try {
+      const response = await fetch(reportPath);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'report.xlsx';
+      link.click();
+    } catch (error) {
+      console.error('Error downloading report:', error);
+    }
   };
 
   return (
@@ -52,7 +57,7 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
           Download CSV Template
         </p>
       </div>
-      <p className={styles.sectionHeader}>Select Ticket</p>
+
       <div className={styles.selectTicket}>
         <Select
           styles={customStyles}
@@ -71,7 +76,20 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
           }}
         />
       </div>
-      <p className={styles.sectionHeader}>Logs</p>
+
+      <button
+        className={styles.uploadButton}
+        onClick={() => {
+          if (file) uploadFile(eventId, file, selectedTickets, setFileStatus);
+          else toast.error('Please select a file');
+        }}
+      >
+        Upload
+      </button>
+
+      {fileStatus.length > 0 && <hr className={styles.line} />}
+
+      <p className={styles.sectionHeader}>Upload Logs</p>
       <div className={styles.logsListingContainer}>
         {fileStatus.map((file, index) => (
           <div className={styles.log} key={index}>
@@ -89,7 +107,7 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
             <p className={styles.logStatus}>{file.status}</p>
             <BiSolidReport
               onClick={() => {
-                generateCSVReport(file.file_id);
+                generateCSVReport(file.report_path);
               }}
               title='Download Report'
               color='#8e8e8e'
@@ -99,18 +117,6 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
         ))}
         {fileStatus.length === 0 && <p className={styles.noLogs}>No logs available</p>}
       </div>
-
-      {fileStatus.length > 0 && <hr className={styles.line} />}
-
-      <button
-        className={styles.uploadButton}
-        onClick={() => {
-          if (file) uploadFile(eventId, file, selectedTickets, setFileStatus);
-          else toast.error('Please select a file');
-        }}
-      >
-        Upload
-      </button>
     </Modal>
   );
 };

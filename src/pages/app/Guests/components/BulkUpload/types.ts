@@ -4,6 +4,7 @@ export type BulkUploadType = {
   status: string;
   success_count: number;
   failure_count: number;
+  report_path: string;
   total_count: number;
   created_by: string;
   created_at: string;
