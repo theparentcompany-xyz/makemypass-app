@@ -10,6 +10,10 @@ import { motion } from 'framer-motion';
 import { HashLoader } from 'react-spinners';
 import { isEqual } from 'lodash';
 import toast from 'react-hot-toast';
+import AdvancedSetting from './components/AdvancedSetting/AdvancedSetting';
+import UnsavedChanges from './components/UnsavedChanges/UnsavedChanges';
+import ConfirmDelete from './components/ConfirmDelete/ConfirmDelete';
+import TicketEditor from './components/TicketEditor/TicketEditor';
 
 export interface ChildProps {
   setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +27,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   const { event_id: eventId, event_name: eventName } = JSON.parse(
     sessionStorage.getItem('eventData') || '',
   );
+  const [ticketEditorModal, setTicketEditorModal] = useState(false);
   const [hasFetched, setHasFetched] = useState(false);
   const [ticketData, setTicketData] = useState<TicketType[]>([]);
   const [tickets, setTickets] = useState<TicketType[]>([]);
@@ -142,7 +147,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       for (const key in changedData) {
         formData.append(key, changedData[key]);
       }
-      console.log(changedData);
+
       editTicket(eventId, selection as TicketType, formData, setTicketData).then(() => {
         setLimitCapacity(true);
         const capacityExists = Object.keys(changedData).includes('capacity');
@@ -212,6 +217,9 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         toast.error('Failed to set default ticket');
       });
   };
+  // const handleTicketClick = (ticketId: string) => {
+  //   setTicketEditorModal(true);
+  // };
 
   const closeTicketModal = () => {
     if (!hasUnsavedChanges()) {
@@ -247,152 +255,46 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     }
   }, [ticketData]);
 
-  console.log(ticketData);
-
-  console.log('price:', selectedTicket?.price, 'capacity:', selectedTicket?.capacity);
-  console.log(paidTicket);
   return (
     <>
       {isOpen && (
         <Modal title='Advanced Setting' onClose={() => setIsOpen(false)} style={{ zIndex: 999 }}>
-          <div className={styles.advancedOptions}>
-            <label className={styles.optionLabel}>Code Prefix</label>
-            <input
-              className={styles.optionInput}
-              placeholder='Eg, PS123'
-              value={selectedTicket?.code_prefix}
-              onChange={(e) =>
-                setSelectedTicket({ ...selectedTicket, code_prefix: e.target.value } as TicketType)
-              }
-            />
-          </div>
-
-          <div className={styles.advancedOptions}>
-            <label className={styles.optionLabel}>No of digits</label>
-            <input
-              className={styles.optionInput}
-              placeholder=''
-              value={selectedTicket?.code_digits}
-              onChange={(e) =>
-                setSelectedTicket({
-                  ...selectedTicket,
-                  code_digits: Number(e.target.value),
-                } as TicketType)
-              }
-            />
-          </div>
-          <div className={styles.modalTicketOption}>
-            <div className={styles.modalTicketSliderLabel}>
-              <p className={styles.ticketSliderLabel}>Maintain Order</p>
-              <p className={styles.ticketSliderSubLabel}>The tickets will be generated in order</p>
-            </div>
-
-            <Slider
-              checked={selectedTicket?.maintain_code_order as boolean}
-              onChange={() => {
-                setSelectedTicket({
-                  ...selectedTicket,
-                  maintain_code_order: !selectedTicket?.maintain_code_order,
-                } as TicketType);
-              }}
-            />
-          </div>
-          <button className={styles.cancelButton} onClick={() => setIsOpen(false)}>
-            Back
-          </button>
+          <AdvancedSetting
+            selectedTicket={selectedTicket as TicketType}
+            setSelectedTicket={setSelectedTicket}
+            setIsOpen={setIsOpen}
+          />
         </Modal>
       )}
       {isChangedModal && (
         <Modal title=' ' onClose={() => setIsChangedModal(false)} style={{ zIndex: 999 }}>
-          <div className={styles.modalContainer}>
-            {/* Get Confirmation to continue event though user has not saved changes.*/}
-            <div className={styles.sectionContent1}>
-              <p className={styles.sectionTitle}>You have unsaved changes</p>
-              <p className={styles.sectionSubTitle}>
-                Are you sure you want to continue without saving?
-              </p>
-            </div>
-            <div className={styles.modalButtons}>
-              <button
-                className={styles.confirmButton}
-                onClick={() => {
-                  setIsChangedModal(false);
-                  if (wantToClose) {
-                    setIsTicketsOpen(false);
-                    setWantToClose(false);
-                    return;
-                  }
-                  const [tempTicket, tempSelectedTicket] = ticketPair as TicketType[];
-                  tempTicket.id != tempSelectedTicket?.id &&
-                    setSelectedTicket(
-                      Object.assign(
-                        {},
-                        ticketData.find((t) => t.id == tempTicket.id),
-                      ),
-                    );
-                }}
-              >
-                Continue without saving
-              </button>
-              <button
-                onClick={() => {
-                  setIsChangedModal(false);
-                  const [tempTicket, tempSelectedTicket] = ticketPair as TicketType[];
-                  tempTicket.id != tempSelectedTicket?.id &&
-                    updateTicket(tempSelectedTicket as TicketType).then(() => {
-                      setSelectedTicket(
-                        Object.assign(
-                          {},
-                          ticketData.find((t) => t.id == tempTicket.id),
-                        ),
-                      );
-                    });
-                  if (wantToClose) {
-                    setIsTicketsOpen(false);
-                    setWantToClose(false);
-                    return;
-                  }
-                }}
-                className={styles.cancelButton}
-              >
-                Save changes and continue
-              </button>
-            </div>
-          </div>
+          <UnsavedChanges
+            setIsChangedModal={setIsChangedModal}
+            setSelectedTicket={setSelectedTicket}
+            setIsTicketsOpen={setIsTicketsOpen}
+            ticketData={ticketData}
+            ticketPair={ticketPair}
+            wantToClose={wantToClose}
+            setWantToClose={setWantToClose}
+            updateTicket={updateTicket}
+          />
         </Modal>
       )}
       {deleteModal && (
         <Modal title=' ' onClose={() => setDeleteModal(false)} style={{ zIndex: 999 }}>
-          <div className={styles.modalContainer}>
-            {/* Get Confirmation to continue event though user has not saved changes.*/}
-            <div className={styles.sectionContent1}>
-              <p className={styles.sectionSubTitle}>
-                Are you sure you want to Delete{' '}
-                {selectedTicket?.title ? selectedTicket?.title : 'this ticket'}?
-              </p>
-            </div>
-            <div className={styles.modalButtons}>
-              <button
-                className={styles.confirmButton}
-                onClick={() => {
-                  onDeleteTicket();
-                  setDeleteModal(false);
-                }}
-              >
-                Delete
-              </button>
-              <button
-                onClick={() => {
-                  setDeleteModal(false);
-                }}
-                className={styles.cancelButton}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
+          <ConfirmDelete
+            selectedTicket={selectedTicket as TicketType}
+            setDeleteModal={setDeleteModal}
+            onDeleteTicket={onDeleteTicket}
+          />
         </Modal>
       )}
+      {ticketEditorModal && (
+        <Modal onClose={() => setTicketEditorModal(false)} style={{ zIndex: 1000 }}>
+          <TicketEditor />
+        </Modal>
+      )}
+
       {ticketData.length || hasFetched ? (
         // <Theme>
         <div className={styles.manageTicketsContainer}>
@@ -425,6 +327,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                   }
                   handleDefaultSelected={changeDefaultSelected}
                   hasUnsavedChanges={hasUnsavedChanges}
+                  // handleTicketClick={handleTicketClick}
                 />
               ) : null;
             })}
