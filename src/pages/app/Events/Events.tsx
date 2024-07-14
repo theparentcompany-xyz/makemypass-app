@@ -31,6 +31,12 @@ const Events = () => {
     setIsMenuOpen(false);
   };
 
+  enum EventStatus {
+    Published = 'Published',
+    Draft = 'Draft',
+    Completed = 'Completed',
+  }
+
   type Event = {
     id: string;
     title: string;
@@ -42,6 +48,7 @@ const Events = () => {
     start_day: string;
     start_date: string;
     event_start_date: string;
+    status: string;
   };
 
   const [events, setEvents] = useState([] as Event[]);
@@ -97,97 +104,106 @@ const Events = () => {
           </Modal>
         )}
         <div className={styles.homeContainer}>
-          <div>
-            <motion.p
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className={styles.homeHeader}
-            >
-              {events.length > 0 ? 'Your Events' : 'No Events Currently'}
-            </motion.p>
-            <div className={styles.eventsContainer}>
-              {events.map((event) => (
-                <div key={event.id} className={styles.event}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className={styles.eventDate}
-                  >
-                    <p className={styles.date}>{formatDate(event?.event_start_date)}</p>
-                  </motion.div>
-
-                  <div>
-                    <motion.div
-                      initial={{ opacity: 0, y: 50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className={styles.eventCard}
-                    >
-                      <div className={styles.innerCard}>
-                        {event.logo ? (
-                          <motion.img
+          {Object.values(EventStatus).map((status) => {
+            return (
+              <div>
+                <motion.p
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className={styles.homeHeader}
+                >
+                  {events.filter((event) => event.status == status).length > 0
+                    ? `${status} Events`
+                    : ''}
+                </motion.p>
+                <div className={styles.eventsContainer}>
+                  {events
+                    .filter((event) => event.status == status)
+                    .map((event) => (
+                      <div key={event.id} className={styles.event}>
+                        <div>
+                          <motion.div
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
-                            src={event.logo}
-                            alt="event logo depicting event information"
-                            className={styles.eventImage}
-                          />
-                        ) : (
-                          <div className={styles.eventImage}>
-                            {event.title.charAt(0).toUpperCase()}
-                          </div>
-                        )}
-                        <div className={styles.eventDetails}>
-                          <div className={styles.eventDetailsHeader}>
-                            <p className={styles.eventName}>{event.title}</p>
-                            {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
-                              <BsThreeDots
-                                onClick={(e: React.MouseEvent<SVGElement, MouseEvent>) => {
-                                  handleButtonClick(e);
-                                  setDuplicateEventId(event?.id);
-                                }}
-                                size={15}
-                                color="#ffffff"
-                                className="pointer"
-                              />
-                            )}
-                          </div>
-                          {isMenuOpen && (
-                            <RightClickMenu
-                              isOpen={isMenuOpen}
-                              position={menuPosition}
-                              onClose={handleMenuClose}
-                              setShowModal={setShowModal}
-                            />
-                          )}
-                          <p className={styles.eventGuests}>
-                            <span>
-                              <GoPeople color="a4a4a4" />
-                            </span>
-                            {event.members} guests
-                          </p>
-
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            className={styles.manage}
-                            onClick={() => {
-                              handleClick(event.name);
-                            }}
+                            className={styles.eventCard}
                           >
-                            Manage
-                            <BsArrowRight size={15} />
-                          </motion.button>
+                            <div className={styles.innerCard}>
+                              {event.logo ? (
+                                <motion.img
+                                  initial={{ opacity: 0, y: 50 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.5 }}
+                                  src={event.logo}
+                                  alt='event logo depicting event information'
+                                  className={styles.eventImage}
+                                />
+                              ) : (
+                                <div className={styles.eventImage}>
+                                  {event.title.charAt(0).toUpperCase()}
+                                </div>
+                              )}
+                              <div className={styles.eventDetails}>
+                                <div className={styles.eventDetailsHeader}>
+                                  <div>
+                                    <motion.div className={styles.eventDate}>
+                                      <p className={styles.date}>
+                                        {formatDate(event?.event_start_date)}
+                                      </p>
+                                    </motion.div>
+                                    <p className={styles.eventName}>
+                                      {event.title.substring(0, 40)}
+                                      {event.title.length > 40 ? '...' : ''}
+                                    </p>
+                                  </div>
+                                  {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
+                                    <BsThreeDots
+                                      onClick={(e: React.MouseEvent<SVGElement, MouseEvent>) => {
+                                        handleButtonClick(e);
+                                        setDuplicateEventId(event?.id);
+                                      }}
+                                      size={15}
+                                      color='#ffffff'
+                                      className='pointer'
+                                    />
+                                  )}
+                                </div>
+                                {isMenuOpen && (
+                                  <RightClickMenu
+                                    isOpen={isMenuOpen}
+                                    position={menuPosition}
+                                    onClose={handleMenuClose}
+                                    setShowModal={setShowModal}
+                                  />
+                                )}
+                                <p className={styles.eventGuests}>
+                                  <span>
+                                    <GoPeople color='a4a4a4' />
+                                  </span>
+                                  {event.members} guests
+                                </p>
+
+                                <motion.button
+                                  whileHover={{ scale: 1.05 }}
+                                  className={styles.manage}
+                                  onClick={() => {
+                                    handleClick(event.name);
+                                  }}
+                                >
+                                  Manage
+                                  <BsArrowRight size={15} />
+                                </motion.button>
+                              </div>
+                            </div>
+                          </motion.div>
                         </div>
                       </div>
-                    </motion.div>
-                  </div>
+                    ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+            );
+          })}
         </div>
       </Theme>
     </>
