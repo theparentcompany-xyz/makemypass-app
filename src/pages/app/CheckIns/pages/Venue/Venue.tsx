@@ -5,7 +5,6 @@ import Theme from '../../../../../components/Theme/Theme';
 import styles from './Venue.module.css';
 import { checkInUserVenue, listVenues } from '../../../../../apis/venue';
 import { VenueType } from './types';
-import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import Scanner from '../../../../../components/Scanner/Scanner';
 import { MdError, MdVerified } from 'react-icons/md';
 
