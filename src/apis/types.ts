@@ -11,6 +11,7 @@ export type Event = {
   start_day: string;
   start_date: string;
   event_start_date: string;
+  status: string;
 };
 
 export type hostList = {
