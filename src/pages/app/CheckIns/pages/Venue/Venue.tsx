@@ -5,7 +5,6 @@ import Theme from '../../../../../components/Theme/Theme';
 import styles from './Venue.module.css';
 import { checkInUserVenue, listVenues } from '../../../../../apis/venue';
 import { VenueType } from './types';
-import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import Scanner from '../../../../../components/Scanner/Scanner';
 import { MdError, MdVerified } from 'react-icons/md';
 
@@ -32,7 +31,6 @@ const Venue = () => {
   useEffect(() => {
     if (ticketId.length > 0 && scanTrigger) {
       checkInUserVenue(ticketId, eventId, selectedVenue, setScanLogs);
-      console.log(scanLogs);
 
       setTimeout(() => {
         setTicketId('');
@@ -60,15 +58,17 @@ const Venue = () => {
                 </p>
                 <div className={styles.venues}>
                   {venues.length > 0 &&
-                    venues.map((venue) => (
-                      <SectionButton
-                        buttonText={venue.name}
-                        buttonColor='#C33D7B'
+                    venues.map((venue, index) => (
+                      <div
+                        key={index}
+                        className={styles.venue}
                         onClick={() => {
                           setSelectedVenue(venue);
                           setShowScanner(true);
                         }}
-                      />
+                      >
+                        {venue.name}
+                      </div>
                     ))}
                 </div>
               </>
@@ -97,7 +97,9 @@ const Venue = () => {
                 />
 
                 <div className={styles.logs}>
-                  <p className={styles.venueHeading}>Scan Logs</p>
+                  <p className={styles.venueHeading}>
+                    {scanLogs.length > 0 ? 'Scan Logs' : 'No Scans Yet'}
+                  </p>
                   {scanLogs
                     .slice()
                     .reverse()

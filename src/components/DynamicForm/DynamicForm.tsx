@@ -300,8 +300,6 @@ const DynamicForm = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     let withinSize = true;
                     Array.from(e.target.files || []).forEach((file) => {
-                      console.log(file);
-
                       if (file.size <= (field.property?.max_size ?? 0) * 1024) {
                         withinSize = withinSize && true;
                       } else {

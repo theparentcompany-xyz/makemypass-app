@@ -289,11 +289,11 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
           />
         </Modal>
       )}
-      {ticketEditorModal && (
+      {/* {ticketEditorModal && (
         <Modal onClose={() => setTicketEditorModal(false)} style={{ zIndex: 1000 }}>
           <TicketEditor />
         </Modal>
-      )}
+      )} */}
 
       {ticketData.length || hasFetched ? (
         // <Theme>

@@ -46,7 +46,6 @@ const CustomMail = ({ setCustomMail }: Props) => {
 
   useEffect(() => {
     if (fetchedMailData) {
-      console.log(fetchedMailData);
       setIsLoading(false);
       Object.keys(fetchedMailData).length && setShowCustomMail(true);
       setMailData(fetchedMailData);
