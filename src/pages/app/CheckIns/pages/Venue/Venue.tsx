@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
-import Glance from '../../../../../components/Glance/Glance';
 import Theme from '../../../../../components/Theme/Theme';
 import styles from './Venue.module.css';
 import { checkInUserVenue, listVenues } from '../../../../../apis/venue';

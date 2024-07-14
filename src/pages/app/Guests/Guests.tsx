@@ -201,7 +201,6 @@ const Guests = () => {
                 setTrigger={() => {
                   if (setShowScanner) setShowScanner(false);
                 }}
-                scanCount={0}
               />
             )}
           </div>

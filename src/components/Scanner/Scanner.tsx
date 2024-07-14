@@ -11,14 +11,12 @@ const Scanner = ({
   setTicketId,
   trigger,
   setTrigger,
-  scanCount,
   checking,
 }: {
   ticketId: string | undefined;
   setTicketId: Dispatch<React.SetStateAction<string>> | undefined;
   trigger: boolean;
   setTrigger: (trigger: boolean) => void;
-  scanCount?: number;
   checking?: boolean;
 }) => {
   const navigate = useNavigate();
@@ -27,11 +25,6 @@ const Scanner = ({
       <p className={styles.scanHeader}>Scan QR Code Below</p>
       <div className={styles.scannerOuterContainer}>
         <div className={styles.scanner}>
-          {scanCount && (
-            <div className={styles.scanCount}>
-              <SecondaryButton buttonText={`${scanCount} Scans`} />
-            </div>
-          )}
           <div className={styles.closeButton}>
             <SecondaryButton
               buttonText='Close'

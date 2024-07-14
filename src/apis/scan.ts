@@ -61,19 +61,19 @@ export const checkInUser = async (
     });
 };
 
-export const getCheckInCount = async (
-  eventId: string,
-  setCheckInCount: React.Dispatch<React.SetStateAction<number>>,
-) => {
-  privateGateway
-    .get(makeMyPass.checkInCount(eventId))
-    .then((response) => {
-      setCheckInCount(response.data.response.authorized_count);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Fetching Check-In Count');
-    });
-};
+// export const getCheckInCount = async (
+//   eventId: string,
+//   setCheckInCount: React.Dispatch<React.SetStateAction<number>>,
+// ) => {
+//   privateGateway
+//     .get(makeMyPass.checkInCount(eventId))
+//     .then((response) => {
+//       setCheckInCount(response.data.response.authorized_count);
+//     })
+//     .catch((error) => {
+//       toast.error(error.response.data.message.general[0] || 'Error in Fetching Check-In Count');
+//     });
+// };
 
 export const preview = async (
   eventId: string,
