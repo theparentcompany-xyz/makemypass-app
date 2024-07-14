@@ -50,7 +50,13 @@ const SuccessModal = ({
                         <button
                           onClick={() => {
                             if (success.ticketURL) {
-                              fetch(success.ticketURL)
+                              fetch('https://cors-anywhere.herokuapp.com/' + success.ticketURL, {
+                                headers: {
+                                  'Access-Control-Allow-Origin': '*',
+                                  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+                                  'Access-Control-Allow-Headers': 'Content-Type',
+                                },
+                              })
                                 .then((response) => response.blob())
                                 .then((blob) => {
                                   const link = document.createElement('a');

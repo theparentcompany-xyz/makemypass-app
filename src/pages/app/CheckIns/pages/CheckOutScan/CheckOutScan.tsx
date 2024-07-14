@@ -4,7 +4,6 @@ import Theme from '../../../../../components/Theme/Theme';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
 import { checkOutUser } from '../../../../../apis/scan';
 import styles from './CheckOutScan.module.css';
-import { MdError, MdVerified } from 'react-icons/md';
 import { LogType } from '../Venue/Venue';
 import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerResponseModal';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
