@@ -7,11 +7,10 @@ type Props = {
   tickets: {
     [key: string]: TicketType;
   };
-  setTicket: React.Dispatch<React.SetStateAction<TicketType | undefined>>;
   setIsTicketSelected: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const MultipleTicket = ({ tickets, setTicket, setIsTicketSelected }: Props) => {
+const MultipleTicket = ({ tickets, setIsTicketSelected }: Props) => {
   return (
     <>
       <div className={styles.multipleTicketContainer}>
@@ -20,7 +19,7 @@ const MultipleTicket = ({ tickets, setTicket, setIsTicketSelected }: Props) => {
             <SectionButton
               buttonText={key}
               onClick={() => {
-                setTicket(tickets[key]);
+                // setTicket(tickets[key]);
                 setIsTicketSelected(true);
               }}
             />

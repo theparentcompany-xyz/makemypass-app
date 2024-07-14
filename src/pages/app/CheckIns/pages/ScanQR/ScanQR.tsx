@@ -7,7 +7,7 @@ import { checkInUser, getCheckInCount } from '../../../../../apis/scan';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import { CgClose } from 'react-icons/cg';
 import Modal from '../../../../../components/Modal/Modal';
-import { PreviewData, TicketType } from '../../../../../apis/types';
+import { PreviewData } from '../../../../../apis/types';
 import Loader from '../../../../../components/Loader';
 import MultipleTicket from './components/MultipleTicket';
 import Scanner from '../../../../../components/Scanner/Scanner';
@@ -21,7 +21,6 @@ const ScanQR = () => {
   const [isError, setIsError] = useState<boolean>(false);
   const [scanCount, setScanCount] = useState<number>(0);
   const [isTicketSelected, setIsTicketSelected] = useState<boolean>(false);
-  const [selectedTicket, setSelectedTicket] = useState<TicketType>();
 
   const [checking, setChecking] = useState<boolean>(false);
 
@@ -42,7 +41,7 @@ const ScanQR = () => {
 
     if (ticketId.length > 0 && trigger) {
       // preview(eventId, ticketId, setPreviewData);
-      checkInUser(ticketId, eventId, setMessage, setIsError, selectedTicket, setChecking);
+      checkInUser(ticketId, eventId, setMessage, setIsError, setChecking);
 
       setTimeout(() => {
         setMessage('');
@@ -65,7 +64,6 @@ const ScanQR = () => {
 
                 <MultipleTicket
                   tickets={eventData?.tickets}
-                  setTicket={setSelectedTicket}
                   setIsTicketSelected={setIsTicketSelected}
                 />
               </div>
@@ -150,7 +148,7 @@ const ScanQR = () => {
                             entry_date: '',
                             tickets: {},
                           });
-                          checkInUser(ticketId, eventId, setMessage, setIsError, selectedTicket);
+                          checkInUser(ticketId, eventId, setMessage, setIsError);
                           setTicketId('');
                         }}
                         buttonColor='red'

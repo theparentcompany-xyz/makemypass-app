@@ -1,22 +1,21 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { PreviewData, TicketType } from './types';
+import { PreviewData } from './types';
 
 export const checkInUser = async (
   ticketId: string,
   eventId: string,
   setMessage?: React.Dispatch<React.SetStateAction<string>>,
   setIsError?: React.Dispatch<React.SetStateAction<boolean>>,
-  selectedTicket?: TicketType | undefined,
   setChecking?: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   if (setChecking) {
     setChecking(true);
   }
   privateGateway
-    .post(makeMyPass.checkInUser(ticketId, eventId), {
-      ticket_id: selectedTicket?.id,
+    .post(makeMyPass.checkInUser(eventId), {
+      ticket_code: ticketId,
     })
     .then((response) => {
       if (setMessage && setIsError) {
@@ -81,7 +80,9 @@ export const checkOutUser = async (
     setChecking(true);
   }
   privateGateway
-    .post(makeMyPass.checkOutUser(ticketId, eventId))
+    .post(makeMyPass.checkOutUser(eventId), {
+      ticket_code: ticketId,
+    })
     .then((response) => {
       if (setMessage && setIsError) {
         setMessage(response.data.message.general[0] || 'Check-Out Successful');

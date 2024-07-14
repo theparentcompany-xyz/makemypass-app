@@ -28,8 +28,9 @@ export const checkInUserVenue = async (
 ) => {
   if (selectedVenue)
     privateGateway
-      .post(makeMyPass.checkInUserVenue(ticketCode, eventId), {
+      .post(makeMyPass.checkInUserVenue(eventId), {
         venue_id: selectedVenue?.id,
+        ticket_code: ticketCode,
       })
       .then((response) => {
         toast.success(response.data.message.general[0] || 'User checked in successfully');
