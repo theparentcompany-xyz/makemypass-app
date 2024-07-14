@@ -51,7 +51,6 @@ const Venue = () => {
     <Theme>
       <div className={styles.mainContainer}>
         <EventHeader />
-        <Glance tab='checkins' />
         <ScannerResponseModal
           message={message}
           setMessage={setMessage}

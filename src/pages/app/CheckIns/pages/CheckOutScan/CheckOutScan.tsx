@@ -34,6 +34,7 @@ const CheckOutScan = () => {
     <Theme>
       <div className={styles.checkOutContainer}>
         <CheckInHeader title='Check-Out' buttonType='back' />
+        <hr className={styles.line} />
         <ScannerResponseModal
           message={message}
           setMessage={setMessage}

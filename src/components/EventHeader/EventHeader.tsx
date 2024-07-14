@@ -20,7 +20,7 @@ const EventHeader = () => {
             <div className={styles.backButton}>
               <button
                 onClick={() => {
-                  navigate('/events');
+                  navigate(-1);
                 }}
                 className={styles.goBack}
               >

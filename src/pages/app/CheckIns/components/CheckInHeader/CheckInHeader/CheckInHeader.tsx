@@ -28,26 +28,28 @@ const CheckInHeader = ({
         <p className={styles.checkInHeading}>{title}</p>
       </div>
 
-      <div className={styles.checkInActions}>
-        {buttonType != 'back' && (
-          <Link to='scan'>
-            <SectionButton
-              buttonText='Scan QR Code'
-              buttonColor='#C33D7B'
-              icon={<BsQrCodeScan size={25} color='#5B75FB' />}
-            />
-          </Link>
-        )}
+      {(buttonType != 'back' || currentCount) && (
+        <div className={styles.checkInActions}>
+          {buttonType != 'back' && (
+            <Link to='scan'>
+              <SectionButton
+                buttonText='Scan QR Code'
+                buttonColor='#C33D7B'
+                icon={<BsQrCodeScan size={25} color='#5B75FB' />}
+              />
+            </Link>
+          )}
 
-        {currentCount && (
-          <div className={styles.checkInGlance}>
-            <p className={styles.checkInGlanceHeader}>Check In at a Glance</p>
-            <p className={styles.guests}>
-              {currentCount} <span>Guests</span>
-            </p>
-          </div>
-        )}
-      </div>
+          {currentCount && (
+            <div className={styles.checkInGlance}>
+              <p className={styles.checkInGlanceHeader}>Check In at a Glance</p>
+              <p className={styles.guests}>
+                {currentCount} <span>Guests</span>
+              </p>
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 };
