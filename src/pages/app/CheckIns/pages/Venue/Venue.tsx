@@ -7,6 +7,13 @@ import { checkInUserVenue, listVenues } from '../../../../../apis/venue';
 import { VenueType } from './types';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import Scanner from '../../../../../components/Scanner/Scanner';
+import { MdError, MdVerified } from 'react-icons/md';
+
+export type LogType = {
+  message: string;
+  timestamp: string;
+  hasError: boolean;
+};
 
 const Venue = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -14,59 +21,101 @@ const Venue = () => {
   const [selectedVenue, setSelectedVenue] = useState<VenueType | null>(null);
   const [showScanner, setShowScanner] = useState(false);
   const [ticketId, setTicketId] = useState('');
+  const [scanTrigger, setScanTrigger] = useState(false);
+
+  const [scanLogs, setScanLogs] = useState<LogType[]>([]);
 
   useEffect(() => {
     listVenues(eventId, setVenues);
   }, [eventId]);
 
   useEffect(() => {
-    if (ticketId.length > 0 && showScanner) {
-      checkInUserVenue(ticketId, eventId, selectedVenue, setShowScanner);
-    }
+    if (ticketId.length > 0 && scanTrigger) {
+      checkInUserVenue(ticketId, eventId, selectedVenue, setScanLogs);
+      console.log(scanLogs);
 
-    if (!showScanner) {
-      setTicketId('');
-      setSelectedVenue(null);
+      setTimeout(() => {
+        setTicketId('');
+      }, 2000);
     }
-  }, [ticketId, showScanner]);
+  }, [ticketId, scanTrigger]);
 
   return (
     <Theme>
-      <EventHeader />
-      <Glance tab='checkins' />
+      <div className={styles.mainContainer}>
+        <EventHeader />
+        <Glance tab='checkins' />
 
-      <div className={styles.venueListingContainer}>
-        <div className={styles.venueListing}>
-          <p className={styles.venueHeading}>
-            {venues.length > 0 ? 'Venue Listing' : 'No Venues Available'}
-          </p>
-          <p className={styles.helperText}>
-            {venues.length > 0
-              ? 'Select a venue to check-in guests'
-              : 'No venues available for check-in'}
-          </p>
-          {!showScanner ? (
-            <div className={styles.venues}>
-              {venues.length > 0 &&
-                venues.map((venue) => (
-                  <SectionButton
-                    buttonText={venue.name}
-                    buttonColor='#C33D7B'
+        <div className={styles.venueListingContainer}>
+          <div className={styles.venueListing}>
+            {!showScanner ? (
+              <>
+                <p className={styles.venueHeading}>
+                  {venues.length > 0 ? 'Venue Listing' : 'No Venues Available'}
+                </p>
+                <p className={styles.helperText}>
+                  {venues.length > 0
+                    ? 'Select a venue to check-in guests'
+                    : 'No venues available for check-in'}
+                </p>
+                <div className={styles.venues}>
+                  {venues.length > 0 &&
+                    venues.map((venue) => (
+                      <SectionButton
+                        buttonText={venue.name}
+                        buttonColor='#C33D7B'
+                        onClick={() => {
+                          setSelectedVenue(venue);
+                          setShowScanner(true);
+                        }}
+                      />
+                    ))}
+                </div>
+              </>
+            ) : (
+              <div className={styles.scannerContainer}>
+                <div className={styles.rowContainer}>
+                  <button
+                    className={styles.closeButton}
                     onClick={() => {
-                      setSelectedVenue(venue);
-                      setShowScanner(true);
+                      setShowScanner(false);
+                      setTicketId('');
+                      setScanTrigger(false);
                     }}
-                  />
-                ))}
-            </div>
-          ) : (
-            <Scanner
-              ticketId={ticketId}
-              setTicketId={setTicketId}
-              trigger={showScanner}
-              setTrigger={setShowScanner}
-            />
-          )}
+                  >
+                    {'<'}
+                  </button>
+                  <p className={styles.checkInHeader}>
+                    {selectedVenue ? `Checking in at ${selectedVenue.name}` : ''}
+                  </p>
+                </div>
+                <Scanner
+                  ticketId={ticketId}
+                  setTicketId={setTicketId}
+                  trigger={scanTrigger}
+                  setTrigger={setScanTrigger}
+                />
+
+                <div className={styles.logs}>
+                  <p className={styles.venueHeading}>Scan Logs</p>
+                  {scanLogs
+                    .slice()
+                    .reverse()
+                    .map((log) => (
+                      <div className={styles.logContainer}>
+                        {log.hasError ? (
+                          <MdError color='#f04b4b' size={20} />
+                        ) : (
+                          <MdVerified color='#47c97e' size={20} />
+                        )}
+                        <p className={styles.logMessage}>{log.message}</p>
+                        <p className={styles.logTimestamp}>{log.timestamp}</p>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </Theme>
