@@ -195,24 +195,7 @@ const Coupon = () => {
                   <div className={styles.discountUses}></div>
 
                   <div className={styles.discountUses}>
-                    <p className={styles.fieldHeader}>Maximum Discount Uses</p>
-
-                    {limitDiscountUsage && (
-                      <InputField
-                        type='text'
-                        name='Conditions'
-                        id='conditions'
-                        placeholder='Limit number of times this discount can be used in total'
-                        icon={<></>}
-                        required={true}
-                        onChange={(event) => {
-                          if (Number(event.target.value) < 0)
-                            toast.error('Count cannot be negative');
-                          setNewCouponData({ ...newCouponData, count: Number(event.target.value) });
-                        }}
-                        value={newCouponData.count ? newCouponData.count.toString() : ''}
-                      />
-                    )}
+                    {/* <p className={styles.fieldHeader}>Maximum Discount Uses</p> */}
                     <Slider
                       checked={limitDiscountUsage}
                       onChange={() => {
@@ -223,6 +206,27 @@ const Coupon = () => {
                       }}
                       text='Limit Discount Usage'
                     />
+                    {limitDiscountUsage && (
+                      <div className={styles.limitInput}>
+                        <InputField
+                          type='text'
+                          name='Conditions'
+                          id='conditions'
+                          placeholder='Enter the limit'
+                          icon={<></>}
+                          required={true}
+                          onChange={(event) => {
+                            if (Number(event.target.value) < 0)
+                              toast.error('Count cannot be negative');
+                            setNewCouponData({
+                              ...newCouponData,
+                              count: Number(event.target.value),
+                            });
+                          }}
+                          value={newCouponData.count ? newCouponData.count.toString() : ''}
+                        />
+                      </div>
+                    )}
                   </div>
                   <div className={styles.limitOne}>
                     <Slider

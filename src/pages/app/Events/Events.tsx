@@ -128,6 +128,12 @@ const Events = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
                             className={styles.eventCard}
+                            onClick={() => {
+                              handleClick(event.name);
+                            }}
+                            style={{
+                              zIndex: 0,
+                            }}
                           >
                             <div className={styles.innerCard}>
                               {event.logo ? (
@@ -158,15 +164,20 @@ const Events = () => {
                                     </p>
                                   </div>
                                   {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
-                                    <BsThreeDots
-                                      onClick={(e: React.MouseEvent<SVGElement, MouseEvent>) => {
-                                        handleButtonClick(e);
-                                        setDuplicateEventId(event?.id);
-                                      }}
-                                      size={15}
-                                      color='#ffffff'
-                                      className='pointer'
-                                    />
+                                    <div className={styles.rightMenuButton}>
+                                      <BsThreeDots
+                                        onClick={(e: React.MouseEvent<SVGElement, MouseEvent>) => {
+                                          handleButtonClick(e);
+                                          setDuplicateEventId(event?.id);
+                                        }}
+                                        size={15}
+                                        color='#ffffff'
+                                        className='pointer'
+                                        style={{
+                                          zIndex: 10,
+                                        }}
+                                      />
+                                    </div>
                                   )}
                                 </div>
                                 {isMenuOpen && (

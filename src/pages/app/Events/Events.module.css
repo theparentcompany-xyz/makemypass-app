@@ -181,13 +181,15 @@
   margin-bottom: 0.5rem;
 }
 
+.rightMenuButton {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
 @media (max-width: 720px) {
   .slider {
     display: none;
-  }
-
-  .eventDate {
-    margin: 1rem 0;
   }
 
   .event {
