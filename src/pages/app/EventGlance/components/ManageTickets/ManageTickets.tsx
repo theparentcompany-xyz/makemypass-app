@@ -13,7 +13,7 @@ import toast from 'react-hot-toast';
 import AdvancedSetting from './components/AdvancedSetting/AdvancedSetting';
 import UnsavedChanges from './components/UnsavedChanges/UnsavedChanges';
 import ConfirmDelete from './components/ConfirmDelete/ConfirmDelete';
-import TicketEditor from './components/TicketEditor/TicketEditor';
+// import TicketEditor from './components/TicketEditor/TicketEditor';
 
 export interface ChildProps {
   setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -217,9 +217,9 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         toast.error('Failed to set default ticket');
       });
   };
-  // const handleTicketClick = (ticketId: string) => {
-  //   setTicketEditorModal(true);
-  // };
+  const handleTicketClick = (ticketId: string) => {
+    setTicketEditorModal(true);
+  };
 
   const closeTicketModal = () => {
     if (!hasUnsavedChanges()) {
@@ -327,7 +327,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                   }
                   handleDefaultSelected={changeDefaultSelected}
                   hasUnsavedChanges={hasUnsavedChanges}
-                  // handleTicketClick={handleTicketClick}
+                  handleTicketClick={handleTicketClick}
                 />
               ) : null;
             })}
