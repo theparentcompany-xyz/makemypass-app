@@ -22,12 +22,10 @@ export const makeMyPass = {
     makeMyPassURL(`/analytics/${eventId}/get-analytics-visibility/`),
 
   // Guest and Ticket Management
-  checkInUser: (ticketCode: string, eventId: string) =>
-    makeMyPassURL(`/scan-guest/${eventId}/register/${ticketCode}/`),
-  checkOutUser: (ticketCode: string, eventId: string) =>
-    makeMyPassURL(`/scan-guest/${eventId}/checkout/${ticketCode}/`),
-  checkInUserVenue: (ticketCode: string, eventId: string) =>
-    makeMyPassURL(`/scan-guest/${eventId}/venue/${ticketCode}/`),
+  ///scan-guest/eventId/checkin
+  checkInUser: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkin`),
+  checkOutUser: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkout`),
+  checkInUserVenue: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/venue-checkin/`),
   listVenues: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/list-venue/`),
 
   resentTicket: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/resent-ticket/`),
