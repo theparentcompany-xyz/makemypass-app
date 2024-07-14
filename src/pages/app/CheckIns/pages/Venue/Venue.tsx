@@ -61,14 +61,15 @@ const Venue = () => {
                 <div className={styles.venues}>
                   {venues.length > 0 &&
                     venues.map((venue) => (
-                      <SectionButton
-                        buttonText={venue.name}
-                        buttonColor='#C33D7B'
+                      <div
+                        className={styles.venue}
                         onClick={() => {
                           setSelectedVenue(venue);
                           setShowScanner(true);
                         }}
-                      />
+                      >
+                        {venue.name}
+                      </div>
                     ))}
                 </div>
               </>
@@ -97,7 +98,9 @@ const Venue = () => {
                 />
 
                 <div className={styles.logs}>
-                  <p className={styles.venueHeading}>Scan Logs</p>
+                  <p className={styles.venueHeading}>
+                    {scanLogs.length > 0 ? 'Scan Logs' : 'No Scans Yet'}
+                  </p>
                   {scanLogs
                     .slice()
                     .reverse()
