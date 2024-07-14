@@ -5,6 +5,9 @@ import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInH
 import { checkOutUser } from '../../../../../apis/scan';
 import styles from './CheckOutScan.module.css';
 import { MdError, MdVerified } from 'react-icons/md';
+import { LogType } from '../Venue/Venue';
+import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerResponseModal';
+import ScanLogs from '../../components/ScanLogs/ScanLogs';
 
 const CheckOutScan = () => {
   const [ticketId, setTicketId] = useState('');
@@ -16,9 +19,11 @@ const CheckOutScan = () => {
 
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
+  const [scanLogs, setScanLogs] = useState<LogType[]>([]);
+
   useEffect(() => {
     if (ticketId.length > 0) {
-      checkOutUser(ticketId, eventId, setMessage, setIsError, setChecking);
+      checkOutUser(ticketId, eventId, setScanLogs, setMessage, setIsError, setChecking);
       setTimeout(() => {
         setTicketId('');
         setTrigger(false);
@@ -30,7 +35,12 @@ const CheckOutScan = () => {
     <Theme>
       <div className={styles.checkOutContainer}>
         <CheckInHeader title='Check-Out' buttonType='back' />
-
+        <ScannerResponseModal
+          message={message}
+          setMessage={setMessage}
+          isError={isError}
+          setIsError={setIsError}
+        />
         <Scanner
           ticketId={ticketId}
           setTicketId={setTicketId}
@@ -38,22 +48,7 @@ const CheckOutScan = () => {
           setTrigger={setTrigger}
           checking={checking}
         />
-
-        {message && message.length > 0 && (
-          <div className={styles.messageContainer}>
-            {isError ? (
-              <MdError color='#f04b4b' size={40} />
-            ) : (
-              <MdVerified color='#47c97e' size={40} />
-            )}
-            <p
-              style={isError ? { color: '#f04b4b' } : { color: '#47c97e' }}
-              className={styles.message}
-            >
-              {message}
-            </p>
-          </div>
-        )}
+        <ScanLogs scanLogs={scanLogs} />
       </div>
     </Theme>
   );

@@ -93,6 +93,7 @@ export const preview = async (
 export const checkOutUser = async (
   ticketId: string,
   eventId: string,
+  setScanLogs: React.Dispatch<React.SetStateAction<LogType[]>>,
   setMessage?: React.Dispatch<React.SetStateAction<string>>,
   setIsError?: React.Dispatch<React.SetStateAction<boolean>>,
   setChecking?: React.Dispatch<React.SetStateAction<boolean>>,
@@ -108,6 +109,14 @@ export const checkOutUser = async (
       if (setMessage && setIsError) {
         setMessage(response.data.message.general[0] || 'Check-Out Successful');
         setIsError(false);
+        setScanLogs((prev) => [
+          ...prev,
+          {
+            message: `${ticketId}: ${response.data.message.general[0]}`,
+            timestamp: formatDate(new Date().toString(), true),
+            hasError: false,
+          },
+        ]);
       } else {
         toast.success(response.data.message.general[0] || 'Check-Out Successful');
       }
@@ -116,6 +125,14 @@ export const checkOutUser = async (
       if (setMessage && setIsError) {
         setMessage(error.response.data.message.general[0] || 'Check-Out Failed');
         setIsError(true);
+        setScanLogs((prev) => [
+          ...prev,
+          {
+            message: `${ticketId}: ${error.response.data.message.general[0]}`,
+            timestamp: formatDate(new Date().toString(), true),
+            hasError: true,
+          },
+        ]);
       } else {
         toast.error(error.response.data.message.general[0] || 'Check-Out Failed');
       }
