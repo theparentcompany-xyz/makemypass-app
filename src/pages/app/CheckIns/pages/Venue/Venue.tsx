@@ -39,10 +39,6 @@ const Venue = () => {
   useEffect(() => {
     if (ticketId.length > 0 && scanTrigger) {
       checkInUserVenue(ticketId, eventId, selectedVenue, setScanLogs);
-
-      setTimeout(() => {
-        setTicketId('');
-      }, 5000);
     }
   }, [ticketId, scanTrigger]);
 

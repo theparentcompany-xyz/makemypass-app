@@ -23,10 +23,6 @@ const CheckOutScan = () => {
   useEffect(() => {
     if (ticketId.length > 0) {
       checkOutUser(ticketId, eventId, setScanLogs, setMessage, setIsError, setChecking);
-      setTimeout(() => {
-        setTicketId('');
-        setTrigger(false);
-      }, 2500);
     }
   }, [trigger]);
 

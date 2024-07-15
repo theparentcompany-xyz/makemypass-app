@@ -42,11 +42,6 @@ const ScanQR = () => {
     if (ticketId.length > 0 && trigger) {
       // preview(eventId, ticketId, setPreviewData);
       checkInUser(ticketId, eventId, setScanLogs, setMessage, setIsError, setChecking);
-
-      setTimeout(() => {
-        setTicketId('');
-        setTrigger(false);
-      }, 2250);
     }
   }, [trigger, eventId]);
 
