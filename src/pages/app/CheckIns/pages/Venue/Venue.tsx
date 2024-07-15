@@ -42,7 +42,7 @@ const Venue = () => {
 
       setTimeout(() => {
         setTicketId('');
-      }, 2000);
+      }, 5000);
     }
   }, [ticketId, scanTrigger]);
 
