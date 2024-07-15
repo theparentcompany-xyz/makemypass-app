@@ -130,7 +130,7 @@ const Overview = () => {
       email: 'email',
       category: 'category',
       registered_at: 'date',
-      check_in_date: 'check_in_date',
+      is_checked_in: 'is_checked_in',
       phonenumber: 'phonenumber',
       amount: 'amount',
       is_approved: 'is_approved',
