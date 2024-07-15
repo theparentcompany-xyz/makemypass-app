@@ -36,6 +36,10 @@ const ViewGuest = ({
   });
   const [deleteModal, setDeleteModal] = useState(false);
   const [initateRefundClicked, setInitateRefundClicked] = useState(false);
+  const [dropdownMenu, setDropdownMenu] = useState({
+    timeInformation: false,
+    detailedInformation: true,
+  });
 
   return (
     <motion.div
@@ -100,39 +104,54 @@ const ViewGuest = ({
             {formData['category'] && <div className={styles.type}>{formData['category']}</div>}
           </div>
           <div className={styles.tsRow2}>
-            <div
-              className={styles.row}
-              style={{
-                justifyContent: 'flex-start',
+            <p
+              className={styles.dropDownMessage}
+              onClick={() => {
+                setDropdownMenu((prevState) => ({
+                  ...prevState,
+                  timeInformation: !prevState.timeInformation,
+                }));
               }}
             >
-              <div className={styles.field}>
-                <p className={styles.fieldLabel}>Registered</p>
-                {!isArray(formData['registered_at']) && (
-                  <p className={styles.fieldData}>{formatDate(formData['registered_at'], true)}</p>
+              {dropdownMenu.timeInformation ? '< Hide' : '> Show'} Time Information
+            </p>
+            {dropdownMenu.timeInformation && (
+              <div
+                className={styles.row}
+                style={{
+                  justifyContent: 'flex-start',
+                }}
+              >
+                <div className={styles.field}>
+                  <p className={styles.fieldLabel}>Registered</p>
+                  {!isArray(formData['registered_at']) && (
+                    <p className={styles.fieldData}>
+                      {formatDate(formData['registered_at'], true)}
+                    </p>
+                  )}
+                </div>
+                {formData['check_in_date'] && (
+                  <div className={styles.field}>
+                    <p className={styles.fieldLabel}>Checked In</p>
+                    {!isArray(formData['check_in_date']) && (
+                      <p className={styles.fieldData}>
+                        {formatDate(formData['check_in_date'], true)}
+                      </p>
+                    )}
+                  </div>
+                )}
+                {formData['check_out_date'] && (
+                  <div className={styles.field}>
+                    <p className={styles.fieldLabel}>Checked Out</p>
+                    {!isArray(formData['check_out_date']) && (
+                      <p className={styles.fieldData}>
+                        {formatDate(formData['check_out_date'], true)}
+                      </p>
+                    )}
+                  </div>
                 )}
               </div>
-              {formData['check_in_date'] && (
-                <div className={styles.field}>
-                  <p className={styles.fieldLabel}>Checked In</p>
-                  {!isArray(formData['check_in_date']) && (
-                    <p className={styles.fieldData}>
-                      {formatDate(formData['check_in_date'], true)}
-                    </p>
-                  )}
-                </div>
-              )}
-              {formData['check_out_date'] && (
-                <div className={styles.field}>
-                  <p className={styles.fieldLabel}>Checked Out</p>
-                  {!isArray(formData['check_out_date']) && (
-                    <p className={styles.fieldData}>
-                      {formatDate(formData['check_out_date'], true)}
-                    </p>
-                  )}
-                </div>
-              )}
-            </div>
+            )}
             <AnimatePresence>
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
@@ -294,7 +313,7 @@ const ViewGuest = ({
             <FaTrash size={15} color='#8E8E8E' />
             <span> Delete Submission</span>
           </div>
-          <br />
+
           {import.meta.env.VITE_CURRENT_ENV === 'dev' &&
             Number(formData['amount']) > 0 &&
             (!initateRefundClicked ? (
@@ -322,19 +341,23 @@ const ViewGuest = ({
                 <p className={styles.alertText}>Are you sure you want to initiate refund.</p>
               </div>
             ))}
-        </div>
-        <hr className={styles.line} />
-        <div className={styles.invitedBy}>
-          {formData['invited_by'] && (
-            <p className={styles.invitedByText}>{`Invited By ${formData['invited_by']}`}</p>
-          )}
-          {formData['entry_date'] && typeof formData['entry_date'] === 'string' && (
-            <p
-              className={styles.invitedByText}
-            >{`Registered For ${formatDate(formData['entry_date'])}`}</p>
-          )}
-        </div>
-
+        </div>{' '}
+        {formData['invited_by'] && (
+          <>
+            <hr className={styles.line} />
+            <div className={styles.invitedBy}>
+              {formData['invited_by'] && (
+                <p className={styles.invitedByText}>{`Invited By ${formData['invited_by']}`}</p>
+              )}
+              {formData['entry_date'] && typeof formData['entry_date'] === 'string' && (
+                <p
+                  className={styles.invitedByText}
+                >{`Registered For ${formatDate(formData['entry_date'])}`}</p>
+              )}
+            </div>
+            <hr className={styles.line} />
+          </>
+        )}
         {Number(formData['amount']) > 0 && (
           <>
             <hr className={styles.line} />
@@ -357,31 +380,45 @@ const ViewGuest = ({
             <hr className={styles.line} />
           </>
         )}
-
-        <div className={styles.bottomSection}>
-          {Object.keys(formData).map((key: string) => {
-            const fieldName = formFields.find((field) => field.field_key === key)?.title;
-            if (
-              key !== 'name' &&
-              key !== 'email' &&
-              key !== 'registered_at' &&
-              key !== 'check_in_date' &&
-              fieldName
-            ) {
-              return (
-                formData[key] && (
-                  <div className={styles.field} key={key}>
-                    <p className={styles.fieldLabel}>{key === 'amount' ? 'Amount' : fieldName}</p>
-                    <p className={styles.fieldData}>
-                      {key === 'amount' && Number(formData[key]) <= 0 ? 'Free' : formData[key]}
-                    </p>
-                  </div>
-                )
-              );
-            }
-            return null;
-          })}
-        </div>
+        {type != 'overview' && (
+          <p
+            className={styles.dropDownMessage}
+            onClick={() => {
+              setDropdownMenu((prevState) => ({
+                ...prevState,
+                detailedInformation: !prevState.detailedInformation,
+              }));
+            }}
+          >
+            {dropdownMenu.detailedInformation ? '< Hide' : '> Show'} Detailed Information
+          </p>
+        )}
+        {(dropdownMenu.detailedInformation || type === 'overview') && (
+          <div className={styles.bottomSection}>
+            {Object.keys(formData).map((key: string) => {
+              const fieldName = formFields.find((field) => field.field_key === key)?.title;
+              if (
+                key !== 'name' &&
+                key !== 'email' &&
+                key !== 'registered_at' &&
+                key !== 'is_checked_in' &&
+                fieldName
+              ) {
+                return (
+                  formData[key] && (
+                    <div className={styles.field} key={key}>
+                      <p className={styles.fieldLabel}>{key === 'amount' ? 'Amount' : fieldName}</p>
+                      <p className={styles.fieldData}>
+                        {key === 'amount' && Number(formData[key]) <= 0 ? 'Free' : formData[key]}
+                      </p>
+                    </div>
+                  )
+                );
+              }
+              return null;
+            })}
+          </div>
+        )}
       </div>
     </motion.div>
   );

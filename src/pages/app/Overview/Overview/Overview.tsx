@@ -75,7 +75,8 @@ const Overview = () => {
   const [formFields, setFormFields] = useState<FormFieldType[]>([]);
 
   useEffect(() => {
-    if (eventId && hostList.length === 0) getHosts(eventId, setHostList);
+    if ((eventId && hostList.length === 0 && userRole == 'Admin') || userRole == 'Owner')
+      getHosts(eventId, setHostList);
 
     getFormFields(eventId, setFormFields);
   }, [eventId, hostList]);
@@ -137,6 +138,7 @@ const Overview = () => {
     };
 
     if (recentRegistrations) {
+      console.log(recentRegistrations);
       const transformedRecentRegistrations = transformTableData(
         recentTableMapping,
         recentRegistrations,
