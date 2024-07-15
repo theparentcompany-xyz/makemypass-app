@@ -27,7 +27,7 @@ export const checkInUser = async (
           setScanLogs((prev) => [
             ...prev,
             {
-              message: `${ticketId}: ${response.data.message.general[0]}`,
+              message: `${response.data.message.general[0]}`,
               timestamp: formatDate(new Date().toString(), true),
               hasError: false,
             },
@@ -45,7 +45,7 @@ export const checkInUser = async (
           setScanLogs((prev) => [
             ...prev,
             {
-              message: `${ticketId}: ${error.response.data.message.general[0]}`,
+              message: ` ${error.response.data.message.general[0]}`,
               timestamp: formatDate(new Date().toString(), true),
               hasError: true,
             },
@@ -112,7 +112,7 @@ export const checkOutUser = async (
         setScanLogs((prev) => [
           ...prev,
           {
-            message: `${ticketId}: ${response.data.message.general[0]}`,
+            message: ` ${response.data.message.general[0]}`,
             timestamp: formatDate(new Date().toString(), true),
             hasError: false,
           },
@@ -128,7 +128,7 @@ export const checkOutUser = async (
         setScanLogs((prev) => [
           ...prev,
           {
-            message: `${ticketId}: ${error.response.data.message.general[0]}`,
+            message: ` ${error.response.data.message.general[0]}`,
             timestamp: formatDate(new Date().toString(), true),
             hasError: true,
           },
