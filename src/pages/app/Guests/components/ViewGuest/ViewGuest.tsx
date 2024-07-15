@@ -71,14 +71,7 @@ const ViewGuest = ({
           </Modal>
         </>
       )}
-      <Modal
-        type='side'
-        title='View Guest'
-        onClose={() => setSelectedGuestId(null)}
-        style={{
-          maxWidth: '30%',
-        }}
-      >
+      <Modal type='side' title='View Guest' onClose={() => setSelectedGuestId(null)}>
         <div className={styles.closeButton}>
           <SecondaryButton
             buttonText='Close'
@@ -87,7 +80,12 @@ const ViewGuest = ({
             }}
           />
         </div>
-        <div className={styles.viewGuests}>
+        <div
+          className={styles.viewGuests}
+          style={{
+            maxWidth: '30rem',
+          }}
+        >
           <div className={styles.topSection}>
             <div className={styles.row}>
               <div className={styles.tsTexts}>
