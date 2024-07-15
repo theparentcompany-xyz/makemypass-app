@@ -79,7 +79,7 @@ const Overview = () => {
       getHosts(eventId, setHostList);
 
     getFormFields(eventId, setFormFields);
-  }, [eventId, hostList]);
+  }, [eventId]);
 
   useEffect(() => {
     return () => {
