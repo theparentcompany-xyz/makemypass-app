@@ -33,7 +33,6 @@ export const checkInUserVenue = async (
         ticket_code: ticketCode,
       })
       .then((response) => {
-        toast.success(response.data.message.general[0] || 'User checked in successfully');
         setScanLogs((prev) => [
           ...prev,
           {
@@ -44,8 +43,6 @@ export const checkInUserVenue = async (
         ]);
       })
       .catch((error) => {
-        toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-
         setScanLogs((prev) => [
           ...prev,
           {

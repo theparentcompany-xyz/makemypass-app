@@ -68,12 +68,20 @@ const Scanner = ({
             }
           }}
         />
-        <SecondaryButton
-          buttonText='Continue'
-          onClick={() => {
-            setTrigger(true);
-          }}
-        />
+        <div className={styles.secondaryButtons}>
+          <SecondaryButton
+            buttonText='Continue'
+            onClick={() => {
+              setTrigger(true);
+            }}
+          />
+          <SecondaryButton
+            buttonText='Clear Scan'
+            onClick={() => {
+              if (setTicketId) setTicketId('');
+            }}
+          />
+        </div>
       </div>
 
       {checking && (

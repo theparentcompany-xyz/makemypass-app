@@ -30,6 +30,13 @@
   position: relative;
 }
 
+.secondaryButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1rem;
+}
+
 .checkingText {
   font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
