@@ -37,7 +37,7 @@ export const checkInUserVenue = async (
         setScanLogs((prev) => [
           ...prev,
           {
-            message: `${ticketCode}: ${response.data.message.general[0]}`,
+            message: `${response.data.message.general[0]}`,
             timestamp: formatDate(new Date().toString(), true),
             hasError: false,
           },
@@ -49,7 +49,7 @@ export const checkInUserVenue = async (
         setScanLogs((prev) => [
           ...prev,
           {
-            message: `${ticketCode}: ${error.response.data.message.general[0]}`,
+            message: `${error.response.data.message.general[0]}`,
             timestamp: formatDate(new Date().toString(), true),
             hasError: true,
           },

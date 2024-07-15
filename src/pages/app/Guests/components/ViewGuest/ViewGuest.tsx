@@ -36,18 +36,9 @@ const ViewGuest = ({
   });
   const [deleteModal, setDeleteModal] = useState(false);
   const [initateRefundClicked, setInitateRefundClicked] = useState(false);
-  const [dropdownMenu, setDropdownMenu] = useState({
-    timeInformation: false,
-    detailedInformation: true,
-  });
 
   return (
-    <motion.div
-      initial={{ y: -10, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: -10, opacity: 0 }}
-      className={styles.viewGuestsContainer}
-    >
+    <>
       {deleteModal && (
         <>
           <Modal
@@ -80,42 +71,36 @@ const ViewGuest = ({
           </Modal>
         </>
       )}
-      <div className={styles.closeButton}>
-        <SecondaryButton
-          buttonText='Close'
-          onClick={() => {
-            setSelectedGuestId(null);
-          }}
-        />
-      </div>
-      <div className={styles.viewGuests}>
-        <div className={styles.topSection}>
-          <div className={styles.row}>
-            <div className={styles.tsTexts}>
-              <p className={styles.name}>
-                <span>
-                  {formData['name'] || formData['fullname']}{' '}
-                  <span className={styles.rowType}>{formData['ticket_code']}</span>
-                </span>
-                {formData['is_approved'] && <span className={styles.rowType}>Shortlisted</span>}
-              </p>
-              <p className={styles.emailAddress}>{formData['email']}</p>
+      <Modal
+        type='side'
+        title='View Guest'
+        onClose={() => setSelectedGuestId(null)}
+        style={{
+          maxWidth: '30%',
+        }}
+      >
+        <div className={styles.closeButton}>
+          <SecondaryButton
+            buttonText='Close'
+            onClick={() => {
+              setSelectedGuestId(null);
+            }}
+          />
+        </div>
+        <div className={styles.viewGuests}>
+          <div className={styles.topSection}>
+            <div className={styles.row}>
+              <div className={styles.tsTexts}>
+                <p className={styles.name}>
+                  <span>{formData['name'] || formData['fullname']} </span>
+                  {formData['is_approved'] && <span className={styles.rowType}>Shortlisted</span>}
+                </p>
+                <p className={styles.ticketCode}>Ticket Code: {formData['ticket_code']}</p>
+                <p className={styles.emailAddress}>{formData['email']}</p>
+              </div>
+              {formData['category'] && <div className={styles.type}>{formData['category']}</div>}
             </div>
-            {formData['category'] && <div className={styles.type}>{formData['category']}</div>}
-          </div>
-          <div className={styles.tsRow2}>
-            <p
-              className={styles.dropDownMessage}
-              onClick={() => {
-                setDropdownMenu((prevState) => ({
-                  ...prevState,
-                  timeInformation: !prevState.timeInformation,
-                }));
-              }}
-            >
-              {dropdownMenu.timeInformation ? '< Hide' : '> Show'} Time Information
-            </p>
-            {dropdownMenu.timeInformation && (
+            <div className={styles.tsRow2}>
               <div
                 className={styles.row}
                 style={{
@@ -151,17 +136,40 @@ const ViewGuest = ({
                   </div>
                 )}
               </div>
-            )}
-            <AnimatePresence>
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 50 }}
-                className={styles.guestActions}
-              >
-                <div className={styles.confirmButton}>
-                  {!confirmClicked.confirm && formData['is_approved'] === null ? (
-                    <>
+
+              <AnimatePresence>
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 50 }}
+                  className={styles.guestActions}
+                >
+                  <div className={styles.confirmButton}>
+                    {!confirmClicked.confirm && formData['is_approved'] === null ? (
+                      <>
+                        <SecondaryButton
+                          onClick={() => {
+                            setConfirmClicked({
+                              confirm: true,
+                              value: false,
+                            });
+                          }}
+                          buttonText='Decline'
+                        />
+
+                        <SecondaryButton
+                          onClick={() => {
+                            setConfirmClicked({
+                              confirm: true,
+                              value: true,
+                            });
+                          }}
+                          buttonText='Accept'
+                        />
+                      </>
+                    ) : !confirmClicked.confirm &&
+                      formData['is_approved'] &&
+                      formData['check_in_date'] === null ? (
                       <SecondaryButton
                         onClick={() => {
                           setConfirmClicked({
@@ -171,229 +179,192 @@ const ViewGuest = ({
                         }}
                         buttonText='Decline'
                       />
+                    ) : (
+                      !confirmClicked.confirm &&
+                      formData['check_in_date'] === null && (
+                        <SecondaryButton
+                          onClick={() => {
+                            setConfirmClicked({
+                              confirm: true,
+                              value: true,
+                            });
+                          }}
+                          buttonText='Accept'
+                        />
+                      )
+                    )}
+                  </div>
 
+                  {confirmClicked.confirm && (
+                    <div className={styles.confirmButton}>
                       <SecondaryButton
                         onClick={() => {
                           setConfirmClicked({
-                            confirm: true,
-                            value: true,
+                            confirm: false,
+                            value: false,
                           });
                         }}
-                        buttonText='Accept'
+                        buttonText='No'
                       />
-                    </>
-                  ) : !confirmClicked.confirm &&
-                    formData['is_approved'] &&
-                    formData['check_in_date'] === null ? (
-                    <SecondaryButton
-                      onClick={() => {
-                        setConfirmClicked({
-                          confirm: true,
-                          value: false,
-                        });
-                      }}
-                      buttonText='Decline'
-                    />
-                  ) : (
-                    !confirmClicked.confirm &&
-                    formData['check_in_date'] === null && (
                       <SecondaryButton
                         onClick={() => {
-                          setConfirmClicked({
-                            confirm: true,
-                            value: true,
-                          });
+                          if (!isArray(formData['id']))
+                            shortListUser(
+                              eventId,
+                              formData['id'],
+                              confirmClicked.value,
+                              setSelectedGuestId,
+                            );
                         }}
-                        buttonText='Accept'
+                        buttonText={confirmClicked.value ? 'Yes, Accept' : 'Yes, Decline'}
                       />
-                    )
+                      <p className={styles.alertText}>
+                        {confirmClicked.value
+                          ? 'Are you sure you want to accept this guest?'
+                          : 'Are you sure you want to decline this guest?'}
+                      </p>
+                    </div>
                   )}
-                </div>
-
-                {confirmClicked.confirm && (
-                  <div className={styles.confirmButton}>
-                    <SecondaryButton
-                      onClick={() => {
-                        setConfirmClicked({
-                          confirm: false,
-                          value: false,
-                        });
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            {formData['is_approved'] && (
+              <div className={styles.guestActionButtons}>
+                {type !== 'overview' && (
+                  <div
+                    className={styles.icon}
+                    onClick={() => {
+                      if (setResentTicket) {
+                        setResentTicket((prevState) => ({
+                          ...prevState,
+                          status: true,
+                          guestId: formData['id'],
+                          name: formData['name'] || formData['fullname'],
+                        }));
+                      }
+                    }}
+                  >
+                    <BsTicketPerforatedFill
+                      style={{
+                        marginRight: '5px',
                       }}
-                      buttonText='No'
+                      size={20}
+                      title='Resend Ticket'
+                      color='#8E8E8E'
                     />
-                    <SecondaryButton
-                      onClick={() => {
-                        if (!isArray(formData['id']))
-                          shortListUser(
-                            eventId,
-                            formData['id'],
-                            confirmClicked.value,
-                            setSelectedGuestId,
-                          );
-                      }}
-                      buttonText={confirmClicked.value ? 'Yes, Accept' : 'Yes, Decline'}
-                    />
-                    <p className={styles.alertText}>
-                      {confirmClicked.value
-                        ? 'Are you sure you want to accept this guest?'
-                        : 'Are you sure you want to decline this guest?'}
-                    </p>
+                    <span>Resent Ticket</span>
                   </div>
                 )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-          {formData['is_approved'] && (
-            <div className={styles.guestActionButtons}>
-              {type !== 'overview' && (
                 <div
                   className={styles.icon}
                   onClick={() => {
-                    if (setResentTicket) {
-                      setResentTicket((prevState) => ({
+                    if (setSelectedGuestId) {
+                      setSelectedGuestId((prevState) => ({
                         ...prevState,
-                        status: true,
-                        guestId: formData['id'],
-                        name: formData['name'] || formData['fullname'],
+                        id: formData['id'].toString(),
+                        type: 'download',
                       }));
                     }
                   }}
                 >
-                  <BsTicketPerforatedFill
-                    style={{
-                      marginRight: '5px',
+                  <MdDownload size={20} color='#8E8E8E' />
+                  <span>View Ticket</span>
+                </div>
+                {!formData['check_in_date'] && (
+                  <div
+                    onClick={() => {
+                      if (!isArray(formData['ticket_code']))
+                        checkInUser(formData['ticket_code'], eventId);
+                      setSelectedGuestId((prevState) => ({
+                        ...prevState,
+                        id: '',
+                        type: '',
+                      }));
                     }}
-                    size={20}
-                    title='Resend Ticket'
-                    color='#8E8E8E'
-                  />
-                  <span>Resent Ticket</span>
-                </div>
-              )}
-              <div
-                className={styles.icon}
-                onClick={() => {
-                  if (setSelectedGuestId) {
-                    setSelectedGuestId((prevState) => ({
-                      ...prevState,
-                      id: formData['id'].toString(),
-                      type: 'download',
-                    }));
-                  }
-                }}
-              >
-                <MdDownload size={20} color='#8E8E8E' />
-                <span>View Ticket</span>
+                    className={styles.icon}
+                  >
+                    <FaCheck size={20} color='#8E8E8E' />
+                    <span>Check-In User</span>
+                  </div>
+                )}
               </div>
-              {!formData['check_in_date'] && (
-                <div
-                  onClick={() => {
-                    if (!isArray(formData['ticket_code']))
-                      checkInUser(formData['ticket_code'], eventId);
-                    setSelectedGuestId((prevState) => ({
-                      ...prevState,
-                      id: '',
-                      type: '',
-                    }));
-                  }}
-                  className={styles.icon}
-                >
-                  <FaCheck size={20} color='#8E8E8E' />
-                  <span>Check-In User</span>
-                </div>
-              )}
-            </div>
-          )}
-          <div
-            className={styles.deleteIcon}
-            onClick={() => {
-              setDeleteModal(true);
-            }}
-          >
-            <FaTrash size={15} color='#8E8E8E' />
-            <span> Delete Submission</span>
-          </div>
-
-          {import.meta.env.VITE_CURRENT_ENV === 'dev' &&
-            Number(formData['amount']) > 0 &&
-            (!initateRefundClicked ? (
-              <SecondaryButton
-                onClick={() => {
-                  setInitateRefundClicked(true);
-                }}
-                buttonText='Initate Refund'
-              />
-            ) : (
-              <div className={styles.confirmButton}>
-                <SecondaryButton
-                  onClick={() => {
-                    setInitateRefundClicked(false);
-                  }}
-                  buttonText='No'
-                />
-                <SecondaryButton
-                  onClick={() => {
-                    if (!isArray(formData['id']))
-                      initateRefund(eventId, formData['id'], setInitateRefundClicked);
-                  }}
-                  buttonText='Yes, Initate Refund'
-                />
-                <p className={styles.alertText}>Are you sure you want to initiate refund.</p>
-              </div>
-            ))}
-        </div>{' '}
-        {formData['invited_by'] && (
-          <>
-            <hr className={styles.line} />
-            <div className={styles.invitedBy}>
-              {formData['invited_by'] && (
-                <p className={styles.invitedByText}>{`Invited By ${formData['invited_by']}`}</p>
-              )}
-              {formData['entry_date'] && typeof formData['entry_date'] === 'string' && (
-                <p
-                  className={styles.invitedByText}
-                >{`Registered For ${formatDate(formData['entry_date'])}`}</p>
-              )}
-            </div>
-            <hr className={styles.line} />
-          </>
-        )}
-        {Number(formData['amount']) > 0 && (
-          <>
-            <hr className={styles.line} />
+            )}
             <div
-              className={styles.invitedBy}
-              style={{
-                justifyContent: 'flex-start',
-                columnGap: '4px',
+              className={styles.deleteIcon}
+              onClick={() => {
+                setDeleteModal(true);
               }}
             >
-              {formData['amount'] && (
-                <p className={styles.invitedByText}>{`Paid Rs.${formData['amount']}`}</p>
-              )}
-              {formData['ticket_count'] && (
-                <p
-                  className={styles.invitedByText}
-                >{` for ${formData['ticket_count']} tickets.`}</p>
-              )}
+              <FaTrash size={15} color='#8E8E8E' />
+              <span> Delete Submission</span>
             </div>
-            <hr className={styles.line} />
-          </>
-        )}
-        {type != 'overview' && (
-          <p
-            className={styles.dropDownMessage}
-            onClick={() => {
-              setDropdownMenu((prevState) => ({
-                ...prevState,
-                detailedInformation: !prevState.detailedInformation,
-              }));
-            }}
-          >
-            {dropdownMenu.detailedInformation ? '< Hide' : '> Show'} Detailed Information
-          </p>
-        )}
-        {(dropdownMenu.detailedInformation || type === 'overview') && (
+
+            {import.meta.env.VITE_CURRENT_ENV === 'dev' &&
+              Number(formData['amount']) > 0 &&
+              (!initateRefundClicked ? (
+                <SecondaryButton
+                  onClick={() => {
+                    setInitateRefundClicked(true);
+                  }}
+                  buttonText='Initate Refund'
+                />
+              ) : (
+                <div className={styles.confirmButton}>
+                  <SecondaryButton
+                    onClick={() => {
+                      setInitateRefundClicked(false);
+                    }}
+                    buttonText='No'
+                  />
+                  <SecondaryButton
+                    onClick={() => {
+                      if (!isArray(formData['id']))
+                        initateRefund(eventId, formData['id'], setInitateRefundClicked);
+                    }}
+                    buttonText='Yes, Initate Refund'
+                  />
+                  <p className={styles.alertText}>Are you sure you want to initiate refund.</p>
+                </div>
+              ))}
+          </div>{' '}
+          {formData['invited_by'] && (
+            <>
+              <hr className={styles.line} />
+              <div className={styles.invitedBy}>
+                {formData['invited_by'] && (
+                  <p className={styles.invitedByText}>{`Invited By ${formData['invited_by']}`}</p>
+                )}
+                {formData['entry_date'] && typeof formData['entry_date'] === 'string' && (
+                  <p
+                    className={styles.invitedByText}
+                  >{`Registered For ${formatDate(formData['entry_date'])}`}</p>
+                )}
+              </div>
+              <hr className={styles.line} />
+            </>
+          )}
+          {Number(formData['amount']) > 0 && (
+            <>
+              <hr className={styles.line} />
+              <div
+                className={styles.invitedBy}
+                style={{
+                  justifyContent: 'flex-start',
+                  columnGap: '4px',
+                }}
+              >
+                {formData['amount'] && (
+                  <p className={styles.invitedByText}>{`Paid Rs.${formData['amount']}`}</p>
+                )}
+                {formData['ticket_count'] && (
+                  <p
+                    className={styles.invitedByText}
+                  >{` for ${formData['ticket_count']} tickets.`}</p>
+                )}
+              </div>
+              <hr className={styles.line} />
+            </>
+          )}
           <div className={styles.bottomSection}>
             {Object.keys(formData).map((key: string) => {
               const fieldName = formFields.find((field) => field.field_key === key)?.title;
@@ -418,9 +389,9 @@ const ViewGuest = ({
               return null;
             })}
           </div>
-        )}
-      </div>
-    </motion.div>
+        </div>
+      </Modal>
+    </>
   );
 };
 

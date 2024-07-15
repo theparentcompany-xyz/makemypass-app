@@ -77,11 +77,17 @@
   margin-bottom: 0.25rem;
 }
 
-.emailAddress {
+.emailAddress,
+.ticketCode {
   margin-top: 0.25rem;
   font-size: 0.8rem;
   font-weight: 400;
   color: #d2d4d7;
+}
+
+.ticketCode {
+  white-space: wrap;
+  max-width: 10;
 }
 
 .type {
@@ -92,6 +98,7 @@
   font-size: 0.7rem;
   padding: 0.25rem 0.5rem;
   margin-left: 0.15rem;
+  white-space: nowrap;
 }
 
 .fieldData {
@@ -109,13 +116,13 @@
 }
 
 .bottomSection {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-
-  margin-left: 1rem;
+  max-width: 20rem;
 }
 
 .dropDownMessage {
