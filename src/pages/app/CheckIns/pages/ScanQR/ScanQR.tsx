@@ -69,6 +69,7 @@ const ScanQR = () => {
                 setMessage={setMessage}
                 isError={isError}
                 setIsError={setIsError}
+                setTicketId={setTicketId}
               />
 
               {previewData && previewData.name && (

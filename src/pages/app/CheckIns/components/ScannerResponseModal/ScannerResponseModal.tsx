@@ -7,11 +7,13 @@ const ScannerResponseModal = ({
   setMessage,
   isError,
   setIsError,
+  setTicketId,
 }: {
   message: string;
   setMessage: (message: string) => void;
   isError: boolean;
   setIsError: (isError: boolean) => void;
+  setTicketId: (ticketId: string) => void;
 }) => {
   return (
     message &&
@@ -36,6 +38,7 @@ const ScannerResponseModal = ({
           <button
             onClick={() => {
               setMessage('');
+              setTicketId('');
               setIsError(false);
             }}
             className={styles.modalCloseButton}

@@ -51,6 +51,7 @@ const Venue = () => {
           setMessage={setMessage}
           isError={isError}
           setIsError={setIsError}
+          setTicketId={setTicketId}
         />
         <div className={styles.venueListingContainer}>
           <div className={styles.venueListing}>
