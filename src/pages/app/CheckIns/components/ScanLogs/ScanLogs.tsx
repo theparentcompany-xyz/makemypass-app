@@ -6,6 +6,9 @@ const ScanLogs = ({ scanLogs }: { scanLogs: LogType[] }) => {
   return (
     <div className={styles.logs}>
       <p className={styles.venueHeading}>{scanLogs.length > 0 ? 'Scan Logs' : 'No Scans Yet'}</p>
+      <p className={styles.helperText}>
+        This log is stored locally just for your reference. you previous scans are safe with us.
+      </p>
       {scanLogs
         .slice()
         .reverse()

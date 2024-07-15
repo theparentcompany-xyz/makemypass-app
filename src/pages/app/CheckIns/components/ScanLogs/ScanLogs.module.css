@@ -10,11 +10,21 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-top: 1rem;
   column-gap: 0.5rem;
   color: white;
   font-family: 'Inter';
   font-size: 0.9rem;
+}
+
+.helperText {
+  color: white;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 0.25rem;
+  opacity: 0.5;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 300;
+  max-width: 25rem;
 }
 
 .logMessage {
