@@ -55,6 +55,29 @@ const Insights = ({ type }: { type?: string }) => {
   const [venueBarData, setVenueBarData] = useState<ChartData>();
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
+  const expandedColors = [
+    '#47C97E',
+    '#7662FC',
+    '#C33D7B',
+    '#FBD85B',
+    '#5B75FB',
+    '#D2D4D7',
+    '#3DB590',
+    '#8A54E8',
+    '#E34765',
+    '#F7CA45',
+    '#4A8AFF',
+    '#BEC2C9',
+    '#59D168',
+    '#6270D9',
+    '#A83C6F',
+    '#FFE347',
+    '#7C9BF2',
+    '#E6E8EC',
+    '#2EAF6D',
+    '#9B4FD3',
+  ];
+
   const eventId = useRef<string>('');
   const eventName = useRef<string>('');
 
@@ -136,8 +159,8 @@ const Insights = ({ type }: { type?: string }) => {
               {
                 label: 'Venue Analytics',
                 data: Object.values(lineBarData?.venue_analytics || {}),
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: expandedColors,
+                backgroundColor: expandedColors,
               },
             ],
           });
