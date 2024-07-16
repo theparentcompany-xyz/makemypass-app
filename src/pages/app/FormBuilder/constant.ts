@@ -13,7 +13,7 @@ import {
   MdStar,
   MdCheckBox,
 } from 'react-icons/md';
-import { FieldType } from './types.ts';
+import { DefaultFieldTypes, FieldType } from './types.ts';
 
 export interface ConditionType {
   value: string;
@@ -162,3 +162,14 @@ export const FileExtensions = [
   { value: '.gz', label: '.gz' },
   { value: '.7z', label: '.7z' },
 ];
+
+export const DefaultFiledTypeMapping: Record<DefaultFieldTypes, FieldType> = {
+  [DefaultFieldTypes.Name]: FieldType.Text,
+  [DefaultFieldTypes.Email]: FieldType.Email,
+  [DefaultFieldTypes.Phone]: FieldType.Phone,
+  [DefaultFieldTypes.Category]: FieldType.SingleSelect,
+  [DefaultFieldTypes.Organization]: FieldType.Text,
+  [DefaultFieldTypes.Referral]: FieldType.Text,
+  [DefaultFieldTypes.District]: FieldType.SingleSelect,
+  [DefaultFieldTypes.TeamId]: FieldType.Text,
+};

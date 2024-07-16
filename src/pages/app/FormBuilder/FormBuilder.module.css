@@ -51,6 +51,9 @@
 
 .requiredFields {
   margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 30rem;
 }
 
 .requiredField {
@@ -68,7 +71,7 @@
   display: flex;
   align-items: center;
   column-gap: 0.5rem;
-  width: 10rem;
+  width: 8rem;
 }
 
 .customFieldsHeading {

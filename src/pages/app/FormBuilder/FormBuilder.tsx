@@ -11,10 +11,10 @@ import Select from 'react-select';
 
 import { useEffect, useState } from 'react';
 import { getForm, updateForm } from '../../../apis/formbuilder';
-import { Field, FieldType } from './types';
+import { DefaultFieldTypes, Field, FieldType } from './types';
 import SelectComponent from './SelectComponent';
 import { IoCloseSharp } from 'react-icons/io5';
-import { FileExtensions, getConditions } from './constant';
+import { DefaultFiledTypeMapping, FileExtensions, getConditions } from './constant';
 import { v4 as uuidv4 } from 'uuid';
 import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
 import { FaChevronDown } from 'react-icons/fa';
@@ -62,17 +62,18 @@ const FormBuilder = () => {
     updateFormStateVariable();
   };
 
-  const addField = () => {
+  const addField = (type?: FieldType, key?: string, field_key?: string) => {
+    console.log(type, key, field_key);
     const defaultField = {
       id: uuidv4(),
-      type: FieldType.Text,
-      title: 'Name',
+      type: type || FieldType.Text,
+      title: key || 'Name',
       hidden: false,
       unique: null,
       options: [],
       property: {},
       required: true,
-      field_key: 'name',
+      field_key: field_key || 'name',
       conditions: [],
       team_field: false,
       description: null,
@@ -138,6 +139,58 @@ const FormBuilder = () => {
           <EventHeader />
           <Glance tab='formbuilder' />
           <div className={styles.requiredFieldsHeader}>
+            <div className={styles.requiredFieldsHeader}>
+              <div className={styles.requiredHeading}>
+                <div className={styles.image}>
+                  <FaAddressCard size={20} color='#ffffff' />
+                </div>
+                <p className={styles.requiredFieldsText}>Required Fields</p>
+              </div>
+              <div className={styles.requiredFields}>
+                {(Object.keys(DefaultFieldTypes) as Array<keyof typeof DefaultFieldTypes>).map(
+                  (key) => {
+                    return (
+                      <div className={styles.requiredField}>
+                        <div>
+                          <p className={styles.requiredLabel}>{key}</p>
+                        </div>
+                        <Slider
+                          checked={formFields.some((formField) =>
+                            Object.values(formField).includes(DefaultFieldTypes[key]),
+                          )}
+                          text={''}
+                          onChange={() => {
+                            if (
+                              !formFields.some((formField) =>
+                                Object.values(formField).includes(DefaultFieldTypes[key]),
+                              )
+                            ) {
+                              const type = DefaultFiledTypeMapping[DefaultFieldTypes[key]];
+                              const field_key = DefaultFieldTypes[key];
+
+                              addField(type, key, field_key);
+                            } else {
+                              const currentField = formFields.find(
+                                (field) => field.field_key === DefaultFieldTypes[key],
+                              );
+
+                              if (currentField) {
+                                formFields.splice(
+                                  formFields.findIndex((field) => field.id === currentField.id),
+                                  1,
+                                );
+                                updateFormStateVariable();
+                              }
+                            }
+                          }}
+                          size='small'
+                        />
+                      </div>
+                    );
+                  },
+                )}
+              </div>
+            </div>
             <div className={styles.customFieldsContainer}>
               <div className={styles.customFieldsHeader}>
                 <div className={styles.customFieldsHeading}>
@@ -218,6 +271,7 @@ const FormBuilder = () => {
                                       field.required = !field.required;
                                       updateFormStateVariable();
                                     }}
+                                    size='small'
                                   />
                                 </div>
 
@@ -281,9 +335,16 @@ const FormBuilder = () => {
                                 value={field.title}
                                 onChange={(event) => {
                                   field.title = event.target.value;
-                                  field.field_key = event.target.value
-                                    .toLowerCase()
-                                    .replace(/ /g, '_');
+
+                                  if (
+                                    !Array.from(Object.values(DefaultFieldTypes)).includes(
+                                      field.field_key as DefaultFieldTypes,
+                                    )
+                                  )
+                                    field.field_key = event.target.value
+                                      .toLowerCase()
+                                      .replace(/ /g, '_');
+
                                   updateFormStateVariable();
                                 }}
                               />
@@ -363,6 +424,7 @@ const FormBuilder = () => {
                                     field.property.is_multiple = !field.property.is_multiple;
                                     updateFormStateVariable();
                                   }}
+                                  size='small'
                                 />
                               )}
                             </div>
@@ -430,6 +492,7 @@ const FormBuilder = () => {
                                   onChange={() => {
                                     addOrRemoveCondition(field);
                                   }}
+                                  size='small'
                                 />
                                 <p className={styles.customFieldLabel}>
                                   Show Field only when the conditions are met.
