@@ -110,6 +110,36 @@ const FormBuilder = () => {
     updateFormStateVariable();
   };
 
+  const removeField = () => {
+    formFields.splice(
+      formFields.findIndex((field) => field.id === selectedField.id),
+      1,
+    );
+    updateFormStateVariable();
+    setShowConfirmationModal(false);
+  };
+
+  const addOrRemoveDefaultField = (key: keyof typeof DefaultFieldTypes) => {
+    if (
+      !formFields.some((formField) => Object.values(formField).includes(DefaultFieldTypes[key]))
+    ) {
+      const type: FieldType = DefaultFiledTypeMapping[DefaultFieldTypes[key]];
+      const field_key: string = DefaultFieldTypes[key];
+
+      addField(type, key, field_key);
+    } else {
+      const currentField = formFields.find((field) => field.field_key === DefaultFieldTypes[key]);
+
+      if (currentField) {
+        formFields.splice(
+          formFields.findIndex((field) => field.id === currentField.id),
+          1,
+        );
+        updateFormStateVariable();
+      }
+    }
+  };
+
   return (
     <>
       <Theme>
@@ -118,18 +148,7 @@ const FormBuilder = () => {
             <div className={styles.confirmationModal}>
               <p>Are you sure you want to delete this field?</p>
               <div className={styles.confirmationButtons}>
-                <button
-                  onClick={() => {
-                    formFields.splice(
-                      formFields.findIndex((field) => field.id === selectedField.id),
-                      1,
-                    );
-                    updateFormStateVariable();
-                    setShowConfirmationModal(false);
-                  }}
-                >
-                  Yes
-                </button>
+                <button onClick={() => removeField()}>Yes</button>
                 <button onClick={() => setShowConfirmationModal(false)}>No</button>
               </div>
             </div>
@@ -146,6 +165,7 @@ const FormBuilder = () => {
                 </div>
                 <p className={styles.requiredFieldsText}>Required Fields</p>
               </div>
+
               <div className={styles.requiredFields}>
                 {(Object.keys(DefaultFieldTypes) as Array<keyof typeof DefaultFieldTypes>).map(
                   (key) => {
@@ -159,30 +179,7 @@ const FormBuilder = () => {
                             Object.values(formField).includes(DefaultFieldTypes[key]),
                           )}
                           text={''}
-                          onChange={() => {
-                            if (
-                              !formFields.some((formField) =>
-                                Object.values(formField).includes(DefaultFieldTypes[key]),
-                              )
-                            ) {
-                              const type = DefaultFiledTypeMapping[DefaultFieldTypes[key]];
-                              const field_key = DefaultFieldTypes[key];
-
-                              addField(type, key, field_key);
-                            } else {
-                              const currentField = formFields.find(
-                                (field) => field.field_key === DefaultFieldTypes[key],
-                              );
-
-                              if (currentField) {
-                                formFields.splice(
-                                  formFields.findIndex((field) => field.id === currentField.id),
-                                  1,
-                                );
-                                updateFormStateVariable();
-                              }
-                            }
-                          }}
+                          onChange={() => addOrRemoveDefaultField(key)}
                           size='small'
                         />
                       </div>
@@ -190,6 +187,10 @@ const FormBuilder = () => {
                   },
                 )}
               </div>
+              <p className={styles.requiredFieldDescription}>
+                *These are important fields for managing insights. Use the slider to add a field to
+                your form instead of creating it yourself.
+              </p>
             </div>
             <div className={styles.customFieldsContainer}>
               <div className={styles.customFieldsHeader}>

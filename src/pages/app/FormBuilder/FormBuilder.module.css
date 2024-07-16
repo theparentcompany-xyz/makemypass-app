@@ -50,10 +50,18 @@
 }
 
 .requiredFields {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   max-width: 30rem;
+}
+
+.requiredFieldDescription {
+  font-size: 0.8rem;
+  margin-top: 0.75rem;
+  max-width: 30rem;
+  font-family: 'Inter', sans-serif;
+  color: #989999;
 }
 
 .requiredField {
