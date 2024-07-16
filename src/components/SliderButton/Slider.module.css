@@ -66,7 +66,45 @@
   transform: translateX(26px);
 }
 
-input:focus + .slider {
+input:focus+.slider {
   box-shadow: 0 0 1px #cccccc1c;
   /* Green box shadow when focused */
+}
+
+
+.switch:has(.small) {
+  width: 42px;
+  height: 26px;
+}
+
+/* .small {
+    transform: scale(0.8);  
+  } */
+
+.small::before {
+  height: 18px;
+  width: 18px;
+}
+
+.small.slider.checked::before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
+
+
+.switch:has(.large) {
+  width: 80px;
+  height: 40px;
+}
+
+.large::before {
+  height: 32px;
+  width: 32px;
+}
+
+.large.slider.checked::before {
+  -webkit-transform: translateX(40px);
+  -ms-transform: translateX(40px);
+  transform: translateX(40px);
 }

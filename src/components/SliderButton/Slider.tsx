@@ -6,15 +6,16 @@ type Props = {
   onChange: () => void;
   labelStyle?: React.CSSProperties;
   sliderStyle?: React.CSSProperties;
+  size?: 'small' | 'medium' | 'large';
 };
 
-const Slider = ({ checked, onChange, text, labelStyle, sliderStyle }: Props) => {
+const Slider = ({ checked, onChange, text, labelStyle, sliderStyle, size }: Props) => {
   if (!text) {
     return (
       <label className={styles.switch} style={sliderStyle}>
         <input type='checkbox' checked={checked} onChange={onChange} />
         <span
-          className={`${styles.slider} ${styles.round} ${checked ? `${styles.checked}` : ''}`}
+          className={`${styles.slider} ${styles.round} ${checked ? `${styles.checked}` : ''} ${size && styles[size]}`}
         ></span>
       </label>
     );
@@ -30,7 +31,7 @@ const Slider = ({ checked, onChange, text, labelStyle, sliderStyle }: Props) => 
       <label className={styles.switch} style={sliderStyle}>
         <input type='checkbox' checked={checked} onChange={onChange} />
         <span
-          className={`${styles.slider} ${styles.round} ${checked ? `${styles.checked}` : ''}`}
+          className={`${styles.slider} ${styles.round} ${checked ? `${styles.checked}` : ''} ${size && styles[size]}`}
         ></span>
       </label>
     </div>
