@@ -67,13 +67,13 @@ const FormBuilder = () => {
     const defaultField = {
       id: uuidv4(),
       type: type || FieldType.Text,
-      title: key || 'Name',
+      title: key || 'Field Name',
       hidden: false,
       unique: null,
       options: [],
       property: {},
       required: true,
-      field_key: field_key || 'name',
+      field_key: field_key || 'text',
       conditions: [],
       team_field: false,
       description: null,
@@ -188,8 +188,8 @@ const FormBuilder = () => {
                 )}
               </div>
               <p className={styles.requiredFieldDescription}>
-                *These are important fields for managing insights. Use the slider to add a field to
-                your form instead of creating it yourself.
+                *These are important fields for managing insights. Use the slider to add such a
+                field to your form instead of creating it yourself.
               </p>
             </div>
             <div className={styles.customFieldsContainer}>

@@ -105,7 +105,7 @@ const DynamicForm = ({
                   }
                   value={formData[field.field_key] || ''}
                   type={field.type}
-                  icon={getIcon(field.field_key)}
+                  icon={getIcon(field.type)}
                   required={field.required}
                   description={field.description}
                 />
@@ -123,7 +123,7 @@ const DynamicForm = ({
                   error={['']}
                   value={formData[field.field_key] || ''}
                   type={field.type}
-                  icon={getIcon(field.field_key)}
+                  icon={getIcon(field.type)}
                   required={field.required}
                   description={field.description}
                 />
