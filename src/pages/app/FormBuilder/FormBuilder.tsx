@@ -62,12 +62,11 @@ const FormBuilder = () => {
     updateFormStateVariable();
   };
 
-  const addField = (type?: FieldType, key?: string, field_key?: string) => {
-    console.log(type, key, field_key);
+  const addField = (type?: FieldType, title?: string, field_key?: string) => {
     const defaultField = {
       id: uuidv4(),
       type: type || FieldType.Text,
-      title: key || 'Field Name',
+      title: title || 'Field Name',
       hidden: false,
       unique: null,
       options: [],
@@ -119,16 +118,16 @@ const FormBuilder = () => {
     setShowConfirmationModal(false);
   };
 
-  const addOrRemoveDefaultField = (key: keyof typeof DefaultFieldTypes) => {
+  const addOrRemoveDefaultField = (title: keyof typeof DefaultFieldTypes) => {
     if (
-      !formFields.some((formField) => Object.values(formField).includes(DefaultFieldTypes[key]))
+      !formFields.some((formField) => Object.values(formField).includes(DefaultFieldTypes[title]))
     ) {
-      const type: FieldType = DefaultFiledTypeMapping[DefaultFieldTypes[key]];
-      const field_key: string = DefaultFieldTypes[key];
+      const type: FieldType = DefaultFiledTypeMapping[DefaultFieldTypes[title]];
+      const field_key: string = DefaultFieldTypes[title];
 
-      addField(type, key, field_key);
+      addField(type, title, field_key);
     } else {
-      const currentField = formFields.find((field) => field.field_key === DefaultFieldTypes[key]);
+      const currentField = formFields.find((field) => field.field_key === DefaultFieldTypes[title]);
 
       if (currentField) {
         formFields.splice(
@@ -167,25 +166,25 @@ const FormBuilder = () => {
               </div>
 
               <div className={styles.requiredFields}>
-                {(Object.keys(DefaultFieldTypes) as Array<keyof typeof DefaultFieldTypes>).map(
-                  (key) => {
-                    return (
-                      <div className={styles.requiredField}>
-                        <div>
-                          <p className={styles.requiredLabel}>{key}</p>
-                        </div>
-                        <Slider
-                          checked={formFields.some((formField) =>
-                            Object.values(formField).includes(DefaultFieldTypes[key]),
-                          )}
-                          text={''}
-                          onChange={() => addOrRemoveDefaultField(key)}
-                          size='small'
-                        />
+                {Object.entries(DefaultFieldTypes).map(([key, value]) => {
+                  return (
+                    <div className={styles.requiredField}>
+                      <div>
+                        <p className={styles.requiredLabel}>{key}</p>
                       </div>
-                    );
-                  },
-                )}
+                      <Slider
+                        checked={formFields.some((formField) =>
+                          Object.values(formField).includes(value),
+                        )}
+                        text={''}
+                        onChange={() =>
+                          addOrRemoveDefaultField(key as keyof typeof DefaultFieldTypes)
+                        }
+                        size='small'
+                      />
+                    </div>
+                  );
+                })}
               </div>
               <p className={styles.requiredFieldDescription}>
                 *These are important fields for managing insights. Use the slider to add such a
