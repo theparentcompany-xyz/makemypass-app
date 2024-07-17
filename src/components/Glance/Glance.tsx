@@ -97,7 +97,23 @@ const Glance = ({
           }
 
           const newStrucure: progressDataType = [];
-          const colors = ['#47C97E', '#7662FC', '#C33D7B', '#FBD85B', '#5B75FB', '#D2D4D7'];
+          const colors = [
+            '#47C97E',
+            '#7662FC',
+            '#C33D7B',
+            '#FBD85B',
+            '#5B75FB',
+            '#D2D4D7',
+            '#BEC2C9',
+            '#59D168',
+            '#6270D9',
+            '#A83C6F',
+            '#FFE347',
+            '#7C9BF2',
+            '#E6E8EC',
+            '#2EAF6D',
+            '#9B4FD3',
+          ];
 
           for (const [key, value] of Object.entries(category)) {
             newStrucure.push({

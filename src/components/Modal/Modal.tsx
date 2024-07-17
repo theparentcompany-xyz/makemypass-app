@@ -22,7 +22,11 @@ const Modal = ({ children, onClose, style, type, title, ...inputProps }: ModalPr
       </>
     ) : (
       <>
-        <div onClick={onClose} className={styles.backgroundBlur} style={style}></div>
+        <div
+          onClick={onClose}
+          className={styles.backgroundBlur}
+          style={{ ...style, zIndex: 105 }}
+        ></div>
         <dialog {...inputProps} className={styles.onClickModal} style={style}>
           {title && (
             <div className={styles.modalHeader}>
