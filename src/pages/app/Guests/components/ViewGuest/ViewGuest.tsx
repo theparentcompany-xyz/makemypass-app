@@ -11,13 +11,8 @@ import { FaCheck } from 'react-icons/fa6';
 import { checkInUser } from '../../../../../apis/scan';
 import { formatDate } from '../../../../../common/commonFunctions';
 import { isArray } from 'chart.js/helpers';
-import {
-  deleteSubmission,
-  getMailLog,
-  getVisistedVenues,
-  initateRefund,
-} from '../../../../../apis/guests';
-import { FaMailBulk, FaTrash, FaWalking } from 'react-icons/fa';
+import { deleteSubmission, getVisistedVenues, initateRefund } from '../../../../../apis/guests';
+import { FaTrash, FaWalking } from 'react-icons/fa';
 import Modal from '../../../../../components/Modal/Modal';
 import { VisitedVenues } from './types';
 
@@ -39,7 +34,7 @@ const ViewGuest = ({
     value: false,
   });
   const [deleteModal, setDeleteModal] = useState(false);
-  const [mailLog, setMailLog] = useState([]);
+  // const [mailLog, setMailLog] = useState([]);
   const [visitedVenues, setVisitedVenues] = useState<VisitedVenues>({
     status: false,
     venues: [],
@@ -342,7 +337,7 @@ const ViewGuest = ({
                     <span>Check-In User</span>
                   </div>
                 )}
-                <div
+                {/* <div
                   className={styles.icon}
                   onClick={() => {
                     if (typeof formData['id'] === 'string')
@@ -351,7 +346,7 @@ const ViewGuest = ({
                 >
                   <FaMailBulk size={20} color='#8E8E8E' />
                   <span>View Mail Log</span>
-                </div>
+                </div> */}
               </div>
             )}
             <div

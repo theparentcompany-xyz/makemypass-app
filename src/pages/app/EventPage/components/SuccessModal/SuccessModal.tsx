@@ -1,13 +1,10 @@
 import { motion } from 'framer-motion';
 import styles from './SuccessModal.module.css';
 import Modal from '../../../../../components/Modal/Modal';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { SuccessModalProps } from '../../types';
 import { HashLoader } from 'react-spinners';
 import { BsDownload } from 'react-icons/bs';
-
-import ScratchCard from 'reactjs-scratchcard';
-import scratchImage from './scratchImage.png';
 
 const SuccessModal = ({
   success,
@@ -94,7 +91,7 @@ const SuccessModal = ({
                       hello@makemypass.com
                     </p>
 
-                    <button
+                    {/* <button
                       onClick={() => {
                         setSuccess({ showModal: false });
                         setScratchCard(true);
@@ -102,7 +99,7 @@ const SuccessModal = ({
                       className={styles.viewTicketButton}
                     >
                       Next
-                    </button>
+                    </button> */}
                   </div>
                 ) : (
                   <div className={styles.loaderContainer}>
@@ -128,31 +125,7 @@ const SuccessModal = ({
                   Scratch the card to reveal your discount code
                 </p>
                 <div className={styles.scratchCardImage}></div>
-                <ScratchCard
-                  brushSize={10}
-                  fadeOutOnComplete={true}
-                  finishPercent={50}
-                  height={'10rem'}
-                  image={scratchImage}
-                  transitionProps={{ timeout: 200 }}
-                  onComplete={() => {
-                    console.log('completed');
-                  }}
-                  width={'10rem'}
-                >
-                  <span
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      textAlign: 'center',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    hehehehehe
-                  </span>
-                </ScratchCard>
+                {/* Scratch Card */}
               </div>
             </div>
           </Modal>
