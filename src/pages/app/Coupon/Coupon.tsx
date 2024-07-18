@@ -10,16 +10,17 @@ import Modal from '../../../components/Modal/Modal';
 import InputField from '../../auth/Login/InputField';
 import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
-import { FormFieldType, TicketType } from '../../../apis/types';
+import { TicketType } from '../../../apis/types';
 import { getTickets } from '../../../apis/tickets';
 import Slider from '../../../components/SliderButton/Slider';
 import { LuPlus } from 'react-icons/lu';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import SelectComponent from '../FormBuilder/SelectComponent';
-import { getFormFields } from '../../../apis/publicpage';
 import { getConditions } from '../FormBuilder/constant';
 import toast from 'react-hot-toast';
+import { getForm } from '../../../apis/formbuilder';
+import { Field } from '../FormBuilder/types';
 
 const Coupon = () => {
   type CouponModalType = {
@@ -44,7 +45,7 @@ const Coupon = () => {
 
   const [tickets, setTickets] = useState<TicketType[]>([]);
   const [coupons, setCoupons] = useState<CouponType[]>([]);
-  const [formFields, setFormFields] = useState<FormFieldType[]>([]);
+  const [formFields, setFormFields] = useState<Field[]>([]);
   const [limitDiscountUsage, setLimitDiscountUsage] = useState(false);
   const [newCouponData, setNewCouponData] = useState<CreateCouponType>({
     code: '',
@@ -61,7 +62,7 @@ const Coupon = () => {
   useEffect(() => {
     listCoupons(eventId, setCoupons);
     getTickets(eventId, setTickets);
-    getFormFields(eventId, setFormFields);
+    getForm(eventId, setFormFields);
   }, []);
 
   const getFieldType = (fieldId: string) => {

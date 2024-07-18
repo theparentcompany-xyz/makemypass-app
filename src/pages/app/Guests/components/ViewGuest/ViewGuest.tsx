@@ -1,5 +1,5 @@
 import styles from './ViewGuest.module.css';
-import { FormDataType, FormFieldType } from '../../../../../apis/types';
+import { FormDataType } from '../../../../../apis/types';
 import { ResentTicket, SelectedGuest } from '../../types';
 import { Dispatch, useState } from 'react';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
@@ -16,14 +16,12 @@ import { FaTrash } from 'react-icons/fa';
 import Modal from '../../../../../components/Modal/Modal';
 
 const ViewGuest = ({
-  formFields,
   formData,
   setSelectedGuestId,
   eventId,
   setResentTicket,
   type,
 }: {
-  formFields: FormFieldType[];
   formData: FormDataType;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;
@@ -365,26 +363,20 @@ const ViewGuest = ({
           )}
           <div className={styles.bottomSection}>
             {Object.keys(formData).map((key: string) => {
-              const fieldName = formFields.find((field) => field.field_key === key)?.title;
-              if (
-                key !== 'name' &&
-                key !== 'email' &&
-                key !== 'registered_at' &&
-                key !== 'is_checked_in' &&
-                fieldName
-              ) {
-                return (
-                  formData[key] && (
-                    <div className={styles.field} key={key}>
-                      <p className={styles.fieldLabel}>{key === 'amount' ? 'Amount' : fieldName}</p>
-                      <p className={styles.fieldData}>
-                        {key === 'amount' && Number(formData[key]) <= 0 ? 'Free' : formData[key]}
-                      </p>
-                    </div>
-                  )
-                );
-              }
-              return null;
+              const fieldName = key;
+
+              return (
+                formData[key] && (
+                  <div className={styles.field} key={key}>
+                    <p className={styles.fieldLabel}>{key === 'amount' ? 'Amount' : fieldName}</p>
+                    <p className={styles.fieldData}>
+                      {key === 'amount' && Number(formData[key]) <= 0
+                        ? 'Free'
+                        : formData[key].toString()}
+                    </p>
+                  </div>
+                )
+              );
             })}
           </div>
         </div>

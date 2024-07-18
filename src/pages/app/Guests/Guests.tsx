@@ -127,7 +127,6 @@ const Guests = () => {
           <>
             <div onClick={onClose} className={styles.backgroundBlur}></div>
             <ViewGuest
-              formFields={eventFormData.form}
               formData={formData}
               setSelectedGuestId={setSelectedGuestId}
               eventId={eventId}
