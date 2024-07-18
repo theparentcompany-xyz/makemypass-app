@@ -9,13 +9,7 @@ import {
   SuccessModalProps,
 } from '../pages/app/EventPage/types';
 import React, { Dispatch } from 'react';
-import {
-  ErrorMessages,
-  EventType,
-  FormDataType,
-  FormFieldType,
-  RazorpayPaymentDetails,
-} from './types';
+import { ErrorMessages, EventType, FormDataType, RazorpayPaymentDetails } from './types';
 import { convertWebmToWav } from './helpers';
 
 declare global {
@@ -308,20 +302,6 @@ export const getEventInfo = async (
     })
     .catch((error) => {
       if (error.response.data.statusCode === 404) setEventNotFound && setEventNotFound(true);
-    });
-};
-
-export const getFormFields = async (
-  eventId: string,
-  setFormFields: Dispatch<React.SetStateAction<FormFieldType[]>>,
-) => {
-  publicGateway
-    .get(makeMyPass.getFormFields(eventId))
-    .then((response) => {
-      setFormFields(response.data.response.form_fields);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Fetching Form Fields');
     });
 };
 

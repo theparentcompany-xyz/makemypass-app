@@ -26,9 +26,8 @@ import { AnimatePresence } from 'framer-motion';
 import Modal from '../../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
 import { GuestsType, SelectedGuest } from '../../Guests/types';
-import { FormDataType, FormFieldType } from '../../../../apis/types';
+import { FormDataType } from '../../../../apis/types';
 import ViewGuest from '../../Guests/components/ViewGuest/ViewGuest';
-import { getFormFields } from '../../../../apis/publicpage';
 import { downloadTicket } from '../../../../apis/guests';
 import { isArray } from 'chart.js/helpers';
 
@@ -72,13 +71,9 @@ const Overview = () => {
     setFormData(selectedGuestData[0]);
   };
 
-  const [formFields, setFormFields] = useState<FormFieldType[]>([]);
-
   useEffect(() => {
     if ((eventId && hostList.length === 0 && userRole == 'Admin') || userRole == 'Owner')
       getHosts(eventId, setHostList);
-
-    getFormFields(eventId, setFormFields);
   }, [eventId]);
 
   useEffect(() => {
@@ -239,7 +234,6 @@ const Overview = () => {
         <>
           <div onClick={onClose} className={styles.backgroundBlur}></div>
           <ViewGuest
-            formFields={formFields}
             formData={formData}
             setSelectedGuestId={setSelectedGuestId}
             eventId={eventId}
