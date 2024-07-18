@@ -64,6 +64,10 @@
   color: #989999;
 }
 
+.uniqueField {
+  max-width: 18rem;
+}
+
 .requiredField {
   display: flex;
   align-items: center;
