@@ -6,6 +6,7 @@ import { Dispatch } from 'react';
 import { ErrorMessages, FormDataType } from './types';
 import { isArray } from 'chart.js/helpers';
 import { BulkUploadType } from '../pages/app/Guests/components/BulkUpload/types';
+import { VisitedVenues } from '../pages/app/Guests/components/ViewGuest/types';
 
 export const resentEventTicket = async (
   ticketData: ResentTicket,
@@ -251,5 +252,23 @@ export const uploadFile = (
     })
     .finally(() => {
       getFileStatus(eventId, setFileStatus);
+    });
+};
+
+export const getVisistedVenues = async (
+  eventId: string,
+  eventRegisterId: string,
+  setVisitedVenues: Dispatch<React.SetStateAction<VisitedVenues>>,
+) => {
+  privateGateway
+    .get(makeMyPass.listVisitedVenues(eventId, eventRegisterId))
+    .then((response) => {
+      setVisitedVenues({
+        status: true,
+        venues: response.data.response,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
     });
 };

@@ -20,9 +20,10 @@ import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
 import { FaChevronDown } from 'react-icons/fa';
 import { AnimatePresence, Reorder } from 'framer-motion';
 import InputField from '../../auth/Login/InputField';
-import { MdClose, MdDelete, MdOutlineSdStorage } from 'react-icons/md';
+import { MdDelete, MdOutlineSdStorage } from 'react-icons/md';
 import { customStyles } from '../EventPage/constants';
 import Modal from '../../../components/Modal/Modal';
+import { GrContract } from 'react-icons/gr';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -126,6 +127,7 @@ const FormBuilder = () => {
       const field_key: string = DefaultFieldTypes[title];
 
       addField(type, title, field_key);
+      window.scrollTo(0, document.body.scrollHeight);
     } else {
       const currentField = formFields.find((field) => field.field_key === DefaultFieldTypes[title]);
 
@@ -297,9 +299,9 @@ const FormBuilder = () => {
                                       }}
                                     />
                                   )}
-                                  <MdClose
+                                  <GrContract
                                     className='pointer'
-                                    size={25}
+                                    size={20}
                                     color='#606264'
                                     onClick={() => {
                                       setSelectedField({} as Field);
@@ -403,11 +405,15 @@ const FormBuilder = () => {
                               )}
 
                             <div className={styles.centerRow}>
-                              <div className={styles.requiredCheckbox}>
-                                Unique &nbsp;
-                                <input
+                              <div className={styles.uniqueField}>
+                                <InputField
+                                  name='unique'
+                                  id='unique'
+                                  icon={<FaRegEyeSlash size={20} color='#606264' />}
                                   type='number'
-                                  value={field.unique ?? undefined}
+                                  placeholder='Unique'
+                                  description='This count indicates the number of times a value can be entered uniquely'
+                                  value={field.unique?.toString()}
                                   onChange={(event) => {
                                     if (parseInt(event.target.value) < 1) event.target.value = '1';
                                     field.unique = parseInt(event.target.value);

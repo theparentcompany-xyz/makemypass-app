@@ -1,7 +1,7 @@
 import styles from './ViewGuest.module.css';
 import { FormDataType, FormFieldType } from '../../../../../apis/types';
 import { ResentTicket, SelectedGuest } from '../../types';
-import { Dispatch, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { shortListUser } from '../../../../../apis/guest';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -11,9 +11,10 @@ import { FaCheck } from 'react-icons/fa6';
 import { checkInUser } from '../../../../../apis/scan';
 import { formatDate } from '../../../../../common/commonFunctions';
 import { isArray } from 'chart.js/helpers';
-import { deleteSubmission, initateRefund } from '../../../../../apis/guests';
-import { FaTrash } from 'react-icons/fa';
+import { deleteSubmission, getVisistedVenues, initateRefund } from '../../../../../apis/guests';
+import { FaTrash, FaWalking } from 'react-icons/fa';
 import Modal from '../../../../../components/Modal/Modal';
+import { VisitedVenues } from './types';
 
 const ViewGuest = ({
   formFields,
@@ -35,6 +36,10 @@ const ViewGuest = ({
     value: false,
   });
   const [deleteModal, setDeleteModal] = useState(false);
+  const [visitedVenues, setVisitedVenues] = useState<VisitedVenues>({
+    status: false,
+    venues: [],
+  });
   const [initateRefundClicked, setInitateRefundClicked] = useState(false);
 
   return (
@@ -71,6 +76,34 @@ const ViewGuest = ({
           </Modal>
         </>
       )}
+      {visitedVenues.status && (
+        <div className={styles.topLayer}>
+          <Modal
+            title='Visited Venues'
+            onClose={() => {
+              setVisitedVenues({
+                status: false,
+                venues: [],
+              });
+            }}
+          >
+            <div className={styles.visitedVenues}>
+              {visitedVenues.venues.length > 0 ? (
+                visitedVenues.venues.map((venue, index) => {
+                  return (
+                    <div className={styles.venue}>
+                      <p className={styles.venueName}>{`${index + 1}) ${venue.name},`}</p>
+                      <p className={styles.venueTime}>{formatDate(venue.visited_at, true)}</p>
+                    </div>
+                  );
+                })
+              ) : (
+                <p className={styles.noVisitedVenues}>No Visited Venues</p>
+              )}
+            </div>
+          </Modal>
+        </div>
+      )}
       <Modal type='side' title='View Guest' onClose={() => setSelectedGuestId(null)}>
         <div className={styles.closeButton}>
           <SecondaryButton
@@ -92,11 +125,15 @@ const ViewGuest = ({
                 <p className={styles.name}>
                   <span>{formData['name'] || formData['fullname']} </span>
                   {formData['is_approved'] && <span className={styles.rowType}>Shortlisted</span>}
+                  {formData['category'] && (
+                    <div className={styles.type}>{formData['category']}</div>
+                  )}
                 </p>
-                <p className={styles.ticketCode}>Ticket Code: {formData['ticket_code']}</p>
                 <p className={styles.emailAddress}>{formData['email']}</p>
+                <p className={styles.ticketCode}>
+                  <span>Ticket Code:</span> {formData['ticket_code']}
+                </p>
               </div>
-              {formData['category'] && <div className={styles.type}>{formData['category']}</div>}
             </div>
             <div className={styles.tsRow2}>
               <div
@@ -268,6 +305,22 @@ const ViewGuest = ({
                   <MdDownload size={20} color='#8E8E8E' />
                   <span>View Ticket</span>
                 </div>
+                {formData['is_checked_in'] && (
+                  <div
+                    className={styles.icon}
+                    onClick={() => {
+                      setVisitedVenues((prevState) => ({
+                        ...prevState,
+                        status: true,
+                      }));
+                      if (typeof formData['id'] === 'string')
+                        getVisistedVenues(eventId, formData['id'], setVisitedVenues);
+                    }}
+                  >
+                    <FaWalking size={20} color='#8E8E8E' />
+                    <span>View Visisted Venues</span>
+                  </div>
+                )}
                 {!formData['check_in_date'] && (
                   <div
                     onClick={() => {
