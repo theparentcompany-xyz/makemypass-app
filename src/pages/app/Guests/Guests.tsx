@@ -32,8 +32,9 @@ import toast from 'react-hot-toast';
 import Scanner from '../../../components/Scanner/Scanner';
 import EventForm from '../EventPage/components/EventForm/EventForm';
 import { useParams } from 'react-router';
-import EditGuest from './components/EditGuest/EditGuest';
+// import EditGuest from './components/EditGuest/EditGuest';
 import BulkUpload from './components/BulkUpload/BulkUpload';
+import { RegistrationDataType } from '../Overview/Overview/types';
 
 const Guests = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -51,7 +52,7 @@ const Guests = () => {
     id: '',
     type: '',
   });
-  const [selectedGuest, setSelectedGuest] = useState<GuestsType | null>(null);
+  const [selectedGuest, setSelectedGuest] = useState<RegistrationDataType | undefined>();
 
   const [resentTicket, setResentTicket] = useState<ResentTicket>({
     status: false,
@@ -61,7 +62,7 @@ const Guests = () => {
 
   const getGuestData = () => {
     if (selectedGuestId && selectedGuestId.id)
-      getIndividualGuestInfo(eventId, selectedGuestId.id, setFormData, setSelectedGuest);
+      getIndividualGuestInfo(eventId, selectedGuestId.id, setSelectedGuest);
   };
 
   const { event_id: eventId, current_user_role: userRole } = JSON.parse(
@@ -92,8 +93,8 @@ const Guests = () => {
       selectedGuestId.type === 'download' &&
       !isArray(selectedGuestId.id)
     )
-      if (selectedGuestId.id && selectedGuest?.name)
-        downloadTicket(eventId, selectedGuestId?.id, selectedGuest?.name);
+      if (selectedGuestId.id && selectedGuest?.submission.Name)
+        downloadTicket(eventId, selectedGuestId?.id, selectedGuest?.submission.Name);
       else toast.error('Ticket download failed');
   }, [selectedGuestId]);
 
@@ -127,7 +128,7 @@ const Guests = () => {
           <>
             <div onClick={onClose} className={styles.backgroundBlur}></div>
             <ViewGuest
-              formData={formData}
+              selectedGuestData={selectedGuest}
               setSelectedGuestId={setSelectedGuestId}
               eventId={eventId}
               setResentTicket={setResentTicket}
@@ -180,7 +181,7 @@ const Guests = () => {
         </Modal>
       )}
 
-      {selectedGuestId && eventFormData && selectedGuestId.type === 'edit' && (
+      {/* {selectedGuestId && eventFormData && selectedGuestId.type === 'edit' && (
         <EditGuest
           formData={formData}
           setFormData={setFormData}
@@ -191,7 +192,7 @@ const Guests = () => {
           eventId={eventId}
           onClose={onClose}
         />
-      )}
+      )} */}
 
       {guests ? (
         <>

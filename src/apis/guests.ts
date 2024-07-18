@@ -7,6 +7,7 @@ import { ErrorMessages, FormDataType } from './types';
 import { isArray } from 'chart.js/helpers';
 import { BulkUploadType } from '../pages/app/Guests/components/BulkUpload/types';
 import { VisitedVenues } from '../pages/app/Guests/components/ViewGuest/types';
+import { RegistrationDataType } from '../pages/app/Overview/Overview/types';
 
 export const resentEventTicket = async (
   ticketData: ResentTicket,
@@ -174,16 +175,11 @@ export const listGuests = async (
 export const getIndividualGuestInfo = async (
   eventId: string,
   eventRegisterId: string,
-  setEventFormData: Dispatch<React.SetStateAction<FormDataType>>,
-  setSelectedGuest: Dispatch<React.SetStateAction<GuestsType | null>>,
+  setSelectedGuest: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>,
 ) => {
   privateGateway
     .get(makeMyPass.getGuestInfo(eventId, eventRegisterId))
     .then((response) => {
-      setEventFormData({
-        id: eventRegisterId,
-        ...response.data.response,
-      });
       setSelectedGuest(response.data.response);
     })
     .catch(() => {

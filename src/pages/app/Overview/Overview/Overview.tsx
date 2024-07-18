@@ -7,7 +7,7 @@ import styles from './Overview.module.css';
 import SectionButton from '../../../../components/SectionButton/SectionButton';
 import { useEffect, useRef, useState } from 'react';
 
-import { hostData, hostId, hostList, recentRegistration } from './types';
+import { hostData, hostId, hostList, recentRegistration, RegistrationDataType } from './types';
 
 import { HashLoader } from 'react-spinners';
 import { getHosts } from '../../../../apis/overview';
@@ -26,9 +26,8 @@ import { AnimatePresence } from 'framer-motion';
 import Modal from '../../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
 import { GuestsType, SelectedGuest } from '../../Guests/types';
-import { FormDataType } from '../../../../apis/types';
 import ViewGuest from '../../Guests/components/ViewGuest/ViewGuest';
-import { downloadTicket } from '../../../../apis/guests';
+import { downloadTicket, getIndividualGuestInfo } from '../../../../apis/guests';
 import { isArray } from 'chart.js/helpers';
 
 const Overview = () => {
@@ -49,7 +48,7 @@ const Overview = () => {
     type: 'edit',
   });
 
-  const [formData, setFormData] = useState<FormDataType>({});
+  const [selectedGuestData, setSelectedGuestData] = useState<RegistrationDataType>();
 
   const { eventTitle } = useParams<{ eventTitle: string }>();
 
@@ -68,7 +67,7 @@ const Overview = () => {
       (guest) => guest?.id === selectedGuestId?.id,
     );
     setSelectedGuest(selectedGuestData[0]);
-    setFormData(selectedGuestData[0]);
+    if (selectedGuestId) getIndividualGuestInfo(eventId, selectedGuestId.id, setSelectedGuestData);
   };
 
   useEffect(() => {
@@ -230,17 +229,20 @@ const Overview = () => {
 
   return (
     <Theme>
-      {selectedGuestId && formData && selectedGuestId.id && selectedGuestId.type == 'view' && (
-        <>
-          <div onClick={onClose} className={styles.backgroundBlur}></div>
-          <ViewGuest
-            formData={formData}
-            setSelectedGuestId={setSelectedGuestId}
-            eventId={eventId}
-            type='overview'
-          />
-        </>
-      )}
+      {selectedGuestId &&
+        selectedGuestData &&
+        selectedGuestId.id &&
+        selectedGuestId.type == 'view' && (
+          <>
+            <div onClick={onClose} className={styles.backgroundBlur}></div>
+            <ViewGuest
+              selectedGuestData={selectedGuestData}
+              setSelectedGuestId={setSelectedGuestId}
+              eventId={eventId}
+              type='overview'
+            />
+          </>
+        )}
 
       <>
         {openAddModal && (
