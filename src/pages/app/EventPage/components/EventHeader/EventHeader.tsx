@@ -155,9 +155,13 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                   <p dangerouslySetInnerHTML={{ __html: eventData.description }}></p>
                 ) : (
                   <p
-                    dangerouslySetInnerHTML={{
-                      __html: eventData?.description?.substring(0, 275).concat('...'),
-                    }}
+                    dangerouslySetInnerHTML={
+                      eventData.description.length > 275
+                        ? {
+                            __html: eventData?.description?.substring(0, 275).concat('...'),
+                          }
+                        : { __html: eventData.description }
+                    }
                   ></p>
                 )}
               </motion.p>
