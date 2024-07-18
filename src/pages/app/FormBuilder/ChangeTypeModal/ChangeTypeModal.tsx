@@ -66,7 +66,9 @@ const ChangeTypeModal = ({
                 changeTypeModal(field, value);
               }}
               style={
-                field && field.type === (type as FieldType) ? { border: `2px solid #565B63` } : {}
+                field && field.type === FieldType[type as keyof typeof FieldType]
+                  ? { border: `2px solid #565B63` }
+                  : {}
               }
             >
               <span

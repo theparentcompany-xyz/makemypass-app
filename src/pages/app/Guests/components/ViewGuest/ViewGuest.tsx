@@ -1,7 +1,7 @@
 import styles from './ViewGuest.module.css';
 import { FormDataType, FormFieldType } from '../../../../../apis/types';
 import { ResentTicket, SelectedGuest } from '../../types';
-import { Dispatch, useEffect, useState } from 'react';
+import { Dispatch, useState } from 'react';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { shortListUser } from '../../../../../apis/guest';
 import { AnimatePresence, motion } from 'framer-motion';
