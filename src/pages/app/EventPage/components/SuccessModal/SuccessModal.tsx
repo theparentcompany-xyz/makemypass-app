@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion';
 import styles from './SuccessModal.module.css';
 import Modal from '../../../../../components/Modal/Modal';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { SuccessModalProps } from '../../types';
 import { HashLoader } from 'react-spinners';
 import { BsDownload } from 'react-icons/bs';
+
+import ScratchCard from 'reactjs-scratchcard';
+import scratchImage from './scratchImage.png';
 
 const SuccessModal = ({
   success,
@@ -13,6 +16,8 @@ const SuccessModal = ({
   success: SuccessModalProps;
   setSuccess: Dispatch<SetStateAction<SuccessModalProps>>;
 }) => {
+  const [scratchCard, setScratchCard] = useState(false);
+
   return (
     <div>
       <motion.div
@@ -77,7 +82,7 @@ const SuccessModal = ({
                           onClick={() => {
                             window.open(success.ticketURL, '_blank');
                           }}
-                          className={styles.viewTicketButton}
+                          className={styles.downloadTicketButton}
                         >
                           View Ticket
                         </button>
@@ -88,6 +93,16 @@ const SuccessModal = ({
                       If you have any questions or need assistance, please contact us at
                       hello@makemypass.com
                     </p>
+
+                    <button
+                      onClick={() => {
+                        setSuccess({ showModal: false });
+                        setScratchCard(true);
+                      }}
+                      className={styles.viewTicketButton}
+                    >
+                      Next
+                    </button>
                   </div>
                 ) : (
                   <div className={styles.loaderContainer}>
@@ -97,6 +112,50 @@ const SuccessModal = ({
               </div>
             </Modal>
           </>
+        )}
+
+        {!success.showModal && scratchCard && (
+          <Modal
+            title='Scratch Card'
+            onClose={() => {
+              setScratchCard(false);
+            }}
+          >
+            <div className={styles.scratchCardContainer}>
+              <div className={styles.scratchCard}>
+                <p className={styles.modalTitle}>Scratch to Reveal</p>
+                <p className={styles.bookingConfirmedSubText}>
+                  Scratch the card to reveal your discount code
+                </p>
+                <div className={styles.scratchCardImage}></div>
+                <ScratchCard
+                  brushSize={10}
+                  fadeOutOnComplete={true}
+                  finishPercent={50}
+                  height={'10rem'}
+                  image={scratchImage}
+                  transitionProps={{ timeout: 200 }}
+                  onComplete={() => {
+                    console.log('completed');
+                  }}
+                  width={'10rem'}
+                >
+                  <span
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      textAlign: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    hehehehehe
+                  </span>
+                </ScratchCard>
+              </div>
+            </div>
+          </Modal>
         )}
       </motion.div>
     </div>

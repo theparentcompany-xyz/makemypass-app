@@ -18,6 +18,14 @@
   text-align: center;
 }
 
+.scratchCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+}
+
 .modalContainer {
   display: flex;
   justify-content: center;
