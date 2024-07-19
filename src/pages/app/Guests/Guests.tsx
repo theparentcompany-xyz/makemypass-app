@@ -9,6 +9,7 @@ import {
   downloadTicket,
   getEditGuestData,
   getGuestInfo,
+  getIndividualGuestInfo,
   listGuests,
   resentEventTicket,
 } from '../../../apis/guests';
@@ -61,8 +62,9 @@ const Guests = () => {
   });
 
   const getGuestData = () => {
-    if (selectedGuestId && selectedGuestId.id)
+    if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'edit')
       getEditGuestData(eventId, selectedGuestId.id, setSelectedGuest);
+    else if (selectedGuestId) getIndividualGuestInfo(eventId, selectedGuestId.id, setSelectedGuest);
   };
 
   const { event_id: eventId, current_user_role: userRole } = JSON.parse(
