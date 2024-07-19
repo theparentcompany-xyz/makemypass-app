@@ -83,7 +83,7 @@ export const editSubmissons = async (
 export const getEditGuestData = async (
   eventId: string,
   eventRegisterId: string,
-  setFormData: Dispatch<React.SetStateAction<RegistrationDataType>>,
+  setFormData: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>,
 ) => {
   privateGateway
     .get(makeMyPass.editSubmission(eventId, eventRegisterId))

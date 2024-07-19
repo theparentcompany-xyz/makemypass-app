@@ -9,7 +9,6 @@ import {
   downloadTicket,
   getEditGuestData,
   getGuestInfo,
-  getIndividualGuestInfo,
   listGuests,
   resentEventTicket,
 } from '../../../apis/guests';
@@ -53,7 +52,7 @@ const Guests = () => {
     id: '',
     type: '',
   });
-  const [selectedGuest, setSelectedGuest] = useState<RegistrationDataType | undefined>();
+  const [selectedGuest, setSelectedGuest] = useState<RegistrationDataType>();
 
   const [resentTicket, setResentTicket] = useState<ResentTicket>({
     status: false,
