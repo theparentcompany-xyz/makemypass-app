@@ -80,6 +80,21 @@ export const editSubmissons = async (
   }
 };
 
+export const getEditGuestData = async (
+  eventId: string,
+  eventRegisterId: string,
+  setFormData: Dispatch<React.SetStateAction<RegistrationDataType>>,
+) => {
+  privateGateway
+    .get(makeMyPass.editSubmission(eventId, eventRegisterId))
+    .then((response) => {
+      setFormData(response.data.response);
+    })
+    .catch(() => {
+      toast.error('Something went wrong');
+    });
+};
+
 export const downloadTicket = async (eventId: string, ticketCode: string, name: string) => {
   privateGateway
     .get(makeMyPass.downloadTicket(eventId, ticketCode))

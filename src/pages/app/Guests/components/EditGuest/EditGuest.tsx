@@ -1,24 +1,23 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import Modal from '../../../../../components/Modal/Modal';
 import styles from '../../Guests.module.css';
-import { editSubmissons } from '../../../../../apis/guests';
-import { FormEventData, GuestsType, SelectedGuest } from '../../types';
+import { editSubmissons, getEditGuestData } from '../../../../../apis/guests';
+import { FormEventData, SelectedGuest } from '../../types';
 import { FormDataType } from '../../../../../apis/types';
 
 const EditGuest = ({
   formData,
   setFormData,
   eventFormData,
-  selectedGuest,
   setSelectedGuestId,
   eventId,
   onClose,
 }: {
-  formData: FormDataType;
+  formData: any;
   setFormData: Dispatch<SetStateAction<FormDataType>>;
   eventFormData: FormEventData;
-  selectedGuest: GuestsType | null;
+
   selectedGuestId: SelectedGuest;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;
@@ -41,9 +40,12 @@ const EditGuest = ({
   };
 
   const handleSubmissionEdit = () => {
-    if (selectedGuest)
-      editSubmissons(eventId, formData, setSelectedGuestId, setFormData, setFormErrors);
+    editSubmissons(eventId, formData, setSelectedGuestId, setFormData, setFormErrors);
   };
+
+  useEffect(() => {
+    console.log('formData', formData);
+  }, [formData]);
 
   return (
     <Modal title='Edit Guest' onClose={onClose} type='side'>

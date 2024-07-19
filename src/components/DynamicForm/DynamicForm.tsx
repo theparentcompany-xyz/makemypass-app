@@ -84,6 +84,8 @@ const DynamicForm = ({
   onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
 }) => {
   const fileRef = React.useRef<HTMLInputElement>(null);
+  console.log('formFields', formFields);
+  console.log('formData', formData);
 
   return (
     <>

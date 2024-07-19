@@ -7,6 +7,7 @@ import Header from '../../../components/EventHeader/EventHeader';
 import {
   downloadCSVData,
   downloadTicket,
+  getEditGuestData,
   getGuestInfo,
   getIndividualGuestInfo,
   listGuests,
@@ -32,7 +33,7 @@ import toast from 'react-hot-toast';
 import Scanner from '../../../components/Scanner/Scanner';
 import EventForm from '../EventPage/components/EventForm/EventForm';
 import { useParams } from 'react-router';
-// import EditGuest from './components/EditGuest/EditGuest';
+import EditGuest from './components/EditGuest/EditGuest';
 import BulkUpload from './components/BulkUpload/BulkUpload';
 import { RegistrationDataType } from '../Overview/Overview/types';
 
@@ -62,7 +63,7 @@ const Guests = () => {
 
   const getGuestData = () => {
     if (selectedGuestId && selectedGuestId.id)
-      getIndividualGuestInfo(eventId, selectedGuestId.id, setSelectedGuest);
+      getEditGuestData(eventId, selectedGuestId.id, setSelectedGuest);
   };
 
   const { event_id: eventId, current_user_role: userRole } = JSON.parse(
@@ -181,18 +182,17 @@ const Guests = () => {
         </Modal>
       )}
 
-      {/* {selectedGuestId && eventFormData && selectedGuestId.type === 'edit' && (
+      {selectedGuestId && eventFormData && selectedGuestId.type === 'edit' && (
         <EditGuest
-          formData={formData}
+          formData={selectedGuest?.submission}
           setFormData={setFormData}
           eventFormData={eventFormData}
-          selectedGuest={selectedGuest}
           selectedGuestId={selectedGuestId}
           setSelectedGuestId={setSelectedGuestId}
           eventId={eventId}
           onClose={onClose}
         />
-      )} */}
+      )}
 
       {guests ? (
         <>
