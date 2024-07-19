@@ -52,6 +52,7 @@ const Venue = () => {
           isError={isError}
           setIsError={setIsError}
           setTicketId={setTicketId}
+          setTrigger={setScanTrigger}
         />
         <div className={styles.venueListingContainer}>
           <div className={styles.venueListing}>

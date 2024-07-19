@@ -79,6 +79,7 @@ const Scanner = ({
             buttonText='Clear Scan'
             onClick={() => {
               if (setTicketId) setTicketId('');
+              setTrigger(false);
             }}
           />
         </div>

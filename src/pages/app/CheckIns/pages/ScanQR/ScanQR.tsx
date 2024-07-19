@@ -70,6 +70,7 @@ const ScanQR = () => {
                 isError={isError}
                 setIsError={setIsError}
                 setTicketId={setTicketId}
+                setTrigger={setTrigger}
               />
 
               {previewData && previewData.name && (

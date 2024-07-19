@@ -37,6 +37,7 @@ const CheckOutScan = () => {
           isError={isError}
           setIsError={setIsError}
           setTicketId={setTicketId}
+          setTrigger={setTrigger}
         />
         <Scanner
           ticketId={ticketId}

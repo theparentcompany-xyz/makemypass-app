@@ -1,6 +1,7 @@
 import { CgClose } from 'react-icons/cg';
 import Modal from '../../../../../components/Modal/Modal';
 import styles from './ScannerResponseModal.module.css';
+import React, { Dispatch } from 'react';
 
 const ScannerResponseModal = ({
   message,
@@ -8,12 +9,14 @@ const ScannerResponseModal = ({
   isError,
   setIsError,
   setTicketId,
+  setTrigger,
 }: {
   message: string;
   setMessage: (message: string) => void;
   isError: boolean;
   setIsError: (isError: boolean) => void;
   setTicketId: (ticketId: string) => void;
+  setTrigger: Dispatch<React.SetStateAction<boolean>>;
 }) => {
   return (
     message &&
@@ -40,6 +43,7 @@ const ScannerResponseModal = ({
               setMessage('');
               setTicketId('');
               setIsError(false);
+              setTrigger(false);
             }}
             className={styles.modalCloseButton}
           >
