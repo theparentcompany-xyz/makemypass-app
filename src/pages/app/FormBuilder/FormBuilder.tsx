@@ -538,15 +538,78 @@ const FormBuilder = () => {
                                           updateFormStateVariable();
                                         }}
                                       />
-                                      <input
-                                        type='text'
-                                        placeholder='Enter a Value'
-                                        value={condition.value}
-                                        onChange={(event) => {
-                                          condition.value = event.target.value;
-                                          updateFormStateVariable();
-                                        }}
-                                      />
+                                      {[
+                                        FieldType.SingleSelect,
+                                        FieldType.MultiSelect,
+                                        FieldType.Checkbox,
+                                        FieldType.Radio,
+                                      ].includes(
+                                        formFields.find((field) => field.id === condition.field)
+                                          ?.type ?? FieldType.Text,
+                                      ) ? (
+                                        condition.operator === 'in' ||
+                                        condition.operator === 'not in' ? (
+                                          <Select
+                                            isMulti
+                                            styles={customStyles}
+                                            name='colors'
+                                            value={
+                                              condition.value
+                                                ? condition.value.split(',').map((value) => ({
+                                                    value,
+                                                    label: value,
+                                                  }))
+                                                : []
+                                            }
+                                            options={
+                                              formFields
+                                                .find((field) => field.id === condition.field)
+                                                ?.options?.map((option) => ({
+                                                  value: option,
+                                                  label: option,
+                                                })) || []
+                                            }
+                                            className='basic-multi-select'
+                                            classNamePrefix='select'
+                                            onChange={(selectedOptions) => {
+                                              condition.value = selectedOptions
+                                                .map((option) => option.value)
+                                                .join(',');
+                                              updateFormStateVariable();
+                                            }}
+                                          />
+                                        ) : (
+                                          <SelectComponent
+                                            options={
+                                              formFields
+                                                .find((field) => field.id === condition.field)
+                                                ?.options?.map((option) => ({
+                                                  value: option,
+                                                  label: option,
+                                                })) || []
+                                            }
+                                            value={condition.value}
+                                            onChange={(option: {
+                                              value: string;
+                                              label: string;
+                                            }) => {
+                                              if (!option) condition.value = '';
+                                              else condition.value = option.value;
+                                              updateFormStateVariable();
+                                            }}
+                                          />
+                                        )
+                                      ) : (
+                                        <input
+                                          type='text'
+                                          placeholder='Value'
+                                          value={condition.value}
+                                          onChange={(event) => {
+                                            condition.value = event.target.value;
+                                            updateFormStateVariable();
+                                          }}
+                                        />
+                                      )}
 
                                       <RiDeleteBinLine
                                         className='pointer'
