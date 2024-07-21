@@ -28,9 +28,11 @@ export const makeMyPass = {
   checkInUserVenue: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/venue-checkin/`),
   listVenues: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/list-venue/`),
   listVisitedVenues: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/visited-venues/`),
+    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/mail-venues/`),
+
   getMailLog: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/${eventId}/guest-info/${eventRegisterId}/visited-venues/`),
+    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/mail-log/`),
+
   resentTicket: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/resent-ticket/`),
   editSubmission: (eventId: string, submissionId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/edit-submission/${submissionId}`),

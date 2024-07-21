@@ -230,7 +230,7 @@
   justify-content: center;
   align-items: center;
   column-gap: 0.25rem;
-
+  margin-bottom: 0.75rem;
   font-size: 0.75rem;
   margin-top: 1rem;
   color: #d2d2d2;
@@ -302,4 +302,76 @@
 .venueTime {
   font-size: 0.9rem;
   margin-left: 0.25rem;
+}
+
+/* Mail Log Styles */
+
+.mailsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 1rem;
+  text-align: left;
+
+  max-height: 30rem;
+  overflow: auto;
+}
+
+.mailHeader {
+  display: flex;
+  column-gap: 1rem;
+}
+
+.mail {
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+  position: relative;
+
+  background-color: #2a2b2b;
+  padding: 1rem;
+  border-radius: 8px;
+  width: -webkit-fill-available;
+  margin-right: 0.5rem;
+}
+
+.expandIcon {
+  position: absolute;
+  right: 0.25rem;
+  cursor: pointer;
+  color: white;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+
+.mailSubject {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.mailDescription {
+  width: 90%;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #d2d4d7;
+}
+
+.mailContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 1rem;
+  text-align: left;
+  max-width: 35rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.attachment {
+  margin-top: 1rem;
+  background-color: rgb(53, 52, 52);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
 }

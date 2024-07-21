@@ -1,20 +1,26 @@
 import styles from './ViewGuest.module.css';
 import { ResentTicket, SelectedGuest } from '../../types';
-import { Dispatch, useState } from 'react';
+import React, { Dispatch, useState } from 'react';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { shortListUser } from '../../../../../apis/guest';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BsTicketPerforatedFill } from 'react-icons/bs';
-import { MdDownload } from 'react-icons/md';
+import { MdDownload, MdMail } from 'react-icons/md';
 import { FaCheck } from 'react-icons/fa6';
 import { checkInUser } from '../../../../../apis/scan';
 import { formatDate } from '../../../../../common/commonFunctions';
 import { isArray } from 'chart.js/helpers';
-import { deleteSubmission, getVisistedVenues, initateRefund } from '../../../../../apis/guests';
-import { FaTrash, FaWalking } from 'react-icons/fa';
+import {
+  deleteSubmission,
+  getMailLog,
+  getVisistedVenues,
+  initateRefund,
+} from '../../../../../apis/guests';
+import { FaMailBulk, FaTrash, FaWalking } from 'react-icons/fa';
 import Modal from '../../../../../components/Modal/Modal';
 import { VisitedVenues } from './types';
 import { RegistrationDataType } from '../../../Overview/Overview/types';
+import { BiChevronDown, BiChevronRight } from 'react-icons/bi';
 
 const ViewGuest = ({
   selectedGuestData,
@@ -34,7 +40,7 @@ const ViewGuest = ({
     value: false,
   });
   const [deleteModal, setDeleteModal] = useState(false);
-  // const [mailLog, setMailLog] = useState([]);
+  const [mailLog, setMailLog] = useState(true);
   const [visitedVenues, setVisitedVenues] = useState<VisitedVenues>({
     status: false,
     venues: [],
@@ -103,6 +109,70 @@ const ViewGuest = ({
             </div>
           </Modal>
         </div>
+      )}
+      {mailLog && (
+        <Modal
+          title='Mail Log'
+          onClose={() => setMailLog(false)}
+          style={{
+            maxWidth: '40rem',
+            alignItems: 'flex-start',
+          }}
+        >
+          <div className={styles.mailLog}>
+            <div className={styles.mailsContainer}>
+              <div className={styles.mail}>
+                <div className={styles.expandIcon}>
+                  <BiChevronDown size={25} />
+                </div>
+                <div className={styles.mailHeader}>
+                  <MdMail size={25} />
+                  <div className={styles.mailHeaderContents}>
+                    <p className={styles.mailSubject}>Lorem ipsum dolor sit amet.</p>
+                    <p className={styles.mailDescription}>
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum nesciunt aperiam
+                      quia deserunt.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.mail}>
+                <div className={styles.expandIcon}>
+                  <BiChevronDown size={25} />
+                </div>
+
+                <div className={styles.mailHeader}>
+                  <MdMail size={25} />
+                  <div className={styles.mailHeaderContents}>
+                    <p className={styles.mailSubject}>Lorem ipsum dolor sit amet.</p>
+                    <p className={styles.mailDescription}>
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum nesciunt aperiam
+                      quia deserunt.
+                    </p>
+
+                    <hr className={styles.line} />
+                    <div className={styles.mailContent}>
+                      Dear name, <br />
+                      <br />
+                      We noticed you couldn’t make it to the Launchpad job fair held on July 15 at
+                      Technopark, Trivandrum, but worry not! Launchpad will also be held in Kochi on
+                      19th July at Jain University, Infopark. This is another fantastic opportunity
+                      to meet top recruiters, explore various career options, and take significant
+                      steps toward your professional future.
+                      <br />
+                      <br /> Do mention in the Airtable given below your mode of preference of
+                      attending the job-fair.
+                      (https://airtable.com/appCAPOMQvpUnbWeb/shrMqdOk5OwFObVjC) Don’t miss this
+                      chance to jumpstart your career journey. We look forward to seeing you there!
+                      Best regards, Launchpad team
+                      <div className={styles.attachment}>Ticket.png</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal>
       )}
       <Modal type='side' title='View Guest' onClose={() => setSelectedGuestId(null)}>
         <div className={styles.closeButton}>
@@ -341,16 +411,16 @@ const ViewGuest = ({
                       <span>Check-In User</span>
                     </div>
                   )}
-                  {/* <div
-                  className={styles.icon}
-                  onClick={() => {
-                    if (typeof selectedGuestData['id'] === 'string')
-                      getMailLog(eventId, selectedGuestData['id'], setMailLog);
-                  }}
-                >
-                  <FaMailBulk size={20} color='#8E8E8E' />
-                  <span>View Mail Log</span>
-                </div> */}
+                  <div
+                    className={styles.icon}
+                    onClick={() => {
+                      if (typeof selectedGuestData['id'] === 'string')
+                        getMailLog(eventId, selectedGuestData['id'], setMailLog);
+                    }}
+                  >
+                    <FaMailBulk size={20} color='#8E8E8E' />
+                    <span>View Mail Log</span>
+                  </div>
                 </div>
               )}
               <div

@@ -284,17 +284,19 @@ export const getVisistedVenues = async (
     });
 };
 
-// export const getMailLog = async (
-//   eventId: string,
-//   eventRegisterId: string,
-//   setMailLog: Dispatch<React.SetStateAction<any>>,
-// ) => {
-//   privateGateway
-//     .get(makeMyPass.getMailLog(eventId, eventRegisterId))
-//     .then((response) => {
-//       console.log(response.data.response);
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// };
+export const getMailLog = async (
+  eventId: string,
+  eventRegisterId: string,
+  setMailLog: Dispatch<React.SetStateAction<boolean>>,
+) => {
+  privateGateway
+    .get(makeMyPass.getMailLog(eventId, eventRegisterId))
+    .then((response) => {
+      console.log(response.data.response);
+      setMailLog(true);
+    })
+    .catch((error) => {
+      console.log(error);
+      setMailLog(true);
+    });
+};

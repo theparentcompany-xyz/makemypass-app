@@ -14,7 +14,7 @@ const Modal = ({ children, onClose, style, type, title, ...inputProps }: ModalPr
   return ReactDOM.createPortal(
     type && type == 'side' ? (
       <>
-        <div onClick={onClose} className={styles.backgroundBlur} style={style}></div>
+        <div onClick={onClose} className={styles.backgroundBlur}></div>
         <dialog {...inputProps} className={styles.sideModal} style={style}>
           <ManageTicketHeader title={title} onClose={onClose} />
           {children}
@@ -25,7 +25,9 @@ const Modal = ({ children, onClose, style, type, title, ...inputProps }: ModalPr
         <div
           onClick={onClose}
           className={styles.backgroundBlur}
-          style={{ ...style, zIndex: 105 }}
+          style={{
+            zIndex: 105,
+          }}
         ></div>
         <dialog {...inputProps} className={styles.onClickModal} style={style}>
           {title && (
