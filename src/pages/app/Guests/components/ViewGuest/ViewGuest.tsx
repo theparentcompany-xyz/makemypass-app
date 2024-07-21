@@ -20,7 +20,7 @@ import { FaMailBulk, FaTrash, FaWalking } from 'react-icons/fa';
 import Modal from '../../../../../components/Modal/Modal';
 import { VisitedVenues } from './types';
 import { RegistrationDataType } from '../../../Overview/Overview/types';
-import { BiChevronDown, BiChevronRight } from 'react-icons/bi';
+import { BiChevronDown } from 'react-icons/bi';
 
 const ViewGuest = ({
   selectedGuestData,
@@ -40,7 +40,7 @@ const ViewGuest = ({
     value: false,
   });
   const [deleteModal, setDeleteModal] = useState(false);
-  const [mailLog, setMailLog] = useState(true);
+  const [mailLog, setMailLog] = useState(false);
   const [visitedVenues, setVisitedVenues] = useState<VisitedVenues>({
     status: false,
     venues: [],
