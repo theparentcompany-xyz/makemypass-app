@@ -6,7 +6,7 @@ import { Dispatch } from 'react';
 import { ErrorMessages, FormDataType } from './types';
 import { isArray } from 'chart.js/helpers';
 import { BulkUploadType } from '../pages/app/Guests/components/BulkUpload/types';
-import { VisitedVenues } from '../pages/app/Guests/components/ViewGuest/types';
+import { EmailType, VisitedVenues } from '../pages/app/Guests/components/ViewGuest/types';
 import { RegistrationDataType } from '../pages/app/Overview/Overview/types';
 
 export const resentEventTicket = async (
@@ -287,16 +287,27 @@ export const getVisistedVenues = async (
 export const getMailLog = async (
   eventId: string,
   eventRegisterId: string,
-  setMailLog: Dispatch<React.SetStateAction<boolean>>,
+  setMailLog: Dispatch<
+    React.SetStateAction<{
+      showLog: boolean;
+      logs: EmailType[];
+    }>
+  >,
 ) => {
   privateGateway
     .get(makeMyPass.getMailLog(eventId, eventRegisterId))
     .then((response) => {
       console.log(response.data.response);
-      setMailLog(true);
+      setMailLog({
+        showLog: true,
+        logs: response.data.response,
+      });
     })
     .catch((error) => {
       console.log(error);
-      setMailLog(true);
+      setMailLog({
+        showLog: false,
+        logs: [],
+      });
     });
 };
