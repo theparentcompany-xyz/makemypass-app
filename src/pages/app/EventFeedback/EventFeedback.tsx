@@ -21,7 +21,7 @@ const EventFeedback = () => {
   return (
     <Theme>
       <div className={styles.feedbackContainer}>
-        <Header />
+        <Header previousPageNavigate='-1' />
         <Glance tab='feedback' />
 
         {/* <GenericTable tableHeading='Feedbacks Recevied' tableData={feedback} /> */}

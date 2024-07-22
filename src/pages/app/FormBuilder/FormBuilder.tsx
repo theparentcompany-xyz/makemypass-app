@@ -23,6 +23,8 @@ import InputField from '../../auth/Login/InputField';
 import { MdDelete, MdOutlineSdStorage } from 'react-icons/md';
 import { customStyles } from '../EventPage/constants';
 import Modal from '../../../components/Modal/Modal';
+
+import CreatableSelect from 'react-select/creatable';
 import { GrContract } from 'react-icons/gr';
 
 const FormBuilder = () => {
@@ -156,7 +158,7 @@ const FormBuilder = () => {
           </Modal>
         )}
         <div className={styles.builderContainer}>
-          <EventHeader />
+          <EventHeader previousPageNavigate='/events' />
           <Glance tab='formbuilder' />
           <div className={styles.requiredFieldsHeader}>
             <div className={styles.requiredFieldsHeader}>
@@ -554,7 +556,7 @@ const FormBuilder = () => {
                                             styles={customStyles}
                                             name='colors'
                                             value={
-                                              condition.value
+                                              condition.value && !Array.isArray(condition.value)
                                                 ? condition.value.split(',').map((value) => ({
                                                     value,
                                                     label: value,
@@ -588,7 +590,9 @@ const FormBuilder = () => {
                                                   label: option,
                                                 })) || []
                                             }
-                                            value={condition.value}
+                                            value={
+                                              !Array.isArray(condition.value) ? condition.value : ''
+                                            }
                                             onChange={(option: {
                                               value: string;
                                               label: string;
@@ -599,6 +603,35 @@ const FormBuilder = () => {
                                             }}
                                           />
                                         )
+                                      ) : condition.operator === 'in' ||
+                                        condition.operator === 'not in' ? (
+                                        <CreatableSelect
+                                          styles={customStyles}
+                                          options={
+                                            formFields
+                                              .find((field) => field.id === condition.field)
+                                              ?.options?.map((option) => ({
+                                                value: option,
+                                                label: option,
+                                              })) || []
+                                          }
+                                          value={
+                                            condition.value && Array.isArray(condition.value)
+                                              ? condition.value.map((value) => ({
+                                                  value,
+                                                  label: value,
+                                                }))
+                                              : []
+                                          }
+                                          onChange={(selectedOptions) => {
+                                            condition.value = selectedOptions.map(
+                                              (option) => option.value,
+                                            );
+
+                                            updateFormStateVariable();
+                                          }}
+                                          isMulti
+                                        />
                                       ) : (
                                         <input
                                           type='text'

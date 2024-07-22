@@ -63,7 +63,7 @@ const EventGlance = () => {
       <Theme>
         <div className={styles.eventGlanceContainer}>
           <div className={styles.eventGlance}>
-            <EventHeader />
+            <EventHeader previousPageNavigate='/events' />
             <Glance tab='manage' />
           </div>
           {isTicketsOpen && (

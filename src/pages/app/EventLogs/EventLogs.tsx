@@ -36,7 +36,7 @@ const EventLogs = () => {
   return (
     <>
       <Theme>
-        <EventHeader />
+        <EventHeader previousPageNavigate='/events' />
         <Glance tab='Logs' />
         <p className={styles.mailLogsHeaders}>Mail logs</p>
         <div className={styles.mailsContainer}>

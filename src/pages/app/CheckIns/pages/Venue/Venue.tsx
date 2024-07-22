@@ -45,7 +45,7 @@ const Venue = () => {
   return (
     <Theme>
       <div className={styles.mainContainer}>
-        <EventHeader />
+        <EventHeader previousPageNavigate='-1' />
         <ScannerResponseModal
           message={message}
           setMessage={setMessage}

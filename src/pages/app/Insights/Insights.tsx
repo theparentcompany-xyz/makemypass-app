@@ -326,7 +326,7 @@ const Insights = ({ type }: { type?: string }) => {
           <>
             <div className={styles.insightsOuterContainer}>
               <div className={styles.glanceContainer}>
-                <Header />
+                <Header previousPageNavigate='/events' />
                 {type != 'public' && (
                   <Glance tab='insights' setShowPublishModal={setShowPublishModal} />
                 )}

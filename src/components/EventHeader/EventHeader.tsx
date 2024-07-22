@@ -2,7 +2,7 @@ import styles from './EventHeader.module.css';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const EventHeader = () => {
+const EventHeader = ({ previousPageNavigate }: { previousPageNavigate: string }) => {
   const eventData = JSON.parse(sessionStorage.getItem('eventData')!);
 
   const navigate = useNavigate();
@@ -20,7 +20,11 @@ const EventHeader = () => {
             <div className={styles.backButton}>
               <button
                 onClick={() => {
-                  navigate(-1);
+                  if (previousPageNavigate === '-1') {
+                    navigate(-1);
+                  } else {
+                    navigate(previousPageNavigate);
+                  }
                 }}
                 className={styles.goBack}
               >
@@ -32,7 +36,7 @@ const EventHeader = () => {
                 <img
                   className={styles.headerImage}
                   src={eventData.logo}
-                  alt='Event logo for the dashboarod'
+                  alt='Event logo for the dashboard'
                 />
               ) : (
                 <p className={styles.headerImage}>{eventData.title.charAt(0).toUpperCase()}</p>

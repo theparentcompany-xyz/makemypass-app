@@ -79,7 +79,7 @@ const CheckIn = () => {
   return (
     <Theme>
       <div className={styles.checkInContainer}>
-        <Header />
+        <Header previousPageNavigate='-1' />
 
         <CheckInHeader title='Check-In' currentCount={recentRegistrations.length} />
 

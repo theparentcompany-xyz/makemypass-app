@@ -241,9 +241,11 @@ export const uploadFile = (
   file: File,
   selectedTickets: string[],
   setFileStatus: Dispatch<React.SetStateAction<BulkUploadType[]>>,
+  sendTicket: boolean,
 ) => {
   const formData = new FormData();
   formData.append('file', file);
+  formData.append('send_ticket', sendTicket ? 'true' : 'false');
 
   selectedTickets.forEach((ticket) => {
     formData.append('tickets[]', ticket);

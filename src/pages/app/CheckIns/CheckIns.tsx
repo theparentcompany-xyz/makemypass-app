@@ -14,7 +14,7 @@ const CheckIns = () => {
   return (
     <Theme>
       <div className={styles.checkInsContainer}>
-        <Header />
+        <Header previousPageNavigate='/events' />
         <Glance tab='checkins' />
         <div className={styles.checkInsButtons}>
           <p className={styles.checkInsHeading}>On-Site Event Management</p>

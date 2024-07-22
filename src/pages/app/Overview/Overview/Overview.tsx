@@ -304,7 +304,7 @@ const Overview = () => {
         )}
         {recentRegistrations && hostList && recentRegistrations.length >= 0 ? (
           <div className={styles.overviewContainer}>
-            <Header />
+            <Header previousPageNavigate='/events' />
             <Glance tab='overview' />
 
             <div className={styles.buttons}>

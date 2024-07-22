@@ -111,7 +111,7 @@ const InEventStats = () => {
 
   const [guests, setGuests] = useState<GuestsType[]>([]);
   const getLocalEventId = () => {
-      return JSON.parse(sessionStorage.getItem('eventData') as string).event_id;
+    return JSON.parse(sessionStorage.getItem('eventData') as string).event_id;
   };
 
   const eventId = getLocalEventId();
@@ -290,7 +290,7 @@ const InEventStats = () => {
         </AnimatePresence>
 
         <div className={styles.inEventContainer}>
-          <Header />
+          <Header previousPageNavigate='/events' />
           <Glance tab='inevent' />
         </div>
 

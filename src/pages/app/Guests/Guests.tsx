@@ -241,7 +241,7 @@ const Guests = () => {
           )}
 
           <div className={styles.guestsContainer}>
-            <Header />
+            <Header previousPageNavigate='/events' />
 
             <Glance tab='guests' />
 

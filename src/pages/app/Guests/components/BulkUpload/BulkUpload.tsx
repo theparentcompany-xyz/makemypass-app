@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import { formatDate } from '../../../../../common/commonFunctions';
 import { BiSolidReport } from 'react-icons/bi';
 import { BulkUploadType } from './types';
+import Slider from '../../../../../components/SliderButton/Slider';
 
 const BulkUpload = ({ onClose }: { onClose: () => void }) => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -17,6 +18,8 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
   const [selectedTickets, setSelectedTickets] = useState<string[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [fileStatus, setFileStatus] = useState<BulkUploadType[]>([]);
+
+  const [sendTicket, setSendTicket] = useState(false);
 
   useEffect(() => {
     getTickets(eventId, setTickets);
@@ -81,12 +84,21 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
             if (selectedOption) setSelectedTickets([selectedOption.value]);
           }}
         />
+
+        <Slider
+          text='Send Ticket'
+          size='small'
+          onChange={() => {
+            setSendTicket(!sendTicket);
+          }}
+          checked={sendTicket}
+        />
       </div>
 
       <button
         className={styles.uploadButton}
         onClick={() => {
-          if (file) uploadFile(eventId, file, selectedTickets, setFileStatus);
+          if (file) uploadFile(eventId, file, selectedTickets, setFileStatus, sendTicket);
           else toast.error('Please select a file');
         }}
       >

@@ -16,7 +16,7 @@ export interface Field {
   conditions: {
     field: string;
     operator: string;
-    value: string;
+    value: string | string[];
   }[];
   field_key: string;
   team_field: boolean;
