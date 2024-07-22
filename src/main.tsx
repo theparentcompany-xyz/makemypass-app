@@ -31,6 +31,7 @@ import ValidateData from './pages/app/ValidateData/ValidateData';
 import Coupon from './pages/app/Coupon/Coupon';
 import Venue from './pages/app/CheckIns/pages/Venue/Venue';
 import CheckOutScan from './pages/app/CheckIns/pages/CheckOutScan/CheckOutScan';
+import EventLogs from './pages/app/EventLogs/EventLogs';
 
 // import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 // import SpinWheel from './pages/app/SpinWheel/SpinWheel';
@@ -171,6 +172,10 @@ const routes = [
       {
         path: '/:eventTitle/coupon',
         element: <RoleChecker roles={[role.ADMIN, role.OWNER]} children={<Coupon />} />,
+      },
+      {
+        path: '/:eventTitle/logs',
+        element: <RoleChecker roles={[role.ADMIN, role.OWNER]} children={<EventLogs />} />,
       },
       // {
       //   path: `/:eventTitle/checkins/claimgifts`,

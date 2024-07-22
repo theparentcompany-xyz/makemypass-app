@@ -321,17 +321,18 @@
 .mailHeader {
   display: flex;
   column-gap: 1rem;
+  row-gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .mail {
   margin-top: 1rem;
   padding-bottom: 1rem;
   position: relative;
-
+  width: 95%;
   background-color: #2a2b2b;
   padding: 1rem;
   border-radius: 8px;
-  width: -webkit-fill-available;
   margin-right: 0.5rem;
 }
 
@@ -350,11 +351,21 @@
   margin-bottom: 0.25rem;
 }
 
+.mailType {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #a4a4a4;
+  margin-bottom: 0.25rem;
+}
+
 .mailDescription {
-  width: 90%;
   font-size: 0.8rem;
   font-weight: 400;
   color: #d2d4d7;
+
+  span {
+    color: #ff9641;
+  }
 }
 
 .mailContent {
@@ -367,6 +378,12 @@
   max-width: 35rem;
   font-size: 0.8rem;
   line-height: 1.5;
+
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Inter', sans-serif;
+  }
 }
 
 .attachment {

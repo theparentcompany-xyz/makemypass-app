@@ -174,6 +174,10 @@ const Glance = ({
       title: 'Feedback',
       roles: ['Admin', 'Owner'],
     };
+    tabs.logs = {
+      title: 'Logs',
+      roles: ['Admin', 'Owner'],
+    };
   }
 
   const userRoles = eventData.current_user_role;

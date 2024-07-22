@@ -18,7 +18,7 @@ import {
 } from '../../../../../apis/guests';
 import { FaMailBulk, FaTrash, FaWalking } from 'react-icons/fa';
 import Modal from '../../../../../components/Modal/Modal';
-import { VisitedVenues } from './types';
+import { EmailType, VisitedVenues } from './types';
 import { RegistrationDataType } from '../../../Overview/Overview/types';
 import { BiChevronDown } from 'react-icons/bi';
 
@@ -40,12 +40,36 @@ const ViewGuest = ({
     value: false,
   });
   const [deleteModal, setDeleteModal] = useState(false);
-  const [mailLog, setMailLog] = useState(false);
+  const [mailLog, setMailLog] = useState<{
+    showLog: boolean;
+    logs: EmailType[];
+  }>({
+    showLog: false,
+    logs: [],
+  });
+
   const [visitedVenues, setVisitedVenues] = useState<VisitedVenues>({
     status: false,
     venues: [],
   });
   const [initateRefundClicked, setInitateRefundClicked] = useState(false);
+
+  const toggleMailContent = (id: string) => {
+    console.log('id', id);
+
+    setMailLog((prevState) => ({
+      ...prevState,
+      logs: prevState.logs.map((mail) => {
+        if (mail.id === id) {
+          return {
+            ...mail,
+            show_content: !mail.show_content as boolean,
+          };
+        }
+        return mail;
+      }),
+    }));
+  };
 
   return (
     <>
@@ -110,10 +134,15 @@ const ViewGuest = ({
           </Modal>
         </div>
       )}
-      {mailLog && (
+      {mailLog.showLog && (
         <Modal
           title='Mail Log'
-          onClose={() => setMailLog(false)}
+          onClose={() =>
+            setMailLog({
+              showLog: false,
+              logs: [],
+            })
+          }
           style={{
             maxWidth: '40rem',
             alignItems: 'flex-start',
@@ -121,55 +150,47 @@ const ViewGuest = ({
         >
           <div className={styles.mailLog}>
             <div className={styles.mailsContainer}>
-              <div className={styles.mail}>
-                <div className={styles.expandIcon}>
-                  <BiChevronDown size={25} />
-                </div>
-                <div className={styles.mailHeader}>
-                  <MdMail size={25} />
-                  <div className={styles.mailHeaderContents}>
-                    <p className={styles.mailSubject}>Lorem ipsum dolor sit amet.</p>
-                    <p className={styles.mailDescription}>
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum nesciunt aperiam
-                      quia deserunt.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.mail}>
-                <div className={styles.expandIcon}>
-                  <BiChevronDown size={25} />
-                </div>
+              {mailLog.logs.map((mail, index) => {
+                return (
+                  <div className={styles.mail} key={index}>
+                    <div className={styles.expandIcon}>
+                      {
+                        <BiChevronDown
+                          onClick={() => toggleMailContent(mail.id)}
+                          size={25}
+                          style={{
+                            transform: mail.show_content ? 'rotate(180deg)' : 'rotate(0deg)',
+                          }}
+                        />
+                      }
+                    </div>
 
-                <div className={styles.mailHeader}>
-                  <MdMail size={25} />
-                  <div className={styles.mailHeaderContents}>
-                    <p className={styles.mailSubject}>Lorem ipsum dolor sit amet.</p>
-                    <p className={styles.mailDescription}>
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum nesciunt aperiam
-                      quia deserunt.
-                    </p>
+                    <div className={styles.mailHeader}>
+                      <MdMail size={25} />
+                      <div className={styles.mailHeaderContents}>
+                        <p className={styles.mailType}>{mail.type} Mail</p>
+                        <p className={styles.mailSubject}>{mail.subject}</p>
+                        <p className={styles.mailDescription}>
+                          To: <span>{mail.send_to}</span> <br />
+                          From: <span>{mail.send_from}</span>
+                        </p>
 
-                    <hr className={styles.line} />
-                    <div className={styles.mailContent}>
-                      Dear name, <br />
-                      <br />
-                      We noticed you couldn’t make it to the Launchpad job fair held on July 15 at
-                      Technopark, Trivandrum, but worry not! Launchpad will also be held in Kochi on
-                      19th July at Jain University, Infopark. This is another fantastic opportunity
-                      to meet top recruiters, explore various career options, and take significant
-                      steps toward your professional future.
-                      <br />
-                      <br /> Do mention in the Airtable given below your mode of preference of
-                      attending the job-fair.
-                      (https://airtable.com/appCAPOMQvpUnbWeb/shrMqdOk5OwFObVjC) Don’t miss this
-                      chance to jumpstart your career journey. We look forward to seeing you there!
-                      Best regards, Launchpad team
-                      <div className={styles.attachment}>Ticket.png</div>
+                        <hr className={styles.line} />
+                        <div className={styles.mailContent}>
+                          <pre>
+                            {mail.show_content
+                              ? mail.body
+                              : mail.body.length > 150
+                                ? mail.body.substring(0, 150) + '...'
+                                : mail.body}
+                          </pre>
+                          {/* <div className={styles.attachment}>Ticket.png</div> */}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
         </Modal>
