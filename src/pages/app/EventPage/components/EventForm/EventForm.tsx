@@ -19,6 +19,7 @@ const EventForm = ({
   eventTitle,
   type,
   claimCode,
+  ticketCode
 }: {
   eventFormData: FormEventData;
   eventTitle: string | undefined;
@@ -26,6 +27,7 @@ const EventForm = ({
   setSuccess?: Dispatch<React.SetStateAction<SuccessModalProps>>;
   type?: string;
   claimCode?: string | null;
+  ticketCode?: string | null;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({});
@@ -251,6 +253,7 @@ const EventForm = ({
                 setDiscount,
                 setLoading,
                 setCoupon,
+                ticketCode,
               });
             }
           }}

@@ -159,6 +159,26 @@ const Guests = () => {
               <p>OR</p>
               <hr />
             </div>
+            <p className={styles.ticketLabel}>Enter Ticket Code</p>
+            <div className={styles.ticketCode}>
+              <input
+                onChange={(event) => {
+                  setTicketCode(event.target.value);
+                }}
+                placeholder='Ticket Code'
+                type='text'
+                value={ticketCode}
+                className={styles.scanInput}
+              />
+              <button
+                onClick={() => {
+                  setShowScanner(true);
+                }}
+                className={styles.scanButton}
+              >
+                Scan
+              </button>
+            </div>
             {!showScanner ? (
               eventFormData && (
                 <>
@@ -166,6 +186,7 @@ const Guests = () => {
                     eventFormData={eventFormData}
                     eventTitle={eventTitle}
                     type='addGuest'
+                    ticketCode={ticketCode}
                   />
                 </>
               )

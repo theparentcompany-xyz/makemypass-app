@@ -302,3 +302,37 @@
   font-size: 0.875rem;
   font-weight: 400;
 }
+
+.ticketCode {
+  display: flex;
+  margin-bottom: -1rem;
+}
+
+.ticketLabel {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: #868686;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+
+.scanInput {
+  border-radius: 8px 0 0 8px;
+  border: none;
+  padding: 0.75rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  width: 100%;
+}
+
+.scanButton {
+  padding: 0 1rem;
+  border-radius: 0 8px 8px 0;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  cursor: pointer;
+}
