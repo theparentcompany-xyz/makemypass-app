@@ -155,13 +155,13 @@ const Glance = ({
       title: 'Check-Ins',
       roles: ['Admin', 'Owner', 'Volunteer'],
     },
+    formbuilder: {
+      title: 'Form Builder',
+      roles: ['Admin', 'Owner'],
+    },
   };
 
   if (import.meta.env.VITE_CURRENT_ENV === 'dev') {
-    tabs.formbuilder = {
-      title: 'Form Builder',
-      roles: ['Admin', 'Owner'],
-    };
     tabs.postevent = {
       title: 'Post Event',
       roles: ['Admin', 'Owner'],
