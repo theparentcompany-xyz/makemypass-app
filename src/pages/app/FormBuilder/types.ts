@@ -50,3 +50,7 @@ export enum DefaultFieldTypes {
   District = 'district',
   TeamId = 'team_id',
 }
+
+export type ErrorResponse = {
+  [key: string]: string[];
+};

@@ -369,3 +369,11 @@ li {
   border-radius: 8px;
   color: white;
 }
+
+.error {
+  color: #f04b4b;
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
+}

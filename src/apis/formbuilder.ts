@@ -1,7 +1,8 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { Field } from '../pages/app/FormBuilder/types';
+import { ErrorResponse, Field } from '../pages/app/FormBuilder/types';
+import React, { Dispatch } from 'react';
 
 export const getForm = (
   eventId: string,
@@ -17,13 +18,17 @@ export const getForm = (
     });
 };
 
-export const updateForm = (eventId: string, formFields: Field[]) => {
+export const updateForm = (
+  eventId: string,
+  formFields: Field[],
+  setFormFieldErrors: Dispatch<React.SetStateAction<ErrorResponse>>,
+) => {
   privateGateway
     .post(makeMyPass.formBuilderUpdateForm(eventId), formFields)
     .then(() => {
       toast.success('Form updated successfully');
     })
     .catch((error) => {
-      throw error;
+      setFormFieldErrors(error.response.data.message);
     });
 };

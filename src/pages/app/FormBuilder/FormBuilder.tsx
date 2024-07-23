@@ -11,7 +11,7 @@ import Select from 'react-select';
 
 import { useEffect, useState } from 'react';
 import { getForm, updateForm } from '../../../apis/formbuilder';
-import { DefaultFieldTypes, Field, FieldType } from './types';
+import { DefaultFieldTypes, ErrorResponse, Field, FieldType } from './types';
 import SelectComponent from './SelectComponent';
 import { IoCloseSharp } from 'react-icons/io5';
 import { DefaultFiledTypeMapping, FileExtensions, getConditions } from './constant';
@@ -33,6 +33,7 @@ const FormBuilder = () => {
   const [selectedField, setSelectedField] = useState<Field>({} as Field);
   const [showChangeTypeModal, setShowChangeTypeModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [formFieldErrors, setFormFieldErrors] = useState<ErrorResponse>({});
 
   useEffect(() => {
     getForm(event_id, setFormFields);
@@ -84,6 +85,10 @@ const FormBuilder = () => {
   };
 
   const addOrRemoveCondition = (field: Field) => {
+    if (formFieldErrors[field.field_key]) {
+      delete formFieldErrors[field.field_key];
+    }
+
     if (field.conditions.length > 0) {
       field.conditions = [];
     } else {
@@ -222,6 +227,14 @@ const FormBuilder = () => {
                             onClick={() => {
                               setSelectedField(field);
                             }}
+                            style={
+                              formFieldErrors[field.field_key]
+                                ? {
+                                    border: '2px solid #f04b4b',
+                                    borderRadius: '5px',
+                                  }
+                                : {}
+                            }
                           >
                             <div className={styles.row1}>
                               <RxDragHandleDots2 size={25} color='#606264' id={field.id} />
@@ -247,7 +260,18 @@ const FormBuilder = () => {
                             <LuPencil size={20} color='#606264' />
                           </div>
                         ) : (
-                          <div className={styles.customFieldExp} key={idx}>
+                          <div
+                            className={styles.customFieldExp}
+                            key={idx}
+                            style={
+                              formFieldErrors[field.field_key]
+                                ? {
+                                    border: '2px solid #f04b4b',
+                                    borderRadius: '5px',
+                                  }
+                                : {}
+                            }
+                          >
                             <div className={styles.row}>
                               <div className={styles.row1}>
                                 <RxDragHandleDots2 size={25} color='#606264' />
@@ -672,6 +696,14 @@ const FormBuilder = () => {
                                 ))}
                               </div>
                             )}
+
+                            {formFieldErrors[field.field_key] && (
+                              <div className={styles.error}>
+                                {formFieldErrors[field.field_key].map((error) => (
+                                  <p>{error}</p>
+                                ))}
+                              </div>
+                            )}
                           </div>
                         )}
                       </Reorder.Item>
@@ -688,7 +720,8 @@ const FormBuilder = () => {
                 </button>
                 <button
                   onClick={() => {
-                    updateForm(event_id, formFields);
+                    setFormFieldErrors({});
+                    updateForm(event_id, formFields, setFormFieldErrors);
                   }}
                   className={styles.addQuestionButton}
                 >
