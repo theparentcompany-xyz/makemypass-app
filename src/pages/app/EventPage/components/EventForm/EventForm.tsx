@@ -11,7 +11,6 @@ import { useLocation } from 'react-router';
 import { FormEventData, SelectedGuest } from '../../../Guests/types';
 import { PropagateLoader } from 'react-spinners';
 import VoiceInput from './components/VoiceInput';
-import { add } from 'lodash';
 import { addGuest } from '../../../../../apis/guest';
 
 const EventForm = ({

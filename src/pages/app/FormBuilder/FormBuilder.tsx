@@ -521,7 +521,7 @@ const FormBuilder = () => {
                               </div>
                             )}
 
-                            {getConditionalFields(field).length >= 0 && (
+                            {getConditionalFields(field, 0).length >= 0 && (
                               <div
                                 className={styles.row1}
                                 style={{
