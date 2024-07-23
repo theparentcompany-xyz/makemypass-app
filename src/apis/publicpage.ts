@@ -36,6 +36,7 @@ export const submitForm = async ({
   setDiscount,
   setLoading,
   setCoupon,
+  ticketCode,
 }: {
   eventId: string;
   tickets: Tickets[];
@@ -53,6 +54,7 @@ export const submitForm = async ({
   setDiscount?: React.Dispatch<DiscountData>;
   setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   setCoupon?: React.Dispatch<React.SetStateAction<CouponData>>;
+  ticketCode?: string | null;
 }) => {
   setLoading && setLoading(true);
   const selectedDateFormatted = selectedDate
@@ -87,6 +89,7 @@ export const submitForm = async ({
   if (coupon.value) backendFormData.append('coupon_code', coupon.value?.toString());
   tickets.forEach((ticket: Tickets) => backendFormData.append('tickets[]', JSON.stringify(ticket)));
   if (selectedDateFormatted) backendFormData.append('ticket_date', selectedDateFormatted);
+  if (ticketCode) backendFormData.append('ticket_code', ticketCode);
 
   publicGateway
     .post(makeMyPass.submitForm(eventId), backendFormData, {
