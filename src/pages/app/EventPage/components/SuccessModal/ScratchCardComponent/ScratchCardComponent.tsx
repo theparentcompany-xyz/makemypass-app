@@ -19,7 +19,7 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [revealPercentage, setRevealPercentage] = useState(0);
+  //   const [revealPercentage, setRevealPercentage] = useState(0);
   const [isRevealed, setIsRevealed] = useState(false);
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
     }
 
     const percentage = (transparentPixels / (width * height)) * 100;
-    setRevealPercentage(Math.round(percentage));
+    // setRevealPercentage(Math.round(percentage));
 
     if (percentage >= revealThreshold) {
       setIsRevealed(true);
