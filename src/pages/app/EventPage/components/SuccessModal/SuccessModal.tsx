@@ -5,6 +5,8 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { SuccessModalProps } from '../../types';
 import { HashLoader } from 'react-spinners';
 import { BsDownload } from 'react-icons/bs';
+import ScratchCard from './ScratchCardComponent/ScratchCardComponent';
+import image from './scratchImage.png';
 
 const SuccessModal = ({
   success,
@@ -125,7 +127,15 @@ const SuccessModal = ({
                   Scratch the card to reveal your discount code
                 </p>
                 <div className={styles.scratchCardImage}></div>
-                {/* Scratch Card */}
+
+                <ScratchCard
+                  width={150}
+                  height={150}
+                  coverImage={image}
+                  revealContent='Congratulations! You won!'
+                  brushSize={30}
+                  revealThreshold={70}
+                />
               </div>
             </div>
           </Modal>
