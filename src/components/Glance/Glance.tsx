@@ -162,7 +162,7 @@ const Glance = ({
     logs: {
       title: 'Logs',
       roles: ['Admin', 'Owner'],
-    };
+    },
   };
 
   if (import.meta.env.VITE_CURRENT_ENV === 'dev') {

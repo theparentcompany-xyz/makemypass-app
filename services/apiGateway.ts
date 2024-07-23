@@ -39,21 +39,12 @@ privateGateway.interceptors.request.use(
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
-
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  },
-);
-
-privateGateway.interceptors.request.use(
-  function (config) {
     if (config.url) {
       if (!config.url.endsWith('/') && !config.url.includes('?')) {
         config.url += '/';
       }
     }
+
     return config;
   },
   function (error) {

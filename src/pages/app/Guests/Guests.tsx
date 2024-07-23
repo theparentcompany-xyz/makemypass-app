@@ -95,8 +95,7 @@ const Guests = () => {
       selectedGuestId.type === 'download' &&
       !isArray(selectedGuestId.id)
     )
-      if (selectedGuestId.id && selectedGuest?.submission.Name)
-        downloadTicket(eventId, selectedGuestId?.id, selectedGuest?.submission.Name);
+      if (selectedGuestId.id) downloadTicket(eventId, selectedGuestId?.id, 'ticketImage');
       else toast.error('Ticket download failed');
   }, [selectedGuestId]);
 

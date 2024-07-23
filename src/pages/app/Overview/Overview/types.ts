@@ -44,4 +44,5 @@ export type RegistrationDataType = {
   is_checked_in: boolean;
   check_out_date: string | null;
   category: string;
+  name: string;
 };
