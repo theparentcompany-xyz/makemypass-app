@@ -187,6 +187,7 @@ const Guests = () => {
                     eventTitle={eventTitle}
                     type='addGuest'
                     ticketCode={ticketCode}
+                    setSelectedGuestId={setSelectedGuestId}
                   />
                 </>
               )

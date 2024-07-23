@@ -41,7 +41,7 @@ export const validateCondition = (
             case 'in':
               if (typeof condition.value === 'string')
                 if (Array.isArray(fieldValue)) {
-                  valid = fieldValue?.includes(condition.value);
+                  valid = valid && fieldValue?.includes(condition.value);
                 } else valid = valid && condition.value?.includes(fieldValue);
               break;
             case 'not in':

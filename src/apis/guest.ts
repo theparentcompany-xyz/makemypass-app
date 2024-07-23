@@ -38,7 +38,8 @@ export const addGuest = (
   formData: FormDataType,
   setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
-  selectedDate?: string,
+  selectedDate?: string | null | undefined,
+  ticketCode?: string | null,
 ) => {
   if (selectedDate) {
     formData['ticket_date'] = selectedDate;
@@ -67,6 +68,10 @@ export const addGuest = (
   tickets.forEach((ticket) => {
     backendFormData.append('tickets[]', JSON.stringify(ticket));
   });
+
+  if (ticketCode) {
+    backendFormData.append('ticket_code', ticketCode);
+  }
 
   const script = document.createElement('script');
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';

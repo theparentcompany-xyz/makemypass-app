@@ -8,9 +8,11 @@ import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import CouponForm from '../CouponForm/CouponForm';
 import { validateCondition } from '../../../../../components/DynamicForm/condition';
 import { useLocation } from 'react-router';
-import { FormEventData } from '../../../Guests/types';
+import { FormEventData, SelectedGuest } from '../../../Guests/types';
 import { PropagateLoader } from 'react-spinners';
 import VoiceInput from './components/VoiceInput';
+import { add } from 'lodash';
+import { addGuest } from '../../../../../apis/guest';
 
 const EventForm = ({
   eventFormData,
@@ -19,7 +21,8 @@ const EventForm = ({
   eventTitle,
   type,
   claimCode,
-  ticketCode
+  ticketCode,
+  setSelectedGuestId,
 }: {
   eventFormData: FormEventData;
   eventTitle: string | undefined;
@@ -28,6 +31,7 @@ const EventForm = ({
   type?: string;
   claimCode?: string | null;
   ticketCode?: string | null;
+  setSelectedGuestId?: Dispatch<React.SetStateAction<SelectedGuest | null>>;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({});
@@ -238,6 +242,17 @@ const EventForm = ({
                 );
               }
             } else {
+              if (type === 'addGuest' && setSelectedGuestId) {
+                addGuest(
+                  eventFormData.id,
+                  tickets,
+                  formData,
+                  setFormErrors,
+                  setSelectedGuestId,
+                  selectedDate,
+                  ticketCode,
+                );
+              }
               submitForm({
                 eventId: eventFormData.id,
                 tickets,
