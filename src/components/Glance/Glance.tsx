@@ -159,6 +159,10 @@ const Glance = ({
       title: 'Form Builder',
       roles: ['Admin', 'Owner'],
     },
+    logs: {
+      title: 'Logs',
+      roles: ['Admin', 'Owner'],
+    };
   };
 
   if (import.meta.env.VITE_CURRENT_ENV === 'dev') {
@@ -172,10 +176,6 @@ const Glance = ({
     };
     tabs.feedback = {
       title: 'Feedback',
-      roles: ['Admin', 'Owner'],
-    };
-    tabs.logs = {
-      title: 'Logs',
       roles: ['Admin', 'Owner'],
     };
   }
