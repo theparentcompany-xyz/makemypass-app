@@ -43,9 +43,20 @@ const FormBuilder = () => {
     setFormFields([...formFields]);
   };
 
-  const getConditionalFields = (currentField: Field) => {
+  const getConditionalFields = (currentField: Field, conditionIdx: number) => {
     const index = formFields.findIndex((field) => field.id === currentField.id);
-    return formFields.slice(0, index).map((field) => ({ label: field.title, value: field.id }));
+    return formFields
+      .slice(0, index)
+      .map((field) => ({ label: field.title, value: field.id }))
+      .filter((field, index) => {
+        if (
+          currentField.conditions.some(
+            (condition) => condition.field === field.value && index !== conditionIdx,
+          )
+        )
+          return false;
+        return true;
+      });
   };
 
   const getFieldType = (fieldId: string) => {
@@ -539,7 +550,7 @@ const FormBuilder = () => {
                                     <p className={styles.when}>{idx === 0 ? 'When' : 'And'}</p>
                                     <div className={styles.conditionsSelect}>
                                       <SelectComponent
-                                        options={getConditionalFields(field)}
+                                        options={getConditionalFields(field, idx)}
                                         value={condition.field}
                                         onChange={(option: { value: string; label: string }) => {
                                           if (!option) condition.field = '';
