@@ -19,6 +19,7 @@ import { TbAlertTriangleFilled } from 'react-icons/tb';
 import { errorType } from './types';
 import { FaGoogle } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
+const Login = () => {
   const navigate = useNavigate();
 
   const emailRef = useRef<HTMLInputElement>(null);
@@ -76,6 +77,7 @@ import toast from 'react-hot-toast';
           emailRef.current?.value,
           otpRef.current?.value,
           passwordRef.current?.value,
+          setError,
         ).then((responseData: any) => {
           if (responseData.response.access_token) {
             const userEmail = emailRef.current?.value.split('@')[0];
