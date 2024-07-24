@@ -282,26 +282,38 @@
 .visitedVenues {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
-  margin-top: 1rem;
-  row-gap: 0.5rem;
+  margin-top: 0.5rem;
   width: 100%;
+  text-align: left;
+
+  max-height: 18rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .venue {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
+  width: 100%;
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.venue:hover {
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
 }
 
 .venueName {
-  color: #47c97e;
+  font-size: 0.9rem;
 }
 
 .venueTime {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   margin-left: 0.25rem;
+  color: #a4a4a4;
 }
 
 /* Mail Log Styles */
