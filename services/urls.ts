@@ -1,5 +1,3 @@
-import { resetPassword } from '../src/apis/auth';
-
 const buildURL = (basePath: string) => (endpoint: string) => `${basePath}${endpoint}`;
 
 const buildVerseURL = buildURL('/buildverse');
