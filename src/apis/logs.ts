@@ -10,10 +10,6 @@ export const getAllMailLog = async (
   privateGateway
     .get(makeMyPass.getAllMailLog(eventId))
     .then((response) => {
-      console.log(response.data.response);
       setAllMailLog(response.data.response);
     })
-    .catch((error) => {
-      console.log(error);
-    });
 };

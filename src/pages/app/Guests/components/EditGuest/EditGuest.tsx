@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import Modal from '../../../../../components/Modal/Modal';
 import styles from '../../Guests.module.css';
@@ -7,13 +7,13 @@ import { FormEventData, SelectedGuest } from '../../types';
 import { FormDataType } from '../../../../../apis/types';
 
 const EditGuest = ({
-  formData,
-  setFormData,
-  eventFormData,
-  setSelectedGuestId,
-  eventId,
-  onClose,
-}: {
+                     formData,
+                     setFormData,
+                     eventFormData,
+                     setSelectedGuestId,
+                     eventId,
+                     onClose,
+                   }: {
   formData: any;
   setFormData: Dispatch<SetStateAction<FormDataType>>;
   eventFormData: FormEventData;
@@ -43,12 +43,8 @@ const EditGuest = ({
     editSubmissons(eventId, formData, setSelectedGuestId, setFormData, setFormErrors);
   };
 
-  useEffect(() => {
-    console.log('formData', formData);
-  }, [formData]);
-
   return (
-    <Modal title='Edit Guest' onClose={onClose} type='side'>
+    <Modal title="Edit Guest" onClose={onClose} type="side">
       <div className={styles.userInfoModalContainer}>
         {formData && eventFormData && (
           <>

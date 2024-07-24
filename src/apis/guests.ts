@@ -281,9 +281,6 @@ export const getVisistedVenues = async (
         venues: response.data.response,
       });
     })
-    .catch((error) => {
-      console.log(error);
-    });
 };
 
 export const getMailLog = async (
@@ -299,14 +296,12 @@ export const getMailLog = async (
   privateGateway
     .get(makeMyPass.getMailLog(eventId, eventRegisterId))
     .then((response) => {
-      console.log(response.data.response);
       setMailLog({
         showLog: true,
         logs: response.data.response,
       });
     })
-    .catch((error) => {
-      console.log(error);
+    .catch(() => {
       setMailLog({
         showLog: false,
         logs: [],

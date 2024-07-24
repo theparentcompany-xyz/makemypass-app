@@ -16,10 +16,10 @@ const variants = {
 };
 
 const ErrorComponent = ({
-  formErrors,
-  field,
-  variants,
-}: {
+                          formErrors,
+                          field,
+                          variants,
+                        }: {
   formErrors: ErrorMessages;
   field: FormFieldType;
   variants: {
@@ -46,12 +46,12 @@ const ErrorComponent = ({
 };
 
 const CommonRenderStructure = ({
-  formErrors,
-  field,
-  children,
-  title,
-  description,
-}: {
+                                 formErrors,
+                                 field,
+                                 children,
+                                 title,
+                                 description,
+                               }: {
   formErrors: ErrorMessages;
   field: FormFieldType;
   children: JSX.Element;
@@ -73,19 +73,17 @@ const CommonRenderStructure = ({
 };
 
 const DynamicForm = ({
-  formFields,
-  formErrors,
-  formData,
-  onFieldChange,
-}: {
+                       formFields,
+                       formErrors,
+                       formData,
+                       onFieldChange,
+                     }: {
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
   formData: FormDataType;
   onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
 }) => {
   const fileRef = React.useRef<HTMLInputElement>(null);
-  console.log('formFields', formFields);
-  console.log('formData', formData);
 
   return (
     <>
@@ -141,7 +139,7 @@ const DynamicForm = ({
                   description={field.description}
                 >
                   <input
-                    type='number'
+                    type="number"
                     id={field.field_key}
                     name={field?.title}
                     value={formData[field.field_key]}
@@ -150,8 +148,8 @@ const DynamicForm = ({
                       onFieldChange(field.field_key, e.target.value)
                     }
                     className={styles.numberInput}
-                    accept=''
-                    pattern='^\d{10}$'
+                    accept=""
+                    pattern="^\d{10}$"
                   />
                 </CommonRenderStructure>
               </>
@@ -233,17 +231,17 @@ const DynamicForm = ({
                 <Select
                   isMulti
                   styles={customStyles}
-                  name='colors'
+                  name="colors"
                   value={
                     Array.isArray(formData[field.field_key])
                       ? selectValues.filter((option) =>
-                          (formData[field.field_key] as string[])?.includes(option.value),
-                        )
+                        (formData[field.field_key] as string[])?.includes(option.value),
+                      )
                       : []
                   }
                   options={selectValues}
-                  className='basic-multi-select'
-                  classNamePrefix='select'
+                  className="basic-multi-select"
+                  classNamePrefix="select"
                   onChange={(selectedOption: MultiValue<{ value: string }>) =>
                     onFieldChange(
                       field.field_key,
@@ -265,7 +263,7 @@ const DynamicForm = ({
                   {field.options?.map((option: string) => (
                     <div key={option} className={styles.radio}>
                       <input
-                        type='radio'
+                        type="radio"
                         id={option}
                         name={field.field_key}
                         value={option}
@@ -290,7 +288,7 @@ const DynamicForm = ({
                 description={field.description}
               >
                 <input
-                  type='file'
+                  type="file"
                   id={field.field_key}
                   accept={
                     field.property?.extension_types
@@ -330,7 +328,7 @@ const DynamicForm = ({
                 description={field.description}
               >
                 <input
-                  type='date'
+                  type="date"
                   id={field.field_key}
                   name={field?.title}
                   value={formData[field.field_key]}
@@ -350,7 +348,7 @@ const DynamicForm = ({
                 description={field.description}
               >
                 <input
-                  type='datetime-local'
+                  type="datetime-local"
                   id={field.field_key}
                   name={field?.title}
                   value={formData[field.field_key]}
@@ -370,7 +368,7 @@ const DynamicForm = ({
                 description={field.description}
               >
                 <input
-                  type='time'
+                  type="time"
                   id={field.field_key}
                   name={field?.title}
                   value={formData[field.field_key]}
@@ -390,7 +388,7 @@ const DynamicForm = ({
                 description={field.description}
               >
                 <input
-                  type='number'
+                  type="number"
                   id={field.field_key}
                   name={field?.title}
                   value={formData[field.field_key]}
@@ -436,7 +434,7 @@ const DynamicForm = ({
                     <>
                       <div key={option} className={styles.checkbox}>
                         <input
-                          type='checkbox'
+                          type="checkbox"
                           id={option}
                           name={field.field_key}
                           value={option}
