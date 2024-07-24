@@ -19,8 +19,6 @@ import { TbAlertTriangleFilled } from 'react-icons/tb';
 import { errorType } from './types';
 import { FaGoogle } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
-import { set } from 'lodash';
-
 const Login = () => {
   const navigate = useNavigate();
 
