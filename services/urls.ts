@@ -1,3 +1,5 @@
+import { resetPassword } from '../src/apis/auth';
+
 const buildURL = (basePath: string) => (endpoint: string) => `${basePath}${endpoint}`;
 
 const buildVerseURL = buildURL('/buildverse');
@@ -180,4 +182,5 @@ export const buildVerse = {
   profileInfo: buildVerseURL('/profile-info/'),
   setUserData: (token: string) => buildVerseURL(`/set-user-data/${token}`),
   googleLogin: buildVerseURL('/google-login/'),
+  resetPassword: buildVerseURL('/reset-password/'),
 };

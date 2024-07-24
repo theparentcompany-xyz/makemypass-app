@@ -83,7 +83,7 @@ export const generateOTP = async (
     .then((response) => {
       toast.success(response.data.message.general[0]);
       setIsOtpSent(true);
-      if (setIsRegistered) {
+      if (setIsRegistered && type !== 'Forget Password') {
         setIsRegistered(true);
       }
       return response.data;
@@ -169,4 +169,21 @@ export const googleLogin = async () => {
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
     });
+};
+export const resetPassword = (email: string, otp: string, password: string): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    publicGateway
+      .post(buildVerse.resetPassword, {
+        email: email,
+        otp: otp,
+        password: password,
+      })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message.general[0]);
+        reject(error);
+      });
+  });
 };
