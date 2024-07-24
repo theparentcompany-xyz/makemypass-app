@@ -19,6 +19,7 @@ import { TbAlertTriangleFilled } from 'react-icons/tb';
 import { errorType } from './types';
 import { FaGoogle } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
+import { set } from 'lodash';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -165,6 +166,7 @@ const Login = () => {
         password: '',
         otp: '',
       });
+      setIsForgetPassword(true);
     }
   }, [isForgetPassword]);
 
@@ -217,6 +219,11 @@ const Login = () => {
                   onChange={() => {
                     setTimer(120);
                     setIsOtpSent(false);
+
+                    if (isForgetPassword && emailRef.current?.value) {
+                      setIsForgetPassword(false);
+                      setError({});
+                    }
                   }}
                 />
                 {error && error.email && <p className={styles.alertMessage}>{error.email}</p>}
@@ -242,7 +249,7 @@ const Login = () => {
                       {error && error.password && (
                         <p className={styles.alertMessage}>{error.password}</p>
                       )}
-                      {!isForgetPassword && (
+                      {(!isForgetPassword || !isOtpSent) && (
                         <p className={styles.passwordReset}>
                           <span
                             className='pointer'
