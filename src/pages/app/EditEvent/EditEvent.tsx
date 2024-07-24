@@ -11,6 +11,7 @@ import { FiGlobe } from 'react-icons/fi';
 import { HiOutlineUserGroup } from 'react-icons/hi2';
 import { BsTicketDetailed } from 'react-icons/bs';
 import { IoCloseOutline } from 'react-icons/io5';
+import { AiOutlineTeam } from 'react-icons/ai';
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { HashLoader } from 'react-spinners';
 import { ErrorMessages, EventType } from '../../../apis/types';
@@ -565,7 +566,21 @@ const EditEvent = () => {
                         />
                       </motion.div>
                     )}
-
+                    <div className={styles.option}>
+                      <label>
+                        <AiOutlineTeam size={20} color='#949597' /> Allow Team Registration
+                      </label>
+                      <Slider
+                        checked={eventData.is_team as boolean}
+                        text={''}
+                        onChange={() =>
+                          setEventData({
+                            ...eventData,
+                            is_team: !eventData.is_team,
+                          })
+                        }
+                      />
+                    </div>
                     {/* <div className={styles.option}>
                       <label>
                         <PiArrowsSplit size={20} color='#949597' /> Add Sub-Event
