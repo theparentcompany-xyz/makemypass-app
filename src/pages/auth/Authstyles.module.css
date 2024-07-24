@@ -25,6 +25,12 @@
   z-index: 2;
 }
 
+@media (min-width: 720px) {
+  .form {
+    min-width: 25rem;
+  }
+}
+
 .alertMessage {
   color: #ff6384;
   font-size: 0.875rem;
@@ -246,4 +252,19 @@
   /* Background of the 'or' should match the container background */
   z-index: 1;
   /* Ensure 'or' is above the lines */
+}
+.passwordResetContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.passwordReset {
+  color: #a4a4a4;
+  font-size: 0.875rem;
+  font-weight: 400;
+  cursor: pointer;
 }

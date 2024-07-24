@@ -4,14 +4,21 @@ import { LuKey } from 'react-icons/lu';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import Theme from '../../../components/Theme/Theme';
 import { useEffect, useRef, useState } from 'react';
-import { login, generateOTP, preRegister, register, googleLogin } from '../../../apis/auth';
+import {
+  login,
+  generateOTP,
+  preRegister,
+  register,
+  googleLogin,
+  resetPassword,
+} from '../../../apis/auth';
 import InputField from './InputField.tsx';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TbAlertTriangleFilled } from 'react-icons/tb';
 import { errorType } from './types';
 import { FaGoogle } from 'react-icons/fa6';
-
+import toast from 'react-hot-toast';
 const Login = () => {
   const navigate = useNavigate();
 
@@ -23,7 +30,7 @@ const Login = () => {
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  const [isForgetPassword, setIsForgetPassword] = useState(false);
   const [isRegistered, setIsRegistered] = useState(true);
 
   const [timer, setTimer] = useState(120);
@@ -46,7 +53,43 @@ const Login = () => {
       });
       return;
     }
-    if (isRegistered) {
+    if (isForgetPassword) {
+      if (!passwordRef.current?.value) {
+        setError({
+          email: '',
+          password: 'Password is required',
+          otp: '',
+        });
+        return;
+      }
+      if (!otpRef.current?.value) {
+        setError({
+          email: '',
+          password: '',
+          otp: 'OTP is required',
+        });
+        return;
+      }
+
+      if (emailRef.current?.value && otpRef.current?.value && passwordRef.current?.value)
+        resetPassword(
+          emailRef.current?.value,
+          otpRef.current?.value,
+          passwordRef.current?.value,
+        ).then((responseData: any) => {
+          if (responseData.response.access_token) {
+            const userEmail = emailRef.current?.value.split('@')[0];
+            localStorage.setItem('accessToken', responseData.response.access_token);
+            localStorage.setItem('refreshToken', responseData.response.refresh_token);
+            if (userEmail) localStorage.setItem('userEmail', userEmail);
+
+            toast.success('Password reset successfully');
+
+            setIsAuthenticated(true);
+            navigate('/events');
+          }
+        });
+    } else if (isRegistered) {
       if (isPassword && emailRef.current?.value && passwordRef.current?.value)
         login(
           emailRef.current?.value,
@@ -112,6 +155,19 @@ const Login = () => {
     if (!isRegistered) setIsOtpSent(false);
   }, [isRegistered]);
 
+  useEffect(() => {
+    if (isForgetPassword && emailRef.current?.value) {
+      generateOTP(emailRef.current?.value, setIsOtpSent, setIsRegistered, 'Forget Password');
+    } else if (isForgetPassword && !emailRef.current?.value) {
+      setError({
+        email: 'Email is required',
+        password: '',
+        otp: '',
+      });
+      setIsForgetPassword(true);
+    }
+  }, [isForgetPassword]);
+
   function handleGoogleLogin(): void {
     googleLogin();
   }
@@ -161,18 +217,23 @@ const Login = () => {
                   onChange={() => {
                     setTimer(120);
                     setIsOtpSent(false);
+
+                    if (isForgetPassword && emailRef.current?.value) {
+                      setIsForgetPassword(false);
+                      setError({});
+                    }
                   }}
                 />
                 {error && error.email && <p className={styles.alertMessage}>{error.email}</p>}
 
-                {isPassword && !isOtpSent && (
+                {((isPassword && !isOtpSent) || (isForgetPassword && isOtpSent)) && (
                   <>
                     <InputField
                       ref={passwordRef}
                       type='password'
                       name='password'
                       id='password'
-                      placeholder='Enter your Password*'
+                      placeholder={isForgetPassword ? 'Enter New Password*' : 'Enter Password*'}
                       icon={<LuKey color='#A4A4A4' />}
                       onChange={() =>
                         setError({
@@ -182,13 +243,27 @@ const Login = () => {
                         })
                       }
                     />
-                    {error && error.password && (
-                      <p className={styles.alertMessage}>{error.password}</p>
-                    )}
+                    <div className={styles.passwordResetContainer}>
+                      {error && error.password && (
+                        <p className={styles.alertMessage}>{error.password}</p>
+                      )}
+                      {(!isForgetPassword || !isOtpSent) && (
+                        <p className={styles.passwordReset}>
+                          <span
+                            className='pointer'
+                            onClick={() => {
+                              setIsForgetPassword(true);
+                            }}
+                          >
+                            Forgot Password?
+                          </span>
+                        </p>
+                      )}
+                    </div>
                   </>
                 )}
 
-                {isOtpSent && !isPassword && (
+                {((isOtpSent && !isPassword) || (isOtpSent && isForgetPassword)) && (
                   <>
                     <InputField
                       ref={otpRef}
@@ -273,7 +348,9 @@ const Login = () => {
                 >
                   {isRegistered
                     ? isOtpSent
-                      ? 'Login'
+                      ? isForgetPassword
+                        ? 'Reset Password'
+                        : 'Login'
                       : isPassword
                         ? 'Login'
                         : 'Get OTP'

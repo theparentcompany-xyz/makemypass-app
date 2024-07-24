@@ -49,8 +49,81 @@ const ViewGuest = ({
   });
 
   const [visitedVenues, setVisitedVenues] = useState<VisitedVenues>({
-    status: false,
-    venues: [],
+    status: true,
+    venues: [
+      {
+        name: 'Tata Consultancy Services',
+        visited_at: '2022-01-01',
+      },
+      {
+        name: 'Oracle Financial Services Software',
+        visited_at: '2022-01-02',
+      },
+      {
+        name: 'Melstar Information Technologies',
+        visited_at: '2022-01-03',
+      },
+      {
+        name: 'Tata Consultancy Services',
+        visited_at: '2022-01-01',
+      },
+      {
+        name: 'Oracle Financial Services Software',
+        visited_at: '2022-01-02',
+      },
+      {
+        name: 'Melstar Information Technologies',
+        visited_at: '2022-01-03',
+      },
+      {
+        name: 'Tata Consultancy Services',
+        visited_at: '2022-01-01',
+      },
+      {
+        name: 'Oracle Financial Services Software',
+        visited_at: '2022-01-02',
+      },
+      {
+        name: 'Melstar Information Technologies',
+        visited_at: '2022-01-03',
+      },
+      {
+        name: 'Tata Consultancy Services',
+        visited_at: '2022-01-01',
+      },
+      {
+        name: 'Oracle Financial Services Software',
+        visited_at: '2022-01-02',
+      },
+      {
+        name: 'Melstar Information Technologies',
+        visited_at: '2022-01-03',
+      },
+      {
+        name: 'Tata Consultancy Services',
+        visited_at: '2022-01-01',
+      },
+      {
+        name: 'Oracle Financial Services Software',
+        visited_at: '2022-01-02',
+      },
+      {
+        name: 'Melstar Information Technologies',
+        visited_at: '2022-01-03',
+      },
+      {
+        name: 'Tata Consultancy Services',
+        visited_at: '2022-01-01',
+      },
+      {
+        name: 'Oracle Financial Services Software',
+        visited_at: '2022-01-02',
+      },
+      {
+        name: 'Melstar Information Technologies',
+        visited_at: '2022-01-03',
+      },
+    ],
   });
   const [initateRefundClicked, setInitateRefundClicked] = useState(false);
 
@@ -117,10 +190,10 @@ const ViewGuest = ({
           >
             <div className={styles.visitedVenues}>
               {visitedVenues.venues.length > 0 ? (
-                visitedVenues.venues.map((venue, index) => {
+                visitedVenues.venues.map((venue) => {
                   return (
                     <div className={styles.venue}>
-                      <p className={styles.venueName}>{`${index + 1}) ${venue.name},`}</p>
+                      <p className={styles.venueName}>{`${venue.name},`}</p>
                       <p className={styles.venueTime}>{formatDate(venue.visited_at, true)}</p>
                     </div>
                   );

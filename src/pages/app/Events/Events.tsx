@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router';
 import RightClickMenu from './RightClickMenu';
 import Modal from '../../../components/Modal/Modal';
 import { formatDate } from '../../../common/commonFunctions';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 
 const Events = () => {
   interface Position {
@@ -102,6 +103,19 @@ const Events = () => {
               </p>
             </div>
           </Modal>
+        )}
+        {Object.values(events).length === 0 && (
+          <div className={styles.noEventsContainer}>
+            <p className={styles.noEvents}>
+              You don't have any events yet. Please connect with our sales team to get started.
+            </p>
+            <SecondaryButton
+              buttonText='Contact Sales'
+              onClick={() => {
+                window.open('https://wa.me/916238450178', '_blank');
+              }}
+            />
+          </div>
         )}
         <div className={styles.homeContainer}>
           {Object.values(EventStatus).map((status) => {
