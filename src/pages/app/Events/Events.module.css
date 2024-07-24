@@ -8,6 +8,8 @@
   margin-top: 2rem;
   padding: 0 1.25rem;
   overflow: hidden;
+
+  height: 100%;
 }
 
 .create {
@@ -56,6 +58,23 @@
   color: white;
   margin-bottom: 1rem;
   text-align: left;
+}
+
+.noEventsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.noEvents {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  max-width: 25rem;
+  color: white;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .eventCard {
