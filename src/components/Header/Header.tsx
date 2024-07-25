@@ -87,21 +87,22 @@ const Header = ({ type }: { type?: string | undefined }) => {
                           </span>
                         </p>
 
-                        {window.location.pathname !== '/set-profile' && (
-                          <motion.div
-                            className={styles.dropdownContent}
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={openSettings ? 'fadein' : 'fadeout'}
-                            variants={variants}
-                          >
-                            <Link to='/set-profile'>
-                              <div className={styles.link}>
-                                <FaUser size={15} color='#57575C' />
-                                <p className={styles.linkText}>Update Profile</p>
-                              </div>
-                            </Link>
-                          </motion.div>
-                        )}
+                        {window.location.pathname !== '/profile' &&
+                          window.location.pathname !== '/set-profile' && (
+                            <motion.div
+                              className={styles.dropdownContent}
+                              initial={{ opacity: 0, y: -20 }}
+                              animate={openSettings ? 'fadein' : 'fadeout'}
+                              variants={variants}
+                            >
+                              <Link to='/profile'>
+                                <div className={styles.link}>
+                                  <FaUser size={15} color='#57575C' />
+                                  <p className={styles.linkText}>View Profile</p>
+                                </div>
+                              </Link>
+                            </motion.div>
+                          )}
                       </div>
 
                       <Link to='/login'>

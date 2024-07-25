@@ -12,7 +12,7 @@ import Modal from '../../../components/Modal/Modal';
 import { formatDate } from '../../../common/commonFunctions';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import Loader from '../../../components/Loader';
-
+import { Event } from '../../../apis/types';
 const Events = () => {
   interface Position {
     x: number;
@@ -39,20 +39,6 @@ const Events = () => {
     Draft = 'Draft',
     Completed = 'Completed',
   }
-
-  type Event = {
-    id: string;
-    title: string;
-    members: number;
-    logo: string | null;
-    date: string;
-    day: string;
-    name: string;
-    start_day: string;
-    start_date: string;
-    event_start_date: string;
-    status: string;
-  };
 
   const [events, setEvents] = useState([] as Event[]);
 

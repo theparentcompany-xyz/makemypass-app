@@ -32,6 +32,7 @@ import Coupon from './pages/app/Coupon/Coupon';
 import Venue from './pages/app/CheckIns/pages/Venue/Venue';
 import CheckOutScan from './pages/app/CheckIns/pages/CheckOutScan/CheckOutScan';
 import EventLogs from './pages/app/EventLogs/EventLogs';
+import SetProfilePage from './pages/app/SetProfilePage/SetProfilePage';
 
 // import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 // import SpinWheel from './pages/app/SpinWheel/SpinWheel';
@@ -65,10 +66,13 @@ const routes = [
     path: '/home',
     element: <LandingPage />,
   },
-
+  {
+    path: '/profile',
+    element: <ProfilePage />,
+  },
   {
     path: '/set-profile',
-    element: <ProfilePage />,
+    element: <SetProfilePage />,
   },
   {
     path: '/:eventTitle/public/insights',
