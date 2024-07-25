@@ -171,7 +171,7 @@ const FormBuilder = () => {
                 <div className={styles.image}>
                   <FaAddressCard size={20} color='#ffffff' />
                 </div>
-                <p className={styles.requiredFieldsText}>Required Fields</p>
+                <p className={styles.requiredFieldsText}>Default Fields</p>
               </div>
 
               <div className={styles.requiredFields}>
