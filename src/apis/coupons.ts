@@ -2,6 +2,8 @@ import { Dispatch, SetStateAction } from 'react';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import CouponType, { CreateCouponType } from '../pages/app/Coupon/types';
+import toast from 'react-hot-toast';
+import { ActivateCouponType } from './types';
 
 export const listCoupons = async (
   eventId: string,
@@ -49,5 +51,19 @@ export const createCoupon = async (
     })
     .then(() => {
       listCoupons(eventId, setCoupons);
+    });
+};
+
+export const updateCouponStatus = async (eventId: string, activateCoupon: ActivateCouponType) => {
+  return privateGateway
+    .patch(makeMyPass.updateCouponStatus(eventId), {
+      show_ticket_field: activateCoupon.active,
+      description: activateCoupon.description,
+    })
+    .then(() => {
+      toast.success('Coupon status updated successfully');
+    })
+    .catch(() => {
+      toast.error('Failed to update coupon status');
     });
 };

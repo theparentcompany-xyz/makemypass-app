@@ -241,3 +241,9 @@ export type listMailType = {
   type: string;
   subject: string;
 };
+
+export type ActivateCouponType = {
+  showModal: boolean;
+  active: boolean;
+  description: string;
+};

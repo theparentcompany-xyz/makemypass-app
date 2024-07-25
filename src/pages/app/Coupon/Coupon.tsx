@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Glance from '../../../components/Glance/Glance';
 import Theme from '../../../components/Theme/Theme';
 import styles from './Coupon.module.css';
-import { createCoupon, listCoupons } from '../../../apis/coupons';
+import { createCoupon, listCoupons, updateCouponStatus } from '../../../apis/coupons';
 import GenericTable from '../../../components/Table/GenericTable';
 import CouponType, { CreateCouponType } from './types';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
@@ -109,9 +109,9 @@ const Coupon = () => {
                 icon={<></>}
                 required={true}
                 onChange={(event) => {
-                  setNewCouponData({ ...newCouponData, description: event.target.value });
+                  setActivateCoupon({ ...activateCoupon, description: event.target.value });
                 }}
-                value={newCouponData.code}
+                value={activateCoupon.description}
                 description='This description will serve as helper text for the coupon field'
               />
             )}
@@ -119,7 +119,7 @@ const Coupon = () => {
             <SecondaryButton
               buttonText='Submit'
               onClick={() => {
-                setActivateCoupon({ ...activateCoupon, showModal: false });
+                updateCouponStatus(eventId, activateCoupon);
               }}
             />
           </div>
@@ -152,7 +152,7 @@ const Coupon = () => {
                     icon={<></>}
                     required={true}
                     onChange={(event) => {
-                      setNewCouponData({ ...newCouponData, code: event.target.value });
+                      setNewCouponData({ ...newCouponData, code: event.target.value.trim() });
                     }}
                     value={newCouponData.code}
                     description='Customer must enter this coupon code at checkout'

@@ -159,6 +159,8 @@ export const makeMyPass = {
   //CouponCRUD
   listCoupons: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/list-coupons/`),
   createCoupon: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/create-coupon/`),
+  updateCouponStatus: (eventId: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/update-coupon-status`),
 };
 
 export const makeMyPassSocket = {
