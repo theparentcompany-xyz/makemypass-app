@@ -49,81 +49,8 @@ const ViewGuest = ({
   });
 
   const [visitedVenues, setVisitedVenues] = useState<VisitedVenues>({
-    status: true,
-    venues: [
-      {
-        name: 'Tata Consultancy Services',
-        visited_at: '2022-01-01',
-      },
-      {
-        name: 'Oracle Financial Services Software',
-        visited_at: '2022-01-02',
-      },
-      {
-        name: 'Melstar Information Technologies',
-        visited_at: '2022-01-03',
-      },
-      {
-        name: 'Tata Consultancy Services',
-        visited_at: '2022-01-01',
-      },
-      {
-        name: 'Oracle Financial Services Software',
-        visited_at: '2022-01-02',
-      },
-      {
-        name: 'Melstar Information Technologies',
-        visited_at: '2022-01-03',
-      },
-      {
-        name: 'Tata Consultancy Services',
-        visited_at: '2022-01-01',
-      },
-      {
-        name: 'Oracle Financial Services Software',
-        visited_at: '2022-01-02',
-      },
-      {
-        name: 'Melstar Information Technologies',
-        visited_at: '2022-01-03',
-      },
-      {
-        name: 'Tata Consultancy Services',
-        visited_at: '2022-01-01',
-      },
-      {
-        name: 'Oracle Financial Services Software',
-        visited_at: '2022-01-02',
-      },
-      {
-        name: 'Melstar Information Technologies',
-        visited_at: '2022-01-03',
-      },
-      {
-        name: 'Tata Consultancy Services',
-        visited_at: '2022-01-01',
-      },
-      {
-        name: 'Oracle Financial Services Software',
-        visited_at: '2022-01-02',
-      },
-      {
-        name: 'Melstar Information Technologies',
-        visited_at: '2022-01-03',
-      },
-      {
-        name: 'Tata Consultancy Services',
-        visited_at: '2022-01-01',
-      },
-      {
-        name: 'Oracle Financial Services Software',
-        visited_at: '2022-01-02',
-      },
-      {
-        name: 'Melstar Information Technologies',
-        visited_at: '2022-01-03',
-      },
-    ],
+    status: false,
+    venues: [],
   });
   const [initateRefundClicked, setInitateRefundClicked] = useState(false);
 

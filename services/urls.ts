@@ -28,7 +28,7 @@ export const makeMyPass = {
   checkInUserVenue: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/venue-checkin/`),
   listVenues: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/list-venue/`),
   listVisitedVenues: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/mail-venues/`),
+    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/visited-venues/`),
 
   getMailLog: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/mail-log/`),
