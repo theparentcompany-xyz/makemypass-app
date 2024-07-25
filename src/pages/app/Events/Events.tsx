@@ -18,6 +18,7 @@ const Events = () => {
     y: number;
   }
 
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState<Position>({ x: 0, y: 0 });
   const [showModal, setShowModal] = useState(false);
@@ -55,7 +56,7 @@ const Events = () => {
   const [events, setEvents] = useState([] as Event[]);
 
   useEffect(() => {
-    getEvents(setEvents);
+    getEvents(setEvents, setIsDataLoaded);
   }, []);
 
   const navigate = useNavigate();
@@ -104,7 +105,7 @@ const Events = () => {
             </div>
           </Modal>
         )}
-        {Object.values(events).length === 0 && (
+        {Object.values(events).length === 0 && isDataLoaded && (
           <div className={styles.noEventsContainer}>
             <p className={styles.noEvents}>
               You don't have any events yet. Please connect with our sales team to get started.

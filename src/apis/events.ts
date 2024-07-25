@@ -4,7 +4,10 @@ import { makeMyPass } from '../../services/urls';
 import { ErrorMessages, Event, EventType } from './types';
 import { Dispatch } from 'react';
 
-export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<Event[]>>) => {
+export const getEvents = async (
+  setEvents: React.Dispatch<React.SetStateAction<Event[]>>,
+  setIsDataLoaded: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   privateGateway
     .get(makeMyPass.listEvents)
     .then((response) => {
@@ -12,6 +15,9 @@ export const getEvents = async (setEvents: React.Dispatch<React.SetStateAction<E
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    })
+    .finally(() => {
+      setIsDataLoaded(true);
     });
 };
 
@@ -23,9 +29,7 @@ interface EventData {
   event_id: string;
 }
 
-export const setEventInfoLocal = async (
-  eventName: string,
-): Promise<EventData> => {
+export const setEventInfoLocal = async (eventName: string): Promise<EventData> => {
   return new Promise((resolve, reject) => {
     privateGateway
       .get(makeMyPass.getEventId(eventName))
@@ -38,16 +42,14 @@ export const setEventInfoLocal = async (
           event_id: response.data.response.id,
         };
         sessionStorage.setItem('eventData', JSON.stringify(eventData));
-        resolve(eventData);  // Now correctly resolving with an EventData object
+        resolve(eventData); // Now correctly resolving with an EventData object
       })
       .catch((error) => {
         toast.error('Event Not Found');
-        reject(error);  // Reject the promise on error
+        reject(error); // Reject the promise on error
       });
   });
 };
-
-
 
 export const getCategories = async (
   eventId: string,
@@ -96,11 +98,11 @@ export const getEvent = (
 };
 
 export const editEvent = ({
-                            eventId,
-                            eventData,
-                            setIsPublished,
-                            setFormErrors,
-                          }: {
+  eventId,
+  eventData,
+  setIsPublished,
+  setFormErrors,
+}: {
   eventId: string;
   eventData: FormData;
   setIsPublished?: Dispatch<boolean>;
