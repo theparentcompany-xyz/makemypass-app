@@ -235,7 +235,7 @@ const EditEvent = () => {
                             <>
                               <rect width='100%' height='100%' className={styles.banner} />
                               <text x='25%' y='50%' fill='white' className={styles.svgText}>
-                                No Banner. Click Here to Upload
+                                No Banner. Click Here to Upload (2000px x 1000px)
                               </text>
                             </>
                           )}
