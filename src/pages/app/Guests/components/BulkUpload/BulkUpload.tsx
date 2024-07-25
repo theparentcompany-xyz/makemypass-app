@@ -28,7 +28,7 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
 
   const generateCSVReport = async (reportPath: string) => {
     try {
-      const response = await fetch('https://cors-anywhere.herokuapp.com/' + reportPath, {
+      const response = await fetch(reportPath, {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',

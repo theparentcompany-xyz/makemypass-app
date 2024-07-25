@@ -54,7 +54,7 @@ const SuccessModal = ({
                         <button
                           onClick={() => {
                             if (success.ticketURL) {
-                              fetch('https://cors-anywhere.herokuapp.com/' + success.ticketURL, {
+                              fetch(success.ticketURL, {
                                 headers: {
                                   'Access-Control-Allow-Origin': '*',
                                   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',

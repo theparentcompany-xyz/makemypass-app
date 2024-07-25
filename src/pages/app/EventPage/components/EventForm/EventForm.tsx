@@ -266,24 +266,24 @@ const EventForm = ({
                   selectedDate,
                   ticketCode,
                 );
-              }
-              submitForm({
-                eventId: eventFormData.id,
-                tickets,
-                formData,
-                coupon,
-                setSuccess,
-                setFormNumber,
-                setFormData,
-                setFormErrors,
-                setEventData,
-                eventTitle,
-                selectedDate,
-                setDiscount,
-                setLoading,
-                setCoupon,
-                ticketCode,
-              });
+              } else
+                submitForm({
+                  eventId: eventFormData.id,
+                  tickets,
+                  formData,
+                  coupon,
+                  setSuccess,
+                  setFormNumber,
+                  setFormData,
+                  setFormErrors,
+                  setEventData,
+                  eventTitle,
+                  selectedDate,
+                  setDiscount,
+                  setLoading,
+                  setCoupon,
+                  ticketCode,
+                });
             }
           }}
           className={styles.submitButton}
