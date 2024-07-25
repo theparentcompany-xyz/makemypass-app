@@ -3,14 +3,16 @@ import { ReactNode } from 'react';
 export type Event = {
   id: string;
   title: string;
+  banner: string | null;
   members: number;
   logo: string | null;
-  date: string;
-  day: string;
   name: string;
-  start_day: string;
-  start_date: string;
   event_start_date: string;
+  event_end_date: string;
+  is_private: boolean;
+  shortlist: boolean;
+  place: string | null;
+  location: string | null;
   status: string;
 };
 
