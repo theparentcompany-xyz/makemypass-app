@@ -178,10 +178,12 @@ const EventForm = ({
           className={!type ? styles.eventForm : undefined}
         >
           <div className={styles.eventFormInnerContainer} id='formFields'>
-            <div className={styles.claimCodeExccededMessage}>
-              <MdError color='#F04B4B' />
-              <span>{claimCodeExceed?.message}</span>
-            </div>
+            {claimCodeExceed?.exceeded && (
+              <div className={styles.claimCodeExccededMessage}>
+                <MdError color='#F04B4B' />
+                <span>{claimCodeExceed?.message}</span>
+              </div>
+            )}
             <div>
               <p className={styles.eventFormTitle}>{type ? '' : 'Register for the event'}</p>
               <p className={styles.eventHeaderDescription}>
