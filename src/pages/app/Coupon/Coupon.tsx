@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import Glance from '../../../components/Glance/Glance';
 import Theme from '../../../components/Theme/Theme';
 import styles from './Coupon.module.css';
-import { createCoupon, listCoupons } from '../../../apis/coupons';
+import { createCoupon, listCoupons, updateCouponStatus } from '../../../apis/coupons';
 import GenericTable from '../../../components/Table/GenericTable';
-import CouponType, { CreateCouponType } from './types';
+import CouponType, { ActivateCouponType, CreateCouponType } from './types';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import Modal from '../../../components/Modal/Modal';
 import InputField from '../../auth/Login/InputField';
@@ -47,7 +47,7 @@ const Coupon = () => {
   const [tickets, setTickets] = useState<TicketType[]>([]);
   const [coupons, setCoupons] = useState<CouponType[]>([]);
   const [formFields, setFormFields] = useState<Field[]>([]);
-  const [activateCoupon, setActivateCoupon] = useState({
+  const [activateCoupon, setActivateCoupon] = useState<ActivateCouponType>({
     showModal: false,
     active: false,
     description: '',
@@ -66,7 +66,7 @@ const Coupon = () => {
   });
 
   useEffect(() => {
-    listCoupons(eventId, setCoupons);
+    listCoupons(eventId, setCoupons, setActivateCoupon);
     getTickets(eventId, setTickets);
     getForm(eventId, setFormFields);
   }, []);
@@ -81,7 +81,7 @@ const Coupon = () => {
 
   return (
     <>
-      {activateCoupon.showModal && (
+      {activateCoupon && activateCoupon.showModal && (
         <Modal
           title='Active Coupuon'
           onClose={() => {
@@ -109,9 +109,9 @@ const Coupon = () => {
                 icon={<></>}
                 required={true}
                 onChange={(event) => {
-                  setNewCouponData({ ...newCouponData, description: event.target.value });
+                  setActivateCoupon({ ...activateCoupon, description: event.target.value });
                 }}
-                value={newCouponData.code}
+                value={activateCoupon.description}
                 description='This description will serve as helper text for the coupon field'
               />
             )}
@@ -119,7 +119,7 @@ const Coupon = () => {
             <SecondaryButton
               buttonText='Submit'
               onClick={() => {
-                setActivateCoupon({ ...activateCoupon, showModal: false });
+                updateCouponStatus(eventId, activateCoupon, setActivateCoupon);
               }}
             />
           </div>
@@ -483,11 +483,12 @@ const Coupon = () => {
                     <SecondaryButton
                       buttonText='Activate Coupon'
                       onClick={() => {
-                        setActivateCoupon({
-                          showModal: true,
-                          active: false,
-                          description: '',
-                        });
+                        if (setActivateCoupon) {
+                          setActivateCoupon({
+                            ...activateCoupon,
+                            showModal: true,
+                          });
+                        }
                       }}
                     />
                   </div>

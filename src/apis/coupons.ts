@@ -8,9 +8,17 @@ import { ActivateCouponType } from './types';
 export const listCoupons = async (
   eventId: string,
   setCoupons: Dispatch<SetStateAction<CouponType[]>>,
+  setActivateCoupon?: React.Dispatch<React.SetStateAction<ActivateCouponType>>,
 ) => {
   privateGateway.get(makeMyPass.listCoupons(eventId)).then((response) => {
     setCoupons(response.data.response.coupons);
+
+    if (setActivateCoupon)
+      setActivateCoupon({
+        showModal: false,
+        active: response.data.response.is_coupon_active,
+        description: response.data.response.description,
+      });
   });
 };
 

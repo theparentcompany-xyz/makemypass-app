@@ -27,3 +27,9 @@ export type CreateCouponType = {
   }[];
   [key: string]: any;
 };
+
+export type ActivateCouponType = {
+  showModal: boolean;
+  active: boolean;
+  description: string;
+};
