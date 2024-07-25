@@ -62,3 +62,8 @@ export type AudioControlsType = {
   transcribing: boolean;
   noData: boolean;
 };
+
+export type ClaimCodeExceedType = {
+  exceeded: boolean;
+  message: string;
+};

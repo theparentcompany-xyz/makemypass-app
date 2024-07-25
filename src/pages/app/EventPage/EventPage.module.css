@@ -208,3 +208,31 @@
   text-align: center;
   width: 100%;
 }
+
+.claimCodeExccededMessage {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #bbbaba;
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+  padding: 0.75rem 0.5rem;
+  margin-bottom: 1rem;
+
+  margin-bottom: 1rem;
+  width: calc(100% - 1rem);
+  background-color: rgba(240, 75, 75, 0.1);
+
+  border: 1px solid rgba(240, 75, 75);
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  column-gap: 0.5rem;
+
+  span {
+    font-size: 0.9rem;
+    color: white;
+  }
+}

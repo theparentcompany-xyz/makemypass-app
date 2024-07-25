@@ -7,6 +7,7 @@ import {
   DiscountData,
   Tickets,
   SuccessModalProps,
+  ClaimCodeExceedType,
 } from '../pages/app/EventPage/types';
 import React, { Dispatch } from 'react';
 import { ErrorMessages, EventType, FormDataType, RazorpayPaymentDetails } from './types';
@@ -287,6 +288,7 @@ export const getEventInfo = async (
   setEventNotFound?: Dispatch<React.SetStateAction<boolean>>,
   setSuccess?: React.Dispatch<React.SetStateAction<SuccessModalProps>>,
   claimCode?: string | null,
+  setClaimCodeExceed?: React.Dispatch<React.SetStateAction<ClaimCodeExceedType>>,
 ) => {
   let backendURL = makeMyPass.getEventInfo(eventTitle);
   if (claimCode) backendURL += `?claim_code=${claimCode}`;
@@ -302,6 +304,13 @@ export const getEventInfo = async (
           loading: false,
         }));
       sessionStorage.setItem('eventId', response.data.response.id);
+      if (response.data.response.claim_code_message) {
+        setClaimCodeExceed &&
+          setClaimCodeExceed({
+            exceeded: true,
+            message: response.data.response.claim_code_message,
+          });
+      }
     })
     .catch((error) => {
       if (error.response.data.statusCode === 404) setEventNotFound && setEventNotFound(true);

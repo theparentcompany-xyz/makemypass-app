@@ -12,7 +12,7 @@ import EventHeader from './components/EventHeader/EventHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
 import { Helmet } from 'react-helmet';
 import EventForm from './components/EventForm/EventForm';
-import { SuccessModalProps } from './types';
+import { ClaimCodeExceedType, SuccessModalProps } from './types';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -23,6 +23,11 @@ const EventPage = () => {
     loading: false,
   });
 
+  const [claimCodeExceed, setClaimCodeExceed] = useState<ClaimCodeExceedType>({
+    exceeded: false,
+    message: '',
+  });
+
   const [eventNotFound, setEventNotFound] = useState<boolean>(false);
 
   const [searchParams] = useSearchParams();
@@ -30,7 +35,15 @@ const EventPage = () => {
   const claimCode = searchParams.get('claim_code');
 
   useEffect(() => {
-    if (eventTitle) getEventInfo(eventTitle, setEventData, setEventNotFound, setSuccess, claimCode);
+    if (eventTitle)
+      getEventInfo(
+        eventTitle,
+        setEventData,
+        setEventNotFound,
+        setSuccess,
+        claimCode,
+        setClaimCodeExceed,
+      );
   }, [eventTitle]);
 
   useEffect(() => {
@@ -103,6 +116,7 @@ const EventPage = () => {
                 setEventData={setEventData}
                 eventTitle={eventTitle}
                 claimCode={claimCode}
+                claimCodeExceed={claimCodeExceed}
               />
             </div>
           </div>

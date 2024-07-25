@@ -1,5 +1,11 @@
 import { Dispatch, useEffect, useState } from 'react';
-import { CouponData, DiscountData, Tickets, SuccessModalProps } from '../../types';
+import {
+  CouponData,
+  DiscountData,
+  Tickets,
+  SuccessModalProps,
+  ClaimCodeExceedType,
+} from '../../types';
 import styles from '../../EventPage.module.css';
 import { submitForm, validateRsvp } from '../../../../../apis/publicpage';
 import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
@@ -12,6 +18,7 @@ import { FormEventData, SelectedGuest } from '../../../Guests/types';
 import { PropagateLoader } from 'react-spinners';
 import VoiceInput from './components/VoiceInput';
 import { addGuest } from '../../../../../apis/guest';
+import { MdError } from 'react-icons/md';
 
 const EventForm = ({
   eventFormData,
@@ -22,6 +29,7 @@ const EventForm = ({
   claimCode,
   ticketCode,
   setSelectedGuestId,
+  claimCodeExceed,
 }: {
   eventFormData: FormEventData;
   eventTitle: string | undefined;
@@ -31,10 +39,11 @@ const EventForm = ({
   claimCode?: string | null;
   ticketCode?: string | null;
   setSelectedGuestId?: Dispatch<React.SetStateAction<SelectedGuest | null>>;
+  claimCodeExceed?: ClaimCodeExceedType;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({});
-  const [formNumber, setFormNumber] = useState<number>(1);
+  const [formNumber, setFormNumber] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState<string | null>();
   const [formErrors, setFormErrors] = useState<any>({});
   const [tickets, setTickets] = useState<Tickets[]>([]);
@@ -169,6 +178,10 @@ const EventForm = ({
           className={!type ? styles.eventForm : undefined}
         >
           <div className={styles.eventFormInnerContainer} id='formFields'>
+            <div className={styles.claimCodeExccededMessage}>
+              <MdError color='#F04B4B' />
+              <span>{claimCodeExceed?.message}</span>
+            </div>
             <div>
               <p className={styles.eventFormTitle}>{type ? '' : 'Register for the event'}</p>
               <p className={styles.eventHeaderDescription}>
