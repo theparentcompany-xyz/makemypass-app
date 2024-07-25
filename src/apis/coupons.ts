@@ -54,14 +54,19 @@ export const createCoupon = async (
     });
 };
 
-export const updateCouponStatus = async (eventId: string, activateCoupon: ActivateCouponType) => {
+export const updateCouponStatus = async (
+  eventId: string,
+  activateCoupon: ActivateCouponType,
+  setActivateCoupon: Dispatch<SetStateAction<ActivateCouponType>>,
+) => {
   return privateGateway
-    .patch(makeMyPass.updateCouponStatus(eventId), {
-      show_ticket_field: activateCoupon.active,
+    .put(makeMyPass.updateCouponStatus(eventId), {
+      show_coupon_field: activateCoupon.active,
       description: activateCoupon.description,
     })
     .then(() => {
       toast.success('Coupon status updated successfully');
+      setActivateCoupon({ ...activateCoupon, showModal: false });
     })
     .catch(() => {
       toast.error('Failed to update coupon status');

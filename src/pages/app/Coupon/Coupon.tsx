@@ -119,7 +119,7 @@ const Coupon = () => {
             <SecondaryButton
               buttonText='Submit'
               onClick={() => {
-                updateCouponStatus(eventId, activateCoupon);
+                updateCouponStatus(eventId, activateCoupon, setActivateCoupon);
               }}
             />
           </div>
