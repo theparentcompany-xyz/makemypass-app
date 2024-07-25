@@ -314,7 +314,7 @@ const CouponForm = ({
           }}
         >
           <p className={styles.couponHeader}>Have a Coupon Code?</p>
-          <p className={styles.couponDescription}>{coupon.description}</p>
+          {coupon.description && <p className={styles.couponDescription}>{coupon.description}</p>}
           <InputField
             name='coupon_code'
             placeholder='Coupon Code'
