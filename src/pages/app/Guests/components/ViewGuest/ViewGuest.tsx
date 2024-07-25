@@ -264,16 +264,40 @@ const ViewGuest = ({
                   )}
                 </div>
 
-                <AnimatePresence>
-                  <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 50 }}
-                    className={styles.guestActions}
-                  >
-                    <div className={styles.confirmButton}>
-                      {!confirmClicked.confirm && selectedGuestData['is_approved'] === null ? (
-                        <>
+                {selectedGuestData['event_approval_required'] && (
+                  <AnimatePresence>
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 50 }}
+                      className={styles.guestActions}
+                    >
+                      <div className={styles.confirmButton}>
+                        {!confirmClicked.confirm && selectedGuestData['is_approved'] === null ? (
+                          <>
+                            <SecondaryButton
+                              onClick={() => {
+                                setConfirmClicked({
+                                  confirm: true,
+                                  value: false,
+                                });
+                              }}
+                              buttonText='Decline'
+                            />
+
+                            <SecondaryButton
+                              onClick={() => {
+                                setConfirmClicked({
+                                  confirm: true,
+                                  value: true,
+                                });
+                              }}
+                              buttonText='Accept'
+                            />
+                          </>
+                        ) : !confirmClicked.confirm &&
+                          selectedGuestData['is_approved'] &&
+                          selectedGuestData['check_in_date'] === null ? (
                           <SecondaryButton
                             onClick={() => {
                               setConfirmClicked({
@@ -283,77 +307,55 @@ const ViewGuest = ({
                             }}
                             buttonText='Decline'
                           />
-
-                          <SecondaryButton
-                            onClick={() => {
-                              setConfirmClicked({
-                                confirm: true,
-                                value: true,
-                              });
-                            }}
-                            buttonText='Accept'
-                          />
-                        </>
-                      ) : !confirmClicked.confirm &&
-                        selectedGuestData['is_approved'] &&
-                        selectedGuestData['check_in_date'] === null ? (
-                        <SecondaryButton
-                          onClick={() => {
-                            setConfirmClicked({
-                              confirm: true,
-                              value: false,
-                            });
-                          }}
-                          buttonText='Decline'
-                        />
-                      ) : (
-                        !confirmClicked.confirm &&
-                        selectedGuestData['check_in_date'] === null && (
-                          <SecondaryButton
-                            onClick={() => {
-                              setConfirmClicked({
-                                confirm: true,
-                                value: true,
-                              });
-                            }}
-                            buttonText='Accept'
-                          />
-                        )
-                      )}
-                    </div>
-
-                    {confirmClicked.confirm && (
-                      <div className={styles.confirmButton}>
-                        <SecondaryButton
-                          onClick={() => {
-                            setConfirmClicked({
-                              confirm: false,
-                              value: false,
-                            });
-                          }}
-                          buttonText='No'
-                        />
-                        <SecondaryButton
-                          onClick={() => {
-                            if (!isArray(selectedGuestData['id']))
-                              shortListUser(
-                                eventId,
-                                selectedGuestData['id'],
-                                confirmClicked.value,
-                                setSelectedGuestId,
-                              );
-                          }}
-                          buttonText={confirmClicked.value ? 'Yes, Accept' : 'Yes, Decline'}
-                        />
-                        <p className={styles.alertText}>
-                          {confirmClicked.value
-                            ? 'Are you sure you want to accept this guest?'
-                            : 'Are you sure you want to decline this guest?'}
-                        </p>
+                        ) : (
+                          !confirmClicked.confirm &&
+                          selectedGuestData['check_in_date'] === null && (
+                            <SecondaryButton
+                              onClick={() => {
+                                setConfirmClicked({
+                                  confirm: true,
+                                  value: true,
+                                });
+                              }}
+                              buttonText='Accept'
+                            />
+                          )
+                        )}
                       </div>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
+
+                      {confirmClicked.confirm && (
+                        <div className={styles.confirmButton}>
+                          <SecondaryButton
+                            onClick={() => {
+                              setConfirmClicked({
+                                confirm: false,
+                                value: false,
+                              });
+                            }}
+                            buttonText='No'
+                          />
+                          <SecondaryButton
+                            onClick={() => {
+                              if (!isArray(selectedGuestData['id']))
+                                shortListUser(
+                                  eventId,
+                                  selectedGuestData['id'],
+                                  confirmClicked.value,
+                                  setSelectedGuestId,
+                                );
+                            }}
+                            buttonText={confirmClicked.value ? 'Yes, Accept' : 'Yes, Decline'}
+                          />
+                          <p className={styles.alertText}>
+                            {confirmClicked.value
+                              ? 'Are you sure you want to accept this guest?'
+                              : 'Are you sure you want to decline this guest?'}
+                          </p>
+                        </div>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+                )}
               </div>
               {selectedGuestData['is_approved'] && (
                 <div className={styles.guestActionButtons}>
@@ -397,7 +399,7 @@ const ViewGuest = ({
                     <MdDownload size={20} color='#8E8E8E' />
                     <span>View Ticket</span>
                   </div>
-                  {selectedGuestData['is_checked_in'] && (
+                  {selectedGuestData['is_checked_in'] && selectedGuestData['has_venues'] && (
                     <div
                       className={styles.icon}
                       onClick={() => {
