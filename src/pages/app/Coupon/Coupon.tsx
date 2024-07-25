@@ -296,7 +296,7 @@ const Coupon = () => {
                           is_private: !newCouponData.is_private,
                         });
                       }}
-                      text='Show Form in Form'
+                      text='Show Coupon in Form'
                     />
                     <Slider
                       checked={newCouponData.is_active}
