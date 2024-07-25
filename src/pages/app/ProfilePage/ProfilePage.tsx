@@ -171,6 +171,7 @@ const ProfilePage = () => {
                           name='email'
                           value={editUser?.email}
                           onChange={(e) => setEditUser({ ...editUser, email: e.target.value })}
+                          disabled={true}
                         />
                       </div>
                     )}
