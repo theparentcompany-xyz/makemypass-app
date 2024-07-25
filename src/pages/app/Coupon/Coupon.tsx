@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Glance from '../../../components/Glance/Glance';
 import Theme from '../../../components/Theme/Theme';
 import styles from './Coupon.module.css';
-import { createCoupon, listCoupons, updateCouponStatus } from '../../../apis/coupons';
+import { createCoupon, listCoupons } from '../../../apis/coupons';
 import GenericTable from '../../../components/Table/GenericTable';
 import CouponType, { CreateCouponType } from './types';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
@@ -109,9 +109,9 @@ const Coupon = () => {
                 icon={<></>}
                 required={true}
                 onChange={(event) => {
-                  setActivateCoupon({ ...activateCoupon, description: event.target.value });
+                  setNewCouponData({ ...newCouponData, description: event.target.value });
                 }}
-                value={activateCoupon.description}
+                value={newCouponData.code}
                 description='This description will serve as helper text for the coupon field'
               />
             )}
@@ -119,7 +119,7 @@ const Coupon = () => {
             <SecondaryButton
               buttonText='Submit'
               onClick={() => {
-                updateCouponStatus(eventId, activateCoupon, setActivateCoupon);
+                setActivateCoupon({ ...activateCoupon, showModal: false });
               }}
             />
           </div>
@@ -152,7 +152,7 @@ const Coupon = () => {
                     icon={<></>}
                     required={true}
                     onChange={(event) => {
-                      setNewCouponData({ ...newCouponData, code: event.target.value.trim() });
+                      setNewCouponData({ ...newCouponData, code: event.target.value });
                     }}
                     value={newCouponData.code}
                     description='Customer must enter this coupon code at checkout'
@@ -163,7 +163,7 @@ const Coupon = () => {
                   <div className={styles.discountContainer}>
                     <div className={styles.discountValue}>
                       <InputField
-                        type='text'
+                        type='number'
                         name='Discount Value'
                         id='discount'
                         placeholder='Enter Discount Value'
