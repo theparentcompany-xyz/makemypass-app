@@ -13,7 +13,7 @@ import toast from 'react-hot-toast';
 import AdvancedSetting from './components/AdvancedSetting/AdvancedSetting';
 import UnsavedChanges from './components/UnsavedChanges/UnsavedChanges';
 import ConfirmDelete from './components/ConfirmDelete/ConfirmDelete';
-// import TicketEditor from './components/TicketEditor/TicketEditor';
+import TicketEditor from './components/TicketEditor/TicketEditor';
 
 export interface ChildProps {
   setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,7 +27,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   const { event_id: eventId, event_name: eventName } = JSON.parse(
     sessionStorage.getItem('eventData') || '',
   );
-  // const [ticketEditorModal, setTicketEditorModal] = useState(false);
+  const [ticketEditorModal, setTicketEditorModal] = useState(false);
   const [hasFetched, setHasFetched] = useState(false);
   const [ticketData, setTicketData] = useState<TicketType[]>([]);
   const [tickets, setTickets] = useState<TicketType[]>([]);
@@ -217,9 +217,9 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         toast.error('Failed to set default ticket');
       });
   };
-  // const handleTicketClick = (ticketId: string) => {
-  //   setTicketEditorModal(true);
-  // };
+  const handleTicketClick = (ticketId: string) => {
+    setTicketEditorModal(true);
+  };
 
   const closeTicketModal = () => {
     if (!hasUnsavedChanges()) {
@@ -289,11 +289,11 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
           />
         </Modal>
       )}
-      {/* {ticketEditorModal && (
+      {ticketEditorModal && (
         <Modal onClose={() => setTicketEditorModal(false)} style={{ zIndex: 1000 }}>
           <TicketEditor />
         </Modal>
-      )} */}
+      )}
 
       {ticketData.length || hasFetched ? (
         // <Theme>
@@ -327,7 +327,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                   }
                   handleDefaultSelected={changeDefaultSelected}
                   hasUnsavedChanges={hasUnsavedChanges}
-                  // handleTicketClick={handleTicketClick}
+                  handleTicketClick={handleTicketClick}
                 />
               ) : null;
             })}
@@ -383,7 +383,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                 <Slider
                   checked={selectedTicket?.capacity != null && limitCapacity}
                   onChange={() => {
-                    if (selectedTicket?.capacity != null && selectedTicket?.capacity > 0) {
+                    if (selectedTicket?.capacity != null && selectedTicket?.capacity >= 0) {
                       setSelectedTicket({
                         ...selectedTicket,
                         capacity: null,
