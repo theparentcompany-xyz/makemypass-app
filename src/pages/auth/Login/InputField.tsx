@@ -24,7 +24,7 @@ const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
       exit={{ opacity: 0, y: 10 }}
       transition={{ duration: 0.2 }}
       className={styles.formInput}
-      style={inputProps.error ? { marginBottom: '0' } : { marginBottom: '1rem' }}
+      // style={inputProps.error ? { marginBottom: '0' }}
     >
       <label className={styles.formLabel} htmlFor='email'>
         {inputProps.required ? inputProps.placeholder + '*' : inputProps.placeholder}

@@ -29,6 +29,7 @@ const Login = () => {
 
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
+  const [isLoginWithOtp, setIsLoginWithOtp] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isForgetPassword, setIsForgetPassword] = useState(false);
   const [isRegistered, setIsRegistered] = useState(true);
@@ -76,6 +77,7 @@ const Login = () => {
           emailRef.current?.value,
           otpRef.current?.value,
           passwordRef.current?.value,
+          setError,
         ).then((responseData: any) => {
           if (responseData.response.access_token) {
             const userEmail = emailRef.current?.value.split('@')[0];
@@ -136,13 +138,6 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    if (timer === 0) {
-      setTimer(120);
-      setIsOtpSent(false);
-    }
-  }, [timer]);
-
-  useEffect(() => {
     if (localStorage.getItem('accessToken')) setIsAuthenticated(true);
 
     if (isAuthenticated) {
@@ -157,7 +152,9 @@ const Login = () => {
 
   useEffect(() => {
     if (isForgetPassword && emailRef.current?.value) {
+      passwordRef.current!.value = '';
       generateOTP(emailRef.current?.value, setIsOtpSent, setIsRegistered, 'Forget Password');
+      setIsForgetPassword(true);
     } else if (isForgetPassword && !emailRef.current?.value) {
       setError({
         email: 'Email is required',
@@ -165,6 +162,7 @@ const Login = () => {
         otp: '',
       });
       setIsForgetPassword(true);
+      setIsPassword(false);
     }
   }, [isForgetPassword]);
 
@@ -220,11 +218,40 @@ const Login = () => {
 
                     if (isForgetPassword && emailRef.current?.value) {
                       setIsForgetPassword(false);
-                      setError({});
+                      setError((prevError) => {
+                        return {
+                          ...prevError,
+                          email: '',
+                        };
+                      });
                     }
                   }}
                 />
                 {error && error.email && <p className={styles.alertMessage}>{error.email}</p>}
+
+                {((isOtpSent && !isPassword) ||
+                  (isOtpSent && isForgetPassword) ||
+                  isLoginWithOtp) && (
+                  <>
+                    <InputField
+                      ref={otpRef}
+                      type='number'
+                      name='otp'
+                      id='otp'
+                      placeholder='Enter OTP*'
+                      icon={<LuKey color='#A4A4A4' />}
+                      onChange={() =>
+                        setError((prevError) => {
+                          return {
+                            ...prevError,
+                            otp: '',
+                          };
+                        })
+                      }
+                    />
+                    {error && error.otp && <p className={styles.alertMessage}>{error.otp}</p>}
+                  </>
+                )}
 
                 {((isPassword && !isOtpSent) || (isForgetPassword && isOtpSent)) && (
                   <>
@@ -236,10 +263,11 @@ const Login = () => {
                       placeholder={isForgetPassword ? 'Enter New Password*' : 'Enter Password*'}
                       icon={<LuKey color='#A4A4A4' />}
                       onChange={() =>
-                        setError({
-                          email: '',
-                          password: '',
-                          otp: '',
+                        setError((prevError) => {
+                          return {
+                            ...prevError,
+                            password: '',
+                          };
                         })
                       }
                     />
@@ -262,27 +290,6 @@ const Login = () => {
                     </div>
                   </>
                 )}
-
-                {((isOtpSent && !isPassword) || (isOtpSent && isForgetPassword)) && (
-                  <>
-                    <InputField
-                      ref={otpRef}
-                      type='number'
-                      name='otp'
-                      id='otp'
-                      placeholder='Enter OTP*'
-                      icon={<LuKey color='#A4A4A4' />}
-                      onChange={() =>
-                        setError({
-                          email: '',
-                          password: '',
-                          otp: '',
-                        })
-                      }
-                    />
-                    {error && error.otp && <p className={styles.alertMessage}>{error.otp}</p>}
-                  </>
-                )}
               </div>
 
               {isOtpSent && !isRegistered && (
@@ -296,14 +303,21 @@ const Login = () => {
                 <p
                   className='pointer'
                   onClick={() => {
+                    setError({
+                      email: '',
+                      password: '',
+                      otp: '',
+                    });
                     if (!isPassword) {
                       setIsOtpSent(false);
                       setIsPassword(true);
                       setIsRegistered(true);
+                      setIsLoginWithOtp(false);
                     } else {
                       setIsOtpSent(false);
                       setIsPassword(false);
                       setIsRegistered(true);
+                      setIsLoginWithOtp(true);
                     }
                   }}
                 >
@@ -335,6 +349,8 @@ const Login = () => {
                           'Login',
                         );
                       else preRegister(emailRef.current?.value, setIsOtpSent);
+
+                      setTimer(120);
                     }}
                     disabled={timer > 0} // Disable button when timer is still running
                   >

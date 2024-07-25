@@ -170,7 +170,12 @@ export const googleLogin = async () => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
     });
 };
-export const resetPassword = (email: string, otp: string, password: string): Promise<any> => {
+export const resetPassword = (
+  email: string,
+  otp: string,
+  password: string,
+  setError: Dispatch<React.SetStateAction<errorType | undefined>>,
+): Promise<any> => {
   return new Promise((resolve, reject) => {
     publicGateway
       .post(buildVerse.resetPassword, {
@@ -182,7 +187,15 @@ export const resetPassword = (email: string, otp: string, password: string): Pro
         resolve(response.data);
       })
       .catch((error) => {
-        toast.error(error.response.data.message.general[0]);
+        setError({
+          email: error.response.data.message.email ? error.response.data.message.email : undefined,
+          password: error.response.data.message.password
+            ? error.response.data.message.password
+            : error.response.data.message.general[0],
+          otp: error.response.data.message.otp
+            ? error.response.data.message.otp
+            : error.response.data.message.general[0],
+        });
         reject(error);
       });
   });
