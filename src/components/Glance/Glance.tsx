@@ -232,6 +232,7 @@ const Glance = ({
             currentTab != 'postevent' &&
             currentTab != 'feedback' &&
             currentTab != 'manage' &&
+            currentTab != 'coupon' &&
             progressData.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: -50 }}

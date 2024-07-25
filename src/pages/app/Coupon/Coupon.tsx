@@ -21,6 +21,7 @@ import { getConditions } from '../FormBuilder/constant';
 import toast from 'react-hot-toast';
 import { getForm } from '../../../apis/formbuilder';
 import { Field } from '../FormBuilder/types';
+import EventHeader from '../../../components/EventHeader/EventHeader';
 
 const Coupon = () => {
   type CouponModalType = {
@@ -46,6 +47,11 @@ const Coupon = () => {
   const [tickets, setTickets] = useState<TicketType[]>([]);
   const [coupons, setCoupons] = useState<CouponType[]>([]);
   const [formFields, setFormFields] = useState<Field[]>([]);
+  const [activateCoupon, setActivateCoupon] = useState({
+    showModal: false,
+    active: false,
+    description: '',
+  });
   const [limitDiscountUsage, setLimitDiscountUsage] = useState(false);
   const [newCouponData, setNewCouponData] = useState<CreateCouponType>({
     code: '',
@@ -75,8 +81,53 @@ const Coupon = () => {
 
   return (
     <>
+      {activateCoupon.showModal && (
+        <Modal
+          title='Active Coupuon'
+          onClose={() => {
+            setActivateCoupon({ ...activateCoupon, showModal: false });
+          }}
+        >
+          <div className={styles.activateCouponModal}>
+            <Slider
+              text='Show Coupon Field in Form'
+              checked={activateCoupon.active}
+              onChange={() => {
+                setActivateCoupon({ ...activateCoupon, active: !activateCoupon.active });
+              }}
+              size='medium'
+              labelStyle={{
+                marginLeft: '-0.25rem',
+              }}
+            />
+            {activateCoupon.active && (
+              <InputField
+                type='text'
+                name='Field Description'
+                id='fieldDescription'
+                placeholder='Enter Field Description'
+                icon={<></>}
+                required={true}
+                onChange={(event) => {
+                  setNewCouponData({ ...newCouponData, description: event.target.value });
+                }}
+                value={newCouponData.code}
+                description='This description will serve as helper text for the coupon field'
+              />
+            )}
+
+            <SecondaryButton
+              buttonText='Submit'
+              onClick={() => {
+                setActivateCoupon({ ...activateCoupon, showModal: false });
+              }}
+            />
+          </div>
+        </Modal>
+      )}
       <Theme>
         <div className={styles.mainContainer}>
+          <EventHeader previousPageNavigate='/events' />
           <Glance tab='coupon' />
           {couponModal.showModal && (
             <Modal
@@ -412,12 +463,24 @@ const Coupon = () => {
                 tableHeading='Coupons'
                 tableData={coupons}
                 secondaryButton={
-                  <SecondaryButton
-                    buttonText='+ Add New Coupon Code'
-                    onClick={() => {
-                      setCouponModal({ showModal: true });
-                    }}
-                  />
+                  <div className={styles.secondaryTableButtons}>
+                    <SecondaryButton
+                      buttonText='+ Add New Coupon Code'
+                      onClick={() => {
+                        setCouponModal({ showModal: true });
+                      }}
+                    />
+                    <SecondaryButton
+                      buttonText='Activate Coupon'
+                      onClick={() => {
+                        setActivateCoupon({
+                          showModal: true,
+                          active: false,
+                          description: '',
+                        });
+                      }}
+                    />
+                  </div>
                 }
               />
             </div>

@@ -51,7 +51,7 @@
 }
 
 .discountSelectContainer {
-  margin-top: 1.05rem;
+  margin-top: 1.9rem;
 }
 
 .basicSelect {
@@ -196,4 +196,19 @@
 
 li {
   list-style-type: none;
+}
+
+.secondaryTableButtons {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 0.5rem;
+}
+
+.activateCouponModal {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  column-gap: 0.5rem;
 }

@@ -165,22 +165,24 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                   ></p>
                 )}
               </motion.p>
-              <div className={styles.expandIcon}>
-                {!showFullDesc ? (
-                  <FaExpandAlt
-                    onClick={() => {
-                      setShowFullDesc((prev) => !prev);
-                    }}
-                  />
-                ) : (
-                  <IoContract
-                    size={20}
-                    onClick={() => {
-                      setShowFullDesc((prev) => !prev);
-                    }}
-                  />
-                )}
-              </div>
+              {eventData.description.length > 275 && (
+                <div className={styles.expandIcon}>
+                  {!showFullDesc ? (
+                    <FaExpandAlt
+                      onClick={() => {
+                        setShowFullDesc((prev) => !prev);
+                      }}
+                    />
+                  ) : (
+                    <IoContract
+                      size={20}
+                      onClick={() => {
+                        setShowFullDesc((prev) => !prev);
+                      }}
+                    />
+                  )}
+                </div>
+              )}
             </motion.div>
           </div>
         )}

@@ -123,14 +123,16 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
               </div>
             </div>
             <p className={styles.logStatus}>{file.status}</p>
-            <BiSolidReport
-              onClick={() => {
-                generateCSVReport(file.report_path);
-              }}
-              title='Download Report'
-              color='#8e8e8e'
-              className={styles.reportIcon}
-            />
+            {file.status === 'completed' && (
+              <BiSolidReport
+                onClick={() => {
+                  generateCSVReport(file.report_path);
+                }}
+                title='Download Report'
+                color='#8e8e8e'
+                className={styles.reportIcon}
+              />
+            )}
           </div>
         ))}
         {fileStatus.length === 0 && <p className={styles.noLogs}>No logs available</p>}
