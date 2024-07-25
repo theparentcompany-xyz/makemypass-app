@@ -47,6 +47,18 @@ const EventPage = () => {
   }, [eventTitle]);
 
   useEffect(() => {
+    if (success.showModal && eventTitle)
+      getEventInfo(
+        eventTitle,
+        setEventData,
+        setEventNotFound,
+        setSuccess,
+        claimCode,
+        setClaimCodeExceed,
+      );
+  }, [success]);
+
+  useEffect(() => {
     const scrollToTop = () => {
       window.scrollTo(0, 0);
     };

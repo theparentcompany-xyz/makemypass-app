@@ -1,4 +1,5 @@
 export type BulkUploadType = {
+  send_ticket: ReactNode;
   filename: string;
   file_id: string;
   status: string;

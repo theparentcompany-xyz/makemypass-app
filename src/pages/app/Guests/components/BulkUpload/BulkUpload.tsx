@@ -121,6 +121,9 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
                 <p className={styles.error}>{file.failure_count} Failed</p>
                 <p className={styles.total}>{file.total_count} Total</p>
               </div>
+              <p className={styles.total} style={{ marginTop: '0.25rem' }}>
+                {file.send_ticket ? 'Tickets Sent' : 'Ticket Not Sent'}{' '}
+              </p>
             </div>
             <p className={styles.logStatus}>{file.status}</p>
             {file.status === 'completed' && (
