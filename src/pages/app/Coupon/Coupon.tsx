@@ -170,6 +170,13 @@ const Coupon = () => {
                         icon={<></>}
                         required={true}
                         onChange={(event) => {
+                          if (
+                            newCouponData.type === 'percentage' &&
+                            Number(event.target.value) > 100
+                          ) {
+                            toast.error('Enter a value less than 100');
+                            return;
+                          }
                           setNewCouponData({
                             ...newCouponData,
                             value: parseInt(event.target.value),
@@ -304,118 +311,121 @@ const Coupon = () => {
                   </div>
                 </div>
 
-                <hr className={styles.line} />
-
-                <div className={styles.conditions}>
-                  <p className={styles.fieldHeader}>Customer Eligiblity</p>
-                  <Slider
-                    checked={newCouponData.conditions.length > 0}
-                    onChange={() => {
-                      if (newCouponData.conditions.length > 0) newCouponData.conditions = [];
-                      else
-                        newCouponData.conditions.push({
-                          field: '',
-                          value: '',
-                          operator: '',
-                        });
-
-                      setNewCouponData({ ...newCouponData });
-                    }}
-                    text='Show coupon only when conditions are met'
-                  />
-                  {newCouponData.conditions.length >= 0 && (
+                {import.meta.env.VITE_CURRENT_ENV == 'dev' && (
+                  <>
+                    <hr className={styles.line} />
                     <div className={styles.conditions}>
-                      {newCouponData.conditions.map((condition, idx) => (
-                        <div className={styles.conditionRow} key={idx}>
-                          <p className={styles.when}>{idx === 0 ? 'When' : 'And'}</p>
-                          <div className={styles.conditionsSelect}>
-                            <SelectComponent
-                              options={
-                                formFields.length > 0
-                                  ? formFields.map((field) => ({
-                                      value: field.id,
-                                      label: field.title,
-                                    }))
-                                  : []
-                              }
-                              value={condition.field}
-                              onChange={(option: { value: string; label: string }) => {
-                                if (!option) condition.field = '';
-                                else condition.field = option.value;
+                      <p className={styles.fieldHeader}>Customer Eligiblity</p>
+                      <Slider
+                        checked={newCouponData.conditions.length > 0}
+                        onChange={() => {
+                          if (newCouponData.conditions.length > 0) newCouponData.conditions = [];
+                          else
+                            newCouponData.conditions.push({
+                              field: '',
+                              value: '',
+                              operator: '',
+                            });
 
-                                setNewCouponData({ ...newCouponData });
-                              }}
-                              isSmall={true}
-                            />
-                            <SelectComponent
-                              options={[
-                                ...getConditions(getFieldType(condition.field)).map(
-                                  (condition) => ({
-                                    value: condition.value,
-                                    label: condition.label,
-                                  }),
-                                ),
-                              ]}
-                              value={condition.operator}
-                              onChange={(option: { value: string; label: string }) => {
-                                if (!option) condition.operator = '';
-                                else condition.operator = option.value;
+                          setNewCouponData({ ...newCouponData });
+                        }}
+                        text='Show coupon only when conditions are met'
+                      />
+                      {newCouponData.conditions.length >= 0 && (
+                        <div className={styles.conditions}>
+                          {newCouponData.conditions.map((condition, idx) => (
+                            <div className={styles.conditionRow} key={idx}>
+                              <p className={styles.when}>{idx === 0 ? 'When' : 'And'}</p>
+                              <div className={styles.conditionsSelect}>
+                                <SelectComponent
+                                  options={
+                                    formFields.length > 0
+                                      ? formFields.map((field) => ({
+                                          value: field.id,
+                                          label: field.title,
+                                        }))
+                                      : []
+                                  }
+                                  value={condition.field}
+                                  onChange={(option: { value: string; label: string }) => {
+                                    if (!option) condition.field = '';
+                                    else condition.field = option.value;
 
-                                setNewCouponData({ ...newCouponData });
-                              }}
-                              isSmall={true}
-                            />
-                            <input
-                              type='text'
-                              placeholder='Enter a Value'
-                              value={condition.value}
-                              onChange={(event) => {
-                                condition.value = event.target.value;
+                                    setNewCouponData({ ...newCouponData });
+                                  }}
+                                  isSmall={true}
+                                />
+                                <SelectComponent
+                                  options={[
+                                    ...getConditions(getFieldType(condition.field)).map(
+                                      (condition) => ({
+                                        value: condition.value,
+                                        label: condition.label,
+                                      }),
+                                    ),
+                                  ]}
+                                  value={condition.operator}
+                                  onChange={(option: { value: string; label: string }) => {
+                                    if (!option) condition.operator = '';
+                                    else condition.operator = option.value;
 
-                                setNewCouponData({ ...newCouponData });
-                              }}
-                            />
+                                    setNewCouponData({ ...newCouponData });
+                                  }}
+                                  isSmall={true}
+                                />
+                                <input
+                                  type='text'
+                                  placeholder='Enter a Value'
+                                  value={condition.value}
+                                  onChange={(event) => {
+                                    condition.value = event.target.value;
 
-                            <RiDeleteBinLine
-                              className='pointer'
-                              size={20}
-                              color='#606264'
-                              onClick={() => {
-                                newCouponData.conditions.splice(idx, 1);
-                                setNewCouponData({ ...newCouponData });
-                              }}
-                            />
+                                    setNewCouponData({ ...newCouponData });
+                                  }}
+                                />
 
-                            <RxDragHandleDots2
-                              style={{
-                                marginLeft: '0.5rem',
-                              }}
-                              size={20}
-                              color='#606264'
-                            />
+                                <RiDeleteBinLine
+                                  className='pointer'
+                                  size={20}
+                                  color='#606264'
+                                  onClick={() => {
+                                    newCouponData.conditions.splice(idx, 1);
+                                    setNewCouponData({ ...newCouponData });
+                                  }}
+                                />
 
-                            <LuPlus
-                              style={{
-                                marginLeft: '0.5rem',
-                              }}
-                              className='pointer'
-                              size={20}
-                              color='#606264'
-                              onClick={() => {
-                                newCouponData.conditions.push({
-                                  field: '',
-                                  value: '',
-                                  operator: '',
-                                });
-                                setNewCouponData({ ...newCouponData });
-                              }}
-                            />
-                          </div>
+                                <RxDragHandleDots2
+                                  style={{
+                                    marginLeft: '0.5rem',
+                                  }}
+                                  size={20}
+                                  color='#606264'
+                                />
+
+                                <LuPlus
+                                  style={{
+                                    marginLeft: '0.5rem',
+                                  }}
+                                  className='pointer'
+                                  size={20}
+                                  color='#606264'
+                                  onClick={() => {
+                                    newCouponData.conditions.push({
+                                      field: '',
+                                      value: '',
+                                      operator: '',
+                                    });
+                                    setNewCouponData({ ...newCouponData });
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      )}
                     </div>
-                  )}
-                </div>
+                  </>
+                )}
 
                 <div className={styles.buttons}>
                   <SecondaryButton
