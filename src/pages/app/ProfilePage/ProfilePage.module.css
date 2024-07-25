@@ -16,6 +16,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   padding: 2rem;
 }
 
@@ -25,9 +26,11 @@
   gap: 1rem;
   justify-content: flex-start;
   border-radius: 8px;
+
 }
 
 .formGroup {
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -57,6 +60,12 @@
   color: white;
   font-family: 'Inter', sans-serif;
 }
+
+
+.fileInput {
+  display: none;
+}
+
 .fileInput::file-selector-button {
   font-family: 'Inter', sans-serif;
   margin-right: 20px;
@@ -100,4 +109,178 @@
 
 .buttonText {
   margin-left: auto;
+}
+
+.profileSection {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  gap: 1rem;
+  width: 85%;
+  flex-wrap: wrap;
+}
+
+.editProfileButton {
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  outline: none;
+  color: #FFFFFF;
+  background-color: #212325;
+  border: 1px solid #3E3E3E;
+  margin-left: auto;
+  align-self: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+
+.editProfileButton:hover {
+  background-color: #3e3e3eb5;
+  color: #FFFFFF;
+  padding: 0.5rem 1rem;
+}
+
+.lineBar {
+  border: 1px solid #6b6b6b3a;
+  border-radius: 10%;
+  width: 85%;
+}
+
+.profileInfo {
+  margin-left: 1rem;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.5rem;
+  color: #f3f3f3;
+}
+
+
+.infoName {
+  font-weight: 500;
+  font-size: 1.8rem;
+}
+
+.infoEmail {
+  font-size: 1.2rem;
+  color: #a4a4a4;
+}
+
+.profilePic {
+  border-radius: 50%;
+  user-select: none;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  background-color: #a4a4a420;
+
+}
+
+
+
+.eventSection {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  max-width: 80rem;
+}
+
+/* TABS */
+
+.tabs {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.tabs ol {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  column-gap: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+@media screen and (max-width: 496px) {
+  .tabs ol {
+    overflow: auto;
+    padding-bottom: 1rem;
+  }
+}
+
+.tab {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  padding-bottom: 0.5rem;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.active {
+  border: 1.5px solid #fff;
+  border-radius: 8px;
+}
+
+/* Modal Stuff*/
+
+.userDetailsContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  width: 100%;
+  align-items: center;
+
+}
+
+.modalUserDetails {
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modalUserName {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.modalUserMail {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #a4a4a4;
+
+}
+
+.cameraIcon {
+  position: absolute;
+  top: 60%;
+  left: 15%;
+  cursor: pointer;
+  padding: 1rem;
+  background-color: #3e3e3eb5;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+.cameraIcon:hover {
+  transform: scale(1.01);
+  background-color: #212325;
+
+  color: white;
 }
