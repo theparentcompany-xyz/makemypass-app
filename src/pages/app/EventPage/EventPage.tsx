@@ -115,7 +115,7 @@ const EventPage = () => {
                 setSuccess={setSuccess}
                 setEventData={setEventData}
                 eventTitle={eventTitle}
-                claimCode={claimCode}
+                claimCode={eventData.claim_ticked_id ? claimCode : ''}
                 claimCodeExceed={claimCodeExceed}
               />
             </div>

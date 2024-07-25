@@ -100,13 +100,16 @@ const Overview = () => {
         url: makeMyPassSocket.recentRegistrations(eventId),
       }).then((ws) => {
         ws.onmessage = (event) => {
-          if (JSON.parse(event.data).response)
+          if (JSON.parse(event.data).response && !JSON.parse(event.data).response.data)
             setRecentRegistrations(JSON.parse(event.data).response);
           else if (JSON.parse(event.data).response.data) {
             const newRegistration = JSON.parse(event.data).response.data;
+            console.log(newRegistration);
 
             setRecentRegistrations((prev) => {
               const updatedRegistrations = [newRegistration, ...prev];
+              console.log(updatedRegistrations);
+
               updatedRegistrations.pop();
               return updatedRegistrations;
             });
@@ -238,7 +241,7 @@ const Overview = () => {
               selectedGuestData={selectedGuestData}
               setSelectedGuestId={setSelectedGuestId}
               eventId={eventId}
-              type="overview"
+              type='overview'
             />
           </>
         )}
@@ -303,33 +306,33 @@ const Overview = () => {
         )}
         {recentRegistrations && hostList && recentRegistrations.length >= 0 ? (
           <div className={styles.overviewContainer}>
-            <Header previousPageNavigate="/events" />
-            <Glance tab="overview" />
+            <Header previousPageNavigate='/events' />
+            <Glance tab='overview' />
 
             <div className={styles.buttons}>
               <Link to={`/${eventTitle}/guests`}>
                 <SectionButton
-                  buttonText="Guest List"
-                  buttonColor="#7662FC"
-                  icon={<HiUserGroup size={25} color="#7662FC" />}
+                  buttonText='Guest List'
+                  buttonColor='#7662FC'
+                  icon={<HiUserGroup size={25} color='#7662FC' />}
                 />
               </Link>
 
               {(userRole === 'Owner' || userRole === 'Admin') && (
-                <a href="#hosts">
+                <a href='#hosts'>
                   <SectionButton
-                    buttonText="Host List"
-                    buttonColor="#C33D7B"
-                    icon={<FaWrench size={25} color="#C33D7B" />}
+                    buttonText='Host List'
+                    buttonColor='#C33D7B'
+                    icon={<FaWrench size={25} color='#C33D7B' />}
                   />
                 </a>
               )}
 
               <Link to={`/${eventTitle}/checkins`}>
                 <SectionButton
-                  buttonText="Check In"
-                  buttonColor="#5B75FB"
-                  icon={<BsQrCodeScan size={25} color="#5B75FB" />}
+                  buttonText='Check In'
+                  buttonColor='#5B75FB'
+                  icon={<BsQrCodeScan size={25} color='#5B75FB' />}
                 />
               </Link>
             </div>
@@ -337,7 +340,7 @@ const Overview = () => {
             <AnimatePresence>
               {recentTableData.length >= 0 && (
                 <Table
-                  tableHeading="Recent Registration"
+                  tableHeading='Recent Registration'
                   tableData={recentTableData}
                   setSelectedGuestId={setSelectedGuestId}
                 />
@@ -345,11 +348,11 @@ const Overview = () => {
             </AnimatePresence>
 
             {(userRole === 'Admin' || userRole === 'Owner') && (
-              <div id="hosts">
+              <div id='hosts'>
                 <Table
-                  tableHeading="Event Hosts"
+                  tableHeading='Event Hosts'
                   tableData={hostListTableData}
-                  secondaryButton={<SecondaryButton buttonText="Add Hosts +" onClick={addHost} />}
+                  secondaryButton={<SecondaryButton buttonText='Add Hosts +' onClick={addHost} />}
                   setHostId={setHostId}
                 />
               </div>
@@ -357,7 +360,7 @@ const Overview = () => {
           </div>
         ) : (
           <div className={styles.center}>
-            <HashLoader color="#47C97E" size={50} />
+            <HashLoader color='#47C97E' size={50} />
           </div>
         )}
       </>
