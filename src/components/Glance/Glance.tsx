@@ -18,21 +18,6 @@ const Glance = ({
 }) => {
   const eventData = JSON.parse(sessionStorage.getItem('eventData')!);
 
-  type progressDataType = {
-    type: string;
-    color: string | undefined;
-    value: number;
-  }[];
-
-  type TabType = {
-    title: string;
-    roles: string[];
-  };
-
-  type TabsType = {
-    [key: string]: TabType;
-  };
-
   const navigate = useNavigate();
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
