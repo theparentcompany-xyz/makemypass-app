@@ -11,7 +11,6 @@ import RightClickMenu from './RightClickMenu';
 import Modal from '../../../components/Modal/Modal';
 import { formatDate } from '../../../common/commonFunctions';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import { PropagateLoader } from 'react-spinners';
 import Loader from '../../../components/Loader';
 
 const Events = () => {
