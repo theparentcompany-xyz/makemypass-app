@@ -96,7 +96,7 @@ export interface TicketType {
   approval_required: boolean;
   code_prefix: string;
   code_digits: number;
-  maintain_code_order: boolean;
+  maintain_code_order?: boolean;
   id: string;
   price: number;
   show_price?: number;

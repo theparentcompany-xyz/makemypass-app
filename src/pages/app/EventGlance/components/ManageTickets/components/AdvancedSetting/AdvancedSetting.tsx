@@ -1,5 +1,5 @@
 import React from 'react';
-import Slider from '../../../../../../../components/SliderButton/Slider';
+// import Slider from '../../../../../../../components/SliderButton/Slider';
 import styles from './AdvancedSetting.module.css';
 import { TicketType } from '../../../../../../../apis/types';
 type Props = {
@@ -37,7 +37,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
           }
         />
       </div>
-      <div className={styles.modalTicketOption}>
+      {/* <div className={styles.modalTicketOption}>
         <div className={styles.modalTicketSliderLabel}>
           <p className={styles.ticketSliderLabel}>Maintain Order</p>
           <p className={styles.ticketSliderSubLabel}>The tickets will be generated in order</p>
@@ -52,7 +52,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
             } as TicketType);
           }}
         />
-      </div>
+      </div> */}
       <button className={styles.cancelButton} onClick={() => setIsOpen(false)}>
         Back
       </button>

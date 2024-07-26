@@ -120,6 +120,11 @@ const EditEvent = () => {
       changedData['location'] = location;
     }
 
+    if (changedData['is_team'] == true) {
+      if (eventData?.select_multi_ticket) changedData['select_multi_ticket'] = false;
+      if (eventData?.is_grouped_ticket) changedData['is_grouped_ticket'] = false;
+    }
+
     if (logo) changedData['logo'] = logo;
     if (banner) changedData['banner'] = banner;
 
@@ -528,44 +533,49 @@ const EditEvent = () => {
                         }
                       />
                     </div>
-                    <div className={styles.option}>
-                      <label>
-                        <BsTicketDetailed size={20} color='#949597' /> Allow Multi Ticket
-                      </label>
-                      <Slider
-                        checked={eventData.select_multi_ticket as boolean}
-                        text={''}
-                        onChange={() =>
-                          setEventData({
-                            ...eventData,
-                            select_multi_ticket: !eventData.select_multi_ticket,
-                          })
-                        }
-                      />
-                    </div>
-                    {eventData.select_multi_ticket && (
-                      <motion.div
-                        className={styles.subOption}
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <label>
-                          <BsTicketDetailed size={20} color='#949597' /> Grouped Ticket
-                        </label>
-                        <Slider
-                          checked={eventData.is_grouped_ticket}
-                          text={''}
-                          onChange={() =>
-                            setEventData({
-                              ...eventData,
-                              is_grouped_ticket: !eventData.is_grouped_ticket,
-                            })
-                          }
-                        />
-                      </motion.div>
+                    {!eventData.is_team && (
+                      <>
+                        <div className={styles.option}>
+                          <label>
+                            <BsTicketDetailed size={20} color='#949597' /> Allow Multi Ticket
+                          </label>
+                          <Slider
+                            checked={eventData.select_multi_ticket as boolean}
+                            text={''}
+                            onChange={() =>
+                              setEventData({
+                                ...eventData,
+                                select_multi_ticket: !eventData.select_multi_ticket,
+                              })
+                            }
+                          />
+                        </div>
+                        {eventData.select_multi_ticket && (
+                          <motion.div
+                            className={styles.subOption}
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <label>
+                              <BsTicketDetailed size={20} color='#949597' /> Grouped Ticket
+                            </label>
+                            <Slider
+                              checked={eventData.is_grouped_ticket}
+                              text={''}
+                              onChange={() =>
+                                setEventData({
+                                  ...eventData,
+                                  is_grouped_ticket: !eventData.is_grouped_ticket,
+                                })
+                              }
+                            />
+                          </motion.div>
+                        )}
+                      </>
                     )}
+
                     <div className={styles.option}>
                       <label>
                         <AiOutlineTeam size={20} color='#949597' /> Allow Team Registration
