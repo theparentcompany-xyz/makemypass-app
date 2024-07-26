@@ -76,6 +76,7 @@
   padding: 0.5rem;
   margin-top: 1rem;
   padding-bottom: 1rem;
+  overflow: auto;
 }
 
 .eventHeading {
@@ -393,6 +394,7 @@ input[type='color']::-webkit-color-swatch {
 .createButton:hover {
   transform: scale(1.05);
 }
+
 .deleteButton {
   padding: 0.5rem 1rem;
   border-radius: 8px;
@@ -488,10 +490,12 @@ input[type='color']::-webkit-color-swatch {
   justify-content: flex-end;
   column-gap: 1rem;
 }
+
 .uploadLogoContainerParent {
   display: flex;
   align-items: center;
 }
+
 .uploadLogoContainer {
   position: relative;
   padding: 0.5rem 1rem;
@@ -541,7 +545,7 @@ input[type='color']::-webkit-color-swatch {
   cursor: pointer;
 }
 
-.uploadLogoContainer:hover > .pencil {
+.uploadLogoContainer:hover>.pencil {
   transform: scale(1.1);
 }
 
@@ -698,6 +702,7 @@ input[type='color']::-webkit-color-swatch {
 .basic-multi-select {
   width: 100%;
 }
+
 .errorText {
   color: #f04b4b;
   font-size: 0.8rem;
@@ -722,7 +727,7 @@ input[type='color']::-webkit-color-swatch {
   transform: scale(1.25);
 }
 
-.uploadLogoContainerParent > .closeIcon {
+.uploadLogoContainerParent>.closeIcon {
   position: relative;
   top: 0;
   right: 0;
@@ -732,6 +737,7 @@ input[type='color']::-webkit-color-swatch {
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
 }
-.uploadLogoContainerParent > .closeIcon:hover {
+
+.uploadLogoContainerParent>.closeIcon:hover {
   transform: scale(1.05);
 }
