@@ -1,0 +1,4 @@
+.bn-block-content[data-is-empty-and-focused]
+  .bn-inline-content:has(> .ProseMirror-trailingBreak)::before {
+  color: #ffffff7e;
+}
