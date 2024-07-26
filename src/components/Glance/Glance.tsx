@@ -10,9 +10,9 @@ import PoppingText from './components/PoppingText';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 
 const Glance = ({
-  tab,
-  setShowPublishModal,
-}: {
+                  tab,
+                  setShowPublishModal,
+                }: {
   tab: string;
   setShowPublishModal?: Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -144,6 +144,10 @@ const Glance = ({
       title: 'Form Builder',
       roles: ['Admin', 'Owner'],
     },
+    coupon: {
+      title: 'Coupon',
+      roles: ['Admin', 'Owner', 'Volunteer'],
+    },
     logs: {
       title: 'Logs',
       roles: ['Admin', 'Owner'],
@@ -154,10 +158,6 @@ const Glance = ({
     tabs.postevent = {
       title: 'Post Event',
       roles: ['Admin', 'Owner'],
-    };
-    tabs.coupon = {
-      title: 'Coupon',
-      roles: ['Admin', 'Owner', 'Volunteer'],
     };
     tabs.feedback = {
       title: 'Feedback',
@@ -190,7 +190,7 @@ const Glance = ({
                             {tabs[tab as keyof typeof tabs].title}
                           </motion.li>
                           {currentTab === tab && (
-                            <motion.div layoutId='tab-indicator' className={styles.active} />
+                            <motion.div layoutId="tab-indicator" className={styles.active} />
                           )}
                         </div>
                       ))}
@@ -199,7 +199,7 @@ const Glance = ({
               </ol>
               {tab === 'insights' && (
                 <SecondaryButton
-                  buttonText='Share'
+                  buttonText="Share"
                   onClick={() => {
                     if (setShowPublishModal) setShowPublishModal(true);
                   }}

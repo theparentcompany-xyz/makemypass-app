@@ -299,7 +299,6 @@ export const getEventInfo = async (
       setSuccess &&
         setSuccess((prev) => ({
           ...prev,
-          showModal: false,
           eventTitle: response.data.response.title,
           loading: false,
         }));
