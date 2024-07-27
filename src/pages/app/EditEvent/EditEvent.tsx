@@ -18,7 +18,7 @@ import { ErrorMessages, EventType } from '../../../apis/types';
 import Slider from '../../../components/SliderButton/Slider';
 import { getCurrentTimezone, convertDate } from '../../../common/commonFunctions';
 import { Autocomplete, GoogleMap, useLoadScript, Libraries, MarkerF } from '@react-google-maps/api';
-import Editor from './components/Editor';
+import Editor from '../../../components/Editor/Editor';
 import Modal from '../../../components/Modal/Modal';
 import Select from 'react-select';
 
