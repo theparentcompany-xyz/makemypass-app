@@ -1,19 +1,5 @@
+import { ConditionalQuestionOperator } from '../../../services/enums';
 import { ConditionType, FormDataType, FormFieldType } from '../../apis/types';
-
-enum ConditionalQuestionOperator {
-  EQUAL = '=',
-  NOT_EQUAL = '!=',
-  IN = 'in',
-  NOT_IN = 'not in',
-  EMPTY = 'empty',
-  NOT_EMPTY = 'not empty',
-  CONTAINS = 'contains',
-  NOT_CONTAINS = 'not contains',
-  GREATER = '>',
-  GREATER_EQUAL = '>=',
-  LESS = '<',
-  LESS_EQUAL = '<='
-}
 
 function parseInput(userInput: string): number | Date | never {
   // Try parsing as number
@@ -36,12 +22,12 @@ function parseInput(userInput: string): number | Date | never {
 
 function parseDate(dateStr: string, format: string): Date | null {
   const regexMap: { [key: string]: string } = {
-    'YYYY': '(\\d{4})',
-    'MM': '(\\d{2})',
-    'DD': '(\\d{2})',
-    'HH': '(\\d{2})',
-    'mm': '(\\d{2})',
-    'ss': '(\\d{2})',
+    YYYY: '(\\d{4})',
+    MM: '(\\d{2})',
+    DD: '(\\d{2})',
+    HH: '(\\d{2})',
+    mm: '(\\d{2})',
+    ss: '(\\d{2})',
   };
 
   let regexPattern = format;
@@ -73,56 +59,78 @@ function parseDate(dateStr: string, format: string): Date | null {
   return isNaN(date.getTime()) ? null : date;
 }
 
-function evaluate(operator: ConditionalQuestionOperator, userInput: string | string[], answer: string | string[]): boolean {
+function evaluate(
+  operator: ConditionalQuestionOperator,
+  userInput: string | string[],
+  answer: string | string[],
+): boolean {
   switch (operator) {
-    case ConditionalQuestionOperator.EQUAL:
+    case ConditionalQuestionOperator.EQUALS:
       if (Array.isArray(userInput)) {
-        return userInput.every(item => item === answer);
+        return userInput.every((item) => item === answer);
       }
       return userInput === answer;
-    case ConditionalQuestionOperator.NOT_EQUAL:
+    case ConditionalQuestionOperator.NOT_EQUALS:
       if (Array.isArray(userInput)) {
-        return userInput.every(item => item !== answer);
+        return userInput.every((item) => item !== answer);
       }
       return userInput !== answer;
     case ConditionalQuestionOperator.IN:
       if (Array.isArray(userInput)) {
-        return userInput.some(item => Array.isArray(answer) ? answer.includes(item) : item === answer);
+        return userInput.some((item) =>
+          Array.isArray(answer) ? answer.includes(item) : item === answer,
+        );
       }
       return Array.isArray(answer) ? answer.includes(userInput) : userInput === answer;
     case ConditionalQuestionOperator.NOT_IN:
       if (Array.isArray(userInput)) {
-        return userInput.every(item => Array.isArray(answer) ? !answer.includes(item) : item !== answer);
+        return userInput.every((item) =>
+          Array.isArray(answer) ? !answer.includes(item) : item !== answer,
+        );
       }
       return Array.isArray(answer) ? !answer.includes(userInput) : userInput !== answer;
     case ConditionalQuestionOperator.EMPTY:
-      return userInput === '' || userInput === null || userInput === undefined || (Array.isArray(userInput) && userInput.length === 0);
+      return (
+        userInput === '' ||
+        userInput === null ||
+        userInput === undefined ||
+        (Array.isArray(userInput) && userInput.length === 0)
+      );
     case ConditionalQuestionOperator.NOT_EMPTY:
-      return !(userInput === '' || userInput === null || userInput === undefined || (Array.isArray(userInput) && userInput.length === 0));
+      return !(
+        userInput === '' ||
+        userInput === null ||
+        userInput === undefined ||
+        (Array.isArray(userInput) && userInput.length === 0)
+      );
     case ConditionalQuestionOperator.CONTAINS:
       if (!userInput) {
         return false;
       }
-      return Array.isArray(userInput) ? userInput.includes(answer as string) : userInput.includes(answer as string);
+      return Array.isArray(userInput)
+        ? userInput.includes(answer as string)
+        : userInput.includes(answer as string);
     case ConditionalQuestionOperator.NOT_CONTAINS:
       if (!userInput) {
         return false;
       }
-      return Array.isArray(userInput) ? !userInput.includes(answer as string) : !userInput.includes(answer as string);
-    case ConditionalQuestionOperator.GREATER:
-    case ConditionalQuestionOperator.GREATER_EQUAL:
-    case ConditionalQuestionOperator.LESS:
-    case ConditionalQuestionOperator.LESS_EQUAL:
+      return Array.isArray(userInput)
+        ? !userInput.includes(answer as string)
+        : !userInput.includes(answer as string);
+    case ConditionalQuestionOperator.GREATER_THAN:
+    case ConditionalQuestionOperator.GREATER_THAN_OR_EQUAL:
+    case ConditionalQuestionOperator.LESS_THAN:
+    case ConditionalQuestionOperator.LESS_THAN_OR_EQUAL:
       try {
         const parsedUserInput = parseInput(userInput as string);
         const parsedAnswer = parseInput(answer as string);
-        if (operator === ConditionalQuestionOperator.GREATER) {
+        if (operator === ConditionalQuestionOperator.GREATER_THAN) {
           return parsedUserInput > parsedAnswer;
-        } else if (operator === ConditionalQuestionOperator.GREATER_EQUAL) {
+        } else if (operator === ConditionalQuestionOperator.GREATER_THAN_OR_EQUAL) {
           return parsedUserInput >= parsedAnswer;
-        } else if (operator === ConditionalQuestionOperator.LESS) {
+        } else if (operator === ConditionalQuestionOperator.LESS_THAN) {
           return parsedUserInput < parsedAnswer;
-        } else if (operator === ConditionalQuestionOperator.LESS_EQUAL) {
+        } else if (operator === ConditionalQuestionOperator.LESS_THAN_OR_EQUAL) {
           return parsedUserInput <= parsedAnswer;
         }
       } catch (e) {
@@ -135,7 +143,11 @@ function evaluate(operator: ConditionalQuestionOperator, userInput: string | str
   return false;
 }
 
-export const validateCondition = (conditions: ConditionType[] | undefined, formData: FormDataType, formFields: FormFieldType[]) => {
+export const validateCondition = (
+  conditions: ConditionType[] | undefined,
+  formData: FormDataType,
+  formFields: FormFieldType[],
+) => {
   if (conditions) {
     for (let i = 0; i < conditions.length; i++) {
       const condition = conditions[i];
@@ -144,11 +156,12 @@ export const validateCondition = (conditions: ConditionType[] | undefined, formD
         ?.field_key.toLowerCase();
 
       const fieldValue = fieldName ? formData[fieldName] : '';
-      if (!evaluate(condition.operator as ConditionalQuestionOperator, fieldValue, condition.value)) {
+      if (
+        !evaluate(condition.operator as ConditionalQuestionOperator, fieldValue, condition.value)
+      ) {
         return false;
       }
     }
   }
   return true;
 };
-
