@@ -8,11 +8,12 @@ import { formatDate } from '../../common/commonFunctions';
 
 import PoppingText from './components/PoppingText';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
+import { roles } from '../../../services/enums';
 
 const Glance = ({
-                  tab,
-                  setShowPublishModal,
-                }: {
+  tab,
+  setShowPublishModal,
+}: {
   tab: string;
   setShowPublishModal?: Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -118,50 +119,50 @@ const Glance = ({
   const tabs: TabsType = {
     overview: {
       title: 'Overview',
-      roles: ['Admin', 'Owner', 'Volunteer'],
+      roles: [roles.ADMIN, roles.OWNER],
     },
     insights: {
       title: 'Insights',
-      roles: ['Admin', 'Owner'],
+      roles: [roles.ADMIN, roles.OWNER],
     },
     guests: {
       title: 'Guests',
-      roles: ['Admin', 'Owner', 'Volunteer'],
+      roles: [roles.ADMIN, roles.OWNER, roles.VOLUNTEER],
     },
     inevent: {
       title: 'In-Event',
-      roles: ['Admin', 'Owner', 'Volunteer'],
+      roles: [roles.ADMIN, roles.OWNER, roles.VOLUNTEER],
     },
     manage: {
       title: 'Event Page',
-      roles: ['Admin', 'Owner'],
+      roles: [roles.ADMIN, roles.OWNER],
     },
     checkins: {
       title: 'Check-Ins',
-      roles: ['Admin', 'Owner', 'Volunteer'],
+      roles: [roles.ADMIN, roles.OWNER, roles.VOLUNTEER],
     },
     formbuilder: {
       title: 'Form Builder',
-      roles: ['Admin', 'Owner'],
+      roles: [roles.ADMIN, roles.OWNER],
     },
     coupon: {
       title: 'Coupon',
-      roles: ['Admin', 'Owner', 'Volunteer'],
+      roles: [roles.ADMIN, roles.OWNER, roles.VOLUNTEER],
     },
     logs: {
       title: 'Logs',
-      roles: ['Admin', 'Owner'],
+      roles: [roles.ADMIN, roles.OWNER],
     },
   };
 
   if (import.meta.env.VITE_CURRENT_ENV === 'dev') {
     tabs.postevent = {
       title: 'Post Event',
-      roles: ['Admin', 'Owner'],
+      roles: [roles.ADMIN, roles.OWNER],
     };
     tabs.feedback = {
       title: 'Feedback',
-      roles: ['Admin', 'Owner'],
+      roles: [roles.ADMIN, roles.OWNER],
     };
   }
 
@@ -190,7 +191,7 @@ const Glance = ({
                             {tabs[tab as keyof typeof tabs].title}
                           </motion.li>
                           {currentTab === tab && (
-                            <motion.div layoutId="tab-indicator" className={styles.active} />
+                            <motion.div layoutId='tab-indicator' className={styles.active} />
                           )}
                         </div>
                       ))}
@@ -199,7 +200,7 @@ const Glance = ({
               </ol>
               {tab === 'insights' && (
                 <SecondaryButton
-                  buttonText="Share"
+                  buttonText='Share'
                   onClick={() => {
                     if (setShowPublishModal) setShowPublishModal(true);
                   }}

@@ -1,15 +1,25 @@
 import { formatDate } from '../../common/commonFunctions';
+import { CreateCouponType } from '../../pages/app/Coupon/types';
+import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Table.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
+
+type CouponModalType = {
+  showModal: boolean;
+};
 
 const GenericTable = ({
   tableHeading,
   tableData,
   secondaryButton,
+  setNewCouponData,
+  setCouponModal,
 }: {
   tableHeading: string;
   tableData: any[];
   secondaryButton?: React.ReactElement;
+  setNewCouponData?: React.Dispatch<React.SetStateAction<CreateCouponType>>;
+  setCouponModal?: React.Dispatch<React.SetStateAction<CouponModalType>>;
 }) => {
   const formattedKeys =
     tableData.length > 0
@@ -66,6 +76,18 @@ const GenericTable = ({
                             )}
                           </>
                         ),
+                      )}
+
+                      {setNewCouponData && (
+                        <td className={styles.rowName}>
+                          <SecondaryButton
+                            buttonText='Edit Coupon'
+                            onClick={() => {
+                              setNewCouponData(data);
+                              if (setCouponModal) setCouponModal({ showModal: true });
+                            }}
+                          />
+                        </td>
                       )}
                     </tr>
                   ))}

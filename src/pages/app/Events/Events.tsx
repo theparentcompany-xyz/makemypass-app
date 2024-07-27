@@ -13,6 +13,7 @@ import { formatDate } from '../../../common/commonFunctions';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import Loader from '../../../components/Loader';
 import { Event } from '../../../apis/types';
+import { roles } from '../../../../services/enums';
 const Events = () => {
   interface Position {
     x: number;
@@ -50,9 +51,12 @@ const Events = () => {
 
   const handleClick = (eventName: string) => {
     setEventInfoLocal(eventName).then((eventData) => {
-      if (eventData.current_user_role === 'Admin' || eventData.current_user_role === 'Owner') {
+      if (
+        eventData.current_user_role === roles.ADMIN ||
+        eventData.current_user_role === roles.OWNER
+      ) {
         navigate(`/${eventName}/overview/`);
-      } else if (eventData.current_user_role === 'Volunteer') {
+      } else if (eventData.current_user_role === roles.VOLUNTEER) {
         navigate(`/${eventName}/checkins/`);
       }
     });

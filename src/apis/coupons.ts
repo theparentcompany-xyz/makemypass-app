@@ -62,6 +62,46 @@ export const createCoupon = async (
     });
 };
 
+export const editCoupon = async (
+  eventId: string,
+  data: CreateCouponType,
+  setCoupons: Dispatch<SetStateAction<CouponType[]>>,
+) => {
+  const backendFormData = new FormData();
+  Object.keys(data).forEach((key) => {
+    let value = data[key];
+
+    if (!(value instanceof FileList)) {
+      if (Array.isArray(value) && value.length > 0) {
+        value.forEach((value) =>
+          backendFormData.append(
+            key + '[]',
+            typeof value === 'object' ? JSON.stringify(value) : value,
+          ),
+        );
+      } else {
+        value = data[key].toString();
+      }
+    }
+
+    if (typeof value === 'string' && value.length > 0) {
+      backendFormData.append(key, value);
+    } else if (value instanceof FileList) {
+      Array.from(value).forEach((value) => backendFormData.append(key + '[]', value));
+    }
+  });
+
+  return privateGateway
+    .put(makeMyPass.editCoupon(eventId, data.id), backendFormData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then(() => {
+      listCoupons(eventId, setCoupons);
+    });
+};
+
 export const updateCouponStatus = async (
   eventId: string,
   activateCoupon: ActivateCouponType,

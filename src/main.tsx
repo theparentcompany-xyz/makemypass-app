@@ -34,16 +34,12 @@ import CheckOutScan from './pages/app/CheckIns/pages/CheckOutScan/CheckOutScan';
 import EventLogs from './pages/app/EventLogs/EventLogs';
 import SetProfilePage from './pages/app/SetProfilePage/SetProfilePage';
 
+import { roles } from '../services/enums';
+
 // import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 // import SpinWheel from './pages/app/SpinWheel/SpinWheel';
 // import ClaimGifts from './pages/app/ClaimGifts/ClaimGifts';
 // import Perks from './pages/app/CheckIns/pages/Perks/Perks';
-
-const role = {
-  ADMIN: 'Admin',
-  OWNER: 'Owner',
-  VOLUNTEER: 'Volunteer',
-};
 
 const routes = [
   {
@@ -94,48 +90,54 @@ const routes = [
       {
         path: '/:eventTitle/overview',
         element: (
-          <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<Overview />} />
+          <RoleChecker
+            roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]}
+            children={<Overview />}
+          />
         ),
       },
       {
         path: '/:eventTitle/insights',
-        element: <RoleChecker roles={[role.ADMIN, role.OWNER]} children={<Insights />} />,
+        element: <RoleChecker roles={[roles.ADMIN, roles.OWNER]} children={<Insights />} />,
       },
       {
         path: '/:eventTitle/guests',
         element: (
-          <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<Guests />} />
+          <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]} children={<Guests />} />
         ),
       },
       {
         path: '/:eventTitle/checkins',
         element: (
-          <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<CheckIns />} />
+          <RoleChecker
+            roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]}
+            children={<CheckIns />}
+          />
         ),
       },
       {
         path: '/:eventTitle/checkins/checkin',
         element: (
-          <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<CheckIn />} />
+          <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]} children={<CheckIn />} />
         ),
       },
       {
         path: '/:eventTitle/checkins/checkin/venue',
         element: (
-          <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<Venue />} />
+          <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]} children={<Venue />} />
         ),
       },
       {
         path: '/:eventTitle/checkins/checkin/scan',
         element: (
-          <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<ScanQR />} />
+          <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]} children={<ScanQR />} />
         ),
       },
       {
         path: '/:eventTitle/checkins/checkin/checkout',
         element: (
           <RoleChecker
-            roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]}
+            roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]}
             children={<CheckOutScan />}
           />
         ),
@@ -145,7 +147,7 @@ const routes = [
         path: '/:eventTitle/inevent',
         element: (
           <RoleChecker
-            roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]}
+            roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]}
             children={<InEventStats />}
           />
         ),
@@ -153,7 +155,10 @@ const routes = [
       {
         path: '/:eventTitle/postevent',
         element: (
-          <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<PostEvent />} />
+          <RoleChecker
+            roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]}
+            children={<PostEvent />}
+          />
         ),
       },
 
@@ -163,40 +168,40 @@ const routes = [
       },
       {
         path: '/:eventTitle/manage',
-        element: <RoleChecker roles={[role.ADMIN, role.OWNER]} children={<EventGlance />} />,
+        element: <RoleChecker roles={[roles.ADMIN, roles.OWNER]} children={<EventGlance />} />,
       },
       {
         path: '/:eventTitle/manage/edit-event',
-        element: <RoleChecker roles={[role.ADMIN, role.OWNER]} children={<EditEvent />} />,
+        element: <RoleChecker roles={[roles.ADMIN, roles.OWNER]} children={<EditEvent />} />,
       },
       {
         path: '/:eventTitle/formbuilder',
-        element: <RoleChecker roles={[role.ADMIN, role.OWNER]} children={<FormBuilder />} />,
+        element: <RoleChecker roles={[roles.ADMIN, roles.OWNER]} children={<FormBuilder />} />,
       },
       {
         path: '/:eventTitle/coupon',
-        element: <RoleChecker roles={[role.ADMIN, role.OWNER]} children={<Coupon />} />,
+        element: <RoleChecker roles={[roles.ADMIN, roles.OWNER]} children={<Coupon />} />,
       },
       {
         path: '/:eventTitle/logs',
-        element: <RoleChecker roles={[role.ADMIN, role.OWNER]} children={<EventLogs />} />,
+        element: <RoleChecker roles={[roles.ADMIN, roles.OWNER]} children={<EventLogs />} />,
       },
       // {
       //   path: `/:eventTitle/checkins/claimgifts`,
-      //   element: <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<ClaimGifts />} />,
+      //   element: <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]} children={<ClaimGifts />} />,
       // },
       // {
       //   path: '/:eventTitle/checkins/perks',
-      //   element: <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<Perks />} />,
+      //   element: <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]} children={<Perks />} />,
       // },
       // {
       //   path: '/:eventTitle/spinwheel',
-      //   element: <RoleChecker roles={['Admin', 'Owner', 'Gamer']} children={<SpinWheel />} />,
+      //   element: <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.GAMER]} children={<SpinWheel />} />,
       // },
       // {
       //   path: '/:eventTitle/feedback',
       //   element: (
-      //     <RoleChecker roles={[role.ADMIN, role.OWNER, role.VOLUNTEER]} children={<EventFeedback />} />
+      //     <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]} children={<EventFeedback />} />
       //   ),
       // },
     ],

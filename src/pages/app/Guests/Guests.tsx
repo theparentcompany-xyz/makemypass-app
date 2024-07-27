@@ -36,6 +36,7 @@ import { useParams } from 'react-router';
 import EditGuest from './components/EditGuest/EditGuest';
 import BulkUpload from './components/BulkUpload/BulkUpload';
 import { RegistrationDataType } from '../Overview/Overview/types';
+import { roles } from '../../../../services/enums';
 
 const Guests = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -307,7 +308,7 @@ const Guests = () => {
                       }}
                     />
 
-                    {(userRole === 'Admin' || userRole === 'Owner') && (
+                    {(userRole === roles.ADMIN || userRole === roles.OWNER) && (
                       <SecondaryButton
                         buttonText='CSV'
                         onClick={() => {
