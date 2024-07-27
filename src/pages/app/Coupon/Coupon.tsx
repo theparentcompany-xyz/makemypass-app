@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Glance from '../../../components/Glance/Glance';
 import Theme from '../../../components/Theme/Theme';
 import styles from './Coupon.module.css';
-import { createCoupon, listCoupons, updateCouponStatus } from '../../../apis/coupons';
+import { createCoupon, editCoupon, listCoupons, updateCouponStatus } from '../../../apis/coupons';
 import GenericTable from '../../../components/Table/GenericTable';
 import CouponType, { ActivateCouponType, CreateCouponType } from './types';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
@@ -52,7 +52,6 @@ const Coupon = () => {
     active: false,
     description: '',
   });
-  const [limitDiscountUsage, setLimitDiscountUsage] = useState(false);
   const [newCouponData, setNewCouponData] = useState<CreateCouponType>({
     code: '',
     value: 0,
@@ -64,12 +63,17 @@ const Coupon = () => {
     conditions: [],
     is_private: false,
   });
+  const [limitDiscountUsage, setLimitDiscountUsage] = useState(newCouponData.count ? true : false);
 
   useEffect(() => {
     listCoupons(eventId, setCoupons, setActivateCoupon);
     getTickets(eventId, setTickets);
     getForm(eventId, setFormFields);
   }, []);
+
+  useEffect(() => {
+    if (newCouponData.count) setLimitDiscountUsage(true);
+  }, [newCouponData.count]);
 
   const getFieldType = (fieldId: string) => {
     const field = formFields.find((f) => f.id === fieldId);
@@ -191,6 +195,7 @@ const Coupon = () => {
                           className={styles.basicSelect}
                           classNamePrefix='select'
                           options={couponTypes}
+                          value={couponTypes.find((type) => type.value === newCouponData.type)}
                           onChange={(selectedOption) => {
                             if (selectedOption)
                               setNewCouponData({
@@ -223,6 +228,12 @@ const Coupon = () => {
                               label: ticket.title,
                             };
                           })}
+                          value={newCouponData.tickets.map((ticket) => {
+                            return {
+                              value: ticket,
+                              label: ticket,
+                            };
+                          })}
                           onChange={(options) => {
                             setNewCouponData({
                               ...newCouponData,
@@ -251,17 +262,15 @@ const Coupon = () => {
 
                   <hr className={styles.line} />
 
-                  <div className={styles.discountUses}></div>
-
                   <div className={styles.discountUses}>
                     {/* <p className={styles.fieldHeader}>Maximum Discount Uses</p> */}
                     <Slider
                       checked={limitDiscountUsage}
                       onChange={() => {
                         setLimitDiscountUsage(!limitDiscountUsage);
-                        if (!limitDiscountUsage)
+                        if (!limitDiscountUsage) {
                           setNewCouponData({ ...newCouponData, count: null });
-                        else setNewCouponData({ ...newCouponData, count: 5 });
+                        }
                       }}
                       text='Limit Discount Usage'
                     />
@@ -317,9 +326,9 @@ const Coupon = () => {
                     <div className={styles.conditions}>
                       <p className={styles.fieldHeader}>Customer Eligiblity</p>
                       <Slider
-                        checked={newCouponData.conditions.length > 0}
+                        checked={newCouponData.conditions?.length > 0}
                         onChange={() => {
-                          if (newCouponData.conditions.length > 0) newCouponData.conditions = [];
+                          if (newCouponData.conditions?.length > 0) newCouponData.conditions = [];
                           else
                             newCouponData.conditions.push({
                               field: '',
@@ -331,7 +340,7 @@ const Coupon = () => {
                         }}
                         text='Show coupon only when conditions are met'
                       />
-                      {newCouponData.conditions.length >= 0 && (
+                      {newCouponData.conditions?.length >= 0 && (
                         <div className={styles.conditions}>
                           {newCouponData.conditions.map((condition, idx) => (
                             <div className={styles.conditionRow} key={idx}>
@@ -339,7 +348,7 @@ const Coupon = () => {
                               <div className={styles.conditionsSelect}>
                                 <SelectComponent
                                   options={
-                                    formFields.length > 0
+                                    formFields?.length > 0
                                       ? formFields.map((field) => ({
                                           value: field.id,
                                           label: field.title,
@@ -448,7 +457,10 @@ const Coupon = () => {
                   <SecondaryButton
                     buttonText='Save Coupon'
                     onClick={() => {
-                      createCoupon(eventId, newCouponData, setCoupons);
+                      console.log(newCouponData);
+
+                      if (newCouponData.id) editCoupon(eventId, newCouponData, setCoupons);
+                      else createCoupon(eventId, newCouponData, setCoupons);
                       setCouponModal({ showModal: false });
                       setNewCouponData({
                         code: '',
@@ -467,7 +479,7 @@ const Coupon = () => {
               </div>
             </Modal>
           )}
-          {coupons.length > 0 ? (
+          {coupons?.length > 0 ? (
             <div className={styles.couponListingContainer}>
               <GenericTable
                 tableHeading='Coupons'
@@ -493,6 +505,8 @@ const Coupon = () => {
                     />
                   </div>
                 }
+                setNewCouponData={setNewCouponData}
+                setCouponModal={setCouponModal}
               />
             </div>
           ) : (
