@@ -7,13 +7,13 @@ import { FormEventData, SelectedGuest } from '../../types';
 import { FormDataType } from '../../../../../apis/types';
 
 const EditGuest = ({
-                     formData,
-                     setFormData,
-                     eventFormData,
-                     setSelectedGuestId,
-                     eventId,
-                     onClose,
-                   }: {
+  formData,
+  setFormData,
+  eventFormData,
+  setSelectedGuestId,
+  eventId,
+  onClose,
+}: {
   formData: any;
   setFormData: Dispatch<SetStateAction<FormDataType>>;
   eventFormData: FormEventData;
@@ -44,7 +44,7 @@ const EditGuest = ({
   };
 
   return (
-    <Modal title="Edit Guest" onClose={onClose} type="side">
+    <Modal title='Edit Guest' onClose={onClose} type='side'>
       <div className={styles.userInfoModalContainer}>
         {formData && eventFormData && (
           <>

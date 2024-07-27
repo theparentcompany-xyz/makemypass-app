@@ -34,8 +34,8 @@ const EventLogs = () => {
   return (
     <>
       <Theme>
-        <EventHeader previousPageNavigate="/events" />
-        <Glance tab="logs" />
+        <EventHeader previousPageNavigate='/events' />
+        <Glance tab='logs' />
         <div className={styles.mailsOuterContainer}>
           <p className={styles.mailLogsHeaders}>
             {mailLogs.length === 0 ? 'No logs available' : 'Mail Logs'}

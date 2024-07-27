@@ -67,7 +67,7 @@
 
 .bannerContainer {
   margin-top: 1rem;
-  border-radius: 12px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
 
   display: flex;
@@ -280,7 +280,7 @@
 
 .scheduleContainer {
   margin-top: 1rem;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
 

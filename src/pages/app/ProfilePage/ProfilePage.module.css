@@ -26,7 +26,6 @@
   gap: 1rem;
   justify-content: flex-start;
   border-radius: 8px;
-
 }
 
 .formGroup {
@@ -60,7 +59,6 @@
   color: white;
   font-family: 'Inter', sans-serif;
 }
-
 
 .fileInput {
   display: none;
@@ -129,9 +127,9 @@
   padding: 0.5rem 0.75rem;
   border-radius: 0.25rem;
   outline: none;
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #212325;
-  border: 1px solid #3E3E3E;
+  border: 1px solid #3e3e3e;
   margin-left: auto;
   align-self: flex-start;
   gap: 10px;
@@ -141,7 +139,7 @@
 
 .editProfileButton:hover {
   background-color: #3e3e3eb5;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 0.5rem 1rem;
 }
 
@@ -161,7 +159,6 @@
   color: #f3f3f3;
 }
 
-
 .infoName {
   font-weight: 500;
   font-size: 1.8rem;
@@ -179,10 +176,7 @@
   height: 100px;
   object-fit: cover;
   background-color: #a4a4a420;
-
 }
-
-
 
 .eventSection {
   display: flex;
@@ -243,11 +237,9 @@
   gap: 1.5rem;
   width: 100%;
   align-items: center;
-
 }
 
 .modalUserDetails {
-
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -264,7 +256,6 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   color: #a4a4a4;
-
 }
 
 .cameraIcon {

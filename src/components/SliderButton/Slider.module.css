@@ -66,11 +66,10 @@
   transform: translateX(26px);
 }
 
-input:focus+.slider {
+input:focus + .slider {
   box-shadow: 0 0 1px #cccccc1c;
   /* Green box shadow when focused */
 }
-
 
 .switch:has(.small) {
   width: 42px;
@@ -91,7 +90,6 @@ input:focus+.slider {
   -ms-transform: translateX(16px);
   transform: translateX(16px);
 }
-
 
 .switch:has(.large) {
   width: 80px;

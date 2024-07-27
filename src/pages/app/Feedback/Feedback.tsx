@@ -33,10 +33,9 @@ const EventPage = () => {
 
   useEffect(() => {
     if (eventTitle)
-      setEventInfoLocal(eventTitle).then((eventData)=>{
+      setEventInfoLocal(eventTitle).then((eventData) => {
         setEventId(eventData.event_id);
-        }
-      );
+      });
   }, [eventTitle, eventId]);
 
   useEffect(() => {
