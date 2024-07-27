@@ -49,7 +49,7 @@ const SuccessModal = ({
                       {success.followupMessage}
                     </p>
 
-                    {success.ticketURL && (
+                    {success.ticketURL && import.meta.env.VITE_CURRENT_ENV === 'dev' && (
                       <>
                         <button
                           onClick={() => {
@@ -63,10 +63,7 @@ const SuccessModal = ({
                               })
                                 .then((response) => response.blob())
                                 .then((blob) => {
-                                  const link = document.createElement('a');
-                                  link.href = window.URL.createObjectURL(blob);
-                                  link.download = 'Ticket.png';
-                                  link.click();
+                                  console.log(blob);
                                 })
                                 .catch((error) =>
                                   console.error('Error downloading the ticket:', error),

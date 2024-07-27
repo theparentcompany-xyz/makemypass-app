@@ -273,14 +273,12 @@ export const getVisistedVenues = async (
   eventRegisterId: string,
   setVisitedVenues: Dispatch<React.SetStateAction<VisitedVenues>>,
 ) => {
-  privateGateway
-    .get(makeMyPass.listVisitedVenues(eventId, eventRegisterId))
-    .then((response) => {
-      setVisitedVenues({
-        status: true,
-        venues: response.data.response,
-      });
-    })
+  privateGateway.get(makeMyPass.listVisitedVenues(eventId, eventRegisterId)).then((response) => {
+    setVisitedVenues({
+      status: true,
+      venues: response.data.response,
+    });
+  });
 };
 
 export const getMailLog = async (

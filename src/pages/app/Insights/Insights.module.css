@@ -3,7 +3,8 @@
 }
 
 @media (max-width: 1280px) {
-  .glanceContainer {
+  .glanceContainer,
+  .insightsOuterContainer {
     padding: 1rem;
   }
 }
@@ -15,16 +16,23 @@
   align-items: stretch;
   flex-wrap: wrap;
   width: 100%;
-  padding: 0.5rem 0;
-  padding-right: 0;
+  margin-top: 1rem;
+  row-gap: 1rem;
+  column-gap: 1rem;
 }
 
-.registrationCount,
+/* @media (max-width: 1320px) {
+  .insightsContainer {
+    margin: 0 1rem;
+  }
+} */
+
+/* .registrationCount,
 .todayRegistered,
 .pieContainer,
 .pageVisitsCount {
   margin: 0 0.5rem;
-}
+} */
 
 .percentage {
   color: white;
@@ -38,7 +46,8 @@
 
   font-family: 'Inter', sans-serif;
   color: white;
-  width: 42%;
+  flex: 1 1 0;
+  width: 0;
 }
 
 .countSection {
@@ -190,7 +199,10 @@
   padding: 1rem 2rem;
   font-family: 'Inter', sans-serif;
   color: white;
-  width: 22.5%;
+  flex: 1 1 0;
+  min-width: 15rem;
+  width: 0;
+  /* width: 22.5%; */
 }
 
 .todayRegistered {
@@ -200,7 +212,8 @@
   padding: 2rem;
   font-family: 'Inter', sans-serif;
   color: white;
-  width: 43%;
+  flex: 1 1 0;
+  width: 0;
 }
 
 .totalRegistered {
@@ -223,9 +236,9 @@
   padding: 1rem 2rem;
   font-family: 'Inter', sans-serif;
   color: white;
-  max-width: 20rem;
-  width: 100%;
-
+  /* max-width: 20rem; */
+  flex: 1 1 0;
+  width: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -260,8 +273,9 @@
   padding: 1rem 2rem;
   font-family: 'Inter', sans-serif;
   color: white;
-  width: 26%;
-  margin: 0 0.5rem;
+  min-width: 15rem;
+  flex: 1 1 0;
+  width: 0;
 }
 
 .categorySection {
@@ -279,7 +293,6 @@
 @media (max-width: 1120px) {
   .registrationCount {
     width: calc(100% - 4rem);
-    padding: 1rem;
   }
 
   .rightSectionHeading {
@@ -291,35 +304,24 @@
   }
 
   .todayRegistered {
-    margin-top: 1rem;
-
     width: calc(100% - 4rem);
-    padding: 1rem;
   }
 
   .pageVisitsCount {
-    margin-top: 1rem;
-
     width: calc(100% - 4rem);
     padding: 1rem;
   }
 
   .paymentCounts {
-    margin-top: 1rem;
-
     width: calc(100% - 4rem);
-    padding: 1rem;
   }
 
   .pieContainer {
-    max-width: 100vw;
-    margin: 0 1rem;
+    width: calc(100% - 4rem);
   }
 
   .categorySection {
     width: 100%;
-    max-width: 100vw;
-    margin-bottom: 1rem;
   }
 }
 

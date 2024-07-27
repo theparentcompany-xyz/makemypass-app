@@ -40,22 +40,17 @@ const EventPage = () => {
         eventTitle,
         setEventData,
         setEventNotFound,
-        setSuccess,
+
         claimCode,
+
         setClaimCodeExceed,
+        setSuccess,
       );
   }, [eventTitle]);
 
   useEffect(() => {
     if (success.showModal && eventTitle)
-      getEventInfo(
-        eventTitle,
-        setEventData,
-        setEventNotFound,
-        setSuccess,
-        claimCode,
-        setClaimCodeExceed,
-      );
+      getEventInfo(eventTitle, setEventData, setEventNotFound, claimCode, setClaimCodeExceed);
   }, [success]);
 
   useEffect(() => {

@@ -286,9 +286,9 @@ export const getEventInfo = async (
   eventTitle: string,
   setEventData: Dispatch<React.SetStateAction<EventType | undefined>>,
   setEventNotFound?: Dispatch<React.SetStateAction<boolean>>,
-  setSuccess?: React.Dispatch<React.SetStateAction<SuccessModalProps>>,
   claimCode?: string | null,
   setClaimCodeExceed?: React.Dispatch<React.SetStateAction<ClaimCodeExceedType>>,
+  setSuccess?: React.Dispatch<React.SetStateAction<SuccessModalProps>>,
 ) => {
   let backendURL = makeMyPass.getEventInfo(eventTitle);
   if (claimCode) backendURL += `?claim_code=${claimCode}`;

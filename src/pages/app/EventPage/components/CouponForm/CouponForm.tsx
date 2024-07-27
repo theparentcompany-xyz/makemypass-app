@@ -306,7 +306,7 @@ const CouponForm = ({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.5 }}
-          className={`${styles.row} ${styles.ticketType}`}
+          className={`${styles.ticketType}`}
           style={{
             marginTop: '0rem',
             border:

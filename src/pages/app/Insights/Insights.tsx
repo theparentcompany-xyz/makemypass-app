@@ -699,6 +699,7 @@ const Insights = ({ type }: { type?: string }) => {
                     </div>
                   </div>
                 )}
+
                 {entryDateCount && entryDateCount.datasets[0].data.length > 0 && (
                   <div className={styles.registrationCount}>
                     <div className={styles.graphContainer}>
