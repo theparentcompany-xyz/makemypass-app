@@ -383,3 +383,14 @@ export const sendVerfication = async (contactType: string, contactInfo: string) 
       toast.error(error.response.data.message.general[0]);
     });
 };
+
+export const claimRegisterGift = async (eventId: string, eventRegisterId: string) => {
+  publicGateway
+    .post(makeMyPass.claimRegisterGift(eventId, eventRegisterId))
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0]);
+    });
+};

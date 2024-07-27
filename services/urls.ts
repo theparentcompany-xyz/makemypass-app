@@ -1,3 +1,5 @@
+import { claimGift } from '../src/apis/spinwheel';
+
 const buildURL = (basePath: string) => (endpoint: string) => `${basePath}${endpoint}`;
 
 const buildVerseURL = buildURL('/buildverse');
@@ -103,6 +105,8 @@ export const makeMyPass = {
   submitForm: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/submit/`),
   downloadBulkUploadCSV: (eventId: string, fileId: string, file_type: string) =>
     makeMyPassURL(`/manage-event/${eventId}/download-file/${fileId}/?file_type=${file_type}`),
+  claimRegisterGift: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/games/${eventId}/claim-gift/${eventRegisterId}/`),
 
   getCategories: (eventId: string) =>
     makeMyPassURL(`/manage-event/get-form-categories/${eventId}/`),

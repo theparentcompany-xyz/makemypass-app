@@ -20,6 +20,7 @@ const EventPage = () => {
   const [success, setSuccess] = useState<SuccessModalProps>({
     showModal: false,
     eventTitle: eventData?.title,
+    eventRegisterId: '',
     loading: false,
   });
 

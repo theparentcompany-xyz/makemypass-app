@@ -7,6 +7,7 @@ import { HashLoader } from 'react-spinners';
 import { BsDownload } from 'react-icons/bs';
 import ScratchCard from './ScratchCardComponent/ScratchCardComponent';
 import image from './scratchImage.png';
+import { claimRegisterGift } from '../../../../../apis/publicpage';
 
 const SuccessModal = ({
   success,
@@ -90,15 +91,20 @@ const SuccessModal = ({
                       hello@makemypass.com
                     </p>
 
-                    {/* <button
+                    <button
                       onClick={() => {
                         setSuccess({ showModal: false });
                         setScratchCard(true);
+                        if (success.eventRegisterId)
+                          claimRegisterGift(
+                            localStorage.getItem('eventId') ?? '',
+                            success.eventRegisterId,
+                          );
                       }}
                       className={styles.viewTicketButton}
                     >
                       Next
-                    </button> */}
+                    </button>
                   </div>
                 ) : (
                   <div className={styles.loaderContainer}>

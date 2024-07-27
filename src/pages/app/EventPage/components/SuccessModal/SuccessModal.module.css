@@ -116,7 +116,7 @@
 
 .viewTicketButton {
   margin-top: 0.5rem;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.04);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;

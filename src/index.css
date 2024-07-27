@@ -126,3 +126,9 @@ input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
+.centerItem {
+  width: 100%;
+  display: block;
+  margin: auto;
+}
