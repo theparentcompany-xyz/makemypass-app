@@ -5,7 +5,7 @@ import Theme from '../../../components/Theme/Theme';
 import styles from './FormBuilder.module.css';
 import Slider from '../../../components/SliderButton/Slider';
 import { RxDragHandleDots2 } from 'react-icons/rx';
-import { LuPencil, LuPlus } from 'react-icons/lu';
+import { LuPlus } from 'react-icons/lu';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import Select from 'react-select';
 
@@ -26,6 +26,7 @@ import Modal from '../../../components/Modal/Modal';
 
 import CreatableSelect from 'react-select/creatable';
 import { GrContract } from 'react-icons/gr';
+import { CgArrowsExpandRight } from 'react-icons/cg';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -257,7 +258,7 @@ const FormBuilder = () => {
                                 <p className={styles.customFieldType}>{field.title}</p>
                               </div>
                             </div>
-                            <LuPencil size={20} color='#606264' />
+                            <CgArrowsExpandRight size={20} color='#606264' />
                           </div>
                         ) : (
                           <div
