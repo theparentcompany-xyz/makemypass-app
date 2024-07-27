@@ -15,6 +15,7 @@ import { customStyles } from '../../../EventPage/constants';
 import Select from 'react-select';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { handleClick } from '../../../Guests/components/csvExport';
+import { roles } from '../../../../../../services/enums';
 
 const CheckIn = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<guests[]>([]);
@@ -104,7 +105,7 @@ const CheckIn = () => {
           search={searchKeyword}
           secondaryButton={
             <div className={styles.tableButtons}>
-              {(userRole === 'Admin' || userRole === 'Owner') && (
+              {(userRole === roles.ADMIN || userRole === roles.OWNER) && (
                 <SecondaryButton
                   buttonText='CSV'
                   onClick={() => {

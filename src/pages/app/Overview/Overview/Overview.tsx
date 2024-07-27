@@ -29,6 +29,7 @@ import { GuestsType, SelectedGuest } from '../../Guests/types';
 import ViewGuest from '../../Guests/components/ViewGuest/ViewGuest';
 import { downloadTicket, getIndividualGuestInfo } from '../../../../apis/guests';
 import { isArray } from 'chart.js/helpers';
+import { roles } from '../../../../../services/enums';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
@@ -71,7 +72,7 @@ const Overview = () => {
   };
 
   useEffect(() => {
-    if ((eventId && hostList.length === 0 && userRole == 'Admin') || userRole == 'Owner')
+    if ((eventId && hostList.length === 0 && userRole == roles.ADMIN) || userRole == roles.OWNER)
       getHosts(eventId, setHostList);
   }, [eventId]);
 
@@ -318,7 +319,7 @@ const Overview = () => {
                 />
               </Link>
 
-              {(userRole === 'Owner' || userRole === 'Admin') && (
+              {(userRole === roles.OWNER || userRole === roles.ADMIN) && (
                 <a href='#hosts'>
                   <SectionButton
                     buttonText='Host List'
@@ -347,7 +348,7 @@ const Overview = () => {
               )}
             </AnimatePresence>
 
-            {(userRole === 'Admin' || userRole === 'Owner') && (
+            {(userRole === roles.ADMIN || userRole === roles.OWNER) && (
               <div id='hosts'>
                 <Table
                   tableHeading='Event Hosts'
