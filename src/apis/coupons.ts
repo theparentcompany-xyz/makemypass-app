@@ -120,3 +120,19 @@ export const updateCouponStatus = async (
       toast.error('Failed to update coupon status');
     });
 };
+
+export const deleteCoupon = async (
+  eventId: string,
+  couponId: string,
+  setCoupons: Dispatch<SetStateAction<CouponType[]>>,
+) => {
+  return privateGateway
+    .delete(makeMyPass.deleteCoupon(eventId, couponId))
+    .then(() => {
+      listCoupons(eventId, setCoupons);
+      toast.success('Coupon deleted successfully');
+    })
+    .catch(() => {
+      toast.error('Failed to delete coupon');
+    });
+};

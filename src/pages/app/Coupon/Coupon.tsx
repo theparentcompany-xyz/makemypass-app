@@ -505,6 +505,7 @@ const Coupon = () => {
                 }
                 setNewCouponData={setNewCouponData}
                 setCouponModal={setCouponModal}
+                setTableData={setCoupons}
               />
             </div>
           ) : (

@@ -212,3 +212,9 @@ li {
   justify-content: flex-start;
   column-gap: 0.5rem;
 }
+
+.buttonsContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}

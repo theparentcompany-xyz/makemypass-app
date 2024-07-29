@@ -165,6 +165,8 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-coupon/${eventId}/update-coupon/${couponId}/`),
   updateCouponStatus: (eventId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/update-coupon-status`),
+  deleteCoupon: (eventId: string, couponId: string) =>
+    makeMyPassURL(`/manage-coupon/${eventId}/delete-coupon/${couponId}/`),
 };
 
 export const makeMyPassSocket = {

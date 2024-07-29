@@ -1,5 +1,6 @@
+import { deleteCoupon } from '../../apis/coupons';
 import { formatDate } from '../../common/commonFunctions';
-import { CreateCouponType } from '../../pages/app/Coupon/types';
+import CouponType, { CreateCouponType } from '../../pages/app/Coupon/types';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Table.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -14,12 +15,14 @@ const GenericTable = ({
   secondaryButton,
   setNewCouponData,
   setCouponModal,
+  setTableData,
 }: {
   tableHeading: string;
   tableData: any[];
   secondaryButton?: React.ReactElement;
   setNewCouponData?: React.Dispatch<React.SetStateAction<CreateCouponType>>;
   setCouponModal?: React.Dispatch<React.SetStateAction<CouponModalType>>;
+  setTableData?: React.Dispatch<React.SetStateAction<any[]>>;
 }) => {
   const formattedKeys =
     tableData.length > 0
@@ -48,7 +51,7 @@ const GenericTable = ({
 
         <div className={styles.tableContainer}>
           <AnimatePresence>
-            <table className={styles.table}>
+            <table className={styles.table} cellSpacing={10}>
               <thead>
                 <tr>
                   {formattedKeys.map((key) =>
@@ -79,9 +82,9 @@ const GenericTable = ({
                       )}
 
                       {setNewCouponData && (
-                        <td className={styles.rowName}>
+                        <td className={styles.buttonsContainer}>
                           <SecondaryButton
-                            buttonText='Edit Coupon'
+                            buttonText='Edit'
                             onClick={() => {
                               setNewCouponData(data);
                               if (setCouponModal) setCouponModal({ showModal: true });
@@ -89,6 +92,18 @@ const GenericTable = ({
                           />
                         </td>
                       )}
+                      <td>
+                        <SecondaryButton
+                          buttonText='Delete'
+                          onClick={() => {
+                            deleteCoupon(
+                              JSON.parse(sessionStorage.getItem('eventData')!).event_id,
+                              data.id,
+                              setTableData as React.Dispatch<React.SetStateAction<CouponType[]>>,
+                            );
+                          }}
+                        />
+                      </td>
                     </tr>
                   ))}
 
