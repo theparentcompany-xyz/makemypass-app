@@ -1,5 +1,3 @@
-import { claimGift } from '../src/apis/spinwheel';
-
 const buildURL = (basePath: string) => (endpoint: string) => `${basePath}${endpoint}`;
 
 const buildVerseURL = buildURL('/buildverse');

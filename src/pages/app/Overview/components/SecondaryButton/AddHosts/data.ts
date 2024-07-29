@@ -1,11 +1,11 @@
-import { roles } from '../../../../../../../services/enums';
+import { Roles } from '../../../../../../../services/enums';
 
 const roleOptions = [
-  { value: roles.ADMIN, label: roles.ADMIN },
-  { value: roles.OWNER, label: roles.OWNER },
-  { value: roles.EDITOR, label: roles.EDITOR },
-  { value: roles.VIEWER, label: roles.VIEWER },
-  { value: roles.VOLUNTEER, label: roles.VOLUNTEER },
+  { value: Roles.ADMIN, label: Roles.ADMIN },
+  { value: Roles.OWNER, label: Roles.OWNER },
+  { value: Roles.EDITOR, label: Roles.EDITOR },
+  { value: Roles.VIEWER, label: Roles.VIEWER },
+  { value: Roles.VOLUNTEER, label: Roles.VOLUNTEER },
 ];
 
 export default roleOptions;

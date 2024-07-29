@@ -39,7 +39,7 @@
 }
 
 .registrationCount {
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
@@ -193,7 +193,7 @@
 /* Next Box */
 
 .pageVisitsCount {
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
@@ -206,7 +206,7 @@
 }
 
 .todayRegistered {
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 2rem;
@@ -230,7 +230,7 @@
 /* Timme Box */
 
 .pieContainer {
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
@@ -267,7 +267,7 @@
 }
 
 .paymentCounts {
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
@@ -280,7 +280,7 @@
 
 .categorySection {
   margin: 1rem 0.75rem;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;

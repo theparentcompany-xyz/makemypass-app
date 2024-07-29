@@ -8,7 +8,7 @@ import { formatDate } from '../../common/commonFunctions';
 
 import PoppingText from './components/PoppingText';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
-import { roles } from '../../../services/enums';
+import { Roles } from '../../../services/enums';
 
 const Glance = ({
   tab,
@@ -119,50 +119,50 @@ const Glance = ({
   const tabs: TabsType = {
     overview: {
       title: 'Overview',
-      roles: [roles.ADMIN, roles.OWNER],
+      roles: [Roles.ADMIN, Roles.OWNER],
     },
     insights: {
       title: 'Insights',
-      roles: [roles.ADMIN, roles.OWNER],
+      roles: [Roles.ADMIN, Roles.OWNER],
     },
     guests: {
       title: 'Guests',
-      roles: [roles.ADMIN, roles.OWNER, roles.VOLUNTEER],
+      roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
     },
     inevent: {
       title: 'In-Event',
-      roles: [roles.ADMIN, roles.OWNER, roles.VOLUNTEER],
+      roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
     },
     manage: {
       title: 'Event Page',
-      roles: [roles.ADMIN, roles.OWNER],
+      roles: [Roles.ADMIN, Roles.OWNER],
     },
     checkins: {
       title: 'Check-Ins',
-      roles: [roles.ADMIN, roles.OWNER, roles.VOLUNTEER],
+      roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
     },
     formbuilder: {
       title: 'Form Builder',
-      roles: [roles.ADMIN, roles.OWNER],
+      roles: [Roles.ADMIN, Roles.OWNER],
     },
     coupon: {
       title: 'Coupon',
-      roles: [roles.ADMIN, roles.OWNER, roles.VOLUNTEER],
+      roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
     },
     logs: {
       title: 'Logs',
-      roles: [roles.ADMIN, roles.OWNER],
+      roles: [Roles.ADMIN, Roles.OWNER],
     },
   };
 
   if (import.meta.env.VITE_CURRENT_ENV === 'dev') {
     tabs.postevent = {
       title: 'Post Event',
-      roles: [roles.ADMIN, roles.OWNER],
+      roles: [Roles.ADMIN, Roles.OWNER],
     };
     tabs.feedback = {
       title: 'Feedback',
-      roles: [roles.ADMIN, roles.OWNER],
+      roles: [Roles.ADMIN, Roles.OWNER],
     };
   }
 

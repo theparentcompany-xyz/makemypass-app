@@ -14,9 +14,10 @@ import {
   MdCheckBox,
 } from 'react-icons/md';
 import { DefaultFieldTypes, FieldType } from './types.ts';
+import { ConditionalQuestionOperator } from '../../../../services/enums.ts';
 
 export interface ConditionType {
-  value: string;
+  value: ConditionalQuestionOperator;
   label: string;
 }
 
@@ -27,18 +28,34 @@ export function getConditions(type: string): ConditionType[] {
     case FieldType.Phone:
     case FieldType.LongText:
       return conditions.filter((condition) =>
-        ['=', '!=', 'in', 'not in', 'empty', 'not empty', 'contains', 'not contains'].includes(
-          condition.value,
-        ),
+        [
+          ConditionalQuestionOperator.EQUALS,
+          ConditionalQuestionOperator.NOT_EQUALS,
+          ConditionalQuestionOperator.IN,
+          ConditionalQuestionOperator.NOT_IN,
+          ConditionalQuestionOperator.EMPTY,
+          ConditionalQuestionOperator.NOT_EMPTY,
+          ConditionalQuestionOperator.CONTAINS,
+          ConditionalQuestionOperator.NOT_CONTAINS,
+        ].includes(condition.value),
       );
     case FieldType.Number:
     case FieldType.Date:
     case FieldType.DateTime:
     case FieldType.Time:
       return conditions.filter((condition) =>
-        ['=', '!=', 'in', 'not in', 'empty', 'not empty', '>', '>=', '<', '<='].includes(
-          condition.value,
-        ),
+        [
+          ConditionalQuestionOperator.EQUALS,
+          ConditionalQuestionOperator.NOT_EQUALS,
+          ConditionalQuestionOperator.IN,
+          ConditionalQuestionOperator.NOT_IN,
+          ConditionalQuestionOperator.EMPTY,
+          ConditionalQuestionOperator.NOT_EMPTY,
+          ConditionalQuestionOperator.GREATER_THAN,
+          ConditionalQuestionOperator.GREATER_THAN_OR_EQUAL,
+          ConditionalQuestionOperator.LESS_THAN,
+          ConditionalQuestionOperator.LESS_THAN_OR_EQUAL,
+        ].includes(condition.value),
       );
     case FieldType.Rating:
     case FieldType.Checkbox:
@@ -46,60 +63,67 @@ export function getConditions(type: string): ConditionType[] {
     case FieldType.SingleSelect:
     case FieldType.Radio:
       return conditions.filter((condition) =>
-        ['=', '!=', 'empty', 'not empty', 'in', 'not in'].includes(condition.value),
+        [
+          ConditionalQuestionOperator.EQUALS,
+          ConditionalQuestionOperator.NOT_EQUALS,
+          ConditionalQuestionOperator.IN,
+          ConditionalQuestionOperator.NOT_IN,
+          ConditionalQuestionOperator.EMPTY,
+          ConditionalQuestionOperator.NOT_EMPTY,
+        ].includes(condition.value),
       );
     default:
       return [];
   }
 }
 
-export const conditions = [
+export const conditions: ConditionType[] = [
   {
-    value: '=',
+    value: ConditionalQuestionOperator.EQUALS,
     label: 'Equal',
   },
   {
-    value: '!=',
+    value: ConditionalQuestionOperator.NOT_EQUALS,
     label: 'Not Equal',
   },
   {
-    value: 'in',
+    value: ConditionalQuestionOperator.IN,
     label: 'In',
   },
   {
-    value: 'not in',
+    value: ConditionalQuestionOperator.NOT_IN,
     label: 'Not In',
   },
   {
-    value: 'empty',
+    value: ConditionalQuestionOperator.EMPTY,
     label: 'Empty',
   },
   {
-    value: 'not empty',
+    value: ConditionalQuestionOperator.NOT_EMPTY,
     label: 'Not Empty',
   },
   {
-    value: 'contains',
+    value: ConditionalQuestionOperator.CONTAINS,
     label: 'Contains',
   },
   {
-    value: 'not contains',
+    value: ConditionalQuestionOperator.NOT_CONTAINS,
     label: 'Not Contains',
   },
   {
-    value: '>',
+    value: ConditionalQuestionOperator.GREATER_THAN,
     label: 'Greater Than',
   },
   {
-    value: '>=',
+    value: ConditionalQuestionOperator.GREATER_THAN_OR_EQUAL,
     label: 'Greater Than and Equal',
   },
   {
-    value: '<',
+    value: ConditionalQuestionOperator.LESS_THAN,
     label: 'Less Than',
   },
   {
-    value: '<=',
+    value: ConditionalQuestionOperator.LESS_THAN_OR_EQUAL,
     label: 'Less Than and Equal',
   },
 ];

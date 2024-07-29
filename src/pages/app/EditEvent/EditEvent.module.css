@@ -54,7 +54,7 @@
 
 .bannerContainer,
 .descriptionContainer {
-  border-radius: 12px;
+  border-radius: 8px;
   /* border: 1px solid rgba(255, 255, 255, 0.1); */
   background: rgba(255, 255, 255, 0.04);
   padding: 0.5rem;
@@ -160,7 +160,7 @@
   justify-content: space-between;
   align-items: flex-start;
 
-  border-radius: 12px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
   padding: 0.5rem;
 
@@ -545,7 +545,7 @@ input[type='color']::-webkit-color-swatch {
   cursor: pointer;
 }
 
-.uploadLogoContainer:hover>.pencil {
+.uploadLogoContainer:hover > .pencil {
   transform: scale(1.1);
 }
 
@@ -727,7 +727,7 @@ input[type='color']::-webkit-color-swatch {
   transform: scale(1.25);
 }
 
-.uploadLogoContainerParent>.closeIcon {
+.uploadLogoContainerParent > .closeIcon {
   position: relative;
   top: 0;
   right: 0;
@@ -738,6 +738,6 @@ input[type='color']::-webkit-color-swatch {
   background: rgba(255, 255, 255, 0.04);
 }
 
-.uploadLogoContainerParent>.closeIcon:hover {
+.uploadLogoContainerParent > .closeIcon:hover {
   transform: scale(1.05);
 }

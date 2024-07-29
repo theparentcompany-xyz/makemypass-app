@@ -7,9 +7,7 @@ export const getAllMailLog = async (
   eventId: string,
   setAllMailLog: Dispatch<React.SetStateAction<EmailType[]>>,
 ) => {
-  privateGateway
-    .get(makeMyPass.getAllMailLog(eventId))
-    .then((response) => {
-      setAllMailLog(response.data.response);
-    })
+  privateGateway.get(makeMyPass.getAllMailLog(eventId)).then((response) => {
+    setAllMailLog(response.data.response);
+  });
 };

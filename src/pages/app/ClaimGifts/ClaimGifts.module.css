@@ -89,7 +89,7 @@
 
 .sucessContainer {
   margin-top: 2rem;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem;
@@ -218,7 +218,7 @@
 }
 
 .tableContainer {
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   margin-top: 1rem;
