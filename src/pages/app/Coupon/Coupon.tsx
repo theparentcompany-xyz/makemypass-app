@@ -487,6 +487,17 @@ const Coupon = () => {
                     <SecondaryButton
                       buttonText='+ Add New Coupon Code'
                       onClick={() => {
+                        setNewCouponData({
+                          code: '',
+                          value: 0,
+                          type: 'amount',
+                          tickets: [],
+                          description: '',
+                          is_active: true,
+                          count: 0,
+                          conditions: [],
+                          is_private: false,
+                        });
                         setCouponModal({ showModal: true });
                       }}
                     />
