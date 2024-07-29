@@ -335,27 +335,25 @@ const CouponForm = ({
             }}
           />
           {discount.discount_type && discount.discount_value > 0 && (
-            <p style={{ marginTop: '-1.75rem' }} className={styles.discountText}>
+            <p className={styles.discountText}>
               {discount.discount_type.toLowerCase() === 'percentage'
                 ? `${discount.discount_value}% discount applied`
                 : `${discount.discount_value} ${filteredTickets[0].currency} discount applied`}
             </p>
           )}
 
-          <div>
-            <button
-              className={styles.validateButton}
-              onClick={() => {
-                if (coupon.value) applyCoupon(eventFormData.id, coupon, setDiscount, setCoupon);
-                else {
-                  setCoupon({ ...coupon, error: 'Please enter a coupon code' });
-                  setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
-                }
-              }}
-            >
-              Validate Coupon
-            </button>
-          </div>
+          <button
+            className={styles.validateButton}
+            onClick={() => {
+              if (coupon.value) applyCoupon(eventFormData.id, coupon, setDiscount, setCoupon);
+              else {
+                setCoupon({ ...coupon, error: 'Please enter a coupon code' });
+                setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
+              }
+            }}
+          >
+            Validate Coupon
+          </button>
         </motion.div>
       )}
     </>
