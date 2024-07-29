@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import CouponType, { CreateCouponType } from '../pages/app/Coupon/types';
+import CouponType, { CreateCouponType, CreateCouponTypeError } from '../pages/app/Coupon/types';
 import toast from 'react-hot-toast';
 import { ActivateCouponType } from './types';
 
@@ -22,44 +22,54 @@ export const listCoupons = async (
   });
 };
 
-export const createCoupon = async (
+export const createCoupon = (
   eventId: string,
   data: CreateCouponType,
   setCoupons: Dispatch<SetStateAction<CouponType[]>>,
-) => {
-  const backendFormData = new FormData();
-  Object.keys(data).forEach((key) => {
-    let value = data[key];
+  setCouponError: Dispatch<SetStateAction<CreateCouponTypeError>>,
+): Promise<void> => {
+  return new Promise<void>((resolve, reject) => {
+    const backendFormData = new FormData();
+    Object.keys(data).forEach((key) => {
+      let value = data[key];
 
-    if (!(value instanceof FileList)) {
-      if (Array.isArray(value) && value.length > 0) {
-        value.forEach((value) =>
-          backendFormData.append(
-            key + '[]',
-            typeof value === 'object' ? JSON.stringify(value) : value,
-          ),
-        );
-      } else {
-        value = data[key].toString();
+      if (!(value instanceof FileList)) {
+        if (Array.isArray(value) && value.length > 0) {
+          value.forEach((value) =>
+            backendFormData.append(
+              key + '[]',
+              typeof value === 'object' ? JSON.stringify(value) : value,
+            ),
+          );
+        } else {
+          value = data[key].toString();
+        }
       }
-    }
 
-    if (typeof value === 'string' && value.length > 0) {
-      backendFormData.append(key, value);
-    } else if (value instanceof FileList) {
-      Array.from(value).forEach((value) => backendFormData.append(key + '[]', value));
-    }
-  });
-
-  return privateGateway
-    .post(makeMyPass.createCoupon(eventId), backendFormData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    .then(() => {
-      listCoupons(eventId, setCoupons);
+      if (typeof value === 'string' && value.length > 0) {
+        backendFormData.append(key, value);
+      } else if (value instanceof FileList) {
+        Array.from(value).forEach((value) => backendFormData.append(key + '[]', value));
+      }
     });
+
+    privateGateway
+      .post(makeMyPass.createCoupon(eventId), backendFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(() => {
+        listCoupons(eventId, setCoupons);
+        resolve();
+      })
+      .catch((error) => {
+        if (error.response.data.message) {
+          setCouponError(error.response.data.message);
+        }
+        reject(error);
+      });
+  });
 };
 
 export const editCoupon = async (

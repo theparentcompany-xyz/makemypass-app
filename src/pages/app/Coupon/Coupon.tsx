@@ -4,7 +4,7 @@ import Theme from '../../../components/Theme/Theme';
 import styles from './Coupon.module.css';
 import { createCoupon, editCoupon, listCoupons, updateCouponStatus } from '../../../apis/coupons';
 import GenericTable from '../../../components/Table/GenericTable';
-import CouponType, { ActivateCouponType, CreateCouponType } from './types';
+import CouponType, { ActivateCouponType, CreateCouponType, CreateCouponTypeError } from './types';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import Modal from '../../../components/Modal/Modal';
 import InputField from '../../auth/Login/InputField';
@@ -63,6 +63,7 @@ const Coupon = () => {
     conditions: [],
     is_private: false,
   });
+  const [couponError, setCouponError] = useState<CreateCouponTypeError>({});
   const [limitDiscountUsage, setLimitDiscountUsage] = useState(newCouponData.count ? true : false);
 
   useEffect(() => {
@@ -160,6 +161,7 @@ const Coupon = () => {
                     }}
                     value={newCouponData.code}
                     description='Customer must enter this coupon code at checkout'
+                    error={couponError.code}
                   />
 
                   <hr className={styles.line} />
@@ -187,6 +189,7 @@ const Coupon = () => {
                           });
                         }}
                         value={newCouponData.value.toString()}
+                        error={couponError.value}
                       />
                       <div className={styles.discountSelectContainer}>
                         <Select
@@ -204,6 +207,7 @@ const Coupon = () => {
                               });
                           }}
                         />
+                        {couponError.value && <p className={styles.error}>{couponError.value}</p>}
                       </div>
                     </div>
                     <>
@@ -231,7 +235,7 @@ const Coupon = () => {
                           value={newCouponData.tickets.map((ticket) => {
                             return {
                               value: ticket,
-                              label: ticket,
+                              label: tickets.find((t) => t.id === ticket)?.title,
                             };
                           })}
                           onChange={(options) => {
@@ -241,6 +245,11 @@ const Coupon = () => {
                             });
                           }}
                         />
+                        {
+                          <p className={styles.error}>
+                            {couponError.tickets && couponError.tickets[0]}
+                          </p>
+                        }
                       </div>
                     </>
                   </div>
@@ -253,11 +262,12 @@ const Coupon = () => {
                     id='description'
                     placeholder='Write a short description'
                     icon={<></>}
-                    required={true}
+                    required={false}
                     onChange={(event) => {
                       setNewCouponData({ ...newCouponData, description: event.target.value });
                     }}
                     value={newCouponData.description}
+                    error={couponError.description}
                   />
 
                   <hr className={styles.line} />
@@ -274,6 +284,11 @@ const Coupon = () => {
                       }}
                       text='Limit Discount Usage'
                     />
+                    {
+                      <p className={styles.error}>
+                        {couponError.count && limitDiscountUsage && couponError.count[0]}
+                      </p>
+                    }
                     {limitDiscountUsage && (
                       <div className={styles.limitInput}>
                         <InputField
@@ -292,6 +307,7 @@ const Coupon = () => {
                             });
                           }}
                           value={newCouponData.count ? newCouponData.count.toString() : ''}
+                          error={couponError.count}
                         />
                       </div>
                     )}
@@ -307,6 +323,13 @@ const Coupon = () => {
                       }}
                       text='Show Coupon in Form'
                     />
+                    {
+                      <p className={styles.error}>
+                        {couponError.is_private &&
+                          newCouponData.is_private &&
+                          couponError.is_private[0]}
+                      </p>
+                    }
                     <Slider
                       checked={newCouponData.is_active}
                       onChange={() => {
@@ -317,6 +340,13 @@ const Coupon = () => {
                       }}
                       text='Activate Ticket'
                     />
+                    {
+                      <p className={styles.error}>
+                        {couponError.is_active &&
+                          newCouponData.is_active &&
+                          couponError.is_active[0]}
+                      </p>
+                    }
                   </div>
                 </div>
 
@@ -458,19 +488,23 @@ const Coupon = () => {
                     buttonText='Save Coupon'
                     onClick={() => {
                       if (newCouponData.id) editCoupon(eventId, newCouponData, setCoupons);
-                      else createCoupon(eventId, newCouponData, setCoupons);
-                      setCouponModal({ showModal: false });
-                      setNewCouponData({
-                        code: '',
-                        value: 0,
-                        type: 'amount',
-                        tickets: [],
-                        description: '',
-                        is_active: true,
-                        count: 0,
-                        conditions: [],
-                        is_private: false,
-                      });
+                      else
+                        createCoupon(eventId, newCouponData, setCoupons, setCouponError).then(
+                          () => {
+                            setCouponModal({ showModal: false });
+                            setNewCouponData({
+                              code: '',
+                              value: 0,
+                              type: 'amount',
+                              tickets: [],
+                              description: '',
+                              is_active: true,
+                              count: 0,
+                              conditions: [],
+                              is_private: false,
+                            });
+                          },
+                        );
                     }}
                   />
                 </div>

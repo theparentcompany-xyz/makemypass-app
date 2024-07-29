@@ -28,6 +28,18 @@ export type CreateCouponType = {
   [key: string]: any;
 };
 
+export type CreateCouponTypeError = {
+  code?: string[];
+  type?: string[];
+  value?: string[];
+  tickets?: string[];
+  description?: string[];
+  is_active?: string[];
+  count?: string[];
+  is_private?: string[];
+  conditions?: string[];
+};
+
 export type ActivateCouponType = {
   showModal: boolean;
   active: boolean;
