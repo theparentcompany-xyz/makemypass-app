@@ -13,6 +13,7 @@
   align-items: center;
   flex-wrap: wrap;
 }
+
 @media screen and (max-width: 720px) {
   .ticketHeader {
     gap: 0;
@@ -57,15 +58,19 @@
   overflow-x: auto;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 @media screen and (min-width: 720px) {
   .ticketsContainer {
     max-width: 50vw;
   }
 }
+
 @media screen and (max-width: 435px) {
   .ticketsContainer {
-    scroll-snap-type: x mandatory; /* Enabling scroll snap */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS devices */
+    scroll-snap-type: x mandatory;
+    /* Enabling scroll snap */
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling on iOS devices */
   }
 }
 
@@ -84,6 +89,7 @@
   gap: 0.5rem;
   color: #d7d7d7;
 }
+
 .ticketTitle {
   font-size: 1.1rem;
   padding-top: 0.5rem;
@@ -104,6 +110,7 @@
   font-family: 'Inter', sans-serif;
   margin-right: 1rem;
 }
+
 .ticketSlider {
   display: flex;
   justify-content: space-between;
@@ -115,6 +122,7 @@
   color: #f3f3f3;
   max-width: 20rem;
 }
+
 .ticketSliderLabel {
   margin-bottom: 0.3rem;
 }
@@ -171,21 +179,25 @@
   width: 100%;
   margin-bottom: 1rem;
 }
+
 .buttonGroup {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
+
 @media screen and (max-height: 770px) {
   .buttonContainer {
     margin-top: 1rem;
   }
 }
+
 @media screen and (max-width: 480px) {
   .buttonContainer {
     flex-direction: column-reverse;
     align-items: flex-start;
   }
+
   .buttonGroup {
     margin-top: 1rem;
     display: flex;
@@ -195,6 +207,7 @@
     margin-bottom: 0.5rem;
   }
 }
+
 .ticketDescriptionContainer {
   margin-top: 1rem;
   padding-bottom: 1rem;
@@ -221,8 +234,10 @@
   color: #d7d7d7;
   opacity: 0.8;
   outline: none;
-  padding: 1rem;
+  padding: 1rem 0;
   max-width: 25rem;
+  max-height: 4rem;
+  overflow: auto;
 }
 
 .ticketCapacityContainer {
@@ -287,6 +302,7 @@
   flex-direction: row;
   align-items: center;
 }
+
 .ticketPriceInput {
   font-size: 0.9rem;
   background: rgba(255, 255, 255, 0.04);
@@ -302,6 +318,7 @@
   border-radius: 8px 0 0 8px;
   margin-top: 0.5rem;
 }
+
 .ticketCurrency {
   font-size: 0.9rem;
   background: rgba(255, 255, 255, 0.04);
@@ -325,6 +342,7 @@
   .ticketPriceLabel {
     margin-left: 1rem;
   }
+
   .ticketSliderLabel {
     margin-left: 1rem;
   }
