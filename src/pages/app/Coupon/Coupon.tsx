@@ -457,8 +457,6 @@ const Coupon = () => {
                   <SecondaryButton
                     buttonText='Save Coupon'
                     onClick={() => {
-                      console.log(newCouponData);
-
                       if (newCouponData.id) editCoupon(eventId, newCouponData, setCoupons);
                       else createCoupon(eventId, newCouponData, setCoupons);
                       setCouponModal({ showModal: false });

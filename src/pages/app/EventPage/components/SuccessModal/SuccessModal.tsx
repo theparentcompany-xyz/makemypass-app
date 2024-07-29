@@ -96,10 +96,7 @@ const SuccessModal = ({
                         setSuccess({ showModal: false });
                         setScratchCard(true);
                         if (success.eventRegisterId)
-                          claimRegisterGift(
-                            localStorage.getItem('eventId') ?? '',
-                            success.eventRegisterId,
-                          );
+                          claimRegisterGift(success.eventId ?? '', success.eventRegisterId);
                       }}
                       className={styles.viewTicketButton}
                     >

@@ -162,7 +162,7 @@ export const makeMyPass = {
   listCoupons: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/list-coupons/`),
   createCoupon: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/create-coupon/`),
   editCoupon: (eventId: string, couponId: string) =>
-    makeMyPassURL(`/manage-coupon/${eventId}/edit-coupon/${couponId}/`),
+    makeMyPassURL(`/manage-coupon/${eventId}/update-coupon/${couponId}/`),
   updateCouponStatus: (eventId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/update-coupon-status`),
 };

@@ -80,7 +80,7 @@ export const editCoupon = async (
           ),
         );
       } else {
-        value = data[key].toString();
+        value = data[key];
       }
     }
 
@@ -92,7 +92,7 @@ export const editCoupon = async (
   });
 
   return privateGateway
-    .put(makeMyPass.editCoupon(eventId, data.id), backendFormData, {
+    .patch(makeMyPass.editCoupon(eventId, data.id), backendFormData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

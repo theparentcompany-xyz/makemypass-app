@@ -55,6 +55,7 @@ export type SuccessModalProps = {
   followupMessage?: string;
   ticketURL?: string;
   loading?: boolean;
+  eventId?: string;
 };
 
 export type AudioControlsType = {

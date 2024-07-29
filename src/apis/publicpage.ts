@@ -300,9 +300,11 @@ export const getEventInfo = async (
         setSuccess((prev) => ({
           ...prev,
           eventTitle: response.data.response.title,
+          eventId: response.data.response.id,
           loading: false,
         }));
       sessionStorage.setItem('eventId', response.data.response.id);
+
       if (response.data.response.claim_code_message) {
         setClaimCodeExceed &&
           setClaimCodeExceed({
