@@ -166,6 +166,49 @@ const Coupon = () => {
 
                   <hr className={styles.line} />
 
+                  <>
+                    <div
+                      style={{
+                        marginBottom: '1rem',
+                      }}
+                    >
+                      <p className={styles.fieldHeader}>Applies To</p>
+                      <p className={styles.filedDescription}>
+                        if no tickets are selected, coupon will apply to all tickets
+                      </p>
+                      <Select
+                        isMulti
+                        styles={customStyles}
+                        name='colors'
+                        className='basic-multi-select'
+                        classNamePrefix='select'
+                        options={tickets.map((ticket) => {
+                          return {
+                            value: ticket.id,
+                            label: ticket.title,
+                          };
+                        })}
+                        value={newCouponData.tickets.map((ticket) => {
+                          return {
+                            value: ticket,
+                            label: tickets.find((t) => t.id === ticket)?.title,
+                          };
+                        })}
+                        onChange={(options) => {
+                          setNewCouponData({
+                            ...newCouponData,
+                            tickets: options.map((option) => option.value),
+                          });
+                        }}
+                      />
+                      {
+                        <p className={styles.error}>
+                          {couponError.tickets && couponError.tickets[0]}
+                        </p>
+                      }
+                    </div>
+                  </>
+
                   <div className={styles.discountContainer}>
                     <div className={styles.discountValue}>
                       <InputField
@@ -182,6 +225,22 @@ const Coupon = () => {
                           ) {
                             toast.error('Enter a value less than 100');
                             return;
+                          } else {
+                            const ticketPrices = newCouponData.tickets.map((ticketId) => {
+                              const ticket = tickets.find((ticket) => ticket.id === ticketId);
+                              return ticket && ticket.price;
+                            });
+
+                            let discountGreaterThanTicket = false;
+
+                            ticketPrices.map((ticketPrice) => {
+                              if (ticketPrice && ticketPrice < Number(event.target.value)) {
+                                toast.error('Discount Amount is Greater than Ticket Price');
+                                discountGreaterThanTicket = true;
+                              }
+                            });
+
+                            if (discountGreaterThanTicket) return;
                           }
                           setNewCouponData({
                             ...newCouponData,
@@ -210,48 +269,6 @@ const Coupon = () => {
                         {couponError.value && <p className={styles.error}>{couponError.value}</p>}
                       </div>
                     </div>
-                    <>
-                      <div
-                        style={{
-                          marginBottom: '1rem',
-                        }}
-                      >
-                        <p className={styles.fieldHeader}>Applies To</p>
-                        <p className={styles.filedDescription}>
-                          if no tickets are selected, coupon will apply to all tickets
-                        </p>
-                        <Select
-                          isMulti
-                          styles={customStyles}
-                          name='colors'
-                          className='basic-multi-select'
-                          classNamePrefix='select'
-                          options={tickets.map((ticket) => {
-                            return {
-                              value: ticket.id,
-                              label: ticket.title,
-                            };
-                          })}
-                          value={newCouponData.tickets.map((ticket) => {
-                            return {
-                              value: ticket,
-                              label: tickets.find((t) => t.id === ticket)?.title,
-                            };
-                          })}
-                          onChange={(options) => {
-                            setNewCouponData({
-                              ...newCouponData,
-                              tickets: options.map((option) => option.value),
-                            });
-                          }}
-                        />
-                        {
-                          <p className={styles.error}>
-                            {couponError.tickets && couponError.tickets[0]}
-                          </p>
-                        }
-                      </div>
-                    </>
                   </div>
 
                   <hr className={styles.line} />
@@ -279,7 +296,7 @@ const Coupon = () => {
                       onChange={() => {
                         setLimitDiscountUsage(!limitDiscountUsage);
                         if (!limitDiscountUsage) {
-                          setNewCouponData({ ...newCouponData, count: null });
+                          setNewCouponData({ ...newCouponData, count: 5 });
                         }
                       }}
                       text='Limit Discount Usage'
@@ -306,7 +323,7 @@ const Coupon = () => {
                               count: Number(event.target.value),
                             });
                           }}
-                          value={newCouponData.count ? newCouponData.count.toString() : ''}
+                          value={newCouponData.count ? newCouponData.count.toString() : '0'}
                           error={couponError.count}
                         />
                       </div>
