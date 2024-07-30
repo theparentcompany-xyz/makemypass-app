@@ -20,6 +20,7 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
   const [fileStatus, setFileStatus] = useState<BulkUploadType[]>([]);
 
   const [sendTicket, setSendTicket] = useState(false);
+  const [sendInvoice, setSendInvoice] = useState(false);
 
   useEffect(() => {
     getTickets(eventId, setTickets);
@@ -73,20 +74,36 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
           }}
         />
 
-        <Slider
-          text='Send Ticket'
-          size='small'
-          onChange={() => {
-            setSendTicket(!sendTicket);
-          }}
-          checked={sendTicket}
-        />
+        <div className='row'>
+          <Slider
+            text='Send Ticket'
+            size='small'
+            onChange={() => {
+              setSendTicket(!sendTicket);
+            }}
+            checked={sendTicket}
+          />
+
+          {tickets
+            .filter((ticket) => selectedTickets.includes(ticket.id))
+            .some((ticket) => ticket.price > 0) && (
+            <Slider
+              text='Send Invoice'
+              size='small'
+              onChange={() => {
+                setSendInvoice(!sendInvoice);
+              }}
+              checked={sendInvoice}
+            />
+          )}
+        </div>
       </div>
 
       <button
         className={styles.uploadButton}
         onClick={() => {
-          if (file) uploadFile(eventId, file, selectedTickets, setFileStatus, sendTicket);
+          if (file)
+            uploadFile(eventId, file, selectedTickets, setFileStatus, sendTicket, sendInvoice);
           else toast.error('Please select a file');
         }}
       >
