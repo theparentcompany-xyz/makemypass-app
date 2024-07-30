@@ -92,18 +92,20 @@ const GenericTable = ({
                           />
                         </td>
                       )}
-                      <td>
-                        <SecondaryButton
-                          buttonText='Delete'
-                          onClick={() => {
-                            deleteCoupon(
-                              JSON.parse(sessionStorage.getItem('eventData')!).event_id,
-                              data.id,
-                              setTableData as React.Dispatch<React.SetStateAction<CouponType[]>>,
-                            );
-                          }}
-                        />
-                      </td>
+                      {data.consumed === 0 && (
+                        <td>
+                          <SecondaryButton
+                            buttonText='Delete'
+                            onClick={() => {
+                              deleteCoupon(
+                                JSON.parse(sessionStorage.getItem('eventData')!).event_id,
+                                data.id,
+                                setTableData as React.Dispatch<React.SetStateAction<CouponType[]>>,
+                              );
+                            }}
+                          />
+                        </td>
+                      )}
                     </tr>
                   ))}
 
