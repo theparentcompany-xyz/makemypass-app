@@ -14,7 +14,7 @@ import { getHosts } from '../../../../apis/overview';
 import { connectPrivateSocket } from '../../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../../services/urls';
 import Theme from '../../../../components/Theme/Theme';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../../../components/EventHeader/EventHeader';
 import Table from '../../../../components/Table/Table';
 import { TableType } from '../../../../components/Table/types';
@@ -34,7 +34,7 @@ import { Roles } from '../../../../../services/enums';
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
   const [recentTableData, setRecentTableData] = useState<TableType[]>([]);
-
+  const navigate = useNavigate();
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
@@ -91,7 +91,7 @@ const Overview = () => {
       !isArray(selectedGuestId.id)
     )
       if (selectedGuestId.id && selectedGuest?.name)
-        downloadTicket(eventId, selectedGuestId?.id, selectedGuest?.name);
+        downloadTicket(eventId, selectedGuestId?.id, navigate);
       else toast.error('Ticket download failed');
   }, [selectedGuestId]);
 

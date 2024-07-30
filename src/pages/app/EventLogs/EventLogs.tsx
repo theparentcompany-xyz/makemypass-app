@@ -68,10 +68,14 @@ const EventLogs = () => {
                     </p>
                   </div>
                 </div>
-                {mail.show_content && <hr className={styles.line} />}
-                <div className={styles.mailContent}>
-                  <pre>{mail.show_content && mail.body}</pre>
-                </div>
+                {mail.show_content && (
+                  <>
+                    <hr className={styles.line} />
+                    <div className={styles.mailContent}>
+                      <pre> {mail.body}</pre>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
           </div>

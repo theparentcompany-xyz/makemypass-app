@@ -5,6 +5,7 @@
   align-items: flex-start;
   text-align: left;
   overflow: auto;
+  width: 100%;
   font-family: 'Inter', sans-serif;
 }
 
@@ -27,11 +28,11 @@
   margin-top: 1rem;
   padding-bottom: 1rem;
   position: relative;
-  width: 95%;
   background-color: rgba(255, 255, 255, 0.04);
   padding: 1rem;
   border-radius: 8px;
   margin-right: 0.5rem;
+  width: 90%;
 }
 
 .line {
@@ -46,7 +47,7 @@
 
 .expandIcon {
   position: absolute;
-  right: 0.25rem;
+  right: 1.25rem;
   cursor: pointer;
   color: white;
   font-size: 0.9rem;

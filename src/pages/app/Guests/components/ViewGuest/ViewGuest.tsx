@@ -146,50 +146,46 @@ const ViewGuest = ({
             alignItems: 'flex-start',
           }}
         >
-          <div className={styles.mailLog}>
-            <div className={styles.mailsContainer}>
-              {mailLog.logs.map((mail, index) => {
-                return (
-                  <div className={styles.mail} key={index}>
-                    <div className={styles.expandIcon}>
-                      {
-                        <BiChevronDown
-                          onClick={() => toggleMailContent(mail.id)}
-                          size={25}
-                          style={{
-                            transform: mail.show_content ? 'rotate(180deg)' : 'rotate(0deg)',
-                          }}
-                        />
-                      }
-                    </div>
+          <div className={styles.mailsContainer}>
+            {mailLog.logs.map((mail, index) => {
+              return (
+                <div className={styles.mail} key={index}>
+                  <div className={styles.expandIcon}>
+                    {
+                      <BiChevronDown
+                        onClick={() => toggleMailContent(mail.id)}
+                        size={25}
+                        style={{
+                          transform: mail.show_content ? 'rotate(180deg)' : 'rotate(0deg)',
+                        }}
+                      />
+                    }
+                  </div>
 
-                    <div className={styles.mailHeader}>
-                      <MdMail size={25} />
-                      <div className={styles.mailHeaderContents}>
-                        <p className={styles.mailType}>{mail.type} Mail</p>
-                        <p className={styles.mailSubject}>{mail.subject}</p>
-                        <p className={styles.mailDescription}>
-                          To: <span>{mail.send_to}</span> <br />
-                          From: <span>{mail.send_from}</span>
-                        </p>
+                  <div className={styles.mailHeader}>
+                    <MdMail size={25} />
+                    <div className={styles.mailHeaderContents}>
+                      <p className={styles.mailType}>{mail.type} Mail</p>
+                      <p className={styles.mailSubject}>{mail.subject}</p>
+                      <p className={styles.mailDescription}>
+                        To: <span>{mail.send_to}</span> <br />
+                        From: <span>{mail.send_from}</span>
+                      </p>
 
-                        <hr className={styles.line} />
-                        <div className={styles.mailContent}>
-                          <pre>
-                            {mail.show_content
-                              ? mail.body
-                              : mail.body.length > 150
-                                ? mail.body.substring(0, 150) + '...'
-                                : mail.body}
-                          </pre>
-                          {/* <div className={styles.attachment}>Ticket.png</div> */}
-                        </div>
-                      </div>
+                      {mail.show_content && (
+                        <>
+                          <hr className={styles.line} />
+                          <div className={styles.mailContent}>
+                            <pre> {mail.body}</pre>
+                          </div>
+                        </>
+                      )}
+                      {/* <div className={styles.attachment}>Ticket.png</div> */}
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
         </Modal>
       )}
