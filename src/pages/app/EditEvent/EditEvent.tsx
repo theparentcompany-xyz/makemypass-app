@@ -117,7 +117,8 @@ const EditEvent = () => {
       !eventData?.is_online &&
       (location?.lat != fetchedEvent?.location?.lat || location?.lng != fetchedEvent?.location?.lng)
     ) {
-      changedData['location'] = location;
+      changedData['location[lat]'] = location?.lat;
+      changedData['location[lng]'] = location?.lng;
     }
 
     if (changedData['is_team'] == true) {
@@ -154,7 +155,7 @@ const EditEvent = () => {
         sessionStorage.clear();
       }
     }
-
+    console.log(formData.forEach((value, key) => console.log(key, value)));
     editEvent({ eventId, eventData: formData, setFormErrors });
   };
 

@@ -13,6 +13,7 @@ import toast from 'react-hot-toast';
 import AdvancedSetting from './components/AdvancedSetting/AdvancedSetting';
 import UnsavedChanges from './components/UnsavedChanges/UnsavedChanges';
 import ConfirmDelete from './components/ConfirmDelete/ConfirmDelete';
+import Editor from '../../../../../components/Editor/Editor';
 // import TicketEditor from './components/TicketEditor/TicketEditor';
 
 export interface ChildProps {
@@ -39,6 +40,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   const [limitCapacity, setLimitCapacity] = useState(true);
   const [paidTicket, setPaidTicket] = useState(true);
   const [ticketPair, setTicketPair] = useState<TicketType[]>();
+  const [newDescription, setNewDescription] = useState('');
   const getDeepCopy = (obj: any) => JSON.parse(JSON.stringify(obj));
 
   const onNewTicket = async () => {
@@ -137,8 +139,16 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
 
     if (matchingTicket) {
       const changedData: Record<string, any> = Object.entries(selection as Record<string, any>)
-        .filter(([key, value]) => matchingTicket?.[key as keyof EventType] !== value)
+        .filter(
+          ([key, value]) =>
+            matchingTicket?.[key as keyof EventType] !== value && key != 'description',
+        )
         .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
+
+      if (selection?.description != newDescription) {
+        console.log(selection.description, newDescription);
+        changedData['description'] = newDescription;
+      }
 
       if (changedData?.description == '' && matchingTicket?.description == null)
         delete changedData['description'];
@@ -151,44 +161,38 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       editTicket(eventId, selection as TicketType, formData, setTicketData).then(() => {
         setLimitCapacity(true);
         const capacityExists = Object.keys(changedData).includes('capacity');
-        if (capacityExists && changedData?.capacity == null && changedData?.price == 0) {
-          setTicketData((prevTickets) =>
-            prevTickets.map((ticket) =>
-              ticket.id == selection?.id
-                ? ({ ...ticket, capacity: null, price: 0 } as unknown as TicketType)
-                : ticket,
-            ),
-          );
-          setSelectedTicket({ ...selection, capacity: null, price: 0 } as unknown as TicketType);
-          setPaidTicket(false);
-          return;
-        } else if (capacityExists && changedData?.capacity == null) {
-          setTicketData((prevTickets) =>
-            prevTickets.map((ticket) =>
-              ticket.id == selection?.id
-                ? ({ ...ticket, capacity: null } as unknown as TicketType)
-                : ticket,
-            ),
-          );
-          setSelectedTicket({ ...selection, capacity: null } as unknown as TicketType);
-        } else if (changedData?.price == 0) {
-          setTicketData((prevTickets) =>
-            prevTickets.map((ticket) =>
-              ticket.id == selection?.id ? ({ ...ticket, price: 0 } as TicketType) : ticket,
-            ),
-          );
-          setSelectedTicket({ ...selection, price: 0 } as TicketType);
-          setPaidTicket(false);
-        }
+
+        setTicketData((prevTickets) =>
+          prevTickets.map((ticket) =>
+            ticket.id == selection?.id
+              ? ({
+                  ...ticket,
+                  ...(capacityExists && changedData?.capacity == null && { capacity: null }),
+                  ...(changedData?.price == 0 && { price: 0 }),
+                  ...(changedData?.['description'] && { description: newDescription }),
+                } as unknown as TicketType)
+              : ticket,
+          ),
+        );
+        setSelectedTicket({
+          ...selection,
+          ...(capacityExists && changedData?.capacity == null && { capacity: null }),
+          ...(changedData?.price == 0 && { price: 0 }),
+          ...(changedData?.['description'] && { description: newDescription }),
+        } as unknown as TicketType);
+
+        changedData?.price == 0 && setPaidTicket(false);
       });
     }
   };
 
   const hasUnsavedChanges = () => {
     if (selectedTicket?.new) return true;
-    return !isEqual(
-      selectedTicket,
-      ticketData?.find((t) => t.id === selectedTicket?.id),
+    return !(
+      isEqual(
+        selectedTicket,
+        ticketData?.find((t) => t.id === selectedTicket?.id),
+      ) && selectedTicket?.description == newDescription
     );
   };
 
@@ -254,6 +258,8 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       });
     }
   }, [ticketData]);
+
+  console.log(ticketData);
 
   return (
     <>
@@ -353,7 +359,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
               </div>
               <div className={styles.ticketDescriptionContainer}>
                 <label>Description</label>
-                <textarea
+                {/* <textarea
                   className={styles.ticketDescription}
                   placeholder='Ticket Description'
                   value={selectedTicket?.description || ''}
@@ -363,7 +369,14 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                       description: e.target.value,
                     } as TicketType)
                   }
-                />
+                /> */}
+
+                <div className={styles.ticketDescription}>
+                  <Editor
+                    description={selectedTicket?.description}
+                    setNewDescription={setNewDescription}
+                  />
+                </div>
               </div>
 
               <div className={styles.ticketSlider}>
