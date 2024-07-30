@@ -32,7 +32,7 @@ import Modal from '../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
 import Scanner from '../../../components/Scanner/Scanner';
 import EventForm from '../EventPage/components/EventForm/EventForm';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import EditGuest from './components/EditGuest/EditGuest';
 import BulkUpload from './components/BulkUpload/BulkUpload';
 import { RegistrationDataType } from '../Overview/Overview/types';
@@ -49,6 +49,8 @@ const Guests = () => {
   const [currentCategory, setCurrentCategory] = useState<string>();
   const [ticketCode, setTicketCode] = useState<string>('');
   const [showScanner, setShowScanner] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
@@ -96,7 +98,7 @@ const Guests = () => {
       selectedGuestId.type === 'download' &&
       !isArray(selectedGuestId.id)
     )
-      if (selectedGuestId.id) downloadTicket(eventId, selectedGuestId?.id, 'ticketImage');
+      if (selectedGuestId.id) downloadTicket(eventId, selectedGuestId?.id, navigate);
       else toast.error('Ticket download failed');
   }, [selectedGuestId]);
 

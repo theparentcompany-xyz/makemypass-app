@@ -8,6 +8,7 @@ import { isArray } from 'chart.js/helpers';
 import { BulkUploadType } from '../pages/app/Guests/components/BulkUpload/types';
 import { EmailType, VisitedVenues } from '../pages/app/Guests/components/ViewGuest/types';
 import { RegistrationDataType } from '../pages/app/Overview/Overview/types';
+import { NavigateFunction } from 'react-router';
 
 export const resentEventTicket = async (
   ticketData: ResentTicket,
@@ -95,16 +96,16 @@ export const getEditGuestData = async (
     });
 };
 
-export const downloadTicket = async (eventId: string, ticketCode: string, name: string) => {
+export const downloadTicket = async (
+  eventId: string,
+  ticketCode: string,
+  navigate: NavigateFunction,
+) => {
   privateGateway
     .get(makeMyPass.downloadTicket(eventId, ticketCode))
     .then((response) => {
-      toast.success(response.data.message.general[0] || 'Ticket downloaded successfully');
-      const link = document.createElement('a');
-      link.href = response.data.response.image;
-      link.download = `${name}.png`;
-      document.body.appendChild(link);
-      link.click();
+      const eventTitle = JSON.parse(sessionStorage.getItem('eventData')!).event_title;
+      navigate(`/${eventTitle}/ticket?ticketURL=${response.data.response.image}`);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');

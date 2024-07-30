@@ -8,6 +8,7 @@ import { BsDownload } from 'react-icons/bs';
 import ScratchCard from './ScratchCardComponent/ScratchCardComponent';
 import image from './scratchImage.png';
 import { claimRegisterGift } from '../../../../../apis/publicpage';
+import { useNavigate } from 'react-router';
 
 const SuccessModal = ({
   success,
@@ -17,6 +18,7 @@ const SuccessModal = ({
   setSuccess: Dispatch<SetStateAction<SuccessModalProps>>;
 }) => {
   const [scratchCard, setScratchCard] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -77,7 +79,10 @@ const SuccessModal = ({
                         </button>
                         <button
                           onClick={() => {
-                            window.open(success.ticketURL, '_blank');
+                            const eventTitle = JSON.parse(
+                              sessionStorage.getItem('eventData')!,
+                            ).event_title;
+                            navigate(`/${eventTitle}/ticket?ticketURL=${success.ticketURL}`);
                           }}
                           className={styles.downloadTicketButton}
                         >

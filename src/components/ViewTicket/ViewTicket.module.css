@@ -1,0 +1,12 @@
+.ticketDisplayContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.ticketImage {
+  height: 80vh;
+  object-fit: cover;
+  border-radius: 10px;
+}
