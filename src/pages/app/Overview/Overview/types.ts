@@ -47,4 +47,5 @@ export type RegistrationDataType = {
   check_out_date: string | null;
   category: string;
   name: string;
+  coupon_code: string;
 };

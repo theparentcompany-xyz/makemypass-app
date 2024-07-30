@@ -510,7 +510,7 @@ const ViewGuest = ({
                   {selectedGuestData['amount'] && (
                     <p
                       className={styles.invitedByText}
-                    >{`Paid Rs.${selectedGuestData['amount']}`}</p>
+                    >{`Paid Rs.${selectedGuestData['amount']}(${selectedGuestData['coupon_code']})`}</p>
                   )}
                   {selectedGuestData['ticket_count'] && (
                     <p
