@@ -111,8 +111,14 @@ const Login = () => {
           setError,
           isOtpSent,
         );
-      else if (!isOtpSent && emailRef.current?.value)
-        generateOTP(emailRef.current?.value, setIsOtpSent, setIsRegistered, 'Login');
+      else if (!isOtpSent && emailRef.current?.value) {
+        generateOTP(
+          emailRef.current?.value,
+          setIsOtpSent,
+          setIsRegistered,
+          isForgetPassword ? 'Forget Password' : 'Login',
+        );
+      }
     } else {
       if (!isOtpSent && emailRef.current?.value) preRegister(emailRef.current?.value, setIsOtpSent);
       else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
@@ -341,14 +347,23 @@ const Login = () => {
                         });
                         return;
                       }
-                      if (isRegistered)
+                      if (isForgetPassword)
+                        generateOTP(
+                          emailRef.current?.value,
+                          setIsOtpSent,
+                          setIsRegistered,
+                          'Forget Password',
+                        );
+                      else if (isRegistered) {
+                        console.log('Ivade');
+
                         generateOTP(
                           emailRef.current?.value,
                           setIsOtpSent,
                           setIsRegistered,
                           'Login',
                         );
-                      else preRegister(emailRef.current?.value, setIsOtpSent);
+                      } else preRegister(emailRef.current?.value, setIsOtpSent);
 
                       setTimer(120);
                     }}

@@ -81,7 +81,7 @@ const GenericTable = ({
                         ),
                       )}
 
-                      {setNewCouponData && (
+                      {/* {setNewCouponData && (
                         <td className={styles.buttonsContainer}>
                           <SecondaryButton
                             buttonText='Edit'
@@ -103,7 +103,7 @@ const GenericTable = ({
                             );
                           }}
                         />
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
 
