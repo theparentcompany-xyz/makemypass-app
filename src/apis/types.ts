@@ -134,6 +134,7 @@ export interface EventType {
   is_multiple_checkin: boolean;
   is_private: boolean;
   is_team: boolean;
+  is_checkout: boolean;
   approval_required: boolean;
   err_message: ReactNode;
   id: string;

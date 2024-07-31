@@ -60,6 +60,31 @@ export const updateProfile = async (
     });
 };
 
+export const updateProfilePassword = async (
+  { data }: { [k: string]: FormData },
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+  const toastId = toast.loading('Updating Password...');
+  return privateGateway
+    .put(buildVerse.updateProfilePassword, {
+      old_password: data.get('current_password'),
+      new_password: data.get('new_password'),
+    })
+    .then(() => {
+      toast.success('Password Updated Successfully', {
+        id: toastId,
+      });
+    })
+    .catch((error) => {
+      toast.error(error.response?.data?.message?.general[0] || 'Error in Updating Password', {
+        id: toastId,
+      });
+    })
+    .finally(() => {
+      setLoading && setLoading(false);
+    });
+};
+
 export const setUserData = async ({
   formData,
   token,

@@ -24,6 +24,7 @@ import Select from 'react-select';
 
 import './google.css';
 import { AnimatePresence, motion } from 'framer-motion';
+import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
 const libraries: Libraries = ['places'];
 
 const EditEvent = () => {
@@ -588,6 +589,22 @@ const EditEvent = () => {
                           setEventData({
                             ...eventData,
                             is_team: !eventData.is_team,
+                          })
+                        }
+                      />
+                    </div>
+                    <div className={styles.option}>
+                      <label>
+                        <MdOutlineShoppingCartCheckout size={20} color='#949597' /> Enable Checkout
+                        Scan
+                      </label>
+                      <Slider
+                        checked={eventData.is_checkout as boolean}
+                        text={''}
+                        onChange={() =>
+                          setEventData({
+                            ...eventData,
+                            is_checkout: !eventData.is_checkout,
                           })
                         }
                       />
