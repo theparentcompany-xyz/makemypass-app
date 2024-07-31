@@ -155,6 +155,7 @@ const Login = () => {
       passwordRef.current!.value = '';
       generateOTP(emailRef.current?.value, setIsOtpSent, setIsRegistered, 'Forget Password');
       setIsForgetPassword(true);
+      setTimer(120);
     } else if (isForgetPassword && !emailRef.current?.value) {
       setError({
         email: 'Email is required',
