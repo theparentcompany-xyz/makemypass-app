@@ -14,6 +14,7 @@ interface FormProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   description?: string;
   style?: React.CSSProperties;
+  disabled?: boolean;
 }
 
 const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProps }, ref) => {
@@ -35,6 +36,7 @@ const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
         <input
           {...inputProps}
           type={inputProps.type}
+          disabled={inputProps.disabled}
           placeholder={`${inputProps.placeholder}`}
           ref={ref}
           style={{

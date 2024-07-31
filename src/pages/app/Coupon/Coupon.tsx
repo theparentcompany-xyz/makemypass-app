@@ -62,6 +62,7 @@ const Coupon = () => {
     count: 0,
     conditions: [],
     is_private: false,
+    consumed: 0,
   });
   const [couponError, setCouponError] = useState<CreateCouponTypeError>({});
   const [limitDiscountUsage, setLimitDiscountUsage] = useState(newCouponData.count ? true : false);
@@ -162,6 +163,7 @@ const Coupon = () => {
                     value={newCouponData.code}
                     description='Customer must enter this coupon code at checkout'
                     error={couponError.code}
+                    disabled={newCouponData.consumed > 0}
                   />
 
                   <hr className={styles.line} />
@@ -218,6 +220,7 @@ const Coupon = () => {
                         placeholder='Enter Discount Value'
                         icon={<></>}
                         required={true}
+                        disabled={newCouponData.consumed > 0}
                         onChange={(event) => {
                           if (
                             newCouponData.type === 'percentage' &&
@@ -256,6 +259,7 @@ const Coupon = () => {
                           name='colors'
                           className={styles.basicSelect}
                           classNamePrefix='select'
+                          isDisabled={newCouponData.consumed > 0}
                           options={couponTypes}
                           value={couponTypes.find((type) => type.value === newCouponData.type)}
                           onChange={(selectedOption) => {
