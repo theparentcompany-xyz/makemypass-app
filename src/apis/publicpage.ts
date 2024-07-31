@@ -9,7 +9,7 @@ import {
   SuccessModalProps,
   ClaimCodeExceedType,
 } from '../pages/app/EventPage/types';
-import React, { Dispatch } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { ErrorMessages, EventType, FormDataType, RazorpayPaymentDetails } from './types';
 import { convertWebmToWav } from './helpers';
 
@@ -386,11 +386,19 @@ export const sendVerfication = async (contactType: string, contactInfo: string) 
     });
 };
 
-export const claimRegisterGift = async (eventId: string, eventRegisterId: string) => {
+export const claimRegisterGift = async (
+  eventId: string,
+  eventRegisterId: string,
+  setScratchCard: Dispatch<SetStateAction<{ name: string; image: string }>>,
+) => {
   publicGateway
     .post(makeMyPass.claimRegisterGift(eventId, eventRegisterId))
     .then((response) => {
       console.log(response);
+      setScratchCard({
+        name: response.data.response.name,
+        image: response.data.response.image,
+      });
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0]);

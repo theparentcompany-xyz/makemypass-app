@@ -18,7 +18,10 @@ const SuccessModal = ({
   setSuccess: Dispatch<SetStateAction<SuccessModalProps>>;
   hasScratchCard?: boolean;
 }) => {
-  const [scratchCard, setScratchCard] = useState(false);
+  const [scratchCard, setScratchCard] = useState({
+    name: '',
+    image: '',
+  });
   const navigate = useNavigate();
 
   return (
@@ -78,9 +81,13 @@ const SuccessModal = ({
                       <button
                         onClick={() => {
                           setSuccess({ showModal: false });
-                          setScratchCard(true);
+
                           if (success.eventRegisterId)
-                            claimRegisterGift(success.eventId ?? '', success.eventRegisterId);
+                            claimRegisterGift(
+                              success.eventId ?? '',
+                              success.eventRegisterId,
+                              setScratchCard,
+                            );
                         }}
                         className={styles.viewTicketButton}
                       >
@@ -98,33 +105,36 @@ const SuccessModal = ({
           </>
         )}
 
-        {!success.showModal && hasScratchCard && scratchCard && (
-          <Modal
-            title='Scratch Card'
-            onClose={() => {
-              setScratchCard(false);
-            }}
-          >
-            <div className={styles.scratchCardContainer}>
-              <div className={styles.scratchCard}>
-                <p className={styles.modalTitle}>Scratch to Reveal</p>
-                <p className={styles.bookingConfirmedSubText}>
-                  Scratch the card to reveal your discount code
-                </p>
-                <div className={styles.scratchCardImage}></div>
+        {!success.showModal &&
+          hasScratchCard &&
+          (scratchCard.name.length > 0 || scratchCard.image.length > 0) && (
+            <Modal
+              title='Scratch Card'
+              onClose={() => {
+                setScratchCard({ name: '', image: '' });
+              }}
+            >
+              <div className={styles.scratchCardContainer}>
+                <div className={styles.scratchCard}>
+                  <p className={styles.modalTitle}>Scratch to Reveal</p>
+                  <p className={styles.bookingConfirmedSubText}>
+                    Scratch the card to reveal your discount code
+                  </p>
+                  <div className={styles.scratchCardImage}></div>
 
-                <ScratchCard
-                  width={150}
-                  height={150}
-                  coverImage={image}
-                  revealContent='Congratulations! You won!'
-                  brushSize={30}
-                  revealThreshold={70}
-                />
+                  <ScratchCard
+                    width={150}
+                    height={150}
+                    coverImage={image}
+                    revealContent={scratchCard.name}
+                    revealImage={scratchCard.image}
+                    brushSize={30}
+                    revealThreshold={70}
+                  />
+                </div>
               </div>
-            </div>
-          </Modal>
-        )}
+            </Modal>
+          )}
       </motion.div>
     </div>
   );

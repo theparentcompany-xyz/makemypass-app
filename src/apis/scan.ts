@@ -4,6 +4,7 @@ import { makeMyPass } from '../../services/urls';
 import { PreviewData } from './types';
 import { formatDate } from '../common/commonFunctions';
 import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
+import { checkInButtonsType } from '../pages/app/CheckIns/types';
 
 export const checkInUser = async (
   ticketId: string,
@@ -147,5 +148,19 @@ export const checkOutUser = async (
           setMessage('');
           setIsError(false);
         }, 2500);
+    });
+};
+
+export const getCheckInButtons = async (
+  eventId: string,
+  setCheckInButtons: React.Dispatch<React.SetStateAction<checkInButtonsType>>,
+) => {
+  privateGateway
+    .get(makeMyPass.checkInButtons(eventId))
+    .then((response) => {
+      setCheckInButtons(response.data.response);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Error in Fetching Check-In Buttons');
     });
 };

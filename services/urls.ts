@@ -24,6 +24,7 @@ export const makeMyPass = {
   // Guest and Ticket Management
   ///scan-guest/eventId/checkin
   checkInUser: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkin`),
+  checkInButtons: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkin-buttons/`),
   checkOutUser: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkout`),
   checkInUserVenue: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/venue-checkin/`),
   listVenues: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/list-venue/`),
