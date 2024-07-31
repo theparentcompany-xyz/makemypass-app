@@ -189,4 +189,5 @@ export const buildVerse = {
   setUserData: (token: string) => buildVerseURL(`/set-user-data/${token}`),
   googleLogin: buildVerseURL('/google-login/'),
   resetPassword: buildVerseURL('/reset-password/'),
+  updateProfilePassword: buildVerseURL('/profile/change-password/'),
 };
