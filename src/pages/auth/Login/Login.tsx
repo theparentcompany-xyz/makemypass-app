@@ -313,6 +313,7 @@ const Login = () => {
                       setIsPassword(true);
                       setIsRegistered(true);
                       setIsLoginWithOtp(false);
+                      isForgetPassword && setIsForgetPassword(false);
                     } else {
                       setIsOtpSent(false);
                       setIsPassword(false);
