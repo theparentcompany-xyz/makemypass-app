@@ -13,9 +13,11 @@ import { useNavigate } from 'react-router';
 const SuccessModal = ({
   success,
   setSuccess,
+  hasScratchCard,
 }: {
   success: SuccessModalProps;
   setSuccess: Dispatch<SetStateAction<SuccessModalProps>>;
+  hasScratchCard?: boolean;
 }) => {
   const [scratchCard, setScratchCard] = useState(false);
   const navigate = useNavigate();
@@ -54,29 +56,6 @@ const SuccessModal = ({
 
                     {success.ticketURL && import.meta.env.VITE_CURRENT_ENV === 'dev' && (
                       <>
-                        <button
-                          onClick={() => {
-                            if (success.ticketURL) {
-                              fetch(success.ticketURL, {
-                                headers: {
-                                  'Access-Control-Allow-Origin': '*',
-                                  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-                                  'Access-Control-Allow-Headers': 'Content-Type',
-                                },
-                              })
-                                .then((response) => response.blob())
-                                .then((blob) => {
-                                  console.log(blob);
-                                })
-                                .catch((error) =>
-                                  console.error('Error downloading the ticket:', error),
-                                );
-                            }
-                          }}
-                          className={styles.downloadTicketButton}
-                        >
-                          <BsDownload /> <span>Download Ticket</span>
-                        </button>
                         <button
                           onClick={() => {
                             const eventTitle = JSON.parse(
@@ -118,7 +97,7 @@ const SuccessModal = ({
           </>
         )}
 
-        {!success.showModal && scratchCard && (
+        {!success.showModal && hasScratchCard && scratchCard && (
           <Modal
             title='Scratch Card'
             onClose={() => {

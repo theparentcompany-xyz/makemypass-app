@@ -161,6 +161,7 @@ export interface EventType {
   select_multi_ticket?: boolean;
   is_sub_event: boolean;
   status: string;
+  is_scratch_card: boolean;
   speakers?: {
     name: string;
     image: string;
