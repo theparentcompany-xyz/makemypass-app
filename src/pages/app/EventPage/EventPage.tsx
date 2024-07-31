@@ -79,7 +79,11 @@ const EventPage = () => {
         />
       </Helmet>
       <Theme type='eventForm'>
-        <SuccessModal success={success} setSuccess={setSuccess} />
+        <SuccessModal
+          success={success}
+          setSuccess={setSuccess}
+          hasScratchCard={eventData?.is_scratch_card}
+        />
 
         {eventData?.err_message && (
           <div>

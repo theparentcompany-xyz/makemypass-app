@@ -4,7 +4,6 @@ import Modal from '../../../../../components/Modal/Modal';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { SuccessModalProps } from '../../types';
 import { HashLoader } from 'react-spinners';
-import { BsDownload } from 'react-icons/bs';
 import ScratchCard from './ScratchCardComponent/ScratchCardComponent';
 import image from './scratchImage.png';
 import { claimRegisterGift } from '../../../../../apis/publicpage';
@@ -13,9 +12,11 @@ import { useNavigate } from 'react-router';
 const SuccessModal = ({
   success,
   setSuccess,
+  hasScratchCard,
 }: {
   success: SuccessModalProps;
   setSuccess: Dispatch<SetStateAction<SuccessModalProps>>;
+  hasScratchCard?: boolean;
 }) => {
   const [scratchCard, setScratchCard] = useState(false);
   const navigate = useNavigate();
@@ -56,29 +57,6 @@ const SuccessModal = ({
                       <>
                         <button
                           onClick={() => {
-                            if (success.ticketURL) {
-                              fetch(success.ticketURL, {
-                                headers: {
-                                  'Access-Control-Allow-Origin': '*',
-                                  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-                                  'Access-Control-Allow-Headers': 'Content-Type',
-                                },
-                              })
-                                .then((response) => response.blob())
-                                .then((blob) => {
-                                  console.log(blob);
-                                })
-                                .catch((error) =>
-                                  console.error('Error downloading the ticket:', error),
-                                );
-                            }
-                          }}
-                          className={styles.downloadTicketButton}
-                        >
-                          <BsDownload /> <span>Download Ticket</span>
-                        </button>
-                        <button
-                          onClick={() => {
                             const eventTitle = JSON.parse(
                               sessionStorage.getItem('eventData')!,
                             ).event_title;
@@ -96,17 +74,19 @@ const SuccessModal = ({
                       hello@makemypass.com
                     </p>
 
-                    <button
-                      onClick={() => {
-                        setSuccess({ showModal: false });
-                        setScratchCard(true);
-                        if (success.eventRegisterId)
-                          claimRegisterGift(success.eventId ?? '', success.eventRegisterId);
-                      }}
-                      className={styles.viewTicketButton}
-                    >
-                      Next
-                    </button>
+                    {hasScratchCard && (
+                      <button
+                        onClick={() => {
+                          setSuccess({ showModal: false });
+                          setScratchCard(true);
+                          if (success.eventRegisterId)
+                            claimRegisterGift(success.eventId ?? '', success.eventRegisterId);
+                        }}
+                        className={styles.viewTicketButton}
+                      >
+                        Next
+                      </button>
+                    )}
                   </div>
                 ) : (
                   <div className={styles.loaderContainer}>
@@ -118,7 +98,7 @@ const SuccessModal = ({
           </>
         )}
 
-        {!success.showModal && scratchCard && (
+        {!success.showModal && hasScratchCard && scratchCard && (
           <Modal
             title='Scratch Card'
             onClose={() => {
