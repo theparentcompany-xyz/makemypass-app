@@ -66,10 +66,18 @@ export const updateProfilePassword = async (
 ) => {
   const toastId = toast.loading('Updating Password...');
   return privateGateway
-    .put(buildVerse.updateProfilePassword, {
-      old_password: data.get('current_password'),
-      new_password: data.get('new_password'),
-    })
+    .post(
+      buildVerse.updateProfilePassword,
+      {
+        old_password: data.get('current_password'),
+        new_password: data.get('new_password'),
+      },
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    )
     .then(() => {
       toast.success('Password Updated Successfully', {
         id: toastId,
