@@ -74,17 +74,19 @@ const SuccessModal = ({
                       hello@makemypass.com
                     </p>
 
-                    <button
-                      onClick={() => {
-                        setSuccess({ showModal: false });
-                        setScratchCard(true);
-                        if (success.eventRegisterId)
-                          claimRegisterGift(success.eventId ?? '', success.eventRegisterId);
-                      }}
-                      className={styles.viewTicketButton}
-                    >
-                      Next
-                    </button>
+                    {hasScratchCard && (
+                      <button
+                        onClick={() => {
+                          setSuccess({ showModal: false });
+                          setScratchCard(true);
+                          if (success.eventRegisterId)
+                            claimRegisterGift(success.eventId ?? '', success.eventRegisterId);
+                        }}
+                        className={styles.viewTicketButton}
+                      >
+                        Next
+                      </button>
+                    )}
                   </div>
                 ) : (
                   <div className={styles.loaderContainer}>
