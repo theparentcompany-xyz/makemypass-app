@@ -14,6 +14,7 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
   height,
   coverImage,
   revealContent,
+  revealImage,
   brushSize = 20,
   revealThreshold = 50,
 }) => {
@@ -92,31 +93,39 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
   return (
     <div style={{ position: 'relative', width, height }}>
       {isRevealed ? (
-        typeof revealContent === 'string' ? (
-          <div
-            style={{
-              width,
-              height,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {revealContent}
-          </div>
-        ) : (
-          revealContent
-        )
+        <>
+          {revealImage && (
+            <img
+              src={revealImage}
+              alt='Reveal Image'
+              style={{ position: 'absolute', top: 0, left: 0, width, height }}
+            />
+          )}
+          <div style={{ width, height }}>{revealContent}</div>
+        </>
       ) : (
-        <canvas
-          ref={canvasRef}
-          width={width}
-          height={height}
-          onMouseDown={handleStartDrawing}
-          onMouseMove={draw}
-          onMouseUp={handleStopDrawing}
-          onMouseLeave={handleStopDrawing}
-        />
+        <>
+          <canvas
+            ref={canvasRef}
+            width={width}
+            height={height}
+            onMouseDown={handleStartDrawing}
+            onMouseMove={draw}
+            onMouseUp={handleStopDrawing}
+            onMouseLeave={handleStopDrawing}
+            style={{
+              zIndex: 1,
+              position: 'relative',
+            }}
+          />
+          {revealImage && (
+            <img
+              src={revealImage}
+              alt='Reveal Image'
+              style={{ position: 'absolute', top: 0, left: 0, width, height, zIndex: 0 }}
+            />
+          )}
+        </>
       )}
     </div>
   );
