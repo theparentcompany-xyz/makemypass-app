@@ -4,7 +4,6 @@ import Modal from '../../../../../components/Modal/Modal';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { SuccessModalProps } from '../../types';
 import { HashLoader } from 'react-spinners';
-import { BsDownload } from 'react-icons/bs';
 import ScratchCard from './ScratchCardComponent/ScratchCardComponent';
 import image from './scratchImage.png';
 import { claimRegisterGift } from '../../../../../apis/publicpage';
