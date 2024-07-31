@@ -4,6 +4,7 @@ interface ScratchCardProps {
   width: number;
   height: number;
   coverImage: string;
+  revealImage?: string;
   revealContent: string | React.ReactNode;
   brushSize?: number;
   revealThreshold?: number;

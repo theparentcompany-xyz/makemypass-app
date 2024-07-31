@@ -7,10 +7,17 @@ import SectionButton from '../../../components/SectionButton/SectionButton';
 import { BsQrCodeScan } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { FaShop } from 'react-icons/fa6';
-// import { IoGiftSharp } from 'react-icons/io5';
-// import { SiNextra } from 'react-icons/si';
+import { useEffect, useState } from 'react';
+import { getCheckInButtons } from '../../../apis/scan';
+import { checkInButtonsType } from './types';
 
 const CheckIns = () => {
+  const [checkInsButtons, setCheckInsButtons] = useState<checkInButtonsType>();
+  const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
+  useEffect(() => {
+    getCheckInButtons(eventId, setCheckInsButtons);
+  }, []);
+
   return (
     <Theme>
       <div className={styles.checkInsContainer}>
@@ -21,27 +28,33 @@ const CheckIns = () => {
           <hr className={styles.line} />
           <div className={styles.buttons}>
             <div className='row'>
-              <Link to='checkin/scan'>
-                <SectionButton
-                  buttonText='Check-In User'
-                  buttonColor='#C33D7B'
-                  icon={<BsQrCodeScan size={25} color='#5B75FB' />}
-                />
-              </Link>
-              <Link to='checkin/venue'>
-                <SectionButton
-                  buttonText='Venue Check-In'
-                  buttonColor='#C33D7B'
-                  icon={<FaShop size={25} color='#5B75FB' />}
-                />
-              </Link>
-              <Link to='checkin/checkout'>
-                <SectionButton
-                  buttonText='Check-Out User'
-                  buttonColor='#C33D7B'
-                  icon={<BsQrCodeScan size={25} color='#5B75FB' />}
-                />
-              </Link>
+              {checkInsButtons?.checkin && (
+                <Link to='checkin/scan'>
+                  <SectionButton
+                    buttonText='Check-In User'
+                    buttonColor='#C33D7B'
+                    icon={<BsQrCodeScan size={25} color='#5B75FB' />}
+                  />
+                </Link>
+              )}
+              {checkInsButtons?.venues && (
+                <Link to='checkin/venue'>
+                  <SectionButton
+                    buttonText='Venue Check-In'
+                    buttonColor='#C33D7B'
+                    icon={<FaShop size={25} color='#5B75FB' />}
+                  />
+                </Link>
+              )}
+              {checkInsButtons?.checkout && (
+                <Link to='checkin/checkout'>
+                  <SectionButton
+                    buttonText='Check-Out User'
+                    buttonColor='#C33D7B'
+                    icon={<BsQrCodeScan size={25} color='#5B75FB' />}
+                  />
+                </Link>
+              )}
               {/* <Link to='claimgifts'>
                 <SectionButton
                   buttonText='Claim Gifts'

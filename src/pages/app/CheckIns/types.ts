@@ -8,3 +8,10 @@ export type tableType = {
   category: string;
   organization: string;
 };
+
+export type checkInButtonsType = {
+  checkin: boolean;
+  checkout: boolean;
+  venues: boolean;
+  gift: boolean;
+};
