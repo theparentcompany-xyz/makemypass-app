@@ -36,6 +36,7 @@ import SetProfilePage from './pages/app/SetProfilePage/SetProfilePage';
 
 import { Roles } from '../services/enums';
 import ViewTicket from './components/ViewTicket/ViewTicket';
+import Gifts from './pages/app/Gifts/Gifts';
 
 // import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 // import SpinWheel from './pages/app/SpinWheel/SpinWheel';
@@ -136,6 +137,12 @@ const routes = [
         path: '/:eventTitle/checkins/checkin/scan',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]} children={<ScanQR />} />
+        ),
+      },
+      {
+        path: '/:eventTitle/checkins/checkin/gifts',
+        element: (
+          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]} children={<Gifts />} />
         ),
       },
       {

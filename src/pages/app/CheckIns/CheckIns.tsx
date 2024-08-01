@@ -4,7 +4,7 @@ import Header from '../../../components/EventHeader/EventHeader';
 import styles from './CheckIns.module.css';
 
 import SectionButton from '../../../components/SectionButton/SectionButton';
-import { BsQrCodeScan } from 'react-icons/bs';
+import { BsGift, BsQrCodeScan } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { FaShop } from 'react-icons/fa6';
 import { useEffect, useState } from 'react';
@@ -52,6 +52,15 @@ const CheckIns = () => {
                     buttonText='Check-Out User'
                     buttonColor='#C33D7B'
                     icon={<BsQrCodeScan size={25} color='#5B75FB' />}
+                  />
+                </Link>
+              )}
+              {checkInsButtons?.gift && (
+                <Link to='checkin/gifts'>
+                  <SectionButton
+                    buttonText='Gifts'
+                    buttonColor='#C33D7B'
+                    icon={<BsGift size={25} color='#5B75FB' />}
                   />
                 </Link>
               )}
