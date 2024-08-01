@@ -28,12 +28,13 @@ export const makeMyPass = {
   checkOutUser: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkout`),
   checkInUserVenue: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/venue-checkin/`),
   listVenues: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/list-venue/`),
+  listUserGifts: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/list-user-gifts/`),
+  claimUserGift: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/claim-gift/`), //Scratch Card
+
   listVisitedVenues: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/visited-venues/`),
-
   getMailLog: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/mail-log/`),
-
   getAllMailLog: (eventId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/guest-info/all-mail-log/`),
 

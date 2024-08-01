@@ -153,7 +153,7 @@ export const checkOutUser = async (
 
 export const getCheckInButtons = async (
   eventId: string,
-  setCheckInButtons: React.Dispatch<React.SetStateAction<checkInButtonsType>>,
+  setCheckInButtons: React.Dispatch<React.SetStateAction<checkInButtonsType | undefined>>,
 ) => {
   privateGateway
     .get(makeMyPass.checkInButtons(eventId))
