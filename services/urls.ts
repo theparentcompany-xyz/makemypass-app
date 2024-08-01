@@ -20,6 +20,8 @@ export const makeMyPass = {
   duplicateEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/duplicate-event/`),
   getAnalyticsVisibility: (eventId: string) =>
     makeMyPassURL(`/analytics/${eventId}/get-analytics-visibility/`),
+  getPaymentAnalytics: (eventId: string) =>
+    makeMyPassURL(`/analytics/${eventId}/payment-analytics/`),
 
   // Guest and Ticket Management
   ///scan-guest/eventId/checkin
