@@ -38,35 +38,38 @@ export const editTicket = async (
   changedData: Record<string, any>,
   setTickets: React.Dispatch<React.SetStateAction<TicketType[]>>,
 ) => {
-  privateGateway
-    .patch(makeMyPass.editTicket(eventId, selectedTicket?.id), changedData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
+  try {
+    const response = await privateGateway.patch(
+      makeMyPass.editTicket(eventId, selectedTicket?.id),
+      changedData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       },
-    })
-    .then((response) => {
-      // window.location.reload();
+    );
 
-      if (changedData.default_selected === true) {
-        setTickets((prev) =>
-          prev.map((t) =>
-            t.id === selectedTicket.id
-              ? changedData.default_selected === true
-                ? { ...selectedTicket, default_selected: true }
-                : selectedTicket
-              : { ...t, default_selected: false },
-          ),
-        );
-      } else {
-        setTickets((prev) => prev.map((t) => (t.id === selectedTicket.id ? selectedTicket : t)));
-      }
-      changedData.default_selected === true
-        ? toast.success(response?.data?.message?.general[0] || 'Default Ticket Changed')
-        : toast.success(response?.data?.message?.general[0] || 'Ticket Updated Successfully');
-    })
-    .catch((error) => {
-      toast.error(error?.response?.data?.message?.general[0] || 'Unable to process the request');
-    });
+    // window.location.reload();
+
+    if (changedData.default_selected === true) {
+      setTickets((prev) =>
+        prev.map((t) =>
+          t.id === selectedTicket.id
+            ? changedData.default_selected === true
+              ? { ...selectedTicket, default_selected: true }
+              : selectedTicket
+            : { ...t, default_selected: false },
+        ),
+      );
+    } else {
+      setTickets((prev) => prev.map((t) => (t.id === selectedTicket.id ? selectedTicket : t)));
+    }
+    changedData.default_selected === true
+      ? toast.success(response?.data?.message?.general[0] || 'Default Ticket Changed')
+      : toast.success(response?.data?.message?.general[0] || 'Ticket Updated Successfully');
+  } catch (error: any) {
+    toast.error(error?.response?.data?.message?.general[0] || 'Unable to process the request');
+  }
 };
 
 export const deleteTicket = async (
