@@ -164,6 +164,10 @@ const Glance = ({
       title: 'Feedback',
       roles: [Roles.ADMIN, Roles.OWNER],
     };
+    tabs['payment-analytics'] = {
+      title: 'Payments Logs',
+      roles: [Roles.ADMIN, Roles.OWNER],
+    };
   }
 
   const userRoles = eventData.current_user_role;

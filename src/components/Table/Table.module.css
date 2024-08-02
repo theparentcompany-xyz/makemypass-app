@@ -140,6 +140,8 @@ td {
   opacity: 0.5;
   font-size: 0.9rem;
   margin-top: 1rem;
+  max-width: 5rem;
+  overflow: hidden;
 }
 
 th {
@@ -153,4 +155,7 @@ th {
   font-weight: 600;
 }
 
+.tableRow {
+  margin-bottom: 1rem;
+}
 /* Path: src/components/Table/Table.js */

@@ -1,3 +1,4 @@
+import { isDate } from 'lodash';
 import { deleteCoupon } from '../../apis/coupons';
 import { formatDate } from '../../common/commonFunctions';
 import CouponType, { CreateCouponType } from '../../pages/app/Coupon/types';
@@ -54,31 +55,45 @@ const GenericTable = ({
             <table className={styles.table} cellSpacing={10}>
               <thead>
                 <tr>
-                  {formattedKeys.map((key) =>
-                    key.includes('Id') || key.includes('id') ? null : (
-                      <th className={styles.rowName}>{key}</th>
-                    ),
+                  {formattedKeys.map(
+                    (key) => !key.includes('Id') && <th className={styles.rowName}>{key}</th>,
                   )}
                 </tr>
               </thead>
               <tbody>
-                {tableData?.length > 0 &&
+                {tableData?.length > 0 ? (
                   tableData.map((data) => (
                     <tr key={data.name} className={styles.tableRow}>
-                      {Object.keys(data).map((key) =>
-                        key.includes('id') || key.includes('Id') ? null : (
-                          <>
-                            {typeof data[key] === 'string' && key.includes('at') ? (
-                              <td className={styles.rowName}>{formatDate(data[key])}</td>
-                            ) : typeof data[key] === 'boolean' ? (
-                              <td className={`${styles.rowName} ${styles.rowType}`}>
-                                {data[key] ? 'Active' : 'Inactive'}
-                              </td>
-                            ) : (
-                              <td className={styles.rowName}>{data[key] ?? 0}</td>
-                            )}
-                          </>
-                        ),
+                      {Object.keys(data).map(
+                        (key) =>
+                          !key.includes('id') && (
+                            <>
+                              {isDate(data[key]) ? (
+                                <td className={styles.rowName}>
+                                  {formatDate(data[key].toString())}
+                                </td>
+                              ) : typeof data[key] === 'boolean' ? (
+                                <td
+                                  className={`${styles.rowName} ${styles.rowType}`}
+                                  style={
+                                    data[key]
+                                      ? {
+                                          backgroundColor: 'rgba(7, 164, 96, 0.13)',
+                                          color: 'rgb(71, 201, 126)',
+                                        }
+                                      : {
+                                          backgroundColor: 'rgba(195, 61, 123, 0.13)',
+                                          color: 'rgb(195, 61, 123)',
+                                        }
+                                  }
+                                >
+                                  {data[key] ? 'Yes' : 'No'}
+                                </td>
+                              ) : (
+                                <td className={styles.rowName}>{data[key] ?? 0}</td>
+                              )}
+                            </>
+                          ),
                       )}
 
                       {setNewCouponData && (
@@ -107,9 +122,8 @@ const GenericTable = ({
                         </td>
                       )}
                     </tr>
-                  ))}
-
-                {tableData?.length == 0 && (
+                  ))
+                ) : (
                   <tr className={styles.tableRow}>
                     <td className={styles.rowName}>No Data Yet</td>
                   </tr>
