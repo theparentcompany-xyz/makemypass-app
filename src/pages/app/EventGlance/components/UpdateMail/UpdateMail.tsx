@@ -32,7 +32,9 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
     if (attachments.length > 0) {
       changedData['attachment'] = attachments[0];
     }
-    updateMail(eventId, mailData as MailType, changedData, setMails, setFetchedMail);
+    updateMail(eventId, mailData as MailType, changedData, setMails, setFetchedMail).then(() => {
+      setSelectedMail(undefined);
+    });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
