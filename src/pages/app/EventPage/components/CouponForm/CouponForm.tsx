@@ -253,7 +253,10 @@ const CouponForm = ({
               <div>
                 <div className={styles.passText}>
                   <p className={styles.ticketTypeTitle}>{filteredTicket.title?.toUpperCase()}</p>
-                  <p className={styles.ticketTypeDescription}>{filteredTicket.description}</p>
+                  <p
+                    className={styles.ticketTypeDescription}
+                    dangerouslySetInnerHTML={{ __html: filteredTicket.description }}
+                  ></p>
                   <div className={styles.perks}>
                     {Object.keys(filteredTicket.perks)?.map((perk) => (
                       <div key={perk} className={styles.perk}>
