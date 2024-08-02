@@ -357,8 +357,6 @@ const Login = () => {
                           'Forget Password',
                         );
                       else if (isRegistered) {
-                        console.log('Ivade');
-
                         generateOTP(
                           emailRef.current?.value,
                           setIsOtpSent,

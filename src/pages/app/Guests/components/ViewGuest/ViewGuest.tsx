@@ -515,12 +515,12 @@ const ViewGuest = ({
                   {selectedGuestData['ticket_count'] && (
                     <p
                       className={styles.invitedByText}
-                    >{` for ${selectedGuestData['ticket_count']} tickets.`}</p>
+                    >{` for ${selectedGuestData['ticket_count']} tickets`}</p>
                   )}
                   {selectedGuestData['extra_ticket'] > 0 && (
                     <p
                       className={styles.invitedByText}
-                    >{` with ${selectedGuestData['extra_ticket']} extra tickets.`}</p>
+                    >{` & ${selectedGuestData['extra_ticket']} extra tickets.`}</p>
                   )}
                   {selectedGuestData['coupon_code'] && (
                     <p

@@ -14,7 +14,6 @@ const CreateEvent = () => {
 
   return (
     <Theme>
-      aaa
       <div className={styles.createEventContainer}>
         <div className={styles.inputContainer}>
           <h1 className={styles.heading}>Create Event</h1>

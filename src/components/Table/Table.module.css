@@ -39,6 +39,7 @@
   padding: 1rem;
 
   /* width: 51.875rem; */
+  max-height: 60vh;
   overflow: auto;
 }
 
@@ -140,6 +141,7 @@ td {
   opacity: 0.5;
   font-size: 0.9rem;
   margin-top: 1rem;
+  overflow: hidden;
 }
 
 th {
@@ -153,4 +155,7 @@ th {
   font-weight: 600;
 }
 
+.tableRow {
+  margin-bottom: 2rem;
+}
 /* Path: src/components/Table/Table.js */
