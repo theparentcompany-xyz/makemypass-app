@@ -220,7 +220,6 @@ const Guests = () => {
           formData={selectedGuest?.submission}
           setFormData={setFormData}
           eventFormData={eventFormData}
-          selectedGuestId={selectedGuestId}
           setSelectedGuestId={setSelectedGuestId}
           eventId={eventId}
           onClose={onClose}
