@@ -249,7 +249,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
+  white-space: wrap;
+  word-break: break-all;
   margin: 0rem;
   margin-bottom: -1rem;
   font-size: 0.9rem;

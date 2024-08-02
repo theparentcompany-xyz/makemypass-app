@@ -43,6 +43,7 @@ export type RegistrationDataType = {
   is_approved: boolean;
   entry_date: string | null;
   invited_by: string;
+  extra_ticket: number;
   is_checked_in: boolean;
   check_out_date: string | null;
   category: string;

@@ -517,6 +517,11 @@ const ViewGuest = ({
                       className={styles.invitedByText}
                     >{` for ${selectedGuestData['ticket_count']} tickets.`}</p>
                   )}
+                  {selectedGuestData['extra_ticket'] > 0 && (
+                    <p
+                      className={styles.invitedByText}
+                    >{` with ${selectedGuestData['extra_ticket']} extra tickets.`}</p>
+                  )}
                   {selectedGuestData['coupon_code'] && (
                     <p
                       className={styles.invitedByText}
