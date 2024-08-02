@@ -148,8 +148,6 @@ const Coupon = () => {
                 }}
               >
                 <div className={styles.couponCodeInput}>
-                  <p className={styles.fieldHeader}>Amount off Ticket</p>
-
                   <InputField
                     type='text'
                     name='Coupon Code'
@@ -359,7 +357,7 @@ const Coupon = () => {
                           is_active: !newCouponData.is_private,
                         });
                       }}
-                      text='Activate Ticket'
+                      text='Activate Coupon'
                     />
                     {
                       <p className={styles.error}>

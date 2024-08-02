@@ -203,45 +203,42 @@ const CouponForm = ({
               }
             >
               {eventFormData?.select_multi_ticket && (
-                <>
-                  <div className={styles.ticketCountContainer}>
-                    <div className='row' style={{ columnGap: 0 }}>
-                      <button
-                        className={styles.ticketCountUpdateButton}
-                        onClick={() => {
-                          filteredTicket.capacity && filteredTicket.capacity <= 0
-                            ? ticketSoldAlert()
-                            : updateTicketCount(filteredTicket.id, false);
-                        }}
-                      >
-                        -
-                      </button>
-                      <p className={styles.ticketCount}>
-                        {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count ??
-                          0}
-                      </p>
-                      <button
-                        className={styles.ticketCountUpdateButton}
-                        onClick={() => {
-                          const currentTicketCount = tickets.find(
-                            (ticket) => ticket.ticket_id === filteredTicket.id,
-                          )?.count;
+                <div className={styles.ticketCountContainer}>
+                  <div className='row' style={{ columnGap: 0 }}>
+                    <button
+                      className={styles.ticketCountUpdateButton}
+                      onClick={() => {
+                        filteredTicket.capacity && filteredTicket.capacity <= 0
+                          ? ticketSoldAlert()
+                          : updateTicketCount(filteredTicket.id, false);
+                      }}
+                    >
+                      -
+                    </button>
+                    <p className={styles.ticketCount}>
+                      {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count ?? 0}
+                    </p>
+                    <button
+                      className={styles.ticketCountUpdateButton}
+                      onClick={() => {
+                        const currentTicketCount = tickets.find(
+                          (ticket) => ticket.ticket_id === filteredTicket.id,
+                        )?.count;
 
-                          if (
-                            currentTicketCount === filteredTicket.capacity ||
-                            (filteredTicket.capacity != null && filteredTicket.capacity <= 0)
-                          ) {
-                            toast.error('Ticket limit reached');
-                            return;
-                          }
-                          updateTicketCount(filteredTicket.id, true);
-                        }}
-                      >
-                        +
-                      </button>
-                    </div>
+                        if (
+                          currentTicketCount === filteredTicket.capacity ||
+                          (filteredTicket.capacity != null && filteredTicket.capacity <= 0)
+                        ) {
+                          toast.error('Ticket limit reached');
+                          return;
+                        }
+                        updateTicketCount(filteredTicket.id, true);
+                      }}
+                    >
+                      +
+                    </button>
                   </div>
-                </>
+                </div>
               )}
 
               {filteredTicket.capacity && filteredTicket.capacity >= 0 && (

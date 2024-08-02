@@ -2,6 +2,8 @@
   width: 100%;
   margin: auto;
   position: relative;
+
+  min-width: 20rem;
 }
 
 .ticketTypesTitle {
@@ -42,7 +44,7 @@
 }
 
 .ticketTypeTitle {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #4eff99;
   line-height: 1.75rem;

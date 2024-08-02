@@ -85,7 +85,7 @@ export const addGuest = (
     })
     .then((response) => {
       if (response.data.response.gateway_type) {
-        toast.success('Complete Payment to add guest');
+        toast.success('Complete Payment to Invite Guest');
         const paymentId: string = response.data.response.id;
         const paymentAmount: string = response.data.response.amount;
         type RazorpayPaymentDetails = PaymentDetails<'razorpay'>;
