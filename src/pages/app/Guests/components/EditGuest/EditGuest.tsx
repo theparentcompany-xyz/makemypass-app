@@ -17,8 +17,6 @@ const EditGuest = ({
   formData: any;
   setFormData: Dispatch<SetStateAction<FormDataType>>;
   eventFormData: FormEventData;
-
-  selectedGuestId: SelectedGuest;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;
   onClose: () => void;

@@ -60,6 +60,8 @@ export const editSubmissons = async (
     }
   });
 
+  console.log(data);
+
   if (data && !isArray(data.id) && typeof data.id === 'string')
     privateGateway
       .put(makeMyPass.editSubmission(eventId, data.id), backendFormData, {
