@@ -146,7 +146,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
 
       if (selection?.description != newDescription) {
-        console.log(selection.description, newDescription);
         changedData['description'] = newDescription;
       }
 
@@ -258,8 +257,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       });
     }
   }, [ticketData]);
-
-  console.log(ticketData);
 
   return (
     <>

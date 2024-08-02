@@ -113,11 +113,10 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                   </div>
                   <div className={styles.eventDateTimeText}>
                     <p className={styles.eventDateText}>
-                      {' '}
-                      {eventData?.place.substring(0, eventData.place.indexOf(' , '))}
+                      {eventData?.place?.substring(0, eventData.place.indexOf(' , '))}
                     </p>
                     <p className={styles.eventTimeText}>
-                      {eventData?.place.substring(eventData.place.indexOf(' , ') + 2)}
+                      {eventData?.place?.substring(eventData.place.indexOf(' , ') + 2)}
                     </p>
                   </div>
                 </div>
@@ -202,10 +201,10 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
               <div className={styles.eventDateTimeText}>
                 <p className={styles.eventDateText}>
                   {' '}
-                  {eventData?.place.substring(0, eventData.place.indexOf(' , '))}
+                  {eventData?.place?.substring(0, eventData.place.indexOf(' , '))}
                 </p>
                 <p className={styles.eventTimeText}>
-                  {eventData?.place.substring(eventData.place.indexOf(' , ') + 2)}
+                  {eventData?.place?.substring(eventData.place.indexOf(' , ') + 2)}
                 </p>
               </div>
             </div>

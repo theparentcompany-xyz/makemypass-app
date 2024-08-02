@@ -399,7 +399,6 @@ export const claimRegisterGift = async (
   publicGateway
     .post(makeMyPass.claimRegisterGift(eventId, eventRegisterId))
     .then((response) => {
-      console.log(response);
       setScratchCard({
         name: response.data.response.name,
         image: response.data.response.image,

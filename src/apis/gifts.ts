@@ -18,9 +18,6 @@ export const getUserGitfs = async (
         claimedGifts: response.data.response.claimed_gifts,
         unclaimedGifts: response.data.response.unclaimed_gifts,
       });
-    })
-    .catch((err) => {
-      console.log(err);
     });
 };
 

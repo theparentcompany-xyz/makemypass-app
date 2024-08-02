@@ -105,11 +105,9 @@ const Overview = () => {
             setRecentRegistrations(JSON.parse(event.data).response);
           else if (JSON.parse(event.data).response.data) {
             const newRegistration = JSON.parse(event.data).response.data;
-            console.log(newRegistration);
 
             setRecentRegistrations((prev) => {
               const updatedRegistrations = [newRegistration, ...prev];
-              console.log(updatedRegistrations);
 
               updatedRegistrations.pop();
               return updatedRegistrations;

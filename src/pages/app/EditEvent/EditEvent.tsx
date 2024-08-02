@@ -156,7 +156,7 @@ const EditEvent = () => {
         sessionStorage.clear();
       }
     }
-    console.log(formData.forEach((value, key) => console.log(key, value)));
+
     editEvent({ eventId, eventData: formData, setFormErrors });
   };
 

@@ -63,7 +63,6 @@ const ProfilePage = () => {
   const handleUpdateProfile = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-    console.log(formData.forEach((value, key) => console.log(key, value)));
     if (token) {
       setUserData({ formData, token, setLoading });
     } else {

@@ -12,6 +12,9 @@ const PaymentAnalytics = () => {
   useEffect(() => {
     getPaymentAnalytics(eventId, setPaymentAnalyticsList);
   }, []);
+
+  useEffect;
+
   return (
     <>
       <Theme>

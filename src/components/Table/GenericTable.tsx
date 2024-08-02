@@ -52,7 +52,7 @@ const GenericTable = ({
 
         <div className={styles.tableContainer}>
           <AnimatePresence>
-            <table className={styles.table} cellSpacing={10}>
+            <table className={styles.table} cellSpacing={15}>
               <thead>
                 <tr>
                   {formattedKeys.map(

@@ -7,13 +7,7 @@ export const getPaymentAnalytics = async (
   event_id: string,
   setPaymentAnalyticsList: Dispatch<SetStateAction<PaymentAnalyticsType[]>>,
 ) => {
-  privateGateway
-    .get(makeMyPass.getPaymentAnalytics(event_id))
-    .then((response) => {
-      console.log(response.data);
-      setPaymentAnalyticsList(response.data.response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  privateGateway.get(makeMyPass.getPaymentAnalytics(event_id)).then((response) => {
+    setPaymentAnalyticsList(response.data.response);
+  });
 };
