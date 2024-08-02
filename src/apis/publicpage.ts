@@ -176,6 +176,14 @@ export const submitForm = async ({
             loading: false,
           }));
 
+        console.log({
+          showModal: true,
+          ticketURL: response.data.response.ticket_url,
+          followupMessage: response.data.response.followup_msg,
+          eventRegisterId: response.data.response.event_register_id,
+          loading: false,
+        });
+
         setTimeout(() => {
           setFormNumber && setFormNumber(0);
           setFormData && setFormData({});

@@ -81,7 +81,7 @@ const SuccessModal = ({
 
                           if (success.eventRegisterId)
                             claimRegisterGift(
-                              JSON.parse(sessionStorage.getItem('eventData')!).event_id,
+                              JSON.parse(sessionStorage.getItem('eventId') ?? ''),
                               success.eventRegisterId,
                               setScratchCard,
                             );
@@ -112,18 +112,13 @@ const SuccessModal = ({
             scratchCard.name.length > 0 ||
             scratchCard.image.length > 0) && (
             <Modal
-              title='Scratch Card'
+              title='Scratch to Reveal'
               onClose={() => {
                 setScratchCard({ name: '', image: '', isFetching: false });
               }}
             >
               <div className={styles.scratchCardContainer}>
                 <div className={styles.scratchCard}>
-                  <p className={styles.modalTitle}>Scratch to Reveal</p>
-                  <p className={styles.bookingConfirmedSubText}>
-                    Scratch the card to reveal your discount code
-                  </p>
-
                   {scratchCard.isFetching ? (
                     <>
                       <br />
