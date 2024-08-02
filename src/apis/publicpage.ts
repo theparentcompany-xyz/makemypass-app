@@ -389,8 +389,13 @@ export const sendVerfication = async (contactType: string, contactInfo: string) 
 export const claimRegisterGift = async (
   eventId: string,
   eventRegisterId: string,
-  setScratchCard: Dispatch<SetStateAction<{ name: string; image: string }>>,
+  setScratchCard: Dispatch<SetStateAction<{ name: string; image: string; isFetching: boolean }>>,
 ) => {
+  setScratchCard({
+    name: '',
+    image: '',
+    isFetching: true,
+  });
   publicGateway
     .post(makeMyPass.claimRegisterGift(eventId, eventRegisterId))
     .then((response) => {
@@ -398,9 +403,15 @@ export const claimRegisterGift = async (
       setScratchCard({
         name: response.data.response.name,
         image: response.data.response.image,
+        isFetching: false,
       });
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0]);
+      setScratchCard({
+        name: '',
+        image: '',
+        isFetching: false,
+      });
     });
 };

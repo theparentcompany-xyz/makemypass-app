@@ -7,7 +7,6 @@ import { HashLoader } from 'react-spinners';
 import ScratchCard from './ScratchCardComponent/ScratchCardComponent';
 import image from './scratchImage.png';
 import { claimRegisterGift } from '../../../../../apis/publicpage';
-import { useNavigate } from 'react-router';
 
 const SuccessModal = ({
   success,
@@ -21,8 +20,8 @@ const SuccessModal = ({
   const [scratchCard, setScratchCard] = useState({
     name: '',
     image: '',
+    isFetching: false,
   });
-  const navigate = useNavigate();
 
   return (
     <div>
@@ -62,8 +61,11 @@ const SuccessModal = ({
                           onClick={() => {
                             const eventTitle = JSON.parse(
                               sessionStorage.getItem('eventData')!,
-                            ).event_title;
-                            navigate(`/${eventTitle}/ticket?ticketURL=${success.ticketURL}`);
+                            ).event_name;
+                            window.open(
+                              `/${eventTitle}/ticket?ticketURL=${success.ticketURL}`,
+                              '_blank',
+                            );
                           }}
                           className={styles.downloadTicketButton}
                         >
@@ -72,11 +74,6 @@ const SuccessModal = ({
                       </>
                     )}
 
-                    <p className={styles.contactUs}>
-                      If you have any questions or need assistance, please contact us at
-                      hello@makemypass.com
-                    </p>
-
                     {hasScratchCard && (
                       <button
                         onClick={() => {
@@ -84,7 +81,7 @@ const SuccessModal = ({
 
                           if (success.eventRegisterId)
                             claimRegisterGift(
-                              success.eventId ?? '',
+                              JSON.parse(sessionStorage.getItem('eventData')!).event_id,
                               success.eventRegisterId,
                               setScratchCard,
                             );
@@ -94,6 +91,11 @@ const SuccessModal = ({
                         Next
                       </button>
                     )}
+
+                    <p className={styles.contactUs}>
+                      If you have any questions or need assistance, please contact us at
+                      hello@makemypass.com
+                    </p>
                   </div>
                 ) : (
                   <div className={styles.loaderContainer}>
@@ -106,12 +108,13 @@ const SuccessModal = ({
         )}
 
         {!success.showModal &&
-          hasScratchCard &&
-          (scratchCard.name.length > 0 || scratchCard.image.length > 0) && (
+          (scratchCard.isFetching ||
+            scratchCard.name.length > 0 ||
+            scratchCard.image.length > 0) && (
             <Modal
               title='Scratch Card'
               onClose={() => {
-                setScratchCard({ name: '', image: '' });
+                setScratchCard({ name: '', image: '', isFetching: false });
               }}
             >
               <div className={styles.scratchCardContainer}>
@@ -120,17 +123,24 @@ const SuccessModal = ({
                   <p className={styles.bookingConfirmedSubText}>
                     Scratch the card to reveal your discount code
                   </p>
-                  <div className={styles.scratchCardImage}></div>
 
-                  <ScratchCard
-                    width={150}
-                    height={150}
-                    coverImage={image}
-                    revealContent={scratchCard.name}
-                    revealImage={scratchCard.image}
-                    brushSize={30}
-                    revealThreshold={70}
-                  />
+                  {scratchCard.isFetching ? (
+                    <>
+                      <br />
+                      <HashLoader color='#46BF75' size={50} />
+                      <br />
+                    </>
+                  ) : (
+                    <ScratchCard
+                      width={150}
+                      height={150}
+                      coverImage={image}
+                      revealContent={scratchCard.name}
+                      revealImage={scratchCard.image}
+                      brushSize={30}
+                      revealThreshold={60}
+                    />
+                  )}
                 </div>
               </div>
             </Modal>

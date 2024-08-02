@@ -2,3 +2,12 @@
   .bn-inline-content:has(> .ProseMirror-trailingBreak)::before {
   color: #ffffff7e;
 }
+
+.bn-container {
+  max-height: 5rem !important;
+}
+
+.bn-side-menu {
+  max-height: 5rem !important;
+  z-index: 0;
+}

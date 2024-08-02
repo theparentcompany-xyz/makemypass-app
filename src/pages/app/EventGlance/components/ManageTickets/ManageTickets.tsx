@@ -359,17 +359,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
               </div>
               <div className={styles.ticketDescriptionContainer}>
                 <label>Description</label>
-                {/* <textarea
-                  className={styles.ticketDescription}
-                  placeholder='Ticket Description'
-                  value={selectedTicket?.description || ''}
-                  onChange={(e) =>
-                    setSelectedTicket({
-                      ...selectedTicket,
-                      description: e.target.value,
-                    } as TicketType)
-                  }
-                /> */}
 
                 <div className={styles.ticketDescription}>
                   <Editor

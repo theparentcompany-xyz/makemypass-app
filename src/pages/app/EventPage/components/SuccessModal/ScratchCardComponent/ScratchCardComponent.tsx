@@ -99,7 +99,7 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
             <img
               src={revealImage}
               alt='Reveal Image'
-              style={{ position: 'absolute', top: 0, left: 0, width, height }}
+              style={{ position: 'absolute', top: 0, left: 0, width, height, borderRadius: '8px' }}
             />
           )}
           <div style={{ width, height }}>{revealContent}</div>
@@ -123,7 +123,15 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
             <img
               src={revealImage}
               alt='Reveal Image'
-              style={{ position: 'absolute', top: 0, left: 0, width, height, zIndex: 0 }}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width,
+                height,
+                zIndex: 0,
+                borderRadius: '8px',
+              }}
             />
           )}
         </>
