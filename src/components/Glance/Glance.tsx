@@ -28,6 +28,7 @@ const Glance = ({
   const [todayCheckIns, setTodayCheckIns] = useState<number>(0);
   const [lastRegistered, setLastRegistered] = useState<string>('');
   const [shortlistedCount, setShortlistedCount] = useState<number>(0);
+  const [uncalimedCount, setUnclaimedCount] = useState<number>(0);
   useEffect(() => {
     return () => {
       socket?.close();
@@ -71,7 +72,13 @@ const Glance = ({
             !JSON.parse(event.data).response.today_checkin &&
             JSON.parse(event.data).response.today_checkin != 0
           ) {
-            setTotalGuests(Number(JSON.parse(event.data).response.total_reg));
+            setTotalGuests(
+              Number(
+                JSON.parse(event.data).response.total_reg -
+                  JSON.parse(event.data).response.unclaimed_count,
+              ),
+            );
+            setUnclaimedCount(Number(JSON.parse(event.data).response.unclaimed_count));
             setTargetGuests(Number(JSON.parse(event.data).response.target_reg));
             setLastRegistered(JSON.parse(event.data).response.last_registered_at);
             setShortlistedCount(Number(JSON.parse(event.data).response.shortlisted_count));
@@ -286,15 +293,29 @@ const Glance = ({
                     ))}
 
                   {(currentTab == 'overview' || currentTab == 'guests') && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className={styles.guests}
-                    >
-                      {shortlistedCount}
+                    <>
+                      <div className='row'>
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className={styles.guests}
+                        >
+                          {shortlistedCount}
 
-                      <span>&nbsp;shortlisted</span>
-                    </motion.div>
+                          <span>&nbsp;shortlisted</span>
+                        </motion.div>
+
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className={styles.guests}
+                        >
+                          {uncalimedCount}
+
+                          <span>&nbsp;unclaimed</span>
+                        </motion.div>
+                      </div>
+                    </>
                   )}
                 </div>
 
