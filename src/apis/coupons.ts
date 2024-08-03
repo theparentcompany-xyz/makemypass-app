@@ -18,6 +18,7 @@ export const listCoupons = async (
         showModal: false,
         active: response.data.response.is_coupon_active,
         description: response.data.response.description,
+        isCouponActive: response.data.response.is_coupon_active,
       });
   });
 };
@@ -124,7 +125,11 @@ export const updateCouponStatus = async (
     })
     .then(() => {
       toast.success('Coupon status updated successfully');
-      setActivateCoupon({ ...activateCoupon, showModal: false });
+      setActivateCoupon({
+        ...activateCoupon,
+        showModal: false,
+        isCouponActive: activateCoupon.active,
+      });
     })
     .catch(() => {
       toast.error('Failed to update coupon status');

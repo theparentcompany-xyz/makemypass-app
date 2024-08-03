@@ -527,7 +527,7 @@
   justify-self: center;
   width: fit-content;
   margin-top: 1rem;
-
+  margin: auto;
   position: fixed;
   bottom: 0;
   left: 0;

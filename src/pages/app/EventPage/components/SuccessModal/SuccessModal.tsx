@@ -80,11 +80,7 @@ const SuccessModal = ({
                           setSuccess({ showModal: false });
 
                           if (success.eventRegisterId)
-                            claimRegisterGift(
-                              JSON.parse(sessionStorage.getItem('eventId') ?? ''),
-                              success.eventRegisterId,
-                              setScratchCard,
-                            );
+                            claimRegisterGift(success.eventRegisterId, setScratchCard);
                         }}
                         className={styles.viewTicketButton}
                       >

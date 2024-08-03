@@ -395,7 +395,6 @@ export const sendVerfication = async (contactType: string, contactInfo: string) 
 };
 
 export const claimRegisterGift = async (
-  eventId: string,
   eventRegisterId: string,
   setScratchCard: Dispatch<SetStateAction<{ name: string; image: string; isFetching: boolean }>>,
 ) => {
@@ -404,8 +403,12 @@ export const claimRegisterGift = async (
     image: '',
     isFetching: true,
   });
+  if (!sessionStorage.getItem('eventId')) {
+    toast.error('Event Id not found');
+    return;
+  }
   publicGateway
-    .post(makeMyPass.claimRegisterGift(eventId, eventRegisterId))
+    .post(makeMyPass.claimRegisterGift(sessionStorage.getItem('eventId') ?? '', eventRegisterId))
     .then((response) => {
       setScratchCard({
         name: response.data.response.name,

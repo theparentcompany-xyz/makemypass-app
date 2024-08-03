@@ -21,7 +21,6 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  //   const [revealPercentage, setRevealPercentage] = useState(0);
   const [isRevealed, setIsRevealed] = useState(false);
 
   useEffect(() => {
@@ -38,16 +37,16 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
     };
   }, [width, height, coverImage]);
 
-  const handleStartDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const startDrawing = (x: number, y: number) => {
     setIsDrawing(true);
-    draw(e);
+    draw(x, y);
   };
 
-  const handleStopDrawing = () => {
+  const stopDrawing = () => {
     setIsDrawing(false);
   };
 
-  const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const draw = (x: number, y: number) => {
     if (!isDrawing) return;
 
     const canvas = canvasRef.current;
@@ -55,10 +54,6 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
 
     ctx.globalCompositeOperation = 'destination-out';
     ctx.beginPath();
@@ -84,11 +79,52 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
     }
 
     const percentage = (transparentPixels / (width * height)) * 100;
-    // setRevealPercentage(Math.round(percentage));
 
     if (percentage >= revealThreshold) {
       setIsRevealed(true);
     }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    startDrawing(x, y);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!isDrawing) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    draw(x, y);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    startDrawing(x, y);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    if (!isDrawing) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    draw(x, y);
   };
 
   return (
@@ -110,13 +146,17 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
             ref={canvasRef}
             width={width}
             height={height}
-            onMouseDown={handleStartDrawing}
-            onMouseMove={draw}
-            onMouseUp={handleStopDrawing}
-            onMouseLeave={handleStopDrawing}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={stopDrawing}
+            onMouseLeave={stopDrawing}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={stopDrawing}
             style={{
               zIndex: 1,
               position: 'relative',
+              touchAction: 'none',
             }}
           />
           {revealImage && (

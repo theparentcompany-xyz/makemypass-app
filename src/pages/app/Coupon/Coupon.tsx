@@ -22,6 +22,7 @@ import toast from 'react-hot-toast';
 import { getForm } from '../../../apis/formbuilder';
 import { Field } from '../FormBuilder/types';
 import EventHeader from '../../../components/EventHeader/EventHeader';
+import { BiSolidHide, BiSolidShow } from 'react-icons/bi';
 
 const Coupon = () => {
   type CouponModalType = {
@@ -51,6 +52,7 @@ const Coupon = () => {
     showModal: false,
     active: false,
     description: '',
+    isCouponActive: false,
   });
   const [newCouponData, setNewCouponData] = useState<CreateCouponType>({
     code: '',
@@ -554,17 +556,38 @@ const Coupon = () => {
                         setCouponModal({ showModal: true });
                       }}
                     />
-                    <SecondaryButton
-                      buttonText='Activate Coupon'
-                      onClick={() => {
-                        if (setActivateCoupon) {
-                          setActivateCoupon({
-                            ...activateCoupon,
-                            showModal: true,
-                          });
+                    {coupons && coupons.length > 0 && (
+                      <SecondaryButton
+                        buttonText={
+                          activateCoupon.isCouponActive
+                            ? 'Coupons are active'
+                            : 'Coupons are not active'
                         }
-                      }}
-                    />
+                        onClick={() => {
+                          if (setActivateCoupon) {
+                            setActivateCoupon({
+                              ...activateCoupon,
+                              showModal: true,
+                            });
+                          }
+                        }}
+                        icon={
+                          !activateCoupon.isCouponActive ? (
+                            <BiSolidHide size={20} color='#ffffff' />
+                          ) : (
+                            <BiSolidShow size={20} color='#ffffff' />
+                          )
+                        }
+                        style={
+                          !activateCoupon.isCouponActive
+                            ? {
+                                backgroundColor: '#f04b4b',
+                                color: '#ffffff',
+                              }
+                            : { background: 'rgba(255, 255, 255, 0.08)', color: '#fff' }
+                        }
+                      />
+                    )}
                   </div>
                 }
                 setNewCouponData={setNewCouponData}

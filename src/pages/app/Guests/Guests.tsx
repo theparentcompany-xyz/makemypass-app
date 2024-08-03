@@ -65,9 +65,11 @@ const Guests = () => {
   });
 
   const getGuestData = () => {
-    if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'edit')
+    setSelectedGuest({} as RegistrationDataType);
+    if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'edit') {
       getEditGuestData(eventId, selectedGuestId.id, setSelectedGuest);
-    else if (selectedGuestId) getIndividualGuestInfo(eventId, selectedGuestId.id, setSelectedGuest);
+    } else if (selectedGuestId)
+      getIndividualGuestInfo(eventId, selectedGuestId.id, setSelectedGuest);
   };
 
   const { event_id: eventId, current_user_role: userRole } = JSON.parse(

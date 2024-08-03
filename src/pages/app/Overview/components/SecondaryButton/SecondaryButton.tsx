@@ -5,15 +5,17 @@ const SecondaryButton = ({
   onClick,
   type,
   icon,
+  style,
 }: {
   buttonText: string;
   onClick?: () => void;
   type?: 'submit' | 'button';
   icon?: React.ReactNode;
+  style?: React.CSSProperties;
 }) => {
   return (
     <>
-      <button onClick={onClick} type={type} className={styles.buttonContainer}>
+      <button onClick={onClick} type={type} className={styles.buttonContainer} style={style}>
         {icon}
         <p className={styles.buttonText}>{buttonText}</p>
       </button>

@@ -21,6 +21,7 @@ import Modal from '../../../../../components/Modal/Modal';
 import { EmailType, VisitedVenues } from './types';
 import { RegistrationDataType } from '../../../Overview/Overview/types';
 import { BiChevronDown } from 'react-icons/bi';
+import { HashLoader } from 'react-spinners';
 
 const ViewGuest = ({
   selectedGuestData,
@@ -198,7 +199,7 @@ const ViewGuest = ({
             }}
           />
         </div>
-        {selectedGuestData && (
+        {selectedGuestData && Object.keys(selectedGuestData).length > 0 ? (
           <div
             className={styles.viewGuests}
             style={{
@@ -549,6 +550,10 @@ const ViewGuest = ({
                 );
               })}
             </div>
+          </div>
+        ) : (
+          <div className={styles.loader}>
+            <HashLoader color='#47c97e' size={50} />
           </div>
         )}
       </Modal>
