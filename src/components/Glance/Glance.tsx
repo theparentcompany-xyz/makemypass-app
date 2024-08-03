@@ -72,12 +72,7 @@ const Glance = ({
             !JSON.parse(event.data).response.today_checkin &&
             JSON.parse(event.data).response.today_checkin != 0
           ) {
-            setTotalGuests(
-              Number(
-                JSON.parse(event.data).response.total_reg -
-                  JSON.parse(event.data).response.unclaimed_count,
-              ),
-            );
+            setTotalGuests(Number(JSON.parse(event.data).response.total_reg));
             setUnclaimedCount(Number(JSON.parse(event.data).response.unclaimed_count));
             setTargetGuests(Number(JSON.parse(event.data).response.target_reg));
             setLastRegistered(JSON.parse(event.data).response.last_registered_at);
@@ -328,12 +323,14 @@ const Glance = ({
                   {progressData.map((data, index) => (
                     <motion.div
                       initial={{ width: 0 }}
-                      animate={{ width: `${(data.value / totalGuests) * 100}%` }}
+                      animate={{
+                        width: `${(data.value / progressData.reduce((sum, data) => sum + data.value, 0)) * 100}%`,
+                      }}
                       key={index}
                       className={styles.progressBar}
                       style={{
                         backgroundColor: data.color,
-                        width: `${(data.value / totalGuests) * 100}%`,
+                        width: `${(data.value / progressData.reduce((sum, data) => sum + data.value, 0)) * 100}%`,
                       }}
                     ></motion.div>
                   ))}
