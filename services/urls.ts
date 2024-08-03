@@ -22,6 +22,8 @@ export const makeMyPass = {
     makeMyPassURL(`/analytics/${eventId}/get-analytics-visibility/`),
   getPaymentAnalytics: (eventId: string) =>
     makeMyPassURL(`/analytics/${eventId}/payment-analytics/`),
+  getPaymentAnalyticsCSV: (eventId: string) =>
+    makeMyPassURL(`/analytics/${eventId}/payment-analytics-csv/`),
 
   // Guest and Ticket Management
   ///scan-guest/eventId/checkin
