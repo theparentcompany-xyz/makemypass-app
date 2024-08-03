@@ -292,31 +292,36 @@ const Glance = ({
                       </motion.div>
                     ))}
 
-                  {(currentTab == 'overview' || currentTab == 'guests') && (
-                    <>
-                      <div className='row'>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          className={styles.guests}
-                        >
-                          {shortlistedCount}
+                  {(currentTab == 'overview' || currentTab == 'guests') &&
+                    (uncalimedCount > 0 || shortlistedCount > 0) && (
+                      <>
+                        <div className='row'>
+                          {shortlistedCount > 0 && (
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              className={styles.guests}
+                            >
+                              {shortlistedCount}
 
-                          <span>&nbsp;shortlisted</span>
-                        </motion.div>
+                              <span>&nbsp;shortlisted</span>
+                            </motion.div>
+                          )}
 
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          className={styles.guests}
-                        >
-                          {uncalimedCount}
+                          {uncalimedCount > 0 && (
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              className={styles.guests}
+                            >
+                              {uncalimedCount}
 
-                          <span>&nbsp;unclaimed</span>
-                        </motion.div>
-                      </div>
-                    </>
-                  )}
+                              <span>&nbsp;unclaimed</span>
+                            </motion.div>
+                          )}
+                        </div>
+                      </>
+                    )}
                 </div>
 
                 <div className={styles.progresBarGraph}>
