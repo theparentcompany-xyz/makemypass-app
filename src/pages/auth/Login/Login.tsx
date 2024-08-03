@@ -34,7 +34,7 @@ const Login = () => {
   const [isForgetPassword, setIsForgetPassword] = useState(false);
   const [isRegistered, setIsRegistered] = useState(true);
 
-  const [timer, setTimer] = useState(120);
+  const [timer, setTimer] = useState(18);
 
   const [error, setError] = useState<errorType>();
 
@@ -161,7 +161,7 @@ const Login = () => {
       passwordRef.current!.value = '';
       generateOTP(emailRef.current?.value, setIsOtpSent, setIsRegistered, 'Forget Password');
       setIsForgetPassword(true);
-      setTimer(120);
+      setTimer(18);
     } else if (isForgetPassword && !emailRef.current?.value) {
       setError({
         email: 'Email is required',
@@ -220,7 +220,7 @@ const Login = () => {
                   placeholder='Enter your Email*'
                   icon={<GoPerson color='#A4A4A4' />}
                   onChange={() => {
-                    setTimer(120);
+                    setTimer(18);
                     setIsOtpSent(false);
 
                     if (isForgetPassword && emailRef.current?.value) {
@@ -365,7 +365,7 @@ const Login = () => {
                         );
                       } else preRegister(emailRef.current?.value, setIsOtpSent);
 
-                      setTimer(120);
+                      setTimer(18);
                     }}
                     disabled={timer > 0} // Disable button when timer is still running
                   >
