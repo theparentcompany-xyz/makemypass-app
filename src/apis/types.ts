@@ -250,4 +250,5 @@ export type ActivateCouponType = {
   showModal: boolean;
   active: boolean;
   description: string;
+  isCouponActive: boolean;
 };
