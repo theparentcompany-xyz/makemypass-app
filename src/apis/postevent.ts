@@ -18,3 +18,15 @@ export const sentTextMail = async (eventId: string, mailId: string) => {
       toast.error('Mail Sent Failed');
     });
 };
+
+export const getPostEventStatus = async (
+  eventId: string,
+  setPostEventStatus: React.Dispatch<React.SetStateAction<PostEventStatus | undefined>>,
+) => {
+  try {
+    const response = await privateGateway.get(makeMyPass.getPostEventStatus(eventId));
+    setPostEventStatus(response.data.response);
+  } catch (e) {
+    toast.error('Error getting post event status');
+  }
+};
