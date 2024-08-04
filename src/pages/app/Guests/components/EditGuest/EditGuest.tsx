@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import Modal from '../../../../../components/Modal/Modal';
 import styles from '../../Guests.module.css';
@@ -23,11 +23,22 @@ const EditGuest = ({
 }) => {
   const [formErrors, setFormErrors] = useState<any>({});
 
+  const [updatedFormData, setUpdatedFormData] = useState<any>(formData);
+
+  useEffect(() => {
+    setUpdatedFormData(formData);
+  }, [formData]);
+
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+    // setFormData((prevFormData) => ({
+    //   ...prevFormData,
+    //   [fieldName]: fieldValue,
+    // }));
+
+    setUpdatedFormData({
+      ...updatedFormData,
       [fieldName]: fieldValue,
-    }));
+    });
 
     if (formErrors[fieldName]) {
       setFormErrors({
@@ -38,7 +49,7 @@ const EditGuest = ({
   };
 
   const handleSubmissionEdit = () => {
-    editSubmissons(eventId, formData, setSelectedGuestId, setFormData, setFormErrors);
+    editSubmissons(eventId, updatedFormData, setSelectedGuestId, setFormData, setFormErrors);
   };
 
   return (
@@ -50,7 +61,7 @@ const EditGuest = ({
               <DynamicForm
                 formFields={eventFormData.form}
                 formErrors={formErrors}
-                formData={formData}
+                formData={updatedFormData}
                 onFieldChange={onFieldChange}
               />
             </div>

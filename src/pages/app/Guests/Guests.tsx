@@ -63,6 +63,10 @@ const Guests = () => {
     name: '',
   });
 
+  useEffect(() => {
+    console.log('Form Data: ', formData);
+  }, [formData]);
+
   const getGuestData = () => {
     setSelectedGuest({} as RegistrationDataType);
     if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'edit') {
@@ -219,7 +223,10 @@ const Guests = () => {
 
         {selectedGuestId && eventFormData && selectedGuestId.type === 'edit' && (
           <EditGuest
-            formData={selectedGuest}
+            formData={{
+              ...selectedGuest?.submission,
+              id: selectedGuestId.id,
+            }}
             setFormData={setFormData}
             eventFormData={eventFormData}
             setSelectedGuestId={setSelectedGuestId}
