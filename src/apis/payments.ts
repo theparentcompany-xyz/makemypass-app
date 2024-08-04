@@ -11,3 +11,14 @@ export const getPaymentAnalytics = async (
     setPaymentAnalyticsList(response.data.response);
   });
 };
+
+export const getPaymentAnalyticsCSV = async (event_id: string) => {
+  return privateGateway.get(makeMyPass.getPaymentAnalyticsCSV(event_id)).then((response) => {
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'payment_analytics.csv');
+    document.body.appendChild(link);
+    link.click();
+  });
+};

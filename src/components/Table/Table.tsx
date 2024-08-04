@@ -26,6 +26,16 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
   const teamId = Object.keys(item)[index];
   const team = item[teamId];
 
+  team.sort((a, b) => {
+    if (a.is_team_lead && !b.is_team_lead) {
+      return -1;
+    } else if (!a.is_team_lead && b.is_team_lead) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+
   return (
     <div className={styles.tableRow}>
       <div className={styles.tableRowData}>

@@ -64,6 +64,15 @@ const CheckIns = () => {
                   />
                 </Link>
               )}
+              {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
+                <Link to='self-checkin'>
+                  <SectionButton
+                    buttonText='Self Check In'
+                    buttonColor='#C33D7B'
+                    icon={<BsGift size={25} color='#5B75FB' />}
+                  />
+                </Link>
+              )}
               {/* <Link to='claimgifts'>
                 <SectionButton
                   buttonText='Claim Gifts'

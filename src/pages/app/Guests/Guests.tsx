@@ -150,7 +150,7 @@ const Guests = () => {
           onClose={onClose}
           type='side'
           style={{
-            minWidth: '25rem',
+            maxWidth: '25rem',
           }}
         >
           <div className={styles.userInfoModalContainer}>

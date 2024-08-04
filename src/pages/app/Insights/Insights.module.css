@@ -276,6 +276,14 @@
   min-width: 15rem;
   flex: 1 1 0;
   width: 0;
+
+  position: relative;
+}
+
+.logButton {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
 }
 
 .categorySection {

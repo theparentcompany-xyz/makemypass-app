@@ -38,6 +38,7 @@ import { Roles } from '../services/enums';
 import ViewTicket from './components/ViewTicket/ViewTicket';
 import Gifts from './pages/app/Gifts/Gifts';
 import PaymentAnalytics from './pages/app/PaymentAnalytics/PaymentAnalytics';
+import SelfCheckIn from './pages/app/SelfCheckIn/SelfCheckIn';
 
 // import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 // import SpinWheel from './pages/app/SpinWheel/SpinWheel';
@@ -85,6 +86,10 @@ const routes = [
   {
     path: '/validate-participant/',
     element: <ValidateData />,
+  },
+  {
+    path: '/:eventTitle/checkins/self-checkin',
+    element: <SelfCheckIn />,
   },
   {
     path: '/',

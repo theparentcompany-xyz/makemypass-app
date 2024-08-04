@@ -110,7 +110,7 @@
 .userInfoModalContainer {
   overflow-y: auto;
   overflow-x: hidden;
-  min-width: 20rem;
+  min-width: -webkit-fill-available;
 }
 
 .modalSubText {
