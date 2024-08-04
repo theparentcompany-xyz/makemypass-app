@@ -3,12 +3,13 @@ import { motion } from 'framer-motion';
 
 type ButtonProps = {
   buttonText: string;
+  iconBefore?: JSX.Element;
   icon?: JSX.Element;
   buttonColor?: string;
   onClick?: () => void;
 };
 
-const Button = ({ buttonText, icon, onClick }: ButtonProps) => {
+const Button = ({ buttonText, icon, iconBefore, onClick }: ButtonProps) => {
   return (
     <>
       <motion.button
@@ -17,6 +18,12 @@ const Button = ({ buttonText, icon, onClick }: ButtonProps) => {
         onClick={onClick}
         className={styles.buttonContainer}
       >
+        {iconBefore && (
+          <div className={styles.buttonIcon}>
+            <div className={styles.iconBefore}>{iconBefore}</div>
+          </div>
+        )}
+
         <p className={styles.buttonText}>{buttonText}</p>
 
         <div className={styles.buttonIcon}>

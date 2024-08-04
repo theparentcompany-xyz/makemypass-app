@@ -33,6 +33,10 @@
   align-items: center;
 }
 
+.iconBefore {
+  margin-right: 0.5rem;
+}
+
 @media screen and (max-width: 768px) {
   .buttonContainer {
     margin-top: 0;
