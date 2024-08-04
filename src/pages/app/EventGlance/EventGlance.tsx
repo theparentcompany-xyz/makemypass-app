@@ -25,6 +25,7 @@ import UpdateMail from './components/UpdateMail/UpdateMail';
 import { sentTextMail } from '../../../apis/postevent';
 import { ChildRef } from './components/ManageTickets/ManageTickets';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import { RiCoupon2Fill } from 'react-icons/ri';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -304,8 +305,14 @@ const EventGlance = () => {
               <SectionButton
                 buttonText='Tickets'
                 buttonColor='#7662FC'
-                icon={<ImTicket size={25} color='#7662FC' />}
+                icon={<RiCoupon2Fill size={25} color='#7662FC' />}
                 onClick={() => setIsTicketsOpen(true)}
+              />
+              <SectionButton
+                buttonText='Coupons'
+                buttonColor='#7662FC'
+                icon={<ImTicket size={25} color='#7662FC' />}
+                onClick={() => navigate(`/${eventName}/coupon`)}
               />
               {/* </Link> */}
               <Link to={`/${eventName}/guests`}>

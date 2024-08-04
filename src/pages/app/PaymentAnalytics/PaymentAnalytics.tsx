@@ -20,7 +20,7 @@ const PaymentAnalytics = () => {
     <>
       <Theme>
         <div className={styles.paymentAnalyticsContainer}>
-          <EventHeader previousPageNavigate='/events' />
+          <EventHeader previousPageNavigate='-1' />
           <GenericTable
             tableData={paymentAnalyticsList}
             tableHeading='Payment Logs'

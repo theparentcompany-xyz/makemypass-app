@@ -27,8 +27,9 @@ import { IoCopyOutline } from 'react-icons/io5';
 import toast from 'react-hot-toast';
 import { getVisibility } from '../../../apis/insights';
 import { getEventInfo } from '../../../apis/publicpage';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { EventType } from '../../../apis/types';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 
 ChartJS.register(
   CategoryScale,
@@ -47,7 +48,7 @@ ChartJS.register(
 
 const Insights = ({ type }: { type?: string }) => {
   const [message, setMessage] = useState<AnalyticsData>();
-
+  const navigate = useNavigate();
   const [lineData, setLineData] = useState<ChartData>();
   const [lineData2, setLineData2] = useState<ChartData>();
   const [entryDateCount, setEntryDateCount] = useState<ChartData>();
@@ -559,95 +560,108 @@ const Insights = ({ type }: { type?: string }) => {
                   </div>
                 </div>
 
-                <div
-                  style={{
-                    borderRadius: '12px',
-                  }}
-                  className={styles.paymentCounts}
-                >
-                  <div className={styles.countSection}>
-                    <div className={styles.cLeftSection}>
-                      <div className={styles.totalRegistered}>
-                        <p className={styles.total}>Payment Details</p>
+                {(message?.payment_analytics.total_paid_users ?? 0 > 0) && (
+                  <div
+                    style={{
+                      borderRadius: '12px',
+                    }}
+                    className={styles.paymentCounts}
+                  >
+                    {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
+                      <div className={styles.logButton}>
+                        <SecondaryButton
+                          buttonText='View Logs'
+                          onClick={() => {
+                            navigate(`/${eventTitle}/payment-analytics`);
+                          }}
+                        />
                       </div>
-                      <div className={styles.weeklyCounts}>
-                        <div className={styles.weeklyCount}>
-                          <p className={styles.live}>
-                            Total Amount{`(${message?.payment_analytics.total_paid_users ?? '0'})`}
-                          </p>
-                          <p className={styles.wcount}>
-                            {message?.payment_analytics.total_amount?.toLocaleString('en-IN', {
-                              style: 'currency',
-                              currency: 'INR',
-                            }) || '-'}
-                            <span>
-                              {message?.payment_analytics.total_paid_percentage
-                                ? `(${Number(
-                                    message?.payment_analytics.total_paid_percentage,
-                                  ).toFixed(2)}%)`
-                                : ''}
-                            </span>
-                          </p>
+                    )}
+                    <div className={styles.countSection}>
+                      <div className={styles.cLeftSection}>
+                        <div className={styles.totalRegistered}>
+                          <p className={styles.total}>Payment Details</p>
                         </div>
-                        <div className={styles.weeklyCount}>
-                          <p className={styles.live}>
-                            Paid Via App
-                            {`(${message?.payment_analytics.platform_paid_users ?? '0'})`}
-                          </p>
-                          <p className={styles.wcount}>
-                            {message?.payment_analytics.total_platform_payments?.toLocaleString(
-                              'en-IN',
-                              {
+                        <div className={styles.weeklyCounts}>
+                          <div className={styles.weeklyCount}>
+                            <p className={styles.live}>
+                              Total Amount
+                              {`(${message?.payment_analytics.total_paid_users ?? '0'})`}
+                            </p>
+                            <p className={styles.wcount}>
+                              {message?.payment_analytics.total_amount?.toLocaleString('en-IN', {
                                 style: 'currency',
                                 currency: 'INR',
-                              },
-                            ) || '-'}
-                            <span>
-                              {message?.payment_analytics.cash_in_hand_user_percent
-                                ? `(${Number(message?.payment_analytics.platform_paid_user_percent).toFixed(2)}%)`
-                                : ''}
-                            </span>
-                          </p>
+                              }) || '-'}
+                              <span>
+                                {message?.payment_analytics.total_paid_percentage
+                                  ? `(${Number(
+                                      message?.payment_analytics.total_paid_percentage,
+                                    ).toFixed(2)}%)`
+                                  : ''}
+                              </span>
+                            </p>
+                          </div>
+                          <div className={styles.weeklyCount}>
+                            <p className={styles.live}>
+                              Paid Via App
+                              {`(${message?.payment_analytics.platform_paid_users ?? '0'})`}
+                            </p>
+                            <p className={styles.wcount}>
+                              {message?.payment_analytics.total_platform_payments?.toLocaleString(
+                                'en-IN',
+                                {
+                                  style: 'currency',
+                                  currency: 'INR',
+                                },
+                              ) || '-'}
+                              <span>
+                                {message?.payment_analytics.cash_in_hand_user_percent
+                                  ? `(${Number(message?.payment_analytics.platform_paid_user_percent).toFixed(2)}%)`
+                                  : ''}
+                              </span>
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <div className={styles.weeklyCounts}>
-                        <div className={styles.weeklyCount}>
-                          <p className={styles.live}>
-                            Cash In Hand
-                            {`(${message?.payment_analytics.cash_in_hand_users ?? '0'})`}
-                          </p>
-                          <p className={styles.wcount}>
-                            {message?.payment_analytics.total_cash_in_hand?.toLocaleString(
-                              'en-IN',
-                              {
-                                style: 'currency',
-                                currency: 'INR',
-                              },
-                            ) || '-'}
-                            <span>
-                              {message?.payment_analytics.cash_in_hand_user_percent
-                                ? `(${Number(message?.payment_analytics.cash_in_hand_user_percent).toFixed(2)}%)`
-                                : ''}
-                            </span>
-                          </p>
-                        </div>
+                        <div className={styles.weeklyCounts}>
+                          <div className={styles.weeklyCount}>
+                            <p className={styles.live}>
+                              Cash In Hand
+                              {`(${message?.payment_analytics.cash_in_hand_users ?? '0'})`}
+                            </p>
+                            <p className={styles.wcount}>
+                              {message?.payment_analytics.total_cash_in_hand?.toLocaleString(
+                                'en-IN',
+                                {
+                                  style: 'currency',
+                                  currency: 'INR',
+                                },
+                              ) || '-'}
+                              <span>
+                                {message?.payment_analytics.cash_in_hand_user_percent
+                                  ? `(${Number(message?.payment_analytics.cash_in_hand_user_percent).toFixed(2)}%)`
+                                  : ''}
+                              </span>
+                            </p>
+                          </div>
 
-                        <div className={styles.weeklyCount}>
-                          <p className={styles.live}>Withdrawable</p>
-                          <p className={styles.wcount}>
-                            {message?.payment_analytics.with_drawable_amount?.toLocaleString(
-                              'en-IN',
-                              {
-                                style: 'currency',
-                                currency: 'INR',
-                              },
-                            ) || '-'}
-                          </p>
+                          <div className={styles.weeklyCount}>
+                            <p className={styles.live}>Withdrawable</p>
+                            <p className={styles.wcount}>
+                              {message?.payment_analytics.with_drawable_amount?.toLocaleString(
+                                'en-IN',
+                                {
+                                  style: 'currency',
+                                  currency: 'INR',
+                                },
+                              ) || '-'}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
 
               <div className={styles.insightsContainer}>

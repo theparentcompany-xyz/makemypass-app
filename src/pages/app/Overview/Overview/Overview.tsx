@@ -131,6 +131,7 @@ const Overview = () => {
       amount: 'amount',
       is_approved: 'is_approved',
       team_id: 'team_id',
+      is_team_lead: 'is_team_lead',
     };
 
     if (recentRegistrations) {

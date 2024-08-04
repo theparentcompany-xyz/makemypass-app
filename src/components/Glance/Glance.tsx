@@ -152,10 +152,6 @@ const Glance = ({
       title: 'Form Builder',
       roles: [Roles.ADMIN, Roles.OWNER],
     },
-    coupon: {
-      title: 'Coupon',
-      roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
-    },
     logs: {
       title: 'Logs',
       roles: [Roles.ADMIN, Roles.OWNER],
@@ -169,10 +165,6 @@ const Glance = ({
     };
     tabs.feedback = {
       title: 'Feedback',
-      roles: [Roles.ADMIN, Roles.OWNER],
-    };
-    tabs['payment-analytics'] = {
-      title: 'Payments Logs',
       roles: [Roles.ADMIN, Roles.OWNER],
     };
   }

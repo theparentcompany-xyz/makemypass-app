@@ -1,0 +1,9 @@
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .printableContent,
+  .printableContent * {
+    visibility: visible;
+  }
+}
