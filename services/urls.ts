@@ -144,7 +144,8 @@ export const makeMyPass = {
   submitFeedback: (eventId: string) => makeMyPassURL(`/feedback/submit-feedback/${eventId}/`),
   getPostEventCategories: (eventId: string) =>
     makeMyPassURL(`/feedback/get-post-event-categories/${eventId}/`),
-
+  getPostEventStatus: (eventId: string) =>
+    makeMyPassURL(`/event/${eventId}/communication/get-post-event-status/`),
   //FormBuilder
   formBuilderGetForm: (eventId: string) => makeMyPassURL(`/form-builder/${eventId}/get-form/`),
   formBuilderUpdateForm: (eventId: string) =>
