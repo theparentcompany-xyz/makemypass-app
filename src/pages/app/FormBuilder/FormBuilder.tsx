@@ -1,6 +1,4 @@
 import { FaAddressCard, FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
-import EventHeader from '../../../components/EventHeader/EventHeader';
-import Glance from '../../../components/Glance/Glance';
 import Theme from '../../../components/Theme/Theme';
 import styles from './FormBuilder.module.css';
 import Slider from '../../../components/SliderButton/Slider';
@@ -27,6 +25,7 @@ import Modal from '../../../components/Modal/Modal';
 import CreatableSelect from 'react-select/creatable';
 import { GrContract } from 'react-icons/gr';
 import { CgArrowsExpandRight } from 'react-icons/cg';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -152,20 +151,23 @@ const FormBuilder = () => {
   return (
     <>
       <Theme>
-        {showConfirmationModal && (
-          <Modal type='center' title='Confirmation' onClose={() => setShowConfirmationModal(false)}>
-            <div className={styles.confirmationModal}>
-              <p>Are you sure you want to delete this field?</p>
-              <div className={styles.confirmationButtons}>
-                <button onClick={() => removeField()}>Yes</button>
-                <button onClick={() => setShowConfirmationModal(false)}>No</button>
+        <DashboardLayout prevPage='/events' tabName='formbuilder'>
+          {showConfirmationModal && (
+            <Modal
+              type='center'
+              title='Confirmation'
+              onClose={() => setShowConfirmationModal(false)}
+            >
+              <div className={styles.confirmationModal}>
+                <p>Are you sure you want to delete this field?</p>
+                <div className={styles.confirmationButtons}>
+                  <button onClick={() => removeField()}>Yes</button>
+                  <button onClick={() => setShowConfirmationModal(false)}>No</button>
+                </div>
               </div>
-            </div>
-          </Modal>
-        )}
-        <div className={styles.builderContainer}>
-          <EventHeader previousPageNavigate='/events' />
-          <Glance tab='formbuilder' />
+            </Modal>
+          )}
+
           <div className={styles.requiredFieldsHeader}>
             <div className={styles.requiredFieldsHeader}>
               <div className={styles.requiredHeading}>
@@ -731,7 +733,7 @@ const FormBuilder = () => {
               </div>
             </div>
           </div>
-        </div>
+        </DashboardLayout>
       </Theme>
     </>
   );

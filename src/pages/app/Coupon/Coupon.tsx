@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Glance from '../../../components/Glance/Glance';
 import Theme from '../../../components/Theme/Theme';
 import styles from './Coupon.module.css';
 import { createCoupon, editCoupon, listCoupons, updateCouponStatus } from '../../../apis/coupons';
@@ -21,8 +20,8 @@ import { getConditions } from '../FormBuilder/constant';
 import toast from 'react-hot-toast';
 import { getForm } from '../../../apis/formbuilder';
 import { Field } from '../FormBuilder/types';
-import EventHeader from '../../../components/EventHeader/EventHeader';
 import { BiSolidHide, BiSolidShow } from 'react-icons/bi';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 
 const Coupon = () => {
   type CouponModalType = {
@@ -134,9 +133,7 @@ const Coupon = () => {
         </Modal>
       )}
       <Theme>
-        <div className={styles.mainContainer}>
-          <EventHeader previousPageNavigate='/events' />
-          <Glance tab='coupon' />
+        <DashboardLayout prevPage='/events' tabName='coupon'>
           {couponModal.showModal && (
             <Modal
               type='side'
@@ -606,7 +603,7 @@ const Coupon = () => {
               />
             </div>
           )}
-        </div>
+        </DashboardLayout>
       </Theme>
     </>
   );

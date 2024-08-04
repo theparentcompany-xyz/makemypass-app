@@ -2,8 +2,6 @@ import styles from './Guests.module.css';
 import { useEffect, useState } from 'react';
 
 import Theme from '../../../components/Theme/Theme';
-import Glance from '../../../components/Glance/Glance';
-import Header from '../../../components/EventHeader/EventHeader';
 import {
   downloadCSVData,
   downloadTicket,
@@ -37,6 +35,7 @@ import EditGuest from './components/EditGuest/EditGuest';
 import BulkUpload from './components/BulkUpload/BulkUpload';
 import { RegistrationDataType } from '../Overview/Overview/types';
 import { Roles } from '../../../../services/enums';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 
 const Guests = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -126,157 +125,153 @@ const Guests = () => {
 
   return (
     <Theme>
-      {eventFormData &&
-        selectedGuestId &&
-        formData &&
-        selectedGuestId.id &&
-        selectedGuestId.type == 'view' && (
-          <>
-            <div onClick={onClose} className={styles.backgroundBlur}></div>
-            <ViewGuest
-              selectedGuestData={selectedGuest}
-              setSelectedGuestId={setSelectedGuestId}
-              eventId={eventId}
-              setResentTicket={setResentTicket}
-            />
-          </>
-        )}
-
-      {selectedGuestId && selectedGuestId.type === 'bulk' && <BulkUpload onClose={onClose} />}
-
-      {selectedGuestId && selectedGuestId.type === 'add' && (
-        <Modal
-          title='Invite Guest'
-          onClose={onClose}
-          type='side'
-          style={{
-            maxWidth: '25rem',
-          }}
-        >
-          <div className={styles.userInfoModalContainer}>
-            <button
-              className={styles.bulkUploadButton}
-              onClick={() => {
-                setSelectedGuestId({
-                  id: '',
-                  type: 'bulk',
-                });
-              }}
-            >
-              Bulk Upload
-            </button>
-            <div className={styles.orContainer}>
-              <hr />
-              <p>OR</p>
-              <hr />
-            </div>
-            <p className={styles.ticketLabel}>Enter Ticket Code</p>
-            <div className={styles.ticketCode}>
-              <input
-                onChange={(event) => {
-                  setTicketCode(event.target.value);
-                }}
-                placeholder='Ticket Code'
-                type='text'
-                value={ticketCode}
-                className={styles.scanInput}
+      <DashboardLayout prevPage='/events' tabName='guests'>
+        {eventFormData &&
+          selectedGuestId &&
+          formData &&
+          selectedGuestId.id &&
+          selectedGuestId.type == 'view' && (
+            <>
+              <div onClick={onClose} className={styles.backgroundBlur}></div>
+              <ViewGuest
+                selectedGuestData={selectedGuest}
+                setSelectedGuestId={setSelectedGuestId}
+                eventId={eventId}
+                setResentTicket={setResentTicket}
               />
-              <button
-                onClick={() => {
-                  setShowScanner(true);
-                }}
-                className={styles.scanButton}
-              >
-                Scan
-              </button>
-            </div>
-            <br />
-            {!showScanner ? (
-              eventFormData && (
-                <>
-                  <EventForm
-                    eventFormData={eventFormData}
-                    eventTitle={eventTitle}
-                    type='addGuest'
-                    ticketCode={ticketCode}
-                    setSelectedGuestId={setSelectedGuestId}
-                  />
-                </>
-              )
-            ) : (
-              <Scanner
-                ticketId={ticketCode}
-                setTicketId={setTicketCode}
-                trigger={true}
-                setTrigger={() => {
-                  if (setShowScanner) setShowScanner(false);
-                }}
-              />
-            )}
-          </div>
-        </Modal>
-      )}
-
-      {selectedGuestId && eventFormData && selectedGuestId.type === 'edit' && (
-        <EditGuest
-          formData={selectedGuest?.submission}
-          setFormData={setFormData}
-          eventFormData={eventFormData}
-          setSelectedGuestId={setSelectedGuestId}
-          eventId={eventId}
-          onClose={onClose}
-        />
-      )}
-
-      {guests ? (
-        <>
-          {resentTicket && resentTicket.status && (
-            <Modal onClose={onClose}>
-              <p className={styles.modalHeader}>Resend Ticket</p>
-              <p className={styles.modalSubText}>
-                Are you sure to resent ticket to{' '}
-                <span
-                  style={{
-                    fontWeight: '500',
-                    color: '#47C97E',
-                  }}
-                >
-                  {resentTicket.name}
-                </span>
-              </p>
-              <div className={styles.buttons}>
-                <p
-                  onClick={() => {
-                    handleTicketResend();
-                  }}
-                  className={`pointer ${styles.button}`}
-                >
-                  Resend
-                </p>
-                <p
-                  onClick={() => {
-                    setResentTicket((prevState) => ({
-                      ...prevState,
-                      status: false,
-                    }));
-
-                    setSelectedGuestId({
-                      id: resentTicket.guestId.toString(),
-                      type: 'view',
-                    });
-                  }}
-                  className={`pointer ${styles.button}`}
-                >
-                  Cancel
-                </p>
-              </div>
-            </Modal>
+            </>
           )}
 
-          <div className={styles.guestsContainer}>
-            <Header previousPageNavigate='/events' />
+        {selectedGuestId && selectedGuestId.type === 'bulk' && <BulkUpload onClose={onClose} />}
 
-            <Glance tab='guests' />
+        {selectedGuestId && selectedGuestId.type === 'add' && (
+          <Modal
+            title='Invite Guest'
+            onClose={onClose}
+            type='side'
+            style={{
+              maxWidth: '25rem',
+            }}
+          >
+            <div className={styles.userInfoModalContainer}>
+              <button
+                className={styles.bulkUploadButton}
+                onClick={() => {
+                  setSelectedGuestId({
+                    id: '',
+                    type: 'bulk',
+                  });
+                }}
+              >
+                Bulk Upload
+              </button>
+              <div className={styles.orContainer}>
+                <hr />
+                <p>OR</p>
+                <hr />
+              </div>
+              <p className={styles.ticketLabel}>Enter Ticket Code</p>
+              <div className={styles.ticketCode}>
+                <input
+                  onChange={(event) => {
+                    setTicketCode(event.target.value);
+                  }}
+                  placeholder='Ticket Code'
+                  type='text'
+                  value={ticketCode}
+                  className={styles.scanInput}
+                />
+                <button
+                  onClick={() => {
+                    setShowScanner(true);
+                  }}
+                  className={styles.scanButton}
+                >
+                  Scan
+                </button>
+              </div>
+              <br />
+              {!showScanner ? (
+                eventFormData && (
+                  <>
+                    <EventForm
+                      eventFormData={eventFormData}
+                      eventTitle={eventTitle}
+                      type='addGuest'
+                      ticketCode={ticketCode}
+                      setSelectedGuestId={setSelectedGuestId}
+                    />
+                  </>
+                )
+              ) : (
+                <Scanner
+                  ticketId={ticketCode}
+                  setTicketId={setTicketCode}
+                  trigger={true}
+                  setTrigger={() => {
+                    if (setShowScanner) setShowScanner(false);
+                  }}
+                />
+              )}
+            </div>
+          </Modal>
+        )}
+
+        {selectedGuestId && eventFormData && selectedGuestId.type === 'edit' && (
+          <EditGuest
+            formData={selectedGuest?.submission}
+            setFormData={setFormData}
+            eventFormData={eventFormData}
+            setSelectedGuestId={setSelectedGuestId}
+            eventId={eventId}
+            onClose={onClose}
+          />
+        )}
+
+        {guests ? (
+          <>
+            {resentTicket && resentTicket.status && (
+              <Modal onClose={onClose}>
+                <p className={styles.modalHeader}>Resend Ticket</p>
+                <p className={styles.modalSubText}>
+                  Are you sure to resent ticket to{' '}
+                  <span
+                    style={{
+                      fontWeight: '500',
+                      color: '#47C97E',
+                    }}
+                  >
+                    {resentTicket.name}
+                  </span>
+                </p>
+                <div className={styles.buttons}>
+                  <p
+                    onClick={() => {
+                      handleTicketResend();
+                    }}
+                    className={`pointer ${styles.button}`}
+                  >
+                    Resend
+                  </p>
+                  <p
+                    onClick={() => {
+                      setResentTicket((prevState) => ({
+                        ...prevState,
+                        status: false,
+                      }));
+
+                      setSelectedGuestId({
+                        id: resentTicket.guestId.toString(),
+                        type: 'view',
+                      });
+                    }}
+                    className={`pointer ${styles.button}`}
+                  >
+                    Cancel
+                  </p>
+                </div>
+              </Modal>
+            )}
 
             <div className={styles.guests}>
               <div className={styles.tableHeader}>
@@ -365,13 +360,13 @@ const Guests = () => {
                 }
               />
             </div>
+          </>
+        ) : (
+          <div className={styles.center}>
+            <HashLoader color='#47C97E' size={50} />
           </div>
-        </>
-      ) : (
-        <div className={styles.center}>
-          <HashLoader color='#47C97E' size={50} />
-        </div>
-      )}
+        )}
+      </DashboardLayout>
     </Theme>
   );
 };

@@ -1,7 +1,6 @@
 import { HiUserGroup } from 'react-icons/hi2';
 import { FaWrench } from 'react-icons/fa';
 import { BsQrCodeScan } from 'react-icons/bs';
-import Glance from '../../../../components/Glance/Glance';
 
 import styles from './Overview.module.css';
 import SectionButton from '../../../../components/SectionButton/SectionButton';
@@ -15,7 +14,6 @@ import { connectPrivateSocket } from '../../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../../services/urls';
 import Theme from '../../../../components/Theme/Theme';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import Header from '../../../../components/EventHeader/EventHeader';
 import Table from '../../../../components/Table/Table';
 import { TableType } from '../../../../components/Table/types';
 import { transformTableData } from '../../../../common/commonFunctions';
@@ -30,6 +28,7 @@ import ViewGuest from '../../Guests/components/ViewGuest/ViewGuest';
 import { downloadTicket, getIndividualGuestInfo } from '../../../../apis/guests';
 import { isArray } from 'chart.js/helpers';
 import { Roles } from '../../../../../services/enums';
+import DashboardLayout from '../../../../components/DashboardLayout/DashboardLayout';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
@@ -231,139 +230,138 @@ const Overview = () => {
 
   return (
     <Theme>
-      {selectedGuestId &&
-        selectedGuestData &&
-        selectedGuestId.id &&
-        selectedGuestId.type == 'view' && (
-          <>
-            <div onClick={onClose} className={styles.backgroundBlur}></div>
-            <ViewGuest
-              selectedGuestData={selectedGuestData}
-              setSelectedGuestId={setSelectedGuestId}
-              eventId={eventId}
-              type='overview'
+      <DashboardLayout prevPage='/events' tabName='overview'>
+        {selectedGuestId &&
+          selectedGuestData &&
+          selectedGuestId.id &&
+          selectedGuestId.type == 'view' && (
+            <>
+              <div onClick={onClose} className={styles.backgroundBlur}></div>
+              <ViewGuest
+                selectedGuestData={selectedGuestData}
+                setSelectedGuestId={setSelectedGuestId}
+                eventId={eventId}
+                type='overview'
+              />
+            </>
+          )}
+
+        <>
+          {openAddModal && (
+            <AddHosts
+              hostData={hostData}
+              setHostData={setHostData}
+              onSubmit={() => {
+                if (hostValidate()) {
+                  onSubmit();
+                }
+                setHostData({ email: '', role: '', is_private: true });
+                addRef.current = false;
+              }}
+              onClose={() => {
+                setOpenAddModal(false);
+                setHostData({ email: '', role: '', is_private: true });
+                addRef.current = false;
+              }}
+              add={addRef.current}
             />
-          </>
-        )}
-
-      <>
-        {openAddModal && (
-          <AddHosts
-            hostData={hostData}
-            setHostData={setHostData}
-            onSubmit={() => {
-              if (hostValidate()) {
-                onSubmit();
-              }
-              setHostData({ email: '', role: '', is_private: true });
-              addRef.current = false;
-            }}
-            onClose={() => {
-              setOpenAddModal(false);
-              setHostData({ email: '', role: '', is_private: true });
-              addRef.current = false;
-            }}
-            add={addRef.current}
-          />
-        )}
-        {openDeleteModal && (
-          <Modal
-            onClose={() => {
-              setOpenDeleteModal(false);
-            }}
-          >
-            <p className={styles.modalHeader}>Remove Host</p>
-            <p className={styles.modalSubText}>
-              Are you sure you want to delete&nbsp;
-              <span
-                style={{
-                  fontWeight: '600',
-                  color: '#ff0c28',
-                }}
-              >
-                {hostData.email}
-              </span>
-            </p>
-            <div className={styles.buttons}>
-              <p
-                onClick={() => {
-                  removeHostAccount();
-                }}
-                className={`pointer ${styles.button}`}
-              >
-                Remove Host
+          )}
+          {openDeleteModal && (
+            <Modal
+              onClose={() => {
+                setOpenDeleteModal(false);
+              }}
+            >
+              <p className={styles.modalHeader}>Remove Host</p>
+              <p className={styles.modalSubText}>
+                Are you sure you want to delete&nbsp;
+                <span
+                  style={{
+                    fontWeight: '600',
+                    color: '#ff0c28',
+                  }}
+                >
+                  {hostData.email}
+                </span>
               </p>
-              <p
-                onClick={() => {
-                  setOpenDeleteModal(false);
-                }}
-                className={`pointer ${styles.button}`}
-              >
-                Cancel
-              </p>
-            </div>
-          </Modal>
-        )}
-        {recentRegistrations && hostList && recentRegistrations.length >= 0 ? (
-          <div className={styles.overviewContainer}>
-            <Header previousPageNavigate='/events' />
-            <Glance tab='overview' />
-
-            <div className={styles.buttons}>
-              <Link to={`/${eventTitle}/guests`}>
-                <SectionButton
-                  buttonText='Guest List'
-                  buttonColor='#7662FC'
-                  icon={<HiUserGroup size={25} color='#7662FC' />}
-                />
-              </Link>
-
-              {(userRole === Roles.OWNER || userRole === Roles.ADMIN) && (
-                <a href='#hosts'>
-                  <SectionButton
-                    buttonText='Host List'
-                    buttonColor='#C33D7B'
-                    icon={<FaWrench size={25} color='#C33D7B' />}
-                  />
-                </a>
-              )}
-
-              <Link to={`/${eventTitle}/checkins`}>
-                <SectionButton
-                  buttonText='Check In'
-                  buttonColor='#5B75FB'
-                  icon={<BsQrCodeScan size={25} color='#5B75FB' />}
-                />
-              </Link>
-            </div>
-
-            <AnimatePresence>
-              {recentTableData.length >= 0 && (
-                <Table
-                  tableHeading='Recent Registration'
-                  tableData={recentTableData}
-                  setSelectedGuestId={setSelectedGuestId}
-                />
-              )}
-            </AnimatePresence>
-
-            {(userRole === Roles.ADMIN || userRole === Roles.OWNER) && (
-              <div id='hosts'>
-                <Table
-                  tableHeading='Event Hosts'
-                  tableData={hostListTableData}
-                  secondaryButton={<SecondaryButton buttonText='Add Hosts +' onClick={addHost} />}
-                  setHostId={setHostId}
-                />
+              <div className={styles.buttons}>
+                <p
+                  onClick={() => {
+                    removeHostAccount();
+                  }}
+                  className={`pointer ${styles.button}`}
+                >
+                  Remove Host
+                </p>
+                <p
+                  onClick={() => {
+                    setOpenDeleteModal(false);
+                  }}
+                  className={`pointer ${styles.button}`}
+                >
+                  Cancel
+                </p>
               </div>
-            )}
-          </div>
-        ) : (
-          <div className={styles.center}>
-            <HashLoader color='#47C97E' size={50} />
-          </div>
-        )}
-      </>
+            </Modal>
+          )}
+          {recentRegistrations && hostList && recentRegistrations.length >= 0 ? (
+            <>
+              <div className={styles.buttons}>
+                <Link to={`/${eventTitle}/guests`}>
+                  <SectionButton
+                    buttonText='Guest List'
+                    buttonColor='#7662FC'
+                    icon={<HiUserGroup size={25} color='#7662FC' />}
+                  />
+                </Link>
+
+                {(userRole === Roles.OWNER || userRole === Roles.ADMIN) && (
+                  <a href='#hosts'>
+                    <SectionButton
+                      buttonText='Host List'
+                      buttonColor='#C33D7B'
+                      icon={<FaWrench size={25} color='#C33D7B' />}
+                    />
+                  </a>
+                )}
+
+                <Link to={`/${eventTitle}/checkins`}>
+                  <SectionButton
+                    buttonText='Check In'
+                    buttonColor='#5B75FB'
+                    icon={<BsQrCodeScan size={25} color='#5B75FB' />}
+                  />
+                </Link>
+              </div>
+
+              <AnimatePresence>
+                {recentTableData.length >= 0 && (
+                  <Table
+                    tableHeading='Recent Registration'
+                    tableData={recentTableData}
+                    setSelectedGuestId={setSelectedGuestId}
+                  />
+                )}
+              </AnimatePresence>
+
+              {(userRole === Roles.ADMIN || userRole === Roles.OWNER) && (
+                <div id='hosts'>
+                  <Table
+                    tableHeading='Event Hosts'
+                    tableData={hostListTableData}
+                    secondaryButton={<SecondaryButton buttonText='Add Hosts +' onClick={addHost} />}
+                    setHostId={setHostId}
+                  />
+                </div>
+              )}
+            </>
+          ) : (
+            <div className={styles.center}>
+              <HashLoader color='#47C97E' size={50} />
+            </div>
+          )}
+        </>
+      </DashboardLayout>
     </Theme>
   );
 };

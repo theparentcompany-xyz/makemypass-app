@@ -4,8 +4,8 @@ import SectionButton from '../../../components/SectionButton/SectionButton';
 import { LuMailPlus, LuMailX } from 'react-icons/lu';
 import { sentPostEventMail } from '../../../apis/postevent';
 import { useState } from 'react';
-import Glance from '../../../components/Glance/Glance';
 import Modal from '../../../components/Modal/Modal';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 
 const PostEvent = () => {
   const [openConfirmModal, setConfirmModal] = useState({
@@ -45,8 +45,7 @@ const PostEvent = () => {
         </Modal>
       )}
       <Theme>
-        <div className={styles.mainContainer}>
-          <Glance tab='postevent' />
+        <DashboardLayout prevPage='-1'>
           <p className={styles.text}>Sent Mails</p>
           <div className={styles.postEventContainer}>
             <div className={styles.sbutton}>
@@ -68,7 +67,7 @@ const PostEvent = () => {
               />
             </div>
           </div>
-        </div>
+        </DashboardLayout>
       </Theme>
     </>
   );
