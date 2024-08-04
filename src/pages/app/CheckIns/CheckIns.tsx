@@ -1,6 +1,4 @@
 import Theme from '../../../components/Theme/Theme';
-import Glance from '../../../components/Glance/Glance';
-import Header from '../../../components/EventHeader/EventHeader';
 import styles from './CheckIns.module.css';
 
 import SectionButton from '../../../components/SectionButton/SectionButton';
@@ -10,6 +8,7 @@ import { FaShop } from 'react-icons/fa6';
 import { useEffect, useState } from 'react';
 import { getCheckInButtons } from '../../../apis/scan';
 import { checkInButtonsType } from './types';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 
 const CheckIns = () => {
   const [checkInsButtons, setCheckInsButtons] = useState<checkInButtonsType>();
@@ -20,9 +19,7 @@ const CheckIns = () => {
 
   return (
     <Theme>
-      <div className={styles.checkInsContainer}>
-        <Header previousPageNavigate='/events' />
-        <Glance tab='checkins' />
+      <DashboardLayout prevPage='/events' tabName='checkins'>
         <div className={styles.checkInsButtons}>
           <p className={styles.checkInsHeading}>On-Site Event Management</p>
           <hr className={styles.line} />
@@ -90,7 +87,7 @@ const CheckIns = () => {
             </div>
           </div>
         </div>
-      </div>
+      </DashboardLayout>
     </Theme>
   );
 };

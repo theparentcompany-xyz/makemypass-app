@@ -1,5 +1,4 @@
 import Theme from '../../../components/Theme/Theme';
-import Header from '../../../components/EventHeader/EventHeader';
 import styles from './InEventStats.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -24,7 +23,7 @@ import { makeMyPassSocket } from '../../../../services/urls';
 import Confetti from 'react-confetti';
 import { formatDate } from '../../../common/commonFunctions';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import Glance from '../../../components/Glance/Glance';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 
 ChartJS.register(
   CategoryScale,
@@ -246,7 +245,7 @@ const InEventStats = () => {
 
   return (
     <Theme>
-      <>
+      <DashboardLayout prevPage='-1' tabName='inevent'>
         <div className={styles.makemypassbranding}>
           <div className={`${styles.backgroundBrand}`}>
             <img src='/app/mmpcolor.png' alt='makemypass logo' />
@@ -288,11 +287,6 @@ const InEventStats = () => {
             </>
           )}
         </AnimatePresence>
-
-        <div className={styles.inEventContainer}>
-          <Header previousPageNavigate='/events' />
-          <Glance tab='inevent' />
-        </div>
 
         <div className={styles.insightsContainer}>
           <div className={styles.registrationCount}>
@@ -405,7 +399,7 @@ const InEventStats = () => {
             </div>
           </div>
         )}
-      </>
+      </DashboardLayout>
     </Theme>
   );
 };

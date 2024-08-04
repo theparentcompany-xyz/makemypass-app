@@ -1,7 +1,6 @@
 import Theme from '../../../components/Theme/Theme';
 
 import styles from './EventGlance.module.css';
-import Glance from '../../../components/Glance/Glance';
 import { IoLocationOutline } from 'react-icons/io5';
 import { ImTicket } from 'react-icons/im';
 import { HiUserGroup } from 'react-icons/hi2';
@@ -16,7 +15,6 @@ import { EventType, listMailType } from '../../../apis/types';
 import { getEvent } from '../../../apis/events';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import EventHeader from '../../../components/EventHeader/EventHeader';
 import ManageTickets from './components/ManageTickets/ManageTickets';
 import { LuCopy, LuDownload, LuMail, LuPencil, LuQrCode } from 'react-icons/lu';
 import { listMails } from '../../../apis/mails';
@@ -26,6 +24,7 @@ import { sentTextMail } from '../../../apis/postevent';
 import { ChildRef } from './components/ManageTickets/ManageTickets';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { RiCoupon2Fill } from 'react-icons/ri';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -62,11 +61,7 @@ const EventGlance = () => {
   return (
     <>
       <Theme>
-        <div className={styles.eventGlanceContainer}>
-          <div className={styles.eventGlance}>
-            <EventHeader previousPageNavigate='/events' />
-            <Glance tab='manage' />
-          </div>
+        <DashboardLayout prevPage='/events'>
           {isTicketsOpen && (
             <Modal
               title='Manage Tickets'
@@ -380,7 +375,7 @@ const EventGlance = () => {
               </div>
             </div>
           </div>
-        </div>
+        </DashboardLayout>
       </Theme>
     </>
   );

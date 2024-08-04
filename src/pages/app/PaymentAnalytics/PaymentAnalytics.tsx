@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import Theme from '../../../components/Theme/Theme';
-import styles from './PaymentAnalytics.module.css';
 import { getPaymentAnalytics, getPaymentAnalyticsCSV } from '../../../apis/payments';
-import EventHeader from '../../../components/EventHeader/EventHeader';
 import { PaymentAnalyticsType } from './types';
 import GenericTable from '../../../components/Table/GenericTable';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 
 const PaymentAnalytics = () => {
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
@@ -17,25 +16,22 @@ const PaymentAnalytics = () => {
   useEffect;
 
   return (
-    <>
-      <Theme>
-        <div className={styles.paymentAnalyticsContainer}>
-          <EventHeader previousPageNavigate='-1' />
-          <GenericTable
-            tableData={paymentAnalyticsList}
-            tableHeading='Payment Logs'
-            secondaryButton={
-              <SecondaryButton
-                onClick={() => {
-                  getPaymentAnalyticsCSV(eventId);
-                }}
-                buttonText='Download CSV'
-              />
-            }
-          />
-        </div>
-      </Theme>
-    </>
+    <Theme>
+      <DashboardLayout prevPage='-1'>
+        <GenericTable
+          tableData={paymentAnalyticsList}
+          tableHeading='Payment Logs'
+          secondaryButton={
+            <SecondaryButton
+              onClick={() => {
+                getPaymentAnalyticsCSV(eventId);
+              }}
+              buttonText='Download CSV'
+            />
+          }
+        />
+      </DashboardLayout>
+    </Theme>
   );
 };
 

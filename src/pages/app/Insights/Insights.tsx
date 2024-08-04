@@ -18,8 +18,6 @@ import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
 import { ChartData, AnalyticsData } from './types';
 import Theme from '../../../components/Theme/Theme';
-import Glance from '../../../components/Glance/Glance';
-import Header from '../../../components/EventHeader/EventHeader';
 import Modal from '../../../components/Modal/Modal';
 import { MdOutlinePublishedWithChanges } from 'react-icons/md';
 import { editEvent } from '../../../apis/events';
@@ -30,6 +28,7 @@ import { getEventInfo } from '../../../apis/publicpage';
 import { useNavigate, useParams } from 'react-router';
 import { EventType } from '../../../apis/types';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 
 ChartJS.register(
   CategoryScale,
@@ -228,7 +227,7 @@ const Insights = ({ type }: { type?: string }) => {
 
   return (
     <Theme>
-      <>
+      <DashboardLayout prevPage='/events' tabName='insights'>
         {showPublishModal && (
           <Modal
             title='Publish'
@@ -326,13 +325,6 @@ const Insights = ({ type }: { type?: string }) => {
         {lineData && lineData2 && pieData ? (
           <>
             <div className={styles.insightsOuterContainer}>
-              <div className={styles.glanceContainer}>
-                <Header previousPageNavigate='/events' />
-                {type != 'public' && (
-                  <Glance tab='insights' setShowPublishModal={setShowPublishModal} />
-                )}
-              </div>
-
               <div className={styles.insightsContainer}>
                 <div className={styles.registrationCount}>
                   <div className={styles.graphContainer}>
@@ -757,7 +749,7 @@ const Insights = ({ type }: { type?: string }) => {
             <HashLoader color={'#46BF75'} size={50} />
           </div>
         )}
-      </>
+      </DashboardLayout>
     </Theme>
   );
 };
