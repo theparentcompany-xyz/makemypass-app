@@ -61,7 +61,7 @@ const EventGlance = () => {
   return (
     <>
       <Theme>
-        <DashboardLayout prevPage='/events'>
+        <DashboardLayout prevPage='/events' tabName='manage'>
           {isTicketsOpen && (
             <Modal
               title='Manage Tickets'

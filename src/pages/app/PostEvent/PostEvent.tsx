@@ -45,7 +45,7 @@ const PostEvent = () => {
         </Modal>
       )}
       <Theme>
-        <DashboardLayout prevPage='-1'>
+        <DashboardLayout prevPage='-1' tabName='postevent'>
           <p className={styles.text}>Sent Mails</p>
           <div className={styles.postEventContainer}>
             <div className={styles.sbutton}>

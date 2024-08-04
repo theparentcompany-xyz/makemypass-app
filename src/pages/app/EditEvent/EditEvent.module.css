@@ -1,6 +1,4 @@
 .createEventContainer {
-  padding: 0 1.25rem;
-
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -9,7 +7,7 @@
   justify-content: space-between;
   font-family: 'Inter', sans-serif;
   color: #d7d7d7;
-
+  margin-top: 1rem;
   padding-bottom: 1rem;
 }
 
@@ -21,6 +19,15 @@
 
   max-width: 49%;
   width: 100%;
+}
+
+.eventNameContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 35rem;
 }
 
 .rightSideContainer {
@@ -77,6 +84,13 @@
   margin-top: 1rem;
   padding-bottom: 1rem;
   overflow: auto;
+  height: 50rem;
+}
+
+@media screen and (max-width: 1085px) {
+  .descriptionContainer {
+    height: auto;
+  }
 }
 
 .eventHeading {
@@ -113,6 +127,7 @@
   overflow-wrap: break-word;
   word-break: break-word;
   resize: none;
+  margin-bottom: 1rem;
 }
 
 .inputEventName:focus {

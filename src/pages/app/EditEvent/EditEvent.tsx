@@ -25,6 +25,7 @@ import Select from 'react-select';
 import './google.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 const libraries: Libraries = ['places'];
 
 const EditEvent = () => {
@@ -187,429 +188,433 @@ const EditEvent = () => {
   return (
     <>
       <Theme>
-        {eventData && isLoaded ? (
-          <>
-            {showModal && (
-              <Modal onClose={() => setShowModal(false)}>
-                <div className={styles.modalContainer}>
-                  <p className={styles.modalHeader}>Are you sure you want to Delete?</p>
-                  <div className={styles.modalButtonContainer}>
-                    <button className={styles.modalButton} onClick={() => setShowModal(false)}>
-                      No
-                    </button>
-                    <button className={styles.modalButton} onClick={() => agreeToDelete()}>
-                      Yes
-                    </button>
+        <DashboardLayout prevPage='-1'>
+          {eventData && isLoaded ? (
+            <>
+              {showModal && (
+                <Modal onClose={() => setShowModal(false)}>
+                  <div className={styles.modalContainer}>
+                    <p className={styles.modalHeader}>Are you sure you want to Delete?</p>
+                    <div className={styles.modalButtonContainer}>
+                      <button className={styles.modalButton} onClick={() => setShowModal(false)}>
+                        No
+                      </button>
+                      <button className={styles.modalButton} onClick={() => agreeToDelete()}>
+                        Yes
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </Modal>
-            )}
-            <div className={styles.createEventContainer}>
-              <div className={styles.rightSideContainer}>
-                <div className={styles.bannerContainer}>
-                  <input
-                    type='file'
-                    className={styles.fileUpload}
-                    accept='image/*'
-                    onChange={(e) => setBanner(e.target.files ? e.target.files[0] : null)}
-                  />
-                  {eventData?.banner && !banner?.name ? (
-                    <>
-                      <IoCloseOutline
-                        className={styles.closeIcon}
-                        onClick={() => {
-                          setEventData({ ...eventData, banner: '' });
-                        }}
-                      />
-                      <img src={eventData?.banner} alt='' className={styles.banner} />
-                    </>
-                  ) : (
-                    <>
-                      {banner?.name ? (
-                        <>
-                          <IoCloseOutline
-                            className={styles.closeIcon}
-                            onClick={() => {
-                              eventData?.banner && setEventData({ ...eventData, banner: '' });
-                              setBanner(null);
-                            }}
-                          />
-                          <img src={URL.createObjectURL(banner)} alt='' className={styles.banner} />
-                        </>
-                      ) : (
-                        <svg height='250' width='100%' className={styles.banner}>
-                          {eventTitle && (
-                            <>
-                              <rect width='100%' height='100%' className={styles.banner} />
-                              <text x='25%' y='50%' fill='white' className={styles.svgText}>
-                                No Banner. Click Here to Upload (2000px x 1000px)
-                              </text>
-                            </>
-                          )}
-                        </svg>
-                      )}
-                    </>
-                  )}
-                </div>
-                <div className={styles.descriptionContainer}>
-                  <p className={styles.eventHeading}>About Event</p>
-                  {/* <p
-                    className={styles.description}
-                    dangerouslySetInnerHTML={{ __html: eventData?.description || '' }}
-                  ></p> */}
-                  <br />
-                  <Editor
-                    description={eventData?.description || ''}
-                    setNewDescription={setNewDescription}
-                  />
-                </div>
-              </div>
+                </Modal>
+              )}
+              <div className={styles.createEventContainer}>
+                <div className={styles.rightSideContainer}>
+                  <div className={styles.eventNameContainer}>
+                    <Select
+                      options={selectOptions}
+                      className={styles.selectDropdown}
+                      styles={{
+                        ...customStyles,
+                        menu: (provided: any) => ({
+                          ...provided,
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                          backgroundColor: '#1C2222',
+                          color: '#fff',
+                          fontFamily: 'Inter, sans-serif',
+                          fontStyle: 'normal',
+                          fontWeight: 400,
+                          fontSize: '0.9rem',
+                          zIndex: 1000,
+                        }),
+                      }}
+                      onChange={(selectedOption: { value: string; label: string } | null) =>
+                        setEventData({ ...eventData, status: selectedOption?.label || '' })
+                      }
+                      value={selectOptions.filter((option) => option.label === eventData?.status)}
+                      placeholder={`Select an option`}
+                      isSearchable={false}
+                    />
 
-              <div className={styles.leftSideContainer}>
-                <div className={styles.container}>
-                  <Select
-                    options={selectOptions}
-                    className={styles.selectDropdown}
-                    styles={{
-                      ...customStyles,
-                      menu: (provided: any) => ({
-                        ...provided,
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
-                        backgroundColor: '#1C2222',
-                        color: '#fff',
-                        fontFamily: 'Inter, sans-serif',
-                        fontStyle: 'normal',
-                        fontWeight: 400,
-                        fontSize: '0.9rem',
-                        zIndex: 1000,
-                      }),
-                    }}
-                    onChange={(selectedOption: { value: string; label: string } | null) =>
-                      setEventData({ ...eventData, status: selectedOption?.label || '' })
-                    }
-                    value={selectOptions.filter((option) => option.label === eventData?.status)}
-                    placeholder={`Select an option`}
-                    isSearchable={false}
-                  />
-
-                  <textarea
-                    placeholder='Event Name'
-                    className={styles.inputEventName}
-                    onChange={(e) => setEventTitle(e.target.value)}
-                    value={eventTitle}
-                  />
-                  <AnimatePresence>
-                    {formErrors.title && (
-                      <motion.p
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
-                        className={styles.errorText}
-                      >
-                        {`${formErrors.title[0]}`}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                  <div className={styles.urlContainer}>
-                    <label>Public URL: {window.location.hostname}/</label>
-                    <input
-                      type='text'
-                      className={styles.urlInput}
-                      placeholder='event-url'
-                      value={eventData?.name}
-                      onChange={(e) => setEventData({ ...eventData, name: e.target.value })}
+                    <textarea
+                      placeholder='Event Name'
+                      className={styles.inputEventName}
+                      onChange={(e) => setEventTitle(e.target.value)}
+                      value={eventTitle}
                     />
                   </div>
-                  <AnimatePresence>
-                    {formErrors.name && (
-                      <motion.p
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
-                        className={styles.errorText}
-                      >
-                        {`${formErrors.name[0]}`}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                  <div className={styles.timezoneContainer}>
-                    <div className={styles.dateTimeParentContainer}>
-                      <div className={styles.dateTimeContainer}>
-                        <div>
-                          <label>Event Start</label>
-                          <input
-                            type='datetime-local'
-                            className={styles.dateInput}
-                            value={dateForDateTimeLocal(eventDate?.start)}
-                            onChange={(e) => {
-                              setEventDate({
-                                end: eventDate?.end,
-                                start: e.target.value ? new Date(e.target.value) : undefined,
-                              });
-                            }}
-                          />
-                        </div>
-                        <div>
-                          <label>Event End</label>
-                          <input
-                            type='datetime-local'
-                            className={styles.dateInput}
-                            value={dateForDateTimeLocal(eventDate?.end)}
-                            onChange={(e) =>
-                              setEventDate({
-                                start: eventDate?.start,
-                                end: e.target.value ? new Date(e.target.value) : undefined,
-                              })
-                            }
-                          />
-                        </div>
-                      </div>
-                      <div className={styles.dateTimeContainer}>
-                        <div>
-                          <label>Registration Start</label>
-                          <input
-                            type='datetime-local'
-                            className={styles.dateInput}
-                            value={dateForDateTimeLocal(regDate?.start)}
-                            onChange={(e) =>
-                              setRegDate({
-                                end: regDate?.end,
-                                start: e.target.value ? new Date(e.target.value) : undefined,
-                              })
-                            }
-                          />
-                        </div>
-                        <div>
-                          <label>Registration End</label>
-                          <input
-                            type='datetime-local'
-                            className={styles.dateInput}
-                            value={dateForDateTimeLocal(regDate?.end)}
-                            onChange={(e) =>
-                              setRegDate({
-                                start: regDate?.start,
-                                end: e.target.value ? new Date(e.target.value) : undefined,
-                              })
-                            }
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <span className={styles.timezone}>
-                      <FiGlobe size={20} color='#949597' />
-                      <br />
-                      {timezone?.offset}
-                      <br />
-                      {timezone?.zoneName}
-                    </span>
-                  </div>
-                  <AnimatePresence>
-                    {(formErrors.reg_start_date ||
-                      formErrors.reg_end_date ||
-                      formErrors.event_start_date ||
-                      formErrors.event_end_date) && (
-                      <motion.p
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
-                        className={styles.errorText}
-                      >
-                        {`${formErrors.reg_start_date[0]}\n ${formErrors.reg_end_date[0]}\n ${formErrors.event_start_date[0]}\n ${formErrors.event_end_date[0]}`}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-
-                  {!eventData.is_online && (
-                    <>
-                      <GoogleMap
-                        mapContainerStyle={{
-                          height: '400px',
-                          width: '100%',
-                          borderRadius: '12px 12px 0 0',
-                        }}
-                        zoom={14}
-                        center={location ?? { lat: 0, lng: 0 }}
-                        options={mapOptions}
-                        onClick={onMapClick}
-                      >
-                        {location && (
-                          <MarkerF
-                            position={location}
-                            icon={{
-                              url: 'https://makemypass.com/app/mascot.webp',
-                              scaledSize: new google.maps.Size(40, 52),
-                            }}
-                          />
-                        )}
-                      </GoogleMap>
-
-                      <div className={styles.eventLocation}>
-                        <GrLocation size={20} color='#949597' />
-                        <div className={styles.locationContainer}>
-                          <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                            <input
-                              type='text'
-                              placeholder='Add Event Location'
-                              className={styles.inputLocation}
-                              value={placeName}
-                              onChange={(e) => setPlaceName(e.target.value)}
-                            />
-                          </Autocomplete>
-                          <p className={styles.subText}>Offline location </p>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                  <p className={styles.eventOptions}>Event Options</p>
-                  <div className={styles.optionsContainer}>
-                    <div className={styles.option}>
-                      <label>
-                        <TbMicrophone size={20} color='#949597' /> Audio Form Fill
-                      </label>
-                      <Slider
-                        checked={eventData.parse_audio}
-                        text={''}
-                        onChange={() =>
-                          setEventData({
-                            ...eventData,
-                            parse_audio: !eventData.parse_audio,
-                          })
-                        }
-                      />
-                    </div>
-                    <div className={styles.option}>
-                      <label>
-                        <TbUserCheck size={20} color='#949597' /> Require Approval
-                      </label>
-                      <Slider
-                        checked={eventData.approval_required}
-                        text={''}
-                        onChange={() =>
-                          setEventData({
-                            ...eventData,
-                            approval_required: !eventData.approval_required,
-                          })
-                        }
-                      />
-                    </div>
-                    <div className={styles.option}>
-                      <label>
-                        <TbMailStar size={20} color='#949597' /> Invite Only
-                      </label>
-                      <Slider
-                        checked={eventData.is_private}
-                        text={''}
-                        onChange={() =>
-                          setEventData({ ...eventData, is_private: !eventData.is_private })
-                        }
-                      />
-                    </div>
-                    <div className={styles.option}>
-                      <label>
-                        <TbWorld size={20} color='#949597' /> Online Event
-                      </label>
-                      <Slider
-                        checked={eventData.is_online}
-                        text={''}
-                        onChange={() =>
-                          setEventData({ ...eventData, is_online: !eventData.is_online })
-                        }
-                      />
-                    </div>
-                    <div className={styles.option}>
-                      <label>
-                        <HiOutlineUserGroup size={20} color='#949597' />
-                        Allow Multiple Check-In
-                      </label>
-                      <Slider
-                        checked={eventData.is_multiple_checkin as boolean}
-                        text={''}
-                        onChange={() =>
-                          setEventData({
-                            ...eventData,
-                            is_multiple_checkin: !eventData.is_multiple_checkin,
-                          })
-                        }
-                      />
-                    </div>
-                    {!eventData.is_team && (
+                  <div className={styles.bannerContainer}>
+                    <input
+                      type='file'
+                      className={styles.fileUpload}
+                      accept='image/*'
+                      onChange={(e) => setBanner(e.target.files ? e.target.files[0] : null)}
+                    />
+                    {eventData?.banner && !banner?.name ? (
                       <>
-                        <div className={styles.option}>
-                          <label>
-                            <BsTicketDetailed size={20} color='#949597' /> Allow Multi Ticket
-                          </label>
-                          <Slider
-                            checked={eventData.select_multi_ticket as boolean}
-                            text={''}
-                            onChange={() =>
-                              setEventData({
-                                ...eventData,
-                                select_multi_ticket: !eventData.select_multi_ticket,
-                              })
-                            }
-                          />
+                        <IoCloseOutline
+                          className={styles.closeIcon}
+                          onClick={() => {
+                            setEventData({ ...eventData, banner: '' });
+                          }}
+                        />
+                        <img src={eventData?.banner} alt='' className={styles.banner} />
+                      </>
+                    ) : (
+                      <>
+                        {banner?.name ? (
+                          <>
+                            <IoCloseOutline
+                              className={styles.closeIcon}
+                              onClick={() => {
+                                eventData?.banner && setEventData({ ...eventData, banner: '' });
+                                setBanner(null);
+                              }}
+                            />
+                            <img
+                              src={URL.createObjectURL(banner)}
+                              alt=''
+                              className={styles.banner}
+                            />
+                          </>
+                        ) : (
+                          <svg height='250' width='100%' className={styles.banner}>
+                            {eventTitle && (
+                              <>
+                                <rect width='100%' height='100%' className={styles.banner} />
+                                <text x='25%' y='50%' fill='white' className={styles.svgText}>
+                                  No Banner. Click Here to Upload (2000px x 1000px)
+                                </text>
+                              </>
+                            )}
+                          </svg>
+                        )}
+                      </>
+                    )}
+                  </div>
+                  <div className={styles.descriptionContainer}>
+                    <p className={styles.eventHeading}>About Event</p>
+
+                    <br />
+                    <Editor
+                      description={eventData?.description || ''}
+                      setNewDescription={setNewDescription}
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.leftSideContainer}>
+                  <div className={styles.container}>
+                    <AnimatePresence>
+                      {formErrors.title && (
+                        <motion.p
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className={styles.errorText}
+                        >
+                          {`${formErrors.title[0]}`}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                    <div className={styles.urlContainer}>
+                      <label>Public URL: {window.location.hostname}/</label>
+                      <input
+                        type='text'
+                        className={styles.urlInput}
+                        placeholder='event-url'
+                        value={eventData?.name}
+                        onChange={(e) => setEventData({ ...eventData, name: e.target.value })}
+                      />
+                    </div>
+                    <AnimatePresence>
+                      {formErrors.name && (
+                        <motion.p
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className={styles.errorText}
+                        >
+                          {`${formErrors.name[0]}`}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                    <div className={styles.timezoneContainer}>
+                      <div className={styles.dateTimeParentContainer}>
+                        <div className={styles.dateTimeContainer}>
+                          <div>
+                            <label>Event Start</label>
+                            <input
+                              type='datetime-local'
+                              className={styles.dateInput}
+                              value={dateForDateTimeLocal(eventDate?.start)}
+                              onChange={(e) => {
+                                setEventDate({
+                                  end: eventDate?.end,
+                                  start: e.target.value ? new Date(e.target.value) : undefined,
+                                });
+                              }}
+                            />
+                          </div>
+                          <div>
+                            <label>Event End</label>
+                            <input
+                              type='datetime-local'
+                              className={styles.dateInput}
+                              value={dateForDateTimeLocal(eventDate?.end)}
+                              onChange={(e) =>
+                                setEventDate({
+                                  start: eventDate?.start,
+                                  end: e.target.value ? new Date(e.target.value) : undefined,
+                                })
+                              }
+                            />
+                          </div>
                         </div>
-                        {eventData.select_multi_ticket && (
-                          <motion.div
-                            className={styles.subOption}
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.3 }}
-                          >
+                        <div className={styles.dateTimeContainer}>
+                          <div>
+                            <label>Registration Start</label>
+                            <input
+                              type='datetime-local'
+                              className={styles.dateInput}
+                              value={dateForDateTimeLocal(regDate?.start)}
+                              onChange={(e) =>
+                                setRegDate({
+                                  end: regDate?.end,
+                                  start: e.target.value ? new Date(e.target.value) : undefined,
+                                })
+                              }
+                            />
+                          </div>
+                          <div>
+                            <label>Registration End</label>
+                            <input
+                              type='datetime-local'
+                              className={styles.dateInput}
+                              value={dateForDateTimeLocal(regDate?.end)}
+                              onChange={(e) =>
+                                setRegDate({
+                                  start: regDate?.start,
+                                  end: e.target.value ? new Date(e.target.value) : undefined,
+                                })
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <span className={styles.timezone}>
+                        <FiGlobe size={20} color='#949597' />
+                        <br />
+                        {timezone?.offset}
+                        <br />
+                        {timezone?.zoneName}
+                      </span>
+                    </div>
+                    <AnimatePresence>
+                      {(formErrors.reg_start_date ||
+                        formErrors.reg_end_date ||
+                        formErrors.event_start_date ||
+                        formErrors.event_end_date) && (
+                        <motion.p
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className={styles.errorText}
+                        >
+                          {`${formErrors.reg_start_date[0]}\n ${formErrors.reg_end_date[0]}\n ${formErrors.event_start_date[0]}\n ${formErrors.event_end_date[0]}`}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+
+                    {!eventData.is_online && (
+                      <>
+                        <GoogleMap
+                          mapContainerStyle={{
+                            height: '400px',
+                            width: '100%',
+                            borderRadius: '12px 12px 0 0',
+                          }}
+                          zoom={14}
+                          center={location ?? { lat: 0, lng: 0 }}
+                          options={mapOptions}
+                          onClick={onMapClick}
+                        >
+                          {location && (
+                            <MarkerF
+                              position={location}
+                              icon={{
+                                url: 'https://makemypass.com/app/mascot.webp',
+                                scaledSize: new google.maps.Size(40, 52),
+                              }}
+                            />
+                          )}
+                        </GoogleMap>
+
+                        <div className={styles.eventLocation}>
+                          <GrLocation size={20} color='#949597' />
+                          <div className={styles.locationContainer}>
+                            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                              <input
+                                type='text'
+                                placeholder='Add Event Location'
+                                className={styles.inputLocation}
+                                value={placeName}
+                                onChange={(e) => setPlaceName(e.target.value)}
+                              />
+                            </Autocomplete>
+                            <p className={styles.subText}>Offline location </p>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    <p className={styles.eventOptions}>Event Options</p>
+                    <div className={styles.optionsContainer}>
+                      <div className={styles.option}>
+                        <label>
+                          <TbMicrophone size={20} color='#949597' /> Audio Form Fill
+                        </label>
+                        <Slider
+                          checked={eventData.parse_audio}
+                          text={''}
+                          onChange={() =>
+                            setEventData({
+                              ...eventData,
+                              parse_audio: !eventData.parse_audio,
+                            })
+                          }
+                        />
+                      </div>
+                      <div className={styles.option}>
+                        <label>
+                          <TbUserCheck size={20} color='#949597' /> Require Approval
+                        </label>
+                        <Slider
+                          checked={eventData.approval_required}
+                          text={''}
+                          onChange={() =>
+                            setEventData({
+                              ...eventData,
+                              approval_required: !eventData.approval_required,
+                            })
+                          }
+                        />
+                      </div>
+                      <div className={styles.option}>
+                        <label>
+                          <TbMailStar size={20} color='#949597' /> Invite Only
+                        </label>
+                        <Slider
+                          checked={eventData.is_private}
+                          text={''}
+                          onChange={() =>
+                            setEventData({ ...eventData, is_private: !eventData.is_private })
+                          }
+                        />
+                      </div>
+                      <div className={styles.option}>
+                        <label>
+                          <TbWorld size={20} color='#949597' /> Online Event
+                        </label>
+                        <Slider
+                          checked={eventData.is_online}
+                          text={''}
+                          onChange={() =>
+                            setEventData({ ...eventData, is_online: !eventData.is_online })
+                          }
+                        />
+                      </div>
+                      <div className={styles.option}>
+                        <label>
+                          <HiOutlineUserGroup size={20} color='#949597' />
+                          Allow Multiple Check-In
+                        </label>
+                        <Slider
+                          checked={eventData.is_multiple_checkin as boolean}
+                          text={''}
+                          onChange={() =>
+                            setEventData({
+                              ...eventData,
+                              is_multiple_checkin: !eventData.is_multiple_checkin,
+                            })
+                          }
+                        />
+                      </div>
+                      {!eventData.is_team && (
+                        <>
+                          <div className={styles.option}>
                             <label>
-                              <BsTicketDetailed size={20} color='#949597' /> Grouped Ticket
+                              <BsTicketDetailed size={20} color='#949597' /> Allow Multi Ticket
                             </label>
                             <Slider
-                              checked={eventData.is_grouped_ticket}
+                              checked={eventData.select_multi_ticket as boolean}
                               text={''}
                               onChange={() =>
                                 setEventData({
                                   ...eventData,
-                                  is_grouped_ticket: !eventData.is_grouped_ticket,
+                                  select_multi_ticket: !eventData.select_multi_ticket,
                                 })
                               }
                             />
-                          </motion.div>
-                        )}
-                      </>
-                    )}
+                          </div>
+                          {eventData.select_multi_ticket && (
+                            <motion.div
+                              className={styles.subOption}
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <label>
+                                <BsTicketDetailed size={20} color='#949597' /> Grouped Ticket
+                              </label>
+                              <Slider
+                                checked={eventData.is_grouped_ticket}
+                                text={''}
+                                onChange={() =>
+                                  setEventData({
+                                    ...eventData,
+                                    is_grouped_ticket: !eventData.is_grouped_ticket,
+                                  })
+                                }
+                              />
+                            </motion.div>
+                          )}
+                        </>
+                      )}
 
-                    <div className={styles.option}>
-                      <label>
-                        <AiOutlineTeam size={20} color='#949597' /> Allow Team Registration
-                      </label>
-                      <Slider
-                        checked={eventData.is_team as boolean}
-                        text={''}
-                        onChange={() =>
-                          setEventData({
-                            ...eventData,
-                            is_team: !eventData.is_team,
-                          })
-                        }
-                      />
-                    </div>
-                    <div className={styles.option}>
-                      <label>
-                        <MdOutlineShoppingCartCheckout size={20} color='#949597' /> Enable Checkout
-                        Scan
-                      </label>
-                      <Slider
-                        checked={eventData.is_checkout as boolean}
-                        text={''}
-                        onChange={() =>
-                          setEventData({
-                            ...eventData,
-                            is_checkout: !eventData.is_checkout,
-                          })
-                        }
-                      />
-                    </div>
-                    {/* <div className={styles.option}>
+                      <div className={styles.option}>
+                        <label>
+                          <AiOutlineTeam size={20} color='#949597' /> Allow Team Registration
+                        </label>
+                        <Slider
+                          checked={eventData.is_team as boolean}
+                          text={''}
+                          onChange={() =>
+                            setEventData({
+                              ...eventData,
+                              is_team: !eventData.is_team,
+                            })
+                          }
+                        />
+                      </div>
+                      <div className={styles.option}>
+                        <label>
+                          <MdOutlineShoppingCartCheckout size={20} color='#949597' /> Enable
+                          Checkout Scan
+                        </label>
+                        <Slider
+                          checked={eventData.is_checkout as boolean}
+                          text={''}
+                          onChange={() =>
+                            setEventData({
+                              ...eventData,
+                              is_checkout: !eventData.is_checkout,
+                            })
+                          }
+                        />
+                      </div>
+                      {/* <div className={styles.option}>
                       <label>
                         <PiArrowsSplit size={20} color='#949597' /> Add Sub-Event
                       </label>
@@ -624,89 +629,90 @@ const EditEvent = () => {
                         }
                       />
                     </div> */}
-                    <div className={styles.option}>
-                      <label>
-                        {' '}
-                        <BiArrowToTop size={20} color='#949597' />
-                        Capacity
-                      </label>
-                      <div>
-                        <input
-                          type='number'
-                          className={styles.capcityInput}
-                          placeholder='Unlimited'
-                          value={eventData?.capacity}
-                          onChange={(e) => {
-                            const value = Number(e.target.value);
-                            setEventData({
-                              ...eventData,
-                              capacity: value === 0 ? undefined : value,
-                            });
-                          }}
-                          min={1}
-                        />
-                        <LuPencil size={15} color='#949597' />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className={styles.uploadLogoContainerParent}>
-                    <div className={styles.uploadLogoContainer}>
-                      <div>
-                        {logo ? (
-                          <img
-                            src={URL.createObjectURL(logo)}
-                            alt='Uploaded Image'
-                            className={styles.noImage}
+                      <div className={styles.option}>
+                        <label>
+                          {' '}
+                          <BiArrowToTop size={20} color='#949597' />
+                          Capacity
+                        </label>
+                        <div>
+                          <input
+                            type='number'
+                            className={styles.capcityInput}
+                            placeholder='Unlimited'
+                            value={eventData?.capacity}
+                            onChange={(e) => {
+                              const value = Number(e.target.value);
+                              setEventData({
+                                ...eventData,
+                                capacity: value === 0 ? undefined : value,
+                              });
+                            }}
+                            min={1}
                           />
-                        ) : eventData?.logo ? (
-                          <img src={eventData.logo} className={styles.noImage} />
-                        ) : (
-                          <div className={styles.noImage}></div>
-                        )}
-                      </div>
-                      <div className={styles.uploadLogo}>
-                        <p>Upload {eventData?.logo ? 'New' : ''} Logo</p>
-                        <p className={styles.logoName}>{logo?.name}</p>
-                      </div>
-                      <input
-                        type='file'
-                        className={styles.fileUpload}
-                        accept='image/*'
-                        onChange={(e) => setLogo(e.target.files ? e.target.files[0] : null)}
-                      />
-                      <div className={styles.pencil}>
-                        <LuPencil size={15} color='#949597' />
+                          <LuPencil size={15} color='#949597' />
+                        </div>
                       </div>
                     </div>
-                    <IoCloseOutline
-                      className={styles.closeIcon}
-                      onClick={() => {
-                        setLogo(null);
-                        setEventData({ ...eventData, logo: '' });
-                      }}
-                    />
-                  </div>
-                  <div className={styles.buttonContainer}>
-                    <button className={styles.deleteButton} onClick={() => setShowModal(true)}>
-                      Delete
-                    </button>
-                    <button className={styles.createButton} onClick={() => history.back()}>
-                      Cancel
-                    </button>
-                    <button className={styles.createButton} onClick={onSubmit}>
-                      Save
-                    </button>
+
+                    <div className={styles.uploadLogoContainerParent}>
+                      <div className={styles.uploadLogoContainer}>
+                        <div>
+                          {logo ? (
+                            <img
+                              src={URL.createObjectURL(logo)}
+                              alt='Uploaded Image'
+                              className={styles.noImage}
+                            />
+                          ) : eventData?.logo ? (
+                            <img src={eventData.logo} className={styles.noImage} />
+                          ) : (
+                            <div className={styles.noImage}></div>
+                          )}
+                        </div>
+                        <div className={styles.uploadLogo}>
+                          <p>Upload {eventData?.logo ? 'New' : ''} Logo</p>
+                          <p className={styles.logoName}>{logo?.name}</p>
+                        </div>
+                        <input
+                          type='file'
+                          className={styles.fileUpload}
+                          accept='image/*'
+                          onChange={(e) => setLogo(e.target.files ? e.target.files[0] : null)}
+                        />
+                        <div className={styles.pencil}>
+                          <LuPencil size={15} color='#949597' />
+                        </div>
+                      </div>
+                      <IoCloseOutline
+                        className={styles.closeIcon}
+                        onClick={() => {
+                          setLogo(null);
+                          setEventData({ ...eventData, logo: '' });
+                        }}
+                      />
+                    </div>
+                    <div className={styles.buttonContainer}>
+                      <button className={styles.deleteButton} onClick={() => setShowModal(true)}>
+                        Delete
+                      </button>
+                      <button className={styles.createButton} onClick={() => history.back()}>
+                        Cancel
+                      </button>
+                      <button className={styles.createButton} onClick={onSubmit}>
+                        Save
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
+            </>
+          ) : (
+            <div className={styles.center}>
+              <HashLoader color={'#46BF75'} size={50} />
             </div>
-          </>
-        ) : (
-          <div className={styles.center}>
-            <HashLoader color={'#46BF75'} size={50} />
-          </div>
-        )}
+          )}
+        </DashboardLayout>
       </Theme>
     </>
   );
