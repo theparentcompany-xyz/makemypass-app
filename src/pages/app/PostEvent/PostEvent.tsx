@@ -2,8 +2,9 @@ import Theme from '../../../components/Theme/Theme';
 import styles from './PostEvent.module.css';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 import { LuMailPlus, LuMailX } from 'react-icons/lu';
-import { sentPostEventMail } from '../../../apis/postevent';
-import { useState } from 'react';
+import { TiTick } from 'react-icons/ti';
+import { sentPostEventMail, getPostEventStatus } from '../../../apis/postevent';
+import { useState, useEffect } from 'react';
 import Modal from '../../../components/Modal/Modal';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 
@@ -14,13 +15,22 @@ const PostEvent = () => {
   });
 
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
-
+  const [postEventStatus, setPostEventStatus] = useState<PostEventStatus>();
+  useEffect(() => {
+    getPostEventStatus(eventId, setPostEventStatus);
+  }, []);
+  console.log(postEventStatus);
   return (
     <>
       {openConfirmModal && openConfirmModal.confirm && (
         <Modal>
           <p className={styles.modalHeader}>Remove Host</p>
-          <p className={styles.modalSubText}>Are you sure you want to sent mails?</p>
+          <p className={styles.modalSubText}>
+            {(openConfirmModal.value && postEventStatus?.AfterEventThankYou) ||
+            (!openConfirmModal.value && postEventStatus?.AfterEventSorry)
+              ? `Are You Sure you want to send the mails to the ${postEventStatus?.AfterEventThankYou ? 'Participants' : 'Non-Participants'} again?`
+              : 'Are you sure you want to send mails?'}
+          </p>
           <div className={styles.buttons}>
             <p
               onClick={() => {
@@ -31,7 +41,7 @@ const PostEvent = () => {
               }}
               className={`pointer ${styles.button}`}
             >
-              Sent Mails
+              Send Mails
             </p>
             <p
               onClick={() => {
@@ -50,10 +60,13 @@ const PostEvent = () => {
           <div className={styles.postEventContainer}>
             <div className={styles.sbutton}>
               <SectionButton
-                buttonText='Participant'
+                buttonText={`Participant`}
                 onClick={() => {
                   setConfirmModal({ confirm: true, value: true });
                 }}
+                iconBefore={
+                  postEventStatus?.AfterEventThankYou ? <TiTick size={28} color='' /> : <></>
+                }
                 icon={<LuMailPlus size={28} color='' />}
               />
             </div>
@@ -63,6 +76,9 @@ const PostEvent = () => {
                 onClick={() => {
                   setConfirmModal({ confirm: true, value: false });
                 }}
+                iconBefore={
+                  postEventStatus?.AfterEventSorry ? <TiTick size={28} color='' /> : <></>
+                }
                 icon={<LuMailX size={28} color='' />}
               />
             </div>

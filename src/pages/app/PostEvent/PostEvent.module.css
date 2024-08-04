@@ -30,7 +30,8 @@
 .modalSubText {
   font-weight: 400;
   font-size: 0.9rem;
-  margin-top: 0.25rem;
+  line-height: 1.25rem;
+  margin: 1rem;
 }
 
 .buttons {
