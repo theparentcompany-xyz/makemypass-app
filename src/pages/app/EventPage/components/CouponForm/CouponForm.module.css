@@ -168,8 +168,8 @@
   font-weight: 400;
   color: #bbbaba;
   font-family: 'Inter', sans-serif;
-  margin-top: 0.5rem;
-  text-align: right;
+  margin-top: 0.25rem;
+  text-align: left;
 }
 
 .discountAmount {
