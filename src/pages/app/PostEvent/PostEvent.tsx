@@ -24,7 +24,7 @@ const PostEvent = () => {
     <>
       {openConfirmModal && openConfirmModal.confirm && (
         <Modal>
-          <p className={styles.modalHeader}>Remove Host</p>
+          <p className={styles.modalHeader}>Send Mail</p>
           <p className={styles.modalSubText}>
             {(openConfirmModal.value && postEventStatus?.AfterEventThankYou) ||
             (!openConfirmModal.value && postEventStatus?.AfterEventSorry)
