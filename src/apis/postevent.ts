@@ -3,9 +3,14 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 
 export const sentPostEventMail = async (eventId: string, type: boolean) => {
-  await privateGateway.post(makeMyPass.sentPostMail(eventId), {
-    checkedin_user: type,
-  });
+  try {
+    await privateGateway.post(makeMyPass.sentPostMail(eventId), {
+      checkedin_user: type,
+    });
+    toast.success('Mail Sent Successfully');
+  } catch (e) {
+    toast.error('Mail Sent Failed');
+  }
 };
 
 export const sentTextMail = async (eventId: string, mailId: string) => {

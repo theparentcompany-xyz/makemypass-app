@@ -34,7 +34,17 @@ const PostEvent = () => {
           <div className={styles.buttons}>
             <p
               onClick={() => {
-                sentPostEventMail(eventId, openConfirmModal.value);
+                sentPostEventMail(eventId, openConfirmModal.value).then(() => {
+                  setPostEventStatus(
+                    (prevStatus) =>
+                      ({
+                        ...prevStatus,
+                        ...(openConfirmModal.value
+                          ? { AfterEventThankYou: true }
+                          : { AfterEventSorry: true }),
+                      }) as PostEventStatus,
+                  );
+                });
                 setTimeout(() => {
                   setConfirmModal({ confirm: false, value: false });
                 }, 1000);
