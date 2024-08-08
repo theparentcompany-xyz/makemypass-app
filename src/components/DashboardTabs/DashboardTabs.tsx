@@ -72,7 +72,7 @@ const DashboardTabs = ({
     // };
   }
 
-  const userRoles = eventData.current_user_role;
+  const userRoles = eventData?.current_user_role;
 
   return (
     <AnimatePresence>

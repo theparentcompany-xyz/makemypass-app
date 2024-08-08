@@ -227,7 +227,11 @@ const Insights = ({ type }: { type?: string }) => {
 
   return (
     <Theme>
-      <DashboardLayout prevPage='/events' tabName='insights'>
+      <DashboardLayout
+        prevPage='/events'
+        tabName='insights'
+        setShowPublishModal={setShowPublishModal}
+      >
         {showPublishModal && (
           <Modal
             title='Publish'
