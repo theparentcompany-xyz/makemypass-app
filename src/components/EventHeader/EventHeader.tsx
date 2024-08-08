@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { EventType } from '../../apis/types';
 import { getEventInfo } from '../../apis/publicpage';
-// import { getEventInfo } from '../../apis/publicpage';
+// import { getEventInfo } from '../../apis/publicpagkwe';
 // import { EventType } from '../../apis/types';
 // import { useState } from 'react';
 

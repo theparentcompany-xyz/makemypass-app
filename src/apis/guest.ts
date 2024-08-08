@@ -47,6 +47,13 @@ export const addGuest = (
 
   const backendFormData = new FormData();
 
+  //Trim the formData to remove spaces
+  Object.keys(formData).forEach((key) => {
+    if (typeof formData[key] === 'string') {
+      formData[key] = formData[key].trim();
+    }
+  });
+
   Object.keys(formData).forEach((key) => {
     let value = formData[key];
 

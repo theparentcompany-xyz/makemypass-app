@@ -68,6 +68,13 @@ export const submitForm = async ({
 
   const backendFormData = new FormData();
 
+  //Trim the formData to remove spaces
+  Object.keys(formData).forEach((key) => {
+    if (typeof formData[key] === 'string') {
+      formData[key] = formData[key].trim();
+    }
+  });
+
   Object.keys(formData).forEach((key) => {
     let value = formData[key];
 
@@ -247,6 +254,13 @@ export const validateRsvp = async (
     ? new Date(selectedDate).toISOString().split('T')[0]
     : null;
 
+  //Trim the formData to remove spaces
+  Object.keys(formData).forEach((key) => {
+    if (typeof formData[key] === 'string') {
+      formData[key] = formData[key].trim();
+    }
+  });
+
   // Remove empty key-value pairs from formData
   Object.keys(formData).forEach((key) => {
     if (formData[key] === '') {
@@ -254,7 +268,7 @@ export const validateRsvp = async (
     }
   });
 
-  const payloadFormData = new FormData();
+  const payloadFormData: FormData = new FormData();
 
   Object.keys(formData).forEach((key) => {
     let value = formData[key];
