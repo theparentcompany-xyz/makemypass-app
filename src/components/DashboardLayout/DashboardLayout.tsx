@@ -1,5 +1,5 @@
 import EventHeader from '../EventHeader/EventHeader';
-import Glance from '../Glance/Glance';
+import DashboardTabs from '../DashboardTabs/DashboardTabs';
 import styles from './DashboardLayout.module.css';
 
 const DashboardLayout = ({
@@ -15,7 +15,7 @@ const DashboardLayout = ({
     <>
       <div className={styles.dashoardLayoutContainer}>
         <EventHeader previousPageNavigate={prevPage} />
-        {tabName && <Glance tab={tabName} />}
+        {tabName && <DashboardTabs tab={tabName} />}
         <div className={styles.dashboardContent}>{children}</div>
       </div>
     </>

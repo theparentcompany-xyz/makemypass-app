@@ -3,7 +3,7 @@
 // import { GlobalContext } from '../../../contexts/globalContext';
 import Theme from '../../../components/Theme/Theme';
 import Header from '../../../components/EventHeader/EventHeader';
-import Glance from '../../../components/Glance/Glance';
+import DashboardTabs from '../../../components/DashboardTabs/DashboardTabs';
 // import GenericTable from '../../../components/Table/GenericTable';
 import styles from './EventFeedback.module.css';
 
@@ -22,7 +22,7 @@ const EventFeedback = () => {
     <Theme>
       <div className={styles.feedbackContainer}>
         <Header previousPageNavigate='-1' />
-        <Glance tab='feedback' />
+        <DashboardTabs tab='feedback' />
 
         {/* <GenericTable tableHeading='Feedbacks Recevied' tableData={feedback} /> */}
       </div>

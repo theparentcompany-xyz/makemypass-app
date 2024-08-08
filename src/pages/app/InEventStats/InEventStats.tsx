@@ -24,6 +24,7 @@ import Confetti from 'react-confetti';
 import { formatDate } from '../../../common/commonFunctions';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import Glance from '../../../components/Glance/Glance';
 
 ChartJS.register(
   CategoryScale,
@@ -246,6 +247,7 @@ const InEventStats = () => {
   return (
     <Theme>
       <DashboardLayout prevPage='-1' tabName='inevent'>
+        <Glance tab='inevent' />
         <div className={styles.makemypassbranding}>
           <div className={`${styles.backgroundBrand}`}>
             <img src='/app/mmpcolor.png' alt='makemypass logo' />

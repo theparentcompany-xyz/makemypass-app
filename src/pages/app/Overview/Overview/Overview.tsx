@@ -29,6 +29,7 @@ import { downloadTicket, getIndividualGuestInfo } from '../../../../apis/guests'
 import { isArray } from 'chart.js/helpers';
 import { Roles } from '../../../../../services/enums';
 import DashboardLayout from '../../../../components/DashboardLayout/DashboardLayout';
+import Glance from '../../../../components/Glance/Glance';
 
 const Overview = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
@@ -231,6 +232,7 @@ const Overview = () => {
   return (
     <Theme>
       <DashboardLayout prevPage='/events' tabName='overview'>
+        <Glance tab='overview' />
         {selectedGuestId &&
           selectedGuestData &&
           selectedGuestId.id &&
