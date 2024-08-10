@@ -106,7 +106,7 @@ export const downloadTicket = async (
   privateGateway
     .get(makeMyPass.downloadTicket(eventId, ticketCode))
     .then((response) => {
-      const eventTitle = JSON.parse(sessionStorage.getItem('eventData')!).event_title;
+      const eventTitle = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
       navigate(`/${eventTitle}/ticket?ticketURL=${response.data.response.image}`);
     })
     .catch((error) => {
