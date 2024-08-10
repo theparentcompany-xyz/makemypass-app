@@ -449,6 +449,43 @@ const FormBuilder = () => {
                                     updateFormStateVariable();
                                   }}
                                 />
+
+                                {(field.type === FieldType.Text ||
+                                  field.type === FieldType.LongText) && (
+                                  <>
+                                    <InputField
+                                      name='max_length'
+                                      id='max_length'
+                                      icon={<></>}
+                                      type='number'
+                                      placeholder='Max Length'
+                                      description='Enter the maximum length of the field'
+                                      value={field.property?.max_length?.toString()}
+                                      onChange={(event) => {
+                                        if (parseInt(event.target.value) < 1)
+                                          event.target.value = '1';
+                                        field.property.max_length = parseInt(event.target.value);
+                                        updateFormStateVariable();
+                                      }}
+                                    />
+
+                                    <InputField
+                                      name='min_length'
+                                      id='min_length'
+                                      icon={<></>}
+                                      type='number'
+                                      placeholder='Min Length'
+                                      description='Enter the minimum length of the field'
+                                      value={field.property?.min_length?.toString()}
+                                      onChange={(event) => {
+                                        if (parseInt(event.target.value) < 1)
+                                          event.target.value = '1';
+                                        field.property.min_length = parseInt(event.target.value);
+                                        updateFormStateVariable();
+                                      }}
+                                    />
+                                  </>
+                                )}
                               </div>
 
                               {field.type === FieldType.File && (

@@ -65,7 +65,13 @@
 }
 
 .uniqueField {
-  max-width: 18rem;
+  display: flex;
+  column-gap: 1rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  div {
+    max-width: 15rem;
+  }
 }
 
 .requiredField {
