@@ -479,6 +479,34 @@ const ViewGuest = ({
                   </div>
                 ))}
             </div>{' '}
+            {selectedGuestData['bought_by'] && (
+              <>
+                <hr className={styles.line} />
+                <div className={styles.invitedBy}>
+                  {selectedGuestData['bought_by'] && (
+                    <p className={styles.invitedByText}>
+                      Ticket Bought By{' '}
+                      <span
+                        onClick={() => {
+                          setSelectedGuestId((prevState) => ({
+                            ...prevState,
+                            id: selectedGuestData['bought_by'].id,
+                            type: 'view',
+                          }));
+                        }}
+                        style={{
+                          textDecoration: 'underline',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {selectedGuestData['bought_by'].name}
+                      </span>
+                    </p>
+                  )}
+                </div>
+                <hr className={styles.line} />
+              </>
+            )}
             {selectedGuestData['invited_by'] && (
               <>
                 <hr className={styles.line} />
