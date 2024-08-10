@@ -479,6 +479,38 @@ const ViewGuest = ({
                   </div>
                 ))}
             </div>{' '}
+            {selectedGuestData['consumed_by'] &&
+              Object.entries(selectedGuestData['consumed_by']).length > 0 && (
+                <>
+                  <hr className={styles.line} />
+                  <div className={styles.invitedBy}>
+                    <div className={styles.invitedByText}>
+                      Tickets Consumed By
+                      <ul>
+                        {Object.entries(selectedGuestData['consumed_by']).map(([key, value]) => (
+                          <li key={key}>
+                            <span
+                              onClick={() => {
+                                setSelectedGuestId((prevState) => ({
+                                  ...prevState,
+                                  id: value.id,
+                                  type: 'view',
+                                }));
+                              }}
+                              style={{
+                                textDecoration: 'underline',
+                                cursor: 'pointer',
+                              }}
+                            >
+                              {value.name}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </>
+              )}
             {selectedGuestData['bought_by'] && (
               <>
                 <hr className={styles.line} />

@@ -53,4 +53,8 @@ export type RegistrationDataType = {
     id: string;
     name: string;
   };
+  consumed_by: {
+    id: string;
+    name: string;
+  }[];
 };
