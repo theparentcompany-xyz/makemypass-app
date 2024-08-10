@@ -327,6 +327,15 @@ export const getEventInfo = async (
         }));
       sessionStorage.setItem('eventId', response.data.response.id);
 
+      const eventData = {
+        title: response.data.response.title,
+        current_user_role: response.data.response.current_user_role,
+        event_name: response.data.response.name,
+        logo: response.data.response.logo,
+        event_id: response.data.response.id,
+      };
+      sessionStorage.setItem('eventData', JSON.stringify(eventData));
+
       if (response.data.response.claim_code_message) {
         setClaimCodeExceed &&
           setClaimCodeExceed({

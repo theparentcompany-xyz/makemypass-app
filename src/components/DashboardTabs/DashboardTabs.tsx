@@ -15,6 +15,10 @@ const DashboardTabs = ({
 }) => {
   const eventData = JSON.parse(sessionStorage.getItem('eventData')!);
 
+  const checkUrlForTerm = (term: string) => {
+    const currentUrl = window.location.href.toLowerCase();
+    return currentUrl.includes(term.toLowerCase());
+  };
   const navigate = useNavigate();
 
   const [currentTab, setCurrentTab] = useState(tab);
@@ -104,7 +108,7 @@ const DashboardTabs = ({
                   </>
                 )}
               </ol>
-              {tab === 'insights' && (
+              {tab === 'insights' && !checkUrlForTerm('public') && (
                 <SecondaryButton
                   buttonText='Share'
                   onClick={() => {

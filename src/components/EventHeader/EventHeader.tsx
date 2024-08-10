@@ -1,23 +1,9 @@
 import styles from './EventHeader.module.css';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { EventType } from '../../apis/types';
-import { getEventInfo } from '../../apis/publicpage';
-// import { getEventInfo } from '../../apis/publicpagkwe';
-// import { EventType } from '../../apis/types';
-// import { useState } from 'react';
 
 const EventHeader = ({ previousPageNavigate }: { previousPageNavigate: string }) => {
   const localEventData = JSON.parse(sessionStorage.getItem('eventData')!);
-  const [eventData, setEventData] = useState<EventType>();
-
-  useEffect(() => {
-    if (!localEventData) {
-      getEventInfo(sessionStorage.getItem('eventId') as string, setEventData);
-      console.log(eventData);
-    }
-  }, []);
 
   const navigate = useNavigate();
 
