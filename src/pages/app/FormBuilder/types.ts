@@ -10,8 +10,8 @@ export interface Field {
         extension_types: string[];
         max_size: number;
         is_multiple: boolean;
-        max_length: number;
-        min_length: number;
+        max_length?: number;
+        min_length?: number;
       }
     | { [key: string]: never };
   required: boolean;

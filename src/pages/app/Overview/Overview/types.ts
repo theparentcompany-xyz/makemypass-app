@@ -49,4 +49,8 @@ export type RegistrationDataType = {
   category: string;
   name: string;
   coupon_code: string;
+  bought_by: {
+    id: string;
+    name: string;
+  };
 };

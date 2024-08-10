@@ -71,7 +71,7 @@ export const submitForm = async ({
   //Trim the formData to remove spaces
   Object.keys(formData).forEach((key) => {
     if (typeof formData[key] === 'string') {
-      formData[key] = formData[key].trim();
+      formData[key] = formData[key].toString().trim();
     }
   });
 
@@ -257,7 +257,7 @@ export const validateRsvp = async (
   //Trim the formData to remove spaces
   Object.keys(formData).forEach((key) => {
     if (typeof formData[key] === 'string') {
-      formData[key] = formData[key].trim();
+      formData[key] = formData[key].toString().trim();
     }
   });
 
