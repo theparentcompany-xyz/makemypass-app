@@ -285,11 +285,21 @@ const CouponForm = ({
                     <p className={styles.ticketPrice}>
                       {filteredTicket.currency} {filteredTicket.price}
                     </p>
+                    <br />
                     <p className={styles.extraCharges}>
                       {filteredTicket.platform_fee_from_user && filteredTicket.price > 0 && (
-                        <p className={styles.extraCharges}>
-                          {filteredTicket.platform_fee}% extra charges
-                        </p>
+                        <>
+                          {filteredTicket.platform_fee > 0 && (
+                            <p className={styles.extraCharges}>
+                              {filteredTicket.platform_fee}% Platform Fee
+                            </p>
+                          )}
+                          {filteredTicket.gateway_fee > 0 && (
+                            <p className={styles.extraCharges}>
+                              {filteredTicket.gateway_fee}% Gateway Fee
+                            </p>
+                          )}
+                        </>
                       )}
                     </p>
                   </div>
