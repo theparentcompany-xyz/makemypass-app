@@ -283,17 +283,21 @@ const CouponForm = ({
 
                   <div className={styles.priceData}>
                     <p className={styles.ticketPrice}>
-                      {filteredTicket.platform_fee + filteredTicket.gateway_fee > 0 &&
-                        filteredTicket.currency}{' '}
-                      {filteredTicket.price}{' '}
-                      {
+                      {filteredTicket.platform_fee + filteredTicket.gateway_fee > 0 && (
+                        <>
+                          {filteredTicket.price > 0 && filteredTicket.currency + ' '}
+                          {filteredTicket.price > 0 ? filteredTicket.price : 'FREE'}
+                        </>
+                      )}
+                      {filteredTicket.price > 0 && (
                         <span className={styles.extraCharges}>
+                          {' '}
                           {Number(filteredTicket.platform_fee + filteredTicket.gateway_fee).toFixed(
                             2,
                           )}{' '}
                           extra charges
                         </span>
-                      }
+                      )}
                     </p>
                     <br />
                     <p className={styles.extraCharges}>
