@@ -253,3 +253,26 @@ export type ActivateCouponType = {
   description: string;
   isCouponActive: boolean;
 };
+
+export type VenueType = {
+  id: string;
+  name: string;
+  count?: number;
+};
+
+export type VenueCRUDType = {
+  showModal: boolean;
+  venueList: VenueType[];
+};
+
+export type SpeakerType = {
+  id: string;
+  name: string;
+  position: string;
+  image: string;
+};
+
+export type SpeakerCRUDType = {
+  showModal: boolean;
+  speakerList: SpeakerType[];
+};

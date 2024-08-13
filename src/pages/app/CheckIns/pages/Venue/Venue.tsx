@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
 import Theme from '../../../../../components/Theme/Theme';
 import styles from './Venue.module.css';
-import { checkInUserVenue, listVenues } from '../../../../../apis/venue';
+import { checkInUserVenue, listUserVenues } from '../../../../../apis/venue';
 import { VenueType } from './types';
 import Scanner from '../../../../../components/Scanner/Scanner';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
@@ -28,7 +28,7 @@ const Venue = () => {
   const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
-    listVenues(eventId, setVenues);
+    listUserVenues(eventId, setVenues);
   }, [eventId]);
 
   useEffect(() => {

@@ -5,19 +5,53 @@ import toast from 'react-hot-toast';
 import { VenueType } from '../pages/app/CheckIns/pages/Venue/types';
 import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
 import { formatDate } from '../common/commonFunctions';
+import { VenueCRUDType } from './types';
 
-export const listVenues = async (
+export const listUserVenues = async (
   eventId: string,
   setVenue: Dispatch<React.SetStateAction<VenueType[]>>,
 ) => {
   privateGateway
-    .get(makeMyPass.listVenues(eventId))
+    .get(makeMyPass.listUserVenues(eventId))
     .then((response) => {
       setVenue(response.data.response.venues);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
+};
+
+export const listVenues = async (
+  eventId: string,
+  setVenue: Dispatch<React.SetStateAction<VenueCRUDType>>,
+) => {
+  privateGateway
+    .get(makeMyPass.listVenues(eventId))
+    .then((response) => {
+      setVenue((prev) => ({
+        ...prev,
+        venueList: response.data.response.venues,
+      }));
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
+export const updateVenueList = (venues: VenueType[], eventId: string) => {
+  return new Promise((resolve, reject) => {
+    privateGateway
+      .post(makeMyPass.updateVenueList(eventId), {
+        venues,
+      })
+      .then((response) => {
+        toast.success(response.data.message.general[0]);
+        resolve(response.data.message.general[0]);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 };
 
 export const checkInUserVenue = async (

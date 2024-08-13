@@ -31,7 +31,7 @@ export const makeMyPass = {
   checkInButtons: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkin-buttons/`),
   checkOutUser: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkout`),
   checkInUserVenue: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/venue-checkin/`),
-  listVenues: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/list-venue/`),
+  listUserVenues: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/list-venue/`),
   listUserGifts: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/list-user-gifts/`),
   claimUserGift: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/claim-gift/`), //Scratch Card
 
@@ -174,6 +174,15 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-event/${eventId}/update-coupon-status`),
   deleteCoupon: (eventId: string, couponId: string) =>
     makeMyPassURL(`/manage-coupon/${eventId}/delete-coupon/${couponId}/`),
+
+  //Manage Venues
+  listVenues: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-venues/`),
+  updateVenueList: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/update-venues/`),
+
+  //Manage Speakers
+  listSpeakers: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-speakers/`),
+  updateSpeakerList: (eventId: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/update-speakers/`),
 };
 
 export const makeMyPassSocket = {
