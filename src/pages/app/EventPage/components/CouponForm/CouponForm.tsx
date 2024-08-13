@@ -289,14 +289,6 @@ const CouponForm = ({
                       {filteredTicket.platform_fee + filteredTicket.gateway_fee > 0 &&
                         filteredTicket.currency}{' '}
                       {filteredTicket.price}{' '}
-                      {
-                        <span className={styles.extraCharges}>
-                          {Number(filteredTicket.platform_fee + filteredTicket.gateway_fee).toFixed(
-                            2,
-                          )}{' '}
-                          extra charges
-                        </span>
-                      }
                     </p>
                     <br />
                     <p className={styles.extraCharges}>
@@ -304,12 +296,12 @@ const CouponForm = ({
                         <>
                           {filteredTicket.platform_fee > 0 && (
                             <p className={styles.extraCharges}>
-                              {filteredTicket.platform_fee}% Platform Fee
+                              {filteredTicket.platform_fee}% Extra Platform Fee
                             </p>
                           )}
                           {filteredTicket.gateway_fee > 0 && (
                             <p className={styles.extraCharges}>
-                              {filteredTicket.gateway_fee}% Gateway Fee
+                              {filteredTicket.gateway_fee}%Extra Gateway Fee
                             </p>
                           )}
                         </>

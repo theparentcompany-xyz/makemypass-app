@@ -103,29 +103,34 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
                   onChange={(e) => mailData && setMailData({ ...mailData, body: e.target.value })}
                 />
               </div>
-              <div className={styles.inputContainer}>
-                {/* Add Attachments container */}
-                <p className={styles.inputLabel}>Attachments</p>
-                <div className={styles.attachmentsContainer}>
-                  {previews.length > 0 && (
-                    <div className={styles.previewContainer}>
-                      {previews.map((preview, index) => (
-                        <div key={index} className={styles.previewBox}>
-                          <div
-                            className={styles.closeButton}
-                            onClick={() => {
-                              handleDeleteAttachment(index);
-                            }}
-                          >
-                            <MdClose size={20} />
-                          </div>
-                          {attachments[index].type.startsWith('image/') && (
-                            <img src={preview} alt='Preview' style={{ width: 100, height: 100 }} />
-                          )}
-                          {attachments[index].type.startsWith('video/') && (
-                            <video src={preview} width='100' height='100' controls />
-                          )}
-                          {/* {attachments[index].type === 'application/pdf' && (
+              {import.meta.env.VITE_CURRENT_ENV == 'dev' && (
+                <div className={styles.inputContainer}>
+                  {/* Add Attachments container */}
+                  <p className={styles.inputLabel}>Attachments</p>
+                  <div className={styles.attachmentsContainer}>
+                    {previews.length > 0 && (
+                      <div className={styles.previewContainer}>
+                        {previews.map((preview, index) => (
+                          <div key={index} className={styles.previewBox}>
+                            <div
+                              className={styles.closeButton}
+                              onClick={() => {
+                                handleDeleteAttachment(index);
+                              }}
+                            >
+                              <MdClose size={20} />
+                            </div>
+                            {attachments[index].type.startsWith('image/') && (
+                              <img
+                                src={preview}
+                                alt='Preview'
+                                style={{ width: 100, height: 100 }}
+                              />
+                            )}
+                            {attachments[index].type.startsWith('video/') && (
+                              <video src={preview} width='100' height='100' controls />
+                            )}
+                            {/* {attachments[index].type === 'application/pdf' && (
                             <>
                               {error && <div>Error loading PDF: {error}</div>}
                               <Document
@@ -138,22 +143,23 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
                               </Document>
                             </>
                           )} */}
-                          {<div className={styles.nameContainer}>{attachments[index].name}</div>}
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                            {<div className={styles.nameContainer}>{attachments[index].name}</div>}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className={styles.uploadContainer}>
+                    <input
+                      type='file'
+                      multiple
+                      value={''}
+                      onChange={handleFileChange}
+                      className={styles.fileInput}
+                    />
+                  </div>
                 </div>
-                <div className={styles.uploadContainer}>
-                  <input
-                    type='file'
-                    multiple
-                    value={''}
-                    onChange={handleFileChange}
-                    className={styles.fileInput}
-                  />
-                </div>
-              </div>
+              )}
               <div className={styles.inputContainer}>
                 <p
                   className={styles.inputLink}
