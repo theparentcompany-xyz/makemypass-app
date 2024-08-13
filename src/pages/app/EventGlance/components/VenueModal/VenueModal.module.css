@@ -180,3 +180,40 @@
   font-weight: 400;
   color: #939597;
 }
+
+.deleteText {
+  font-size: 0.95rem;
+  color: #a4a4a4;
+  text-align: center;
+}
+
+.deleteButton {
+  text-align: center;
+  background: #fdfdfd;
+  color: rgb(43, 42, 42);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+
+  max-width: 10rem;
+  margin-right: 1rem;
+}
+
+.cancelButton {
+  text-align: center;
+  background: rgba(253, 253, 253, 0.1);
+  color: #fdfdfd;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+
+  max-width: 10rem;
+}
