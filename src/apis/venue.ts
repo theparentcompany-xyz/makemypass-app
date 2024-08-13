@@ -30,12 +30,28 @@ export const listVenues = async (
     .then((response) => {
       setVenue((prev) => ({
         ...prev,
-        venues: response.data.response.venues,
+        venueList: response.data.response.venues,
       }));
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
+};
+
+export const updateVenueList = (venues: VenueType[], eventId: string) => {
+  return new Promise((resolve, reject) => {
+    privateGateway
+      .post(makeMyPass.updateVenueList(eventId), {
+        venues,
+      })
+      .then((response) => {
+        toast.success(response.data.message.general[0]);
+        resolve(response.data.message.general[0]);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 };
 
 export const checkInUserVenue = async (

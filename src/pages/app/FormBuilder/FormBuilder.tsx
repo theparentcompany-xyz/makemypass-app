@@ -622,12 +622,12 @@ const FormBuilder = () => {
                                               styles={customStyles}
                                               name='colors'
                                               value={
-                                                condition.value && !Array.isArray(condition.value)
-                                                  ? condition.value.split(',').map((value) => ({
+                                                !Array.isArray(condition.value)
+                                                  ? []
+                                                  : condition.value.map((value) => ({
                                                       value,
                                                       label: value,
                                                     }))
-                                                  : []
                                               }
                                               options={
                                                 formFields
@@ -640,9 +640,9 @@ const FormBuilder = () => {
                                               className='basic-multi-select'
                                               classNamePrefix='select'
                                               onChange={(selectedOptions) => {
-                                                condition.value = selectedOptions
-                                                  .map((option) => option.value)
-                                                  .join(',');
+                                                condition.value = selectedOptions.map(
+                                                  (option) => option.value,
+                                                );
                                                 updateFormStateVariable();
                                               }}
                                             />

@@ -103,6 +103,7 @@ export interface TicketType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   perks: any;
   registration_count: number;
+  user_count: number;
   capacity: number | null;
   default_selected: boolean;
   platform_fee: number;
@@ -257,10 +258,22 @@ export type ActivateCouponType = {
 export type VenueType = {
   id: string;
   name: string;
-  count: number;
+  count?: number;
 };
 
 export type VenueCRUDType = {
   showModal: boolean;
-  venues: VenueType[];
+  venueList: VenueType[];
+};
+
+export type SpeakerType = {
+  id: string;
+  name: string;
+  position: string;
+  image: string;
+};
+
+export type SpeakerCRUDType = {
+  showModal: boolean;
+  speakerList: SpeakerType[];
 };

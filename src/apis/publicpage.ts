@@ -140,15 +140,19 @@ export const submitForm = async ({
                     followupMessage: response.data.response.followup_msg,
                     eventRegisterId: response.data.response.event_register_id,
                     loading: false,
+                    redirection: response.data.response.redirection,
                   }));
 
-                setTimeout(() => {
-                  setFormNumber && setFormNumber(0);
-                  setFormData && setFormData({});
-                  setDiscount &&
-                    setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
-                  if (setEventData && eventTitle) getEventInfo(eventTitle, setEventData);
-                }, 2000);
+                if (response.data.response.redirection?.type === 'on_submit') {
+                  window.open(response.data.response.redirection?.url, '_blank');
+                }
+
+                setFormNumber && setFormNumber(0);
+                setFormData && setFormData({});
+                setDiscount &&
+                  setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
+
+                if (setEventData && eventTitle) getEventInfo(eventTitle, setEventData);
               })
               .catch((error) => {
                 toast.error(
