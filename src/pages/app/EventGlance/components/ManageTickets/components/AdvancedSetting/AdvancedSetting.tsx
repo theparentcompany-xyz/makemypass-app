@@ -53,6 +53,23 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
           }}
         />
       </div> */}
+      <div className={styles.advancedOptions}>
+        <label className={styles.optionLabel}>User Count</label>
+        <input
+          type='number'
+          className={styles.optionInput}
+          placeholder=''
+          value={selectedTicket?.user_count}
+          onChange={(e) => {
+            console.log(Number(e.target.value));
+            Number(e.target.value) > 0 &&
+              setSelectedTicket({
+                ...selectedTicket,
+                user_count: Number(e.target.value),
+              } as TicketType);
+          }}
+        />
+      </div>
       <button className={styles.cancelButton} onClick={() => setIsOpen(false)}>
         Back
       </button>
