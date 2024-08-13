@@ -363,6 +363,7 @@
   font-weight: 500;
   color: #fff;
   font-family: 'Inter', sans-serif;
+  width: 100%;
 }
 .couponDescription {
   font-size: 0.8rem;

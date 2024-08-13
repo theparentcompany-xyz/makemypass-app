@@ -251,7 +251,7 @@ const CouponForm = ({
                 <div className={styles.passText}>
                   <p className={styles.ticketTypeTitle}>
                     {filteredTicket.title?.toUpperCase()}{' '}
-                    <span>Admit {filteredTicket.user_count}/Ticket</span>
+                    {filteredTicket.user_count > 1 && <span>x {filteredTicket.user_count}</span>}
                   </p>
                   <p
                     className={styles.ticketTypeDescription}
