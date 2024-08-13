@@ -4,14 +4,14 @@ import styles from './EventGlance.module.css';
 import { IoLocationOutline } from 'react-icons/io5';
 import { ImTicket } from 'react-icons/im';
 import { HiUserGroup } from 'react-icons/hi2';
-import { FaWrench } from 'react-icons/fa6';
+import { FaHouse, FaWrench } from 'react-icons/fa6';
 import { BsQrCodeScan } from 'react-icons/bs';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 // import { LuClock, LuPencil } from 'react-icons/lu';
 import { useEffect, useRef, useState } from 'react';
 import Modal from '../../../components/Modal/Modal';
 import { getDay, getMonthAbbreviation } from '../EventPage/constants';
-import { EventType, listMailType } from '../../../apis/types';
+import { EventType, listMailType, VenueCRUDType } from '../../../apis/types';
 import { getEvent } from '../../../apis/events';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -25,6 +25,8 @@ import { ChildRef } from './components/ManageTickets/ManageTickets';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { RiCoupon2Fill } from 'react-icons/ri';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import { listVenues } from '../../../apis/venue';
+import VenueModal from './components/VenueModal/VenueModal';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -52,15 +54,21 @@ const EventGlance = () => {
   const [isTicketsOpen, setIsTicketsOpen] = useState(false);
   const [mails, setMails] = useState<listMailType[]>([]);
   const [showQR, setShowQR] = useState(false);
+  const [venues, setVenues] = useState<VenueCRUDType>({
+    showModal: false,
+    venues: [],
+  });
 
   useEffect(() => {
     if (eventId) {
+      listVenues(eventId, setVenues);
       listMails(eventId, setMails);
     }
   }, [eventId]);
   return (
     <>
       <Theme>
+        {venues.showModal && <VenueModal venues={venues} setVenues={setVenues} eventId={eventId} />}
         <DashboardLayout prevPage='/events' tabName='manage'>
           {isTicketsOpen && (
             <Modal
@@ -333,6 +341,15 @@ const EventGlance = () => {
                   icon={<BsQrCodeScan size={25} color='#5B75FB' />}
                 />
               </Link>
+
+              <SectionButton
+                buttonText='Add Venues'
+                buttonColor='#5B75FB'
+                icon={<FaHouse size={25} color='#5B75FB' />}
+                onClick={() => {
+                  setVenues({ ...venues, showModal: true });
+                }}
+              />
             </div>
 
             <div className={styles.sendMailsContainer}>
