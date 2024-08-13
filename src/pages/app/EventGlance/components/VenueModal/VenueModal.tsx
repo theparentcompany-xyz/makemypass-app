@@ -2,9 +2,11 @@ import { Dispatch, SetStateAction, useRef } from 'react';
 import { VenueCRUDType } from '../../../../../apis/types';
 import Modal from '../../../../../components/Modal/Modal';
 import styles from './VenueModal.module.css';
-import { BiSolidReport } from 'react-icons/bi';
 import InputField from '../../../../auth/Login/InputField';
 import { v4 as uuidv4 } from 'uuid';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import toast from 'react-hot-toast';
+import { listVenues, updateVenueList } from '../../../../../apis/venue';
 
 const VenueModal = ({
   eventId,
@@ -16,7 +18,49 @@ const VenueModal = ({
   setVenues: Dispatch<SetStateAction<VenueCRUDType>>;
 }) => {
   const newVenueName = useRef<HTMLInputElement>(null);
-  console.log(eventId);
+  const selectedVenueId = useRef<string | null>(null);
+
+  const updateStateVenueList = ({
+    venueName,
+    venueId,
+  }: {
+    venueName: string;
+    venueId?: string;
+  }) => {
+    if (venueId) {
+      const newVenues = venues.venues.map((venue) => {
+        if (venue.id === venueId) {
+          return {
+            ...venue,
+            name: venueName,
+          };
+        }
+        return venue;
+      });
+
+      updateVenueList(newVenues, eventId)
+        .then(() => {
+          listVenues(eventId, setVenues);
+        })
+        .catch(() => {
+          toast.error('Failed to update venue');
+        });
+    } else {
+      const newVenue = {
+        id: uuidv4(),
+        name: venueName,
+        count: 0,
+      };
+
+      updateVenueList([...venues.venues, newVenue], eventId)
+        .then(() => {
+          listVenues(eventId, setVenues);
+        })
+        .catch(() => {
+          toast.error('Failed to add venue');
+        });
+    }
+  };
 
   return (
     <>
@@ -34,37 +78,66 @@ const VenueModal = ({
 
         <button
           onClick={() => {
-            const newVenue = {
-              id: uuidv4(),
-              name: newVenueName.current?.value || '',
-              count: 0,
-            };
-
-            setVenues({
-              ...venues,
-              venues: [...venues.venues, newVenue],
-            });
+            if (newVenueName.current?.value && !selectedVenueId.current) {
+              updateStateVenueList({ venueName: newVenueName.current.value });
+              newVenueName.current.value = '';
+            } else if (newVenueName.current?.value && selectedVenueId.current) {
+              updateStateVenueList({
+                venueName: newVenueName.current.value,
+                venueId: selectedVenueId.current,
+              });
+              newVenueName.current.value = '';
+              selectedVenueId.current = null;
+            } else {
+              toast.error('Please enter a venue name');
+            }
           }}
           className={styles.uploadButton}
         >
-          Add Venue
+          Save Venue
         </button>
 
         <hr className={styles.line} />
 
         <p className={styles.sectionHeader}>Upload Logs</p>
         <div className={styles.logsListingContainer}>
-          <div className={styles.log}>
-            <div className={styles.logDetails}>
-              <p className={styles.logName}>Hardcoded File Name</p>
-              <p className={styles.total} style={{ marginTop: '0.25rem' }}>
-                Hardcoded Ticket Status
-              </p>
-            </div>
-            <p className={styles.logStatus}>Hardcoded Status</p>
+          {venues.venues.map((venue) => (
+            <div className={styles.log}>
+              <div className={styles.logDetails}>
+                <p className={styles.logName}>{venue.name}</p>
+                <p className={styles.total} style={{ marginTop: '0.25rem' }}>
+                  {venue.count} Check Ins
+                </p>
+              </div>
 
-            <BiSolidReport title='Download Report' color='#8e8e8e' className={styles.reportIcon} />
-          </div>
+              <div className='row'>
+                <FaTrash
+                  title='Download Report'
+                  color='#8e8e8e'
+                  className={styles.reportIcon}
+                  onClick={() => {
+                    const newVenues = venues.venues.filter((v) => v.id !== venue.id);
+                    updateVenueList(newVenues, eventId)
+                      .then(() => {
+                        listVenues(eventId, setVenues);
+                      })
+                      .catch(() => {
+                        toast.error('Failed to delete venue');
+                      });
+                  }}
+                />
+                <FaEdit
+                  title='Edit Venue'
+                  color='#8e8e8e'
+                  className={styles.reportIcon}
+                  onClick={() => {
+                    newVenueName.current!.value = venue.name;
+                    selectedVenueId.current = venue.id;
+                  }}
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </Modal>
     </>

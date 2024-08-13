@@ -38,6 +38,22 @@ export const listVenues = async (
     });
 };
 
+export const updateVenueList = (venues: VenueType[], eventId: string) => {
+  return new Promise((resolve, reject) => {
+    privateGateway
+      .post(makeMyPass.updateVenueList(eventId), {
+        venues,
+      })
+      .then((response) => {
+        toast.success(response.data.message.general[0]);
+        resolve(response.data.message.general[0]);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 export const checkInUserVenue = async (
   ticketCode: string,
   eventId: string,

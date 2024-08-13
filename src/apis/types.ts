@@ -257,7 +257,7 @@ export type ActivateCouponType = {
 export type VenueType = {
   id: string;
   name: string;
-  count: number;
+  count?: number;
 };
 
 export type VenueCRUDType = {

@@ -177,6 +177,7 @@ export const makeMyPass = {
 
   //Manage Venues
   listVenues: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-venues/`),
+  updateVenueList: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/update-venues/`),
 };
 
 export const makeMyPassSocket = {
