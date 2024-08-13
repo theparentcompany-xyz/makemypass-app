@@ -477,24 +477,35 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                     </div>
                   </div>
 
-                  <div className={styles.ticketSlider}>
-                    <p className={styles.ticketSliderLabel}>
-                      Include Platform fee{' '}
-                      <span
-                        className={styles.feeReminder}
-                      >{`( ₹${((selectedTicket?.platform_fee / 100) * selectedTicket?.price).toFixed(2)} )`}</span>
-                    </p>
-                    <Slider
-                      checked={selectedTicket?.platform_fee_from_user}
-                      onChange={() => {
-                        selectedTicket &&
-                          setSelectedTicket({
-                            ...selectedTicket,
-                            platform_fee_from_user: !selectedTicket.platform_fee_from_user,
-                          } as TicketType);
-                      }}
-                    />
-                  </div>
+                  {selectedTicket?.platform_fee + selectedTicket?.gateway_fee > 0 && (
+                    <>
+                      <div className={styles.ticketSlider}>
+                        <p className={styles.ticketSliderLabel}>
+                          Include Platform fee{' '}
+                          <span className={styles.feeReminder}>{`( ₹${(
+                            ((selectedTicket?.platform_fee + selectedTicket?.gateway_fee) / 100) *
+                            selectedTicket?.price
+                          ).toFixed(2)} )`}</span>
+                        </p>
+                        <Slider
+                          checked={selectedTicket?.platform_fee_from_user}
+                          onChange={() => {
+                            selectedTicket &&
+                              setSelectedTicket({
+                                ...selectedTicket,
+                                platform_fee_from_user: !selectedTicket.platform_fee_from_user,
+                              } as TicketType);
+                          }}
+                        />
+                      </div>
+                      <div className={styles.feeReminder}>
+                        Platform Fee: {selectedTicket?.platform_fee}%
+                      </div>
+                      <div className={styles.feeReminder}>
+                        Gateway Fee: {selectedTicket?.gateway_fee}%
+                      </div>
+                    </>
+                  )}
                 </motion.div>
               )}
               <div className={styles.ticketSlider}>
