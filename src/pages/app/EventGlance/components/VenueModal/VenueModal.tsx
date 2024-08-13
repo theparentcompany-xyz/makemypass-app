@@ -30,7 +30,7 @@ const VenueModal = ({
     venueId?: string;
   }) => {
     if (venueId) {
-      const newVenues = venues.venues.map((venue) => {
+      const newVenues = venues.venueList.map((venue) => {
         if (venue.id === venueId) {
           return {
             ...venue,
@@ -54,7 +54,7 @@ const VenueModal = ({
         count: 0,
       };
 
-      updateVenueList([...venues.venues, newVenue], eventId)
+      updateVenueList([...venues.venueList, newVenue], eventId)
         .then(() => {
           listVenues(eventId, setVenues);
         })
@@ -78,8 +78,8 @@ const VenueModal = ({
             <div className={styles.deleteButtons}>
               <button
                 onClick={() => {
-                  const newVenues = venues.venues.filter(
-                    (venue) => venue.id !== venues.venues[0].id,
+                  const newVenues = venues.venueList.filter(
+                    (venue) => venue.id !== venues.venueList[0].id,
                   );
                   updateVenueList(newVenues, eventId)
                     .then(() => {
@@ -144,7 +144,7 @@ const VenueModal = ({
 
           <p className={styles.sectionHeader}>Upload Logs</p>
           <div className={styles.logsListingContainer}>
-            {venues.venues.map((venue) => (
+            {venues.venueList.map((venue) => (
               <div className={styles.log}>
                 <div className={styles.logDetails}>
                   <p className={styles.logName}>{venue.name}</p>
@@ -159,10 +159,10 @@ const VenueModal = ({
                     color='#8e8e8e'
                     className={styles.reportIcon}
                     onClick={() => {
-                      if (venues.venues.length > 1) {
+                      if (venues.venueList.length > 1) {
                         setShowDeleteModal(true);
                       } else {
-                        const newVenues = venues.venues.filter((v) => v.id !== venue.id);
+                        const newVenues = venues.venueList.filter((v) => v.id !== venue.id);
                         updateVenueList(newVenues, eventId)
                           .then(() => {
                             listVenues(eventId, setVenues);

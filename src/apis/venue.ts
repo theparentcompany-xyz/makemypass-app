@@ -30,7 +30,7 @@ export const listVenues = async (
     .then((response) => {
       setVenue((prev) => ({
         ...prev,
-        venues: response.data.response.venues,
+        venueList: response.data.response.venues,
       }));
     })
     .catch((error) => {

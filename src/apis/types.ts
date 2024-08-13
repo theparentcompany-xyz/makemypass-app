@@ -262,5 +262,17 @@ export type VenueType = {
 
 export type VenueCRUDType = {
   showModal: boolean;
-  venues: VenueType[];
+  venueList: VenueType[];
+};
+
+export type SpeakerType = {
+  id: string;
+  name: string;
+  position: string;
+  image: string;
+};
+
+export type SpeakerCRUDType = {
+  showModal: boolean;
+  speakerList: SpeakerType[];
 };

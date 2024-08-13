@@ -11,7 +11,7 @@ import SectionButton from '../../../components/SectionButton/SectionButton';
 import { useEffect, useRef, useState } from 'react';
 import Modal from '../../../components/Modal/Modal';
 import { getDay, getMonthAbbreviation } from '../EventPage/constants';
-import { EventType, listMailType, VenueCRUDType } from '../../../apis/types';
+import { EventType, listMailType, SpeakerCRUDType, VenueCRUDType } from '../../../apis/types';
 import { getEvent } from '../../../apis/events';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -27,6 +27,8 @@ import { RiCoupon2Fill } from 'react-icons/ri';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import { listVenues } from '../../../apis/venue';
 import VenueModal from './components/VenueModal/VenueModal';
+import { listSpeakers } from '../../../apis/speakers';
+// import SpeakerModal from './components/SpeakerModal/SpeakerModal';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -56,11 +58,16 @@ const EventGlance = () => {
   const [showQR, setShowQR] = useState(false);
   const [venues, setVenues] = useState<VenueCRUDType>({
     showModal: false,
-    venues: [],
+    venueList: [],
+  });
+  const [speakers, setSpeakers] = useState<SpeakerCRUDType>({
+    showModal: false,
+    speakerList: [],
   });
 
   useEffect(() => {
     if (eventId) {
+      listSpeakers(eventId, setSpeakers);
       listVenues(eventId, setVenues);
       listMails(eventId, setMails);
     }
@@ -69,6 +76,9 @@ const EventGlance = () => {
     <>
       <Theme>
         {venues.showModal && <VenueModal venues={venues} setVenues={setVenues} eventId={eventId} />}
+        {/* {speakers.showModal && (
+          <SpeakerModal eventId={eventId} speakers={speakers} setSpeakers={setSpeakers} />
+        )} */}
         <DashboardLayout prevPage='/events' tabName='manage'>
           {isTicketsOpen && (
             <Modal
@@ -343,13 +353,22 @@ const EventGlance = () => {
               </Link>
 
               <SectionButton
-                buttonText='Add Venues'
+                buttonText='Update Venues'
                 buttonColor='#5B75FB'
                 icon={<FaHouse size={25} color='#5B75FB' />}
                 onClick={() => {
                   setVenues({ ...venues, showModal: true });
                 }}
               />
+
+              {/* <SectionButton
+                buttonText='Update Speakers'
+                buttonColor='#5B75FB'
+                icon={<FaHouse size={25} color='#5B75FB' />}
+                onClick={() => {
+                  setSpeakers({ ...speakers, showModal: true });
+                }}
+              /> */}
             </div>
 
             <div className={styles.sendMailsContainer}>

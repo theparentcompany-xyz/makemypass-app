@@ -178,6 +178,11 @@ export const makeMyPass = {
   //Manage Venues
   listVenues: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-venues/`),
   updateVenueList: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/update-venues/`),
+
+  //Manage Speakers
+  listSpeakers: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-speakers/`),
+  updateSpeakerList: (eventId: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/update-speakers/`),
 };
 
 export const makeMyPassSocket = {
