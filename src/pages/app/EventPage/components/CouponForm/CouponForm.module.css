@@ -35,6 +35,7 @@
   font-family: 'Inter', sans-serif;
 
   position: relative;
+  overflow: hidden;
 }
 
 .dateContainer {
@@ -49,6 +50,13 @@
   color: #4eff99;
   line-height: 1.75rem;
   font-family: 'Inter', sans-serif;
+
+  span {
+    color: white;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    font-weight: 400;
+  }
 }
 
 .ticketTypeDescription {
@@ -363,4 +371,15 @@
   font-family: 'Inter', sans-serif;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.userCount {
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  position: absolute;
+  font-size: 0.9rem;
+  top: 11px;
+  left: -25px;
+  padding: 0.25rem 1.25rem;
+  transform: rotate(-45deg);
 }

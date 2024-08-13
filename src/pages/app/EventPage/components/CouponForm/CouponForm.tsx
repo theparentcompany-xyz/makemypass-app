@@ -249,7 +249,10 @@ const CouponForm = ({
 
               <div>
                 <div className={styles.passText}>
-                  <p className={styles.ticketTypeTitle}>{filteredTicket.title?.toUpperCase()}</p>
+                  <p className={styles.ticketTypeTitle}>
+                    {filteredTicket.title?.toUpperCase()}{' '}
+                    <span>Admit {filteredTicket.user_count}/Ticket</span>
+                  </p>
                   <p
                     className={styles.ticketTypeDescription}
                     dangerouslySetInnerHTML={{ __html: filteredTicket.description }}
