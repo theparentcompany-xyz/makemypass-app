@@ -103,6 +103,7 @@ export interface TicketType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   perks: any;
   registration_count: number;
+  user_count: number;
   capacity: number | null;
   default_selected: boolean;
   platform_fee: number;
