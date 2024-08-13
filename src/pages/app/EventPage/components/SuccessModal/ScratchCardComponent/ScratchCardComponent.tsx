@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 
 interface ScratchCardProps {
   width: number;
@@ -8,6 +8,8 @@ interface ScratchCardProps {
   revealContent: string | React.ReactNode;
   brushSize?: number;
   revealThreshold?: number;
+  isRevealed: boolean;
+  setIsRevealed: Dispatch<SetStateAction<boolean>>;
 }
 
 const ScratchCard: React.FC<ScratchCardProps> = ({
@@ -18,10 +20,11 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
   revealImage,
   brushSize = 20,
   revealThreshold = 50,
+  isRevealed,
+  setIsRevealed,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [isRevealed, setIsRevealed] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -132,11 +135,20 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
       {isRevealed ? (
         <>
           {revealImage && (
-            <img
-              src={revealImage}
-              alt='Reveal Image'
-              style={{ position: 'absolute', top: 0, left: 0, width, height, borderRadius: '8px' }}
-            />
+            <>
+              <img
+                src={revealImage}
+                alt='Reveal Image'
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width,
+                  height,
+                  borderRadius: '8px',
+                }}
+              />
+            </>
           )}
           <div style={{ width, height }}>{revealContent}</div>
         </>

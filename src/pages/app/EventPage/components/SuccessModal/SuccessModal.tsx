@@ -7,7 +7,6 @@ import { HashLoader } from 'react-spinners';
 import ScratchCard from './ScratchCardComponent/ScratchCardComponent';
 import image from './scratchImage.png';
 import { claimRegisterGift } from '../../../../../apis/publicpage';
-
 const SuccessModal = ({
   success,
   setSuccess,
@@ -22,6 +21,8 @@ const SuccessModal = ({
     image: '',
     isFetching: false,
   });
+
+  const [isRevealed, setIsRevealed] = useState(false);
 
   return (
     <div>
@@ -88,6 +89,17 @@ const SuccessModal = ({
                       </button>
                     )}
 
+                    {!hasScratchCard && success.redirection && (
+                      <button
+                        onClick={() => {
+                          window.open(success.redirection?.url, '_blank');
+                        }}
+                        className={styles.viewTicketButton}
+                      >
+                        Next
+                      </button>
+                    )}
+
                     <p className={styles.contactUs}>
                       If you have any questions or need assistance, please contact us at
                       hello@makemypass.com
@@ -122,15 +134,29 @@ const SuccessModal = ({
                       <br />
                     </>
                   ) : (
-                    <ScratchCard
-                      width={150}
-                      height={150}
-                      coverImage={image}
-                      revealContent={scratchCard.name}
-                      revealImage={scratchCard.image}
-                      brushSize={30}
-                      revealThreshold={60}
-                    />
+                    <>
+                      <ScratchCard
+                        width={150}
+                        height={150}
+                        coverImage={image}
+                        revealContent={scratchCard.name}
+                        revealImage={scratchCard.image}
+                        brushSize={30}
+                        revealThreshold={60}
+                        isRevealed={isRevealed}
+                        setIsRevealed={setIsRevealed}
+                      />
+                      {isRevealed && (
+                        <button
+                          onClick={() => {
+                            window.open(success.redirection?.url, '_blank');
+                          }}
+                          className={styles.viewTicketButton}
+                        >
+                          Next
+                        </button>
+                      )}
+                    </>
                   )}
                 </div>
               </div>

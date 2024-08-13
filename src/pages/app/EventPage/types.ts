@@ -56,6 +56,10 @@ export type SuccessModalProps = {
   ticketURL?: string;
   loading?: boolean;
   eventId?: string;
+  redirection?: {
+    url: string;
+    type: 'on_submit' | 'on_button_click';
+  };
 };
 
 export type AudioControlsType = {

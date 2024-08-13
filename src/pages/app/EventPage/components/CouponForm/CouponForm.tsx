@@ -216,7 +216,7 @@ const CouponForm = ({
                       -
                     </button>
                     <p className={styles.ticketCount}>
-                      {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count ?? 0}
+                      {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count}
                     </p>
                     <button
                       className={styles.ticketCountUpdateButton}
@@ -241,7 +241,7 @@ const CouponForm = ({
                 </div>
               )}
 
-              {filteredTicket.capacity && filteredTicket.capacity >= 0 && (
+              {filteredTicket.capacity != null && filteredTicket.capacity >= 0 && (
                 <div className={styles.dateContainer}>
                   <p className={styles.capacity}>{filteredTicket.capacity} tickets left</p>
                 </div>
