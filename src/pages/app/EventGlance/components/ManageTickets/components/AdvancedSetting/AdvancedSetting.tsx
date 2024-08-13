@@ -62,11 +62,14 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
           value={selectedTicket?.user_count}
           onChange={(e) => {
             console.log(Number(e.target.value));
-            Number(e.target.value) > 0 &&
-              setSelectedTicket({
-                ...selectedTicket,
-                user_count: Number(e.target.value),
-              } as TicketType);
+            // Number(e.target.value) > 0 &&
+            if (Number(e.target.value) < 1) {
+              e.target.value = '1';
+            }
+            setSelectedTicket({
+              ...selectedTicket,
+              user_count: Number(e.target.value),
+            } as TicketType);
           }}
         />
       </div>
