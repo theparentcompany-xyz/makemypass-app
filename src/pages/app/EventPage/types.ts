@@ -17,6 +17,7 @@ export type CouponData = {
   description: string;
   value?: string;
   error?: string;
+  public_coupon?: string[];
 };
 
 type TicketType = {

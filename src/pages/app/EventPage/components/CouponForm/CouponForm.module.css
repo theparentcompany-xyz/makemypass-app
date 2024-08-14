@@ -22,7 +22,7 @@
   /* max-width: 25rem; */
 
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 2rem;
 
   flex-wrap: wrap;
@@ -420,4 +420,26 @@
     font-size: 0.9rem;
     color: white;
   }
+}
+
+.couponContainer {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.couponName {
+  margin-right: 0.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border: 1px solid #3e3e3e;
+  padding: 0.25rem 1rem;
+  font-weight: 500;
+  color: #ffffffb7;
+  font-family: 'Inter', sans-serif;
+
+  cursor: pointer;
+}
+
+.couponName:hover {
+  background: rgba(255, 255, 255, 0.04);
 }

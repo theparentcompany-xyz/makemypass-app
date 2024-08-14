@@ -286,9 +286,8 @@ const CouponForm = ({
 
                   <div className={styles.priceData}>
                     <p className={styles.ticketPrice}>
-                      {filteredTicket.platform_fee + filteredTicket.gateway_fee > 0 &&
-                        filteredTicket.currency}{' '}
-                      {filteredTicket.price}{' '}
+                      {filteredTicket.price > 0 && filteredTicket.currency}{' '}
+                      {filteredTicket.price === 0 ? 'FREE' : filteredTicket.price}
                     </p>
                     <br />
                     <p className={styles.extraCharges}>
@@ -338,6 +337,7 @@ const CouponForm = ({
             error={[coupon.error ?? '']}
             type='text'
             icon={getIcon('coupon_code')}
+            value={coupon.value}
             style={{
               marginTop: '-1rem',
               border:
@@ -349,12 +349,29 @@ const CouponForm = ({
               setCoupon({ ...coupon, error: '', value: e.target.value });
             }}
           />
+
           {discount.discount_type && discount.discount_value > 0 && (
             <p className={styles.discountText}>
               {discount.discount_type.toLowerCase() === 'percentage'
                 ? `${discount.discount_value}% discount applied`
                 : `${discount.discount_value} ${filteredTickets[0].currency} discount applied`}
             </p>
+          )}
+
+          {coupon.public_coupon && (
+            <div className={styles.couponContainer}>
+              {coupon.public_coupon.map((coupon) => (
+                <span
+                  className={styles.couponName}
+                  onClick={() => {
+                    setCoupon((prevCoupon) => ({ ...prevCoupon, value: coupon }));
+                    setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
+                  }}
+                >
+                  {coupon}
+                </span>
+              ))}
+            </div>
           )}
 
           <button
