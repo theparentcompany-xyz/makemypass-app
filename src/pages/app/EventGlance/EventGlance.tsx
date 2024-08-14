@@ -361,14 +361,14 @@ const EventGlance = () => {
                 }}
               />
 
-              {/* <SectionButton
+              <SectionButton
                 buttonText='Update Speakers'
                 buttonColor='#5B75FB'
                 icon={<FaHouse size={25} color='#5B75FB' />}
                 onClick={() => {
                   setSpeakers({ ...speakers, showModal: true });
                 }}
-              /> */}
+              />
             </div>
 
             <div className={styles.sendMailsContainer}>
