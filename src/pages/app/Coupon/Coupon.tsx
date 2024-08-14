@@ -353,7 +353,7 @@ const Coupon = () => {
                       onChange={() => {
                         setNewCouponData({
                           ...newCouponData,
-                          is_active: !newCouponData.is_private,
+                          is_active: !newCouponData.is_active,
                         });
                       }}
                       text='Activate Coupon'
