@@ -4,7 +4,7 @@ import styles from './EventGlance.module.css';
 import { IoLocationOutline } from 'react-icons/io5';
 import { ImTicket } from 'react-icons/im';
 import { HiUserGroup } from 'react-icons/hi2';
-import { FaHouse, FaWrench } from 'react-icons/fa6';
+import { FaWrench } from 'react-icons/fa6';
 import { BsQrCodeScan } from 'react-icons/bs';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 // import { LuClock, LuPencil } from 'react-icons/lu';

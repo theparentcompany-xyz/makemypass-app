@@ -265,7 +265,6 @@ const CouponForm = ({
                     ))}
                   </div>
                 </div>
-
                 <div className={styles.ticketPriceData}>
                   {discount.discount_value > 0 &&
                     filteredTicket.price > 0 &&
