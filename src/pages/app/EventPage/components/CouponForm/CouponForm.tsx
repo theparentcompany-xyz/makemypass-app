@@ -55,10 +55,20 @@ const CouponForm = ({
   };
   const [filteredTickets, setFilteredTickets] = useState<TicketType[]>([]);
   const [newTickets, setNewTickets] = useState<Tickets[]>([]);
+  const [selectedTicketCategory, setSelectedTicketCategory] = useState<string>('');
 
   const ticketSoldAlert = () => {
     toast.error('Ticket sold out');
   };
+
+  useEffect(() => {
+    const firstCategory = [
+      ...new Set(
+        filteredTickets.filter((ticket) => ticket.category).map((ticket) => ticket.category),
+      ),
+    ][0];
+    setSelectedTicketCategory(firstCategory);
+  }, [filteredTickets]);
 
   const onSelectTicket = (currentTicketId: string) => {
     if (eventFormData?.select_multi_ticket) {
@@ -187,131 +197,283 @@ const CouponForm = ({
           <p className={styles.eventDescription}>Select a ticket type to register for the event.</p>
         </div>
 
-        {filteredTickets?.map((filteredTicket) => {
-          return (
-            <div
-              key={filteredTicket.id}
-              onClick={() => {
-                filteredTicket.capacity && filteredTicket.capacity <= 0
-                  ? ticketSoldAlert()
-                  : onSelectTicket(filteredTicket.id);
-              }}
-              className={`${styles.ticketType} ${isTicketActive(filteredTicket) ? styles.borderClassWhite : styles.borderClassDefault}`}
+        <div className={styles.couponTypesContainer}>
+          {[
+            ...new Set(
+              filteredTickets.filter((ticket) => ticket.category).map((ticket) => ticket.category),
+            ),
+          ].map((category) => (
+            <p
+              className={styles.couponTypesTitle}
               style={
-                filteredTicket.capacity && filteredTicket.capacity <= 0
-                  ? { opacity: '0.5' }
+                selectedTicketCategory === category
+                  ? { borderBottom: '2px solid #ffffff', color: '#ffffff' }
                   : undefined
               }
+              onClick={() => setSelectedTicketCategory(category)}
             >
-              {eventFormData?.select_multi_ticket && (
-                <div className={styles.ticketCountContainer}>
-                  <div className='row' style={{ columnGap: 0 }}>
-                    <button
-                      className={styles.ticketCountUpdateButton}
-                      onClick={() => {
-                        filteredTicket.capacity && filteredTicket.capacity <= 0
-                          ? ticketSoldAlert()
-                          : updateTicketCount(filteredTicket.id, false);
-                      }}
-                    >
-                      -
-                    </button>
-                    <p className={styles.ticketCount}>
-                      {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count ?? 0}
-                    </p>
-                    <button
-                      className={styles.ticketCountUpdateButton}
-                      onClick={() => {
-                        const currentTicketCount = tickets.find(
-                          (ticket) => ticket.ticket_id === filteredTicket.id,
-                        )?.count;
+              {category}
+            </p>
+          ))}
+        </div>
 
-                        if (
-                          currentTicketCount === filteredTicket.capacity ||
-                          (filteredTicket.capacity != null && filteredTicket.capacity <= 0)
-                        ) {
-                          toast.error('Ticket limit reached');
-                          return;
-                        }
-                        updateTicketCount(filteredTicket.id, true);
-                      }}
-                    >
-                      +
-                    </button>
+        {filteredTickets
+          .filter((filteredTicket) => filteredTicket.category === selectedTicketCategory)
+          .map((filteredTicket) => {
+            return (
+              <div
+                key={filteredTicket.id}
+                onClick={() => {
+                  filteredTicket.capacity && filteredTicket.capacity <= 0
+                    ? ticketSoldAlert()
+                    : onSelectTicket(filteredTicket.id);
+                }}
+                className={`${styles.ticketType} ${isTicketActive(filteredTicket) ? styles.borderClassWhite : styles.borderClassDefault}`}
+                style={
+                  filteredTicket.capacity && filteredTicket.capacity <= 0
+                    ? { opacity: '0.5' }
+                    : undefined
+                }
+              >
+                {eventFormData?.select_multi_ticket && (
+                  <div className={styles.ticketCountContainer}>
+                    <div className='row' style={{ columnGap: 0 }}>
+                      <button
+                        className={styles.ticketCountUpdateButton}
+                        onClick={() => {
+                          filteredTicket.capacity && filteredTicket.capacity <= 0
+                            ? ticketSoldAlert()
+                            : updateTicketCount(filteredTicket.id, false);
+                        }}
+                      >
+                        -
+                      </button>
+                      <p className={styles.ticketCount}>
+                        {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count ??
+                          0}
+                      </p>
+                      <button
+                        className={styles.ticketCountUpdateButton}
+                        onClick={() => {
+                          const currentTicketCount = tickets.find(
+                            (ticket) => ticket.ticket_id === filteredTicket.id,
+                          )?.count;
+
+                          if (
+                            currentTicketCount === filteredTicket.capacity ||
+                            (filteredTicket.capacity != null && filteredTicket.capacity <= 0)
+                          ) {
+                            toast.error('Ticket limit reached');
+                            return;
+                          }
+                          updateTicketCount(filteredTicket.id, true);
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {filteredTicket.capacity != null && filteredTicket.capacity >= 0 && (
-                <div className={styles.dateContainer}>
-                  <p className={styles.capacity}>{filteredTicket.capacity} tickets left</p>
-                </div>
-              )}
-
-              <div>
-                <div className={styles.passText}>
-                  <p className={styles.ticketTypeTitle}>
-                    {filteredTicket.title?.toUpperCase()}{' '}
-                    {filteredTicket.user_count > 1 && <span>x {filteredTicket.user_count}</span>}
-                  </p>
-                  <p
-                    className={styles.ticketTypeDescription}
-                    dangerouslySetInnerHTML={{ __html: filteredTicket.description }}
-                  ></p>
-                  <div className={styles.perks}>
-                    {Object.keys(filteredTicket.perks)?.map((perk) => (
-                      <div key={perk} className={styles.perk}>
-                        {perk}: {filteredTicket.perks[perk]}
-                      </div>
-                    ))}
+                {filteredTicket.capacity != null && filteredTicket.capacity >= 0 && (
+                  <div className={styles.dateContainer}>
+                    <p className={styles.capacity}>{filteredTicket.capacity} tickets left</p>
                   </div>
-                </div>
-                <div className={styles.ticketPriceData}>
-                  {discount.discount_value > 0 &&
-                    filteredTicket.price > 0 &&
-                    discount.ticket.includes(filteredTicket.id) && (
-                      <div className={styles.discountData}>
-                        <p className={styles.discountAmount}>
-                          {discount.discount_type.toLowerCase() === 'percentage'
-                            ? `${discount.discount_value}% off`
-                            : `${filteredTicket.currency} ${discount.discount_value} off`}
-                        </p>
-                        <p className={styles.originalPrice}>
-                          <del>
-                            {filteredTicket.currency} {filteredTicket.show_price}
-                          </del>
-                        </p>
-                      </div>
-                    )}
+                )}
 
-                  <div className={styles.priceData}>
-                    <p className={styles.ticketPrice}>
-                      {filteredTicket.price > 0 && filteredTicket.currency}{' '}
-                      {filteredTicket.price === 0 ? 'FREE' : filteredTicket.price}
+                <div>
+                  <div className={styles.passText}>
+                    <p className={styles.ticketTypeTitle}>
+                      {filteredTicket.title?.toUpperCase()}{' '}
+                      {filteredTicket.user_count > 1 && <span>x {filteredTicket.user_count}</span>}
                     </p>
-                    <br />
-                    <p className={styles.extraCharges}>
-                      {filteredTicket.platform_fee_from_user && filteredTicket.price > 0 && (
-                        <>
-                          {filteredTicket.platform_fee > 0 && (
-                            <p className={styles.extraCharges}>
-                              {filteredTicket.platform_fee}% Extra Platform Fee
-                            </p>
-                          )}
-                          {filteredTicket.gateway_fee > 0 && (
-                            <p className={styles.extraCharges}>
-                              {filteredTicket.gateway_fee}% Extra Gateway Fee
-                            </p>
-                          )}
-                        </>
+                    <p
+                      className={styles.ticketTypeDescription}
+                      dangerouslySetInnerHTML={{ __html: filteredTicket.description }}
+                    ></p>
+                    <div className={styles.perks}>
+                      {Object.keys(filteredTicket.perks)?.map((perk) => (
+                        <div key={perk} className={styles.perk}>
+                          {perk}: {filteredTicket.perks[perk]}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className={styles.ticketPriceData}>
+                    {discount.discount_value > 0 &&
+                      filteredTicket.price > 0 &&
+                      discount.ticket.includes(filteredTicket.id) && (
+                        <div className={styles.discountData}>
+                          <p className={styles.discountAmount}>
+                            {discount.discount_type.toLowerCase() === 'percentage'
+                              ? `${discount.discount_value}% off`
+                              : `${filteredTicket.currency} ${discount.discount_value} off`}
+                          </p>
+                          <p className={styles.originalPrice}>
+                            <del>
+                              {filteredTicket.currency} {filteredTicket.show_price}
+                            </del>
+                          </p>
+                        </div>
                       )}
-                    </p>
+
+                    <div className={styles.priceData}>
+                      <p className={styles.ticketPrice}>
+                        {filteredTicket.price > 0 && filteredTicket.currency}{' '}
+                        {filteredTicket.price === 0 ? 'FREE' : filteredTicket.price}
+                      </p>
+                      <br />
+                      <p className={styles.extraCharges}>
+                        {filteredTicket.platform_fee_from_user && filteredTicket.price > 0 && (
+                          <>
+                            {filteredTicket.platform_fee > 0 && (
+                              <p className={styles.extraCharges}>
+                                {filteredTicket.platform_fee}% Extra Platform Fee
+                              </p>
+                            )}
+                            {filteredTicket.gateway_fee > 0 && (
+                              <p className={styles.extraCharges}>
+                                {filteredTicket.gateway_fee}% Extra Gateway Fee
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+
+        {filteredTickets
+          .filter((filteredTicket) => filteredTicket.category === null)
+          .map((filteredTicket) => {
+            return (
+              <div
+                key={filteredTicket.id}
+                onClick={() => {
+                  filteredTicket.capacity && filteredTicket.capacity <= 0
+                    ? ticketSoldAlert()
+                    : onSelectTicket(filteredTicket.id);
+                }}
+                className={`${styles.ticketType} ${isTicketActive(filteredTicket) ? styles.borderClassWhite : styles.borderClassDefault}`}
+                style={
+                  filteredTicket.capacity && filteredTicket.capacity <= 0
+                    ? { opacity: '0.5' }
+                    : undefined
+                }
+              >
+                {eventFormData?.select_multi_ticket && (
+                  <div className={styles.ticketCountContainer}>
+                    <div className='row' style={{ columnGap: 0 }}>
+                      <button
+                        className={styles.ticketCountUpdateButton}
+                        onClick={() => {
+                          filteredTicket.capacity && filteredTicket.capacity <= 0
+                            ? ticketSoldAlert()
+                            : updateTicketCount(filteredTicket.id, false);
+                        }}
+                      >
+                        -
+                      </button>
+                      <p className={styles.ticketCount}>
+                        {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count ??
+                          0}
+                      </p>
+                      <button
+                        className={styles.ticketCountUpdateButton}
+                        onClick={() => {
+                          const currentTicketCount = tickets.find(
+                            (ticket) => ticket.ticket_id === filteredTicket.id,
+                          )?.count;
+
+                          if (
+                            currentTicketCount === filteredTicket.capacity ||
+                            (filteredTicket.capacity != null && filteredTicket.capacity <= 0)
+                          ) {
+                            toast.error('Ticket limit reached');
+                            return;
+                          }
+                          updateTicketCount(filteredTicket.id, true);
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {filteredTicket.capacity != null && filteredTicket.capacity >= 0 && (
+                  <div className={styles.dateContainer}>
+                    <p className={styles.capacity}>{filteredTicket.capacity} tickets left</p>
+                  </div>
+                )}
+
+                <div>
+                  <div className={styles.passText}>
+                    <p className={styles.ticketTypeTitle}>
+                      {filteredTicket.title?.toUpperCase()}{' '}
+                      {filteredTicket.user_count > 1 && <span>x {filteredTicket.user_count}</span>}
+                    </p>
+                    <p
+                      className={styles.ticketTypeDescription}
+                      dangerouslySetInnerHTML={{ __html: filteredTicket.description }}
+                    ></p>
+                    <div className={styles.perks}>
+                      {Object.keys(filteredTicket.perks)?.map((perk) => (
+                        <div key={perk} className={styles.perk}>
+                          {perk}: {filteredTicket.perks[perk]}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className={styles.ticketPriceData}>
+                    {discount.discount_value > 0 &&
+                      filteredTicket.price > 0 &&
+                      discount.ticket.includes(filteredTicket.id) && (
+                        <div className={styles.discountData}>
+                          <p className={styles.discountAmount}>
+                            {discount.discount_type.toLowerCase() === 'percentage'
+                              ? `${discount.discount_value}% off`
+                              : `${filteredTicket.currency} ${discount.discount_value} off`}
+                          </p>
+                          <p className={styles.originalPrice}>
+                            <del>
+                              {filteredTicket.currency} {filteredTicket.show_price}
+                            </del>
+                          </p>
+                        </div>
+                      )}
+
+                    <div className={styles.priceData}>
+                      <p className={styles.ticketPrice}>
+                        {filteredTicket.price > 0 && filteredTicket.currency}{' '}
+                        {filteredTicket.price === 0 ? 'FREE' : filteredTicket.price}
+                      </p>
+                      <br />
+                      <p className={styles.extraCharges}>
+                        {filteredTicket.platform_fee_from_user && filteredTicket.price > 0 && (
+                          <>
+                            {filteredTicket.platform_fee > 0 && (
+                              <p className={styles.extraCharges}>
+                                {filteredTicket.platform_fee}% Extra Platform Fee
+                              </p>
+                            )}
+                            {filteredTicket.gateway_fee > 0 && (
+                              <p className={styles.extraCharges}>
+                                {filteredTicket.gateway_fee}% Extra Gateway Fee
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
       </motion.div>
 
       {coupon.status && (

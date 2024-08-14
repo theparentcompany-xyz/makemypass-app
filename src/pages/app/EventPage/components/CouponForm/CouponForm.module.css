@@ -443,3 +443,25 @@
 .couponName:hover {
   background: rgba(255, 255, 255, 0.04);
 }
+
+.couponTypesContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
+  column-gap: 0.25rem;
+}
+
+.couponTypesTitle {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #fff;
+
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+
+  padding: 0.25rem 1rem;
+  font-family: 'Inter', sans-serif;
+}

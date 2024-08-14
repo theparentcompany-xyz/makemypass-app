@@ -119,6 +119,7 @@ export function convertDate(date: Date | undefined) {
 
 export const findMinDate = (eventFormData: FormEventData): Date | null => {
   const todayDate: Date = new Date();
+  todayDate.setHours(0, 0, 0, 0);
   let minDate: Date | null = null;
 
   eventFormData.tickets.forEach((ticket: TicketType) => {
