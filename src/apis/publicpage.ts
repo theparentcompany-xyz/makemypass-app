@@ -1,6 +1,8 @@
 import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
+import { NewTabOpener } from 'new-tab-opener';
+
 import {
   AudioControlsType,
   CouponData,
@@ -58,6 +60,8 @@ export const submitForm = async ({
   ticketCode?: string | null;
 }) => {
   setLoading && setLoading(true);
+
+  const newTab = new NewTabOpener();
   const selectedDateFormatted = selectedDate
     ? new Date(selectedDate).toISOString().split('T')[0]
     : null;
@@ -133,6 +137,12 @@ export const submitForm = async ({
                 payment_id: response.razorpay_payment_id,
               })
               .then((response) => {
+                if (response.data.response.redirection?.type === 'on_submit') {
+                  setTimeout(() => {
+                    window.open(response.data.response.redirection?.url, '_blank');
+                  }, 1000);
+                }
+
                 setSuccess &&
                   setSuccess((prev) => ({
                     ...prev,
@@ -142,10 +152,6 @@ export const submitForm = async ({
                     loading: false,
                     redirection: response.data.response.redirection,
                   }));
-
-                if (response.data.response.redirection?.type === 'on_submit') {
-                  window.open(response.data.response.redirection?.url, '_blank');
-                }
 
                 setFormNumber && setFormNumber(0);
                 setFormData && setFormData({});
@@ -185,21 +191,18 @@ export const submitForm = async ({
             followupMessage: response.data.response.followup_msg,
             eventRegisterId: response.data.response.event_register_id,
             loading: false,
+            redirection: response.data.response.redirection,
           }));
 
-        console.log({
-          showModal: true,
-          ticketURL: response.data.response.ticket_url,
-          followupMessage: response.data.response.followup_msg,
-          eventRegisterId: response.data.response.event_register_id,
-          loading: false,
-        });
+        if (response.data.response.redirection?.type === 'on_submit') {
+          setTimeout(() => {
+            window.open(response.data.response.redirection?.url, '_blank');
+          }, 1000);
+        }
 
-        setTimeout(() => {
-          setFormNumber && setFormNumber(0);
-          setFormData && setFormData({});
-          setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
-        }, 2000);
+        setFormNumber && setFormNumber(0);
+        setFormData && setFormData({});
+        setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
       }
     })
     .catch((error) => {

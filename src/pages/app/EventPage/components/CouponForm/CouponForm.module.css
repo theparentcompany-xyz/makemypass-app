@@ -394,3 +394,30 @@
   text-align: left;
   /* max-width: 20rem; */
 }
+
+.claimCodeExccededMessage {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #bbbaba;
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+  padding: 0.75rem 0.5rem;
+  margin-bottom: 1rem;
+
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  column-gap: 0.5rem;
+
+  span {
+    font-size: 0.9rem;
+    color: white;
+  }
+}

@@ -13,6 +13,7 @@ import toast from 'react-hot-toast';
 import { findMinDate } from '../../../../../common/commonFunctions';
 import { filterTickets } from '../../../../../common/coreLogics.ts';
 import { FormEventData } from '../../../Guests/types.ts';
+import { RiInformationFill } from 'react-icons/ri';
 
 const CouponForm = ({
   setTickets,
@@ -308,14 +309,6 @@ const CouponForm = ({
                     </p>
                   </div>
                 </div>
-                {eventFormData?.select_multi_ticket &&
-                  !eventFormData.is_grouped_ticket &&
-                  (tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count ?? 0) >
-                    1 && (
-                    <p className={styles.multiTicketMessage}>
-                      Note: Kindly check your email for the link of register of other tickets
-                    </p>
-                  )}
               </div>
             </div>
           );
@@ -378,6 +371,14 @@ const CouponForm = ({
           </button>
         </motion.div>
       )}
+      {eventFormData?.select_multi_ticket &&
+        !eventFormData.is_grouped_ticket &&
+        tickets.reduce((acc, ticket) => acc + ticket.count, 0) > 1 && (
+          <div className={styles.claimCodeExccededMessage}>
+            <RiInformationFill color='#4eff99' size={25} />
+            <span>Kindly check your email for the link of register of other tickets</span>
+          </div>
+        )}
     </>
   );
 };
