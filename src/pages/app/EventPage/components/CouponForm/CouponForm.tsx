@@ -212,7 +212,7 @@ const CouponForm = ({
               }
               onClick={() => setSelectedTicketCategory(category)}
             >
-              {category}
+              {`${category}`}
             </p>
           ))}
         </div>
