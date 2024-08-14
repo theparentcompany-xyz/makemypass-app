@@ -15,7 +15,7 @@ export type CreateCouponType = {
   code: string;
   type: 'percentage' | 'amount';
   value: number;
-  tickets: string[];
+  ticket_restricted: string[];
   description: string;
   is_active: boolean;
   count: number | null;

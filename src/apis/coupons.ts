@@ -12,6 +12,7 @@ export const listCoupons = async (
 ) => {
   privateGateway.get(makeMyPass.listCoupons(eventId)).then((response) => {
     setCoupons(response.data.response.coupons);
+    console.log('Coupons', response.data.response.coupons);
 
     if (setActivateCoupon)
       setActivateCoupon({

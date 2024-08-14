@@ -1,8 +1,6 @@
 import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { NewTabOpener } from 'new-tab-opener';
-
 import {
   AudioControlsType,
   CouponData,
@@ -60,8 +58,6 @@ export const submitForm = async ({
   ticketCode?: string | null;
 }) => {
   setLoading && setLoading(true);
-
-  const newTab = new NewTabOpener();
   const selectedDateFormatted = selectedDate
     ? new Date(selectedDate).toISOString().split('T')[0]
     : null;
