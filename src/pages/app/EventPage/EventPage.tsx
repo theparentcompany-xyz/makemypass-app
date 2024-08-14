@@ -123,6 +123,7 @@ const EventPage = () => {
                   parse_audio: eventData.parse_audio ?? false,
                   coupon: eventData.coupon ?? false,
                   claim_ticket_id: eventData.claim_ticked_id,
+                  is_grouped_ticket: eventData.is_grouped_ticket,
                 }}
                 setSuccess={setSuccess}
                 setEventData={setEventData}
