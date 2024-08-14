@@ -216,7 +216,7 @@ const CouponForm = ({
                       -
                     </button>
                     <p className={styles.ticketCount}>
-                      {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count}
+                      {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count ?? 0}
                     </p>
                     <button
                       className={styles.ticketCountUpdateButton}
@@ -265,7 +265,6 @@ const CouponForm = ({
                     ))}
                   </div>
                 </div>
-
                 <div className={styles.ticketPriceData}>
                   {discount.discount_value > 0 &&
                     filteredTicket.price > 0 &&
@@ -286,21 +285,9 @@ const CouponForm = ({
 
                   <div className={styles.priceData}>
                     <p className={styles.ticketPrice}>
-                      {filteredTicket.platform_fee + filteredTicket.gateway_fee > 0 && (
-                        <>
-                          {filteredTicket.price > 0 && filteredTicket.currency + ' '}
-                          {filteredTicket.price > 0 ? filteredTicket.price : 'FREE'}
-                        </>
-                      )}
-                      {filteredTicket.price > 0 && (
-                        <span className={styles.extraCharges}>
-                          {' '}
-                          {Number(filteredTicket.platform_fee + filteredTicket.gateway_fee).toFixed(
-                            2,
-                          )}{' '}
-                          extra charges
-                        </span>
-                      )}
+                      {filteredTicket.platform_fee + filteredTicket.gateway_fee > 0 &&
+                        filteredTicket.currency}{' '}
+                      {filteredTicket.price}{' '}
                     </p>
                     <br />
                     <p className={styles.extraCharges}>
@@ -308,12 +295,12 @@ const CouponForm = ({
                         <>
                           {filteredTicket.platform_fee > 0 && (
                             <p className={styles.extraCharges}>
-                              {filteredTicket.platform_fee}% Platform Fee
+                              {filteredTicket.platform_fee}% Extra Platform Fee
                             </p>
                           )}
                           {filteredTicket.gateway_fee > 0 && (
                             <p className={styles.extraCharges}>
-                              {filteredTicket.gateway_fee}% Gateway Fee
+                              {filteredTicket.gateway_fee}% Extra Gateway Fee
                             </p>
                           )}
                         </>
