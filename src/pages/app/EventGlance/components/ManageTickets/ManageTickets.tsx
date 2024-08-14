@@ -186,6 +186,22 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     }
   };
 
+  const calcTotalExtraFee = () => {
+    if (!selectedTicket?.platform_fee_from_user) {
+      return (
+        (((selectedTicket?.platform_fee ?? 0) + (selectedTicket?.gateway_fee ?? 0)) / 100) *
+        (selectedTicket?.price ?? 0)
+      );
+    } else {
+      const target_amount = selectedTicket?.price * (1 + selectedTicket?.platform_fee / 100);
+
+      const total_amount = target_amount / (1 - selectedTicket?.gateway_fee / 100);
+      const gateway_amount = (selectedTicket?.gateway_fee / 100) * total_amount;
+      const platform_amount = total_amount - selectedTicket?.price - gateway_amount;
+      return platform_amount + gateway_amount;
+    }
+  };
+
   const hasUnsavedChanges = () => {
     if (selectedTicket?.new) return true;
     return !(
@@ -483,10 +499,9 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                       <div className={styles.ticketSlider}>
                         <p className={styles.ticketSliderLabel}>
                           Include Platform fee{' '}
-                          <span className={styles.feeReminder}>{`( ₹${(
-                            ((selectedTicket?.platform_fee + selectedTicket?.gateway_fee) / 100) *
-                            selectedTicket?.price
-                          ).toFixed(2)} )`}</span>
+                          <span className={styles.feeReminder}>{`( ₹${calcTotalExtraFee().toFixed(
+                            2,
+                          )} )`}</span>
                         </p>
                         <Slider
                           checked={selectedTicket?.platform_fee_from_user}
