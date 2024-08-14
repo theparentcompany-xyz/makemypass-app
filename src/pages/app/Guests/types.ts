@@ -24,6 +24,7 @@ export type SelectedGuest = {
 };
 
 export interface FormEventData {
+  is_grouped_ticket: any;
   id: string;
   form: FormFieldType[];
   tickets: TicketType[];

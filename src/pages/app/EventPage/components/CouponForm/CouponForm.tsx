@@ -308,6 +308,14 @@ const CouponForm = ({
                     </p>
                   </div>
                 </div>
+                {eventFormData?.select_multi_ticket &&
+                  !eventFormData.is_grouped_ticket &&
+                  (tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count ?? 0) >
+                    1 && (
+                    <p className={styles.multiTicketMessage}>
+                      Note: Kindly check your email for the link of register of other tickets
+                    </p>
+                  )}
               </div>
             </div>
           );

@@ -384,3 +384,13 @@
   padding: 0.25rem 1.25rem;
   transform: rotate(-45deg);
 }
+
+.multiTicketMessage {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #4eff98be;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
+  text-align: left;
+  /* max-width: 20rem; */
+}
