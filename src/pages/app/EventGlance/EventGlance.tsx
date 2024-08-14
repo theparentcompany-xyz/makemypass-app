@@ -4,7 +4,7 @@ import styles from './EventGlance.module.css';
 import { IoLocationOutline } from 'react-icons/io5';
 import { ImTicket } from 'react-icons/im';
 import { HiUserGroup } from 'react-icons/hi2';
-import { FaWrench } from 'react-icons/fa6';
+import { FaHouse, FaWrench } from 'react-icons/fa6';
 import { BsQrCodeScan } from 'react-icons/bs';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 // import { LuClock, LuPencil } from 'react-icons/lu';
@@ -352,23 +352,25 @@ const EventGlance = () => {
                 />
               </Link>
 
-              {/* <SectionButton
+              <SectionButton
                 buttonText='Update Venues'
                 buttonColor='#5B75FB'
                 icon={<FaHouse size={25} color='#5B75FB' />}
                 onClick={() => {
                   setVenues({ ...venues, showModal: true });
                 }}
-              /> */}
+              />
 
-              {/* <SectionButton
-                buttonText='Update Speakers'
-                buttonColor='#5B75FB'
-                icon={<FaHouse size={25} color='#5B75FB' />}
-                onClick={() => {
-                  setSpeakers({ ...speakers, showModal: true });
-                }}
-              /> */}
+              {import.meta.env.VITE_CURRENT_ENV == 'dev' && (
+                <SectionButton
+                  buttonText='Update Speakers'
+                  buttonColor='#5B75FB'
+                  icon={<FaHouse size={25} color='#5B75FB' />}
+                  onClick={() => {
+                    setSpeakers({ ...speakers, showModal: true });
+                  }}
+                />
+              )}
             </div>
 
             <div className={styles.sendMailsContainer}>

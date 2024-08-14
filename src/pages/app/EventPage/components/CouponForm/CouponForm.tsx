@@ -13,6 +13,7 @@ import toast from 'react-hot-toast';
 import { findMinDate } from '../../../../../common/commonFunctions';
 import { filterTickets } from '../../../../../common/coreLogics.ts';
 import { FormEventData } from '../../../Guests/types.ts';
+import { RiInformationFill } from 'react-icons/ri';
 
 const CouponForm = ({
   setTickets,
@@ -285,9 +286,8 @@ const CouponForm = ({
 
                   <div className={styles.priceData}>
                     <p className={styles.ticketPrice}>
-                      {filteredTicket.platform_fee + filteredTicket.gateway_fee > 0 &&
-                        filteredTicket.currency}{' '}
-                      {filteredTicket.price}{' '}
+                      {filteredTicket.price > 0 && filteredTicket.currency}{' '}
+                      {filteredTicket.price === 0 ? 'FREE' : filteredTicket.price}
                     </p>
                     <br />
                     <p className={styles.extraCharges}>
@@ -308,14 +308,6 @@ const CouponForm = ({
                     </p>
                   </div>
                 </div>
-                {eventFormData?.select_multi_ticket &&
-                  !eventFormData.is_grouped_ticket &&
-                  (tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count ?? 0) >
-                    1 && (
-                    <p className={styles.multiTicketMessage}>
-                      Note: Kindly check your email for the link of register of other tickets
-                    </p>
-                  )}
               </div>
             </div>
           );
@@ -345,6 +337,7 @@ const CouponForm = ({
             error={[coupon.error ?? '']}
             type='text'
             icon={getIcon('coupon_code')}
+            value={coupon.value}
             style={{
               marginTop: '-1rem',
               border:
@@ -356,12 +349,29 @@ const CouponForm = ({
               setCoupon({ ...coupon, error: '', value: e.target.value });
             }}
           />
+
           {discount.discount_type && discount.discount_value > 0 && (
             <p className={styles.discountText}>
               {discount.discount_type.toLowerCase() === 'percentage'
                 ? `${discount.discount_value}% discount applied`
                 : `${discount.discount_value} ${filteredTickets[0].currency} discount applied`}
             </p>
+          )}
+
+          {coupon.public_coupon && (
+            <div className={styles.couponContainer}>
+              {coupon.public_coupon.map((coupon) => (
+                <span
+                  className={styles.couponName}
+                  onClick={() => {
+                    setCoupon((prevCoupon) => ({ ...prevCoupon, value: coupon }));
+                    setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
+                  }}
+                >
+                  {coupon}
+                </span>
+              ))}
+            </div>
           )}
 
           <button
@@ -378,6 +388,14 @@ const CouponForm = ({
           </button>
         </motion.div>
       )}
+      {eventFormData?.select_multi_ticket &&
+        !eventFormData.is_grouped_ticket &&
+        tickets.reduce((acc, ticket) => acc + ticket.count, 0) > 1 && (
+          <div className={styles.claimCodeExccededMessage}>
+            <RiInformationFill color='#4eff99' size={25} />
+            <span>Kindly check your email for the link of register of other tickets</span>
+          </div>
+        )}
     </>
   );
 };

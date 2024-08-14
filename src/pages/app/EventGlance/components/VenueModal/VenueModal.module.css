@@ -187,6 +187,12 @@
   text-align: center;
 }
 
+.noLogsText {
+  font-size: 0.95rem;
+  color: #a4a4a4;
+  text-align: left;
+}
+
 .deleteButton {
   text-align: center;
   background: #fdfdfd;

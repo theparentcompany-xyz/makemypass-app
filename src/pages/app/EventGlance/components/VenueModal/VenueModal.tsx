@@ -142,7 +142,7 @@ const VenueModal = ({
 
           <hr className={styles.line} />
 
-          <p className={styles.sectionHeader}>Upload Logs</p>
+          <p className={styles.sectionHeader}>Current Venues</p>
           <div className={styles.logsListingContainer}>
             {venues.venueList.map((venue) => (
               <div className={styles.log}>
@@ -185,6 +185,10 @@ const VenueModal = ({
                 </div>
               </div>
             ))}
+
+            {venues.venueList.length === 0 && (
+              <p className={styles.noLogsText}>No venues added yet</p>
+            )}
           </div>
         </Modal>
       )}
