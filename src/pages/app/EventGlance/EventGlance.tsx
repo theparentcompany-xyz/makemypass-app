@@ -352,14 +352,14 @@ const EventGlance = () => {
                 />
               </Link>
 
-              <SectionButton
+              {/* <SectionButton
                 buttonText='Update Venues'
                 buttonColor='#5B75FB'
                 icon={<FaHouse size={25} color='#5B75FB' />}
                 onClick={() => {
                   setVenues({ ...venues, showModal: true });
                 }}
-              />
+              /> */}
 
               {/* <SectionButton
                 buttonText='Update Speakers'
