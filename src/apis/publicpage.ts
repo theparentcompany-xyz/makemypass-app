@@ -133,6 +133,12 @@ export const submitForm = async ({
                 payment_id: response.razorpay_payment_id,
               })
               .then((response) => {
+                if (response.data.response.redirection?.type === 'on_submit') {
+                  setTimeout(() => {
+                    window.open(response.data.response.redirection?.url, '_blank');
+                  }, 1000);
+                }
+
                 setSuccess &&
                   setSuccess((prev) => ({
                     ...prev,
@@ -140,15 +146,15 @@ export const submitForm = async ({
                     followupMessage: response.data.response.followup_msg,
                     eventRegisterId: response.data.response.event_register_id,
                     loading: false,
+                    redirection: response.data.response.redirection,
                   }));
 
-                setTimeout(() => {
-                  setFormNumber && setFormNumber(0);
-                  setFormData && setFormData({});
-                  setDiscount &&
-                    setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
-                  if (setEventData && eventTitle) getEventInfo(eventTitle, setEventData);
-                }, 2000);
+                setFormNumber && setFormNumber(0);
+                setFormData && setFormData({});
+                setDiscount &&
+                  setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
+
+                if (setEventData && eventTitle) getEventInfo(eventTitle, setEventData);
               })
               .catch((error) => {
                 toast.error(
@@ -181,21 +187,18 @@ export const submitForm = async ({
             followupMessage: response.data.response.followup_msg,
             eventRegisterId: response.data.response.event_register_id,
             loading: false,
+            redirection: response.data.response.redirection,
           }));
 
-        console.log({
-          showModal: true,
-          ticketURL: response.data.response.ticket_url,
-          followupMessage: response.data.response.followup_msg,
-          eventRegisterId: response.data.response.event_register_id,
-          loading: false,
-        });
+        if (response.data.response.redirection?.type === 'on_submit') {
+          setTimeout(() => {
+            window.open(response.data.response.redirection?.url, '_blank');
+          }, 1000);
+        }
 
-        setTimeout(() => {
-          setFormNumber && setFormNumber(0);
-          setFormData && setFormData({});
-          setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
-        }, 2000);
+        setFormNumber && setFormNumber(0);
+        setFormData && setFormData({});
+        setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
       }
     })
     .catch((error) => {

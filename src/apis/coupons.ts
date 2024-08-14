@@ -12,6 +12,7 @@ export const listCoupons = async (
 ) => {
   privateGateway.get(makeMyPass.listCoupons(eventId)).then((response) => {
     setCoupons(response.data.response.coupons);
+    console.log('Coupons', response.data.response.coupons);
 
     if (setActivateCoupon)
       setActivateCoupon({
@@ -79,8 +80,10 @@ export const editCoupon = async (
   setCoupons: Dispatch<SetStateAction<CouponType[]>>,
 ) => {
   const backendFormData = new FormData();
+  console.log(data);
+
   Object.keys(data).forEach((key) => {
-    let value = data[key];
+    const value = data[key];
 
     if (!(value instanceof FileList)) {
       if (Array.isArray(value) && value.length > 0) {
@@ -90,13 +93,15 @@ export const editCoupon = async (
             typeof value === 'object' ? JSON.stringify(value) : value,
           ),
         );
-      } else {
-        value = data[key];
       }
     }
 
-    if (typeof value === 'string' && value.length > 0) {
-      backendFormData.append(key, value);
+    if (
+      (typeof value === 'string' && value.length > 0) ||
+      typeof value === 'number' ||
+      typeof value === 'boolean'
+    ) {
+      backendFormData.append(key, value.toString());
     } else if (value instanceof FileList) {
       Array.from(value).forEach((value) => backendFormData.append(key + '[]', value));
     }

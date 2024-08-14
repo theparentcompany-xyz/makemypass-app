@@ -57,7 +57,7 @@ const Coupon = () => {
     code: '',
     value: 0,
     type: 'amount',
-    tickets: [],
+    ticket_restricted: [],
     description: '',
     is_active: true,
     count: 0,
@@ -187,7 +187,7 @@ const Coupon = () => {
                             label: ticket.title,
                           };
                         })}
-                        value={newCouponData.tickets.map((ticket) => {
+                        value={newCouponData?.ticket_restricted.map((ticket) => {
                           return {
                             value: ticket,
                             label: tickets.find((t) => t.id === ticket)?.title,
@@ -196,7 +196,7 @@ const Coupon = () => {
                         onChange={(options) => {
                           setNewCouponData({
                             ...newCouponData,
-                            tickets: options.map((option) => option.value),
+                            ticket_restricted: options.map((option) => option.value),
                           });
                         }}
                       />
@@ -226,7 +226,7 @@ const Coupon = () => {
                             toast.error('Enter a value less than 100');
                             return;
                           } else {
-                            const ticketPrices = newCouponData.tickets.map((ticketId) => {
+                            const ticketPrices = newCouponData.ticket_restricted.map((ticketId) => {
                               const ticket = tickets.find((ticket) => ticket.id === ticketId);
                               return ticket && ticket.price;
                             });
@@ -493,7 +493,7 @@ const Coupon = () => {
                         code: '',
                         value: 0,
                         type: 'amount',
-                        tickets: [],
+                        ticket_restricted: [],
                         description: '',
                         is_active: true,
                         count: 0,
@@ -514,7 +514,7 @@ const Coupon = () => {
                               code: '',
                               value: 0,
                               type: 'amount',
-                              tickets: [],
+                              ticket_restricted: [],
                               description: '',
                               is_active: true,
                               count: 0,
@@ -543,7 +543,7 @@ const Coupon = () => {
                           code: '',
                           value: 0,
                           type: 'amount',
-                          tickets: [],
+                          ticket_restricted: [],
                           description: '',
                           is_active: true,
                           count: 0,

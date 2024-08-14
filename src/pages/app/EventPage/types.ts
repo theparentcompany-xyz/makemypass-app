@@ -17,6 +17,7 @@ export type CouponData = {
   description: string;
   value?: string;
   error?: string;
+  public_coupon?: string[];
 };
 
 type TicketType = {
@@ -56,6 +57,10 @@ export type SuccessModalProps = {
   ticketURL?: string;
   loading?: boolean;
   eventId?: string;
+  redirection?: {
+    url: string;
+    type: 'on_submit' | 'on_button_click';
+  };
 };
 
 export type AudioControlsType = {

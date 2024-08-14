@@ -1,12 +1,13 @@
-import { Dispatch, SetStateAction, useRef } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { SpeakerCRUDType } from '../../../../../apis/types';
 import Modal from '../../../../../components/Modal/Modal';
 import InputField from '../../../../auth/Login/InputField';
 import styles from './SpeakerModal.module.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { updateSpeakerList } from '../../../../../apis/speakers';
 // import toast from 'react-hot-toast';
 // import { listSpeakers, updateSpeakerList } from '../../../../../apis/speakers';
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 const SpeakerModal = ({
   eventId,
@@ -17,52 +18,16 @@ const SpeakerModal = ({
   speakers: SpeakerCRUDType;
   setSpeakers: Dispatch<SetStateAction<SpeakerCRUDType>>;
 }) => {
-  const newSpeakerName = useRef<HTMLInputElement>(null);
-  //   const selectedVenueId = useRef<string | null>(null);
-  console.log(eventId);
+  const [speakerData, setSpeakerData] = useState({
+    id: uuidv4(),
+    name: '',
+    position: '',
+    image: '',
+  });
 
-  //   const updateStateVenueList = ({
-  //     speakerName,
-  //     speakerId,
-  //   }: {
-  //     speakerName: string;
-  //     speakerId?: string;
-  //   }) => {
-  //     if (speakerId) {
-  //       const newSpeakers = speakers.speakerList.map((speaker) => {
-  //         if (speaker.id === speakerId) {
-  //           return {
-  //             ...speaker,
-  //             name: speakerName,
-  //           };
-  //         }
-  //         return speaker;
-  //       });
-
-  //       updateSpeakerList(newSpeakers, eventId)
-  //         .then(() => {
-  //           listSpeakers(eventId, setSpeakers);
-  //         })
-  //         .catch(() => {
-  //           toast.error('Failed to update venue');
-  //         });
-  //     } else {
-  //       const newSpeaker = {
-  //         id: uuidv4(),
-  //         name: speakerName,
-  //         position: '',
-  //         image: '',
-  //       };
-
-  //       updateSpeakerList([...speakers.speakerList, newSpeaker], eventId)
-  //         .then(() => {
-  //           listSpeakers(eventId, setSpeakers);
-  //         })
-  //         .catch(() => {
-  //           toast.error('Failed to add venue');
-  //         });
-  //     }
-  //   };
+  const updateSpeakerInformation = () => {
+    updateSpeakerList([...speakers.speakerList, speakerData], eventId);
+  };
 
   return (
     <Modal
@@ -81,29 +46,53 @@ const SpeakerModal = ({
           name='speaker_name'
           id='speaker_name'
           icon={<></>}
-          ref={newSpeakerName}
+          onChange={(event) => {
+            setSpeakerData({
+              ...speakerData,
+              name: event.target.value,
+            });
+          }}
+        />
+        <InputField
+          placeholder='Enter Speaker Position'
+          type='text'
+          name='speaker_name'
+          id='speaker_name'
+          icon={<></>}
+          onChange={(event) => {
+            setSpeakerData({
+              ...speakerData,
+              position: event.target.value,
+            });
+          }}
+        />
+
+        <InputField
+          placeholder='Enter Speaker Image URL'
+          type='file'
+          name='speaker_name'
+          id='speaker_name'
+          icon={<></>}
+          onChange={(event) => {
+            setSpeakerData({
+              ...speakerData,
+              image: event.target.value,
+            });
+          }}
         />
       </div>
 
       <button
-        // onClick={() => {
-        //   if (newSpeakerName.current?.value && !selectedVenueId.current) {
-        //     updateStateVenueList({ venueName: newSpeakerName.current.value });
-        //     newSpeakerName.current.value = '';
-        //   } else if (newSpeakerName.current?.value && selectedVenueId.current) {
-        //     updateStateVenueList({
-        //       speakerName: newVenueName.current.value,
-        //       speakerId: selectedVenueId.current,
-        //     });
-        //     newSpeakerName.current.value = '';
-        //     selectedVenueId.current = null;
-        //   } else {
-        //     toast.error('Please enter a venue name');
-        //   }
-        // }}
         className={styles.uploadButton}
+        onClick={() => {
+          updateSpeakerInformation();
+          setSpeakers((prev) => ({
+            ...prev,
+            showModal: false,
+          }));
+        }}
       >
-        Save Venue
+        Save Speaker
       </button>
 
       <hr className={styles.line} />
@@ -123,20 +112,20 @@ const SpeakerModal = ({
             </div>
 
             <div className='row'>
-              <FaTrash
-                title='Download Report'
+              <FaTrash title='Download Report' color='#8e8e8e' className={styles.reportIcon} />
+              <FaEdit
+                title='Edit Venue'
                 color='#8e8e8e'
                 className={styles.reportIcon}
                 onClick={() => {
-                  //   if (venues.venueList.length > 1) {
-                  //     setShowDeleteModal(true);
-                  //   } else {
-                  //     const newVenues = venues.venueList.filter((v) => v.id !== venue.id);
-                  //     updateVenueList(newVenues, eventId);
-                  //   }
+                  setSpeakerData({
+                    id: speaker.id,
+                    name: speaker.name,
+                    position: speaker.position,
+                    image: speaker.image,
+                  });
                 }}
               />
-              <FaEdit title='Edit Venue' color='#8e8e8e' className={styles.reportIcon} />
             </div>
           </div>
         ))}

@@ -28,7 +28,7 @@ import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout
 import { listVenues } from '../../../apis/venue';
 import VenueModal from './components/VenueModal/VenueModal';
 import { listSpeakers } from '../../../apis/speakers';
-// import SpeakerModal from './components/SpeakerModal/SpeakerModal';
+import SpeakerModal from './components/SpeakerModal/SpeakerModal';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -76,9 +76,9 @@ const EventGlance = () => {
     <>
       <Theme>
         {venues.showModal && <VenueModal venues={venues} setVenues={setVenues} eventId={eventId} />}
-        {/* {speakers.showModal && (
+        {speakers.showModal && (
           <SpeakerModal eventId={eventId} speakers={speakers} setSpeakers={setSpeakers} />
-        )} */}
+        )}
         <DashboardLayout prevPage='/events' tabName='manage'>
           {isTicketsOpen && (
             <Modal
@@ -361,14 +361,16 @@ const EventGlance = () => {
                 }}
               />
 
-              {/* <SectionButton
-                buttonText='Update Speakers'
-                buttonColor='#5B75FB'
-                icon={<FaHouse size={25} color='#5B75FB' />}
-                onClick={() => {
-                  setSpeakers({ ...speakers, showModal: true });
-                }}
-              /> */}
+              {import.meta.env.VITE_CURRENT_ENV == 'dev' && (
+                <SectionButton
+                  buttonText='Update Speakers'
+                  buttonColor='#5B75FB'
+                  icon={<FaHouse size={25} color='#5B75FB' />}
+                  onClick={() => {
+                    setSpeakers({ ...speakers, showModal: true });
+                  }}
+                />
+              )}
             </div>
 
             <div className={styles.sendMailsContainer}>
