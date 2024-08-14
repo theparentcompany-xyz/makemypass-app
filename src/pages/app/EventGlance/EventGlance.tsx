@@ -361,14 +361,16 @@ const EventGlance = () => {
                 }}
               />
 
-              <SectionButton
-                buttonText='Update Speakers'
-                buttonColor='#5B75FB'
-                icon={<FaHouse size={25} color='#5B75FB' />}
-                onClick={() => {
-                  setSpeakers({ ...speakers, showModal: true });
-                }}
-              />
+              {import.meta.env.VITE_CURRENT_ENV == 'dev' && (
+                <SectionButton
+                  buttonText='Update Speakers'
+                  buttonColor='#5B75FB'
+                  icon={<FaHouse size={25} color='#5B75FB' />}
+                  onClick={() => {
+                    setSpeakers({ ...speakers, showModal: true });
+                  }}
+                />
+              )}
             </div>
 
             <div className={styles.sendMailsContainer}>
