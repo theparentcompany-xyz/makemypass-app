@@ -216,7 +216,7 @@ const CouponForm = ({
                       -
                     </button>
                     <p className={styles.ticketCount}>
-                      {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count}
+                      {tickets.find((ticket) => ticket.ticket_id === filteredTicket.id)?.count ?? 0}
                     </p>
                     <button
                       className={styles.ticketCountUpdateButton}
@@ -301,7 +301,7 @@ const CouponForm = ({
                           )}
                           {filteredTicket.gateway_fee > 0 && (
                             <p className={styles.extraCharges}>
-                              {filteredTicket.gateway_fee}%Extra Gateway Fee
+                              {filteredTicket.gateway_fee}% Extra Gateway Fee
                             </p>
                           )}
                         </>
