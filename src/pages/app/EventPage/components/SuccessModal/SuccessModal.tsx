@@ -102,7 +102,7 @@ const SuccessModal = ({
                       </button>
                     )}
 
-                    {!hasScratchCard && success.redirection && (
+                    {!hasScratchCard && success?.redirection?.url && (
                       <button
                         onClick={() => {
                           window.open(success.redirection?.url, '_blank');
@@ -160,7 +160,7 @@ const SuccessModal = ({
                         isRevealed={isRevealed}
                         setIsRevealed={setIsRevealed}
                       />
-                      {isRevealed && (
+                      {isRevealed && success.redirection?.url && (
                         <button
                           onClick={() => {
                             window.open(success.redirection?.url, '_blank');
