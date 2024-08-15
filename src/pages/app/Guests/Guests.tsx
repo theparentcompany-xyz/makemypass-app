@@ -151,14 +151,7 @@ const Guests = () => {
         {selectedGuestId && selectedGuestId.type === 'bulk' && <BulkUpload onClose={onClose} />}
 
         {selectedGuestId && selectedGuestId.type === 'add' && (
-          <Modal
-            title='Invite Guest'
-            onClose={onClose}
-            type='side'
-            style={{
-              maxWidth: '25rem',
-            }}
-          >
+          <Modal title='Invite Guest' onClose={onClose} type='side'>
             <div className={styles.userInfoModalContainer}>
               <button
                 className={styles.bulkUploadButton}
@@ -196,7 +189,6 @@ const Guests = () => {
                   Scan
                 </button>
               </div>
-              <br />
               {!showScanner ? (
                 eventFormData && (
                   <>

@@ -184,12 +184,14 @@ const EventForm = ({
                 <span>{claimCodeExceed?.message}</span>
               </div>
             )}
-            <div>
-              <p className={styles.eventFormTitle}>{type ? '' : 'Register for the event'}</p>
-              <p className={styles.eventHeaderDescription}>
-                {type ? '' : 'Please fill in the form below to register for the event.'}
-              </p>
-            </div>
+            {!type && (
+              <div>
+                <p className={styles.eventFormTitle}>{type ? '' : 'Register for the event'}</p>
+                <p className={styles.eventHeaderDescription}>
+                  {type ? '' : 'Please fill in the form below to register for the event.'}
+                </p>
+              </div>
+            )}
             {formData && eventFormData && (
               <div className={styles.formFields}>
                 {eventFormData.parse_audio && (
