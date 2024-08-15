@@ -18,17 +18,17 @@ import { FaBookOpen, FaDollarSign } from 'react-icons/fa';
 import ExpectedInvoice from '../ExpectedInvoice/ExpectedInvoice.tsx';
 
 const CouponForm = ({
-  setTickets,
-  tickets,
-  discount,
-  setDiscount,
-  eventFormData,
-  setCoupon,
-  coupon,
-  setSelectedDate,
-  selectedDate,
-  formData,
-}: {
+                      setTickets,
+                      tickets,
+                      discount,
+                      setDiscount,
+                      eventFormData,
+                      setCoupon,
+                      coupon,
+                      setSelectedDate,
+                      selectedDate,
+                      formData,
+                    }: {
   setTickets: React.Dispatch<React.SetStateAction<Tickets[]>>;
   tickets: Tickets[];
   discount: DiscountData;
@@ -202,7 +202,7 @@ const CouponForm = ({
       }
     });
     setBillReceipt(localBillReceipt);
-  }, [tickets]);
+  }, [tickets, filteredTickets]);
 
   useEffect(() => {
     if (eventFormData) {
@@ -315,7 +315,7 @@ const CouponForm = ({
               >
                 {eventFormData?.select_multi_ticket && (
                   <div className={styles.ticketCountContainer}>
-                    <div className='row' style={{ columnGap: 0 }}>
+                    <div className="row" style={{ columnGap: 0 }}>
                       <button
                         className={styles.ticketCountUpdateButton}
                         onClick={() => {
@@ -444,7 +444,7 @@ const CouponForm = ({
               >
                 {eventFormData?.select_multi_ticket && (
                   <div className={styles.ticketCountContainer}>
-                    <div className='row' style={{ columnGap: 0 }}>
+                    <div className="row" style={{ columnGap: 0 }}>
                       <button
                         className={styles.ticketCountUpdateButton}
                         onClick={() => {
@@ -570,12 +570,12 @@ const CouponForm = ({
           <p className={styles.couponHeader}>Have a Coupon Code?</p>
           {coupon.description && <p className={styles.couponDescription}>{coupon.description}</p>}
           <InputField
-            name='coupon_code'
-            placeholder='Coupon Code'
-            id='coupon_code'
-            key='coupon_code'
+            name="coupon_code"
+            placeholder="Coupon Code"
+            id="coupon_code"
+            key="coupon_code"
             error={[coupon.error ?? '']}
-            type='text'
+            type="text"
             icon={getIcon('coupon_code')}
             value={coupon.value}
             style={{
@@ -632,17 +632,17 @@ const CouponForm = ({
         !eventFormData.is_grouped_ticket &&
         tickets.reduce((acc, ticket) => acc + ticket.count, 0) > 1 && (
           <div className={styles.claimCodeExccededMessage}>
-            <RiInformationFill color='#4eff99' size={25} />
+            <RiInformationFill color="#4eff99" size={25} />
             <span>Kindly check your email for the link of register of other tickets</span>
           </div>
         )}
 
       {billReceipt.length > 0 &&
         billReceipt.reduce((acc, ticket) => acc + ticket.ticketPrice * ticket.ticketCount, 0) >
-          0 && (
+        0 && (
           <div className={styles.totalPriceMessage}>
             <div>
-              <FaDollarSign color='#4eff99' size={20} />
+              <FaDollarSign color="#4eff99" size={20} />
               <span>
                 Total Price: Rs.{' '}
                 {billReceipt.reduce(
@@ -652,8 +652,8 @@ const CouponForm = ({
                 <span className={styles.extraCharges}></span>
               </span>
             </div>
-            <div className='pointer' onClick={() => setShowReceiptModal(true)}>
-              <FaBookOpen color='#fff' size={20} style={{ marginRight: '0.25rem' }} />{' '}
+            <div className="pointer" onClick={() => setShowReceiptModal(true)}>
+              <FaBookOpen color="#fff" size={20} style={{ marginRight: '0.25rem' }} />{' '}
               <span
                 style={{
                   fontSize: '0.9rem',
