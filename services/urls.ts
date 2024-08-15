@@ -174,6 +174,10 @@ export const makeMyPass = {
     makeMyPassURL(`/manage-event/${eventId}/update-coupon-status`),
   deleteCoupon: (eventId: string, couponId: string) =>
     makeMyPassURL(`/manage-coupon/${eventId}/delete-coupon/${couponId}/`),
+  getCouponData: (eventId: string, couponId: string) =>
+    makeMyPassURL(`/manage-coupon/${eventId}/get-coupon/${couponId}`),
+  getShortListTicket: (eventId: string) =>
+    makeMyPassURL(`/manage-ticket/${eventId}/short-list-ticket/`),
 
   //Manage Venues
   listVenues: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-venues/`),

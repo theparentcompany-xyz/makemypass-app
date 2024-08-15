@@ -129,6 +129,14 @@ const CouponForm = ({
           return ticket;
         }
 
+        if (tickets.filter((ticket) => ticket.my_ticket).length === 0) {
+          return {
+            ...ticket,
+            count: increment ? ticket.count + 1 : ticket.count > 0 ? ticket.count - 1 : 0,
+            my_ticket: true,
+          };
+        }
+
         return {
           ...ticket,
           count: increment ? ticket.count + 1 : ticket.count > 0 ? ticket.count - 1 : 0,
@@ -231,7 +239,7 @@ const CouponForm = ({
   return (
     <>
       {showReceiptModal && (
-        <Modal title='Bill Receipt' onClose={() => setShowReceiptModal(false)}>
+        <Modal title='Expected Invoice' onClose={() => setShowReceiptModal(false)}>
           <div className={styles.receiptContainer}>
             {billReceipt.map((ticket) => (
               <div className={styles.receiptItem}>
@@ -665,7 +673,7 @@ const CouponForm = ({
                   fontSize: '0.9rem',
                 }}
               >
-                View Receipt
+                Expected Invoice
               </span>
             </div>
           </div>

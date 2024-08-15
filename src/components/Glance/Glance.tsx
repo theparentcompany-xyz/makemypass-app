@@ -191,6 +191,7 @@ const Glance = ({ tab }: { tab: string }) => {
                 animate={{
                   width: `${(data.value / progressData.reduce((sum, data) => sum + data.value, 0)) * 100}%`,
                 }}
+                title={`${data.type} (${data.value})`}
                 key={index}
                 className={styles.progressBar}
                 style={{

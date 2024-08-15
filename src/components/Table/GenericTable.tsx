@@ -1,5 +1,5 @@
 import { isDate } from 'lodash';
-import { deleteCoupon } from '../../apis/coupons';
+import { deleteCoupon, getCouponData } from '../../apis/coupons';
 import { formatDate } from '../../common/commonFunctions';
 import CouponType, { CreateCouponType } from '../../pages/app/Coupon/types';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
@@ -35,6 +35,8 @@ const GenericTable = ({
           return formattedKey;
         })
       : [];
+
+  const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
 
   return (
     <>
@@ -101,8 +103,12 @@ const GenericTable = ({
                           <SecondaryButton
                             buttonText='Edit'
                             onClick={() => {
-                              setNewCouponData(data);
-                              if (setCouponModal) setCouponModal({ showModal: true });
+                              getCouponData(eventId, data.id).then((response) => {
+                                setNewCouponData(response);
+                                if (setCouponModal) setCouponModal({ showModal: true });
+                              });
+                              // setNewCouponData(data);
+                              // if (setCouponModal) setCouponModal({ showModal: true });
                             }}
                           />
                         </td>
