@@ -253,7 +253,7 @@
 
 .sectionButtons {
   margin-top: 1rem;
-
+  flex-wrap: wrap;
   display: flex;
   row-gap: 0.5rem;
   column-gap: 0.5rem;

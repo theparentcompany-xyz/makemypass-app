@@ -74,6 +74,17 @@ export const createCoupon = (
   });
 };
 
+export const getCouponData = async (eventId: string, couponId: string) => {
+  return privateGateway
+    .get(makeMyPass.getCouponData(eventId, couponId))
+    .then((response) => {
+      return response.data.response;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 export const editCoupon = async (
   eventId: string,
   data: CreateCouponType,
@@ -154,5 +165,27 @@ export const deleteCoupon = async (
     })
     .catch(() => {
       toast.error('Failed to delete coupon');
+    });
+};
+
+export const getShortListTickets = async (
+  eventId: string,
+  setTickets: Dispatch<
+    SetStateAction<
+      {
+        id: string;
+        title: string;
+        price: number;
+      }[]
+    >
+  >,
+) => {
+  return privateGateway
+    .get(makeMyPass.getShortListTicket(eventId))
+    .then((response) => {
+      setTickets(response.data.response.tickets);
+    })
+    .catch((error) => {
+      console.log(error);
     });
 };

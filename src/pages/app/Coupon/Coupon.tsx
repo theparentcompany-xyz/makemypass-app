@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import Theme from '../../../components/Theme/Theme';
 import styles from './Coupon.module.css';
-import { createCoupon, editCoupon, listCoupons, updateCouponStatus } from '../../../apis/coupons';
+import {
+  createCoupon,
+  editCoupon,
+  getShortListTickets,
+  listCoupons,
+  updateCouponStatus,
+} from '../../../apis/coupons';
 import GenericTable from '../../../components/Table/GenericTable';
 import CouponType, { ActivateCouponType, CreateCouponType, CreateCouponTypeError } from './types';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
@@ -9,8 +15,7 @@ import Modal from '../../../components/Modal/Modal';
 import InputField from '../../auth/Login/InputField';
 import { customStyles } from '../EventPage/constants';
 import Select from 'react-select';
-import { TicketType } from '../../../apis/types';
-import { getTickets } from '../../../apis/tickets';
+// import { getTickets } from '../../../apis/tickets';
 import Slider from '../../../components/SliderButton/Slider';
 import { LuPlus } from 'react-icons/lu';
 import { RxDragHandleDots2 } from 'react-icons/rx';
@@ -44,7 +49,13 @@ const Coupon = () => {
     showModal: false,
   });
 
-  const [tickets, setTickets] = useState<TicketType[]>([]);
+  const [tickets, setTickets] = useState<
+    {
+      id: string;
+      title: string;
+      price: number;
+    }[]
+  >([]);
   const [coupons, setCoupons] = useState<CouponType[]>([]);
   const [formFields, setFormFields] = useState<Field[]>([]);
   const [activateCoupon, setActivateCoupon] = useState<ActivateCouponType>({
@@ -70,7 +81,7 @@ const Coupon = () => {
 
   useEffect(() => {
     listCoupons(eventId, setCoupons, setActivateCoupon);
-    getTickets(eventId, setTickets);
+    getShortListTickets(eventId, setTickets);
     getForm(eventId, setFormFields);
   }, []);
 

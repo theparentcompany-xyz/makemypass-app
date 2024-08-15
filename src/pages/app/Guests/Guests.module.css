@@ -305,7 +305,7 @@
 
 .ticketCode {
   display: flex;
-  margin-bottom: -1rem;
+  margin-bottom: 1rem;
 }
 
 .ticketLabel {
@@ -335,4 +335,14 @@
   font-family: 'Inter', sans-serif;
   border: none;
   cursor: pointer;
+}
+
+.line {
+  margin: auto;
+  height: 2px;
+  background: #a4a4a4;
+  opacity: 0.2;
+  border: none;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }

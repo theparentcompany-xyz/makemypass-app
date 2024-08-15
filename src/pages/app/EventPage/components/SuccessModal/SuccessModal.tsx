@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import styles from './SuccessModal.module.css';
 import Modal from '../../../../../components/Modal/Modal';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { SuccessModalProps } from '../../types';
 import { HashLoader } from 'react-spinners';
 import ScratchCard from './ScratchCardComponent/ScratchCardComponent';
@@ -23,6 +23,19 @@ const SuccessModal = ({
   });
 
   const [isRevealed, setIsRevealed] = useState(false);
+  const redirectButtonRef = useRef<HTMLButtonElement>(null);
+  const scratchRedirectButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!hasScratchCard && success.redirection && success.redirection.type === 'on_submit') {
+      redirectButtonRef.current?.click();
+    }
+
+    if (hasScratchCard && isRevealed && success.redirection?.type === 'on_submit') {
+      scratchRedirectButtonRef.current?.click();
+      console.log('redirecting');
+    }
+  }, [success, isRevealed, hasScratchCard]);
 
   return (
     <div>
@@ -89,11 +102,12 @@ const SuccessModal = ({
                       </button>
                     )}
 
-                    {!hasScratchCard && success.redirection && (
+                    {!hasScratchCard && success?.redirection?.url && (
                       <button
                         onClick={() => {
                           window.open(success.redirection?.url, '_blank');
                         }}
+                        ref={redirectButtonRef}
                         className={styles.viewTicketButton}
                       >
                         Next
@@ -146,11 +160,12 @@ const SuccessModal = ({
                         isRevealed={isRevealed}
                         setIsRevealed={setIsRevealed}
                       />
-                      {isRevealed && (
+                      {isRevealed && success.redirection?.url && (
                         <button
                           onClick={() => {
                             window.open(success.redirection?.url, '_blank');
                           }}
+                          ref={scratchRedirectButtonRef}
                           className={styles.viewTicketButton}
                         >
                           Next

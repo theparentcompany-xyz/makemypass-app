@@ -166,6 +166,13 @@
   z-index: 99;
 }
 
+@media (min-width: 720px) {
+  /* Your CSS code for devices with width less than 720px goes here */
+  .onClickModal {
+    min-width: 30rem;
+  }
+}
+
 @media (max-width: 720px) {
   /* Your CSS code for devices with width less than 720px goes here */
   .onClickModal {

@@ -133,12 +133,6 @@ export const submitForm = async ({
                 payment_id: response.razorpay_payment_id,
               })
               .then((response) => {
-                if (response.data.response.redirection?.type === 'on_submit') {
-                  setTimeout(() => {
-                    window.open(response.data.response.redirection?.url, '_blank');
-                  }, 1000);
-                }
-
                 setSuccess &&
                   setSuccess((prev) => ({
                     ...prev,
@@ -189,12 +183,6 @@ export const submitForm = async ({
             loading: false,
             redirection: response.data.response.redirection,
           }));
-
-        if (response.data.response.redirection?.type === 'on_submit') {
-          setTimeout(() => {
-            window.open(response.data.response.redirection?.url, '_blank');
-          }, 1000);
-        }
 
         setFormNumber && setFormNumber(0);
         setFormData && setFormData({});

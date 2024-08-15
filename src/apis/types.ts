@@ -110,6 +110,7 @@ export interface TicketType {
   gateway_fee: number;
   platform_fee_from_user: boolean;
   currency: string;
+  category: string;
   entry_date: {
     date: string;
     capacity: number;
