@@ -83,7 +83,7 @@ const CouponForm = ({
         filteredTickets.filter((ticket) => ticket.category).map((ticket) => ticket.category),
       ),
     ][0];
-    setSelectedTicketCategory(firstCategory);
+    if (!selectedTicketCategory) setSelectedTicketCategory(firstCategory);
   }, [filteredTickets]);
 
   const onSelectTicket = (currentTicketId: string) => {
@@ -123,6 +123,12 @@ const CouponForm = ({
     const updatedTickets: Tickets[] = tickets.map((ticket) => {
       if (ticket.ticket_id === ticketId && ticket.count >= 0) {
         newTicket = false;
+
+        if (ticket.my_ticket && ticket.count === 1 && !increment) {
+          toast.error('Kindly select another ticket to remove this ticket');
+          return ticket;
+        }
+
         return {
           ...ticket,
           count: increment ? ticket.count + 1 : ticket.count > 0 ? ticket.count - 1 : 0,
@@ -143,15 +149,14 @@ const CouponForm = ({
       (ticket) => ticket.my_ticket && ticket.ticket_id === filteredTicket.id,
     );
 
-    if (isActive) return true;
-    else return false;
+    return isActive;
   };
 
   useEffect(() => {
     console.log('tickets', tickets);
 
     if (tickets.length > 0) {
-      const localBillReceipt: billReceipt[] = [];
+      let localBillReceipt: billReceipt[] = [];
       tickets.forEach((ticket) => {
         const ticketData = filteredTickets.find(
           (filteredTicket) => filteredTicket.id === ticket.ticket_id,
@@ -169,9 +174,12 @@ const CouponForm = ({
           });
         }
       });
-      setBillReceipt(localBillReceipt);
 
-      console.log('billReceipt', localBillReceipt);
+      localBillReceipt = localBillReceipt.filter(
+        (ticket) => ticket.ticketCount > 0 || ticket.youTicket,
+      );
+
+      setBillReceipt(localBillReceipt);
     }
   }, [tickets]);
 
@@ -288,7 +296,7 @@ const CouponForm = ({
               }
               onClick={() => setSelectedTicketCategory(category)}
             >
-              {`${category} (${billReceipt.filter((ticket) => ticket.category === category).length})`}
+              {`${category} (${billReceipt.filter((ticket) => ticket.category === category && ticket.ticketCount > 0).reduce((acc, ticket) => acc + ticket.ticketCount, 0)})`}
             </p>
           ))}
         </div>
