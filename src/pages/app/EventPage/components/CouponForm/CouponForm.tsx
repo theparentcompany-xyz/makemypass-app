@@ -15,7 +15,6 @@ import { filterTickets } from '../../../../../common/coreLogics.ts';
 import { FormEventData } from '../../../Guests/types.ts';
 import { RiInformationFill } from 'react-icons/ri';
 import { FaBookOpen, FaDollarSign } from 'react-icons/fa';
-import Modal from '../../../../../components/Modal/Modal.tsx';
 import ExpectedInvoice from '../ExpectedInvoice/ExpectedInvoice.tsx';
 
 const CouponForm = ({
@@ -142,7 +141,11 @@ const CouponForm = ({
     });
 
     if (newTicket) {
-      updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: false });
+      if (tickets.filter((ticket) => ticket.my_ticket).length === 0) {
+        updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: true });
+      } else {
+        updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: false });
+      }
     }
 
     setNewTickets(updatedTickets);
