@@ -167,13 +167,9 @@
 }
 
 @media (min-width: 720px) {
-  /* Your CSS code for devices with width greater than 720px goes here */
+  /* Your CSS code for devices with width less than 720px goes here */
   .onClickModal {
-    width: 90%;
-  }
-  .sideModal {
-    min-width: 25rem;
-    /* width: 95%; */
+    min-width: 30rem;
   }
 }
 

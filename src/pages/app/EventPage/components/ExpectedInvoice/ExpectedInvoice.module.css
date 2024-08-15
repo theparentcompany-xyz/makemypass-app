@@ -2,7 +2,7 @@
   width: 100%;
   position: relative;
   min-width: 20rem;
-  max-width: 25rem;
+  max-width: 30rem;
   color: white;
   font-family: 'Inter', sans-serif;
   text-align: left;
@@ -31,6 +31,7 @@
   font-size: 0.8rem;
   color: #4eff99;
   margin-left: 0.25rem;
+  text-align: right;
 }
 
 .receiptItemPrice {
@@ -38,6 +39,7 @@
   font-weight: 400;
   color: #bbbaba;
   margin-left: 1rem;
+  text-align: right;
 }
 
 .receiptItemPrice:last-child {

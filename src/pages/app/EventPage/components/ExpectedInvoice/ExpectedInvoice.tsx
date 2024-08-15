@@ -28,17 +28,27 @@ const ExpectedInvoice = ({
             <p className={styles.receiptItemPrice}>
               {ticket.currency} {ticket.ticketPrice > 0 && ticket.ticketPrice} x{' '}
               {ticket.ticketCount}
-              {ticket.is_fee && <span> + fee</span>}
+              {ticket.is_fee && (
+                <span
+                  style={{
+                    fontSize: '0.7rem',
+                    opacity: 0.7,
+                  }}
+                >
+                  {' '}
+                  +fee
+                </span>
+              )}
             </p>
             <p className={styles.receiptItemPrice}>
-              {ticket.currency} {ticket.ticketPrice > 0 && ticket.total}
+              {ticket.currency} {ticket.total > 0 && ticket.total}
             </p>
           </div>
         ))}
         <div className={styles.totalPrice}>
           <p>
             Total Price: {billReceipt[0].currency}{' '}
-            {billReceipt.reduce((acc, ticket) => acc + ticket.ticketPrice * ticket.ticketCount, 0)}
+            {billReceipt.reduce((acc, ticket) => acc + ticket.total, 0)}
           </p>
         </div>
       </div>

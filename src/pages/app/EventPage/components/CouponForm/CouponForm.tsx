@@ -18,17 +18,17 @@ import { FaBookOpen, FaDollarSign } from 'react-icons/fa';
 import ExpectedInvoice from '../ExpectedInvoice/ExpectedInvoice.tsx';
 
 const CouponForm = ({
-                      setTickets,
-                      tickets,
-                      discount,
-                      setDiscount,
-                      eventFormData,
-                      setCoupon,
-                      coupon,
-                      setSelectedDate,
-                      selectedDate,
-                      formData,
-                    }: {
+  setTickets,
+  tickets,
+  discount,
+  setDiscount,
+  eventFormData,
+  setCoupon,
+  coupon,
+  setSelectedDate,
+  selectedDate,
+  formData,
+}: {
   setTickets: React.Dispatch<React.SetStateAction<Tickets[]>>;
   tickets: Tickets[];
   discount: DiscountData;
@@ -120,25 +120,27 @@ const CouponForm = ({
 
   const updateTicketCount = (ticketId: string, increment: boolean) => {
     let newTicket = true;
-    const updatedTickets: Tickets[] = tickets.map((ticket) => {
-      if (ticket.ticket_id === ticketId && ticket.count >= 0) {
-        newTicket = false;
+    const updatedTickets: Tickets[] = tickets
+      .map((ticket) => {
+        if (ticket.ticket_id === ticketId && ticket.count >= 0) {
+          newTicket = false;
 
-        if (tickets.filter((ticket) => ticket.my_ticket).length === 0) {
+          if (tickets.filter((ticket) => ticket.my_ticket).length === 0) {
+            return {
+              ...ticket,
+              count: increment ? ticket.count + 1 : ticket.count > 0 ? ticket.count - 1 : 0,
+              my_ticket: true,
+            };
+          }
+
           return {
             ...ticket,
             count: increment ? ticket.count + 1 : ticket.count > 0 ? ticket.count - 1 : 0,
-            my_ticket: true,
           };
         }
-
-        return {
-          ...ticket,
-          count: increment ? ticket.count + 1 : ticket.count > 0 ? ticket.count - 1 : 0,
-        };
-      }
-      return ticket;
-    }).filter((ticket) => ticket.count > 0);
+        return ticket;
+      })
+      .filter((ticket) => ticket.count > 0);
 
     if (newTicket && increment) {
       if (tickets.filter((ticket) => ticket.my_ticket).length === 0) {
@@ -159,7 +161,12 @@ const CouponForm = ({
     return isActive;
   };
 
-  const findPriceAfterCharge = (netPrice: number, platformFee: number, gatewayFee: number, platform_fee_from_user: boolean) => {
+  const findPriceAfterCharge = (
+    netPrice: number,
+    platformFee: number,
+    gatewayFee: number,
+    platform_fee_from_user: boolean,
+  ) => {
     if (platform_fee_from_user) {
       const target_amount = netPrice * (1 + platformFee / 100);
       return target_amount / (1 - gatewayFee / 100);
@@ -179,11 +186,18 @@ const CouponForm = ({
           ticketName: ticketData.title,
           ticketPrice: ticketData.price,
           ticketCount: ticket.count,
-          total: findPriceAfterCharge(ticketData.price * ticket.count, ticketData.platform_fee, ticketData.gateway_fee, ticketData.platform_fee_from_user),
+          total: findPriceAfterCharge(
+            ticketData.price * ticket.count,
+            ticketData.platform_fee,
+            ticketData.gateway_fee,
+            ticketData.platform_fee_from_user,
+          ),
           category: ticketData.category,
           youTicket: ticket.my_ticket,
           currency: ticketData.currency,
-          is_fee: ticketData.platform_fee_from_user && (ticketData.platform_fee + ticketData.gateway_fee) > 0,
+          is_fee:
+            ticketData.platform_fee_from_user &&
+            ticketData.platform_fee + ticketData.gateway_fee > 0,
         });
       }
     });
@@ -301,7 +315,7 @@ const CouponForm = ({
               >
                 {eventFormData?.select_multi_ticket && (
                   <div className={styles.ticketCountContainer}>
-                    <div className="row" style={{ columnGap: 0 }}>
+                    <div className='row' style={{ columnGap: 0 }}>
                       <button
                         className={styles.ticketCountUpdateButton}
                         onClick={() => {
@@ -430,7 +444,7 @@ const CouponForm = ({
               >
                 {eventFormData?.select_multi_ticket && (
                   <div className={styles.ticketCountContainer}>
-                    <div className="row" style={{ columnGap: 0 }}>
+                    <div className='row' style={{ columnGap: 0 }}>
                       <button
                         className={styles.ticketCountUpdateButton}
                         onClick={() => {
@@ -556,12 +570,12 @@ const CouponForm = ({
           <p className={styles.couponHeader}>Have a Coupon Code?</p>
           {coupon.description && <p className={styles.couponDescription}>{coupon.description}</p>}
           <InputField
-            name="coupon_code"
-            placeholder="Coupon Code"
-            id="coupon_code"
-            key="coupon_code"
+            name='coupon_code'
+            placeholder='Coupon Code'
+            id='coupon_code'
+            key='coupon_code'
             error={[coupon.error ?? '']}
-            type="text"
+            type='text'
             icon={getIcon('coupon_code')}
             value={coupon.value}
             style={{
@@ -618,17 +632,17 @@ const CouponForm = ({
         !eventFormData.is_grouped_ticket &&
         tickets.reduce((acc, ticket) => acc + ticket.count, 0) > 1 && (
           <div className={styles.claimCodeExccededMessage}>
-            <RiInformationFill color="#4eff99" size={25} />
+            <RiInformationFill color='#4eff99' size={25} />
             <span>Kindly check your email for the link of register of other tickets</span>
           </div>
         )}
 
       {billReceipt.length > 0 &&
         billReceipt.reduce((acc, ticket) => acc + ticket.ticketPrice * ticket.ticketCount, 0) >
-        0 && (
+          0 && (
           <div className={styles.totalPriceMessage}>
             <div>
-              <FaDollarSign color="#4eff99" size={20} />
+              <FaDollarSign color='#4eff99' size={20} />
               <span>
                 Total Price: Rs.{' '}
                 {billReceipt.reduce(
@@ -638,11 +652,12 @@ const CouponForm = ({
                 <span className={styles.extraCharges}></span>
               </span>
             </div>
-            <div className="pointer" onClick={() => setShowReceiptModal(true)}>
-              <FaBookOpen color="#fff" size={20} style={{ marginRight: '0.25rem' }} />{' '}
+            <div className='pointer' onClick={() => setShowReceiptModal(true)}>
+              <FaBookOpen color='#fff' size={20} style={{ marginRight: '0.25rem' }} />{' '}
               <span
                 style={{
                   fontSize: '0.9rem',
+                  textDecoration: 'underline',
                 }}
               >
                 Expected Invoice
