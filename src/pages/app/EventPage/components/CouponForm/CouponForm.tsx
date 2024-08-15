@@ -16,6 +16,7 @@ import { FormEventData } from '../../../Guests/types.ts';
 import { RiInformationFill } from 'react-icons/ri';
 import { FaBookOpen, FaDollarSign } from 'react-icons/fa';
 import Modal from '../../../../../components/Modal/Modal.tsx';
+import ExpectedInvoice from '../ExpectedInvoice/ExpectedInvoice.tsx';
 
 const CouponForm = ({
   setTickets,
@@ -123,11 +124,6 @@ const CouponForm = ({
     const updatedTickets: Tickets[] = tickets.map((ticket) => {
       if (ticket.ticket_id === ticketId && ticket.count >= 0) {
         newTicket = false;
-
-        if (ticket.my_ticket && ticket.count === 1 && !increment) {
-          toast.error('Kindly select another ticket to remove this ticket');
-          return ticket;
-        }
 
         if (tickets.filter((ticket) => ticket.my_ticket).length === 0) {
           return {
@@ -239,34 +235,7 @@ const CouponForm = ({
   return (
     <>
       {showReceiptModal && (
-        <Modal title='Expected Invoice' onClose={() => setShowReceiptModal(false)}>
-          <div className={styles.receiptContainer}>
-            {billReceipt.map((ticket) => (
-              <div className={styles.receiptItem}>
-                <p className={styles.receiptItemName}>
-                  {ticket.ticketName} {ticket.youTicket && <span>(Your Ticket)</span>}
-                </p>
-                <p className={styles.receiptItemPrice}>
-                  {ticket.currency} {ticket.ticketPrice > 0 && ticket.ticketPrice} x{' '}
-                  {ticket.ticketCount}
-                </p>
-                <p className={styles.receiptItemPrice}>
-                  {ticket.currency}{' '}
-                  {ticket.ticketPrice > 0 && ticket.ticketPrice * ticket.ticketCount}
-                </p>
-              </div>
-            ))}
-            <div className={styles.totalPrice}>
-              <p>
-                Total Price: {billReceipt[0].currency}{' '}
-                {billReceipt.reduce(
-                  (acc, ticket) => acc + ticket.ticketPrice * ticket.ticketCount,
-                  0,
-                )}
-              </p>
-            </div>
-          </div>
-        </Modal>
+        <ExpectedInvoice billReceipt={billReceipt} setShowReceiptModal={setShowReceiptModal} />
       )}
 
       {findMinDate(eventFormData) && (
