@@ -45,9 +45,13 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
 
   const onNewTicket = async () => {
     // setSettingNewTicket(true);
-    if (tickets.findIndex((t) => t.default_selected == true) != -1) {
+    if (tickets.findIndex((t) => t.default_selected == true) != -1 || tickets.length > 0) {
       const newTicket: TicketType = {
-        ...(getDeepCopy(tickets.find((t) => t.default_selected == true)) as TicketType),
+        ...(getDeepCopy(
+          tickets.some((t) => t.default_selected == true)
+            ? tickets.find((t) => t.default_selected == true)
+            : tickets[tickets.length - 1],
+        ) as TicketType),
         title: 'New Ticket',
         description: '',
         id: '',
@@ -204,39 +208,67 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   };
 
   const hasUnsavedChanges = () => {
-    if (selectedTicket?.new) return true;
-    return !(
+    console.log(
       isEqual(
         selectedTicket,
         ticketData?.find((t) => t.id === selectedTicket?.id),
-      ) && selectedTicket?.description == newDescription
+      ),
+      selectedTicket?.description == newDescription,
     );
+    return !(isEqual(
+      selectedTicket,
+      ticketData?.find((t) => t.id === selectedTicket?.id),
+    ) && selectedTicket
+      ? selectedTicket?.description == newDescription
+      : true);
   };
 
   const changeDefaultSelected = (ticketId: string) => {
-    if (tickets.find((ticket) => ticket.id === ticketId && ticket.default_selected)) return;
-    editTicket(
-      eventId,
-      tickets.find((t) => t.id === ticketId) as TicketType,
-      { default_selected: true },
-      setTicketData,
-    )
-      .then(() => {
-        setTicketData(
-          ticketData.map((ticket) =>
-            ticket.id === ticketId
-              ? { ...ticket, default_selected: true }
-              : { ...ticket, default_selected: false },
-          ),
-        );
-        setSelectedTicket({
-          ...tickets.find((t) => t.id === ticketId),
-          default_selected: true,
-        } as TicketType);
-      })
-      .catch(() => {
-        toast.error('Failed to set default ticket');
-      });
+    if (tickets.find((ticket) => ticket.id === ticketId && ticket.default_selected)) {
+      editTicket(
+        eventId,
+        tickets.find((t) => t.id === ticketId) as TicketType,
+        { default_selected: false },
+        setTicketData,
+      )
+        .then(() => {
+          setTicketData(
+            ticketData.map((ticket) =>
+              ticket.id === ticketId ? { ...ticket, default_selected: false } : ticket,
+            ),
+          );
+          setSelectedTicket({
+            ...tickets.find((t) => t.id === ticketId),
+            default_selected: false,
+          } as TicketType);
+        })
+        .catch(() => {
+          toast.error('Failed to set default ticket');
+        });
+    } else {
+      editTicket(
+        eventId,
+        tickets.find((t) => t.id === ticketId) as TicketType,
+        { default_selected: true },
+        setTicketData,
+      )
+        .then(() => {
+          setTicketData(
+            ticketData.map((ticket) =>
+              ticket.id === ticketId
+                ? { ...ticket, default_selected: true }
+                : { ...ticket, default_selected: false },
+            ),
+          );
+          setSelectedTicket({
+            ...tickets.find((t) => t.id === ticketId),
+            default_selected: true,
+          } as TicketType);
+        })
+        .catch(() => {
+          toast.error('Failed to set default ticket');
+        });
+    }
   };
   // const handleTicketClick = (ticketId: string) => {
   //   setTicketEditorModal(true);
@@ -270,9 +302,13 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   useEffect(() => {
     setTickets(ticketData || []);
     if (tickets.length == 0) {
-      ticketData?.forEach((ticket) => {
-        if (ticket.default_selected) setSelectedTicket(ticket);
-      });
+      if (ticketData?.some((ticket) => ticket.default_selected)) {
+        ticketData?.forEach((ticket) => {
+          if (ticket.default_selected) setSelectedTicket(ticket);
+        });
+      } else if (ticketData.length > 0) {
+        setSelectedTicket(ticketData[0]);
+      }
     }
   }, [ticketData]);
 
@@ -326,32 +362,29 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
             </button>
           </div>
           <div className={styles.ticketsContainer}>
-            {Array.from(new Set(tickets.map((ticket) => ticket.id))).map((id) => {
-              const ticket = tickets.find((t) => t.id === id);
-              return ticket ? (
-                <TicketBox
-                  key={ticket.id}
-                  ticketInfo={ticket}
-                  onClick={() => {
-                    if (ticket.id != selectedTicket?.id) {
-                      if (hasUnsavedChanges()) {
-                        setIsChangedModal(true);
-                        setTicketPair([ticket, selectedTicket as TicketType]);
-                        return;
-                      }
-                      setSelectedTicket(Object.assign({}, ticket));
+            {tickets.map((ticket) => (
+              <TicketBox
+                key={ticket.id}
+                ticketInfo={ticket}
+                onClick={() => {
+                  if (ticket.id != selectedTicket?.id) {
+                    if (hasUnsavedChanges()) {
+                      setIsChangedModal(true);
+                      setTicketPair([ticket, selectedTicket as TicketType]);
+                      return;
                     }
-                  }}
-                  selected={selectedTicket?.id == ticket.id}
-                  closed={
-                    selectedTicket?.id == ticket.id ? !selectedTicket?.is_active : !ticket.is_active
+                    setSelectedTicket(Object.assign({}, ticket));
                   }
-                  handleDefaultSelected={changeDefaultSelected}
-                  hasUnsavedChanges={hasUnsavedChanges}
-                  // handleTicketClick={handleTicketClick}
-                />
-              ) : null;
-            })}
+                }}
+                selected={selectedTicket?.id == ticket.id}
+                closed={
+                  selectedTicket?.id == ticket.id ? !selectedTicket?.is_active : !ticket.is_active
+                }
+                handleDefaultSelected={changeDefaultSelected}
+                hasUnsavedChanges={hasUnsavedChanges}
+                // handleTicketClick={handleTicketClick}
+              />
+            ))}
           </div>
           {selectedTicket && (
             <motion.div
