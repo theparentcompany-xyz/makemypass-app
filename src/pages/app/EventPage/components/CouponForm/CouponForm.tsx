@@ -15,7 +15,6 @@ import { filterTickets } from '../../../../../common/coreLogics.ts';
 import { FormEventData } from '../../../Guests/types.ts';
 import { RiInformationFill } from 'react-icons/ri';
 import { FaBookOpen, FaDollarSign } from 'react-icons/fa';
-import { HiReceiptPercent } from 'react-icons/hi2';
 import Modal from '../../../../../components/Modal/Modal.tsx';
 
 const CouponForm = ({
@@ -636,31 +635,33 @@ const CouponForm = ({
           </div>
         )}
 
-      {billReceipt.length > 0 && (
-        <div className={styles.totalPriceMessage}>
-          <div>
-            <FaDollarSign color='#4eff99' size={20} />
-            <span>
-              Total Price: Rs.{' '}
-              {billReceipt.reduce(
-                (acc, ticket) => acc + ticket.ticketPrice * ticket.ticketCount,
-                0,
-              )}
-              <span className={styles.extraCharges}></span>
-            </span>
+      {billReceipt.length > 0 &&
+        billReceipt.reduce((acc, ticket) => acc + ticket.ticketPrice * ticket.ticketCount, 0) >
+          0 && (
+          <div className={styles.totalPriceMessage}>
+            <div>
+              <FaDollarSign color='#4eff99' size={20} />
+              <span>
+                Total Price: Rs.{' '}
+                {billReceipt.reduce(
+                  (acc, ticket) => acc + ticket.ticketPrice * ticket.ticketCount,
+                  0,
+                )}
+                <span className={styles.extraCharges}></span>
+              </span>
+            </div>
+            <div className='pointer' onClick={() => setShowReceiptModal(true)}>
+              <FaBookOpen color='#fff' size={20} style={{ marginRight: '0.25rem' }} />{' '}
+              <span
+                style={{
+                  fontSize: '0.9rem',
+                }}
+              >
+                View Receipt
+              </span>
+            </div>
           </div>
-          <div className='pointer' onClick={() => setShowReceiptModal(true)}>
-            <FaBookOpen color='#fff' size={20} style={{ marginRight: '0.25rem' }} />{' '}
-            <span
-              style={{
-                fontSize: '0.9rem',
-              }}
-            >
-              View Receipt
-            </span>
-          </div>
-        </div>
-      )}
+        )}
     </>
   );
 };
