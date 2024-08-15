@@ -60,11 +60,11 @@ const CouponForm = ({
     ticketName: string;
     ticketPrice: number;
     ticketCount: number;
+    total: number;
     category: string;
     youTicket: boolean;
-    platformFee: number;
-    gatewayFee: number;
     currency: string;
+    is_fee: boolean;
   };
 
   const [filteredTickets, setFilteredTickets] = useState<TicketType[]>([]);
@@ -159,6 +159,15 @@ const CouponForm = ({
     return isActive;
   };
 
+  const findPriceAfterCharge = (netPrice: number, platformFee: number, gatewayFee: number, platform_fee_from_user: boolean) => {
+    if (platform_fee_from_user) {
+      const target_amount = netPrice * (1 + platformFee / 100);
+      return target_amount / (1 - gatewayFee / 100);
+    } else {
+      return netPrice;
+    }
+  };
+
   useEffect(() => {
     const localBillReceipt: billReceipt[] = [];
     tickets.forEach((ticket) => {
@@ -170,11 +179,11 @@ const CouponForm = ({
           ticketName: ticketData.title,
           ticketPrice: ticketData.price,
           ticketCount: ticket.count,
+          total: findPriceAfterCharge(ticketData.price * ticket.count, ticketData.platform_fee, ticketData.gateway_fee, ticketData.platform_fee_from_user),
           category: ticketData.category,
           youTicket: ticket.my_ticket,
-          platformFee: ticketData.platform_fee,
-          gatewayFee: ticketData.gateway_fee,
           currency: ticketData.currency,
+          is_fee: ticketData.platform_fee_from_user && (ticketData.platform_fee + ticketData.gateway_fee) > 0,
         });
       }
     });

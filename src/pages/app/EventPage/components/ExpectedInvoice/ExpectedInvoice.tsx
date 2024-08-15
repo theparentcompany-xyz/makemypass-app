@@ -9,8 +9,11 @@ const ExpectedInvoice = ({
     ticketName: string;
     ticketPrice: number;
     ticketCount: number;
-    currency: string;
+    total: number;
+    category: string;
     youTicket: boolean;
+    currency: string;
+    is_fee: boolean;
   }[];
   setShowReceiptModal: (value: boolean) => void;
 }) => {
@@ -25,9 +28,10 @@ const ExpectedInvoice = ({
             <p className={styles.receiptItemPrice}>
               {ticket.currency} {ticket.ticketPrice > 0 && ticket.ticketPrice} x{' '}
               {ticket.ticketCount}
+              {ticket.is_fee && <span> + fee</span>}
             </p>
             <p className={styles.receiptItemPrice}>
-              {ticket.currency} {ticket.ticketPrice > 0 && ticket.ticketPrice * ticket.ticketCount}
+              {ticket.currency} {ticket.ticketPrice > 0 && ticket.total}
             </p>
           </div>
         ))}
