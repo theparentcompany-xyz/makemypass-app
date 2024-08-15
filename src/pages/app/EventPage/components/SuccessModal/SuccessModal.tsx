@@ -65,9 +65,10 @@ const SuccessModal = ({
                     <p className={styles.bookingConfirmedSubText}>
                       Thank you for booking your spot at {success.eventTitle}!
                     </p>
-                    <p className={styles.bookingConfirmedSecondaryText}>
-                      {success.followupMessage}
-                    </p>
+                    <p
+                      className={styles.bookingConfirmedSecondaryText}
+                      dangerouslySetInnerHTML={{ __html: success.followupMessage || '' }}
+                    ></p>
 
                     {success.ticketURL && import.meta.env.VITE_CURRENT_ENV === 'dev' && (
                       <>

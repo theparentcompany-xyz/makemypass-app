@@ -83,6 +83,7 @@
   font-family: 'Inter';
   margin-top: 0.25rem;
   max-width: 23rem;
+  text-align: center;
 }
 
 .bookingConfirmedSecondaryText {
