@@ -18,17 +18,17 @@ import { FaBookOpen, FaDollarSign } from 'react-icons/fa';
 import ExpectedInvoice from '../ExpectedInvoice/ExpectedInvoice.tsx';
 
 const CouponForm = ({
-  setTickets,
-  tickets,
-  discount,
-  setDiscount,
-  eventFormData,
-  setCoupon,
-  coupon,
-  setSelectedDate,
-  selectedDate,
-  formData,
-}: {
+                      setTickets,
+                      tickets,
+                      discount,
+                      setDiscount,
+                      eventFormData,
+                      setCoupon,
+                      coupon,
+                      setSelectedDate,
+                      selectedDate,
+                      formData,
+                    }: {
   setTickets: React.Dispatch<React.SetStateAction<Tickets[]>>;
   tickets: Tickets[];
   discount: DiscountData;
@@ -138,9 +138,9 @@ const CouponForm = ({
         };
       }
       return ticket;
-    });
+    }).filter((ticket) => ticket.count > 0);
 
-    if (newTicket) {
+    if (newTicket && increment) {
       if (tickets.filter((ticket) => ticket.my_ticket).length === 0) {
         updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: true });
       } else {
@@ -160,34 +160,25 @@ const CouponForm = ({
   };
 
   useEffect(() => {
-    console.log('tickets', tickets);
-
-    if (tickets.length > 0) {
-      let localBillReceipt: billReceipt[] = [];
-      tickets.forEach((ticket) => {
-        const ticketData = filteredTickets.find(
-          (filteredTicket) => filteredTicket.id === ticket.ticket_id,
-        );
-        if (ticketData) {
-          localBillReceipt.push({
-            ticketName: ticketData.title,
-            ticketPrice: ticketData.price,
-            ticketCount: ticket.count,
-            category: ticketData.category,
-            youTicket: ticket.my_ticket,
-            platformFee: ticketData.platform_fee,
-            gatewayFee: ticketData.gateway_fee,
-            currency: ticketData.currency,
-          });
-        }
-      });
-
-      localBillReceipt = localBillReceipt.filter(
-        (ticket) => ticket.ticketCount > 0 || ticket.youTicket,
+    const localBillReceipt: billReceipt[] = [];
+    tickets.forEach((ticket) => {
+      const ticketData = filteredTickets.find(
+        (filteredTicket) => filteredTicket.id === ticket.ticket_id,
       );
-
-      setBillReceipt(localBillReceipt);
-    }
+      if (ticketData) {
+        localBillReceipt.push({
+          ticketName: ticketData.title,
+          ticketPrice: ticketData.price,
+          ticketCount: ticket.count,
+          category: ticketData.category,
+          youTicket: ticket.my_ticket,
+          platformFee: ticketData.platform_fee,
+          gatewayFee: ticketData.gateway_fee,
+          currency: ticketData.currency,
+        });
+      }
+    });
+    setBillReceipt(localBillReceipt);
   }, [tickets]);
 
   useEffect(() => {
@@ -301,7 +292,7 @@ const CouponForm = ({
               >
                 {eventFormData?.select_multi_ticket && (
                   <div className={styles.ticketCountContainer}>
-                    <div className='row' style={{ columnGap: 0 }}>
+                    <div className="row" style={{ columnGap: 0 }}>
                       <button
                         className={styles.ticketCountUpdateButton}
                         onClick={() => {
@@ -430,7 +421,7 @@ const CouponForm = ({
               >
                 {eventFormData?.select_multi_ticket && (
                   <div className={styles.ticketCountContainer}>
-                    <div className='row' style={{ columnGap: 0 }}>
+                    <div className="row" style={{ columnGap: 0 }}>
                       <button
                         className={styles.ticketCountUpdateButton}
                         onClick={() => {
@@ -556,12 +547,12 @@ const CouponForm = ({
           <p className={styles.couponHeader}>Have a Coupon Code?</p>
           {coupon.description && <p className={styles.couponDescription}>{coupon.description}</p>}
           <InputField
-            name='coupon_code'
-            placeholder='Coupon Code'
-            id='coupon_code'
-            key='coupon_code'
+            name="coupon_code"
+            placeholder="Coupon Code"
+            id="coupon_code"
+            key="coupon_code"
             error={[coupon.error ?? '']}
-            type='text'
+            type="text"
             icon={getIcon('coupon_code')}
             value={coupon.value}
             style={{
@@ -618,17 +609,17 @@ const CouponForm = ({
         !eventFormData.is_grouped_ticket &&
         tickets.reduce((acc, ticket) => acc + ticket.count, 0) > 1 && (
           <div className={styles.claimCodeExccededMessage}>
-            <RiInformationFill color='#4eff99' size={25} />
+            <RiInformationFill color="#4eff99" size={25} />
             <span>Kindly check your email for the link of register of other tickets</span>
           </div>
         )}
 
       {billReceipt.length > 0 &&
         billReceipt.reduce((acc, ticket) => acc + ticket.ticketPrice * ticket.ticketCount, 0) >
-          0 && (
+        0 && (
           <div className={styles.totalPriceMessage}>
             <div>
-              <FaDollarSign color='#4eff99' size={20} />
+              <FaDollarSign color="#4eff99" size={20} />
               <span>
                 Total Price: Rs.{' '}
                 {billReceipt.reduce(
@@ -638,8 +629,8 @@ const CouponForm = ({
                 <span className={styles.extraCharges}></span>
               </span>
             </div>
-            <div className='pointer' onClick={() => setShowReceiptModal(true)}>
-              <FaBookOpen color='#fff' size={20} style={{ marginRight: '0.25rem' }} />{' '}
+            <div className="pointer" onClick={() => setShowReceiptModal(true)}>
+              <FaBookOpen color="#fff" size={20} style={{ marginRight: '0.25rem' }} />{' '}
               <span
                 style={{
                   fontSize: '0.9rem',
