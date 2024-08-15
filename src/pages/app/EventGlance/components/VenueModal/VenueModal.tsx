@@ -73,7 +73,10 @@ const VenueModal = ({
         >
           <div className={styles.deleteContainer}>
             <p className={styles.deleteText}>
-              This venue has check-ins associated with it. Deleting this venue will delete all the
+              {venues.venueList.find((venue) => venue.id === selectedVenueId.current)?.count ??
+              0 > 0
+                ? 'This venue has check-ins associated with it. Deleting this venue will delete all the check-ins associated  with it.'
+                : 'Are you sure you want to delete this venue?'}
             </p>
             <div className={styles.deleteButtons}>
               <button
@@ -155,22 +158,11 @@ const VenueModal = ({
 
                 <div className='row'>
                   <FaTrash
-                    title='Download Report'
+                    title='Delete Venue'
                     color='#8e8e8e'
                     className={styles.reportIcon}
                     onClick={() => {
-                      if (venues.venueList.length > 1) {
-                        setShowDeleteModal(true);
-                      } else {
-                        const newVenues = venues.venueList.filter((v) => v.id !== venue.id);
-                        updateVenueList(newVenues, eventId)
-                          .then(() => {
-                            listVenues(eventId, setVenues);
-                          })
-                          .catch(() => {
-                            toast.error('Failed to delete venue');
-                          });
-                      }
+                      setShowDeleteModal(true);
                     }}
                   />
                   <FaEdit
