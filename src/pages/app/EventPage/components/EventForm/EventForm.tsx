@@ -43,7 +43,7 @@ const EventForm = ({
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({});
-  const [formNumber, setFormNumber] = useState<number>(0);
+  const [formNumber, setFormNumber] = useState<number>(1);
   const [selectedDate, setSelectedDate] = useState<string | null>();
   const [formErrors, setFormErrors] = useState<any>({});
   const [tickets, setTickets] = useState<Tickets[]>([]);
@@ -186,9 +186,9 @@ const EventForm = ({
             )}
             {!type && (
               <div>
-                <p className={styles.eventFormTitle}>{type ? '' : 'Register for the event'}</p>
+                <p className={styles.eventFormTitle}>Register for the event</p>
                 <p className={styles.eventHeaderDescription}>
-                  {type ? '' : 'Please fill in the form below to register for the event.'}
+                  Please fill in the form below to register for the event.
                 </p>
               </div>
             )}

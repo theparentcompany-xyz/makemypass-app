@@ -14,6 +14,9 @@ import { findMinDate } from '../../../../../common/commonFunctions';
 import { filterTickets } from '../../../../../common/coreLogics.ts';
 import { FormEventData } from '../../../Guests/types.ts';
 import { RiInformationFill } from 'react-icons/ri';
+import { FaBookOpen, FaDollarSign } from 'react-icons/fa';
+import { HiReceiptPercent } from 'react-icons/hi2';
+import Modal from '../../../../../components/Modal/Modal.tsx';
 
 const CouponForm = ({
   setTickets,
@@ -53,9 +56,23 @@ const CouponForm = ({
       formData,
     });
   };
+
+  type billReceipt = {
+    ticketName: string;
+    ticketPrice: number;
+    ticketCount: number;
+    category: string;
+    youTicket: boolean;
+    platformFee: number;
+    gatewayFee: number;
+    currency: string;
+  };
+
   const [filteredTickets, setFilteredTickets] = useState<TicketType[]>([]);
   const [newTickets, setNewTickets] = useState<Tickets[]>([]);
   const [selectedTicketCategory, setSelectedTicketCategory] = useState<string>('');
+  const [billReceipt, setBillReceipt] = useState<billReceipt[]>([]);
+  const [showReceiptModal, setShowReceiptModal] = useState<boolean>(false);
 
   const ticketSoldAlert = () => {
     toast.error('Ticket sold out');
@@ -118,6 +135,7 @@ const CouponForm = ({
     if (newTicket) {
       updatedTickets.push({ ticket_id: ticketId, count: 1, my_ticket: false });
     }
+
     setNewTickets(updatedTickets);
   };
 
@@ -129,6 +147,34 @@ const CouponForm = ({
     if (isActive) return true;
     else return false;
   };
+
+  useEffect(() => {
+    console.log('tickets', tickets);
+
+    if (tickets.length > 0) {
+      const localBillReceipt: billReceipt[] = [];
+      tickets.forEach((ticket) => {
+        const ticketData = filteredTickets.find(
+          (filteredTicket) => filteredTicket.id === ticket.ticket_id,
+        );
+        if (ticketData) {
+          localBillReceipt.push({
+            ticketName: ticketData.title,
+            ticketPrice: ticketData.price,
+            ticketCount: ticket.count,
+            category: ticketData.category,
+            youTicket: ticket.my_ticket,
+            platformFee: ticketData.platform_fee,
+            gatewayFee: ticketData.gateway_fee,
+            currency: ticketData.currency,
+          });
+        }
+      });
+      setBillReceipt(localBillReceipt);
+
+      console.log('billReceipt', localBillReceipt);
+    }
+  }, [tickets]);
 
   useEffect(() => {
     if (eventFormData) {
@@ -177,6 +223,37 @@ const CouponForm = ({
 
   return (
     <>
+      {showReceiptModal && (
+        <Modal title='Bill Receipt' onClose={() => setShowReceiptModal(false)}>
+          <div className={styles.receiptContainer}>
+            {billReceipt.map((ticket) => (
+              <div className={styles.receiptItem}>
+                <p className={styles.receiptItemName}>
+                  {ticket.ticketName} {ticket.youTicket && <span>(Your Ticket)</span>}
+                </p>
+                <p className={styles.receiptItemPrice}>
+                  {ticket.currency} {ticket.ticketPrice > 0 && ticket.ticketPrice} x{' '}
+                  {ticket.ticketCount}
+                </p>
+                <p className={styles.receiptItemPrice}>
+                  {ticket.currency}{' '}
+                  {ticket.ticketPrice > 0 && ticket.ticketPrice * ticket.ticketCount}
+                </p>
+              </div>
+            ))}
+            <div className={styles.totalPrice}>
+              <p>
+                Total Price: {billReceipt[0].currency}{' '}
+                {billReceipt.reduce(
+                  (acc, ticket) => acc + ticket.ticketPrice * ticket.ticketCount,
+                  0,
+                )}
+              </p>
+            </div>
+          </div>
+        </Modal>
+      )}
+
       {findMinDate(eventFormData) && (
         <SelectDate
           eventFormData={eventFormData}
@@ -212,7 +289,7 @@ const CouponForm = ({
               }
               onClick={() => setSelectedTicketCategory(category)}
             >
-              {`${category}`}
+              {`${category} (${billReceipt.filter((ticket) => ticket.category === category).length})`}
             </p>
           ))}
         </div>
@@ -558,6 +635,32 @@ const CouponForm = ({
             <span>Kindly check your email for the link of register of other tickets</span>
           </div>
         )}
+
+      {billReceipt.length > 0 && (
+        <div className={styles.totalPriceMessage}>
+          <div>
+            <FaDollarSign color='#4eff99' size={20} />
+            <span>
+              Total Price: Rs.{' '}
+              {billReceipt.reduce(
+                (acc, ticket) => acc + ticket.ticketPrice * ticket.ticketCount,
+                0,
+              )}
+              <span className={styles.extraCharges}></span>
+            </span>
+          </div>
+          <div className='pointer' onClick={() => setShowReceiptModal(true)}>
+            <FaBookOpen color='#fff' size={20} style={{ marginRight: '0.25rem' }} />{' '}
+            <span
+              style={{
+                fontSize: '0.9rem',
+              }}
+            >
+              View Receipt
+            </span>
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -465,3 +465,97 @@
   padding: 0.25rem 1rem;
   font-family: 'Inter', sans-serif;
 }
+
+.totalPriceMessage {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #bbbaba;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
+  text-align: left;
+
+  padding: 0.75rem 0.5rem;
+  padding-right: 2rem;
+  margin-bottom: 1rem;
+
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    span {
+      font-size: 1rem;
+      color: white;
+      margin-left: 0.25rem;
+      font-weight: 400;
+    }
+  }
+}
+.receiptContainer {
+  width: 100%;
+  position: relative;
+  min-width: 20rem;
+  max-width: 25rem;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+}
+
+.receiptItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.receiptItem:last-child {
+  border-bottom: none;
+}
+
+.receiptItemName {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #fff;
+  flex-grow: 1;
+}
+
+.receiptItemName span {
+  font-size: 0.8rem;
+  color: #4eff99;
+  margin-left: 0.25rem;
+}
+
+.receiptItemPrice {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #bbbaba;
+  margin-left: 1rem;
+}
+
+.receiptItemPrice:last-child {
+  font-weight: 500;
+  color: #fff;
+}
+
+.totalPrice {
+  margin-top: 1rem;
+}
+
+.totalPrice p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4eff99;
+  text-align: right;
+}
