@@ -45,7 +45,7 @@
 
 .button {
   padding: 0.5rem 1rem;
-  border-radius: 4px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.08);
   color: #fff;
   font-family: 'Inter', sans-serif;

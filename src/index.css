@@ -17,7 +17,7 @@
   height: 4px;
   /* Add this line */
   margin: 1rem;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -39,7 +39,7 @@
   width: 5px;
   height: 5px;
   margin: 1rem;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 ::-moz-scrollbar-track {

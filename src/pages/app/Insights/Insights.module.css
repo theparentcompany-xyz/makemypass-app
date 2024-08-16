@@ -39,7 +39,7 @@
 }
 
 .registrationCount {
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
@@ -193,7 +193,7 @@
 /* Next Box */
 
 .pageVisitsCount {
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
@@ -206,7 +206,7 @@
 }
 
 .todayRegistered {
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 2rem;
@@ -230,7 +230,7 @@
 /* Timme Box */
 
 .pieContainer {
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
@@ -267,7 +267,7 @@
 }
 
 .paymentCounts {
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
@@ -288,7 +288,7 @@
 
 .categorySection {
   margin: 1rem 0.75rem;
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
@@ -376,7 +376,7 @@
   background: #fdfdfd;
   color: rgb(43, 42, 42);
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 0.5rem 1rem;
   font-size: 0.8rem;
   cursor: pointer;
@@ -392,7 +392,7 @@
   width: 95%;
   margin-top: 1rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.02);
   padding-right: 1rem;
 }
@@ -406,7 +406,7 @@
   font-weight: 400;
   line-height: 1.5;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   background: transparent;
   font-family: 'Inter', sans-serif;
   overflow: hidden;

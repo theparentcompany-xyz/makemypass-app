@@ -83,7 +83,7 @@ header {
   border: none;
   color: white;
   font-family: 'Inter';
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 .requestDemo {
@@ -111,7 +111,7 @@ header {
   font-size: 0.8rem;
   font-family: 'Inter', sans-serif;
   display: none;
-  border-radius: 4px 0 8px 8px;
+  border-radius: 8px 0 8px 8px;
 }
 
 .link {

@@ -27,7 +27,7 @@
 }
 
 .ticketHeaderButton {
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   border: none;
@@ -94,7 +94,7 @@
   font-size: 1.1rem;
   padding-top: 0.5rem;
   max-width: 100%;
-  border-radius: 4px;
+  border-radius: 8px;
   border: none;
   background: transparent;
   color: #d7d7d7;
@@ -105,7 +105,7 @@
   max-width: 20rem;
   background-color: rgba(255, 255, 255, 0.04);
   padding: 0.75rem;
-  border-radius: 4px;
+  border-radius: 8px;
   color: #d7d7d7;
   font-family: 'Inter', sans-serif;
   margin-right: 1rem;
@@ -128,7 +128,7 @@
 }
 
 .settingsButton {
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0);
   border: none;
@@ -152,7 +152,7 @@
 }
 
 .updateButton {
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   border: none;
@@ -221,7 +221,7 @@
 .ticketDescription {
   font-size: 0.9rem;
   color: #d7d7d7;
-  border-radius: 4px;
+  border-radius: 8px;
   border: none;
   background: rgba(255, 255, 255, 0.04);
   color: #d7d7d7;
@@ -271,7 +271,7 @@
   padding: 0.5rem;
   max-width: 11rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   resize: none;
   opacity: 0.8;
   text-align: left;
@@ -319,7 +319,7 @@
   outline: none;
   padding: 0.5rem;
   max-width: 8rem;
-  border-radius: 4px 0 0 8px;
+  border-radius: 8px 0 0 8px;
   margin-top: 0.5rem;
 }
 
@@ -361,7 +361,7 @@
 
 .cancelButton {
   margin-top: 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   border: none;
@@ -381,7 +381,7 @@
 
 .deleteButton {
   padding: 0.5rem 1rem;
-  border-radius: 4px;
+  border-radius: 8px;
   border: none;
   background: #d11a29ba;
   color: #fff;
@@ -436,7 +436,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.04);
   padding: 0.5rem 1rem;
-  border-radius: 4px;
+  border-radius: 8px;
   color: #fff;
   border: none;
   color: #fff;
@@ -477,7 +477,7 @@
 
 .confirmButton {
   margin-top: 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   border: none;

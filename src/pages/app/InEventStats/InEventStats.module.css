@@ -29,7 +29,7 @@
 }
 
 .registrationCount {
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
@@ -185,7 +185,7 @@
 /* Next Box */
 
 .pageVisitsCount {
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem 2rem;
@@ -195,7 +195,7 @@
 }
 
 .todayRegistered {
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
 
@@ -265,7 +265,7 @@
 }
 
 .user {
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 0.9rem;
 
   padding: 0.5rem 1rem;
@@ -302,12 +302,12 @@
 
   text-align: center;
 
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 .image {
   width: 20rem;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 .districtsCount {
@@ -347,7 +347,7 @@
   background: rgba(255, 255, 255, 0.04);
   font-weight: 500;
   font-size: 0.8rem;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 @keyframes swipe {
@@ -418,7 +418,7 @@
   color: #47c97e;
   margin-right: 0.5rem;
   padding: 0.35rem 0.95rem;
-  border-radius: 4px;
+  border-radius: 8px;
 
   background-color: #1d332c;
 
@@ -465,7 +465,7 @@
 
   .image {
     width: 15rem;
-    border-radius: 4px;
+    border-radius: 8px;
   }
 }
 
@@ -481,7 +481,7 @@
 
   .image {
     width: 11rem;
-    border-radius: 4px;
+    border-radius: 8px;
   }
 
   .userName {
@@ -547,7 +547,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-radius: 4px 8px 0 0;
+  border-radius: 8px 8px 0 0;
   border: 1px solid #1b2725;
   background: #1b2725;
   border: 2px solid #4f5554;

@@ -5,7 +5,7 @@
 .uploadFileButton {
   padding: 0.5rem 1rem;
   border: 1.5px solid rgba(255, 255, 255, 0.18);
-  border-radius: 4px;
+  border-radius: 8px;
   background: rgb(37, 37, 37, 0.9);
   color: #fff;
   font-family: 'Inter', sans-serif;
@@ -45,7 +45,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  border-radius: 4px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
   text-align: left;
   border: 1.5px solid rgba(255, 255, 255, 0.08);
@@ -99,7 +99,7 @@
   background: #fdfdfd;
   color: rgb(43, 42, 42);
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   font-weight: 500;
@@ -124,7 +124,7 @@
 
 .fileInput {
   margin-top: 0.25rem;
-  border-radius: 4px;
+  border-radius: 8px;
   border: none;
   padding: 0.5rem 0.5rem;
   background: rgba(255, 255, 255, 0.04);

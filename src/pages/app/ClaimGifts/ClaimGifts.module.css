@@ -89,7 +89,7 @@
 
 .sucessContainer {
   margin-top: 2rem;
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem;
@@ -123,7 +123,7 @@
 }
 
 .input {
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   border: none;
@@ -218,7 +218,7 @@
 }
 
 .tableContainer {
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
   margin-top: 1rem;
@@ -278,7 +278,7 @@
 
   padding: 0.5rem 0.75rem;
 
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 @media screen and (max-width: 768px) {
@@ -298,7 +298,7 @@
 
 .button {
   padding: 0.5rem 1rem;
-  border-radius: 4px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.08);
   color: #fff;
   font-family: 'Inter', sans-serif;
