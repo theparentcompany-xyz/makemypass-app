@@ -281,6 +281,10 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     } else {
       setIsChangedModal(true);
       setWantToClose(true);
+      setTicketPair([
+        ticketData.find((ticket) => ticket.id == selectedTicket?.id) as TicketType,
+        selectedTicket as TicketType,
+      ]);
     }
   };
 

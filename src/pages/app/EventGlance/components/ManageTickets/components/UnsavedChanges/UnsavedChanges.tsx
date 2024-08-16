@@ -42,6 +42,7 @@ const UnsavedChanges = ({
                 setWantToClose(false);
                 return;
               }
+
               const [tempTicket, tempSelectedTicket] = ticketPair as TicketType[];
               tempTicket.id != tempSelectedTicket?.id &&
                 setSelectedTicket(
@@ -58,7 +59,7 @@ const UnsavedChanges = ({
             onClick={() => {
               setIsChangedModal(false);
               const [tempTicket, tempSelectedTicket] = ticketPair as TicketType[];
-              tempTicket.id != tempSelectedTicket?.id &&
+              (tempTicket.id != tempSelectedTicket?.id || wantToClose) &&
                 updateTicket(tempSelectedTicket as TicketType).then(() => {
                   setSelectedTicket(
                     Object.assign(
