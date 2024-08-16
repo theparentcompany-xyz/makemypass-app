@@ -212,11 +212,6 @@ export const checkOutUser = async (
       if (setTrigger) {
         setTrigger(false);
       }
-
-      if (setMessage)
-        setTimeout(() => {
-          setMessage('');
-        }, 2500);
     });
 };
 
