@@ -42,7 +42,7 @@ export const makeMyPass = {
   getAllMailLog: (eventId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/guest-info/all-mail-log/`),
 
-  resentTicket: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/resent-ticked/`),
+  resentTicket: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/resend-ticket/`),
   editSubmission: (eventId: string, submissionId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/edit-submission/${submissionId}`),
   deleteSubmission: (eventId: string, submissionId: string) =>
