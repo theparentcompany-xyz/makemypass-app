@@ -100,6 +100,7 @@ const InEventStats = () => {
   const [barData, setBarData] = useState<ChartData>();
   const [districtData, setDistrictData] = useState<DistrictData>({});
   const [showWelcome, setShowWelcome] = useState(true);
+  const [totalCheckIns, setTotalCheckIns] = useState(0);
 
   type DailyCount = {
     day: string;
@@ -142,6 +143,7 @@ const InEventStats = () => {
       }).then((ws) => {
         ws.onmessage = (event) => {
           const lineData = JSON.parse(event.data).response.time;
+          setTotalCheckIns(JSON.parse(event.data).response.total_checkin);
           const barData = JSON.parse(event.data).response.bargraph;
           setDistrictData(barData);
           const dates = Object.keys(lineData || {});
@@ -303,7 +305,7 @@ const InEventStats = () => {
                 <div className={styles.totalRegistered}>
                   <p className={styles.total}>Total Check-Ins</p>
                   <p className={styles.count}>
-                    {dailyCount.length > 0 && dailyCount.reduce((a, b) => a + b.count, 0)}
+                    {totalCheckIns}
                     <span> guests</span>
                   </p>
                 </div>
@@ -363,7 +365,7 @@ const InEventStats = () => {
           <div className={styles.insightsContainer}>
             <div
               style={{
-                borderRadius: '8px',
+                borderRadius: '12px',
               }}
               className={styles.pageVisitsCount}
             >
