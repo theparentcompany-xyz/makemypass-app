@@ -488,12 +488,7 @@ const Insights = ({ type }: { type?: string }) => {
                   </div>
                 </div>
 
-                <div
-                  style={{
-                    borderRadius: '12px',
-                  }}
-                  className={styles.pageVisitsCount}
-                >
+                <div className={styles.pageVisitsCount}>
                   <div className={styles.countSection}>
                     <div className={styles.cLeftSection}>
                       <div className={styles.totalRegistered}>
@@ -557,12 +552,7 @@ const Insights = ({ type }: { type?: string }) => {
                 </div>
 
                 {(message?.payment_analytics.total_paid_users ?? 0 > 0) && (
-                  <div
-                    style={{
-                      borderRadius: '12px',
-                    }}
-                    className={styles.paymentCounts}
-                  >
+                  <div className={styles.paymentCounts}>
                     <div className={styles.logButton}>
                       <SecondaryButton
                         buttonText='View Logs'

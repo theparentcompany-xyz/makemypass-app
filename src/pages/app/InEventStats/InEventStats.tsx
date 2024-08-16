@@ -363,7 +363,7 @@ const InEventStats = () => {
           <div className={styles.insightsContainer}>
             <div
               style={{
-                borderRadius: '12px',
+                borderRadius: '8px',
               }}
               className={styles.pageVisitsCount}
             >

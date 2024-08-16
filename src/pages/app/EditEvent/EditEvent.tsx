@@ -433,7 +433,7 @@ const EditEvent = () => {
                           mapContainerStyle={{
                             height: '400px',
                             width: '100%',
-                            borderRadius: '12px 12px 0 0',
+                            borderRadius: '4px 4px 0 0',
                           }}
                           zoom={14}
                           center={location ?? { lat: 0, lng: 0 }}
