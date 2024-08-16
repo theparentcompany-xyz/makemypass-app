@@ -35,7 +35,7 @@ const ViewGuest = ({
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;
   setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
-  setSelectedGuest: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>;
+  setSelectedGuest?: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>;
   type?: string;
 }) => {
   const [confirmClicked, setConfirmClicked] = useState({
@@ -458,7 +458,7 @@ const ViewGuest = ({
                   <div
                     className={styles.deleteIcon}
                     onClick={() => {
-                      setSelectedGuest(selectedGuestData);
+                      if (setSelectedGuest) setSelectedGuest(selectedGuestData);
                       setSelectedGuestId((prevState) => ({
                         ...prevState,
                         id: selectedGuestData['id'],
