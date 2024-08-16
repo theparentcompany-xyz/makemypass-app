@@ -17,8 +17,8 @@ const ScannerResponseModal = ({
   setMessage: (message: string) => void;
   setTicketId: (ticketId: string) => void;
   setTrigger: Dispatch<React.SetStateAction<boolean>>;
-  setMultipleTickets: Dispatch<React.SetStateAction<multipleTicketCount>>;
-  multipleTickets: multipleTicketCount;
+  setMultipleTickets?: Dispatch<React.SetStateAction<multipleTicketCount>>;
+  multipleTickets?: multipleTicketCount;
 }) => {
   return (
     message &&
@@ -26,17 +26,18 @@ const ScannerResponseModal = ({
       <>
         <div className={styles.backgroundBlur}></div>
         <Modal
-          title={multipleTickets.hasMultipleTickets ? message : 'User Check-In'}
+          title={multipleTickets && multipleTickets.hasMultipleTickets ? message : 'User Check-In'}
           onClose={() => {
             setMessage('');
             setTicketId('');
             setTrigger(false);
-            setMultipleTickets({
-              hasMultipleTickets: false,
-            });
+            if (setMultipleTickets)
+              setMultipleTickets({
+                hasMultipleTickets: false,
+              });
           }}
         >
-          {!multipleTickets.hasMultipleTickets && (
+          {multipleTickets && !multipleTickets.hasMultipleTickets && (
             <>
               <p className={styles.modalSubText}>{message}</p>
               <button
@@ -45,16 +46,17 @@ const ScannerResponseModal = ({
                   setMessage('');
                   setTicketId('');
                   setTrigger(false);
-                  setMultipleTickets({
-                    hasMultipleTickets: false,
-                  });
+                  if (setMultipleTickets)
+                    setMultipleTickets({
+                      hasMultipleTickets: false,
+                    });
                 }}
               >
                 Close
               </button>
             </>
           )}
-          {multipleTickets.hasMultipleTickets && (
+          {multipleTickets && multipleTickets.hasMultipleTickets && (
             <>
               <div className={styles.multipleTicketsContainer}>
                 {multipleTickets.tickets?.map((ticket, index) => (
@@ -82,10 +84,11 @@ const ScannerResponseModal = ({
                         return t;
                       });
 
-                      setMultipleTickets({
-                        ...multipleTickets,
-                        tickets: newTickets,
-                      });
+                      if (setMultipleTickets)
+                        setMultipleTickets({
+                          ...multipleTickets,
+                          tickets: newTickets,
+                        });
                     }}
                   />
                 ))}

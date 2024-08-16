@@ -132,7 +132,6 @@ export const checkOutUser = async (
   eventId: string,
   setScanLogs: React.Dispatch<React.SetStateAction<LogType[]>>,
   setMessage?: React.Dispatch<React.SetStateAction<string>>,
-  setIsError?: React.Dispatch<React.SetStateAction<boolean>>,
   setChecking?: React.Dispatch<React.SetStateAction<boolean>>,
   setMultipleTickets?: React.Dispatch<React.SetStateAction<multipleTicketCount>>,
   multtipleTickets?: multipleTicketCount,
@@ -159,9 +158,8 @@ export const checkOutUser = async (
   privateGateway
     .post(makeMyPass.checkOutUser(eventId), dataToSend)
     .then((response) => {
-      if (setMessage && setIsError) {
+      if (setMessage) {
         setMessage(response.data.message.general[0] || 'Check-Out Successful');
-        setIsError(false);
         setScanLogs((prev) => [
           ...prev,
           {
@@ -188,9 +186,8 @@ export const checkOutUser = async (
           tickets: [],
         }));
       }
-      if (setMessage && setIsError) {
+      if (setMessage) {
         setMessage(error.response.data.message.general[0] || 'Check-Out Failed');
-        setIsError(true);
         setScanLogs((prev) => [
           ...prev,
           {
@@ -212,10 +209,9 @@ export const checkOutUser = async (
         setTrigger(false);
       }
 
-      if (setMessage && setIsError)
+      if (setMessage)
         setTimeout(() => {
           setMessage('');
-          setIsError(false);
         }, 2500);
     });
 };
