@@ -16,7 +16,7 @@ import {
   getVisistedVenues,
   initateRefund,
 } from '../../../../../apis/guests';
-import { FaMailBulk, FaTrash, FaWalking } from 'react-icons/fa';
+import { FaEdit, FaMailBulk, FaTrash, FaWalking } from 'react-icons/fa';
 import Modal from '../../../../../components/Modal/Modal';
 import { EmailType, VisitedVenues } from './types';
 import { RegistrationDataType } from '../../../Overview/Overview/types';
@@ -28,12 +28,14 @@ const ViewGuest = ({
   setSelectedGuestId,
   eventId,
   setResentTicket,
+  setSelectedGuest,
   type,
 }: {
   selectedGuestData: RegistrationDataType | undefined;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;
   setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
+  setSelectedGuest: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>;
   type?: string;
 }) => {
   const [confirmClicked, setConfirmClicked] = useState({
@@ -442,14 +444,32 @@ const ViewGuest = ({
                   </div>
                 </div>
               )}
-              <div
-                className={styles.deleteIcon}
-                onClick={() => {
-                  setDeleteModal(true);
-                }}
-              >
-                <FaTrash size={15} color='#8E8E8E' />
-                <span> Delete Submission</span>
+              <div className='row'>
+                <div
+                  className={styles.deleteIcon}
+                  onClick={() => {
+                    setDeleteModal(true);
+                  }}
+                >
+                  <FaTrash size={15} color='#8E8E8E' />
+                  <span> Delete Submission</span>
+                </div>
+                {!type && (
+                  <div
+                    className={styles.deleteIcon}
+                    onClick={() => {
+                      setSelectedGuest(selectedGuestData);
+                      setSelectedGuestId((prevState) => ({
+                        ...prevState,
+                        id: selectedGuestData['id'],
+                        type: 'edit',
+                      }));
+                    }}
+                  >
+                    <FaEdit size={15} color='#8E8E8E' />
+                    <span> Edit Submission</span>
+                  </div>
+                )}
               </div>
 
               {import.meta.env.VITE_CURRENT_ENV === 'dev' &&
@@ -603,9 +623,16 @@ const ViewGuest = ({
                     <div className={styles.field} key={key}>
                       <p className={styles.fieldLabel}>{key === 'amount' ? 'Amount' : fieldName}</p>
                       <p className={styles.fieldData}>
-                        {key === 'amount' && Number(selectedGuestData.submission[key]) <= 0
-                          ? 'Free'
-                          : selectedGuestData.submission[key].toString()}
+                        {key === 'amount' && Number(selectedGuestData.submission[key]) <= 0 ? (
+                          'Free'
+                        ) : selectedGuestData.submission[key].toString().includes('http') ? (
+                          <SecondaryButton
+                            buttonText='View File'
+                            onClick={() => window.open(selectedGuestData.submission[key])}
+                          />
+                        ) : (
+                          selectedGuestData.submission[key]
+                        )}
                       </p>
                     </div>
                   )

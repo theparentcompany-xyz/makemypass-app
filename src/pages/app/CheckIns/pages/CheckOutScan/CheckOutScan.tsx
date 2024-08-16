@@ -25,7 +25,7 @@ const CheckOutScan = () => {
   const [scanLogs, setScanLogs] = useState<LogType[]>([]);
 
   useEffect(() => {
-    if (ticketId.length > 0) {
+    if (ticketId.length > 0 && trigger) {
       checkOutUser(
         ticketId,
         eventId,

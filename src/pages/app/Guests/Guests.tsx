@@ -146,6 +146,7 @@ const Guests = () => {
                 setSelectedGuestId={setSelectedGuestId}
                 eventId={eventId}
                 setResentTicket={setResentTicket}
+                setSelectedGuest={setSelectedGuest}
               />
             </>
           )}
