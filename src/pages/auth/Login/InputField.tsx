@@ -15,6 +15,7 @@ interface FormProps {
   description?: string;
   style?: React.CSSProperties;
   disabled?: boolean;
+  key?: number;
 }
 
 const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProps }, ref) => {

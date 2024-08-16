@@ -15,6 +15,7 @@ import { LuCheck } from 'react-icons/lu';
 import { LogType } from '../Venue/Venue';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
 import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerResponseModal';
+import { multipleTicketCount } from './types';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -23,6 +24,10 @@ const ScanQR = () => {
   const [message, setMessage] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
   const [isTicketSelected, setIsTicketSelected] = useState<boolean>(false);
+  const [multipleTickets, setMultipleTickets] = useState<multipleTicketCount>({
+    hasMultipleTickets: false,
+    triggerCheckIn: false,
+  });
 
   const [checking, setChecking] = useState<boolean>(false);
 
@@ -40,10 +45,18 @@ const ScanQR = () => {
 
   useEffect(() => {
     if (ticketId.length > 0 && trigger) {
-      // preview(eventId, ticketId, setPreviewData);
-      checkInUser(ticketId, eventId, setScanLogs, setMessage, setIsError, setChecking);
+      checkInUser(
+        ticketId,
+        eventId,
+        setScanLogs,
+        setMessage,
+        setIsError,
+        setChecking,
+        setMultipleTickets,
+        multipleTickets,
+      );
     }
-  }, [trigger, eventId]);
+  }, [trigger, eventId, multipleTickets.triggerCheckIn]);
 
   return (
     <>
@@ -71,6 +84,8 @@ const ScanQR = () => {
                 setIsError={setIsError}
                 setTicketId={setTicketId}
                 setTrigger={setTrigger}
+                setMultipleTickets={setMultipleTickets}
+                multipleTickets={multipleTickets}
               />
 
               {previewData && previewData.name && (

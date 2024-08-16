@@ -21,16 +21,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #333333;
+  background: #282828;
   padding: 1px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #282828;
+  background: #333333;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3b3b3b;
+  background: rgb(70, 70, 70);
 }
 
 /* Firefox scrollbar */

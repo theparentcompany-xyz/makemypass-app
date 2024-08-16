@@ -169,7 +169,7 @@
 @media (min-width: 720px) {
   /* Your CSS code for devices with width less than 720px goes here */
   .onClickModal {
-    min-width: 30rem;
+    min-width: 25rem;
   }
 }
 

@@ -1,22 +1,28 @@
-.modalCloseButton {
-  margin-top: 1rem;
-  border-radius: 11px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  background: rgba(255, 255, 255, 0.04);
-
-  border: none;
-
-  padding: 0.75rem 1.75rem;
-
+.multipleTicketsContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Inter', sans-serif;
-  color: white;
-  align-items: center;
-  cursor: pointer;
-  font-size: 1rem;
-  column-gap: 0.25rem;
-  max-width: 12rem;
+  flex-direction: column;
   width: 100%;
+  max-width: 25rem;
+  max-height: 25rem;
+  overflow: auto;
+}
+.modalSubText {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+}
+
+.modalButton {
+  width: 100%;
+  text-align: center;
+  background: #fdfdfd;
+  color: rgb(43, 42, 42);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
 }
