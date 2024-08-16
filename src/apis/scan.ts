@@ -65,6 +65,8 @@ export const checkInUser = async (
           ...prevData,
           hasMultipleTickets: true,
           tickets: error.response.data.response.tickets,
+          userName: error.response.data.response.user_name,
+          entryDate: error.response.data.response.entry_date,
         }));
       } else if (setMultipleTickets) {
         setMultipleTickets((prevData) => ({
@@ -177,6 +179,8 @@ export const checkOutUser = async (
         setMultipleTickets((prevData) => ({
           ...prevData,
           hasMultipleTickets: true,
+          userName: error.response.data.response.user_name,
+          entryDate: error.response.data.response.entry_date,
           tickets: error.response.data.response.tickets,
         }));
       } else if (setMultipleTickets) {

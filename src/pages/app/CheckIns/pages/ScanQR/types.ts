@@ -8,6 +8,8 @@ export type User = {
 };
 
 export type multipleTicketCount = {
+  userName?: string;
+  entryDate?: string;
   hasMultipleTickets: boolean;
   tickets?: Ticket[];
 };

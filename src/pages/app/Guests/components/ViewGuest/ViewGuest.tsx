@@ -94,8 +94,9 @@ const ViewGuest = ({
                 <SecondaryButton
                   buttonText='Delete'
                   onClick={() => {
-                    if (selectedGuestData)
+                    if (selectedGuestData) {
                       deleteSubmission(eventId, selectedGuestData['id'] as string);
+                    }
                     setSelectedGuestId(null);
                     setDeleteModal(false);
                   }}

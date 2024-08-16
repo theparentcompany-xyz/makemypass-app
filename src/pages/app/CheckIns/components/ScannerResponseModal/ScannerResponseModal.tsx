@@ -2,7 +2,6 @@ import Modal from '../../../../../components/Modal/Modal';
 import styles from './ScannerResponseModal.module.css';
 import React, { Dispatch } from 'react';
 import { multipleTicketCount } from '../../pages/ScanQR/types';
-import InputField from '../../../../auth/Login/InputField';
 import toast from 'react-hot-toast';
 
 const ScannerResponseModal = ({
@@ -59,38 +58,59 @@ const ScannerResponseModal = ({
           {multipleTickets && multipleTickets.hasMultipleTickets && (
             <>
               <div className={styles.multipleTicketsContainer}>
-                {multipleTickets.tickets?.map((ticket, index) => (
-                  <InputField
-                    key={index.toString()}
-                    id='ticketId'
-                    name='ticketId'
-                    icon={<></>}
-                    type='number'
-                    placeholder={`Enter count for ${ticket.ticket_name}`}
-                    description={`There are ${ticket.remaining_count}/${ticket.total_count} tickets remaining`}
-                    value={ticket.checked_in_count?.toString() || '0'}
-                    onChange={(e) => {
-                      const newTickets = multipleTickets.tickets?.map((t, i) => {
-                        if (i === index) {
-                          if (Number(e.target.value) <= t.remaining_count)
-                            return {
-                              ...t,
-                              checked_in_count: parseInt(e.target.value),
-                            };
-                          else {
-                            toast.error('Ticket Limit Exceeded');
-                          }
-                        }
-                        return t;
-                      });
+                <div className='row'>
+                  {multipleTickets.userName && (
+                    <p className={styles.userName}>
+                      Name: <span className={styles.userValue}>{multipleTickets.userName}</span>
+                    </p>
+                  )}
+                  {multipleTickets.entryDate && (
+                    <p className={styles.userName}>
+                      Entry Date:{' '}
+                      <span className={styles.userValue}>{multipleTickets.entryDate}</span>
+                    </p>
+                  )}
+                </div>
+                <hr className={styles.line} />
 
-                      if (setMultipleTickets)
-                        setMultipleTickets({
-                          ...multipleTickets,
-                          tickets: newTickets,
-                        });
-                    }}
-                  />
+                {multipleTickets.tickets?.map((ticket, index) => (
+                  <div className={styles.input} key={index}>
+                    <div className={styles.inputLabel}>
+                      <p className={styles.labelHeader}>
+                        <span className={styles.ticketName}>{ticket.ticket_name}</span>
+                      </p>
+                      <span className={styles.ticketCount}>
+                        ({ticket.remaining_count}/{ticket.total_count} left){' '}
+                      </span>
+                    </div>
+                    <input
+                      className={styles.inputField}
+                      type='number'
+                      min={0}
+                      value={ticket.checked_in_count}
+                      placeholder='0'
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (setMultipleTickets)
+                          if (Number(value) <= ticket.remaining_count)
+                            setMultipleTickets((prevData) => ({
+                              ...prevData,
+                              tickets: prevData.tickets?.map((ticketData) => {
+                                if (ticketData.ticket_id === ticket.ticket_id) {
+                                  return {
+                                    ...ticketData,
+                                    checked_in_count: Number(value),
+                                  };
+                                }
+                                return ticketData;
+                              }),
+                            }));
+                          else {
+                            toast.error('Check-In count cannot exceed remaining count');
+                          }
+                      }}
+                    />
+                  </div>
                 ))}
               </div>
               <button
