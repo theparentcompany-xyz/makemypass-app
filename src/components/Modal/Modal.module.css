@@ -171,6 +171,10 @@
   .onClickModal {
     min-width: 25rem;
   }
+
+  .sideModal {
+    min-width: 25rem;
+  }
 }
 
 @media (max-width: 720px) {
