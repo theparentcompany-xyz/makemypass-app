@@ -145,7 +145,7 @@ const Insights = ({ type }: { type?: string }) => {
             labels: Object.keys(lineBarData?.analytics || {}),
             datasets: [
               {
-                label: 'Daily Analytics',
+                label: 'Overall Analytics',
                 data: Object.values(lineBarData?.analytics || {}),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
