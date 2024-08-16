@@ -9,7 +9,6 @@ export type User = {
 
 export type multipleTicketCount = {
   hasMultipleTickets: boolean;
-  triggerCheckIn?: boolean;
   tickets?: Ticket[];
 };
 

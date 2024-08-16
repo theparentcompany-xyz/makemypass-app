@@ -26,7 +26,6 @@ const ScanQR = () => {
   const [isTicketSelected, setIsTicketSelected] = useState<boolean>(false);
   const [multipleTickets, setMultipleTickets] = useState<multipleTicketCount>({
     hasMultipleTickets: false,
-    triggerCheckIn: false,
   });
 
   const [checking, setChecking] = useState<boolean>(false);
@@ -50,13 +49,13 @@ const ScanQR = () => {
         eventId,
         setScanLogs,
         setMessage,
-        setIsError,
         setChecking,
         setMultipleTickets,
         multipleTickets,
+        setTrigger,
       );
     }
-  }, [trigger, eventId, multipleTickets.triggerCheckIn]);
+  }, [trigger, eventId]);
 
   return (
     <>
@@ -80,8 +79,6 @@ const ScanQR = () => {
               <ScannerResponseModal
                 message={message}
                 setMessage={setMessage}
-                isError={isError}
-                setIsError={setIsError}
                 setTicketId={setTicketId}
                 setTrigger={setTrigger}
                 setMultipleTickets={setMultipleTickets}

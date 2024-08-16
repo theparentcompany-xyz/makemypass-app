@@ -25,7 +25,7 @@ const Venue = () => {
   const [scanLogs, setScanLogs] = useState<LogType[]>([]);
 
   const [message, setMessage] = useState<string>('');
-  const [isError, setIsError] = useState<boolean>(false);
+  // const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
     listUserVenues(eventId, setVenues);
@@ -33,7 +33,7 @@ const Venue = () => {
 
   useEffect(() => {
     setMessage(scanLogs.length > 0 ? scanLogs[scanLogs.length - 1].message : '');
-    setIsError(scanLogs.length > 0 ? scanLogs[scanLogs.length - 1].hasError : false);
+    // setIsError(scanLogs.length > 0 ? scanLogs[scanLogs.length - 1].hasError : false);
   }, [scanLogs]);
 
   useEffect(() => {
@@ -49,8 +49,6 @@ const Venue = () => {
         <ScannerResponseModal
           message={message}
           setMessage={setMessage}
-          isError={isError}
-          setIsError={setIsError}
           setTicketId={setTicketId}
           setTrigger={setScanTrigger}
         />

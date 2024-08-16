@@ -12,10 +12,10 @@ export const checkInUser = async (
   eventId: string,
   setScanLogs?: React.Dispatch<React.SetStateAction<LogType[]>>,
   setMessage?: React.Dispatch<React.SetStateAction<string>>,
-  setIsError?: React.Dispatch<React.SetStateAction<boolean>>,
   setChecking?: React.Dispatch<React.SetStateAction<boolean>>,
   setMultipleTickets?: React.Dispatch<React.SetStateAction<multipleTicketCount>>,
   multtipleTickets?: multipleTicketCount,
+  setTrigger?: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   if (setChecking) {
     setChecking(true);
@@ -38,7 +38,13 @@ export const checkInUser = async (
   privateGateway
     .post(makeMyPass.checkInUser(eventId), dataToSend)
     .then((response) => {
-      if (setMessage && setIsError) {
+      if (setMultipleTickets) {
+        setMultipleTickets({
+          hasMultipleTickets: false,
+          tickets: [],
+        });
+      }
+      if (setMessage) {
         setMessage(response.data.message.general[0] || 'Check-In Successful');
         if (setScanLogs)
           setScanLogs((prev) => [
@@ -49,14 +55,6 @@ export const checkInUser = async (
               hasError: false,
             },
           ]);
-        if (setMultipleTickets) {
-          setMultipleTickets({
-            hasMultipleTickets: false,
-            triggerCheckIn: false,
-            tickets: [],
-          });
-        }
-        setIsError(false);
       } else {
         toast.success(response.data.message.general[0] || 'Check-In Successful');
       }
@@ -77,9 +75,8 @@ export const checkInUser = async (
           tickets: [],
         }));
       }
-      if (setMessage && setIsError) {
+      if (setMessage) {
         setMessage(error.response.data.message.general[0] || 'Check-In Failed');
-        setIsError(true);
         if (setScanLogs)
           setScanLogs((prev) => [
             ...prev,
@@ -96,6 +93,9 @@ export const checkInUser = async (
     .finally(() => {
       if (setChecking) {
         setChecking(false);
+      }
+      if (setTrigger) {
+        setTrigger(false);
       }
     });
 };
