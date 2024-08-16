@@ -541,7 +541,6 @@ const ViewGuest = ({
             )}
             {selectedGuestData['invited_by'] && (
               <>
-                <hr className={styles.line} />
                 <div className={styles.invitedBy}>
                   {selectedGuestData['invited_by'] && (
                     <p
@@ -550,12 +549,14 @@ const ViewGuest = ({
                   )}
                   {selectedGuestData['entry_date'] &&
                     typeof selectedGuestData['entry_date'] === 'string' && (
-                      <p
-                        className={styles.invitedByText}
-                      >{`Registered For ${formatDate(selectedGuestData['entry_date'])}`}</p>
+                      <>
+                        <p
+                          className={styles.invitedByText}
+                        >{`Registered For ${formatDate(selectedGuestData['entry_date'])}`}</p>
+                        <hr className={styles.line} />
+                      </>
                     )}
                 </div>
-                <hr className={styles.line} />
               </>
             )}
             {Number(selectedGuestData['amount']) > 0 && (

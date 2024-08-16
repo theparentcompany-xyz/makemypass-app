@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
 
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: #1b2725;
   padding: 1rem;
@@ -347,7 +347,7 @@
   width: 90%;
   background-color: #2a2b2b;
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: 4px;
   margin-right: 0.5rem;
 }
 
@@ -405,7 +405,7 @@
   margin-top: 1rem;
   background-color: rgb(53, 52, 52);
   padding: 0.5rem 0.75rem;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .loader {

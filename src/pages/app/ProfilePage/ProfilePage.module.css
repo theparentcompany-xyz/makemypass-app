@@ -11,7 +11,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5rem;
-  border-radius: 8px;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.08);
   padding: 2rem;
 
@@ -32,7 +32,7 @@
   flex-direction: column;
   gap: 1rem;
   justify-content: flex-start;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .formGroup {
@@ -44,7 +44,7 @@
 
 .formGroup input {
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: 4px;
   border: none;
   background: rgba(255, 255, 255, 0.08);
   color: white;
@@ -61,7 +61,7 @@
 
 .formGroup input[type='file'] {
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: 4px;
   border: none;
   background: rgba(255, 255, 255, 0.08);
   color: white;
@@ -98,7 +98,7 @@
 
 .updateButton {
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: 4px;
   border: none;
   background: rgba(255, 255, 255, 0.08);
   color: white;
@@ -236,7 +236,7 @@
 
 .active {
   border: 1.5px solid #fff;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 /* Modal Stuff*/
@@ -293,7 +293,7 @@
   flex-direction: row;
   align-items: center;
 
-  border-radius: 8px;
+  border-radius: 4px;
   border: none;
   background: rgba(255, 255, 255, 0.08);
   color: white;

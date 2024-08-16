@@ -14,11 +14,9 @@ export const resentEventTicket = async (
   ticketData: ResentTicket,
   setResentTicket: Dispatch<React.SetStateAction<ResentTicket>>,
 ) => {
-  const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   privateGateway
     .post(makeMyPass.resentTicket(eventId), {
-      client_id: ticketData.guestId,
-      event_id: eventId,
+      event_register_id: ticketData.guestId,
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Ticket resent successfully');

@@ -37,7 +37,7 @@
 .eventDataContainer,
 .eventForm,
 .eventDataContainer2 {
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
 
@@ -73,7 +73,7 @@
 }
 
 .backButton {
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
 
@@ -132,7 +132,7 @@
 }
 
 .submitButton {
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
 
@@ -189,7 +189,7 @@
 }
 
 .reocordUsingVoiceButton {
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.04);
 
@@ -223,7 +223,7 @@
   background-color: rgba(240, 75, 75, 0.1);
 
   border: 1px solid rgba(240, 75, 75);
-  border-radius: 8px;
+  border-radius: 4px;
 
   display: flex;
   flex-direction: row;

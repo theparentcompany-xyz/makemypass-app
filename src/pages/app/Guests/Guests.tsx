@@ -242,10 +242,17 @@ const Guests = () => {
         {guests ? (
           <>
             {resentTicket && resentTicket.status && (
-              <Modal onClose={onClose}>
-                <p className={styles.modalHeader}>Resend Ticket</p>
+              <Modal
+                onClose={() => {
+                  setResentTicket((prevState) => ({
+                    ...prevState,
+                    status: false,
+                  }));
+                }}
+                title='Resend Ticket'
+              >
                 <p className={styles.modalSubText}>
-                  Are you sure to resent ticket to{' '}
+                  By clicking on resend, the ticket with most resent will be sent to{' '}
                   <span
                     style={{
                       fontWeight: '500',

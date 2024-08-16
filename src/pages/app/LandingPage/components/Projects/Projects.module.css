@@ -39,7 +39,7 @@
 
 .projectDetails {
   margin-bottom: 2rem;
-  border-radius: 8px;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.04);
   padding: 2rem;
   display: flex;
@@ -79,7 +79,7 @@
 }
 
 .projectImage {
-  border-radius: 8px;
+  border-radius: 4px;
   margin: 0.5rem;
   margin-top: 0;
   margin-bottom: 0;
@@ -136,7 +136,7 @@
 }
 
 .projectImagesContainer {
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   white-space: nowrap;
   position: relative;
@@ -195,7 +195,7 @@
 }
 
 .dot {
-  border-radius: 8px;
+  border-radius: 4px;
   border: 2px solid rgba(255, 255, 255, 0.32);
   background: #12251e;
   width: 12px;
@@ -257,7 +257,7 @@
   width: 3rem;
   height: 2.5rem;
   border: 2px solid rgba(255, 255, 255, 0.04);
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .locationIcon {
@@ -272,7 +272,7 @@
   align-items: center;
   padding: 0.75rem;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.04);
   color: #fff;
   font-size: 1rem;
