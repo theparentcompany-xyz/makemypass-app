@@ -30,6 +30,7 @@ const EventForm = ({
   ticketCode,
   setSelectedGuestId,
   claimCodeExceed,
+  isCashInHand,
 }: {
   eventFormData: FormEventData;
   eventTitle: string | undefined;
@@ -40,6 +41,7 @@ const EventForm = ({
   ticketCode?: string | null;
   setSelectedGuestId?: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   claimCodeExceed?: ClaimCodeExceedType;
+  isCashInHand?: boolean;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({});
@@ -267,6 +269,7 @@ const EventForm = ({
                   setSelectedGuestId,
                   selectedDate,
                   ticketCode,
+                  isCashInHand,
                 );
               } else
                 submitForm({

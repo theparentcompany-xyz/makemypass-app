@@ -40,9 +40,14 @@ export const addGuest = (
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
   selectedDate?: string | null | undefined,
   ticketCode?: string | null,
+  isCashInHand?: boolean,
 ) => {
   if (selectedDate) {
     formData['ticket_date'] = selectedDate;
+  }
+
+  if (isCashInHand) {
+    formData['cash_in_hand'] = isCashInHand.toString();
   }
 
   const backendFormData = new FormData();

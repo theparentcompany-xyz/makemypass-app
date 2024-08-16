@@ -37,6 +37,7 @@ import { RegistrationDataType } from '../Overview/Overview/types';
 import { Roles } from '../../../../services/enums';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Glance from '../../../components/Glance/Glance';
+import Slider from '../../../components/SliderButton/Slider';
 
 const Guests = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
@@ -49,6 +50,7 @@ const Guests = () => {
   const [currentCategory, setCurrentCategory] = useState<string>();
   const [ticketCode, setTicketCode] = useState<string>('');
   const [showScanner, setShowScanner] = useState<boolean>(false);
+  const [isCashInHand, setIsCashInHand] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -192,12 +194,20 @@ const Guests = () => {
               {!showScanner ? (
                 eventFormData && (
                   <>
+                    <Slider
+                      checked={isCashInHand}
+                      onChange={() => setIsCashInHand(!isCashInHand)}
+                      key={isCashInHand ? 'cash' : 'online'}
+                      size='medium'
+                      text='Cash in Hand'
+                    />
                     <EventForm
                       eventFormData={eventFormData}
                       eventTitle={eventTitle}
                       type='addGuest'
                       ticketCode={ticketCode}
                       setSelectedGuestId={setSelectedGuestId}
+                      isCashInHand={isCashInHand}
                     />
                   </>
                 )
