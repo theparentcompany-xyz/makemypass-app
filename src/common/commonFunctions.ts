@@ -151,3 +151,11 @@ export const findMaxDate = (eventFormData: FormEventData): Date | null => {
   });
   return maxDate;
 };
+
+const getRemSizeFromCss = () => {
+  const rootStyle = getComputedStyle(document.documentElement);
+  const fontSize = rootStyle.getPropertyValue('font-size');
+  return parseFloat(fontSize);
+};
+
+export const RemSize = getRemSizeFromCss();
