@@ -5,6 +5,8 @@ import CouponType, { CreateCouponType } from '../../pages/app/Coupon/types';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Table.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
+import Modal from '../Modal/Modal';
 
 type CouponModalType = {
   showModal: boolean;
@@ -25,6 +27,9 @@ const GenericTable = ({
   setCouponModal?: React.Dispatch<React.SetStateAction<CouponModalType>>;
   setTableData?: React.Dispatch<React.SetStateAction<any[]>>;
 }) => {
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [selectedCoupon, setSelectedCoupon] = useState<CouponType>();
+
   const formattedKeys =
     tableData.length > 0
       ? Object.keys(tableData[0]).map((key) => {
@@ -40,6 +45,42 @@ const GenericTable = ({
 
   return (
     <>
+      {showConfirmModal && (
+        <Modal
+          title='Delete Coupon'
+          onClose={() => setShowConfirmModal(false)}
+          style={{
+            width: '20rem',
+          }}
+        >
+          <p
+            style={{
+              fontSize: '0.9rem',
+            }}
+          >
+            Are you sure you want to delete this coupon?
+          </p>
+          <div
+            className='row'
+            style={{
+              marginTop: '20px',
+            }}
+          >
+            <SecondaryButton buttonText='Cancel' onClick={() => setShowConfirmModal(false)} />
+            <SecondaryButton
+              buttonText='Delete'
+              onClick={() => {
+                deleteCoupon(
+                  JSON.parse(sessionStorage.getItem('eventData')!).event_id,
+                  selectedCoupon!.id,
+                  setTableData as React.Dispatch<React.SetStateAction<CouponType[]>>,
+                );
+                setShowConfirmModal(false);
+              }}
+            />
+          </div>
+        </Modal>
+      )}
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -118,11 +159,13 @@ const GenericTable = ({
                           <SecondaryButton
                             buttonText='Delete'
                             onClick={() => {
-                              deleteCoupon(
-                                JSON.parse(sessionStorage.getItem('eventData')!).event_id,
-                                data.id,
-                                setTableData as React.Dispatch<React.SetStateAction<CouponType[]>>,
-                              );
+                              setSelectedCoupon(data);
+                              setShowConfirmModal(true);
+                              // deleteCoupon(
+                              //   JSON.parse(sessionStorage.getItem('eventData')!).event_id,
+                              //   data.id,
+                              //   setTableData as React.Dispatch<React.SetStateAction<CouponType[]>>,
+                              // );
                             }}
                           />
                         </td>

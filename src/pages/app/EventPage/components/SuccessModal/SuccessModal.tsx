@@ -61,13 +61,9 @@ const SuccessModal = ({
 
                 {!success.loading ? (
                   <div className={styles.modalTexts}>
-                    <p className={styles.modalTitle}>Booking Confirmed!</p>
-                    <p className={styles.bookingConfirmedSubText}>
-                      Thank you for booking your spot at {success.eventTitle}!
-                    </p>
-                    <p className={styles.bookingConfirmedSecondaryText}>
-                      {success.followupMessage}
-                    </p>
+                    {/* <p className={styles.modalTitle}>Registration Successful!</p> */}
+                    {/* <p>Thank you for booking your spot at {success.eventTitle}!</p> */}
+                    <div dangerouslySetInnerHTML={{ __html: success.followupMessage || '' }}></div>
 
                     {success.ticketURL && import.meta.env.VITE_CURRENT_ENV === 'dev' && (
                       <>

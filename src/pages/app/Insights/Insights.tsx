@@ -261,13 +261,13 @@ const Insights = ({ type }: { type?: string }) => {
                     <div className={styles.publicLinkField}>
                       <input
                         className={styles.publicLink}
-                        value={`https://www.makemypass.com/${eventName.current}/public/insights`}
+                        value={`https://www.${import.meta.env.VITE_CURRENT_ENV === 'dev' ? 'devmakemypass.netlify.app' : 'makemypass.com'}/${eventName.current}/public/insights`}
                         readOnly
                       />
                       <IoCopyOutline
                         onClick={() => {
                           navigator.clipboard.writeText(
-                            `https://www.makemypass.com/${eventName.current}/public/insights`,
+                            `https://www.${import.meta.env.VITE_CURRENT_ENV === 'dev' ? 'devmakemypass.netlify.app ' : 'makemypass.com'}/${eventName.current}/public/insights`,
                           );
                           toast.success('Link copied to clipboard');
                         }}
@@ -280,14 +280,14 @@ const Insights = ({ type }: { type?: string }) => {
                       <textarea
                         rows={5}
                         className={styles.publicLink}
-                        value={`<iframe src=${`https://www.makemypass.com/${eventName.current}/public/insights`} width="600" height="400" frameborder="0" scrolling="no"></iframe>
-                        `}
+                        value={`<iframe src=${`https://www.${import.meta.env.VITE_CURRENT_ENV === 'dev' ? 'devmakemypass.netlify.app' : 'makemypass.com'}/${eventName.current}/public/insights`} width="600" height="400" frameborder="0" scrolling="no"></iframe>
+                                    `}
                         readOnly
                       />
                       <IoCopyOutline
                         onClick={() => {
                           navigator.clipboard.writeText(
-                            `<iframe src=${`https://www.makemypass.com/${eventName.current}/public/insights`} width="600" height="400" frameborder="0" scrolling="no"></iframe>`,
+                            `<iframe src=${`https://www.${import.meta.env.VITE_CURRENT_ENV === 'dev' ? 'devmakemypass.netlify.app' : 'makemypass.com'}/${eventName.current}/public/insights`} width="600" height="400" frameborder="0" scrolling="no"></iframe>`,
                           );
                           toast.success('Link copied to clipboard');
                         }}
@@ -308,7 +308,7 @@ const Insights = ({ type }: { type?: string }) => {
                     <button
                       onClick={() => {
                         window.open(
-                          `https://www.makemypass.com/${eventName.current}/public/insights`,
+                          `https://www.${import.meta.env.VITE_CURRENT_ENV === 'dev' ? 'devmakemypass.netlify.app' : 'makemypass.com'}/${eventName.current}/public/insights`,
                           '_blank',
                         );
                       }}
@@ -563,16 +563,14 @@ const Insights = ({ type }: { type?: string }) => {
                     }}
                     className={styles.paymentCounts}
                   >
-                    {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
-                      <div className={styles.logButton}>
-                        <SecondaryButton
-                          buttonText='View Logs'
-                          onClick={() => {
-                            navigate(`/${eventTitle}/payment-analytics`);
-                          }}
-                        />
-                      </div>
-                    )}
+                    <div className={styles.logButton}>
+                      <SecondaryButton
+                        buttonText='View Logs'
+                        onClick={() => {
+                          navigate(`/${eventTitle}/payment-analytics`);
+                        }}
+                      />
+                    </div>
                     <div className={styles.countSection}>
                       <div className={styles.cLeftSection}>
                         <div className={styles.totalRegistered}>

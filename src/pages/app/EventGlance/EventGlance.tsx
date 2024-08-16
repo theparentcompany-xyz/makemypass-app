@@ -294,7 +294,12 @@ const EventGlance = () => {
                   <div className={styles.buttons}>
                     <button
                       onClick={() => {
-                        const eventLink = `https://makemypass.com/${eventName}`;
+                        let eventLink;
+                        if (import.meta.env.VITE_CURRENT_ENV == 'dev') {
+                          eventLink = `https://devmakemypass.netlify.app/${eventName}`;
+                        } else {
+                          eventLink = `https://makemypass.com/${eventName}`;
+                        }
                         navigator.clipboard.writeText(eventLink);
                         toast.success('Event link copied to clipboard');
                       }}
