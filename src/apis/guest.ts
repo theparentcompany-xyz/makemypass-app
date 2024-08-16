@@ -47,7 +47,7 @@ export const addGuest = (
   }
 
   if (isCashInHand) {
-    formData['cash_in_hand'] = isCashInHand.toString();
+    formData['is_cash_in_hand'] = isCashInHand.toString();
   }
 
   const backendFormData = new FormData();
