@@ -2,7 +2,6 @@ import Modal from '../../../../../components/Modal/Modal';
 import styles from './ScannerResponseModal.module.css';
 import React, { Dispatch } from 'react';
 import { multipleTicketCount } from '../../pages/ScanQR/types';
-import toast from 'react-hot-toast';
 
 const ScannerResponseModal = ({
   message,
@@ -14,11 +13,13 @@ const ScannerResponseModal = ({
 }: {
   message: string;
   setMessage: (message: string) => void;
-  setTicketId: (ticketId: string) => void;
   setTrigger: Dispatch<React.SetStateAction<boolean>>;
+  setTicketId?: (ticketId: string) => void;
   setMultipleTickets?: Dispatch<React.SetStateAction<multipleTicketCount>>;
   multipleTickets?: multipleTicketCount;
 }) => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
   return (
     message &&
     message.length > 0 && (
@@ -28,7 +29,7 @@ const ScannerResponseModal = ({
           title={multipleTickets && multipleTickets.hasMultipleTickets ? message : 'User Check-In'}
           onClose={() => {
             setMessage('');
-            setTicketId('');
+            if (setTicketId) setTicketId('');
             setTrigger(false);
             if (setMultipleTickets)
               setMultipleTickets({
@@ -43,7 +44,7 @@ const ScannerResponseModal = ({
                 className={styles.modalButton}
                 onClick={() => {
                   setMessage('');
-                  setTicketId('');
+                  if (setTicketId) setTicketId('');
                   setTrigger(false);
                   if (setMultipleTickets)
                     setMultipleTickets({
@@ -83,33 +84,36 @@ const ScannerResponseModal = ({
                         ({ticket.remaining_count}/{ticket.total_count} left){' '}
                       </span>
                     </div>
-                    <input
-                      className={styles.inputField}
-                      type='number'
-                      min={0}
-                      value={ticket.checked_in_count}
-                      placeholder='0'
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        if (setMultipleTickets)
-                          if (Number(value) <= ticket.remaining_count)
-                            setMultipleTickets((prevData) => ({
-                              ...prevData,
-                              tickets: prevData.tickets?.map((ticketData) => {
-                                if (ticketData.ticket_id === ticket.ticket_id) {
-                                  return {
-                                    ...ticketData,
-                                    checked_in_count: Number(value),
-                                  };
-                                }
-                                return ticketData;
-                              }),
-                            }));
-                          else {
-                            toast.error('Check-In count cannot exceed remaining count');
+                    {ticket.remaining_count > 0 && (
+                      <input
+                        className={styles.inputField}
+                        type='number'
+                        min={0}
+                        ref={inputRef}
+                        value={ticket.checked_in_count}
+                        placeholder='0'
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (setMultipleTickets) {
+                            if (Number(value) > ticket.remaining_count)
+                              e.target.value = ticket.remaining_count.toString();
+                            if (Number(value) <= ticket.remaining_count)
+                              setMultipleTickets((prevData) => ({
+                                ...prevData,
+                                tickets: prevData.tickets?.map((ticketData) => {
+                                  if (ticketData.ticket_id === ticket.ticket_id) {
+                                    return {
+                                      ...ticketData,
+                                      checked_in_count: Number(value),
+                                    };
+                                  }
+                                  return ticketData;
+                                }),
+                              }));
                           }
-                      }}
-                    />
+                        }}
+                      />
+                    )}
                   </div>
                 ))}
               </div>

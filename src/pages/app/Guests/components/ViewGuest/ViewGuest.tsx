@@ -1,6 +1,6 @@
 import styles from './ViewGuest.module.css';
 import { ResentTicket, SelectedGuest } from '../../types';
-import React, { Dispatch, useState } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { shortListUser } from '../../../../../apis/guest';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -22,6 +22,9 @@ import { EmailType, VisitedVenues } from './types';
 import { RegistrationDataType } from '../../../Overview/Overview/types';
 import { BiChevronDown } from 'react-icons/bi';
 import { HashLoader } from 'react-spinners';
+import { multipleTicketCount } from '../../../CheckIns/pages/ScanQR/types';
+import { LogType } from '../../../CheckIns/pages/Venue/Venue';
+import ScannerResponseModal from '../../../CheckIns/components/ScannerResponseModal/ScannerResponseModal';
 
 const ViewGuest = ({
   selectedGuestData,
@@ -72,8 +75,41 @@ const ViewGuest = ({
     }));
   };
 
+  const [multipleTickets, setMultipleTickets] = useState<multipleTicketCount>({
+    hasMultipleTickets: false,
+  });
+  const [trigger, setTrigger] = useState(false);
+  const [checking, setChecking] = useState<boolean>(false);
+  const [scanLogs, setScanLogs] = useState<LogType[]>([]);
+  const [message, setMessage] = useState<string>('');
+
+  useEffect(() => {
+    if (selectedGuestData && selectedGuestData['id'] && trigger) {
+      checkInUser(
+        selectedGuestData['ticket_code'],
+        eventId,
+        setScanLogs,
+        setMessage,
+        setChecking,
+        setMultipleTickets,
+        multipleTickets,
+        setTrigger,
+      );
+
+      console.log(scanLogs);
+      console.log(checking);
+    }
+  }, [trigger, eventId, selectedGuestData]);
+
   return (
     <>
+      <ScannerResponseModal
+        message={message}
+        setMessage={setMessage}
+        setTrigger={setTrigger}
+        setMultipleTickets={setMultipleTickets}
+        multipleTickets={multipleTickets}
+      />
       {deleteModal && (
         <>
           <Modal
@@ -419,12 +455,16 @@ const ViewGuest = ({
                     <div
                       onClick={() => {
                         if (!isArray(selectedGuestData['ticket_code']))
-                          checkInUser(selectedGuestData['ticket_code'], eventId);
-                        setSelectedGuestId((prevState) => ({
-                          ...prevState,
-                          id: '',
-                          type: '',
-                        }));
+                          checkInUser(
+                            selectedGuestData['ticket_code'],
+                            eventId,
+                            setScanLogs,
+                            setMessage,
+                            setChecking,
+                            setMultipleTickets,
+                            multipleTickets,
+                            setTrigger,
+                          );
                       }}
                       className={styles.icon}
                     >
