@@ -57,7 +57,7 @@ export const makeMyPass = {
 
   // Manage Event
   event: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/event/`),
-  getEventId: (eventName: string) => makeMyPassURL(`/manage-event/event-info/${eventName}/`),
+  getEventId: (eventName: string) => makeMyPassURL(`/manage-event/get-event-info/${eventName}/`),
   listHosts: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/host/list`),
   addHost: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/host/create`),
   host: (eventId: string, hostId: string) =>
