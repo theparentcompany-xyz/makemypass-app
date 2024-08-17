@@ -18,7 +18,7 @@ const ScannerResponseModal = ({
   setTicketId?: (ticketId: string) => void;
   setMultipleTickets?: Dispatch<React.SetStateAction<multipleTicketCount>>;
   multipleTickets?: multipleTicketCount;
-  type: string;
+  type?: string;
 }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
