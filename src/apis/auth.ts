@@ -145,21 +145,6 @@ export const register = async (
     });
 };
 
-export const hostWithUs = async (name: string, email: string, phone: string) => {
-  publicGateway
-    .post(makeMyPass.hostWithUs, {
-      name: name,
-      email: email,
-      mobile: phone,
-    })
-    .then((response) => {
-      toast.success(response.data.message.general[0]);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0]);
-    });
-};
-
 export const googleLogin = async () => {
   publicGateway
     .get(buildVerse.googleLogin)

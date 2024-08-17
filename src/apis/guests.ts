@@ -16,9 +16,7 @@ export const resentEventTicket = async (
 ) => {
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   privateGateway
-    .post(makeMyPass.resentTicket(eventId), {
-      event_register_id: ticketData.guestId,
-    })
+    .post(makeMyPass.resentTicket(eventId, ticketData.guestId.toString()))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Ticket resent successfully');
       setResentTicket({
@@ -99,11 +97,11 @@ export const getEditGuestData = async (
 
 export const downloadTicket = async (
   eventId: string,
-  ticketCode: string,
+  eventRegisterId: string,
   navigate: NavigateFunction,
 ) => {
   privateGateway
-    .get(makeMyPass.downloadTicket(eventId, ticketCode))
+    .get(makeMyPass.downloadTicket(eventId, eventRegisterId))
     .then((response) => {
       const eventTitle = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
       navigate(`/${eventTitle}/ticket?ticketURL=${response.data.response.image}`);

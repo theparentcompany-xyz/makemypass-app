@@ -76,7 +76,7 @@ export const createCoupon = (
 
 export const getCouponData = async (eventId: string, couponId: string) => {
   return privateGateway
-    .get(makeMyPass.getCouponData(eventId, couponId))
+    .get(makeMyPass.coupon(eventId, couponId))
     .then((response) => {
       return response.data.response;
     })
@@ -119,7 +119,7 @@ export const editCoupon = async (
   });
 
   return privateGateway
-    .patch(makeMyPass.editCoupon(eventId, data.id), backendFormData, {
+    .patch(makeMyPass.coupon(eventId, data.id), backendFormData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -158,7 +158,7 @@ export const deleteCoupon = async (
   setCoupons: Dispatch<SetStateAction<CouponType[]>>,
 ) => {
   return privateGateway
-    .delete(makeMyPass.deleteCoupon(eventId, couponId))
+    .delete(makeMyPass.coupon(eventId, couponId))
     .then(() => {
       listCoupons(eventId, setCoupons);
       toast.success('Coupon deleted successfully');
