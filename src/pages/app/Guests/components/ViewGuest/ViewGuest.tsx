@@ -249,7 +249,13 @@ const ViewGuest = ({
               <div className={styles.row}>
                 <div className={styles.tsTexts}>
                   <p className={styles.name}>
-                    <span>{selectedGuestData.submission.Name} </span>
+                    <span>
+                      {
+                        selectedGuestData.submissions.find(
+                          (submission) => submission.title === 'Name',
+                        )?.value
+                      }{' '}
+                    </span>
                     {selectedGuestData['is_approved'] && (
                       <span className={styles.rowType}>Shortlisted</span>
                     )}
@@ -257,7 +263,13 @@ const ViewGuest = ({
                       <div className={styles.type}>{selectedGuestData['category']}</div>
                     )}
                   </p>
-                  <p className={styles.emailAddress}>{selectedGuestData.submission.email}</p>
+                  <p className={styles.emailAddress}>
+                    {
+                      selectedGuestData.submissions.find(
+                        (submission) => submission.type === 'email',
+                      )?.value
+                    }
+                  </p>
                   <p className={styles.ticketCode}>
                     <span>Ticket Code:</span> {selectedGuestData['ticket_code']}
                   </p>
@@ -404,7 +416,9 @@ const ViewGuest = ({
                             ...prevState,
                             status: true,
                             guestId: selectedGuestData['id'],
-                            name: selectedGuestData.submission.Name,
+                            name: selectedGuestData.submissions.find(
+                              (submission) => submission.title === 'Name',
+                            )?.value as string,
                           }));
                         }
                       }}
@@ -655,27 +669,21 @@ const ViewGuest = ({
               </>
             )}
             <div className={styles.bottomSection}>
-              {Object.keys(selectedGuestData.submission).map((key: string) => {
-                const fieldName = key;
-
+              {selectedGuestData.submissions.map((submission, index) => {
                 return (
-                  selectedGuestData.submission[key] && (
-                    <div className={styles.field} key={key}>
-                      <p className={styles.fieldLabel}>{key === 'amount' ? 'Amount' : fieldName}</p>
-                      <p className={styles.fieldData}>
-                        {key === 'amount' && Number(selectedGuestData.submission[key]) <= 0 ? (
-                          'Free'
-                        ) : selectedGuestData.submission[key].toString().includes('http') ? (
-                          <SecondaryButton
-                            buttonText='View File'
-                            onClick={() => window.open(selectedGuestData.submission[key])}
-                          />
-                        ) : (
-                          selectedGuestData.submission[key]
-                        )}
-                      </p>
-                    </div>
-                  )
+                  <div className={styles.field} key={index}>
+                    <p className={styles.fieldLabel}>{submission.title}</p>
+                    <p className={styles.fieldData}>
+                      {submission.type === 'file' ? (
+                        <SecondaryButton
+                          buttonText='View File'
+                          onClick={() => window.open(submission.value)}
+                        />
+                      ) : (
+                        submission.value
+                      )}
+                    </p>
+                  </div>
                 );
               })}
             </div>

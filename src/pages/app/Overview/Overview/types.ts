@@ -32,9 +32,12 @@ export type RegistrationDataType = {
   id: string;
   registered_at: string;
   check_in_date: string | null;
-  submission: {
-    [key: string]: string;
-  };
+  submissions: {
+    id: string;
+    type: string;
+    title: string;
+    value: string;
+  }[];
   amount: number;
   ticket_count: number;
   event_approval_required: boolean;

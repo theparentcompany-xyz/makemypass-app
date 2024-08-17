@@ -229,7 +229,7 @@ const Guests = () => {
         {selectedGuestId && eventFormData && selectedGuestId.type === 'edit' && (
           <EditGuest
             formData={{
-              ...selectedGuest?.submission,
+              ...selectedGuest?.submissions,
               id: selectedGuestId.id,
             }}
             setFormData={setFormData}
