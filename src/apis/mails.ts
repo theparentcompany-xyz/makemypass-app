@@ -86,7 +86,7 @@ export const getMailService = (
   setMailData: React.Dispatch<React.SetStateAction<any>>,
 ) => {
   privateGateway
-    .get(makeMyPass.getMailService(eventId))
+    .get(makeMyPass.mailService(eventId))
     .then((response) => {
       setMailData(response.data.response);
     })
@@ -104,7 +104,7 @@ export const updateMailService = (
   mailData: mailData | undefined,
 ) => {
   privateGateway
-    .post(makeMyPass.updateMailService(eventId), data, {
+    .post(makeMyPass.mailService(eventId), data, {
       headers: {
         'Content-Type': 'application/json',
       },

@@ -40,8 +40,7 @@ export const updateHostRole = async (
   setHostData: Dispatch<React.SetStateAction<hostData>>,
 ) => {
   privateGateway
-    .put(makeMyPass.editHost(eventId), {
-      host_id: hostId,
+    .put(makeMyPass.host(eventId, hostId), {
       role: role,
       is_private: is_private,
     })
@@ -65,7 +64,7 @@ export const removeHost = async (
   setOpenDeleteModal: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   privateGateway
-    .delete(makeMyPass.removeHost(eventId, hostId))
+    .delete(makeMyPass.host(eventId, hostId))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Host removed successfully');
       setOpenDeleteModal(false);

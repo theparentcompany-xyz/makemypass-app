@@ -4,33 +4,43 @@ const buildVerseURL = buildURL('/buildverse');
 const makeMyPassURL = buildURL('/makemypass');
 
 export const makeMyPass = {
-  //Event Management
+  //Common
   onboardUser: makeMyPassURL('/common/onboard-user/'),
   listEvents: makeMyPassURL('/common/user/list-events/'),
 
-  listPublicEvents: makeMyPassURL('/manage-event/list-events/'), //unused
-
-  createEvent: makeMyPassURL(`/manage-event/create-event/`),
-  deleteEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/delete-event/`),
-
-  getEventId: (eventName: string) => makeMyPassURL(`/manage-event/get-event-info/${eventName}/`),
-  getEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/get-event/`),
-  editEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/edit-event/`),
-  duplicateEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/duplicate-event/`),
-
   //Scan Guest
   checkInUser: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkin`),
-  checkInButtons: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkin-buttons/`),
+  checkInButtons: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/buttons/`),
   checkOutUser: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkout`),
-  checkInUserVenue: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/venue-checkin/`),
-  listUserVenues: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/list-venue/`),
-  listUserGifts: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/list-user-gifts/`),
-  claimUserGift: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/claim-gift/`), //Scratch Card
+  checkInUserVenue: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/venue/checkin/`),
+  listUserVenues: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/venue/list`),
+  listUserGifts: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/gift/list`),
+  claimUserGift: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/gift/claim`), //Scratch Card
 
+  //Manage Guests
+  createEvent: makeMyPassURL(`/manage-event/create/`),
   listVisitedVenues: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/visited-venues/`),
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/visited-venues/`),
   getMailLog: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/mail-log/`),
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/mail-log/`),
+  resentTicket: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/resend-ticket/`),
+  editSubmission: (eventId: string, submissionId: string) =>
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${submissionId}/edit/`),
+  downloadTicket: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/download-ticket`),
+  sentInvite: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/send-invite/`),
+  shortListUser: (eventId: string, userId: string) =>
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${userId}/shortlist`),
+  listGuests: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/register-list/`),
+  initateRefund: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/initiate-refund/`),
+  guestInfo: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/`),
+  addGuestInfo: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/form-info/`),
+  downloadCSV: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/download-csv/`),
+  getCategories: (eventId: string) =>
+    makeMyPassURL(`/manage-guest/${eventId}/list-form-categories/`),
 
   //Manage Logs
   getAllMailLog: (eventId: string) => makeMyPassURL(`/manage-log/${eventId}/mail-log/`),
@@ -38,48 +48,26 @@ export const makeMyPass = {
   getPaymentAnalyticsCSV: (eventId: string) =>
     makeMyPassURL(`/manage-log/${eventId}/payment-log/csv/`),
 
-  resentTicket: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/resend-ticket/`),
-  editSubmission: (eventId: string, submissionId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${submissionId}/edit/`),
-  deleteSubmission: (eventId: string, submissionId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${submissionId}/delete/`),
-  downloadTicket: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/download-ticket`),
-  userInfo: (eventId: string, ticketCode: string) =>
-    makeMyPassURL(`/scan-guest/${eventId}/user-info/${ticketCode}`),
-  preview: (eventId: string, ticketCode: string) =>
-    makeMyPassURL(`/scan-guest/${eventId}/preview/${ticketCode}`),
-  getTicketInfo: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/list-tickets/`),
-  sentInvite: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/send-invite/`),
-  shortListUser: (eventId: string, userId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${userId}/shortlist`),
-  validateSentInvitePayment: (eventId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/validate-sent-invite-payment/`),
-  getUserPerksInfo: (ticketCode: string) =>
-    makeMyPassURL(`/manage-guest/get-user-perks-info/${ticketCode}`),
-  //Ticket APIs for creation,fetching and manipulation
-  getTicket: (eventId: string, ticketCode: string) =>
-    makeMyPassURL(`/manage-ticket/${eventId}/get-ticket/${ticketCode}`),
-  createTicket: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/create-ticket/`),
-  editTicket: (eventId: string, ticketCode: string) =>
-    makeMyPassURL(`/manage-ticket/${eventId}/edit-ticket/${ticketCode}`),
-  deleteTicket: (eventId: string, ticketCode: string) =>
-    makeMyPassURL(`/manage-ticket/${eventId}/delete-ticket/${ticketCode}`),
+  //Manage Ticket
+  getTicketInfo: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/list/`),
+  createTicket: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/create/`),
+  ticket: (eventId: string, ticketCode: string) =>
+    makeMyPassURL(`/manage-ticket/${eventId}/ticket/${ticketCode}`),
+  getShortListTicket: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/list/short`),
 
-  // Host Management
-  listHosts: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-hosts/`),
-  addHost: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/add-host/`),
-  editHost: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/edit-host/`),
-  removeHost: (eventId: string, hostId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/remove-host/${hostId}`),
-
-  //Analytics and Reporting
-  CSVdata: (event_id: string) => makeMyPassURL(`/manage-event/${event_id}/csv/`),
-  downloadFormSubmission: (eventId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
-  downloadCSV: (eventId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/download-form-submission-csv/`),
+  // Manage Event
+  event: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/event/`),
+  getEventId: (eventName: string) => makeMyPassURL(`/manage-event/event-info/${eventName}/`),
+  listHosts: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/host/list`),
+  addHost: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/host/create`),
+  host: (eventId: string, hostId: string) =>
+    makeMyPassURL(`/manage-event/${eventId}/host/${hostId}`),
+  duplicateEvent: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/duplicate/`),
+  listVenues: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/venue/list`),
+  updateVenueList: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/venue/update`),
+  listSpeakers: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/speaker/list`),
+  updateSpeakerList: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/speaker/update`),
+  listPublicEvents: makeMyPassURL('/manage-event/list-events/'), //unused
 
   //Feedback
   getFeedback: (eventId: string) => makeMyPassURL(`/feedback/${eventId}/list/`),
@@ -93,21 +81,6 @@ export const makeMyPass = {
     makeMyPassURL(`/bulk/${event_id}/import-guest/download-template/`),
   getFileStatus: (eventId: string) => makeMyPassURL(`/bulk/${eventId}import-guest/list`),
 
-  //Forms and Submissions
-  downloadBulkUploadCSV: (eventId: string, fileId: string, file_type: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/download-file/${fileId}/?file_type=${file_type}`),
-  claimRegisterGift: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/games/${eventId}/claim-gift/${eventRegisterId}/`),
-
-  getCategories: (eventId: string) =>
-    makeMyPassURL(`/manage-event/get-form-categories/${eventId}/`),
-  listGuests: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/list-guests/`),
-  initateRefund: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/initiate-refund/`),
-  getGuestInfo: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest-info/${eventRegisterId}/`),
-  addGuestInfo: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/form-info/`),
-
   //Public Form
   validatePayment: makeMyPassURL(`/public-form/validate-payment/`),
   verifyParticipant: (verificationCode: string) =>
@@ -120,10 +93,6 @@ export const makeMyPass = {
   submitForm: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/submit/`),
   parseFromAudio: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/parse-from-audio/`),
   sendVerfication: (eventId: string) => makeMyPassURL(`/public-form/${eventId}/send-verification/`),
-
-  //Perks
-  getPerksInfo: (eventId: string) => makeMyPassURL(`/scan-guest/get-perks-info/${eventId}/`),
-  updatePerk: (ticketCode: string) => makeMyPassURL(`/checkin/update-perk/${ticketCode}/`),
 
   //FormBuilder
   formBuilderGetForm: (eventId: string) => makeMyPassURL(`/form-builder/${eventId}/register-form/`),
@@ -142,35 +111,22 @@ export const makeMyPass = {
     makeMyPassURL(`/communication/${eventId}/post-event/send-mail/`),
   getPostEventStatus: (eventId: string) =>
     makeMyPassURL(`/communication/${eventId}/post-event/status/`),
-
-  //Custom Mail
-  getMailService: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/get-email-service/`),
-  updateMailService: (eventId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/update-email-service/`),
+  mailService: (eventId: string) => makeMyPassURL(`/communication/${eventId}/service/mail`),
 
   //manage-coupon
   listCoupons: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/list/`),
   createCoupon: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/create/`),
   coupon: (eventId: string, couponId: string) =>
     makeMyPassURL(`/manage-coupon/${eventId}/coupon/${couponId}/`),
-
-  getShortListTicket: (eventId: string) =>
-    makeMyPassURL(`/manage-ticket/${eventId}/short-list-ticket/`),
-  updateCouponStatus: (eventId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/update-coupon-status`),
-
-  //Manage Venues
-  listVenues: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-venues/`),
-  updateVenueList: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/update-venues/`),
-
-  //Manage Speakers
-  listSpeakers: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-speakers/`),
-  updateSpeakerList: (eventId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/update-speakers/`),
+  updateCouponStatus: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/status`),
 
   //Analytics API
   getAnalyticsVisibility: (eventId: string) =>
     makeMyPassURL(`/analytics/${eventId}/analytics-visibility/`),
+
+  //Manage Games
+  claimRegisterGift: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/games/${eventId}/scratch-card/${eventRegisterId}/claim`),
 };
 
 export const makeMyPassSocket = {
@@ -178,8 +134,7 @@ export const makeMyPassSocket = {
   registerCounts: (eventId: string) => `analytics/${eventId}/register-glance-count/`,
   checkInCounts: (eventId: string) => `analytics/${eventId}/checkin-glance-count/`,
   checkInAnalytics: (eventId: string) => `analytics/${eventId}/checkin-insights/`,
-
-  listCheckinGuests: (eventId: string) => `manage-guest/${eventId}/checkin-list-guests/`,
+  listCheckinGuests: (eventId: string) => `manage-guest/${eventId}/checkin-list/`,
   recentRegistrations: (eventId: string) => `manage-guest/${eventId}/recent-registrations/`,
 };
 

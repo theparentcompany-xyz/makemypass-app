@@ -40,7 +40,7 @@ export const editTicket = async (
 ) => {
   try {
     const response = await privateGateway.patch(
-      makeMyPass.editTicket(eventId, selectedTicket?.id),
+      makeMyPass.ticket(eventId, selectedTicket?.id),
       changedData,
       {
         headers: {
@@ -79,7 +79,7 @@ export const deleteTicket = async (
 ) => {
   const toastId = toast.loading('Deleting Ticket...');
   privateGateway
-    .delete(makeMyPass.deleteTicket(eventId, ticketId))
+    .delete(makeMyPass.ticket(eventId, ticketId))
     .then((response) => {
       setTickets((prev) => prev.filter((t) => t.id !== ticketId));
       toast.success(response?.data?.message?.general[0] || 'Ticket Deleted Successfully', {

@@ -1,7 +1,6 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { PreviewData } from './types';
 import { formatDate } from '../common/commonFunctions';
 import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
 import { checkInButtonsType } from '../pages/app/CheckIns/types';
@@ -99,36 +98,6 @@ export const checkInUser = async (
       }
     });
 };
-
-// export const getCheckInCount = async (
-//   eventId: string,
-//   setCheckInCount: React.Dispatch<React.SetStateAction<number>>,
-// ) => {
-//   privateGateway
-//     .get(makeMyPass.checkInCount(eventId))
-//     .then((response) => {
-//       setCheckInCount(response.data.response.authorized_count);
-//     })
-//     .catch((error) => {
-//       toast.error(error.response.data.message.general[0] || 'Error in Fetching Check-In Count');
-//     });
-// };
-
-export const preview = async (
-  eventId: string,
-  ticketCode: string,
-  setPreviewData: React.Dispatch<React.SetStateAction<PreviewData>>,
-) => {
-  privateGateway
-    .get(makeMyPass.preview(eventId, ticketCode))
-    .then((response) => {
-      setPreviewData(response.data.response);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Error in Fetching Check-In Count');
-    });
-};
-
 export const checkOutUser = async (
   ticketId: string,
   eventId: string,

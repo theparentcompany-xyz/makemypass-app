@@ -164,7 +164,7 @@ export const getGuestInfo = async (
 
 export const deleteSubmission = async (eventId: string, submissionId: string) => {
   privateGateway
-    .delete(makeMyPass.deleteSubmission(eventId, submissionId))
+    .delete(makeMyPass.guestInfo(eventId, submissionId))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Submission deleted successfully');
     })
@@ -193,7 +193,7 @@ export const getIndividualGuestInfo = async (
   setSelectedGuest: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>,
 ) => {
   privateGateway
-    .get(makeMyPass.getGuestInfo(eventId, eventRegisterId))
+    .get(makeMyPass.guestInfo(eventId, eventRegisterId))
     .then((response) => {
       setSelectedGuest(response.data.response);
     })

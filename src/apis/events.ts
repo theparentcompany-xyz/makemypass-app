@@ -87,7 +87,7 @@ export const getEvent = (
   setEventData?: Dispatch<React.SetStateAction<EventType | undefined>>,
 ) => {
   privateGateway
-    .get(makeMyPass.getEvent(eventId))
+    .get(makeMyPass.event(eventId))
     .then((response) => {
       setEventData && setEventData(response.data.response);
       setEventTitle && setEventTitle(response.data.response.title);
@@ -109,7 +109,7 @@ export const editEvent = ({
   setFormErrors?: Dispatch<ErrorMessages>;
 }) => {
   privateGateway
-    .patch(makeMyPass.editEvent(eventId), eventData, {
+    .patch(makeMyPass.event(eventId), eventData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -128,7 +128,7 @@ export const editEvent = ({
 
 export const deleteEvent = (eventId: string) => {
   privateGateway
-    .delete(makeMyPass.deleteEvent(eventId))
+    .delete(makeMyPass.event(eventId))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Event Deleted Successfully');
       setTimeout(() => {
