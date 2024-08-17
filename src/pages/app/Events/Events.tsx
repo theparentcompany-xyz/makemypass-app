@@ -121,7 +121,7 @@ const Events = () => {
                     className={styles.homeHeader}
                   >
                     {events.filter((event) => event.status == status).length > 0
-                      ? `${status} Events`
+                      ? `${status} Events (${events.filter((event) => event.status == status).length})`
                       : ''}
                   </motion.p>
                   <div className={styles.eventsContainer}>

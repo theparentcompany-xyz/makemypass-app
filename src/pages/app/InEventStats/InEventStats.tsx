@@ -283,7 +283,7 @@ const InEventStats = () => {
                   className={styles.image}
                 />
                 <div className={styles.welcomeText}>
-                  <p className={styles.userType}>{newUser?.category}</p>
+                  {newUser.category && <p className={styles.userType}>{newUser?.category}</p>}
                   <p className={styles.userName}>{newUser?.name}</p>
                   <p className={styles.userEmail}>{newUser?.email}</p>
                 </div>

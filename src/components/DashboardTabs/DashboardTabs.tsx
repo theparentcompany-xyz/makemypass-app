@@ -34,34 +34,42 @@ const DashboardTabs = ({
     overview: {
       title: 'Overview',
       roles: [Roles.ADMIN, Roles.OWNER],
+      category: 'preEvent',
     },
     insights: {
       title: 'Insights',
       roles: [Roles.ADMIN, Roles.OWNER],
+      category: 'preEvent',
     },
     guests: {
       title: 'Guests',
       roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
-    },
-    inevent: {
-      title: 'In-Event',
-      roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
+      category: 'preEvent',
     },
     manage: {
       title: 'Event Page',
       roles: [Roles.ADMIN, Roles.OWNER],
-    },
-    checkins: {
-      title: 'Check-Ins',
-      roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
+      category: 'eventManagement',
     },
     formbuilder: {
       title: 'Form Builder',
       roles: [Roles.ADMIN, Roles.OWNER],
+      category: 'eventManagement',
+    },
+    checkins: {
+      title: 'Scan QR',
+      roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
+      category: 'inEvent',
+    },
+    inevent: {
+      title: 'In-Event',
+      roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
+      category: 'inEvent',
     },
     logs: {
       title: 'Logs',
       roles: [Roles.ADMIN, Roles.OWNER],
+      category: 'others',
     },
   };
 

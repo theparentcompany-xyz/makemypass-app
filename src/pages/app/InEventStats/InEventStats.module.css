@@ -36,7 +36,7 @@
 
   font-family: 'Inter', sans-serif;
   color: white;
-  width: 42%;
+  flex: 1;
 }
 
 .countSection {
@@ -201,7 +201,7 @@
 
   font-family: 'Inter', sans-serif;
   color: white;
-  width: 49%;
+  flex: 1;
 }
 
 @media (max-width: 1120px) {

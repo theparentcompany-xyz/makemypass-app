@@ -7,6 +7,7 @@ type progressDataType = {
 type TabType = {
   title: string;
   roles: string[];
+  category?: string;
 };
 
 type TabsType = {
