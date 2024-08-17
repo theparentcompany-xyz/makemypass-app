@@ -83,6 +83,7 @@ const ScanQR = () => {
                 setTrigger={setTrigger}
                 setMultipleTickets={setMultipleTickets}
                 multipleTickets={multipleTickets}
+                type='checkIn'
               />
 
               {previewData && previewData.name && (

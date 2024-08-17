@@ -10,6 +10,7 @@ const ScannerResponseModal = ({
   setTrigger,
   setMultipleTickets,
   multipleTickets,
+  type,
 }: {
   message: string;
   setMessage: (message: string) => void;
@@ -17,6 +18,7 @@ const ScannerResponseModal = ({
   setTicketId?: (ticketId: string) => void;
   setMultipleTickets?: Dispatch<React.SetStateAction<multipleTicketCount>>;
   multipleTickets?: multipleTicketCount;
+  type: string;
 }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -123,7 +125,7 @@ const ScannerResponseModal = ({
                   setTrigger(true);
                 }}
               >
-                Check-In Users
+                {type === 'checkIn' ? 'Check-In User' : 'Check-Out User'}
               </button>
             </>
           )}

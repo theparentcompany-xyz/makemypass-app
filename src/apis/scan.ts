@@ -130,6 +130,12 @@ export const checkOutUser = async (
     .post(makeMyPass.checkOutUser(eventId), dataToSend)
     .then((response) => {
       if (setMessage) {
+        if (setMultipleTickets) {
+          setMultipleTickets({
+            hasMultipleTickets: false,
+            tickets: [],
+          });
+        }
         setMessage(response.data.message.general[0] || 'Check-Out Successful');
         setScanLogs((prev) => [
           ...prev,
