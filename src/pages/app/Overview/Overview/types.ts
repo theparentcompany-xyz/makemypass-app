@@ -48,6 +48,7 @@ export type RegistrationDataType = {
   invited_by: string;
   extra_ticket: number;
   is_checked_in: boolean;
+  show_checked_in_button: boolean;
   check_out_date: string | null;
   category: string;
   name: string;

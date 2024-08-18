@@ -466,7 +466,7 @@ const ViewGuest = ({
                       <span>View Visisted Venues</span>
                     </div>
                   )}
-                  {!selectedGuestData['check_in_date'] && (
+                  {selectedGuestData['show_checked_in_button'] && (
                     <div
                       onClick={() => {
                         if (!isArray(selectedGuestData['ticket_code']))
