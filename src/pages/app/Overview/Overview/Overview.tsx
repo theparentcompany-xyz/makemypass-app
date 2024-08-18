@@ -6,7 +6,7 @@ import styles from './Overview.module.css';
 import SectionButton from '../../../../components/SectionButton/SectionButton';
 import { useEffect, useRef, useState } from 'react';
 
-import { hostData, hostId, hostList, recentRegistration, RegistrationDataType } from './types';
+import { hostData, hostId, hostList, recentRegistration } from './types';
 
 import { HashLoader } from 'react-spinners';
 import { getEventHosts } from '../../../../apis/overview';
@@ -23,13 +23,10 @@ import { createEventHost, removeEventHost, updateEventHost } from '../../../../a
 import { AnimatePresence } from 'framer-motion';
 import Modal from '../../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
-import { GuestsType, SelectedGuest } from '../../Guests/types';
-import ViewGuest from '../../Guests/components/ViewGuest/ViewGuest';
-import { viewGuestTicket, getGuestInformation } from '../../../../apis/guests';
-import { isArray } from 'chart.js/helpers';
 import { Roles } from '../../../../../services/enums';
 import DashboardLayout from '../../../../components/DashboardLayout/DashboardLayout';
 import Glance from '../../../../components/Glance/Glance';
+import { SelectedGuest } from '../../Guests/types';
 
 const Overview = () => {
   const navigate = useNavigate();
