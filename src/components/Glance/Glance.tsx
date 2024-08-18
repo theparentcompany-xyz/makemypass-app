@@ -28,10 +28,10 @@ const Glance = ({ tab }: { tab: string }) => {
 
   useEffect(() => {
     if (tab === 'inevent') {
-      setBackendURL(makeMyPassSocket.checkInCounts(eventId));
+      setBackendURL(makeMyPassSocket.checkinGlanceCount(eventId));
     } else {
       if (eventId && (tab === 'overview' || tab === 'guests'))
-        setBackendURL(makeMyPassSocket.registerCounts(eventId));
+        setBackendURL(makeMyPassSocket.registerGlanceCount(eventId));
     }
   }, [tab, eventId]);
 

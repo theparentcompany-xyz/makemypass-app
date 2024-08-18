@@ -100,7 +100,7 @@ export const submitForm = async ({
   if (ticketCode) backendFormData.append('ticket_code', ticketCode);
 
   publicGateway
-    .post(makeMyPass.submitForm(eventId), backendFormData, {
+    .post(makeMyPass.formSubmit(eventId), backendFormData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -128,7 +128,7 @@ export const submitForm = async ({
                 loading: true,
               }));
             publicGateway
-              .post(makeMyPass.validatePayment, {
+              .post(makeMyPass.formValidatePayment, {
                 order_id: response.razorpay_order_id,
                 payment_id: response.razorpay_payment_id,
               })
@@ -215,7 +215,7 @@ export const applyCoupon = async (
 ) => {
   if (couponData.value)
     publicGateway
-      .post(makeMyPass.validateCoupon(eventId, couponData.value))
+      .post(makeMyPass.formValidateCoupon(eventId, couponData.value))
       .then((response) => {
         setDiscount(response.data.response);
       })
@@ -282,7 +282,7 @@ export const validateRsvp = async (
   if (selectedDateFormatted) payloadFormData.append('ticket_date', selectedDateFormatted);
 
   return publicGateway
-    .post(makeMyPass.validateRsvp(eventId), payloadFormData, {
+    .post(makeMyPass.formValidateRSVP(eventId), payloadFormData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -303,7 +303,7 @@ export const getEventInfo = async (
   setClaimCodeExceed?: React.Dispatch<React.SetStateAction<ClaimCodeExceedType>>,
   setSuccess?: React.Dispatch<React.SetStateAction<SuccessModalProps>>,
 ) => {
-  let backendURL = makeMyPass.getEventInfo(eventTitle);
+  let backendURL = makeMyPass.formEventInfo(eventTitle);
   if (claimCode) backendURL += `?claim_code=${claimCode}`;
   privateGateway
     .get(backendURL)
@@ -359,7 +359,7 @@ export const postAudio = async (
   form.append('file', file);
   form.append('previous_form', JSON.stringify(formData));
   publicGateway
-    .post(makeMyPass.parseFromAudio(eventId), form, {
+    .post(makeMyPass.formParseFromAudio(eventId), form, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -396,7 +396,7 @@ export const sendVerfication = async (contactType: string, contactInfo: string) 
   const eventId = sessionStorage.getItem('eventId');
   if (!eventId) return;
   publicGateway
-    .post(makeMyPass.sendVerfication(eventId), {
+    .post(makeMyPass.formSendVerfication(eventId), {
       contact_type: contactType,
       contact_info: contactInfo,
     })
@@ -422,7 +422,7 @@ export const claimRegisterGift = async (
     return;
   }
   publicGateway
-    .post(makeMyPass.claimRegisterGift(sessionStorage.getItem('eventId') ?? '', eventRegisterId))
+    .post(makeMyPass.scratchCardClaim(sessionStorage.getItem('eventId') ?? '', eventRegisterId))
     .then((response) => {
       setScratchCard({
         name: response.data.response.name,

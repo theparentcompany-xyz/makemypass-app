@@ -32,7 +32,7 @@ const CheckIn = () => {
     if (eventId) {
       getCategories(eventId, setCategories);
       connectPrivateSocket({
-        url: makeMyPassSocket.listCheckinGuests(eventId),
+        url: makeMyPassSocket.guestCheckinList(eventId),
       }).then((ws) => {
         ws.onmessage = (event) => {
           if (JSON.parse(event.data).response.datas)

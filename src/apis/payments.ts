@@ -7,13 +7,13 @@ export const getPaymentAnalytics = async (
   event_id: string,
   setPaymentAnalyticsList: Dispatch<SetStateAction<PaymentAnalyticsType[]>>,
 ) => {
-  privateGateway.get(makeMyPass.getPaymentAnalytics(event_id)).then((response) => {
+  privateGateway.get(makeMyPass.paymentLog(event_id)).then((response) => {
     setPaymentAnalyticsList(response.data.response);
   });
 };
 
 export const getPaymentAnalyticsCSV = async (event_id: string) => {
-  return privateGateway.get(makeMyPass.getPaymentAnalyticsCSV(event_id)).then((response) => {
+  return privateGateway.get(makeMyPass.paymentLogCSV(event_id)).then((response) => {
     const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
     link.href = url;

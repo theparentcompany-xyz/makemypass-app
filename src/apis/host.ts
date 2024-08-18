@@ -12,7 +12,7 @@ export const addHosts = async (
   setHostData: Dispatch<React.SetStateAction<hostData>>,
 ) => {
   privateGateway
-    .post(makeMyPass.addHost(eventId), {
+    .post(makeMyPass.eventHostCreate(eventId), {
       host_email: hostMail,
       role: role,
       is_private: is_private,

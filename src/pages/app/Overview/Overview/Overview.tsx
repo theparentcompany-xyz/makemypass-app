@@ -98,7 +98,7 @@ const Overview = () => {
   useEffect(() => {
     if (eventId)
       connectPrivateSocket({
-        url: makeMyPassSocket.recentRegistrations(eventId),
+        url: makeMyPassSocket.guestRecentRegistrations(eventId),
       }).then((ws) => {
         ws.onmessage = (event) => {
           if (JSON.parse(event.data).response && !JSON.parse(event.data).response.data)

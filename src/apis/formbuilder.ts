@@ -9,7 +9,7 @@ export const getForm = (
   setFormFields: React.Dispatch<React.SetStateAction<Field[]>>,
 ) => {
   privateGateway
-    .get(makeMyPass.formBuilderGetForm(eventId))
+    .get(makeMyPass.formBuilderForm(eventId))
     .then((response) => {
       setFormFields(response.data.response);
     })
@@ -24,7 +24,7 @@ export const updateForm = (
   setFormFieldErrors: Dispatch<React.SetStateAction<ErrorResponse>>,
 ) => {
   privateGateway
-    .post(makeMyPass.formBuilderUpdateForm(eventId), formFields)
+    .post(makeMyPass.formBuilderForm(eventId), formFields)
     .then(() => {
       toast.success('Form updated successfully');
     })

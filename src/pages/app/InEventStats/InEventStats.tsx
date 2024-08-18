@@ -139,7 +139,7 @@ const InEventStats = () => {
   useEffect(() => {
     if (eventId)
       connectPrivateSocket({
-        url: makeMyPassSocket.checkInAnalytics(eventId),
+        url: makeMyPassSocket.checkinInsights(eventId),
       }).then((ws) => {
         ws.onmessage = (event) => {
           const lineData = JSON.parse(event.data).response.time;
@@ -202,7 +202,7 @@ const InEventStats = () => {
   useEffect(() => {
     if (eventId)
       connectPrivateSocket({
-        url: makeMyPassSocket.listCheckinGuests(eventId),
+        url: makeMyPassSocket.guestCheckinList(eventId),
       }).then((ws) => {
         ws.onmessage = (event) => {
           if (JSON.parse(event.data).response.datas)

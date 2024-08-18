@@ -4,7 +4,7 @@ import { makeMyPass } from '../../services/urls';
 
 export const sentPostEventMail = async (eventId: string, type: boolean) => {
   try {
-    await privateGateway.post(makeMyPass.sentPostMail(eventId), {
+    await privateGateway.post(makeMyPass.communcationPostEventSendMail(eventId), {
       checkedin_user: type,
     });
     toast.success('Mail Sent Successfully');
@@ -15,7 +15,7 @@ export const sentPostEventMail = async (eventId: string, type: boolean) => {
 
 export const sentTextMail = async (eventId: string, mailId: string) => {
   try {
-    await privateGateway.post(makeMyPass.sentTestMail(eventId, mailId));
+    await privateGateway.post(makeMyPass.communicationMailTest(eventId, mailId));
     toast.success('Mail Sent Successfully');
   } catch (e) {
     toast.error('Mail Sent Failed');
@@ -27,7 +27,7 @@ export const getPostEventStatus = async (
   setPostEventStatus: React.Dispatch<React.SetStateAction<PostEventStatus | undefined>>,
 ) => {
   try {
-    const response = await privateGateway.get(makeMyPass.getPostEventStatus(eventId));
+    const response = await privateGateway.get(makeMyPass.communicationPostEventStatus(eventId));
     setPostEventStatus(response.data.response);
   } catch (e) {
     toast.error('Error getting post event status');

@@ -133,7 +133,7 @@ const Insights = ({ type }: { type?: string }) => {
 
     if (eventId)
       connectPrivateSocket({
-        url: makeMyPassSocket.analytics(eventId.current),
+        url: makeMyPassSocket.registerInsights(eventId.current),
         type: type,
       }).then((ws) => {
         ws.onmessage = (event) => {

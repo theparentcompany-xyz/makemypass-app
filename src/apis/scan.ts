@@ -35,7 +35,7 @@ export const checkInUser = async (
   }
 
   privateGateway
-    .post(makeMyPass.checkInUser(eventId), dataToSend)
+    .post(makeMyPass.scanGuestCheckin(eventId), dataToSend)
     .then((response) => {
       if (setMultipleTickets) {
         setMultipleTickets({
@@ -127,7 +127,7 @@ export const checkOutUser = async (
   }
 
   privateGateway
-    .post(makeMyPass.checkOutUser(eventId), dataToSend)
+    .post(makeMyPass.scanGuestCheckout(eventId), dataToSend)
     .then((response) => {
       if (setMessage) {
         if (setMultipleTickets) {
@@ -195,7 +195,7 @@ export const getCheckInButtons = async (
   setCheckInButtons: React.Dispatch<React.SetStateAction<checkInButtonsType | undefined>>,
 ) => {
   privateGateway
-    .get(makeMyPass.checkInButtons(eventId))
+    .get(makeMyPass.scanGuestButtons(eventId))
     .then((response) => {
       setCheckInButtons(response.data.response);
     })

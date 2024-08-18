@@ -16,7 +16,7 @@ export const resentEventTicket = async (
 ) => {
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   privateGateway
-    .post(makeMyPass.resentTicket(eventId, ticketData.guestId.toString()))
+    .post(makeMyPass.guestResentTicket(eventId, ticketData.guestId.toString()))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Ticket resent successfully');
       setResentTicket({
@@ -61,7 +61,7 @@ export const editSubmissons = async (
 
   if (data && !isArray(data.id) && typeof data.id === 'string')
     privateGateway
-      .put(makeMyPass.editSubmission(eventId, data.id), backendFormData, {
+      .put(makeMyPass.guestEditSubmission(eventId, data.id), backendFormData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -86,7 +86,7 @@ export const getEditGuestData = async (
   setFormData: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>,
 ) => {
   privateGateway
-    .get(makeMyPass.editSubmission(eventId, eventRegisterId))
+    .get(makeMyPass.guestEditSubmission(eventId, eventRegisterId))
     .then((response) => {
       setFormData(response.data.response);
     })
@@ -101,7 +101,7 @@ export const downloadTicket = async (
   navigate: NavigateFunction,
 ) => {
   privateGateway
-    .get(makeMyPass.downloadTicket(eventId, eventRegisterId))
+    .get(makeMyPass.guestDownloadTicket(eventId, eventRegisterId))
     .then((response) => {
       const eventTitle = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
       navigate(`/${eventTitle}/ticket?ticketURL=${response.data.response.image}`);
@@ -113,7 +113,7 @@ export const downloadTicket = async (
 
 export const downloadCSVData = async (eventId: string) => {
   privateGateway
-    .get(makeMyPass.downloadCSV(eventId))
+    .get(makeMyPass.guestDownloadCSV(eventId))
     .then((response) => {
       const csvData = response.data;
       const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
@@ -135,7 +135,7 @@ export const initateRefund = async (
   setInitateRefundClicked: Dispatch<React.SetStateAction<boolean>>,
 ) => {
   privateGateway
-    .post(makeMyPass.initateRefund(eventId, eventRegisterId))
+    .post(makeMyPass.guestInitateRefund(eventId, eventRegisterId))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Refund initiated successfully');
       setInitateRefundClicked(false);
@@ -151,7 +151,7 @@ export const getGuestInfo = async (
   setTriggerFetch?: Dispatch<React.SetStateAction<boolean>>,
 ) => {
   privateGateway
-    .get(makeMyPass.addGuestInfo(eventId))
+    .get(makeMyPass.guestFormInfo(eventId))
     .then((response) => {
       setEventFormData({
         id: eventId,
@@ -170,7 +170,7 @@ export const deleteSubmission = async (
   setTriggerFetch: Dispatch<SetStateAction<boolean>> | undefined,
 ) => {
   privateGateway
-    .delete(makeMyPass.guestInfo(eventId, submissionId))
+    .delete(makeMyPass.guestInformation(eventId, submissionId))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Submission deleted successfully');
       if (setTriggerFetch) setTriggerFetch((prev) => !prev);
@@ -185,7 +185,7 @@ export const listGuests = async (
   setGuestList: Dispatch<React.SetStateAction<GuestsType[]>>,
 ) => {
   privateGateway
-    .get(makeMyPass.listGuests(eventId))
+    .get(makeMyPass.guestRegisterList(eventId))
     .then((response) => {
       setGuestList(response.data.response);
     })
@@ -200,7 +200,7 @@ export const getIndividualGuestInfo = async (
   setSelectedGuest: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>,
 ) => {
   privateGateway
-    .get(makeMyPass.guestInfo(eventId, eventRegisterId))
+    .get(makeMyPass.guestInformation(eventId, eventRegisterId))
     .then((response) => {
       setSelectedGuest(response.data.response);
     })
@@ -213,7 +213,7 @@ export const getIndividualGuestInfo = async (
 
 export const getCSVTemplate = (eventId: string) => {
   privateGateway
-    .get(makeMyPass.downloadCSVTemplate(eventId))
+    .get(makeMyPass.bulkDownloadTemplate(eventId))
     .then((response) => {
       const csvData = response.data;
       const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
@@ -234,7 +234,7 @@ export const getFileStatus = (
   setFileStatus: Dispatch<React.SetStateAction<BulkUploadType[]>>,
 ) => {
   privateGateway
-    .get(makeMyPass.getFileStatus(eventId))
+    .get(makeMyPass.bulkGuestList(eventId))
     .then((response) => {
       setFileStatus(response.data.response.files);
     })
@@ -261,7 +261,7 @@ export const uploadFile = (
   });
 
   privateGateway
-    .post(makeMyPass.uploadFile(eventId), formData, {
+    .post(makeMyPass.bulkGuestUpload(eventId), formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -282,7 +282,7 @@ export const getVisistedVenues = async (
   eventRegisterId: string,
   setVisitedVenues: Dispatch<React.SetStateAction<VisitedVenues>>,
 ) => {
-  privateGateway.get(makeMyPass.listVisitedVenues(eventId, eventRegisterId)).then((response) => {
+  privateGateway.get(makeMyPass.guestVisitedVenues(eventId, eventRegisterId)).then((response) => {
     setVisitedVenues({
       status: true,
       venues: response.data.response,
@@ -301,7 +301,7 @@ export const getMailLog = async (
   >,
 ) => {
   privateGateway
-    .get(makeMyPass.getMailLog(eventId, eventRegisterId))
+    .get(makeMyPass.guestMailLog(eventId, eventRegisterId))
     .then((response) => {
       setMailLog({
         showLog: true,
