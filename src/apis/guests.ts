@@ -9,6 +9,7 @@ import { BulkUploadType } from '../pages/app/Guests/components/BulkUpload/types'
 import { EmailType, VisitedVenues } from '../pages/app/Guests/components/ViewGuest/types';
 import { RegistrationDataType } from '../pages/app/Overview/Overview/types';
 import { NavigateFunction } from 'react-router';
+import { set } from 'lodash';
 
 export const resentEventTicket = async (
   ticketData: ResentTicket,
@@ -148,6 +149,7 @@ export const initateRefund = async (
 export const getGuestInfo = async (
   eventId: string,
   setEventFormData: Dispatch<React.SetStateAction<FormEventData | undefined>>,
+  setTriggerFetch: Dispatch<React.SetStateAction<boolean>>,
 ) => {
   privateGateway
     .get(makeMyPass.addGuestInfo(eventId))
@@ -156,6 +158,7 @@ export const getGuestInfo = async (
         id: eventId,
         ...response.data.response,
       });
+      setTriggerFetch((prev) => !prev);
     })
     .catch(() => {
       toast.error('Something went wrong');

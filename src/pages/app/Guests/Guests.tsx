@@ -52,6 +52,8 @@ const Guests = () => {
   const [showScanner, setShowScanner] = useState<boolean>(false);
   const [isCashInHand, setIsCashInHand] = useState<boolean>(false);
 
+  const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
@@ -65,10 +67,6 @@ const Guests = () => {
     guestId: '',
     name: '',
   });
-
-  useEffect(() => {
-    console.log('Form Data: ', formData);
-  }, [formData]);
 
   const getGuestData = () => {
     setSelectedGuest({} as RegistrationDataType);
@@ -86,7 +84,7 @@ const Guests = () => {
     if (eventId && !selectedGuestId?.id) {
       listGuests(eventId, setGuests);
     }
-  }, [eventId, selectedGuestId]);
+  }, [eventId, selectedGuestId, triggerFetch]);
 
   useEffect(() => {
     if (eventId) {
@@ -147,6 +145,7 @@ const Guests = () => {
                 eventId={eventId}
                 setResentTicket={setResentTicket}
                 setSelectedGuest={setSelectedGuest}
+                setTriggerFetch={setTriggerFetch}
               />
             </>
           )}

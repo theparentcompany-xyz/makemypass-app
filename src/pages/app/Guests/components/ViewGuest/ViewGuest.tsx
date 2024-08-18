@@ -34,6 +34,7 @@ const ViewGuest = ({
   setResentTicket,
   setSelectedGuest,
   type,
+  setTriggerFetch,
 }: {
   selectedGuestData: RegistrationDataType | undefined;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
@@ -41,6 +42,7 @@ const ViewGuest = ({
   setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
   setSelectedGuest?: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>;
   type?: string;
+  setTriggerFetch?: Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [confirmClicked, setConfirmClicked] = useState({
     confirm: false,
@@ -134,7 +136,7 @@ const ViewGuest = ({
                   buttonText='Delete'
                   onClick={() => {
                     if (selectedGuestData) {
-                      deleteSubmission(eventId, selectedGuestData['id'] as string);
+                      deleteSubmission(eventId, selectedGuestData['id'] as string, setTriggerFetch);
                     }
                     setSelectedGuestId(null);
                     setDeleteModal(false);

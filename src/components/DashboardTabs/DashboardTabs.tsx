@@ -102,7 +102,7 @@ const DashboardTabs = ({
                       .reduce((acc: JSX.Element[], tab, index) => {
                         const category = tabs[tab as keyof typeof tabs].category;
                         const title = tabs[tab as keyof typeof tabs].title;
-                        const isLastTab = index === Object.keys(tabs).length - 1;
+
                         const tabElement = (
                           <div key={index}>
                             <motion.li
@@ -132,9 +132,7 @@ const DashboardTabs = ({
                           }
                           acc.push(tabElement);
                         }
-                        if (isLastTab && setShowPublishModal) {
-                          setShowPublishModal(true);
-                        }
+
                         return acc;
                       }, [])}
                   </>
