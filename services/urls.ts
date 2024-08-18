@@ -112,6 +112,8 @@ export const makeMyPass = {
   getPostEventStatus: (eventId: string) =>
     makeMyPassURL(`/communication/${eventId}/post-event/status/`),
   mailService: (eventId: string) => makeMyPassURL(`/communication/${eventId}/service/mail`),
+  deleteAttachment: (eventId: string, mailId: string) =>
+    makeMyPassURL(`/communication/${eventId}/mail/${mailId}/delete-attachment/`),
 
   //manage-coupon
   listCoupons: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/list/`),

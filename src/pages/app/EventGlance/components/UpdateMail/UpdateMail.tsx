@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { listMailType, MailType } from '../../../../../apis/types';
 import styles from './UpdateMail.module.css';
-import { getMail } from '../../../../../apis/mails';
+import { deleteAttachment, getMail } from '../../../../../apis/mails';
 import { HashLoader } from 'react-spinners';
 import { updateMail } from '../../../../../apis/mails';
 import { MdClose } from 'react-icons/md';
-// import { Document, Page, pdfjs } from 'react-pdf';
-// import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 type Props = {
   selectedMail: listMailType | undefined;
@@ -15,48 +13,69 @@ type Props = {
   setMails: React.Dispatch<React.SetStateAction<listMailType[]>>;
 };
 
-// pdfjs.GlobalWorkerOptions.workerSrc =
-//   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.worker.min.js';
+type AttachmentType = {
+  type: 'newFile' | 'existingFile';
+  file: File;
+  fileURL?: string;
+};
+
+type previewType = {
+  previewURL: string;
+  previewExtension: string;
+};
 
 const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: Props) => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [mailData, setMailData] = useState<MailType>();
   const [fetchedMail, setFetchedMail] = useState<MailType>();
-  const [attachments, setAttachments] = useState<File[]>([]);
-  const [previews, setPreviews] = useState<string[]>([]);
+  const [attachments, setAttachments] = useState<AttachmentType[]>([]);
+  const [previews, setPreviews] = useState<previewType[]>([]);
 
   const onUpdateEmail = () => {
     const changedData: Record<string, any> = Object.entries(mailData as Record<string, any>)
       .filter(([key, value]) => fetchedMail?.[key as keyof MailType] !== value)
       .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
-    if (attachments.length > 0) {
-      changedData['attachment'] = attachments[0];
-    }
+
+    attachments.forEach((attachment) => {
+      if (attachment.type === 'newFile') {
+        changedData.attachment = attachment.file;
+      }
+    });
+
     updateMail(eventId, mailData as MailType, changedData, setMails, setFetchedMail).then(() => {
       setSelectedMail(undefined);
     });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = [...attachments, ...Array.from(e.target.files || [])];
+    // const files = [...attachments, ...Array.from(e.target.files || [])];
+    const files: AttachmentType[] = [
+      ...attachments,
+      ...Array.from(e.target.files || []).map((file) => {
+        return {
+          type: 'newFile' as const,
+          file: file,
+        };
+      }),
+    ];
+
     setAttachments(files);
-
-    // Generate previews
-    const newPreviews = files.map((file) => {
-      if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
-        return URL.createObjectURL(file);
-      }
-      // Handle other types or return a placeholder
-      return 'placeholder_for_non_image_video_types';
-    });
-
-    setPreviews(newPreviews);
+    setPreviews([
+      ...previews,
+      ...Array.from(e.target.files || []).map((file) => {
+        return {
+          previewURL: URL.createObjectURL(file),
+          previewExtension: file.type,
+        };
+      }),
+    ]);
   };
 
   const handleDeleteAttachment = (index: number) => {
     const newAttachments = attachments.filter((_, i) => i !== index);
     setAttachments(newAttachments);
     setPreviews(previews.filter((_, i) => i !== index));
+    if (selectedMail) deleteAttachment(eventId, selectedMail?.id, previews[index].previewURL);
   };
   useEffect(() => {
     if (selectedMail) {
@@ -67,6 +86,46 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
   useEffect(() => {
     if (fetchedMail) {
       setMailData(fetchedMail);
+
+      const attachmentList = fetchedMail.attachment.map((attachment) => {
+        const fileName = attachment.split('/').pop() || 'file';
+        const fileExtension = attachment.split('.').pop();
+        const fileType =
+          fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png'
+            ? `image/${fileExtension}`
+            : fileExtension === 'mp3'
+              ? 'audio/mp3'
+              : fileExtension === 'mp4'
+                ? 'video/mp4'
+                : fileExtension === 'pdf'
+                  ? 'application/pdf'
+                  : 'application/octet-stream';
+        return {
+          file: new File([], fileName, { type: fileType }),
+          name: fileName,
+          fileURL: attachment,
+        };
+      });
+
+      setAttachments(
+        attachmentList.map((attachment) => {
+          return {
+            type: 'existingFile',
+            file: attachment.file,
+          };
+        }),
+      );
+
+      setPreviews(
+        attachmentList.map((attachment) => {
+          return {
+            previewURL: attachment.fileURL!,
+            previewExtension: attachment.file.type,
+          };
+        }),
+      );
+
+      console.log(previews);
     }
   }, [fetchedMail]);
 
@@ -120,30 +179,44 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
                             >
                               <MdClose size={20} />
                             </div>
-                            {attachments[index].type.startsWith('image/') && (
+                            {preview.previewExtension.startsWith('image/') && (
                               <img
-                                src={preview}
+                                src={preview.previewURL}
                                 alt='Preview'
                                 style={{ width: 100, height: 100 }}
+                                onClick={() => window.open(preview.previewURL, '_blank')}
                               />
                             )}
-                            {attachments[index].type.startsWith('video/') && (
-                              <video src={preview} width='100' height='100' controls />
+                            {preview.previewExtension.startsWith('video/') && (
+                              <video
+                                src={preview.previewURL}
+                                width='100'
+                                height='100'
+                                controls
+                                onClick={() => window.open(preview.previewURL, '_blank')}
+                              />
                             )}
-                            {/* {attachments[index].type === 'application/pdf' && (
-                            <>
-                              {error && <div>Error loading PDF: {error}</div>}
-                              <Document
-                                file={attachments[index]}
-                                onLoadSuccess={onDocumentLoadSuccess}
-                                onLoadError={onDocumentLoadError}
-                                className='pdf-preview'
-                              >
-                                <Page pageNumber={1} />
-                              </Document>
-                            </>
-                          )} */}
-                            {<div className={styles.nameContainer}>{attachments[index].name}</div>}
+                            {preview.previewExtension.startsWith('audio/') && (
+                              <audio
+                                src={preview.previewURL}
+                                controls
+                                onClick={() => window.open(preview.previewURL, '_blank')}
+                              />
+                            )}
+                            {preview.previewExtension === 'application/pdf' && (
+                              <embed
+                                onClick={() => window.open(preview.previewURL, '_blank')}
+                                src={preview.previewURL}
+                                width='100'
+                                height='100'
+                                type='application/pdf'
+                              />
+                            )}
+                            {
+                              <div className={styles.nameContainer}>
+                                {attachments[index].file.name}
+                              </div>
+                            }
                           </div>
                         ))}
                       </div>

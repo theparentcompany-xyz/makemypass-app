@@ -119,3 +119,16 @@ export const updateMailService = (
       );
     });
 };
+
+export const deleteAttachment = (eventId: string, mailId: string, attachmentPath: string) => {
+  privateGateway
+    .post(makeMyPass.deleteAttachment(eventId, mailId), {
+      attachment_path: attachmentPath,
+    })
+    .then((response) => {
+      toast.success(response.data.message.general[0] || 'Attachment deleted successfully');
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.message?.general[0] || 'Error while deleting attachment');
+    });
+};
