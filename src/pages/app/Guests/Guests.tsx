@@ -38,11 +38,16 @@ import { Roles } from '../../../../services/enums';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Glance from '../../../components/Glance/Glance';
 import Slider from '../../../components/SliderButton/Slider';
+import { useLocation } from 'react-router-dom';
 
 const Guests = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const [guests, setGuests] = useState<GuestsType[]>([]);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const eventRegisterId = searchParams.get('eventRegisterId');
 
   const [eventFormData, setEventFormData] = useState<FormEventData>();
   const [formData, setFormData] = useState<FormDataType>({});
@@ -78,6 +83,19 @@ const Guests = () => {
   const { event_id: eventId, current_user_role: userRole } = JSON.parse(
     sessionStorage.getItem('eventData')!,
   );
+
+  useEffect(() => {
+    console.log('eventRegisterId', eventRegisterId);
+
+    if (eventRegisterId) {
+      setSelectedGuestId({
+        id: eventRegisterId,
+        type: 'view',
+      });
+
+      getGuestInformation(eventId, eventRegisterId, setSelectedGuest);
+    }
+  }, [eventRegisterId]);
 
   useEffect(() => {
     if (eventId && !selectedGuestId?.id) {

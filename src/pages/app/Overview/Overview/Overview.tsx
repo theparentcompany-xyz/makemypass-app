@@ -32,26 +32,25 @@ import DashboardLayout from '../../../../components/DashboardLayout/DashboardLay
 import Glance from '../../../../components/Glance/Glance';
 
 const Overview = () => {
+  const navigate = useNavigate();
+  const { eventTitle } = useParams<{ eventTitle: string }>();
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
+  const addRef = useRef<boolean>(false);
+  const userRole = JSON.parse(sessionStorage.getItem('eventData')!).current_user_role;
+
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
   const [recentTableData, setRecentTableData] = useState<TableType[]>([]);
-  const navigate = useNavigate();
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
     type: '',
   });
-
-  const [selectedGuest, setSelectedGuest] = useState<GuestsType | null | TableType>(null);
   const [hostList, setHostList] = useState<hostList[]>([]);
   const [hostListTableData, setHostListTableData] = useState<TableType[]>([]);
   const [hostId, setHostId] = useState<hostId>({
     id: '',
     type: 'edit',
   });
-
-  const [selectedGuestData, setSelectedGuestData] = useState<RegistrationDataType>();
-
-  const { eventTitle } = useParams<{ eventTitle: string }>();
 
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -60,16 +59,6 @@ const Overview = () => {
     role: '',
     is_private: true,
   });
-
-  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
-  const addRef = useRef<boolean>(false);
-  const getGuestData = () => {
-    const selectedGuestData = recentRegistrations.filter(
-      (guest) => guest?.id === selectedGuestId?.id,
-    );
-    setSelectedGuest(selectedGuestData[0]);
-    if (selectedGuestId) getGuestInformation(eventId, selectedGuestId.id, setSelectedGuestData);
-  };
 
   useEffect(() => {
     if ((eventId && hostList.length === 0 && userRole == Roles.ADMIN) || userRole == Roles.OWNER)
@@ -83,16 +72,8 @@ const Overview = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedGuestId?.id && (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view'))
-      getGuestData();
-    else if (
-      selectedGuestId?.id &&
-      selectedGuestId.type === 'download' &&
-      !isArray(selectedGuestId.id)
-    )
-      if (selectedGuestId.id && selectedGuest?.name)
-        viewGuestTicket(eventId, selectedGuestId?.id, navigate);
-      else toast.error('Ticket download failed');
+    if (selectedGuestId?.id)
+      navigate(`/${eventTitle}/guests?eventRegisterId=${selectedGuestId?.id}`);
   }, [selectedGuestId]);
 
   useEffect(() => {
@@ -208,6 +189,7 @@ const Overview = () => {
       updateEventHost(eventId, hostData.id, hostData.role, hostData.is_private, setHostData);
     setOpenAddModal(false);
   };
+
   const hostValidate: () => boolean = () => {
     if (!hostData.email) {
       toast.error('Email is required');
@@ -220,33 +202,10 @@ const Overview = () => {
     return true;
   };
 
-  const onClose = () => {
-    setSelectedGuestId({
-      id: '',
-      type: '',
-    });
-  };
-
-  const userRole = JSON.parse(sessionStorage.getItem('eventData')!).current_user_role;
-
   return (
     <Theme>
       <DashboardLayout prevPage='/events' tabName='overview'>
         <Glance tab='overview' />
-        {selectedGuestId &&
-          selectedGuestData &&
-          selectedGuestId.id &&
-          selectedGuestId.type == 'view' && (
-            <>
-              <div onClick={onClose} className={styles.backgroundBlur}></div>
-              <ViewGuest
-                selectedGuestData={selectedGuestData}
-                setSelectedGuestId={setSelectedGuestId}
-                eventId={eventId}
-                type='overview'
-              />
-            </>
-          )}
 
         <>
           {openAddModal && (
