@@ -25,6 +25,7 @@ import { HashLoader } from 'react-spinners';
 import { multipleTicketCount } from '../../../CheckIns/pages/ScanQR/types';
 import { LogType } from '../../../CheckIns/pages/Venue/Venue';
 import ScannerResponseModal from '../../../CheckIns/components/ScannerResponseModal/ScannerResponseModal';
+import PreviewBox from '../../../EventGlance/components/UpdateMail/components/PreviewBox/PreviewBox';
 
 const ViewGuest = ({
   selectedGuestData,
@@ -675,10 +676,31 @@ const ViewGuest = ({
                     <p className={styles.fieldLabel}>{submission.title}</p>
                     <p className={styles.fieldData}>
                       {submission.type === 'file' ? (
-                        <SecondaryButton
-                          buttonText='View File'
-                          onClick={() => window.open(submission.value)}
-                        />
+                        Array.isArray(submission.value) ? (
+                          submission.value.map((file, index) => {
+                            return (
+                              <PreviewBox
+                                key={index}
+                                index={index}
+                                preview={{
+                                  previewURL: file,
+                                  previewExtension: 'image/png',
+                                  previewName: file.split('/').pop() as string,
+                                }}
+                              />
+                            );
+                          })
+                        ) : (
+                          <PreviewBox
+                            key={index}
+                            index={index}
+                            preview={{
+                              previewURL: submission.value,
+                              previewExtension: 'image/png',
+                              previewName: submission.value.split('/').pop() as string,
+                            }}
+                          />
+                        )
                       ) : (
                         submission.value
                       )}

@@ -36,7 +36,7 @@ export type RegistrationDataType = {
     id: string;
     type: string;
     title: string;
-    value: string;
+    value: string | string[];
   }[];
   amount: number;
   ticket_count: number;

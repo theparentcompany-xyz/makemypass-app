@@ -1,30 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { listMailType, MailType } from '../../../../../apis/types';
+import { MailType } from '../../../../../apis/types';
 import styles from './UpdateMail.module.css';
 import { deleteAttachment, getMail } from '../../../../../apis/mails';
 import { HashLoader } from 'react-spinners';
 import { updateMail } from '../../../../../apis/mails';
-import { MdClose } from 'react-icons/md';
+import { AttachmentType, previewType, PropTypes } from './types';
+import PreviewBox from './components/PreviewBox/PreviewBox';
 
-type Props = {
-  selectedMail: listMailType | undefined;
-  setSelectedMail: React.Dispatch<React.SetStateAction<listMailType | undefined>>;
-  setCustomMail: React.Dispatch<React.SetStateAction<boolean>>;
-  setMails: React.Dispatch<React.SetStateAction<listMailType[]>>;
-};
-
-type AttachmentType = {
-  type: 'newFile' | 'existingFile';
-  file: File;
-  fileURL?: string;
-};
-
-type previewType = {
-  previewURL: string;
-  previewExtension: string;
-};
-
-const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: Props) => {
+const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: PropTypes) => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [mailData, setMailData] = useState<MailType>();
   const [fetchedMail, setFetchedMail] = useState<MailType>();
@@ -66,6 +49,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
         return {
           previewURL: URL.createObjectURL(file),
           previewExtension: file.type,
+          previewName: file.name,
         };
       }),
     ]);
@@ -121,6 +105,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
           return {
             previewURL: attachment.fileURL!,
             previewExtension: attachment.file.type,
+            previewName: attachment.name,
           };
         }),
       );
@@ -168,54 +153,12 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
                     {previews.length > 0 && (
                       <div className={styles.previewContainer}>
                         {previews.map((preview, index) => (
-                          <div key={index} className={styles.previewBox}>
-                            <div
-                              className={styles.closeButton}
-                              onClick={() => {
-                                handleDeleteAttachment(index);
-                              }}
-                            >
-                              <MdClose size={20} />
-                            </div>
-                            {preview.previewExtension.startsWith('image/') && (
-                              <img
-                                src={preview.previewURL}
-                                alt='Preview'
-                                style={{ width: 100, height: 100 }}
-                                onClick={() => window.open(preview.previewURL, '_blank')}
-                              />
-                            )}
-                            {preview.previewExtension.startsWith('video/') && (
-                              <video
-                                src={preview.previewURL}
-                                width='100'
-                                height='100'
-                                controls
-                                onClick={() => window.open(preview.previewURL, '_blank')}
-                              />
-                            )}
-                            {preview.previewExtension.startsWith('audio/') && (
-                              <audio
-                                src={preview.previewURL}
-                                controls
-                                onClick={() => window.open(preview.previewURL, '_blank')}
-                              />
-                            )}
-                            {preview.previewExtension === 'application/pdf' && (
-                              <embed
-                                onClick={() => window.open(preview.previewURL, '_blank')}
-                                src={preview.previewURL}
-                                width='100'
-                                height='100'
-                                type='application/pdf'
-                              />
-                            )}
-                            {
-                              <div className={styles.nameContainer}>
-                                {attachments[index].file.name}
-                              </div>
-                            }
-                          </div>
+                          <PreviewBox
+                            key={index}
+                            index={index}
+                            preview={preview}
+                            handleDeleteAttachment={handleDeleteAttachment}
+                          />
                         ))}
                       </div>
                     )}
