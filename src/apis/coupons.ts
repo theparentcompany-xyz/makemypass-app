@@ -10,7 +10,7 @@ export const listCoupons = async (
   setCoupons: Dispatch<SetStateAction<CouponType[]>>,
   setActivateCoupon?: React.Dispatch<React.SetStateAction<ActivateCouponType>>,
 ) => {
-  privateGateway.get(makeMyPass.listCoupons(eventId)).then((response) => {
+  privateGateway.get(makeMyPass.couponsList(eventId)).then((response) => {
     setCoupons(response.data.response.coupons);
     console.log('Coupons', response.data.response.coupons);
 
@@ -56,7 +56,7 @@ export const createCoupon = (
     });
 
     privateGateway
-      .post(makeMyPass.createCoupon(eventId), backendFormData, {
+      .post(makeMyPass.couponCreate(eventId), backendFormData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -135,7 +135,7 @@ export const updateCouponStatus = async (
   setActivateCoupon: Dispatch<SetStateAction<ActivateCouponType>>,
 ) => {
   return privateGateway
-    .put(makeMyPass.updateCouponStatus(eventId), {
+    .put(makeMyPass.couponStatusUpdate(eventId), {
       show_coupon_field: activateCoupon.active,
       description: activateCoupon.description,
     })
@@ -181,7 +181,7 @@ export const getShortListTickets = async (
   >,
 ) => {
   return privateGateway
-    .get(makeMyPass.getShortListTicket(eventId))
+    .get(makeMyPass.ticketShortList(eventId))
     .then((response) => {
       setTickets(response.data.response.tickets);
     })

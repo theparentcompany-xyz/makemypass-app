@@ -10,7 +10,7 @@ export const getUserGitfs = async (
   setGifts: Dispatch<SetStateAction<GiftsType>>,
 ) => {
   privateGateway
-    .post(makeMyPass.listUserGifts(eventId), {
+    .post(makeMyPass.scanGuestGiftList(eventId), {
       ticket_code: ticketCode,
     })
     .then((response) => {
@@ -28,7 +28,7 @@ export const claimUserGift = (
 ): Promise<void> => {
   return new Promise<void>((resolve, reject) => {
     privateGateway
-      .post(makeMyPass.claimUserGift(eventId), {
+      .post(makeMyPass.scanGuestGiftClaim(eventId), {
         gift_id: selectedGift.id,
         ticket_code: ticketCode,
         gift_name: selectedGift.name,

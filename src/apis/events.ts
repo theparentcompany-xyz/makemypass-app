@@ -56,7 +56,7 @@ export const getCategories = async (
   setCategories: Dispatch<React.SetStateAction<string[]>>,
 ) => {
   privateGateway
-    .get(makeMyPass.getCategories(eventId))
+    .get(makeMyPass.guestListFormCategories(eventId))
     .then((response) => {
       setCategories(response.data.response);
     })
@@ -67,7 +67,7 @@ export const getCategories = async (
 
 export const createEvent = (eventTitle: string) => {
   privateGateway
-    .post(makeMyPass.createEvent, {
+    .post(makeMyPass.eventCreate, {
       title: eventTitle,
     })
     .then((response) => {
@@ -142,7 +142,7 @@ export const deleteEvent = (eventId: string) => {
 
 export const duplicateEvent = async (eventId: string) => {
   privateGateway
-    .post(makeMyPass.duplicateEvent(eventId))
+    .post(makeMyPass.eventCreateDuplicate(eventId))
     .then((response) => {
       toast.success('Event Duplicated Successfually');
       setEventInfoLocal(response.data.response.event_name);

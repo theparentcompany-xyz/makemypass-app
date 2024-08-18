@@ -13,7 +13,7 @@ export const shortListUser = (
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
 ) => {
   privateGateway
-    .post(makeMyPass.shortListUser(eventId, userId), {
+    .post(makeMyPass.guestShortList(eventId, userId), {
       is_approved: isShortListed,
     })
     .then((response) => {
@@ -90,7 +90,7 @@ export const addGuest = (
   document.body.appendChild(script);
 
   privateGateway
-    .post(makeMyPass.sentInvite(eventId), backendFormData, {
+    .post(makeMyPass.guestSendInvite(eventId), backendFormData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -114,7 +114,7 @@ export const addGuest = (
             audio.play();
 
             publicGateway
-              .post(makeMyPass.validatePayment, {
+              .post(makeMyPass.formValidatePayment, {
                 order_id: response.razorpay_order_id,
                 payment_id: response.razorpay_payment_id,
                 payment_signature: response.razorpay_signature,

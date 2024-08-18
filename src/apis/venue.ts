@@ -12,7 +12,7 @@ export const listUserVenues = async (
   setVenue: Dispatch<React.SetStateAction<VenueType[]>>,
 ) => {
   privateGateway
-    .get(makeMyPass.listUserVenues(eventId))
+    .get(makeMyPass.scanGuestVenueList(eventId))
     .then((response) => {
       setVenue(response.data.response.venues);
     })
@@ -26,7 +26,7 @@ export const listVenues = async (
   setVenue: Dispatch<React.SetStateAction<VenueCRUDType>>,
 ) => {
   privateGateway
-    .get(makeMyPass.listVenues(eventId))
+    .get(makeMyPass.eventVenueList(eventId))
     .then((response) => {
       setVenue((prev) => ({
         ...prev,
@@ -41,7 +41,7 @@ export const listVenues = async (
 export const updateVenueList = (venues: VenueType[], eventId: string) => {
   return new Promise((resolve, reject) => {
     privateGateway
-      .post(makeMyPass.updateVenueList(eventId), {
+      .post(makeMyPass.eventVenueUpdate(eventId), {
         venues,
       })
       .then((response) => {
@@ -62,7 +62,7 @@ export const checkInUserVenue = async (
 ) => {
   if (selectedVenue)
     privateGateway
-      .post(makeMyPass.checkInUserVenue(eventId), {
+      .post(makeMyPass.scanGuestVenueCheckin(eventId), {
         venue_id: selectedVenue?.id,
         ticket_code: ticketCode,
       })

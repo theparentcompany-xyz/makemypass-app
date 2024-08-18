@@ -8,7 +8,7 @@ export const getHosts = async (
   setHosts: React.Dispatch<React.SetStateAction<hostList[]>>,
 ) => {
   privateGateway
-    .get(makeMyPass.listHosts(eventId))
+    .get(makeMyPass.eventHostList(eventId))
     .then((response) => {
       setHosts(response.data.response.hosts);
     })

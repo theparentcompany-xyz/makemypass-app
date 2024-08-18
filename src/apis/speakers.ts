@@ -9,7 +9,7 @@ export const listSpeakers = async (
   setSpeakers: Dispatch<React.SetStateAction<SpeakerCRUDType>>,
 ) => {
   privateGateway
-    .get(makeMyPass.listSpeakers(eventId))
+    .get(makeMyPass.eventSpeakerList(eventId))
     .then((response) => {
       setSpeakers((prev) => ({
         ...prev,
@@ -24,7 +24,7 @@ export const listSpeakers = async (
 export const updateSpeakerList = (speakers: SpeakerType[], eventId: string) => {
   return new Promise((resolve, reject) => {
     privateGateway
-      .post(makeMyPass.updateSpeakerList(eventId), {
+      .post(makeMyPass.eventSpeakerUpdate(eventId), {
         speakers,
       })
       .then((response) => {

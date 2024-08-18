@@ -15,7 +15,7 @@ export const getPostEventFields = (
   setData: Dispatch<React.SetStateAction<Data>>,
 ) => {
   publicGateway
-    .get(makeMyPass.getPostEventFields(eventId))
+    .get(makeMyPass.feedbackFormInfo(eventId))
     .then((response) => {
       setFormFields(response.data.response.questions);
       setData({
@@ -30,7 +30,7 @@ export const getPostEventFields = (
 
 export const getPostEventCategories = (eventId: string) => {
   publicGateway
-    .get(makeMyPass.getPostEventCategories(eventId))
+    .get(makeMyPass.feedbackCategories(eventId))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Categories fetched successfully');
     })
@@ -59,7 +59,7 @@ export const submitFeedback = (
   setFormData: Dispatch<React.SetStateAction<FormDataType>>,
 ) => {
   privateGateway
-    .post(makeMyPass.submitFeedback(eventId), formData)
+    .post(makeMyPass.feedbackSubmit(eventId), formData)
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Feedback submitted successfully');
       setSuccess && setSuccess(response.data.response.code);

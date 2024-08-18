@@ -17,7 +17,7 @@ export const listMails = (
   setMails: React.Dispatch<React.SetStateAction<listMailType[]>>,
 ) => {
   privateGateway
-    .get(makeMyPass.listMails(eventId))
+    .get(makeMyPass.communicationMailList(eventId))
     .then((response) => {
       setMails(response.data.response);
     })
@@ -32,7 +32,7 @@ export const getMail = (
   setMail: React.Dispatch<React.SetStateAction<MailType | undefined>>,
 ) => {
   privateGateway
-    .get(makeMyPass.getMail(eventId, mailId))
+    .get(makeMyPass.communcationMailGet(eventId, mailId))
     .then((response) => {
       setMail(response.data);
     })
@@ -50,7 +50,7 @@ export const updateMail = async (
 ) => {
   try {
     const response = await privateGateway.patch(
-      makeMyPass.updateMail(eventId, selectedMail?.id),
+      makeMyPass.communicationMailUPdate(eventId, selectedMail?.id),
       data,
       {
         headers: {
@@ -86,7 +86,7 @@ export const getMailService = (
   setMailData: React.Dispatch<React.SetStateAction<any>>,
 ) => {
   privateGateway
-    .get(makeMyPass.mailService(eventId))
+    .get(makeMyPass.communicationServiceMail(eventId))
     .then((response) => {
       setMailData(response.data.response);
     })
@@ -104,7 +104,7 @@ export const updateMailService = (
   mailData: mailData | undefined,
 ) => {
   privateGateway
-    .post(makeMyPass.mailService(eventId), data, {
+    .post(makeMyPass.communicationServiceMail(eventId), data, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -122,7 +122,7 @@ export const updateMailService = (
 
 export const deleteAttachment = (eventId: string, mailId: string, attachmentPath: string) => {
   privateGateway
-    .post(makeMyPass.deleteAttachment(eventId, mailId), {
+    .post(makeMyPass.communicationMailDeleteAttachment(eventId, mailId), {
       attachment_path: attachmentPath,
     })
     .then((response) => {

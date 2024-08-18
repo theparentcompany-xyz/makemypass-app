@@ -8,7 +8,7 @@ export const getTickets = async (
   setTicketInfo: React.Dispatch<React.SetStateAction<TicketType[]>>,
 ) => {
   privateGateway
-    .get(makeMyPass.getTicketInfo(eventId))
+    .get(makeMyPass.ticketList(eventId))
     .then((response) => {
       setTicketInfo(response.data.response.tickets);
     })
@@ -20,7 +20,7 @@ export const getTickets = async (
 export const createTicket = async (eventId: string, ticket: TicketType) => {
   delete ticket['new'];
   try {
-    const response = await privateGateway.post(makeMyPass.createTicket(eventId), ticket, {
+    const response = await privateGateway.post(makeMyPass.ticketCreate(eventId), ticket, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -40,7 +40,7 @@ export const editTicket = async (
 ) => {
   try {
     const response = await privateGateway.patch(
-      makeMyPass.ticket(eventId, selectedTicket?.id),
+      makeMyPass.ticketInformation(eventId, selectedTicket?.id),
       changedData,
       {
         headers: {
@@ -79,7 +79,7 @@ export const deleteTicket = async (
 ) => {
   const toastId = toast.loading('Deleting Ticket...');
   privateGateway
-    .delete(makeMyPass.ticket(eventId, ticketId))
+    .delete(makeMyPass.ticketInformation(eventId, ticketId))
     .then((response) => {
       setTickets((prev) => prev.filter((t) => t.id !== ticketId));
       toast.success(response?.data?.message?.general[0] || 'Ticket Deleted Successfully', {

@@ -13,7 +13,7 @@ export const verifyParticipant = (
   setVerified: Dispatch<SetStateAction<VerifiedType>>,
 ) => {
   return publicGateway
-    .post(makeMyPass.verifyParticipant(verificationCode), {
+    .post(makeMyPass.formVerfifyParticipant(verificationCode), {
       verification_code: verificationCode,
     })
     .then(() => {
