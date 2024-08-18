@@ -15,6 +15,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
   const [previews, setPreviews] = useState<previewType[]>([]);
 
   const onUpdateEmail = () => {
+    console.log(mailData);
     const changedData: Record<string, any> = Object.entries(mailData as Record<string, any>)
       .filter(([key, value]) => fetchedMail?.[key as keyof MailType] !== value)
       .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
@@ -61,6 +62,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
     setPreviews(previews.filter((_, i) => i !== index));
     if (selectedMail) deleteAttachment(eventId, selectedMail?.id, previews[index].previewURL);
   };
+
   useEffect(() => {
     if (selectedMail) {
       getMail(eventId, selectedMail?.id, setFetchedMail);
@@ -112,6 +114,20 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
     }
   }, [fetchedMail]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 's' && (navigator.userAgent.includes('Mac') ? e.metaKey : e.ctrlKey)) {
+        e.preventDefault();
+        onUpdateEmail();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
   return (
     <>
       {mailData ? (
@@ -152,7 +168,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
                   <div className={styles.attachmentsContainer}>
                     {previews.length > 0 && (
                       <div className={styles.previewContainer}>
-                        {previews.map((preview, index) => (
+                        {previews?.map((preview, index) => (
                           <PreviewBox
                             key={index}
                             index={index}
