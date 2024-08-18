@@ -92,27 +92,51 @@ const DashboardTabs = ({
         {eventData && (
           <div className={styles.tabsContainer}>
             <div className={styles.tabs}>
-              <ol>
+              <ol className={styles.tabList}>
                 {eventData.current_user_role != 'Gamer' && (
                   <>
                     {Object.keys(tabs)
                       .filter((tab) => {
                         return tabs[tab as keyof typeof tabs].roles.includes(userRoles);
                       })
-                      .map((tab, index) => (
-                        <div key={index}>
-                          <motion.li
-                            whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
-                            className={`pointer ${styles.tab}`}
-                            onClick={() => updateTab(tab)}
-                          >
-                            {tabs[tab as keyof typeof tabs].title}
-                          </motion.li>
-                          {currentTab === tab && (
-                            <motion.div layoutId='tab-indicator' className={styles.active} />
-                          )}
-                        </div>
-                      ))}
+                      .reduce((acc: JSX.Element[], tab, index) => {
+                        const category = tabs[tab as keyof typeof tabs].category;
+                        const title = tabs[tab as keyof typeof tabs].title;
+                        const isLastTab = index === Object.keys(tabs).length - 1;
+                        const tabElement = (
+                          <div key={index}>
+                            <motion.li
+                              whileHover={{ scale: 1.05, marginRight: 10, color: '#fdfdfd' }}
+                              className={`pointer ${styles.tab}`}
+                              onClick={() => updateTab(tab)}
+                            >
+                              {title}
+                            </motion.li>
+                            {currentTab === tab && (
+                              <motion.div layoutId='tab-indicator' className={styles.active} />
+                            )}
+                          </div>
+                        );
+                        if (acc.length === 0) {
+                          acc.push(tabElement);
+                        } else {
+                          const lastCategory =
+                            tabs[Object.keys(tabs)[index - 1] as keyof typeof tabs].category;
+                          if (category !== lastCategory) {
+                            acc.push(
+                              <span key={`category-${index}`} className={styles.categorySeparator}>
+                                {' '}
+                                |{' '}
+                              </span>,
+                            );
+                          }
+                          acc.push(tabElement);
+                        }
+                        if (isLastTab && setShowPublishModal) {
+                          setShowPublishModal(true);
+                        }
+                        return acc;
+                      }, [])}
                   </>
                 )}
               </ol>

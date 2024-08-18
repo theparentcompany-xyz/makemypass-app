@@ -33,7 +33,7 @@
 .tabs ol {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -61,4 +61,10 @@
 .active {
   border: 1.5px solid #fff;
   border-radius: 8px;
+}
+
+.categorySeparator {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  font-weight: bold;
 }

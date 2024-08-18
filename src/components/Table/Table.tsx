@@ -84,7 +84,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
                   {item.category}
                 </p>
               )}
-              <p className={styles.rowDate}>{timeAgo(item.date)}</p>
+              <p className={styles.rowDate}>{timeAgo(item.registered_at)}</p>
               {setResentTicket && (
                 <>
                   <div className={styles.icon}>

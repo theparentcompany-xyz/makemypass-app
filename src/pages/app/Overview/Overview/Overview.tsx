@@ -125,7 +125,7 @@ const Overview = () => {
       name: 'name',
       email: 'email',
       category: 'category',
-      registered_at: 'date',
+      registered_at: 'registered_at',
       is_checked_in: 'is_checked_in',
       phonenumber: 'phonenumber',
       amount: 'amount',
