@@ -26,6 +26,7 @@ import './google.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import { useOverrideCtrlS } from '../../../hooks/common';
 const libraries: Libraries = ['places'];
 
 const EditEvent = () => {
@@ -164,6 +165,8 @@ const EditEvent = () => {
   const agreeToDelete = () => {
     deleteEvent(eventId);
   };
+
+  useOverrideCtrlS(onSubmit);
 
   useEffect(() => {
     if (eventId) getEvent(eventId, setEventTitle, setEventData);
