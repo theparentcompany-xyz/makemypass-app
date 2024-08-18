@@ -112,6 +112,7 @@ const ViewGuest = ({
         setTrigger={setTrigger}
         setMultipleTickets={setMultipleTickets}
         multipleTickets={multipleTickets}
+        type='checkIn'
       />
       {deleteModal && (
         <>
