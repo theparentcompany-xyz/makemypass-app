@@ -124,8 +124,6 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
           };
         }),
       );
-
-      console.log(previews);
     }
   }, [fetchedMail]);
 
