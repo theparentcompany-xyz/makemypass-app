@@ -207,7 +207,7 @@ export const submitForm = async ({
     });
 };
 
-export const applyCoupon = async (
+export const validateFormCoupon = async (
   eventId: string,
   couponData: CouponData,
   setDiscount: React.Dispatch<DiscountData>,
@@ -234,7 +234,7 @@ export const applyCoupon = async (
       });
 };
 
-export const validateRsvp = async (
+export const validateRSVPData = async (
   eventId: string,
   formData: FormDataType,
   setFormNumber: React.Dispatch<React.SetStateAction<number>>,
@@ -340,7 +340,7 @@ export const getEventInfo = async (
     });
 };
 
-export const postAudio = async (
+export const parseAudio = async (
   eventId: string,
   recordedBlob: Blob,
   formData: FormDataType,
@@ -408,7 +408,7 @@ export const sendVerfication = async (contactType: string, contactInfo: string) 
     });
 };
 
-export const claimRegisterGift = async (
+export const claimScratchCard = async (
   eventRegisterId: string,
   setScratchCard: Dispatch<SetStateAction<{ name: string; image: string; isFetching: boolean }>>,
 ) => {

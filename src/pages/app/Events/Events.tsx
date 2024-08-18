@@ -3,7 +3,7 @@ import styles from './Events.module.css';
 import { GoPeople } from 'react-icons/go';
 import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
-import { duplicateEvent, setEventInfoLocal, getEvents } from '../../../apis/events';
+import { createDuplicateEvent, setEventInfoLocal, getEventsList } from '../../../apis/events';
 
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
@@ -44,7 +44,7 @@ const Events = () => {
   const [events, setEvents] = useState([] as Event[]);
 
   useEffect(() => {
-    getEvents(setEvents, setIsDataLoaded);
+    getEventsList(setEvents, setIsDataLoaded);
   }, []);
 
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ const Events = () => {
               <div className={styles.buttons}>
                 <p
                   onClick={() => {
-                    duplicateEvent(duplicateEventId);
+                    createDuplicateEvent(duplicateEventId);
                     setShowModal(false);
                   }}
                   className={styles.button}

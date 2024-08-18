@@ -3,7 +3,7 @@ import { IoMicOutline } from 'react-icons/io5';
 import styles from './VoiceInput.module.css';
 import { Dispatch, useEffect, useState } from 'react';
 import { AudioControlsType } from '../../../types';
-import { postAudio } from '../../../../../../apis/publicpage';
+import { parseAudio } from '../../../../../../apis/publicpage';
 import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
 import toast from 'react-hot-toast';
 import { PropagateLoader } from 'react-spinners';
@@ -21,7 +21,7 @@ const VoiceInput = ({
 }) => {
   const handleAudioSubmit = (recordedBlob: Blob | null) => {
     if (recordedBlob && eventFormData.id && formData && setFormData) {
-      postAudio(eventFormData.id, recordedBlob, formData, setFormData, setShowAudioModal);
+      parseAudio(eventFormData.id, recordedBlob, formData, setFormData, setShowAudioModal);
     }
   };
 

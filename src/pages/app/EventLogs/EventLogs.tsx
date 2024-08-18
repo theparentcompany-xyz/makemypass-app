@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Theme from '../../../components/Theme/Theme';
 import styles from './EventLogs.module.css';
-import { getAllMailLog } from '../../../apis/logs';
+import { getEventMailLog } from '../../../apis/logs';
 import { EmailType } from '../Guests/components/ViewGuest/types';
 import { BiChevronDown } from 'react-icons/bi';
 import { formatDate } from '../../../common/commonFunctions';
@@ -13,7 +13,7 @@ const EventLogs = () => {
   const eventId = JSON.parse(sessionStorage.getItem('eventData') || '{}').event_id;
 
   useEffect(() => {
-    getAllMailLog(eventId, setMailLogs);
+    getEventMailLog(eventId, setMailLogs);
   }, []);
 
   const toggleMailContent = (id: string) => {

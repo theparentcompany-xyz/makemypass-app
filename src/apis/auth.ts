@@ -4,7 +4,7 @@ import { buildVerse, makeMyPass } from '../../services/urls';
 import { Dispatch } from 'react';
 import { errorType } from '../pages/auth/Login/types';
 
-export const login = async (
+export const userLogin = async (
   email: string,
   password: string,
   setIsAuthenticated: (arg0: boolean) => void,
@@ -91,12 +91,15 @@ export const generateOTP = async (
     .catch((error) => {
       if (error.response.data.statusCode === 1001) {
         setIsRegistered(false);
-        preRegister(email, setIsOtpSent);
+        initiatePreRegistration(email, setIsOtpSent);
       }
     });
 };
 
-export const preRegister = async (email: string, setIsOtpSent: (arg0: boolean) => void) => {
+export const initiatePreRegistration = async (
+  email: string,
+  setIsOtpSent: (arg0: boolean) => void,
+) => {
   publicGateway
     .post(buildVerse.preRegister, {
       email: email,
@@ -110,7 +113,7 @@ export const preRegister = async (email: string, setIsOtpSent: (arg0: boolean) =
     });
 };
 
-export const register = async (
+export const registerUser = async (
   email: string,
   otp: string,
   setIsRegistered: Dispatch<React.SetStateAction<boolean>>,
@@ -145,7 +148,7 @@ export const register = async (
     });
 };
 
-export const googleLogin = async () => {
+export const loginUsingGoogle = async () => {
   publicGateway
     .get(buildVerse.googleLogin)
     .then((response) => {
@@ -155,7 +158,8 @@ export const googleLogin = async () => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
     });
 };
-export const resetPassword = (
+
+export const resetUserPassword = (
   email: string,
   otp: string,
   password: string,

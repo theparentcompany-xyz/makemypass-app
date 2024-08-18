@@ -5,7 +5,7 @@ import { RiSearchLine } from 'react-icons/ri';
 import { useEffect, useState } from 'react';
 import { guests } from './types';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
-import { getCategories } from '../../../../../apis/events';
+import { getFormCategories } from '../../../../../apis/events';
 import { connectPrivateSocket } from '../../../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../../../services/urls';
 import { transformTableData } from '../../../../../common/commonFunctions';
@@ -30,7 +30,7 @@ const CheckIn = () => {
 
   useEffect(() => {
     if (eventId) {
-      getCategories(eventId, setCategories);
+      getFormCategories(eventId, setCategories);
       connectPrivateSocket({
         url: makeMyPassSocket.guestCheckinList(eventId),
       }).then((ws) => {

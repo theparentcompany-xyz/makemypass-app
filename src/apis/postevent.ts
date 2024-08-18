@@ -13,7 +13,7 @@ export const sentPostEventMail = async (eventId: string, type: boolean) => {
   }
 };
 
-export const sentTextMail = async (eventId: string, mailId: string) => {
+export const sentTestMail = async (eventId: string, mailId: string) => {
   try {
     await privateGateway.post(makeMyPass.communicationMailTest(eventId, mailId));
     toast.success('Mail Sent Successfully');

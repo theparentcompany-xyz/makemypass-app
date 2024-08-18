@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import { hostData, hostId, hostList, recentRegistration, RegistrationDataType } from './types';
 
 import { HashLoader } from 'react-spinners';
-import { getHosts } from '../../../../apis/overview';
+import { getEventHosts } from '../../../../apis/overview';
 import { connectPrivateSocket } from '../../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../../services/urls';
 import Theme from '../../../../components/Theme/Theme';
@@ -19,13 +19,13 @@ import { TableType } from '../../../../components/Table/types';
 import { transformTableData } from '../../../../common/commonFunctions';
 import SecondaryButton from '../components/SecondaryButton/SecondaryButton';
 import AddHosts from '../components/SecondaryButton/AddHosts/AddHosts';
-import { addHosts, removeHost, updateHostRole } from '../../../../apis/host';
+import { createEventHost, removeEventHost, updateEventHost } from '../../../../apis/host';
 import { AnimatePresence } from 'framer-motion';
 import Modal from '../../../../components/Modal/Modal';
 import toast from 'react-hot-toast';
 import { GuestsType, SelectedGuest } from '../../Guests/types';
 import ViewGuest from '../../Guests/components/ViewGuest/ViewGuest';
-import { downloadTicket, getIndividualGuestInfo } from '../../../../apis/guests';
+import { viewGuestTicket, getGuestInformation } from '../../../../apis/guests';
 import { isArray } from 'chart.js/helpers';
 import { Roles } from '../../../../../services/enums';
 import DashboardLayout from '../../../../components/DashboardLayout/DashboardLayout';
@@ -68,12 +68,12 @@ const Overview = () => {
       (guest) => guest?.id === selectedGuestId?.id,
     );
     setSelectedGuest(selectedGuestData[0]);
-    if (selectedGuestId) getIndividualGuestInfo(eventId, selectedGuestId.id, setSelectedGuestData);
+    if (selectedGuestId) getGuestInformation(eventId, selectedGuestId.id, setSelectedGuestData);
   };
 
   useEffect(() => {
     if ((eventId && hostList.length === 0 && userRole == Roles.ADMIN) || userRole == Roles.OWNER)
-      getHosts(eventId, setHostList);
+      getEventHosts(eventId, setHostList);
   }, [eventId]);
 
   useEffect(() => {
@@ -91,7 +91,7 @@ const Overview = () => {
       !isArray(selectedGuestId.id)
     )
       if (selectedGuestId.id && selectedGuest?.name)
-        downloadTicket(eventId, selectedGuestId?.id, navigate);
+        viewGuestTicket(eventId, selectedGuestId?.id, navigate);
       else toast.error('Ticket download failed');
   }, [selectedGuestId]);
 
@@ -198,14 +198,14 @@ const Overview = () => {
   };
 
   const removeHostAccount = () => {
-    removeHost(eventId, hostId.id, setOpenDeleteModal);
+    removeEventHost(eventId, hostId.id, setOpenDeleteModal);
   };
 
   const onSubmit = () => {
     if (!hostData.id)
-      addHosts(eventId, hostData.email, hostData.role, hostData.is_private, setHostData);
+      createEventHost(eventId, hostData.email, hostData.role, hostData.is_private, setHostData);
     if (hostData.id)
-      updateHostRole(eventId, hostData.id, hostData.role, hostData.is_private, setHostData);
+      updateEventHost(eventId, hostData.id, hostData.role, hostData.is_private, setHostData);
     setOpenAddModal(false);
   };
   const hostValidate: () => boolean = () => {

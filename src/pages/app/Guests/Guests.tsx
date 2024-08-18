@@ -3,16 +3,16 @@ import { useEffect, useState } from 'react';
 
 import Theme from '../../../components/Theme/Theme';
 import {
-  downloadCSVData,
-  downloadTicket,
-  getEditGuestData,
-  getGuestInfo,
-  getIndividualGuestInfo,
-  listGuests,
-  resentEventTicket,
+  downloadRegisterCSVData,
+  viewGuestTicket,
+  getGuestEditPrefillData,
+  getEventFormData,
+  getGuestInformation,
+  getGuestRegisterList,
+  resentGuestTicket,
 } from '../../../apis/guests';
 import { FormDataType } from '../../../apis/types';
-import { getCategories } from '../../../apis/events';
+import { getFormCategories } from '../../../apis/events';
 
 import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from './types';
 import { TableType } from '../../../components/Table/types';
@@ -71,9 +71,8 @@ const Guests = () => {
   const getGuestData = () => {
     setSelectedGuest({} as RegistrationDataType);
     if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'edit') {
-      getEditGuestData(eventId, selectedGuestId.id, setSelectedGuest);
-    } else if (selectedGuestId)
-      getIndividualGuestInfo(eventId, selectedGuestId.id, setSelectedGuest);
+      getGuestEditPrefillData(eventId, selectedGuestId.id, setSelectedGuest);
+    } else if (selectedGuestId) getGuestInformation(eventId, selectedGuestId.id, setSelectedGuest);
   };
 
   const { event_id: eventId, current_user_role: userRole } = JSON.parse(
@@ -82,14 +81,14 @@ const Guests = () => {
 
   useEffect(() => {
     if (eventId && !selectedGuestId?.id) {
-      listGuests(eventId, setGuests);
+      getGuestRegisterList(eventId, setGuests);
     }
   }, [eventId, selectedGuestId, triggerFetch]);
 
   useEffect(() => {
     if (eventId) {
-      getCategories(eventId, setCategories);
-      getGuestInfo(eventId, setEventFormData);
+      getFormCategories(eventId, setCategories);
+      getEventFormData(eventId, setEventFormData);
     }
   }, [eventId]);
 
@@ -104,12 +103,12 @@ const Guests = () => {
       selectedGuestId.type === 'download' &&
       !isArray(selectedGuestId.id)
     )
-      if (selectedGuestId.id) downloadTicket(eventId, selectedGuestId?.id, navigate);
+      if (selectedGuestId.id) viewGuestTicket(eventId, selectedGuestId?.id, navigate);
       else toast.error('Ticket download failed');
   }, [selectedGuestId]);
 
   const handleTicketResend = () => {
-    resentEventTicket(resentTicket, setResentTicket);
+    resentGuestTicket(resentTicket, setResentTicket);
   };
 
   const onClose = () => {
@@ -336,7 +335,7 @@ const Guests = () => {
                       <SecondaryButton
                         buttonText='CSV'
                         onClick={() => {
-                          downloadCSVData(eventId);
+                          downloadRegisterCSVData(eventId);
                         }}
                       />
                     )}

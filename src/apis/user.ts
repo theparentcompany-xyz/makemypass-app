@@ -1,7 +1,8 @@
 import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { buildVerse } from '../../services/urls';
-export const updateProfile = async (
+
+export const udpateUserProfile = async (
   { data }: { [k: string]: FormData },
   setLoading?: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {

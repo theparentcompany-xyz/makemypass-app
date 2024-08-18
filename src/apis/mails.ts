@@ -12,7 +12,7 @@ type mailData = {
   from_mail: string;
 };
 
-export const listMails = (
+export const listEventMails = (
   eventId: string,
   setMails: React.Dispatch<React.SetStateAction<listMailType[]>>,
 ) => {
@@ -26,7 +26,7 @@ export const listMails = (
     });
 };
 
-export const getMail = (
+export const getEventMailData = (
   eventId: string,
   mailId: string,
   setMail: React.Dispatch<React.SetStateAction<MailType | undefined>>,
@@ -41,7 +41,7 @@ export const getMail = (
     });
 };
 
-export const updateMail = async (
+export const updateEventMail = async (
   eventId: string,
   selectedMail: MailType,
   data: Record<string, any>,
@@ -81,7 +81,7 @@ export const updateMail = async (
   }
 };
 
-export const getMailService = (
+export const getEventMailService = (
   eventId: string,
   setMailData: React.Dispatch<React.SetStateAction<any>>,
 ) => {
@@ -97,7 +97,7 @@ export const getMailService = (
     });
 };
 
-export const updateMailService = (
+export const updateEventMailService = (
   eventId: string,
   data: Record<string, any>,
   setFetchedData: React.Dispatch<React.SetStateAction<mailData | undefined>>,
@@ -120,7 +120,11 @@ export const updateMailService = (
     });
 };
 
-export const deleteAttachment = (eventId: string, mailId: string, attachmentPath: string) => {
+export const deleteEventMailAttachment = (
+  eventId: string,
+  mailId: string,
+  attachmentPath: string,
+) => {
   privateGateway
     .post(makeMyPass.communicationMailDeleteAttachment(eventId, mailId), {
       attachment_path: attachmentPath,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Theme from '../../../components/Theme/Theme';
-import { getPaymentAnalytics, getPaymentAnalyticsCSV } from '../../../apis/payments';
+import { getEventPaymentLog, getPaymentAnalyticsCSV } from '../../../apis/payments';
 import { PaymentAnalyticsType } from './types';
 import GenericTable from '../../../components/Table/GenericTable';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
@@ -10,7 +10,7 @@ const PaymentAnalytics = () => {
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   const [paymentAnalyticsList, setPaymentAnalyticsList] = useState<PaymentAnalyticsType[]>([]);
   useEffect(() => {
-    getPaymentAnalytics(eventId, setPaymentAnalyticsList);
+    getEventPaymentLog(eventId, setPaymentAnalyticsList);
   }, []);
 
   useEffect;

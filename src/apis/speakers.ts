@@ -4,7 +4,7 @@ import { makeMyPass } from '../../services/urls';
 import toast from 'react-hot-toast';
 import { SpeakerCRUDType, SpeakerType } from './types';
 
-export const listSpeakers = async (
+export const listEventSpeakers = async (
   eventId: string,
   setSpeakers: Dispatch<React.SetStateAction<SpeakerCRUDType>>,
 ) => {
@@ -21,7 +21,7 @@ export const listSpeakers = async (
     });
 };
 
-export const updateSpeakerList = (speakers: SpeakerType[], eventId: string) => {
+export const updateEventSpeakers = (speakers: SpeakerType[], eventId: string) => {
   return new Promise((resolve, reject) => {
     privateGateway
       .post(makeMyPass.eventSpeakerUpdate(eventId), {

@@ -3,7 +3,7 @@ import styles from './ProfilePage.module.css';
 import Theme from '../../../components/Theme/Theme';
 import {
   setUserData,
-  updateProfile,
+  udpateUserProfile,
   getProfileInfo,
   updateProfilePassword,
 } from '../../../apis/user';
@@ -13,7 +13,7 @@ import EventBox from './components/EventBox/EventBox';
 import Loader from '../../../components/Loader';
 import { motion } from 'framer-motion';
 import Modal from '../../../components/Modal/Modal';
-import { getEvents } from '../../../apis/events';
+import { getEventsList } from '../../../apis/events';
 import { Event } from '../../../apis/types';
 import ButtonLoader from '../../../components/ButtonLoader/ButtonLoader';
 import { FaCamera } from 'react-icons/fa';
@@ -66,7 +66,7 @@ const ProfilePage = () => {
     if (token) {
       setUserData({ formData, token, setLoading });
     } else {
-      updateProfile({ data: formData }, setLoading);
+      udpateUserProfile({ data: formData }, setLoading);
     }
   };
 
@@ -85,7 +85,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const userInfo = await getProfileInfo();
-      await getEvents(setEventsData, setDataLoading);
+      await getEventsList(setEventsData, setDataLoading);
       setUser(userInfo);
       if (userInfo) {
         setEditUser({

@@ -4,7 +4,12 @@ import Slider from '../../../../../components/SliderButton/Slider';
 import TicketBox from './components/TicketBox/TicketBox';
 import { TbSettings } from 'react-icons/tb';
 import { EventType, TicketType } from '../../../../../apis/types';
-import { editTicket, createTicket, deleteTicket, getTickets } from '../../../../../apis/tickets';
+import {
+  updateTicketData,
+  createTicket,
+  deleteTicket,
+  getTicketsList,
+} from '../../../../../apis/tickets';
 import Modal from '../../../../../components/Modal/Modal';
 import { motion } from 'framer-motion';
 import { HashLoader } from 'react-spinners';
@@ -164,7 +169,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         formData.append(key, changedData[key]);
       }
 
-      editTicket(eventId, selection as TicketType, formData, setTicketData).then(() => {
+      updateTicketData(eventId, selection as TicketType, formData, setTicketData).then(() => {
         setLimitCapacity(true);
         const capacityExists = Object.keys(changedData).includes('capacity');
 
@@ -226,7 +231,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
 
   const changeDefaultSelected = (ticketId: string) => {
     if (tickets.find((ticket) => ticket.id === ticketId && ticket.default_selected)) {
-      editTicket(
+      updateTicketData(
         eventId,
         tickets.find((t) => t.id === ticketId) as TicketType,
         { default_selected: false },
@@ -247,7 +252,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
           toast.error('Failed to set default ticket');
         });
     } else {
-      editTicket(
+      updateTicketData(
         eventId,
         tickets.find((t) => t.id === ticketId) as TicketType,
         { default_selected: true },
@@ -294,7 +299,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
 
   useEffect(() => {
     if (eventId && !ticketData.length && !hasFetched) {
-      getTickets(eventId, setTicketData);
+      getTicketsList(eventId, setTicketData);
       setHasFetched(true);
     }
   }, [eventId, ticketData]);

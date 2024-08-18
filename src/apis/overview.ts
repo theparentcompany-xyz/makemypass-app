@@ -3,7 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { hostList } from './types';
 
-export const getHosts = async (
+export const getEventHosts = async (
   eventId: string,
   setHosts: React.Dispatch<React.SetStateAction<hostList[]>>,
 ) => {

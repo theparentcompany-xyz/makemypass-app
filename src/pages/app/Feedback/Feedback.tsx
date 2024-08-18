@@ -5,7 +5,11 @@ import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 import { setEventInfoLocal } from '../../../apis/events';
 // import { getEventDatas } from '../../../apis/publicpage';
-import { getPostEventFields, getPostEventCategories, submitFeedback } from '../../../apis/feedback';
+import {
+  getFeeddbackFormInfo,
+  getFeedbackFormCategories,
+  submitFeedbackForm,
+} from '../../../apis/feedback';
 import { motion } from 'framer-motion';
 import { EventType, FormDataType, FormFieldType } from '../../../apis/types';
 import DynamicForm from '../../../components/DynamicForm/DynamicForm';
@@ -40,8 +44,8 @@ const EventPage = () => {
 
   useEffect(() => {
     if (eventId) {
-      getPostEventFields(eventId, setFormFields, setData);
-      getPostEventCategories(eventId);
+      getFeeddbackFormInfo(eventId, setFormFields, setData);
+      getFeedbackFormCategories(eventId);
       //getFeedback(eventId);
     }
   }, [eventId]);
@@ -144,7 +148,7 @@ const EventPage = () => {
                   whileTap={{ scale: 0.95 }}
                   type='submit'
                   onClick={() => {
-                    submitFeedback(eventId, formData, setFormErrors, setSuccess, setFormData);
+                    submitFeedbackForm(eventId, formData, setFormErrors, setSuccess, setFormData);
                   }}
                   className={styles.submitButton}
                 >

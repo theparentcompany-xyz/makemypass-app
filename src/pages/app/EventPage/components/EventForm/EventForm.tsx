@@ -7,7 +7,7 @@ import {
   ClaimCodeExceedType,
 } from '../../types';
 import styles from '../../EventPage.module.css';
-import { submitForm, validateRsvp } from '../../../../../apis/publicpage';
+import { submitForm, validateRSVPData } from '../../../../../apis/publicpage';
 import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
 import { motion } from 'framer-motion';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
@@ -251,7 +251,7 @@ const EventForm = ({
           onClick={() => {
             if (formNumber === 0 && !directRegister) {
               {
-                validateRsvp(
+                validateRSVPData(
                   eventFormData.id,
                   formData,
                   setFormNumber,

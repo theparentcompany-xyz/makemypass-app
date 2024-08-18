@@ -4,7 +4,7 @@ import { makeMyPass } from '../../services/urls';
 import { ErrorMessages, Event, EventType } from './types';
 import { Dispatch } from 'react';
 
-export const getEvents = async (
+export const getEventsList = async (
   setEvents: React.Dispatch<React.SetStateAction<Event[]>>,
   setIsDataLoaded: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
@@ -51,7 +51,7 @@ export const setEventInfoLocal = async (eventName: string): Promise<EventData> =
   });
 };
 
-export const getCategories = async (
+export const getFormCategories = async (
   eventId: string,
   setCategories: Dispatch<React.SetStateAction<string[]>>,
 ) => {
@@ -81,7 +81,7 @@ export const createEvent = (eventTitle: string) => {
     });
 };
 
-export const getEvent = (
+export const getEventData = (
   eventId: string,
   setEventTitle?: Dispatch<React.SetStateAction<string>>,
   setEventData?: Dispatch<React.SetStateAction<EventType | undefined>>,
@@ -97,7 +97,7 @@ export const getEvent = (
     });
 };
 
-export const editEvent = ({
+export const updateEventData = ({
   eventId,
   eventData,
   setIsPublished,
@@ -140,7 +140,7 @@ export const deleteEvent = (eventId: string) => {
     });
 };
 
-export const duplicateEvent = async (eventId: string) => {
+export const createDuplicateEvent = async (eventId: string) => {
   privateGateway
     .post(makeMyPass.eventCreateDuplicate(eventId))
     .then((response) => {

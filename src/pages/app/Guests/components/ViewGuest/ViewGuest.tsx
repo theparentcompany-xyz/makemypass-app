@@ -2,7 +2,7 @@ import styles from './ViewGuest.module.css';
 import { ResentTicket, SelectedGuest } from '../../types';
 import React, { Dispatch, useEffect, useState } from 'react';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
-import { shortListUser } from '../../../../../apis/guest';
+import { setGuestShortlistStatus } from '../../../../../apis/guest';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BsTicketPerforatedFill } from 'react-icons/bs';
 import { MdDownload, MdMail } from 'react-icons/md';
@@ -11,10 +11,10 @@ import { checkInUser } from '../../../../../apis/scan';
 import { formatDate } from '../../../../../common/commonFunctions';
 import { isArray } from 'chart.js/helpers';
 import {
-  deleteSubmission,
-  getMailLog,
-  getVisistedVenues,
-  initateRefund,
+  deleteGuestSubmission,
+  getGuestMailLog,
+  getGuestVisistedVenues,
+  initateGuestRefund,
 } from '../../../../../apis/guests';
 import { FaEdit, FaMailBulk, FaTrash, FaWalking } from 'react-icons/fa';
 import Modal from '../../../../../components/Modal/Modal';
@@ -136,7 +136,11 @@ const ViewGuest = ({
                   buttonText='Delete'
                   onClick={() => {
                     if (selectedGuestData) {
-                      deleteSubmission(eventId, selectedGuestData['id'] as string, setTriggerFetch);
+                      deleteGuestSubmission(
+                        eventId,
+                        selectedGuestData['id'] as string,
+                        setTriggerFetch,
+                      );
                     }
                     setSelectedGuestId(null);
                     setDeleteModal(false);
@@ -387,7 +391,7 @@ const ViewGuest = ({
                           <SecondaryButton
                             onClick={() => {
                               if (!isArray(selectedGuestData['id']))
-                                shortListUser(
+                                setGuestShortlistStatus(
                                   eventId,
                                   selectedGuestData['id'],
                                   confirmClicked.value,
@@ -460,7 +464,11 @@ const ViewGuest = ({
                           status: true,
                         }));
                         if (typeof selectedGuestData['id'] === 'string')
-                          getVisistedVenues(eventId, selectedGuestData['id'], setVisitedVenues);
+                          getGuestVisistedVenues(
+                            eventId,
+                            selectedGuestData['id'],
+                            setVisitedVenues,
+                          );
                       }}
                     >
                       <FaWalking size={20} color='#8E8E8E' />
@@ -492,7 +500,7 @@ const ViewGuest = ({
                     className={styles.icon}
                     onClick={() => {
                       if (typeof selectedGuestData['id'] === 'string')
-                        getMailLog(eventId, selectedGuestData['id'], setMailLog);
+                        getGuestMailLog(eventId, selectedGuestData['id'], setMailLog);
                     }}
                   >
                     <FaMailBulk size={20} color='#8E8E8E' />
@@ -548,7 +556,11 @@ const ViewGuest = ({
                     <SecondaryButton
                       onClick={() => {
                         if (!isArray(selectedGuestData['id']))
-                          initateRefund(eventId, selectedGuestData['id'], setInitateRefundClicked);
+                          initateGuestRefund(
+                            eventId,
+                            selectedGuestData['id'],
+                            setInitateRefundClicked,
+                          );
                       }}
                       buttonText='Yes, Initate Refund'
                     />

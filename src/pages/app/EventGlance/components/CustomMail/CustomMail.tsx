@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getMailService, updateMailService } from '../../../../../apis/mails';
+import { getEventMailService, updateEventMailService } from '../../../../../apis/mails';
 import styles from './CustomMail.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import Slider from '../../../../../components/SliderButton/Slider';
@@ -35,12 +35,12 @@ const CustomMail = ({ setCustomMail }: Props) => {
       changedData = {};
     }
 
-    updateMailService(eventId, changedData, setFetchedMailData, mailData);
+    updateEventMailService(eventId, changedData, setFetchedMailData, mailData);
   };
 
   useEffect(() => {
     if (eventId) {
-      getMailService(eventId, setFetchedMailData);
+      getEventMailService(eventId, setFetchedMailData);
     }
   }, [eventId]);
 

@@ -6,7 +6,7 @@ import InputField from '../../../../auth/Login/InputField';
 import { v4 as uuidv4 } from 'uuid';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import toast from 'react-hot-toast';
-import { listVenues, updateVenueList } from '../../../../../apis/venue';
+import { listEventVenues, updateEventVenueList } from '../../../../../apis/venue';
 
 const VenueModal = ({
   eventId,
@@ -40,9 +40,9 @@ const VenueModal = ({
         return venue;
       });
 
-      updateVenueList(newVenues, eventId)
+      updateEventVenueList(newVenues, eventId)
         .then(() => {
-          listVenues(eventId, setVenues);
+          listEventVenues(eventId, setVenues);
         })
         .catch(() => {
           toast.error('Failed to update venue');
@@ -54,9 +54,9 @@ const VenueModal = ({
         count: 0,
       };
 
-      updateVenueList([...venues.venueList, newVenue], eventId)
+      updateEventVenueList([...venues.venueList, newVenue], eventId)
         .then(() => {
-          listVenues(eventId, setVenues);
+          listEventVenues(eventId, setVenues);
         })
         .catch(() => {
           toast.error('Failed to add venue');
@@ -84,9 +84,9 @@ const VenueModal = ({
                   const newVenues = venues.venueList.filter(
                     (venue) => venue.id !== venues.venueList[0].id,
                   );
-                  updateVenueList(newVenues, eventId)
+                  updateEventVenueList(newVenues, eventId)
                     .then(() => {
-                      listVenues(eventId, setVenues);
+                      listEventVenues(eventId, setVenues);
                     })
                     .catch(() => {
                       toast.error('Failed to delete venue');

@@ -6,7 +6,7 @@ import { SuccessModalProps } from '../../types';
 import { HashLoader } from 'react-spinners';
 import ScratchCard from './ScratchCardComponent/ScratchCardComponent';
 import image from './scratchImage.png';
-import { claimRegisterGift } from '../../../../../apis/publicpage';
+import { claimScratchCard } from '../../../../../apis/publicpage';
 const SuccessModal = ({
   success,
   setSuccess,
@@ -90,7 +90,7 @@ const SuccessModal = ({
                           setSuccess({ showModal: false });
 
                           if (success.eventRegisterId)
-                            claimRegisterGift(success.eventRegisterId, setScratchCard);
+                            claimScratchCard(success.eventRegisterId, setScratchCard);
                         }}
                         className={styles.viewTicketButton}
                       >

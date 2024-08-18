@@ -5,7 +5,7 @@ import styles from './CouponForm.module.css';
 import { getIcon } from '../../constants';
 import InputField from '../../../../auth/Login/InputField.tsx';
 import { motion } from 'framer-motion';
-import { applyCoupon } from '../../../../../apis/publicpage';
+import { validateFormCoupon } from '../../../../../apis/publicpage';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import SelectDate from '../../../../../components/SelectDate/SelectDate';
@@ -617,7 +617,8 @@ const CouponForm = ({
           <button
             className={styles.validateButton}
             onClick={() => {
-              if (coupon.value) applyCoupon(eventFormData.id, coupon, setDiscount, setCoupon);
+              if (coupon.value)
+                validateFormCoupon(eventFormData.id, coupon, setDiscount, setCoupon);
               else {
                 setCoupon({ ...coupon, error: 'Please enter a coupon code' });
                 setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });

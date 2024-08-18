@@ -10,7 +10,7 @@ import { EmailType, VisitedVenues } from '../pages/app/Guests/components/ViewGue
 import { RegistrationDataType } from '../pages/app/Overview/Overview/types';
 import { NavigateFunction } from 'react-router';
 
-export const resentEventTicket = async (
+export const resentGuestTicket = async (
   ticketData: ResentTicket,
   setResentTicket: Dispatch<React.SetStateAction<ResentTicket>>,
 ) => {
@@ -30,7 +30,7 @@ export const resentEventTicket = async (
     });
 };
 
-export const editSubmissons = async (
+export const updateGuestSubmission = async (
   eventId: string,
   data: FormDataType,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
@@ -80,7 +80,7 @@ export const editSubmissons = async (
   }
 };
 
-export const getEditGuestData = async (
+export const getGuestEditPrefillData = async (
   eventId: string,
   eventRegisterId: string,
   setFormData: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>,
@@ -95,7 +95,7 @@ export const getEditGuestData = async (
     });
 };
 
-export const downloadTicket = async (
+export const viewGuestTicket = async (
   eventId: string,
   eventRegisterId: string,
   navigate: NavigateFunction,
@@ -111,7 +111,7 @@ export const downloadTicket = async (
     });
 };
 
-export const downloadCSVData = async (eventId: string) => {
+export const downloadRegisterCSVData = async (eventId: string) => {
   privateGateway
     .get(makeMyPass.guestDownloadCSV(eventId))
     .then((response) => {
@@ -129,7 +129,7 @@ export const downloadCSVData = async (eventId: string) => {
     });
 };
 
-export const initateRefund = async (
+export const initateGuestRefund = async (
   eventId: string,
   eventRegisterId: string,
   setInitateRefundClicked: Dispatch<React.SetStateAction<boolean>>,
@@ -145,7 +145,7 @@ export const initateRefund = async (
     });
 };
 
-export const getGuestInfo = async (
+export const getEventFormData = async (
   eventId: string,
   setEventFormData: Dispatch<React.SetStateAction<FormEventData | undefined>>,
   setTriggerFetch?: Dispatch<React.SetStateAction<boolean>>,
@@ -164,7 +164,7 @@ export const getGuestInfo = async (
     });
 };
 
-export const deleteSubmission = async (
+export const deleteGuestSubmission = async (
   eventId: string,
   submissionId: string,
   setTriggerFetch: Dispatch<SetStateAction<boolean>> | undefined,
@@ -180,7 +180,7 @@ export const deleteSubmission = async (
     });
 };
 
-export const listGuests = async (
+export const getGuestRegisterList = async (
   eventId: string,
   setGuestList: Dispatch<React.SetStateAction<GuestsType[]>>,
 ) => {
@@ -194,7 +194,7 @@ export const listGuests = async (
     });
 };
 
-export const getIndividualGuestInfo = async (
+export const getGuestInformation = async (
   eventId: string,
   eventRegisterId: string,
   setSelectedGuest: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>,
@@ -211,7 +211,7 @@ export const getIndividualGuestInfo = async (
 
 // Bulk Upload APIS
 
-export const getCSVTemplate = (eventId: string) => {
+export const getBulkImportCSV = (eventId: string) => {
   privateGateway
     .get(makeMyPass.bulkDownloadTemplate(eventId))
     .then((response) => {
@@ -229,7 +229,7 @@ export const getCSVTemplate = (eventId: string) => {
     });
 };
 
-export const getFileStatus = (
+export const getGuestBulkImportList = (
   eventId: string,
   setFileStatus: Dispatch<React.SetStateAction<BulkUploadType[]>>,
 ) => {
@@ -243,7 +243,7 @@ export const getFileStatus = (
     });
 };
 
-export const uploadFile = (
+export const uploadBulkGuestData = (
   eventId: string,
   file: File,
   selectedTickets: string[],
@@ -273,11 +273,11 @@ export const uploadFile = (
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
     })
     .finally(() => {
-      getFileStatus(eventId, setFileStatus);
+      getGuestBulkImportList(eventId, setFileStatus);
     });
 };
 
-export const getVisistedVenues = async (
+export const getGuestVisistedVenues = async (
   eventId: string,
   eventRegisterId: string,
   setVisitedVenues: Dispatch<React.SetStateAction<VisitedVenues>>,
@@ -290,7 +290,7 @@ export const getVisistedVenues = async (
   });
 };
 
-export const getMailLog = async (
+export const getGuestMailLog = async (
   eventId: string,
   eventRegisterId: string,
   setMailLog: Dispatch<

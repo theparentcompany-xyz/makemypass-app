@@ -4,7 +4,7 @@ import { makeMyPass } from '../../services/urls';
 import { Gift, GiftsType } from '../pages/app/Gifts/types';
 import toast from 'react-hot-toast';
 
-export const getUserGitfs = async (
+export const getGuestGiftList = async (
   eventId: string,
   ticketCode: string,
   setGifts: Dispatch<SetStateAction<GiftsType>>,

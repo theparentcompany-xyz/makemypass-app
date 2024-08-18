@@ -2,7 +2,7 @@ import styles from './EditEvent.module.css';
 import Theme from '../../../components/Theme/Theme';
 import { customStyles } from '../EventPage/constants';
 import { GrLocation } from 'react-icons/gr';
-import { getEvent, editEvent, deleteEvent } from '../../../apis/events';
+import { getEventData, updateEventData, deleteEvent } from '../../../apis/events';
 import { TbMicrophone, TbUserCheck, TbWorld } from 'react-icons/tb';
 import { TbMailStar } from 'react-icons/tb';
 import { BiArrowToTop } from 'react-icons/bi';
@@ -158,7 +158,7 @@ const EditEvent = () => {
       }
     }
 
-    editEvent({ eventId, eventData: formData, setFormErrors });
+    updateEventData({ eventId, eventData: formData, setFormErrors });
   };
 
   const agreeToDelete = () => {
@@ -166,7 +166,7 @@ const EditEvent = () => {
   };
 
   useEffect(() => {
-    if (eventId) getEvent(eventId, setEventTitle, setEventData);
+    if (eventId) getEventData(eventId, setEventTitle, setEventData);
   }, [eventId]);
 
   useEffect(() => {

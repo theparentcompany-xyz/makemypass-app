@@ -3,10 +3,10 @@ import Theme from '../../../components/Theme/Theme';
 import styles from './Coupon.module.css';
 import {
   createCoupon,
-  editCoupon,
-  getShortListTickets,
-  listCoupons,
-  updateCouponStatus,
+  updateCouponData,
+  getTicketShortlist,
+  getCouponsList,
+  updateFormCouponStatus,
 } from '../../../apis/coupons';
 import GenericTable from '../../../components/Table/GenericTable';
 import CouponType, { ActivateCouponType, CreateCouponType, CreateCouponTypeError } from './types';
@@ -23,7 +23,7 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 import SelectComponent from '../FormBuilder/SelectComponent';
 import { getConditions } from '../FormBuilder/constant';
 import toast from 'react-hot-toast';
-import { getForm } from '../../../apis/formbuilder';
+import { getFormBuilderForm } from '../../../apis/formbuilder';
 import { Field } from '../FormBuilder/types';
 import { BiSolidHide, BiSolidShow } from 'react-icons/bi';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
@@ -80,9 +80,9 @@ const Coupon = () => {
   const [limitDiscountUsage, setLimitDiscountUsage] = useState(newCouponData.count ? true : false);
 
   useEffect(() => {
-    listCoupons(eventId, setCoupons, setActivateCoupon);
-    getShortListTickets(eventId, setTickets);
-    getForm(eventId, setFormFields);
+    getCouponsList(eventId, setCoupons, setActivateCoupon);
+    getTicketShortlist(eventId, setTickets);
+    getFormBuilderForm(eventId, setFormFields);
   }, []);
 
   useEffect(() => {
@@ -137,7 +137,7 @@ const Coupon = () => {
             <SecondaryButton
               buttonText='Submit'
               onClick={() => {
-                updateCouponStatus(eventId, activateCoupon, setActivateCoupon);
+                updateFormCouponStatus(eventId, activateCoupon, setActivateCoupon);
               }}
             />
           </div>
@@ -516,7 +516,7 @@ const Coupon = () => {
                   <SecondaryButton
                     buttonText='Save Coupon'
                     onClick={() => {
-                      if (newCouponData.id) editCoupon(eventId, newCouponData, setCoupons);
+                      if (newCouponData.id) updateCouponData(eventId, newCouponData, setCoupons);
                       else
                         createCoupon(eventId, newCouponData, setCoupons, setCouponError).then(
                           () => {

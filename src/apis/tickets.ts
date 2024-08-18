@@ -3,7 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { TicketType } from './types';
 
-export const getTickets = async (
+export const getTicketsList = async (
   eventId: string,
   setTicketInfo: React.Dispatch<React.SetStateAction<TicketType[]>>,
 ) => {
@@ -32,7 +32,8 @@ export const createTicket = async (eventId: string, ticket: TicketType) => {
     toast.error(error.response.data.message.general[0] || 'Unable to process the request');
   }
 };
-export const editTicket = async (
+
+export const updateTicketData = async (
   eventId: string,
   selectedTicket: TicketType,
   changedData: Record<string, any>,

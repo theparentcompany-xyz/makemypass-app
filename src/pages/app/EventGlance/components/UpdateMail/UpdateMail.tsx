@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { MailType } from '../../../../../apis/types';
 import styles from './UpdateMail.module.css';
-import { deleteAttachment, getMail } from '../../../../../apis/mails';
+import { deleteEventMailAttachment, getEventMailData } from '../../../../../apis/mails';
 import { HashLoader } from 'react-spinners';
-import { updateMail } from '../../../../../apis/mails';
+import { updateEventMail } from '../../../../../apis/mails';
 import { AttachmentType, previewType, PropTypes } from './types';
 import PreviewBox from './components/PreviewBox/PreviewBox';
 
@@ -26,9 +26,11 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
       }
     });
 
-    updateMail(eventId, mailData as MailType, changedData, setMails, setFetchedMail).then(() => {
-      setSelectedMail(undefined);
-    });
+    updateEventMail(eventId, mailData as MailType, changedData, setMails, setFetchedMail).then(
+      () => {
+        setSelectedMail(undefined);
+      },
+    );
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,12 +62,13 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
     const newAttachments = attachments.filter((_, i) => i !== index);
     setAttachments(newAttachments);
     setPreviews(previews.filter((_, i) => i !== index));
-    if (selectedMail) deleteAttachment(eventId, selectedMail?.id, previews[index].previewURL);
+    if (selectedMail)
+      deleteEventMailAttachment(eventId, selectedMail?.id, previews[index].previewURL);
   };
 
   useEffect(() => {
     if (selectedMail) {
-      getMail(eventId, selectedMail?.id, setFetchedMail);
+      getEventMailData(eventId, selectedMail?.id, setFetchedMail);
     }
   }, []);
 

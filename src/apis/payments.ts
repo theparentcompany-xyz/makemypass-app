@@ -3,7 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { PaymentAnalyticsType } from '../pages/app/PaymentAnalytics/types';
 
-export const getPaymentAnalytics = async (
+export const getEventPaymentLog = async (
   event_id: string,
   setPaymentAnalyticsList: Dispatch<SetStateAction<PaymentAnalyticsType[]>>,
 ) => {

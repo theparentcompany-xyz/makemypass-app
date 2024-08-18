@@ -5,12 +5,12 @@ import { IoIosArrowRoundForward } from 'react-icons/io';
 import Theme from '../../../components/Theme/Theme';
 import { useEffect, useRef, useState } from 'react';
 import {
-  login,
+  userLogin,
   generateOTP,
-  preRegister,
-  register,
-  googleLogin,
-  resetPassword,
+  initiatePreRegistration,
+  registerUser,
+  loginUsingGoogle,
+  resetUserPassword,
 } from '../../../apis/auth';
 import InputField from './InputField.tsx';
 import { useNavigate } from 'react-router-dom';
@@ -73,7 +73,7 @@ const Login = () => {
       }
 
       if (emailRef.current?.value && otpRef.current?.value && passwordRef.current?.value)
-        resetPassword(
+        resetUserPassword(
           emailRef.current?.value,
           otpRef.current?.value,
           passwordRef.current?.value,
@@ -93,7 +93,7 @@ const Login = () => {
         });
     } else if (isRegistered) {
       if (isPassword && emailRef.current?.value && passwordRef.current?.value)
-        login(
+        userLogin(
           emailRef.current?.value,
           passwordRef.current?.value,
           setIsAuthenticated,
@@ -104,7 +104,7 @@ const Login = () => {
           setIsPassword,
         );
       else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
-        login(
+        userLogin(
           emailRef.current?.value,
           otpRef.current?.value,
           setIsAuthenticated,
@@ -120,9 +120,10 @@ const Login = () => {
         );
       }
     } else {
-      if (!isOtpSent && emailRef.current?.value) preRegister(emailRef.current?.value, setIsOtpSent);
+      if (!isOtpSent && emailRef.current?.value)
+        initiatePreRegistration(emailRef.current?.value, setIsOtpSent);
       else if (isOtpSent && emailRef.current?.value && otpRef.current?.value)
-        register(
+        registerUser(
           emailRef.current?.value,
           otpRef.current?.value,
           setIsRegistered,
@@ -174,7 +175,7 @@ const Login = () => {
   }, [isForgetPassword]);
 
   function handleGoogleLogin(): void {
-    googleLogin();
+    loginUsingGoogle();
   }
 
   return (
@@ -363,7 +364,7 @@ const Login = () => {
                           setIsRegistered,
                           'Login',
                         );
-                      } else preRegister(emailRef.current?.value, setIsOtpSent);
+                      } else initiatePreRegistration(emailRef.current?.value, setIsOtpSent);
 
                       setTimer(18);
                     }}

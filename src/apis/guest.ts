@@ -6,7 +6,7 @@ import { SelectedGuest } from '../pages/app/Guests/types';
 import { ErrorMessages, FormDataType, PaymentDetails } from './types';
 import { Tickets } from '../pages/app/EventPage/types';
 
-export const shortListUser = (
+export const setGuestShortlistStatus = (
   eventId: string,
   userId: string,
   isShortListed: boolean,

@@ -3,7 +3,10 @@ import { publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Dispatch, SetStateAction } from 'react';
 
-export const getVisibility = (id: string, setVisibility: Dispatch<SetStateAction<boolean>>) => {
+export const getInsightsVisibility = (
+  id: string,
+  setVisibility: Dispatch<SetStateAction<boolean>>,
+) => {
   publicGateway
     .get(makeMyPass.getAnalyticsVisibility(id))
     .then((response) => {

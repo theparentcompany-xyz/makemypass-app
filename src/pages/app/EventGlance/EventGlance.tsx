@@ -12,22 +12,22 @@ import { useEffect, useRef, useState } from 'react';
 import Modal from '../../../components/Modal/Modal';
 import { getDay, getMonthAbbreviation } from '../EventPage/constants';
 import { EventType, listMailType, SpeakerCRUDType, VenueCRUDType } from '../../../apis/types';
-import { getEvent } from '../../../apis/events';
+import { getEventData } from '../../../apis/events';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import ManageTickets from './components/ManageTickets/ManageTickets';
 import { LuCopy, LuDownload, LuMail, LuPencil, LuQrCode } from 'react-icons/lu';
-import { listMails } from '../../../apis/mails';
+import { listEventMails } from '../../../apis/mails';
 import CustomMail from './components/CustomMail/CustomMail';
 import UpdateMail from './components/UpdateMail/UpdateMail';
-import { sentTextMail } from '../../../apis/postevent';
+import { sentTestMail } from '../../../apis/postevent';
 import { ChildRef } from './components/ManageTickets/ManageTickets';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { RiCoupon2Fill } from 'react-icons/ri';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
-import { listVenues } from '../../../apis/venue';
+import { listEventVenues } from '../../../apis/venue';
 import VenueModal from './components/VenueModal/VenueModal';
-import { listSpeakers } from '../../../apis/speakers';
+import { listEventSpeakers } from '../../../apis/speakers';
 import SpeakerModal from './components/SpeakerModal/SpeakerModal';
 
 const EventGlance = () => {
@@ -47,7 +47,7 @@ const EventGlance = () => {
   };
 
   useEffect(() => {
-    if (eventId) getEvent(eventId, setEventTitle, setEventData);
+    if (eventId) getEventData(eventId, setEventTitle, setEventData);
   }, [eventId]);
   const [selectedMail, setSelectedMail] = useState<listMailType>();
   const [customMail, setCustomMail] = useState<boolean>(false);
@@ -67,9 +67,9 @@ const EventGlance = () => {
 
   useEffect(() => {
     if (eventId) {
-      listSpeakers(eventId, setSpeakers);
-      listVenues(eventId, setVenues);
-      listMails(eventId, setMails);
+      listEventSpeakers(eventId, setSpeakers);
+      listEventVenues(eventId, setVenues);
+      listEventMails(eventId, setMails);
     }
   }, [eventId]);
   return (
@@ -130,7 +130,7 @@ const EventGlance = () => {
                   <button
                     className={styles.confirmButton}
                     onClick={() => {
-                      sentTextMail(eventId, confirmTestMail.mailId);
+                      sentTestMail(eventId, confirmTestMail.mailId);
                     }}
                   >
                     Send

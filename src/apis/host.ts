@@ -4,7 +4,7 @@ import { makeMyPass } from '../../services/urls';
 import { hostData } from '../pages/app/Overview/Overview/types';
 import { Dispatch } from 'react';
 
-export const addHosts = async (
+export const createEventHost = async (
   eventId: string,
   hostMail: string,
   role: string,
@@ -32,7 +32,7 @@ export const addHosts = async (
     });
 };
 
-export const updateHostRole = async (
+export const updateEventHost = async (
   eventId: string,
   hostId: string,
   role: string,
@@ -58,7 +58,7 @@ export const updateHostRole = async (
     });
 };
 
-export const removeHost = async (
+export const removeEventHost = async (
   eventId: string,
   hostId: string,
   setOpenDeleteModal: React.Dispatch<React.SetStateAction<boolean>>,

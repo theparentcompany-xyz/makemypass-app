@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
-import { getCSVTemplate, getFileStatus, uploadFile } from '../../../../../apis/guests';
+import {
+  getBulkImportCSV,
+  getGuestBulkImportList,
+  uploadBulkGuestData,
+} from '../../../../../apis/guests';
 import { TicketType } from '../../../../../apis/types';
 import Modal from '../../../../../components/Modal/Modal';
 import { customStyles } from '../../../EventPage/constants';
 import styles from './BulkUpload.module.css';
 import Select from 'react-select';
-import { getTickets } from '../../../../../apis/tickets';
+import { getTicketsList } from '../../../../../apis/tickets';
 import toast from 'react-hot-toast';
 import { formatDate } from '../../../../../common/commonFunctions';
 import { BiSolidReport } from 'react-icons/bi';
@@ -23,8 +27,8 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
   const [sendInvoice, setSendInvoice] = useState(false);
 
   useEffect(() => {
-    getTickets(eventId, setTickets);
-    getFileStatus(eventId, setFileStatus);
+    getTicketsList(eventId, setTickets);
+    getGuestBulkImportList(eventId, setFileStatus);
   }, []);
 
   const generateCSVReport = async (reportPath: string) => {
@@ -49,7 +53,7 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
         <p
           className={`pointer ${styles.downloadTemplate}`}
           onClick={() => {
-            getCSVTemplate(eventId);
+            getBulkImportCSV(eventId);
           }}
         >
           Download CSV Template
@@ -103,7 +107,14 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
         className={styles.uploadButton}
         onClick={() => {
           if (file)
-            uploadFile(eventId, file, selectedTickets, setFileStatus, sendTicket, sendInvoice);
+            uploadBulkGuestData(
+              eventId,
+              file,
+              selectedTickets,
+              setFileStatus,
+              sendTicket,
+              sendInvoice,
+            );
           else toast.error('Please select a file');
         }}
       >

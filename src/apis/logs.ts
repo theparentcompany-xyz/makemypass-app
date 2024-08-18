@@ -3,7 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { EmailType } from '../pages/app/Guests/components/ViewGuest/types';
 
-export const getAllMailLog = async (
+export const getEventMailLog = async (
   eventId: string,
   setAllMailLog: Dispatch<React.SetStateAction<EmailType[]>>,
 ) => {

@@ -5,7 +5,7 @@ import CouponType, { CreateCouponType, CreateCouponTypeError } from '../pages/ap
 import toast from 'react-hot-toast';
 import { ActivateCouponType } from './types';
 
-export const listCoupons = async (
+export const getCouponsList = async (
   eventId: string,
   setCoupons: Dispatch<SetStateAction<CouponType[]>>,
   setActivateCoupon?: React.Dispatch<React.SetStateAction<ActivateCouponType>>,
@@ -62,7 +62,7 @@ export const createCoupon = (
         },
       })
       .then(() => {
-        listCoupons(eventId, setCoupons);
+        getCouponsList(eventId, setCoupons);
         resolve();
       })
       .catch((error) => {
@@ -85,7 +85,7 @@ export const getCouponData = async (eventId: string, couponId: string) => {
     });
 };
 
-export const editCoupon = async (
+export const updateCouponData = async (
   eventId: string,
   data: CreateCouponType,
   setCoupons: Dispatch<SetStateAction<CouponType[]>>,
@@ -125,11 +125,11 @@ export const editCoupon = async (
       },
     })
     .then(() => {
-      listCoupons(eventId, setCoupons);
+      getCouponsList(eventId, setCoupons);
     });
 };
 
-export const updateCouponStatus = async (
+export const updateFormCouponStatus = async (
   eventId: string,
   activateCoupon: ActivateCouponType,
   setActivateCoupon: Dispatch<SetStateAction<ActivateCouponType>>,
@@ -160,7 +160,7 @@ export const deleteCoupon = async (
   return privateGateway
     .delete(makeMyPass.coupon(eventId, couponId))
     .then(() => {
-      listCoupons(eventId, setCoupons);
+      getCouponsList(eventId, setCoupons);
       toast.success('Coupon deleted successfully');
     })
     .catch(() => {
@@ -168,7 +168,7 @@ export const deleteCoupon = async (
     });
 };
 
-export const getShortListTickets = async (
+export const getTicketShortlist = async (
   eventId: string,
   setTickets: Dispatch<
     SetStateAction<

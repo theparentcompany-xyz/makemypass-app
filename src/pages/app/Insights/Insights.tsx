@@ -20,10 +20,10 @@ import { ChartData, AnalyticsData } from './types';
 import Theme from '../../../components/Theme/Theme';
 import Modal from '../../../components/Modal/Modal';
 import { MdOutlinePublishedWithChanges } from 'react-icons/md';
-import { editEvent } from '../../../apis/events';
+import { updateEventData } from '../../../apis/events';
 import { IoCopyOutline } from 'react-icons/io5';
 import toast from 'react-hot-toast';
-import { getVisibility } from '../../../apis/insights';
+import { getInsightsVisibility } from '../../../apis/insights';
 import { getEventInfo } from '../../../apis/publicpage';
 import { useNavigate, useParams } from 'react-router';
 import { EventType } from '../../../apis/types';
@@ -123,8 +123,8 @@ const Insights = ({ type }: { type?: string }) => {
 
   useEffect(() => {
     if (eventData || eventId.current) {
-      if (eventData && eventData.id) getVisibility(eventData.id, setIsPublished);
-      else getVisibility(eventId.current, setIsPublished);
+      if (eventData && eventData.id) getInsightsVisibility(eventData.id, setIsPublished);
+      else getInsightsVisibility(eventId.current, setIsPublished);
     }
   }, [eventData, type, eventId]);
 
@@ -222,7 +222,7 @@ const Insights = ({ type }: { type?: string }) => {
   const publishPage = () => {
     const eventData = new FormData();
     eventData.append('is_public_insight', isPublished ? 'false' : 'true');
-    editEvent({ eventId: eventId.current, eventData, setIsPublished });
+    updateEventData({ eventId: eventId.current, eventData, setIsPublished });
   };
 
   return (

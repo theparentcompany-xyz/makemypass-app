@@ -7,7 +7,7 @@ import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
 import { formatDate } from '../common/commonFunctions';
 import { VenueCRUDType } from './types';
 
-export const listUserVenues = async (
+export const listGuestVenues = async (
   eventId: string,
   setVenue: Dispatch<React.SetStateAction<VenueType[]>>,
 ) => {
@@ -21,7 +21,7 @@ export const listUserVenues = async (
     });
 };
 
-export const listVenues = async (
+export const listEventVenues = async (
   eventId: string,
   setVenue: Dispatch<React.SetStateAction<VenueCRUDType>>,
 ) => {
@@ -38,7 +38,7 @@ export const listVenues = async (
     });
 };
 
-export const updateVenueList = (venues: VenueType[], eventId: string) => {
+export const updateEventVenueList = (venues: VenueType[], eventId: string) => {
   return new Promise((resolve, reject) => {
     privateGateway
       .post(makeMyPass.eventVenueUpdate(eventId), {

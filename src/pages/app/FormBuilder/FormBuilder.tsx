@@ -8,7 +8,7 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 import Select from 'react-select';
 
 import { useEffect, useState } from 'react';
-import { getForm, updateForm } from '../../../apis/formbuilder';
+import { getFormBuilderForm, updateFormBuilderForm } from '../../../apis/formbuilder';
 import { DefaultFieldTypes, ErrorResponse, Field, FieldType } from './types';
 import SelectComponent from './SelectComponent';
 import { IoCloseSharp } from 'react-icons/io5';
@@ -36,7 +36,7 @@ const FormBuilder = () => {
   const [formFieldErrors, setFormFieldErrors] = useState<ErrorResponse>({});
 
   useEffect(() => {
-    getForm(event_id, setFormFields);
+    getFormBuilderForm(event_id, setFormFields);
   }, [event_id]);
 
   const updateFormStateVariable = () => {
@@ -761,7 +761,7 @@ const FormBuilder = () => {
                 <button
                   onClick={() => {
                     setFormFieldErrors({});
-                    updateForm(event_id, formFields, setFormFieldErrors);
+                    updateFormBuilderForm(event_id, formFields, setFormFieldErrors);
                   }}
                   className={styles.addQuestionButton}
                 >

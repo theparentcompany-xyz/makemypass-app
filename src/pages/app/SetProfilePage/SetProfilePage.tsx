@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './SetProfilePage.module.css';
 import Theme from '../../../components/Theme/Theme';
-import { setUserData, updateProfile, getProfileInfo } from '../../../apis/user';
+import { setUserData, udpateUserProfile, getProfileInfo } from '../../../apis/user';
 import { useLocation } from 'react-router-dom';
 import ButtonLoader from '../../../components/ButtonLoader/ButtonLoader';
 
@@ -18,7 +18,7 @@ const SetProfilePage = () => {
     if (token) {
       setUserData({ formData, token, setLoading });
     } else {
-      updateProfile({ data: formData }, setLoading);
+      udpateUserProfile({ data: formData }, setLoading);
     }
   };
 

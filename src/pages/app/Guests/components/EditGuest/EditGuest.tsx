@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import Modal from '../../../../../components/Modal/Modal';
 import styles from '../../Guests.module.css';
-import { editSubmissons } from '../../../../../apis/guests';
+import { updateGuestSubmission } from '../../../../../apis/guests';
 import { FormEventData, SelectedGuest } from '../../types';
 import { FormDataType } from '../../../../../apis/types';
 
@@ -49,7 +49,7 @@ const EditGuest = ({
   };
 
   const handleSubmissionEdit = () => {
-    editSubmissons(eventId, updatedFormData, setSelectedGuestId, setFormData, setFormErrors);
+    updateGuestSubmission(eventId, updatedFormData, setSelectedGuestId, setFormData, setFormErrors);
   };
 
   return (

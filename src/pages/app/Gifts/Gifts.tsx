@@ -1,7 +1,7 @@
 import styles from './Gifts.module.css';
 import Theme from '../../../components/Theme/Theme';
 import { useEffect, useState } from 'react';
-import { claimUserGift, getUserGitfs } from '../../../apis/gifts';
+import { claimUserGift, getGuestGiftList } from '../../../apis/gifts';
 import Scanner from '../../../components/Scanner/Scanner';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 import { Gift, GiftsType } from './types';
@@ -17,7 +17,7 @@ const Gifts = () => {
 
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   useEffect(() => {
-    if (ticketId.length > 0) getUserGitfs(eventId, ticketId, setGifts);
+    if (ticketId.length > 0) getGuestGiftList(eventId, ticketId, setGifts);
   }, [trigger]);
   return (
     <>
@@ -41,7 +41,7 @@ const Gifts = () => {
                   className={styles.confirmButton}
                   onClick={() => {
                     claimUserGift(eventId, selectedGift, ticketId).then(() => {
-                      getUserGitfs(eventId, ticketId, setGifts);
+                      getGuestGiftList(eventId, ticketId, setGifts);
                       setSelectedGift({} as Gift);
                     });
                   }}

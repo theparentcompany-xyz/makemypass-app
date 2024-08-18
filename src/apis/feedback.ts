@@ -9,7 +9,7 @@ export type Data = {
   description: string;
 };
 
-export const getPostEventFields = (
+export const getFeeddbackFormInfo = (
   eventId: string,
   setFormFields: Dispatch<React.SetStateAction<FormFieldType[]>>,
   setData: Dispatch<React.SetStateAction<Data>>,
@@ -28,7 +28,7 @@ export const getPostEventFields = (
     });
 };
 
-export const getPostEventCategories = (eventId: string) => {
+export const getFeedbackFormCategories = (eventId: string) => {
   publicGateway
     .get(makeMyPass.feedbackCategories(eventId))
     .then((response) => {
@@ -39,19 +39,7 @@ export const getPostEventCategories = (eventId: string) => {
     });
 };
 
-// ! ERROR: API returns 400 Bad Request (Event Not Found)
-// export const getFeedback = (eventId: string, setFeedback: any) => {
-//   privateGateway
-//     .get(makeMyPass.getFeedback(eventId))
-//     .then((response) => {
-//       setFeedback(response.data.response.feedbacks);
-//     })
-//     .catch((error) => {
-//       toast.error(error.response.data.message.general[0] || 'Feedback fetching failed');
-//     });
-// };
-
-export const submitFeedback = (
+export const submitFeedbackForm = (
   eventId: string,
   formData: FormDataType,
   setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,

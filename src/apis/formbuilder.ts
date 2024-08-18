@@ -4,7 +4,7 @@ import { makeMyPass } from '../../services/urls';
 import { ErrorResponse, Field } from '../pages/app/FormBuilder/types';
 import React, { Dispatch } from 'react';
 
-export const getForm = (
+export const getFormBuilderForm = (
   eventId: string,
   setFormFields: React.Dispatch<React.SetStateAction<Field[]>>,
 ) => {
@@ -18,7 +18,7 @@ export const getForm = (
     });
 };
 
-export const updateForm = (
+export const updateFormBuilderForm = (
   eventId: string,
   formFields: Field[],
   setFormFieldErrors: Dispatch<React.SetStateAction<ErrorResponse>>,

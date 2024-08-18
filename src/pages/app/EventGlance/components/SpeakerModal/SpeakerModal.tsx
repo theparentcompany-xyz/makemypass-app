@@ -4,7 +4,7 @@ import Modal from '../../../../../components/Modal/Modal';
 import InputField from '../../../../auth/Login/InputField';
 import styles from './SpeakerModal.module.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { updateSpeakerList } from '../../../../../apis/speakers';
+import { updateEventSpeakers } from '../../../../../apis/speakers';
 // import toast from 'react-hot-toast';
 // import { listSpeakers, updateSpeakerList } from '../../../../../apis/speakers';
 import { v4 as uuidv4 } from 'uuid';
@@ -26,7 +26,7 @@ const SpeakerModal = ({
   });
 
   const updateSpeakerInformation = () => {
-    updateSpeakerList([...speakers.speakerList, speakerData], eventId);
+    updateEventSpeakers([...speakers.speakerList, speakerData], eventId);
   };
 
   return (
