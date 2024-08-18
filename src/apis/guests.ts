@@ -2,14 +2,13 @@ import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
-import { Dispatch } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { ErrorMessages, FormDataType } from './types';
 import { isArray } from 'chart.js/helpers';
 import { BulkUploadType } from '../pages/app/Guests/components/BulkUpload/types';
 import { EmailType, VisitedVenues } from '../pages/app/Guests/components/ViewGuest/types';
 import { RegistrationDataType } from '../pages/app/Overview/Overview/types';
 import { NavigateFunction } from 'react-router';
-import { set } from 'lodash';
 
 export const resentEventTicket = async (
   ticketData: ResentTicket,
@@ -149,7 +148,7 @@ export const initateRefund = async (
 export const getGuestInfo = async (
   eventId: string,
   setEventFormData: Dispatch<React.SetStateAction<FormEventData | undefined>>,
-  setTriggerFetch: Dispatch<React.SetStateAction<boolean>>,
+  setTriggerFetch?: Dispatch<React.SetStateAction<boolean>>,
 ) => {
   privateGateway
     .get(makeMyPass.addGuestInfo(eventId))
@@ -158,18 +157,23 @@ export const getGuestInfo = async (
         id: eventId,
         ...response.data.response,
       });
-      setTriggerFetch((prev) => !prev);
+      if (setTriggerFetch) setTriggerFetch((prev) => !prev);
     })
     .catch(() => {
       toast.error('Something went wrong');
     });
 };
 
-export const deleteSubmission = async (eventId: string, submissionId: string) => {
+export const deleteSubmission = async (
+  eventId: string,
+  submissionId: string,
+  setTriggerFetch: Dispatch<SetStateAction<boolean>> | undefined,
+) => {
   privateGateway
     .delete(makeMyPass.guestInfo(eventId, submissionId))
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Submission deleted successfully');
+      if (setTriggerFetch) setTriggerFetch((prev) => !prev);
     })
     .catch(() => {
       toast.error('Something went wrong, Couldnt Delete Submission');

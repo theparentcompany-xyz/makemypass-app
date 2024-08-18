@@ -21,7 +21,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
 
     attachments.forEach((attachment) => {
       if (attachment.type === 'newFile') {
-        changedData.attachment = attachment.file;
+        changedData.attachments = attachment.file;
       }
     });
 
@@ -71,7 +71,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
     if (fetchedMail) {
       setMailData(fetchedMail);
 
-      const attachmentList = fetchedMail.attachment.map((attachment) => {
+      const attachmentList = fetchedMail.attachments.map((attachment) => {
         const fileName = attachment.split('/').pop() || 'file';
         const fileExtension = attachment.split('.').pop();
         const fileType =

@@ -233,7 +233,7 @@ export type ConditionType = {
 };
 
 export type MailType = {
-  attachment: string[];
+  attachments: string[];
   body: string;
   type_description: string;
   email_type: string;

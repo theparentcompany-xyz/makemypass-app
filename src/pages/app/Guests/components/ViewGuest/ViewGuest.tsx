@@ -223,7 +223,6 @@ const ViewGuest = ({
                           </div>
                         </>
                       )}
-                      {/* <div className={styles.attachment}>Ticket.png</div> */}
                     </div>
                   </div>
                 </div>
