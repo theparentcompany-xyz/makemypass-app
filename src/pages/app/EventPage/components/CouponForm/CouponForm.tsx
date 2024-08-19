@@ -332,7 +332,8 @@ const CouponForm = ({
                       </p>
                       <button
                         className={styles.ticketCountUpdateButton}
-                        onClick={() => {
+                        onClick={(event) => {
+                          event.stopPropagation();
                           const currentTicketCount = tickets.find(
                             (ticket) => ticket.ticket_id === filteredTicket.id,
                           )?.count;

@@ -45,7 +45,7 @@ const EventForm = ({
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({});
-  const [formNumber, setFormNumber] = useState<number>(0);
+  const [formNumber, setFormNumber] = useState<number>(eventFormData.is_coupon_first ? 1 : 0);
   const [selectedDate, setSelectedDate] = useState<string | null>();
   const [formErrors, setFormErrors] = useState<any>({});
   const [tickets, setTickets] = useState<Tickets[]>([]);
@@ -171,6 +171,13 @@ const EventForm = ({
 
   return (
     <>
+      {claimCodeExceed?.exceeded && (
+        <div className={styles.claimCodeExccededMessage}>
+          <MdError color='#F04B4B' />
+          <span>{claimCodeExceed?.message}</span>
+        </div>
+      )}
+
       {formNumber === 0 && (
         <motion.div
           initial={{ opacity: 0, y: 35 }}
@@ -180,12 +187,6 @@ const EventForm = ({
           className={!type ? styles.eventForm : undefined}
         >
           <div className={styles.eventFormInnerContainer} id='formFields'>
-            {claimCodeExceed?.exceeded && (
-              <div className={styles.claimCodeExccededMessage}>
-                <MdError color='#F04B4B' />
-                <span>{claimCodeExceed?.message}</span>
-              </div>
-            )}
             {!type && (
               <div>
                 <p className={styles.eventFormTitle}>Register for the event</p>
@@ -231,7 +232,8 @@ const EventForm = ({
       )}
 
       <div className={styles.buttons}>
-        {formNumber > 0 && (
+        {((formNumber === 0 && eventFormData.is_coupon_first) ||
+          (formNumber === 1 && !eventFormData.is_coupon_first)) && (
           <div
             onClick={() => {
               setFormNumber((prevState) => {
@@ -249,16 +251,40 @@ const EventForm = ({
           whileTap={{ scale: 0.95 }}
           type='submit'
           onClick={() => {
-            if (formNumber === 0 && !directRegister) {
-              {
-                validateRSVPData(
-                  eventFormData.id,
-                  formData,
-                  setFormNumber,
-                  setFormErrors,
-                  selectedDate,
-                );
-              }
+            if (
+              (formNumber === 0 && !directRegister) ||
+              (eventFormData.is_coupon_first && formNumber === 0)
+            ) {
+              validateRSVPData(
+                eventFormData.id,
+                eventFormData.is_coupon_first,
+                formData,
+                setFormNumber,
+                setFormErrors,
+                selectedDate,
+              ).then(() => {
+                if (eventFormData.is_coupon_first)
+                  submitForm({
+                    eventId: eventFormData.id,
+                    isCouponFirst: eventFormData.is_coupon_first,
+                    tickets,
+                    formData,
+                    coupon,
+                    setSuccess,
+                    setFormNumber,
+                    setFormData,
+                    setFormErrors,
+                    setEventData,
+                    eventTitle,
+                    selectedDate,
+                    setDiscount,
+                    setLoading,
+                    setCoupon,
+                    ticketCode,
+                  });
+              });
+            } else if (formNumber === 1 && eventFormData.is_coupon_first) {
+              setFormNumber(0);
             } else {
               if (type === 'addGuest' && setSelectedGuestId) {
                 addGuest(
@@ -271,7 +297,9 @@ const EventForm = ({
                   ticketCode,
                   isCashInHand,
                 );
-              } else
+              } else {
+                console.log('hereeasdfe');
+
                 submitForm({
                   eventId: eventFormData.id,
                   tickets,
@@ -289,6 +317,7 @@ const EventForm = ({
                   setCoupon,
                   ticketCode,
                 });
+              }
             }
           }}
           className={styles.submitButton}
@@ -304,9 +333,15 @@ const EventForm = ({
               }}
             />
           ) : formNumber === 0 && !directRegister ? (
+            eventFormData.is_coupon_first ? (
+              'Submit'
+            ) : (
+              'Next'
+            )
+          ) : formNumber === 1 && eventFormData.is_coupon_first ? (
             'Next'
           ) : (
-            'Register'
+            'Submit'
           )}
         </motion.button>
       </div>

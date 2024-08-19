@@ -16,6 +16,7 @@ import { ClaimCodeExceedType, SuccessModalProps } from './types';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
+  const [isCouponFirst, setIsCouponFirst] = useState<boolean>(false);
   const [eventData, setEventData] = useState<EventType>();
   const [success, setSuccess] = useState<SuccessModalProps>({
     showModal: false,
@@ -36,6 +37,7 @@ const EventPage = () => {
   const claimCode = searchParams.get('claim_code');
 
   useEffect(() => {
+    setIsCouponFirst(true);
     if (eventTitle)
       getEventInfo(
         eventTitle,
@@ -124,6 +126,7 @@ const EventPage = () => {
                   coupon: eventData.coupon ?? false,
                   claim_ticket_id: eventData.claim_ticked_id,
                   is_grouped_ticket: eventData.is_grouped_ticket,
+                  is_coupon_first: isCouponFirst,
                 }}
                 setSuccess={setSuccess}
                 setEventData={setEventData}

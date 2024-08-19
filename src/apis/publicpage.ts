@@ -22,6 +22,7 @@ declare global {
 
 export const submitForm = async ({
   eventId,
+  isCouponFirst,
   tickets,
   formData,
   coupon,
@@ -40,6 +41,7 @@ export const submitForm = async ({
   ticketCode,
 }: {
   eventId: string;
+  isCouponFirst?: boolean;
   tickets: Tickets[];
   formData: FormDataType;
   coupon: CouponData;
@@ -143,7 +145,9 @@ export const submitForm = async ({
                     redirection: response.data.response.redirection,
                   }));
 
-                setFormNumber && setFormNumber(0);
+                if (isCouponFirst && setFormNumber) setFormNumber(1);
+                else if (setFormNumber) setFormNumber(0);
+
                 setFormData && setFormData({});
                 setDiscount &&
                   setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
@@ -183,8 +187,8 @@ export const submitForm = async ({
             loading: false,
             redirection: response.data.response.redirection,
           }));
-
-        setFormNumber && setFormNumber(0);
+        if (isCouponFirst && setFormNumber) setFormNumber(1);
+        else if (setFormNumber) setFormNumber(0);
         setFormData && setFormData({});
         setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
       }
@@ -234,65 +238,70 @@ export const validateFormCoupon = async (
       });
 };
 
-export const validateRSVPData = async (
+export const validateRSVPData = (
   eventId: string,
+  isCouponFirst: boolean | undefined,
   formData: FormDataType,
   setFormNumber: React.Dispatch<React.SetStateAction<number>>,
   setFieldErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
   selectedDate?: string | null,
 ) => {
-  const selectedDateFormatted = selectedDate
-    ? new Date(selectedDate).toISOString().split('T')[0]
-    : null;
+  return new Promise<void>((resolve, reject) => {
+    const selectedDateFormatted = selectedDate
+      ? new Date(selectedDate).toISOString().split('T')[0]
+      : null;
 
-  //Trim the formData to remove spaces
-  Object.keys(formData).forEach((key) => {
-    if (typeof formData[key] === 'string') {
-      formData[key] = formData[key].toString().trim();
-    }
-  });
-
-  // Remove empty key-value pairs from formData
-  Object.keys(formData).forEach((key) => {
-    if (formData[key] === '') {
-      delete formData[key];
-    }
-  });
-
-  const payloadFormData: FormData = new FormData();
-
-  Object.keys(formData).forEach((key) => {
-    let value = formData[key];
-
-    if (!(value instanceof FileList)) {
-      if (Array.isArray(value) && value.length > 0) {
-        value.forEach((value) => payloadFormData.append(key + '[]', value));
-      } else {
-        value = formData[key].toString();
+    //Trim the formData to remove spaces
+    Object.keys(formData).forEach((key) => {
+      if (typeof formData[key] === 'string') {
+        formData[key] = formData[key].toString().trim();
       }
-    }
-
-    if (typeof value === 'string' && value.length > 0) {
-      payloadFormData.append(key, value);
-    } else if (value instanceof FileList) {
-      Array.from(value).forEach((value) => payloadFormData.append(key + '[]', value));
-    }
-  });
-
-  if (selectedDateFormatted) payloadFormData.append('ticket_date', selectedDateFormatted);
-
-  return publicGateway
-    .post(makeMyPass.formValidateRSVP(eventId), payloadFormData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    .then(() => {
-      setFormNumber(1);
-    })
-    .catch((error) => {
-      setFieldErrors(error.response.data.message);
     });
+
+    // Remove empty key-value pairs from formData
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] === '') {
+        delete formData[key];
+      }
+    });
+
+    const payloadFormData: FormData = new FormData();
+
+    Object.keys(formData).forEach((key) => {
+      let value = formData[key];
+
+      if (!(value instanceof FileList)) {
+        if (Array.isArray(value) && value.length > 0) {
+          value.forEach((value) => payloadFormData.append(key + '[]', value));
+        } else {
+          value = formData[key].toString();
+        }
+      }
+
+      if (typeof value === 'string' && value.length > 0) {
+        payloadFormData.append(key, value);
+      } else if (value instanceof FileList) {
+        Array.from(value).forEach((value) => payloadFormData.append(key + '[]', value));
+      }
+    });
+
+    if (selectedDateFormatted) payloadFormData.append('ticket_date', selectedDateFormatted);
+
+    publicGateway
+      .post(makeMyPass.formValidateRSVP(eventId), payloadFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(() => {
+        if (!isCouponFirst) setFormNumber(1);
+        resolve();
+      })
+      .catch((error) => {
+        setFieldErrors(error.response.data.message);
+        reject(error);
+      });
+  });
 };
 
 export const getEventInfo = async (
