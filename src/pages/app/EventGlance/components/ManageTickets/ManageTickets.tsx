@@ -19,6 +19,7 @@ import AdvancedSetting from './components/AdvancedSetting/AdvancedSetting';
 import UnsavedChanges from './components/UnsavedChanges/UnsavedChanges';
 import ConfirmDelete from './components/ConfirmDelete/ConfirmDelete';
 import Editor from '../../../../../components/Editor/Editor';
+import { useOverrideCtrlS } from '../../../../../hooks/common';
 // import TicketEditor from './components/TicketEditor/TicketEditor';
 
 export interface ChildProps {
@@ -292,6 +293,8 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       ]);
     }
   };
+
+  useOverrideCtrlS(updateTicket);
 
   useImperativeHandle(ref, () => ({
     closeTicketModal,
