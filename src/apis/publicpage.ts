@@ -96,7 +96,7 @@ export const submitForm = async ({
   });
 
   if (response) backendFormData.append('payment_data', JSON.stringify(response));
-  if (coupon.value) backendFormData.append('coupon_code', coupon.value?.toString());
+  if (coupon.value) backendFormData.append('coupon_code', coupon.value?.toString().trim());
   tickets.forEach((ticket: Tickets) => backendFormData.append('tickets[]', JSON.stringify(ticket)));
   if (selectedDateFormatted) backendFormData.append('ticket_date', selectedDateFormatted);
   if (ticketCode) backendFormData.append('ticket_code', ticketCode);
@@ -234,6 +234,10 @@ export const validateFormCoupon = async (
       .post(makeMyPass.formValidateCoupon(eventId, couponData.value))
       .then((response) => {
         setDiscount(response.data.response);
+        setCoupon({
+          ...couponData,
+          error: '',
+        });
       })
       .catch(() => {
         //TODO: check status code and show error message accordingly
