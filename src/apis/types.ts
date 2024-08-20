@@ -138,6 +138,7 @@ export interface EventType {
   is_private: boolean;
   is_team: boolean;
   is_checkout: boolean;
+  is_ticket_first: boolean;
   approval_required: boolean;
   err_message: ReactNode;
   id: string;

@@ -152,7 +152,12 @@ export const submitForm = async ({
                 setDiscount &&
                   setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
 
-                if (setEventData && eventTitle) getEventInfo(eventTitle, setEventData);
+                if (setEventData && eventTitle)
+                  getEventInfo({
+                    eventTitle,
+                    setEventData,
+                    setSuccess,
+                  });
               })
               .catch((error) => {
                 toast.error(
@@ -304,14 +309,23 @@ export const validateRSVPData = (
   });
 };
 
-export const getEventInfo = async (
-  eventTitle: string,
-  setEventData: Dispatch<React.SetStateAction<EventType | undefined>>,
-  setEventNotFound?: Dispatch<React.SetStateAction<boolean>>,
-  claimCode?: string | null,
-  setClaimCodeExceed?: React.Dispatch<React.SetStateAction<ClaimCodeExceedType>>,
-  setSuccess?: React.Dispatch<React.SetStateAction<SuccessModalProps>>,
-) => {
+export const getEventInfo = async ({
+  eventTitle,
+  setEventData,
+  setEventNotFound,
+  claimCode,
+  setClaimCodeExceed,
+  setIsTicketFirst,
+  setSuccess,
+}: {
+  eventTitle: string;
+  setEventData: Dispatch<React.SetStateAction<EventType | undefined>>;
+  setEventNotFound?: Dispatch<React.SetStateAction<boolean>>;
+  claimCode?: string | null;
+  setClaimCodeExceed?: React.Dispatch<React.SetStateAction<ClaimCodeExceedType>>;
+  setIsTicketFirst?: React.Dispatch<React.SetStateAction<boolean>>;
+  setSuccess?: React.Dispatch<React.SetStateAction<SuccessModalProps>>;
+}) => {
   let backendURL = makeMyPass.formEventInfo(eventTitle);
   if (claimCode) backendURL += `?claim_code=${claimCode}`;
   privateGateway
@@ -343,6 +357,8 @@ export const getEventInfo = async (
             message: response.data.response.claim_code_message,
           });
       }
+
+      if (setIsTicketFirst) setIsTicketFirst(response.data.response.is_ticket_first);
     })
     .catch((error) => {
       if (error.response.data.statusCode === 404) setEventNotFound && setEventNotFound(true);

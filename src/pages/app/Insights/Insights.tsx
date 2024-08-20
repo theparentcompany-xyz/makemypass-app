@@ -117,7 +117,10 @@ const Insights = ({ type }: { type?: string }) => {
 
   useEffect(() => {
     if (type === 'public' && eventTitle) {
-      getEventInfo(eventTitle, setEventData);
+      getEventInfo({
+        eventTitle,
+        setEventData,
+      });
     }
   }, [type, eventTitle]);
 

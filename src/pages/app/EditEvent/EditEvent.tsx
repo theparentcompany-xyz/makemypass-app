@@ -8,7 +8,7 @@ import { TbMailStar } from 'react-icons/tb';
 import { BiArrowToTop } from 'react-icons/bi';
 import { LuPencil } from 'react-icons/lu';
 import { FiGlobe } from 'react-icons/fi';
-import { HiOutlineUserGroup } from 'react-icons/hi2';
+import { HiOutlineTicket, HiOutlineUserGroup } from 'react-icons/hi2';
 import { BsTicketDetailed } from 'react-icons/bs';
 import { IoCloseOutline } from 'react-icons/io5';
 import { AiOutlineTeam } from 'react-icons/ai';
@@ -539,6 +539,22 @@ const EditEvent = () => {
                             setEventData({
                               ...eventData,
                               is_multiple_checkin: !eventData.is_multiple_checkin,
+                            })
+                          }
+                        />
+                      </div>
+                      <div className={styles.option}>
+                        <label>
+                          <HiOutlineTicket size={20} color='#949597' />
+                          Show Tickets First
+                        </label>
+                        <Slider
+                          checked={eventData.is_ticket_first as boolean}
+                          text={''}
+                          onChange={() =>
+                            setEventData({
+                              ...eventData,
+                              is_ticket_first: !eventData.is_ticket_first,
                             })
                           }
                         />
