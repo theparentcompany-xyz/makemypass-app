@@ -3,7 +3,7 @@ import Theme from '../../../components/Theme/Theme';
 import { customStyles } from '../EventPage/constants';
 import { GrLocation } from 'react-icons/gr';
 import { getEventData, updateEventData, deleteEvent } from '../../../apis/events';
-import { TbMicrophone, TbUserCheck, TbWorld } from 'react-icons/tb';
+import { TbMicrophone, TbSettings, TbUserCheck, TbWorld } from 'react-icons/tb';
 import { TbMailStar } from 'react-icons/tb';
 import { BiArrowToTop } from 'react-icons/bi';
 import { LuPencil } from 'react-icons/lu';
@@ -40,6 +40,8 @@ const EditEvent = () => {
   const [regDate, setRegDate] = useState<{ start: Date | undefined; end: Date | undefined }>();
   const [placeName, setPlaceName] = useState('');
   const [banner, setBanner] = useState<File | null>(null);
+  const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
+  const [followupMessage, setFollowupMessage] = useState('');
 
   const [location, setLocation] = useState<google.maps.LatLngLiteral | null>(null);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
@@ -191,6 +193,30 @@ const EditEvent = () => {
   return (
     <>
       <Theme>
+        {showAdvancedSettings && (
+          <Modal title='Advanced Settings' onClose={() => setShowAdvancedSettings(false)}>
+            <div className={styles.followupMessageContainer}>
+              <label>Description</label>
+
+              <div className={styles.followupMessage}>
+                <Editor
+                  description={eventData?.followup_msg ?? ''}
+                  setNewDescription={setFollowupMessage}
+                />
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                if (eventData)
+                  setEventData({ ...eventData, followup_msg: followupMessage.toString() });
+                setShowAdvancedSettings(false);
+              }}
+              className={styles.continueButton}
+            >
+              Continue
+            </button>
+          </Modal>
+        )}
         <DashboardLayout prevPage='-1'>
           {eventData && isLoaded ? (
             <>
@@ -633,21 +659,7 @@ const EditEvent = () => {
                           }
                         />
                       </div>
-                      {/* <div className={styles.option}>
-                      <label>
-                        <PiArrowsSplit size={20} color='#949597' /> Add Sub-Event
-                      </label>
-                      <Slider
-                        checked={eventData.is_sub_event as boolean}
-                        text={''}
-                        onChange={() =>
-                          setEventData({
-                            ...eventData,
-                            is_sub_event: !eventData.is_sub_event,
-                          })
-                        }
-                      />
-                    </div> */}
+
                       <div className={styles.option}>
                         <label>
                           {' '}
@@ -711,10 +723,20 @@ const EditEvent = () => {
                         }}
                       />
                     </div>
+
                     <div className={styles.buttonContainer}>
                       <button className={styles.deleteButton} onClick={() => setShowModal(true)}>
                         Delete
                       </button>
+
+                      <button
+                        className={styles.settingsButton}
+                        onClick={() => setShowAdvancedSettings(true)}
+                      >
+                        <TbSettings />
+                        Advanced Settings
+                      </button>
+
                       <button className={styles.createButton} onClick={() => history.back()}>
                         Cancel
                       </button>

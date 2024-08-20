@@ -240,8 +240,7 @@
   max-width: 25rem;
   max-height: 4rem;
   overflow: hidden;
-
-  position: relative;
+  /* position: relative; */
 }
 
 .ticketCapacityContainer {

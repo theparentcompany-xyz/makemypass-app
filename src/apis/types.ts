@@ -149,6 +149,7 @@ export interface EventType {
   event_end_date: string;
   reg_start_date: string;
   reg_end_date: string;
+  followup_msg: string;
   is_online: boolean;
   logo: string;
   banner: string;
