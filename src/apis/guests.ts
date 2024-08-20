@@ -18,7 +18,7 @@ export const resentGuestTicket = async (
   privateGateway
     .post(makeMyPass.guestResentTicket(eventId, ticketData.guestId.toString()))
     .then((response) => {
-      toast.success(response.data.message.general[0] || 'Ticket resent successfully');
+      toast.success(response.data.message.general[0] || 'Ticket resend successfully');
       setResentTicket({
         status: false,
         name: '',

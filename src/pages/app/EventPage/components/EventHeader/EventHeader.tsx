@@ -132,7 +132,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
       </motion.div>
 
       <div className={styles.row1} style={showFullDesc ? { flexDirection: 'column' } : {}}>
-        {eventData?.description && (
+        {eventData?.description && eventData?.description.length > 0 && (
           <div className={styles.eventDescriptionContainer}>
             <motion.div
               initial={{ opacity: 0, y: 35 }}

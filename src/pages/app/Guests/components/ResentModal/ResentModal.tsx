@@ -28,7 +28,7 @@ const ResentModal = ({
       title='Resend Ticket'
     >
       <p className={styles.modalSubText}>
-        By clicking on resend, the ticket with most resent will be sent to{' '}
+        By clicking on resend, the ticket with most resend will be sent to{' '}
         <span
           style={{
             fontWeight: '500',

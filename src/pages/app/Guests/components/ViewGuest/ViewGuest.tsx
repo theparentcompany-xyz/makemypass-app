@@ -438,7 +438,7 @@ const ViewGuest = ({
                         title='Resend Ticket'
                         color='#8E8E8E'
                       />
-                      <span>Resent Ticket</span>
+                      <span>Resend Ticket</span>
                     </div>
                   )}
                   <div
