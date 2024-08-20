@@ -55,7 +55,7 @@ export const filterTickets = ({
   tempList2.forEach((ticket) => {
     if (
       discount?.discount_type === DiscountType.Percentage &&
-      discount.ticket.includes(ticket.id)
+      discount.ticket.some((t) => t.id === ticket.id)
     ) {
       const updatedTicket = {
         ...ticket,
@@ -67,7 +67,7 @@ export const filterTickets = ({
       });
     } else if (
       discount?.discount_type === DiscountType.Amount &&
-      discount.ticket.includes(ticket.id)
+      discount.ticket.some((t) => t.id === ticket.id)
     ) {
       const updatedTicket = {
         ...ticket,

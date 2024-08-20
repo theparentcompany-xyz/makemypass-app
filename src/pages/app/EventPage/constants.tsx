@@ -181,7 +181,7 @@ export const discountedTicketPrice = (
 ) => {
   let discountedPrice = 0;
 
-  if (discount.ticket.includes(ticketId))
+  if (discount.ticket.some((t) => t.id === ticketId))
     if (discount.discount_type?.toLowerCase() === 'percentage') {
       discountedPrice = (ticketPrice * (100 - discount.discount_value)) / 100;
     } else {

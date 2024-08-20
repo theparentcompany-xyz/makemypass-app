@@ -381,7 +381,7 @@ const CouponForm = ({
                   <div className={styles.ticketPriceData}>
                     {discount.discount_value > 0 &&
                       filteredTicket.price > 0 &&
-                      discount.ticket.includes(filteredTicket.id) && (
+                      discount.ticket.some((ticket) => ticket.id == filteredTicket.id) && (
                         <div className={styles.discountData}>
                           <p className={styles.discountAmount}>
                             {discount.discount_type.toLowerCase() === 'percentage'
@@ -510,7 +510,7 @@ const CouponForm = ({
                   <div className={styles.ticketPriceData}>
                     {discount.discount_value > 0 &&
                       filteredTicket.price > 0 &&
-                      discount.ticket.includes(filteredTicket.id) && (
+                      discount.ticket.some((ticket) => ticket.id == filteredTicket.id) && (
                         <div className={styles.discountData}>
                           <p className={styles.discountAmount}>
                             {discount.discount_type.toLowerCase() === 'percentage'
@@ -594,8 +594,8 @@ const CouponForm = ({
           {discount.discount_type && discount.discount_value > 0 && (
             <p className={styles.discountText}>
               {discount.discount_type.toLowerCase() === 'percentage'
-                ? `${discount.discount_value}% discount applied`
-                : `${discount.discount_value} ${filteredTickets[0].currency} discount applied`}
+                ? `${discount.discount_value}% discount applied on ${discount.ticket.map((ticket) => ticket.name).join(', ')}`
+                : `${discount.discount_value} ${filteredTickets[0].currency} discount applied on ${discount.ticket.map((ticket) => ticket.name).join(', ')}`}
             </p>
           )}
 
