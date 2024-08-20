@@ -207,6 +207,13 @@ export const submitForm = async ({
           });
       }
 
+      if (setDiscount)
+        setDiscount({
+          discount_value: 0,
+          discount_type: 'error',
+          ticket: [],
+        });
+
       if (setFormErrors && error.response.data.message) setFormErrors(error.response.data.message);
       if (error.response.data.message.general[0])
         toast.error(error.response.data.message.general[0]);
