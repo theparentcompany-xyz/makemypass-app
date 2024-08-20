@@ -84,7 +84,7 @@ export function timeAgo(date: string | number | Date) {
     return `${Math.floor(days / 7)} week${Math.floor(days / 7) > 1 ? 's' : ''} ago`;
   } else if (days > 0) {
     return `${days} day${days > 1 ? 's' : ''} ago`;
-  } else if (hours > 0) {
+  } else if (hours >= 0) {
     return `today`;
   }
 }
