@@ -33,5 +33,5 @@ export interface FormEventData {
   parse_audio: boolean;
   coupon: CouponData;
   claim_ticket_id?: string;
-  is_coupon_first?: boolean;
+  show_ticket_first?: boolean;
 }

@@ -315,7 +315,7 @@ export const getEventInfo = async ({
   setEventNotFound,
   claimCode,
   setClaimCodeExceed,
-  setIsTicketFirst,
+  setShowTicketFirst,
   setSuccess,
 }: {
   eventTitle: string;
@@ -323,7 +323,7 @@ export const getEventInfo = async ({
   setEventNotFound?: Dispatch<React.SetStateAction<boolean>>;
   claimCode?: string | null;
   setClaimCodeExceed?: React.Dispatch<React.SetStateAction<ClaimCodeExceedType>>;
-  setIsTicketFirst?: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowTicketFirst?: React.Dispatch<React.SetStateAction<boolean>>;
   setSuccess?: React.Dispatch<React.SetStateAction<SuccessModalProps>>;
 }) => {
   let backendURL = makeMyPass.formEventInfo(eventTitle);
@@ -358,7 +358,7 @@ export const getEventInfo = async ({
           });
       }
 
-      if (setIsTicketFirst) setIsTicketFirst(response.data.response.is_ticket_first);
+      if (setShowTicketFirst) setShowTicketFirst(response.data.response.show_ticket_first);
     })
     .catch((error) => {
       if (error.response.data.statusCode === 404) setEventNotFound && setEventNotFound(true);

@@ -549,12 +549,12 @@ const EditEvent = () => {
                           Show Tickets First
                         </label>
                         <Slider
-                          checked={eventData.is_ticket_first as boolean}
+                          checked={eventData.show_ticket_first as boolean}
                           text={''}
                           onChange={() =>
                             setEventData({
                               ...eventData,
-                              is_ticket_first: !eventData.is_ticket_first,
+                              show_ticket_first: !eventData.show_ticket_first,
                             })
                           }
                         />

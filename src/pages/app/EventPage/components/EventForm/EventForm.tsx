@@ -45,7 +45,7 @@ const EventForm = ({
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({});
-  const [formNumber, setFormNumber] = useState<number>(eventFormData.is_coupon_first ? 1 : 0);
+  const [formNumber, setFormNumber] = useState<number>(eventFormData.show_ticket_first ? 1 : 0);
   const [selectedDate, setSelectedDate] = useState<string | null>();
   const [formErrors, setFormErrors] = useState<any>({});
   const [tickets, setTickets] = useState<Tickets[]>([]);
@@ -232,8 +232,8 @@ const EventForm = ({
       )}
 
       <div className={styles.buttons}>
-        {((formNumber === 0 && eventFormData.is_coupon_first) ||
-          (formNumber === 1 && !eventFormData.is_coupon_first)) && (
+        {((formNumber === 0 && eventFormData.show_ticket_first) ||
+          (formNumber === 1 && !eventFormData.show_ticket_first)) && (
           <div
             onClick={() => {
               setFormNumber((prevState) => {
@@ -253,20 +253,20 @@ const EventForm = ({
           onClick={() => {
             if (
               (formNumber === 0 && !directRegister) ||
-              (eventFormData.is_coupon_first && formNumber === 0)
+              (eventFormData.show_ticket_first && formNumber === 0)
             ) {
               validateRSVPData(
                 eventFormData.id,
-                eventFormData.is_coupon_first,
+                eventFormData.show_ticket_first,
                 formData,
                 setFormNumber,
                 setFormErrors,
                 selectedDate,
               ).then(() => {
-                if (eventFormData.is_coupon_first)
+                if (eventFormData.show_ticket_first)
                   submitForm({
                     eventId: eventFormData.id,
-                    isCouponFirst: eventFormData.is_coupon_first,
+                    isCouponFirst: eventFormData.show_ticket_first,
                     tickets,
                     formData,
                     coupon,
@@ -283,7 +283,7 @@ const EventForm = ({
                     ticketCode,
                   });
               });
-            } else if (formNumber === 1 && eventFormData.is_coupon_first) {
+            } else if (formNumber === 1 && eventFormData.show_ticket_first) {
               setFormNumber(0);
             } else {
               if (type === 'addGuest' && setSelectedGuestId) {
@@ -333,12 +333,12 @@ const EventForm = ({
               }}
             />
           ) : formNumber === 0 && !directRegister ? (
-            eventFormData.is_coupon_first ? (
+            eventFormData.show_ticket_first ? (
               'Submit'
             ) : (
               'Next'
             )
-          ) : formNumber === 1 && eventFormData.is_coupon_first ? (
+          ) : formNumber === 1 && eventFormData.show_ticket_first ? (
             'Next'
           ) : (
             'Submit'
