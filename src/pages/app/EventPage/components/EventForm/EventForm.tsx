@@ -236,9 +236,11 @@ const EventForm = ({
           (formNumber === 1 && !eventFormData.show_ticket_first)) && (
           <div
             onClick={() => {
-              setFormNumber((prevState) => {
-                return prevState - 1;
-              });
+              if (eventFormData.show_ticket_first) {
+                setFormNumber(1);
+              } else {
+                setFormNumber(0);
+              }
             }}
             className={styles.backButton}
           >
