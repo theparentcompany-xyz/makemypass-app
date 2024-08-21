@@ -19,6 +19,7 @@ import { PropagateLoader } from 'react-spinners';
 import VoiceInput from './components/VoiceInput';
 import { addGuest } from '../../../../../apis/guest';
 import { MdError } from 'react-icons/md';
+import toast from 'react-hot-toast';
 
 const EventForm = ({
   eventFormData,
@@ -286,7 +287,10 @@ const EventForm = ({
                   });
               });
             } else if (formNumber === 1 && eventFormData.show_ticket_first) {
-              setFormNumber(0);
+              if (tickets.some((ticket) => ticket.count > 0)) setFormNumber(0);
+              else {
+                toast.error('Please select at least one ticket');
+              }
             } else {
               if (type === 'addGuest' && setSelectedGuestId) {
                 addGuest(
