@@ -80,7 +80,9 @@ const CouponForm = ({
   useEffect(() => {
     const firstCategory = [
       ...new Set(
-        filteredTickets.filter((ticket) => ticket.category).map((ticket) => ticket.category),
+        filteredTickets
+          .filter((ticket) => ticket.category && ticket.default_selected)
+          .map((ticket) => ticket.category),
       ),
     ][0];
     if (!selectedTicketCategory) setSelectedTicketCategory(firstCategory);
@@ -318,7 +320,8 @@ const CouponForm = ({
                     <div className='row' style={{ columnGap: 0 }}>
                       <button
                         className={styles.ticketCountUpdateButton}
-                        onClick={() => {
+                        onClick={(event) => {
+                          event.stopPropagation();
                           filteredTicket.capacity && filteredTicket.capacity <= 0
                             ? ticketSoldAlert()
                             : updateTicketCount(filteredTicket.id, false);
@@ -366,10 +369,7 @@ const CouponForm = ({
                       {filteredTicket.title?.toUpperCase()}{' '}
                       {filteredTicket.user_count > 1 && <span>x {filteredTicket.user_count}</span>}
                     </p>
-                    <p
-                      className={styles.ticketTypeDescription}
-                      dangerouslySetInnerHTML={{ __html: filteredTicket.description }}
-                    ></p>
+
                     <div className={styles.perks}>
                       {Object.keys(filteredTicket.perks)?.map((perk) => (
                         <div key={perk} className={styles.perk}>
@@ -420,6 +420,11 @@ const CouponForm = ({
                       </p>
                     </div>
                   </div>
+
+                  <p
+                    className={styles.ticketTypeDescription}
+                    dangerouslySetInnerHTML={{ __html: filteredTicket.description }}
+                  ></p>
                 </div>
               </div>
             );

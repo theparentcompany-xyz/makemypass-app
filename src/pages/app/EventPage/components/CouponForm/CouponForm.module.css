@@ -60,13 +60,18 @@
 }
 
 .ticketTypeDescription {
-  font-size: 0.8rem;
-  max-width: 16rem;
+  font-size: 0.9rem;
   width: 100%;
   font-weight: 400;
   color: #fff;
   opacity: 0.8;
   font-family: 'Inter', sans-serif;
+
+  li {
+    list-style: disc;
+    margin-left: 1rem;
+    line-height: 1.5rem;
+  }
 }
 
 .ticketPrice {
