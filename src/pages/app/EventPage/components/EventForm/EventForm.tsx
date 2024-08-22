@@ -141,7 +141,7 @@ const EventForm = ({
 
     if (
       filteredTicket.length === 1 &&
-      filteredTicket[0].price == 0 &&
+      !eventFormData.select_multi_ticket &&
       !eventFormData?.select_multi_ticket &&
       filteredTicket[0].entry_date.length == 0
     ) {
