@@ -431,7 +431,9 @@ const CouponForm = ({
           })}
 
         {filteredTickets
-          .filter((filteredTicket) => filteredTicket.category === null)
+          .filter(
+            (filteredTicket) => filteredTicket.category === null || filteredTicket.category === '',
+          )
           .map((filteredTicket) => {
             return (
               <div
