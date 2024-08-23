@@ -101,7 +101,11 @@ export interface TicketType {
   price: number;
   show_price?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  perks: any;
+  perks: {
+    id: string;
+    name: string;
+    count: number;
+  }[];
   registration_count: number;
   user_count: number;
   capacity: number | null;

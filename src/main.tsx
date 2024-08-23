@@ -39,6 +39,7 @@ import ViewTicket from './components/ViewTicket/ViewTicket';
 import Gifts from './pages/app/Gifts/Gifts';
 import PaymentAnalytics from './pages/app/PaymentAnalytics/PaymentAnalytics';
 import SelfCheckIn from './pages/app/SelfCheckIn/SelfCheckIn';
+import Randomizer from './pages/app/Randomizer/Randomizer';
 
 // import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 // import SpinWheel from './pages/app/SpinWheel/SpinWheel';
@@ -207,6 +208,10 @@ const routes = [
       {
         path: '/:eventTitle/payment-analytics',
         element: <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]} children={<PaymentAnalytics />} />,
+      },
+      {
+        path: '/:eventTitle/randomsizer',
+        element: <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]} children={<Randomizer />} />,
       },
       // {
       //   path: `/:eventTitle/checkins/claimgifts`,

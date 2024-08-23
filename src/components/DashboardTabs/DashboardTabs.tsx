@@ -77,6 +77,12 @@ const DashboardTabs = ({
     tabs.postevent = {
       title: 'Post Event',
       roles: [Roles.ADMIN, Roles.OWNER],
+      category: 'postEvent',
+    };
+    tabs.randomsizer = {
+      title: 'Randomizer',
+      roles: [Roles.ADMIN, Roles.OWNER],
+      category: 'others',
     };
     // tabs.feedback = {
     //   title: 'Feedback',

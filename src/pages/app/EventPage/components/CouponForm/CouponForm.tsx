@@ -371,13 +371,14 @@ const CouponForm = ({
                     </p>
 
                     <div className={styles.perks}>
-                      {Object.keys(filteredTicket.perks)?.map((perk) => (
+                      {Object.values(filteredTicket.perks)?.map((perk) => (
                         <div key={perk} className={styles.perk}>
-                          {perk}: {filteredTicket.perks[perk]}
+                          {perk.name}: {perk.count}
                         </div>
                       ))}
                     </div>
                   </div>
+
                   <div className={styles.ticketPriceData}>
                     {discount.discount_value > 0 &&
                       filteredTicket.price > 0 &&
