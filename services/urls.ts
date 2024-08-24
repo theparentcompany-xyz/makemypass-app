@@ -17,6 +17,7 @@ export const makeMyPass = {
   scanGuestVenueList: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/venue/list`),
   scanGuestGiftList: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/gift/list`),
   scanGuestGiftClaim: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/gift/claim`), //Scratch Card
+  scanGuestPerkClaim: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/perk/claim`),
 
   //Manage Guests
   eventCreate: makeMyPassURL(`/manage-event/create/`),
@@ -55,6 +56,12 @@ export const makeMyPass = {
   ticketInformation: (eventId: string, ticketCode: string) =>
     makeMyPassURL(`/manage-ticket/${eventId}/ticket/${ticketCode}`),
   ticketShortList: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/list/short`),
+  perkList: (eventId: string, eventTicketId: string) =>
+    makeMyPassURL(`/manage-ticket/${eventId}/ticket/${eventTicketId}/perks/list/`),
+  createPerk: (eventId: string, eventTicketId: string) =>
+    makeMyPassURL(`/manage-ticket/${eventId}/ticket/${eventTicketId}/perks/create/`),
+  perk: (eventId: string, eventTicketId: string, perkId: string) =>
+    makeMyPassURL(`/manage-ticket/${eventId}/ticket/${eventTicketId}/perks/${perkId}/`),
 
   // Manage Event
   event: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/event/`),

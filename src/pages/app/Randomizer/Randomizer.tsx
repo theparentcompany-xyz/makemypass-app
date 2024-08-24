@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './Randomizer.module.css';
+import Theme from '../../../components/Theme/Theme';
+import EventHeader from '../../../components/EventHeader/EventHeader';
+import DashboardTabs from '../../../components/DashboardTabs/DashboardTabs';
+import Modal from '../../../components/Modal/Modal';
 
 const Randomizer = () => {
   const names = ['John', 'Jane', 'Michael', 'Emily', 'David', 'Sarah'];
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState('');
   const [topIndex, setTopIndex] = useState(0);
+  const [showButton, setShowButton] = useState(true);
 
   const spin = () => {
     if (!spinning) {
       setSpinning(true);
       setResult('');
+      setShowButton(false);
 
       const spins = 50 + Math.floor(Math.random() * 50); // 50-100 moves
       let currentIndex = topIndex;
@@ -24,12 +30,13 @@ const Randomizer = () => {
         clearInterval(intervalId);
         setSpinning(false);
         setResult(names[currentIndex]);
+        setShowButton(true);
       }, spins * 100);
     }
   };
 
   const getVisibleNames = () => {
-    const visibleCount = 8; // Number of visible items
+    const visibleCount = 7; // Odd number for center alignment
     const visibleNames = [];
     const middleIndex = Math.floor(visibleCount / 2);
     const startIndex = (topIndex + names.length - middleIndex) % names.length;
@@ -41,30 +48,51 @@ const Randomizer = () => {
     return visibleNames;
   };
 
-  useEffect(() => {
-    console.log(result);
-  }, [result]);
+  const getOpacity = (index: number) => {
+    const opacities = [0.3, 0.5, 0.7, 1, 0.7, 0.5, 0.3];
+    return opacities[index];
+  };
 
   return (
-    <div className={styles.spinWheelContainer}>
-      <div className={`${styles.spinWheel} ${spinning ? styles.spinning : ''}`}>
-        {getVisibleNames().map((name, index) => (
-          <div key={index} className={styles.spinItem} style={{ backgroundColor: getColor(index) }}>
-            {name}
+    <Theme>
+      {result && (
+        <Modal title='Selected User' onClose={() => setResult('')}>
+          <div className={styles.resultsContainer}>
+            <p className={styles.resultText}>{result} is the selected User</p>
           </div>
-        ))}
+        </Modal>
+      )}
+      <EventHeader previousPageNavigate='/events' />
+      <DashboardTabs tab='randomizer' />
+      <div className={styles.center}>
+        <div className={styles.pageTexts}>
+          <p className={styles.pageHeading}>Pick a Random User</p>
+          <p className={styles.pageDescription}>
+            Click the SPIN button to randomly select a user from the list.
+          </p>
+        </div>
+        <div className={styles.spinWheelContainer}>
+          <div className={`${styles.spinWheel} ${spinning ? styles.spinning : ''}`}>
+            {getVisibleNames().map((name, index) => (
+              <div
+                key={index}
+                className={`${styles.spinItem} ${index === 3 ? styles.centerItem : ''}`}
+                style={{ opacity: getOpacity(index) }}
+              >
+                {name}
+              </div>
+            ))}
+            <div className={styles.pointer}></div>
+          </div>
+          {showButton && (
+            <button className={styles.spinButton} onClick={spin}>
+              SPIN
+            </button>
+          )}
+        </div>
       </div>
-      <div className={styles.spinButton} onClick={spin}>
-        SPIN
-      </div>
-      {result && <div className={styles.result}>Result: {result}</div>}
-    </div>
+    </Theme>
   );
-};
-
-const getColor = (index: number) => {
-  const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c'];
-  return colors[index % colors.length];
 };
 
 export default Randomizer;

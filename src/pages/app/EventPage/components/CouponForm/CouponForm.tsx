@@ -371,11 +371,13 @@ const CouponForm = ({
                     </p>
 
                     <div className={styles.perks}>
-                      {Object.values(filteredTicket.perks)?.map((perk) => (
-                        <div key={perk} className={styles.perk}>
-                          {perk.name}: {perk.count}
-                        </div>
-                      ))}
+                      {filteredTicket.perks &&
+                        filteredTicket.perks.length > 0 &&
+                        filteredTicket.perks.map((perk) => (
+                          <div key={perk.id} className={styles.perk}>
+                            {perk.name}: {perk.count}
+                          </div>
+                        ))}
                     </div>
                   </div>
 
@@ -508,11 +510,13 @@ const CouponForm = ({
                       dangerouslySetInnerHTML={{ __html: filteredTicket.description }}
                     ></p>
                     <div className={styles.perks}>
-                      {Object.keys(filteredTicket.perks)?.map((perk) => (
-                        <div key={perk} className={styles.perk}>
-                          {perk}: {filteredTicket.perks[perk]}
-                        </div>
-                      ))}
+                      {filteredTicket.perks &&
+                        filteredTicket.perks.length > 0 &&
+                        filteredTicket.perks.map((perk) => (
+                          <div key={perk.id} className={styles.perk}>
+                            {perk.name}: {perk.count}
+                          </div>
+                        ))}
                     </div>
                   </div>
                   <div className={styles.ticketPriceData}>
