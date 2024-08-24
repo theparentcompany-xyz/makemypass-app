@@ -13,14 +13,17 @@ import {
 import Modal from '../../../../../components/Modal/Modal';
 import { motion } from 'framer-motion';
 import { HashLoader } from 'react-spinners';
-import { isEqual } from 'lodash';
+import { isEqual, last, set } from 'lodash';
 import toast from 'react-hot-toast';
 import AdvancedSetting from './components/AdvancedSetting/AdvancedSetting';
 import UnsavedChanges from './components/UnsavedChanges/UnsavedChanges';
 import ConfirmDelete from './components/ConfirmDelete/ConfirmDelete';
 import Editor from '../../../../../components/Editor/Editor';
 import { useOverrideCtrlS } from '../../../../../hooks/common';
-// import TicketEditor from './components/TicketEditor/TicketEditor';
+import { perkType } from './types';
+import { createPerk, deletePerk, getTicketPerkList, updatePerk } from '../../../../../apis/perks';
+import { MdDelete } from 'react-icons/md';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface ChildProps {
   setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,7 +37,9 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   const { event_id: eventId, event_name: eventName } = JSON.parse(
     sessionStorage.getItem('eventData') || '',
   );
-  // const [ticketEditorModal, setTicketEditorModal] = useState(false);
+
+  const [ticketPerks, setTicketPerks] = useState<perkType[]>([]);
+
   const [hasFetched, setHasFetched] = useState(false);
   const [ticketData, setTicketData] = useState<TicketType[]>([]);
   const [tickets, setTickets] = useState<TicketType[]>([]);
@@ -277,9 +282,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         });
     }
   };
-  // const handleTicketClick = (ticketId: string) => {
-  //   setTicketEditorModal(true);
-  // };
 
   const closeTicketModal = () => {
     if (!hasUnsavedChanges()) {
@@ -314,6 +316,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
 
   useEffect(() => {
     setTickets(ticketData || []);
+
     if (tickets.length == 0) {
       if (ticketData?.some((ticket) => ticket.default_selected)) {
         ticketData?.forEach((ticket) => {
@@ -324,6 +327,42 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       }
     }
   }, [ticketData]);
+
+  useEffect(() => {
+    if (selectedTicket) {
+      getTicketPerkList(eventId, selectedTicket.id, setTicketPerks);
+    }
+  }, [selectedTicket]);
+
+  const addNewPerk = () => {
+    const lastPerk = ticketPerks[ticketPerks.length - 1];
+    if (lastPerk && lastPerk.name && lastPerk.count) {
+      if (!lastPerk.id) {
+        createPerk(
+          eventId,
+          selectedTicket?.id as string,
+          lastPerk.name,
+          lastPerk.count,
+          ticketPerks,
+          setTicketPerks,
+        );
+      } else {
+        setTicketPerks((prevPerks) => {
+          const updatedPerks = [...prevPerks];
+          updatedPerks.push({ id: '', name: '', count: 1, ticket_id: '' });
+          return updatedPerks;
+        });
+      }
+    } else {
+      toast.error('Please fill the previous perk details');
+    }
+  };
+
+  const deletePerkFromList = (perkId: string) => {
+    if (perkId) deletePerk(eventId, selectedTicket?.id as string, perkId);
+
+    setTicketPerks((prevPerks) => prevPerks.slice(0, prevPerks.length - 1));
+  };
 
   return (
     <>
@@ -359,11 +398,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
           />
         </Modal>
       )}
-      {/* {ticketEditorModal && (
-        <Modal onClose={() => setTicketEditorModal(false)} style={{ zIndex: 1000 }}>
-          <TicketEditor />
-        </Modal>
-      )} */}
 
       {ticketData.length || hasFetched ? (
         // <Theme>
@@ -468,6 +502,70 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                   }}
                 />
               </div>
+
+              <div className={styles.ticketSlider}>
+                <p className={styles.perksLabel}>Perks</p>
+                <Slider
+                  checked={ticketPerks && ticketPerks.length > 0}
+                  onChange={() => {
+                    setTicketPerks((prevPerks) =>
+                      prevPerks.length > 0
+                        ? []
+                        : ([
+                            { name: '', count: 1, id: '', ticket_id: selectedTicket?.id },
+                          ] as perkType[]),
+                    );
+                  }}
+                />
+              </div>
+
+              {ticketPerks && ticketPerks.length > 0 && (
+                <div className={styles.perksList}>
+                  {ticketPerks.map((perk, index) => (
+                    <div key={index} className={styles.perkItem}>
+                      <input
+                        type='text'
+                        placeholder='Perk Name'
+                        value={perk.name}
+                        onChange={(e) => {
+                          setTicketPerks((prevPerks) => {
+                            const updatedPerks = [...prevPerks];
+                            updatedPerks[index].name = e.target.value;
+                            return updatedPerks;
+                          });
+                        }}
+                        className={styles.perkNameInput}
+                      />
+                      <input
+                        type='number'
+                        placeholder='Perk Count'
+                        value={perk.count}
+                        onChange={(e) => {
+                          setTicketPerks((prevPerks) => {
+                            const updatedPerks = [...prevPerks];
+                            updatedPerks[index].count = parseInt(e.target.value);
+                            return updatedPerks;
+                          });
+                        }}
+                        className={styles.perkCountInput}
+                      />
+
+                      <MdDelete
+                        size={25}
+                        color='rgb(147, 149, 151)'
+                        onClick={() => {
+                          deletePerkFromList(perk.id);
+                        }}
+                      />
+                    </div>
+                  ))}
+
+                  <button className={styles.addPerkButton} onClick={() => addNewPerk()}>
+                    + Add Perk
+                  </button>
+                </div>
+              )}
+
               {selectedTicket?.capacity != null && limitCapacity && (
                 <motion.div
                   initial={{ opacity: 0, y: -5 }}
