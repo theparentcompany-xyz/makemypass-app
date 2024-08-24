@@ -32,7 +32,6 @@ export const createPerk = async (
   ticketId: string,
   name: string,
   count: number,
-  ticketPerks: perkType[],
   setTicketPerks: Dispatch<SetStateAction<perkType[]>>,
 ) => {
   const perkId = uuidv4();
@@ -65,7 +64,6 @@ export const updatePerk = async (
   perkId: string,
   name: string,
   count: number,
-  ticketPerks: perkType[],
   setTicketPerks: Dispatch<SetStateAction<perkType[]>>,
 ) => {
   privateGateway

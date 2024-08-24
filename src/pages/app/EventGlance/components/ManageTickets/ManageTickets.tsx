@@ -13,7 +13,7 @@ import {
 import Modal from '../../../../../components/Modal/Modal';
 import { motion } from 'framer-motion';
 import { HashLoader } from 'react-spinners';
-import { isEqual, last, set } from 'lodash';
+import { isEqual } from 'lodash';
 import toast from 'react-hot-toast';
 import AdvancedSetting from './components/AdvancedSetting/AdvancedSetting';
 import UnsavedChanges from './components/UnsavedChanges/UnsavedChanges';
@@ -22,8 +22,7 @@ import Editor from '../../../../../components/Editor/Editor';
 import { useOverrideCtrlS } from '../../../../../hooks/common';
 import { perkType } from './types';
 import { createPerk, deletePerk, getTicketPerkList, updatePerk } from '../../../../../apis/perks';
-import { MdDelete, MdEdit, MdSave } from 'react-icons/md';
-import { v4 as uuidv4 } from 'uuid';
+import { MdDelete, MdSave } from 'react-icons/md';
 
 export interface ChildProps {
   setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -98,7 +97,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         id: '',
         approval_required: false,
         price: 0,
-        perks: undefined,
+        perks: [],
         registration_count: 0,
         capacity: 0,
         default_selected: true,
@@ -148,7 +147,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
           perk.id,
           perk.name,
           perk.count,
-          ticketPerks,
           setTicketPerks,
         );
       }
@@ -357,7 +355,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
           selectedTicket?.id as string,
           lastPerk.name,
           lastPerk.count,
-          ticketPerks,
           setTicketPerks,
         );
       } else {
@@ -577,7 +574,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                               perk.id,
                               perk.name,
                               perk.count,
-                              ticketPerks,
                               setTicketPerks,
                             );
                           }}
