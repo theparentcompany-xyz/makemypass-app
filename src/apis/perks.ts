@@ -48,7 +48,7 @@ export const createPerk = async (
         const lastPerkWithUpdatedId = { ...updatedPerks.pop() };
         lastPerkWithUpdatedId.id = perkId;
         updatedPerks.push(lastPerkWithUpdatedId as perkType);
-        updatedPerks.push({ id: '', name: '', count: 0, ticket_id: ticketId });
+        updatedPerks.push({ id: '', name: '', count: 0, ticketId: ticketId });
         return updatedPerks;
       });
 
@@ -65,18 +65,33 @@ export const updatePerk = async (
   perkId: string,
   name: string,
   count: number,
-  setPerks: Dispatch<SetStateAction<perkType[]>>,
+  ticketPerks: perkType[],
+  setTicketPerks: Dispatch<SetStateAction<perkType[]>>,
 ) => {
   privateGateway
     .put(makeMyPass.perk(eventId, ticketId, perkId), {
       name,
       count,
     })
-    .then((response) => {
-      setPerks(response.data.response.perks);
+    .then(() => {
+      setTicketPerks((prevPerks) => {
+        const updatedPerks = prevPerks.map((perk) => {
+          if (perk.id === perkId) {
+            return {
+              ...perk,
+              name,
+              count,
+              isEditing: false,
+            };
+          }
+          return perk;
+        });
+        return updatedPerks;
+      });
+      toast.success('Perk updated successfully');
     })
     .catch(() => {
-      setPerks([]);
+      toast.error('Failed to update perk');
     });
 };
 

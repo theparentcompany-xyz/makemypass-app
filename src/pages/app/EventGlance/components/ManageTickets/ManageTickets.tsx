@@ -22,7 +22,7 @@ import Editor from '../../../../../components/Editor/Editor';
 import { useOverrideCtrlS } from '../../../../../hooks/common';
 import { perkType } from './types';
 import { createPerk, deletePerk, getTicketPerkList, updatePerk } from '../../../../../apis/perks';
-import { MdDelete } from 'react-icons/md';
+import { MdDelete, MdEdit, MdSave } from 'react-icons/md';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface ChildProps {
@@ -140,6 +140,20 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   };
 
   const updateTicket = async (specificUpdate?: TicketType) => {
+    ticketPerks.forEach((perk) => {
+      if (perk.id && perk.isEditing) {
+        updatePerk(
+          eventId,
+          selectedTicket?.id as string,
+          perk.id,
+          perk.name,
+          perk.count,
+          ticketPerks,
+          setTicketPerks,
+        );
+      }
+    });
+
     let selection = specificUpdate || selectedTicket;
     const matchingTicket = ticketData.find((ticket) => ticket.id === selection?.id);
     if (!paidTicket) {
@@ -349,7 +363,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       } else {
         setTicketPerks((prevPerks) => {
           const updatedPerks = [...prevPerks];
-          updatedPerks.push({ id: '', name: '', count: 1, ticket_id: '' });
+          updatedPerks.push({ id: '', name: '', count: 1, ticketId: '' });
           return updatedPerks;
         });
       }
@@ -512,7 +526,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                       prevPerks.length > 0
                         ? []
                         : ([
-                            { name: '', count: 1, id: '', ticket_id: selectedTicket?.id },
+                            { name: '', count: 1, id: '', ticketId: selectedTicket?.id },
                           ] as perkType[]),
                     );
                   }}
@@ -531,6 +545,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                           setTicketPerks((prevPerks) => {
                             const updatedPerks = [...prevPerks];
                             updatedPerks[index].name = e.target.value;
+                            updatedPerks[index].isEditing = updatedPerks[index].id ? true : false;
                             return updatedPerks;
                           });
                         }}
@@ -544,14 +559,33 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                           setTicketPerks((prevPerks) => {
                             const updatedPerks = [...prevPerks];
                             updatedPerks[index].count = parseInt(e.target.value);
+                            updatedPerks[index].isEditing = updatedPerks[index].id ? true : false;
                             return updatedPerks;
                           });
                         }}
                         className={styles.perkCountInput}
                       />
 
+                      {perk.isEditing && (
+                        <MdSave
+                          size={22}
+                          color='rgb(147, 149, 151)'
+                          onClick={() => {
+                            updatePerk(
+                              eventId,
+                              selectedTicket?.id as string,
+                              perk.id,
+                              perk.name,
+                              perk.count,
+                              ticketPerks,
+                              setTicketPerks,
+                            );
+                          }}
+                        />
+                      )}
+
                       <MdDelete
-                        size={25}
+                        size={22}
                         color='rgb(147, 149, 151)'
                         onClick={() => {
                           deletePerkFromList(perk.id);
