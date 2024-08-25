@@ -10,11 +10,13 @@ import {
   getSpinWheelUserList,
 } from '../../../apis/randomizer';
 import { SpinWheelLogList, userListType } from './types';
-import ReactConfetti from 'react-confetti';
+import Confetti from 'react-confetti';
 import { HashLoader } from 'react-spinners';
 import { formatDate } from '../../../common/commonFunctions';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import { useNavigate, useParams } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 const Randomizer = () => {
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState({
@@ -38,6 +40,13 @@ const Randomizer = () => {
   useEffect(() => {
     if (result.id && result.id.length > 0) {
       createSpinWheelLog(eventId, result.id, setLogList);
+
+      setTimeout(() => {
+        setResult({
+          name: '',
+          id: '',
+        });
+      }, 400000);
     }
   }, [result]);
 
@@ -61,10 +70,11 @@ const Randomizer = () => {
       setTimeout(() => {
         clearInterval(intervalId);
         setSpinning(false);
-        setResult({
-          name: userList[currentIndex].name,
-          id: userList[currentIndex].id,
-        });
+        if (userList[currentIndex].name && userList[currentIndex].id)
+          setResult({
+            name: userList[currentIndex].name,
+            id: userList[currentIndex].id,
+          });
         setShowButton(true);
       }, spins * 100);
     }
@@ -78,7 +88,7 @@ const Randomizer = () => {
 
     for (let i = 0; i < visibleCount; i++) {
       const index = (startIndex + i) % userList.length;
-      if (userList[index].name) visibleNames.push(userList[index].name);
+      if (userList[index] && userList[index].name) visibleNames.push(userList[index].name);
       else visibleNames.push('No Name');
     }
     return visibleNames;
@@ -93,30 +103,46 @@ const Randomizer = () => {
     <Theme>
       {result && result.id && (
         <>
-          <ReactConfetti
-            className={styles.confetti}
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 100000,
-            }}
-          />
-          <Modal
-            title='Selected User'
-            onClose={() =>
-              setResult({
-                name: '',
-                id: '',
-              })
-            }
-          >
-            <div className={styles.resultsContainer}>
-              <p className={styles.resultText}>{result.name} is the selected User</p>
-            </div>
-          </Modal>
+          <Confetti className={styles.confetti} />
+          <AnimatePresence>
+            <>
+              <div className={styles.backgroundBlur}></div>
+              <motion.dialog
+                initial={{
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                open
+                className={styles.welcomeContainer}
+              >
+                <img
+                  src='/app/congo.png'
+                  alt='welcome image with confetti for card '
+                  className={styles.image}
+                />
+                <div className={styles.welcomeText}>
+                  <p className={styles.welcomeHeading}>
+                    We have a Winner! <span role='img'>🎉</span>
+                  </p>
+                  <p className={styles.welcomeDescription}>
+                    {`${result.name} is the lucky Winner.`}
+                  </p>
+                  <SecondaryButton
+                    onClick={() => navigate(`/${eventTitle}/guests?eventRegisterId=${result.id}`)}
+                    buttonText='View Winner'
+                  />
+                </div>
+              </motion.dialog>
+            </>
+          </AnimatePresence>
         </>
       )}
       <EventHeader previousPageNavigate='/events' />
