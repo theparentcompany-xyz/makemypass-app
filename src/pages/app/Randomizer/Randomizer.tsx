@@ -14,8 +14,7 @@ import ReactConfetti from 'react-confetti';
 import { HashLoader } from 'react-spinners';
 import { formatDate } from '../../../common/commonFunctions';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import { useNavigate, useParams } from 'react-router';
-
+import { useNavigate, useParams } from 'react-router-dom';
 const Randomizer = () => {
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState({
@@ -38,8 +37,7 @@ const Randomizer = () => {
 
   useEffect(() => {
     if (result.id && result.id.length > 0) {
-      createSpinWheelLog(eventId, result.id);
-      getSpinWheelLogList(eventId, setLogList);
+      createSpinWheelLog(eventId, result.id, setLogList);
     }
   }, [result]);
 
