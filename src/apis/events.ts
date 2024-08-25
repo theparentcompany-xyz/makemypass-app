@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { ErrorMessages, Event, EventType } from './types';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch } from 'react';
 
 export const getEventsList = async (
   setEvents: React.Dispatch<React.SetStateAction<Event[]>>,

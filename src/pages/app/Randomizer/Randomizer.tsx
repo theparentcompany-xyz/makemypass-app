@@ -4,10 +4,17 @@ import Theme from '../../../components/Theme/Theme';
 import EventHeader from '../../../components/EventHeader/EventHeader';
 import DashboardTabs from '../../../components/DashboardTabs/DashboardTabs';
 import Modal from '../../../components/Modal/Modal';
-import { createSpinWheelLog, getSpinWheelUserList } from '../../../apis/randomizer';
-import { userListType } from './types';
+import {
+  createSpinWheelLog,
+  getSpinWheelLogList,
+  getSpinWheelUserList,
+} from '../../../apis/randomizer';
+import { SpinWheelLogList, userListType } from './types';
 import ReactConfetti from 'react-confetti';
 import { HashLoader } from 'react-spinners';
+import { formatDate } from '../../../common/commonFunctions';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import { useNavigate, useParams } from 'react-router';
 
 const Randomizer = () => {
   const [spinning, setSpinning] = useState(false);
@@ -17,18 +24,22 @@ const Randomizer = () => {
   });
   const [topIndex, setTopIndex] = useState(0);
   const [showButton, setShowButton] = useState(true);
-
+  const navigate = useNavigate();
   const [userList, setUserList] = useState<userListType[]>([]);
+  const [logList, setLogList] = useState<SpinWheelLogList[]>([]);
 
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
+  const { eventTitle } = useParams<{ eventTitle: string }>();
   useEffect(() => {
     getSpinWheelUserList(eventId, setUserList);
+    getSpinWheelLogList(eventId, setLogList);
   }, []);
 
   useEffect(() => {
     if (result.id && result.id.length > 0) {
       createSpinWheelLog(eventId, result.id);
+      getSpinWheelLogList(eventId, setLogList);
     }
   }, [result]);
 
@@ -82,7 +93,7 @@ const Randomizer = () => {
 
   return (
     <Theme>
-      {result && result.id && result.name && (
+      {result && result.id && (
         <>
           <ReactConfetti
             className={styles.confetti}
@@ -141,6 +152,35 @@ const Randomizer = () => {
               )}
             </div>
           )}
+
+          <div className={styles.previousLogs}>
+            <div className={styles.pageTexts}>
+              <p className={styles.pageHeading}>Randomly Picked Users</p>
+              <p className={styles.pageDescription}>
+                List of users that were randomly picked in the past.
+              </p>
+            </div>
+            <div className={styles.logsContainer}>
+              {logList.length > 0 ? (
+                logList.map((log, index) => (
+                  <div key={index} className={styles.logItem}>
+                    <p className={styles.logItemText}>{`${index + 1}). ${log.name}`}</p>
+                    <div className='row'>
+                      <p className={styles.logItemText}>{formatDate(log.created_at, true)}</p>
+                      <SecondaryButton
+                        onClick={() =>
+                          navigate(`/${eventTitle}/guests?eventRegisterId=${log.event_register_id}`)
+                        }
+                        buttonText='View Guest'
+                      />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className={styles.noLogsText}>No Logs Available</p>
+              )}
+            </div>
+          </div>
         </div>
       ) : (
         <div className='center'>

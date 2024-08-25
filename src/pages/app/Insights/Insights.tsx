@@ -24,9 +24,8 @@ import { getEventId, updateEventData } from '../../../apis/events';
 import { IoCopyOutline } from 'react-icons/io5';
 import toast from 'react-hot-toast';
 import { getInsightsVisibility } from '../../../apis/insights';
-import { getEventInfo } from '../../../apis/publicpage';
 import { useNavigate, useParams } from 'react-router';
-import { EventType } from '../../../apis/types';
+
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 

@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Dispatch, SetStateAction } from 'react';
-import { userListType } from '../pages/app/Randomizer/types';
+import { SpinWheelLogList, userListType } from '../pages/app/Randomizer/types';
 
 export const getSpinWheelUserList = async (
   eventId: string,
@@ -30,5 +30,19 @@ export const createSpinWheelLog = async (eventId: string, userId: string) => {
     })
     .catch(() => {
       toast.error('Failed to create log');
+    });
+};
+
+export const getSpinWheelLogList = async (
+  eventId: string,
+  setLogList: Dispatch<SetStateAction<SpinWheelLogList[]>>,
+) => {
+  privateGateway
+    .get(makeMyPass.spinWheelLogList(eventId))
+    .then((response) => {
+      setLogList(response.data.response.logs);
+    })
+    .catch(() => {
+      toast.error('Failed to get logs');
     });
 };

@@ -7,7 +7,6 @@
   font-family: 'Inter', sans-serif;
   padding: 2rem;
   position: relative;
-  height: 60vh;
 }
 
 .spinWheel {
@@ -134,4 +133,42 @@
   font-weight: 400;
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
+}
+
+.previousLogs {
+  font-family: 'Inter', sans-serif;
+  color: white;
+}
+
+.previousLogsHeading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.logsContainer {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.logItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: rgba(255, 255, 255, 0.075);
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+}
+
+.logItemText {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.712);
+}
+
+.noLogsText {
+  font-size: 0.9rem;
+  color: #a4a4a4;
+  margin-top: 0.5rem;
 }

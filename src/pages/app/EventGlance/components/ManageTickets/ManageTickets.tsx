@@ -21,7 +21,7 @@ import ConfirmDelete from './components/ConfirmDelete/ConfirmDelete';
 import Editor from '../../../../../components/Editor/Editor';
 import { useOverrideCtrlS } from '../../../../../hooks/common';
 import { perkType } from './types';
-import { getTicketPerkList, updatePerk } from '../../../../../apis/perks';
+import { getTicketPerkList } from '../../../../../apis/perks';
 
 export interface ChildProps {
   setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
