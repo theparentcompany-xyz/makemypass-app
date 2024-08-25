@@ -46,7 +46,7 @@ const Randomizer = () => {
           name: '',
           id: '',
         });
-      }, 400000);
+      }, 4000);
     }
   }, [result]);
 
