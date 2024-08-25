@@ -12,8 +12,7 @@ export const getSpinWheelUserList = async (
     .get(makeMyPass.spinWheelList(eventId))
     .then((response) => {
       console.log(response.data.response);
-
-      setUserList(response.data.response.participant);
+      setUserList(response.data.response.participants);
     })
     .catch(() => {
       toast.error('Failed to get perks');
@@ -40,7 +39,7 @@ export const getSpinWheelLogList = async (
   privateGateway
     .get(makeMyPass.spinWheelLogList(eventId))
     .then((response) => {
-      setLogList(response.data.response.logs);
+      setLogList(response.data.response.participants);
     })
     .catch(() => {
       toast.error('Failed to get logs');
