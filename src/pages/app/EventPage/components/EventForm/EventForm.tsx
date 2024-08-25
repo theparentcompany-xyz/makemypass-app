@@ -304,8 +304,6 @@ const EventForm = ({
                   isCashInHand,
                 );
               } else {
-                console.log('hereeasdfe');
-
                 submitForm({
                   eventId: eventFormData.id,
                   tickets,

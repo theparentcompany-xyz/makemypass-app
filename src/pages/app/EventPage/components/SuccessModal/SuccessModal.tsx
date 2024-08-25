@@ -34,7 +34,6 @@ const SuccessModal = ({
 
     if (hasScratchCard && isRevealed && success.redirection?.type === 'on_submit') {
       scratchRedirectButtonRef.current?.click();
-      console.log('redirecting');
     }
   }, [success, isRevealed, hasScratchCard]);
 

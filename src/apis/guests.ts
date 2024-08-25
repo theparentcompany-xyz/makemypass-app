@@ -57,8 +57,6 @@ export const updateGuestSubmission = async (
     }
   });
 
-  console.log(data);
-
   if (data && !isArray(data.id) && typeof data.id === 'string')
     privateGateway
       .put(makeMyPass.guestEditSubmission(eventId, data.id), backendFormData, {

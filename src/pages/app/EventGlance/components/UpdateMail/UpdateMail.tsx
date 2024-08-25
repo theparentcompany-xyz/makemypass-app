@@ -15,7 +15,6 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
   const [previews, setPreviews] = useState<previewType[]>([]);
 
   const onUpdateEmail = () => {
-    console.log(mailData);
     const changedData: Record<string, any> = Object.entries(mailData as Record<string, any>)
       .filter(([key, value]) => fetchedMail?.[key as keyof MailType] !== value)
       .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});

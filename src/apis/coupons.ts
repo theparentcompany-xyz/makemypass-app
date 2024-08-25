@@ -12,8 +12,6 @@ export const getCouponsList = async (
 ) => {
   privateGateway.get(makeMyPass.couponsList(eventId)).then((response) => {
     setCoupons(response.data.response.coupons);
-    console.log('Coupons', response.data.response.coupons);
-
     if (setActivateCoupon)
       setActivateCoupon({
         showModal: false,
@@ -75,14 +73,9 @@ export const createCoupon = (
 };
 
 export const getCouponData = async (eventId: string, couponId: string) => {
-  return privateGateway
-    .get(makeMyPass.coupon(eventId, couponId))
-    .then((response) => {
-      return response.data.response;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  return privateGateway.get(makeMyPass.coupon(eventId, couponId)).then((response) => {
+    return response.data.response;
+  });
 };
 
 export const updateCouponData = async (
@@ -91,7 +84,6 @@ export const updateCouponData = async (
   setCoupons: Dispatch<SetStateAction<CouponType[]>>,
 ) => {
   const backendFormData = new FormData();
-  console.log(data);
 
   Object.keys(data).forEach((key) => {
     const value = data[key];
@@ -180,12 +172,7 @@ export const getTicketShortlist = async (
     >
   >,
 ) => {
-  return privateGateway
-    .get(makeMyPass.ticketShortList(eventId))
-    .then((response) => {
-      setTickets(response.data.response.tickets);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  return privateGateway.get(makeMyPass.ticketShortList(eventId)).then((response) => {
+    setTickets(response.data.response.tickets);
+  });
 };

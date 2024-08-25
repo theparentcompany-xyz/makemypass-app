@@ -98,9 +98,6 @@ const ViewGuest = ({
         multipleTickets,
         setTrigger,
       );
-
-      console.log(scanLogs);
-      console.log(checking);
     }
   }, [trigger, eventId, selectedGuestData]);
 

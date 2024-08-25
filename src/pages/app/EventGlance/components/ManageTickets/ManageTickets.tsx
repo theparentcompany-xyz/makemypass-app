@@ -218,13 +218,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   };
 
   const hasUnsavedChanges = () => {
-    console.log(
-      isEqual(
-        selectedTicket,
-        ticketData?.find((t) => t.id === selectedTicket?.id),
-      ),
-      selectedTicket?.description == newDescription,
-    );
     return !(isEqual(
       selectedTicket,
       ticketData?.find((t) => t.id === selectedTicket?.id),

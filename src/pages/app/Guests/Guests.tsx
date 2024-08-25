@@ -85,8 +85,6 @@ const Guests = () => {
   );
 
   useEffect(() => {
-    console.log('eventRegisterId', eventRegisterId);
-
     if (eventRegisterId) {
       setSelectedGuestId({
         id: eventRegisterId,

@@ -19,7 +19,6 @@ const PostEvent = () => {
   useEffect(() => {
     getPostEventStatus(eventId, setPostEventStatus);
   }, []);
-  console.log(postEventStatus);
   return (
     <>
       {openConfirmModal && openConfirmModal.confirm && (
