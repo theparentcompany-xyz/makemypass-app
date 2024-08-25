@@ -20,7 +20,7 @@ import { ChartData, AnalyticsData } from './types';
 import Theme from '../../../components/Theme/Theme';
 import Modal from '../../../components/Modal/Modal';
 import { MdOutlinePublishedWithChanges } from 'react-icons/md';
-import { updateEventData } from '../../../apis/events';
+import { getEventId, updateEventData } from '../../../apis/events';
 import { IoCopyOutline } from 'react-icons/io5';
 import toast from 'react-hot-toast';
 import { getInsightsVisibility } from '../../../apis/insights';
@@ -86,7 +86,10 @@ const Insights = ({ type }: { type?: string }) => {
     eventName.current = JSON.parse(sessionStorage.getItem('eventData')!)?.event_name;
   }
 
-  const [eventData, setEventData] = useState<EventType>();
+  const [eventData, setEventData] = useState<{
+    name: string;
+    id: string;
+  }>();
   const { eventTitle } = useParams();
 
   const [showPublishModal, setShowPublishModal] = useState(false);
@@ -117,17 +120,16 @@ const Insights = ({ type }: { type?: string }) => {
 
   useEffect(() => {
     if (type === 'public' && eventTitle) {
-      getEventInfo({
-        eventTitle,
-        setEventData,
+      getEventId(eventTitle).then((eventData) => {
+        setEventData(eventData);
       });
     }
   }, [type, eventTitle]);
 
   useEffect(() => {
-    if (eventData || eventId.current) {
-      if (eventData && eventData.id) getInsightsVisibility(eventData.id, setIsPublished);
-      else getInsightsVisibility(eventId.current, setIsPublished);
+    const currentEventId = eventData?.id || eventId.current;
+    if (currentEventId && type !== 'public') {
+      getInsightsVisibility(currentEventId, setIsPublished);
     }
   }, [eventData, type, eventId]);
 

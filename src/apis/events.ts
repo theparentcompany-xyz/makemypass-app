@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { ErrorMessages, Event, EventType } from './types';
-import { Dispatch } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 export const getEventsList = async (
   setEvents: React.Dispatch<React.SetStateAction<Event[]>>,
@@ -32,7 +32,7 @@ interface EventData {
 export const setEventInfoLocal = async (eventName: string): Promise<EventData> => {
   return new Promise((resolve, reject) => {
     privateGateway
-      .get(makeMyPass.getEventId(eventName))
+      .get(makeMyPass.getEventInfo(eventName))
       .then((response) => {
         const eventData: EventData = {
           title: response.data.response.title,
@@ -47,6 +47,30 @@ export const setEventInfoLocal = async (eventName: string): Promise<EventData> =
       .catch((error) => {
         toast.error('Event Not Found');
         reject(error); // Reject the promise on error
+      });
+  });
+};
+
+export const getEventId = async (
+  eventName: string,
+): Promise<{
+  id: string;
+  name: string;
+}> => {
+  return new Promise((resolve, reject) => {
+    privateGateway
+      .get(makeMyPass.getEventId(eventName))
+      .then((response) => {
+        const eventData = {
+          id: response.data.response.id,
+          title: response.data.response.name,
+        };
+        sessionStorage.setItem('eventData', JSON.stringify(eventData));
+        resolve(response.data.response);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+        reject(error);
       });
   });
 };
