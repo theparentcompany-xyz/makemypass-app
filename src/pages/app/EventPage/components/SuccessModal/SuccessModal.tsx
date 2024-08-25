@@ -7,6 +7,7 @@ import { HashLoader } from 'react-spinners';
 import ScratchCard from './ScratchCardComponent/ScratchCardComponent';
 import image from './scratchImage.png';
 import { claimScratchCard } from '../../../../../apis/publicpage';
+import toast from 'react-hot-toast';
 const SuccessModal = ({
   success,
   setSuccess,
@@ -61,8 +62,6 @@ const SuccessModal = ({
 
                 {!success.loading ? (
                   <div className={styles.modalTexts}>
-                    {/* <p className={styles.modalTitle}>Registration Successful!</p> */}
-                    {/* <p>Thank you for booking your spot at {success.eventTitle}!</p> */}
                     <div dangerouslySetInnerHTML={{ __html: success.followupMessage || '' }}></div>
 
                     {success.ticketURL && import.meta.env.VITE_CURRENT_ENV === 'dev' && (
@@ -81,6 +80,32 @@ const SuccessModal = ({
                         >
                           View Ticket
                         </button>
+
+                        {success.ticketURL && (
+                          <button
+                            onClick={async () => {
+                              try {
+                                const response = await fetch(success.ticketURL || '');
+                                const blob = await response.blob();
+
+                                const link = document.createElement('a');
+                                link.href = URL.createObjectURL(blob);
+                                link.setAttribute('download', 'ticket.png');
+
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+
+                                URL.revokeObjectURL(link.href);
+                              } catch (error) {
+                                toast.error('Failed to download ticket');
+                              }
+                            }}
+                            className={styles.downloadTicketButton}
+                          >
+                            Download Ticket
+                          </button>
+                        )}
                       </>
                     )}
 

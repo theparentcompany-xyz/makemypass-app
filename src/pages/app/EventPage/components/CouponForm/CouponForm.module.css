@@ -456,6 +456,8 @@
   justify-content: flex-start;
   margin-top: 0.5rem;
   column-gap: 0.25rem;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
 }
 
 .couponTypesTitle {
