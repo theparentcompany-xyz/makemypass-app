@@ -50,7 +50,7 @@ export const createPerk = async (
         const lastPerkWithUpdatedId = { ...updatedPerks.pop() };
         lastPerkWithUpdatedId.id = perkId;
         updatedPerks.push(lastPerkWithUpdatedId as perkType);
-        updatedPerks.push({ id: '', name: '', count: 0, ticketId: ticketId });
+        updatedPerks.push({ id: '', name: '', count: 1, ticketId: ticketId });
         return updatedPerks;
       });
 

@@ -21,8 +21,7 @@ import ConfirmDelete from './components/ConfirmDelete/ConfirmDelete';
 import Editor from '../../../../../components/Editor/Editor';
 import { useOverrideCtrlS } from '../../../../../hooks/common';
 import { perkType } from './types';
-import { createPerk, deletePerk, getTicketPerkList, updatePerk } from '../../../../../apis/perks';
-import { MdDelete, MdSave } from 'react-icons/md';
+import { getTicketPerkList, updatePerk } from '../../../../../apis/perks';
 
 export interface ChildProps {
   setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -139,19 +138,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   };
 
   const updateTicket = async (specificUpdate?: TicketType) => {
-    ticketPerks.forEach((perk) => {
-      if (perk.id && perk.isEditing) {
-        updatePerk(
-          eventId,
-          selectedTicket?.id as string,
-          perk.id,
-          perk.name,
-          perk.count,
-          setTicketPerks,
-        );
-      }
-    });
-
     let selection = specificUpdate || selectedTicket;
     const matchingTicket = ticketData.find((ticket) => ticket.id === selection?.id);
     if (!paidTicket) {
@@ -344,45 +330,22 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     if (selectedTicket) {
       getTicketPerkList(eventId, selectedTicket.id, setTicketPerks);
     }
-  }, [selectedTicket]);
-
-  const addNewPerk = () => {
-    const lastPerk = ticketPerks[ticketPerks.length - 1];
-    if (lastPerk && lastPerk.name && lastPerk.count) {
-      if (!lastPerk.id) {
-        createPerk(
-          eventId,
-          selectedTicket?.id as string,
-          lastPerk.name,
-          lastPerk.count,
-          setTicketPerks,
-        );
-      } else {
-        setTicketPerks((prevPerks) => {
-          const updatedPerks = [...prevPerks];
-          updatedPerks.push({ id: '', name: '', count: 1, ticketId: '' });
-          return updatedPerks;
-        });
-      }
-    } else {
-      toast.error('Please fill the previous perk details');
-    }
-  };
-
-  const deletePerkFromList = (perkId: string) => {
-    if (perkId) deletePerk(eventId, selectedTicket?.id as string, perkId);
-
-    setTicketPerks((prevPerks) => prevPerks.slice(0, prevPerks.length - 1));
-  };
+  }, [selectedTicket?.perks]);
 
   return (
     <>
       {isOpen && (
-        <Modal title='Advanced Setting' onClose={() => setIsOpen(false)} style={{ zIndex: 999 }}>
+        <Modal
+          title='Advanced Setting'
+          onClose={() => setIsOpen(false)}
+          style={{ zIndex: 999, alignItems: 'flex-start' }}
+        >
           <AdvancedSetting
             selectedTicket={selectedTicket as TicketType}
             setSelectedTicket={setSelectedTicket}
             setIsOpen={setIsOpen}
+            ticketPerks={ticketPerks}
+            setTicketPerks={setTicketPerks}
           />
         </Modal>
       )}
@@ -514,88 +477,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                 />
               </div>
 
-              <div className={styles.ticketSlider}>
-                <p className={styles.perksLabel}>Perks</p>
-                <Slider
-                  checked={ticketPerks && ticketPerks.length > 0}
-                  onChange={() => {
-                    setTicketPerks((prevPerks) =>
-                      prevPerks.length > 0
-                        ? []
-                        : ([
-                            { name: '', count: 1, id: '', ticketId: selectedTicket?.id },
-                          ] as perkType[]),
-                    );
-                  }}
-                />
-              </div>
-
-              {ticketPerks && ticketPerks.length > 0 && (
-                <div className={styles.perksList}>
-                  {ticketPerks.map((perk, index) => (
-                    <div key={index} className={styles.perkItem}>
-                      <input
-                        type='text'
-                        placeholder='Perk Name'
-                        value={perk.name}
-                        onChange={(e) => {
-                          setTicketPerks((prevPerks) => {
-                            const updatedPerks = [...prevPerks];
-                            updatedPerks[index].name = e.target.value;
-                            updatedPerks[index].isEditing = updatedPerks[index].id ? true : false;
-                            return updatedPerks;
-                          });
-                        }}
-                        className={styles.perkNameInput}
-                      />
-                      <input
-                        type='number'
-                        placeholder='Perk Count'
-                        value={perk.count}
-                        onChange={(e) => {
-                          setTicketPerks((prevPerks) => {
-                            const updatedPerks = [...prevPerks];
-                            updatedPerks[index].count = parseInt(e.target.value);
-                            updatedPerks[index].isEditing = updatedPerks[index].id ? true : false;
-                            return updatedPerks;
-                          });
-                        }}
-                        className={styles.perkCountInput}
-                      />
-
-                      {perk.isEditing && (
-                        <MdSave
-                          size={22}
-                          color='rgb(147, 149, 151)'
-                          onClick={() => {
-                            updatePerk(
-                              eventId,
-                              selectedTicket?.id as string,
-                              perk.id,
-                              perk.name,
-                              perk.count,
-                              setTicketPerks,
-                            );
-                          }}
-                        />
-                      )}
-
-                      <MdDelete
-                        size={22}
-                        color='rgb(147, 149, 151)'
-                        onClick={() => {
-                          deletePerkFromList(perk.id);
-                        }}
-                      />
-                    </div>
-                  ))}
-
-                  <button className={styles.addPerkButton} onClick={() => addNewPerk()}>
-                    + Add Perk
-                  </button>
-                </div>
-              )}
-
               {selectedTicket?.capacity != null && limitCapacity && (
                 <motion.div
                   initial={{ opacity: 0, y: -5 }}
@@ -623,6 +504,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                   </div>
                 </motion.div>
               )}
+
               <div className={styles.ticketSlider}>
                 <p className={styles.ticketSliderLabel}>Paid Ticket</p>
                 <Slider
