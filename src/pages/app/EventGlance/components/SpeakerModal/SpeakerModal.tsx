@@ -5,8 +5,6 @@ import InputField from '../../../../auth/Login/InputField';
 import styles from './SpeakerModal.module.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { updateEventSpeakers } from '../../../../../apis/speakers';
-// import toast from 'react-hot-toast';
-// import { listSpeakers, updateSpeakerList } from '../../../../../apis/speakers';
 import { v4 as uuidv4 } from 'uuid';
 
 const SpeakerModal = ({
@@ -97,38 +95,40 @@ const SpeakerModal = ({
 
       <hr className={styles.line} />
 
-      <p className={styles.sectionHeader}>Upload Logs</p>
+      <p className={styles.sectionHeader}>Curernt Speakers</p>
       <div className={styles.logsListingContainer}>
-        {speakers.speakerList.map((speaker) => (
-          <div className={styles.log}>
-            <div className={styles.logDetails}>
-              <img className={styles.speakerImage} src={speaker.image} alt='' />
-              <div>
-                <p className={styles.logName}>{speaker.name}</p>
-                <p className={styles.total} style={{ marginTop: '0.25rem' }}>
-                  {speaker.position}
-                </p>
+        {speakers.speakerList &&
+          speakers.speakerList.length > 0 &&
+          speakers.speakerList.map((speaker) => (
+            <div className={styles.log}>
+              <div className={styles.logDetails}>
+                <img className={styles.speakerImage} src={speaker.image} alt='' />
+                <div>
+                  <p className={styles.logName}>{speaker.name}</p>
+                  <p className={styles.total} style={{ marginTop: '0.25rem' }}>
+                    {speaker.position}
+                  </p>
+                </div>
+              </div>
+
+              <div className='row'>
+                <FaTrash title='Download Report' color='#8e8e8e' className={styles.reportIcon} />
+                <FaEdit
+                  title='Edit Venue'
+                  color='#8e8e8e'
+                  className={styles.reportIcon}
+                  onClick={() => {
+                    setSpeakerData({
+                      id: speaker.id,
+                      name: speaker.name,
+                      position: speaker.position,
+                      image: speaker.image,
+                    });
+                  }}
+                />
               </div>
             </div>
-
-            <div className='row'>
-              <FaTrash title='Download Report' color='#8e8e8e' className={styles.reportIcon} />
-              <FaEdit
-                title='Edit Venue'
-                color='#8e8e8e'
-                className={styles.reportIcon}
-                onClick={() => {
-                  setSpeakerData({
-                    id: speaker.id,
-                    name: speaker.name,
-                    position: speaker.position,
-                    image: speaker.image,
-                  });
-                }}
-              />
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </Modal>
   );

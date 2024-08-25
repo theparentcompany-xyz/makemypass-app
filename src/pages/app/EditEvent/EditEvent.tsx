@@ -196,8 +196,10 @@ const EditEvent = () => {
         {showAdvancedSettings && (
           <Modal title='Advanced Settings' onClose={() => setShowAdvancedSettings(false)}>
             <div className={styles.followupMessageContainer}>
-              <label>Description</label>
-
+              <label>Followup Message</label>
+              <p className={styles.subText}>
+                This message will be shown once the user has registered for the event.
+              </p>
               <div className={styles.followupMessage}>
                 <Editor
                   description={eventData?.followup_msg ?? ''}
