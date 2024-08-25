@@ -38,3 +38,10 @@
   overflow: auto;
   z-index: 1;
 }
+
+@media screen and (max-width: 1320px) {
+  .childrenContainer {
+    padding: 0 1.25rem;
+    width: calc(100% - 2.5rem);
+  }
+}

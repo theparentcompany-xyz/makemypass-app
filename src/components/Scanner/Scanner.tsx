@@ -12,12 +12,14 @@ const Scanner = ({
   trigger,
   setTrigger,
   checking,
+  onClose,
 }: {
   ticketId: string | undefined;
   setTicketId: Dispatch<React.SetStateAction<string>> | undefined;
   trigger: boolean;
   setTrigger: (trigger: boolean) => void;
   checking?: boolean;
+  onClose?: () => void;
 }) => {
   const navigate = useNavigate();
   return (
@@ -29,7 +31,11 @@ const Scanner = ({
             <SecondaryButton
               buttonText='Close'
               onClick={() => {
-                navigate(-1);
+                if (onClose) {
+                  onClose();
+                } else {
+                  navigate(-1);
+                }
               }}
             />
           </div>

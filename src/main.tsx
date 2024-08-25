@@ -40,6 +40,7 @@ import Gifts from './pages/app/Gifts/Gifts';
 import PaymentAnalytics from './pages/app/PaymentAnalytics/PaymentAnalytics';
 import SelfCheckIn from './pages/app/SelfCheckIn/SelfCheckIn';
 import Randomizer from './pages/app/Randomizer/Randomizer';
+import Perks from './pages/app/CheckIns/pages/Perks/Perks';
 
 // import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 // import SpinWheel from './pages/app/SpinWheel/SpinWheel';
@@ -217,10 +218,12 @@ const routes = [
       //   path: `/:eventTitle/checkins/claimgifts`,
       //   element: <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]} children={<ClaimGifts />} />,
       // },
-      // {
-      //   path: '/:eventTitle/checkins/perks',
-      //   element: <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]} children={<Perks />} />,
-      // },
+      {
+        path: '/:eventTitle/checkins/perks',
+        element: (
+          <RoleChecker roles={[Roles.ADMIN, Roles.VOLUNTEER, Roles.OWNER]} children={<Perks />} />
+        ),
+      },
       // {
       //   path: '/:eventTitle/spinwheel',
       //   element: <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.GAMER]} children={<SpinWheel />} />,

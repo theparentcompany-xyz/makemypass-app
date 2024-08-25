@@ -70,6 +70,13 @@ const CheckIns = () => {
                   />
                 </Link>
               )}
+              <Link to='perks'>
+                <SectionButton
+                  buttonText='Perks'
+                  buttonColor='#C33D7B'
+                  icon={<BsGift size={25} color='#5B75FB' />}
+                />
+              </Link>
               {/* <Link to='claimgifts'>
                 <SectionButton
                   buttonText='Claim Gifts'
