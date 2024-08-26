@@ -4,56 +4,18 @@ import styles from './AdvancedSetting.module.css';
 import { TicketType } from '../../../../../../../apis/types';
 import InputField from '../../../../../../auth/Login/InputField';
 import Slider from '../../../../../../../components/SliderButton/Slider';
-import { createPerk, deletePerk, updatePerk } from '../../../../../../../apis/perks';
+
+import { MdDelete } from 'react-icons/md';
+import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
-import { MdDelete, MdSave } from 'react-icons/md';
-import { perkType } from '../../types';
+
 type Props = {
   selectedTicket: TicketType;
   setSelectedTicket: React.Dispatch<React.SetStateAction<TicketType | undefined>>;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  ticketPerks: perkType[];
-  setTicketPerks: React.Dispatch<React.SetStateAction<perkType[]>>;
 };
 
-const AdvancedSetting = ({
-  selectedTicket,
-  setSelectedTicket,
-  setIsOpen,
-  ticketPerks,
-  setTicketPerks,
-}: Props) => {
-  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData') || '');
-
-  const addNewPerk = () => {
-    const lastPerk = ticketPerks[ticketPerks.length - 1];
-    if (lastPerk && lastPerk.name && lastPerk.count) {
-      if (!lastPerk.id) {
-        createPerk(
-          eventId,
-          selectedTicket?.id as string,
-          lastPerk.name,
-          lastPerk.count,
-          setTicketPerks,
-        );
-      } else {
-        setTicketPerks((prevPerks) => {
-          const updatedPerks = [...prevPerks];
-          updatedPerks.push({ id: '', name: '', count: 1, ticketId: '' });
-          return updatedPerks;
-        });
-      }
-    } else {
-      toast.error('Please fill the previous perk details');
-    }
-  };
-
-  const deletePerkFromList = (perkId: string) => {
-    if (perkId) deletePerk(eventId, selectedTicket?.id as string, perkId);
-
-    setTicketPerks((prevPerks) => prevPerks.slice(0, prevPerks.length - 1));
-  };
-
+const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props) => {
   return (
     <>
       <InputField
@@ -120,31 +82,35 @@ const AdvancedSetting = ({
       <div className={styles.ticketSlider}>
         <p className={styles.perksLabel}>Perks</p>
         <Slider
-          checked={ticketPerks && ticketPerks.length > 0}
+          checked={selectedTicket?.perks.length > 0}
           onChange={() => {
-            setTicketPerks((prevPerks) =>
-              prevPerks.length > 0
-                ? []
-                : ([{ name: '', count: 1, id: '', ticketId: selectedTicket?.id }] as perkType[]),
-            );
+            if (selectedTicket) {
+              setSelectedTicket({
+                ...selectedTicket,
+                perks:
+                  selectedTicket.perks.length > 0 ? [] : [{ id: uuidv4(), name: '', count: 1 }],
+              } as TicketType);
+            }
           }}
         />
       </div>
 
-      {ticketPerks && ticketPerks.length > 0 && (
+      {selectedTicket && selectedTicket.perks.length > 0 && (
         <div className={styles.perksList}>
-          {ticketPerks.map((perk, index) => (
+          {selectedTicket.perks.map((perk, index) => (
             <div key={index} className={styles.perkItem}>
               <input
                 type='text'
                 placeholder='Perk Name'
                 value={perk.name}
                 onChange={(e) => {
-                  setTicketPerks((prevPerks) => {
-                    const updatedPerks = [...prevPerks];
-                    updatedPerks[index].name = e.target.value;
-                    updatedPerks[index].isEditing = updatedPerks[index].id ? true : false;
-                    return updatedPerks;
+                  setSelectedTicket((prevTicket) => {
+                    if (prevTicket) {
+                      const updatedPerks = [...prevTicket.perks];
+                      updatedPerks[index].name = e.target.value;
+                      return { ...prevTicket, perks: updatedPerks } as TicketType;
+                    }
+                    return prevTicket;
                   });
                 }}
                 className={styles.perkNameInput}
@@ -154,44 +120,53 @@ const AdvancedSetting = ({
                 placeholder='Perk Count'
                 value={perk.count}
                 onChange={(e) => {
-                  setTicketPerks((prevPerks) => {
-                    const updatedPerks = [...prevPerks];
-                    updatedPerks[index].count = parseInt(e.target.value);
-                    updatedPerks[index].isEditing = updatedPerks[index].id ? true : false;
-                    return updatedPerks;
+                  setSelectedTicket((prevTicket) => {
+                    if (prevTicket) {
+                      const updatedPerks = [...prevTicket.perks];
+                      updatedPerks[index].count = Number(e.target.value);
+                      return { ...prevTicket, perks: updatedPerks } as TicketType;
+                    }
+                    return prevTicket;
                   });
                 }}
                 className={styles.perkCountInput}
               />
 
-              {perk.isEditing && (
-                <MdSave
-                  size={22}
-                  color='rgb(147, 149, 151)'
-                  onClick={() => {
-                    updatePerk(
-                      eventId,
-                      selectedTicket?.id as string,
-                      perk.id,
-                      perk.name,
-                      perk.count,
-                      setTicketPerks,
-                    );
-                  }}
-                />
-              )}
-
               <MdDelete
                 size={22}
                 color='rgb(147, 149, 151)'
                 onClick={() => {
-                  deletePerkFromList(perk.id);
+                  setSelectedTicket((prevTicket) => {
+                    if (prevTicket) {
+                      const updatedPerks = [...prevTicket.perks];
+                      updatedPerks.splice(index, 1);
+                      return { ...prevTicket, perks: updatedPerks } as TicketType;
+                    }
+                    return prevTicket;
+                  });
                 }}
               />
             </div>
           ))}
 
-          <button className={styles.addPerkButton} onClick={() => addNewPerk()}>
+          <button
+            className={styles.addPerkButton}
+            onClick={() => {
+              setSelectedTicket((prevTicket) => {
+                if (prevTicket) {
+                  const updatedPerks = [...prevTicket.perks];
+                  const lastPerk = updatedPerks[updatedPerks.length - 1];
+                  if (lastPerk.name && lastPerk.count) {
+                    updatedPerks.push({ id: uuidv4(), name: '', count: 1 });
+                  } else {
+                    toast.error('Please fill the previous perk');
+                  }
+                  return { ...prevTicket, perks: updatedPerks } as TicketType;
+                }
+                return prevTicket;
+              });
+            }}
+          >
             + Add Perk
           </button>
         </div>
@@ -201,26 +176,6 @@ const AdvancedSetting = ({
         className={styles.cancelButton}
         onClick={() => {
           setIsOpen(false);
-          ticketPerks.forEach((perk) => {
-            if (perk.id && perk.isEditing) {
-              updatePerk(
-                eventId,
-                selectedTicket?.id as string,
-                perk.id,
-                perk.name,
-                perk.count,
-                setTicketPerks,
-              );
-            } else if (!perk.id && perk.name && perk.count > 0 && !perk.isEditing) {
-              createPerk(
-                eventId,
-                selectedTicket?.id as string,
-                perk.name,
-                perk.count,
-                setTicketPerks,
-              );
-            }
-          });
         }}
       >
         Back

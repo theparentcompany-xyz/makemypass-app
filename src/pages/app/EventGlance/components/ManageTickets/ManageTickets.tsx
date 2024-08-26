@@ -20,8 +20,6 @@ import UnsavedChanges from './components/UnsavedChanges/UnsavedChanges';
 import ConfirmDelete from './components/ConfirmDelete/ConfirmDelete';
 import Editor from '../../../../../components/Editor/Editor';
 import { useOverrideCtrlS } from '../../../../../hooks/common';
-import { perkType } from './types';
-import { getTicketPerkList } from '../../../../../apis/perks';
 
 export interface ChildProps {
   setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,8 +33,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   const { event_id: eventId, event_name: eventName } = JSON.parse(
     sessionStorage.getItem('eventData') || '',
   );
-
-  const [ticketPerks, setTicketPerks] = useState<perkType[]>([]);
 
   const [hasFetched, setHasFetched] = useState(false);
   const [ticketData, setTicketData] = useState<TicketType[]>([]);
@@ -140,6 +136,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   const updateTicket = async (specificUpdate?: TicketType) => {
     let selection = specificUpdate || selectedTicket;
     const matchingTicket = ticketData.find((ticket) => ticket.id === selection?.id);
+
     if (!paidTicket) {
       selection = { ...selection, price: 0 } as TicketType;
     }
@@ -169,9 +166,28 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         delete changedData['description'];
 
       const formData = new FormData();
-      for (const key in changedData) {
-        formData.append(key, changedData[key]);
-      }
+      Object.keys(changedData).forEach((key) => {
+        let value = changedData[key];
+
+        if (!(value instanceof FileList)) {
+          if (Array.isArray(value) && value.length > 0) {
+            value.forEach((value) =>
+              formData.append(
+                key + '[]',
+                typeof value === 'object' ? JSON.stringify(value) : value,
+              ),
+            );
+          } else {
+            value = changedData[key].toString();
+          }
+        }
+
+        if (typeof value === 'string' && value.length > 0) {
+          formData.append(key, value);
+        } else if (value instanceof FileList) {
+          Array.from(value).forEach((value) => formData.append(key + '[]', value));
+        }
+      });
 
       updateTicketData(eventId, selection as TicketType, formData, setTicketData).then(() => {
         setLimitCapacity(true);
@@ -319,12 +335,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     }
   }, [ticketData]);
 
-  useEffect(() => {
-    if (selectedTicket) {
-      getTicketPerkList(eventId, selectedTicket.id, setTicketPerks);
-    }
-  }, [selectedTicket?.perks]);
-
   return (
     <>
       {isOpen && (
@@ -337,8 +347,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
             selectedTicket={selectedTicket as TicketType}
             setSelectedTicket={setSelectedTicket}
             setIsOpen={setIsOpen}
-            ticketPerks={ticketPerks}
-            setTicketPerks={setTicketPerks}
           />
         </Modal>
       )}
