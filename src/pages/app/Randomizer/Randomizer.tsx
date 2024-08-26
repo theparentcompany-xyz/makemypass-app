@@ -207,15 +207,15 @@ const Randomizer = () => {
             </div>
           </div>
         </div>
-      ) : hasLoaded ? (
+      ) : hasLoaded && userList.length === 0 ? (
         <div className='center'>
           <p className={styles.noLogsText}>
             No users available to pick. Please add users to the list.
           </p>
         </div>
       ) : (
-        <div className={styles.center}>
-          <HashLoader color='#FF5C00' loading={true} size={50} />
+        <div className='center'>
+          <HashLoader color={'#46BF75'} size={50} />
         </div>
       )}
     </Theme>
