@@ -78,13 +78,26 @@ const CouponForm = ({
   };
 
   useEffect(() => {
-    const firstCategory = [
-      ...new Set(
-        filteredTickets
-          .filter((ticket) => ticket.category && ticket.default_selected)
-          .map((ticket) => ticket.category),
-      ),
-    ][0];
+    let firstCategory;
+
+    if (
+      filteredTickets.filter((ticket) => ticket.category && ticket.default_selected).length === 0
+    ) {
+      firstCategory = [
+        ...new Set(
+          filteredTickets.filter((ticket) => ticket.category).map((ticket) => ticket.category),
+        ),
+      ][0];
+    } else {
+      firstCategory = [
+        ...new Set(
+          filteredTickets
+            .filter((ticket) => ticket.category && ticket.default_selected)
+            .map((ticket) => ticket.category),
+        ),
+      ][0];
+    }
+
     if (!selectedTicketCategory) setSelectedTicketCategory(firstCategory);
   }, [filteredTickets]);
 
