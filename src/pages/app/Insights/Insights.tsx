@@ -53,6 +53,7 @@ const Insights = ({ type }: { type?: string }) => {
   const [pieData, setPieData] = useState<ChartData>();
   const [venueBarData, setVenueBarData] = useState<ChartData>();
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [perkData, setPerkData] = useState<ChartData>();
 
   const expandedColors = [
     '#47C97E',
@@ -163,6 +164,18 @@ const Insights = ({ type }: { type?: string }) => {
               {
                 label: 'Venue Analytics',
                 data: Object.values(lineBarData?.venue_analytics || {}),
+                borderColor: expandedColors,
+                backgroundColor: expandedColors,
+              },
+            ],
+          });
+
+          setPerkData({
+            labels: Object.keys(lineBarData?.perk_analytics || {}),
+            datasets: [
+              {
+                label: 'Perk Analytics',
+                data: Object.values(lineBarData?.perk_analytics || {}),
                 borderColor: expandedColors,
                 backgroundColor: expandedColors,
               },
@@ -673,6 +686,16 @@ const Insights = ({ type }: { type?: string }) => {
                     <div className={styles.graphContainer}>
                       {venueBarData && venueBarData.datasets[0].data && (
                         <Bar options={options} data={venueBarData} />
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {perkData && perkData.datasets[0].data.length > 0 && (
+                  <div className={styles.registrationCount}>
+                    <div className={styles.graphContainer}>
+                      {perkData && perkData.datasets[0].data && (
+                        <Bar options={options} data={perkData} />
                       )}
                     </div>
                   </div>
