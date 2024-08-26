@@ -28,12 +28,13 @@ const Randomizer = () => {
   const navigate = useNavigate();
   const [userList, setUserList] = useState<userListType[]>([]);
   const [logList, setLogList] = useState<SpinWheelLogList[]>([]);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
   const { eventTitle } = useParams<{ eventTitle: string }>();
   useEffect(() => {
-    getSpinWheelUserList(eventId, setUserList);
+    getSpinWheelUserList(eventId, setUserList, setHasLoaded);
     getSpinWheelLogList(eventId, setLogList);
   }, []);
 
@@ -206,9 +207,15 @@ const Randomizer = () => {
             </div>
           </div>
         </div>
-      ) : (
+      ) : hasLoaded ? (
         <div className='center'>
-          <HashLoader color={'#46BF75'} size={50} />
+          <p className={styles.noLogsText}>
+            No users available to pick. Please add users to the list.
+          </p>
+        </div>
+      ) : (
+        <div className={styles.center}>
+          <HashLoader color='#FF5C00' loading={true} size={50} />
         </div>
       )}
     </Theme>

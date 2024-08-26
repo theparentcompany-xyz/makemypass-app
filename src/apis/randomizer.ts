@@ -7,6 +7,7 @@ import { SpinWheelLogList, userListType } from '../pages/app/Randomizer/types';
 export const getSpinWheelUserList = async (
   eventId: string,
   setUserList: Dispatch<SetStateAction<userListType[]>>,
+  setHasLoaded: Dispatch<SetStateAction<boolean>>,
 ) => {
   privateGateway
     .get(makeMyPass.spinWheelList(eventId))
@@ -16,6 +17,9 @@ export const getSpinWheelUserList = async (
     })
     .catch(() => {
       toast.error('Failed to get perks');
+    })
+    .finally(() => {
+      setHasLoaded(true);
     });
 };
 
