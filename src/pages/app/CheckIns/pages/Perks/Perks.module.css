@@ -60,3 +60,58 @@
   opacity: 0.6;
   border-radius: 4px;
 }
+
+.exhaustHistoryContainer {
+  text-align: left;
+  width: 100%;
+}
+
+.exhaustHistoryItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.modalDescription {
+  text-align: left;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.modalHeading {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.pageTexts {
+  margin-top: 1rem;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.pageHeading {
+  color: #fff;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.pageDescription {
+  color: #a4a4a4;
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}

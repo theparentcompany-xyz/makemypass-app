@@ -27,6 +27,7 @@ export const claimUserPerk = async (
   setScanLogs: Dispatch<SetStateAction<LogType[]>>,
   setChecking: Dispatch<SetStateAction<boolean>>,
   setTrigger: Dispatch<SetStateAction<boolean>>,
+  setExhaustHistory: Dispatch<SetStateAction<string[]>>,
 ) => {
   privateGateway
     .post(makeMyPass.scanGuestPerkClaim(eventId), {
@@ -40,7 +41,7 @@ export const claimUserPerk = async (
         setScanLogs((prev) => [
           ...prev,
           {
-            message: `${response.data.message.general[0]}`,
+            message: `${response.data.response.message}`,
             timestamp: formatDate(new Date().toString(), true),
             hasError: false,
           },
@@ -54,11 +55,15 @@ export const claimUserPerk = async (
         setScanLogs((prev) => [
           ...prev,
           {
-            message: ` ${error.response.data.message.general[0]}`,
+            message: ` ${error.response.data.response.message}`,
             timestamp: formatDate(new Date().toString(), true),
             hasError: true,
           },
         ]);
-      toast.error(error.response.data.message.general[0]);
+
+      if (error.response.data.response.history) {
+        setExhaustHistory(error.response.data.response.history);
+      }
+      toast.error(error.response.data.response.message);
     });
 };

@@ -3,22 +3,31 @@ import Theme from '../../../../../components/Theme/Theme';
 import styles from './Perks.module.css';
 import { claimUserPerk, getScanPerkList } from '../../../../../apis/perks';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
-import { TicketPerkType } from './types';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import Scanner from '../../../../../components/Scanner/Scanner';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
 import { LogType } from '../Venue/Venue';
+import Modal from '../../../../../components/Modal/Modal';
+import { formatDate } from '../../../../../common/commonFunctions';
+import { TicketPerkType } from './types';
 
 const Perks = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
   const [availablePerks, setAvailablePerks] = useState<TicketPerkType[]>([]);
-  const [selectedPerk, setSelectedPerk] = useState<string>('');
+  const [selectedPerk, setSelectedPerk] = useState<{
+    id: string;
+    name: string;
+  }>({
+    id: '',
+    name: '',
+  });
   const [ticketId, setTicketId] = useState<string>('');
   const [trigger, setTrigger] = useState(false);
 
   const [checking, setChecking] = useState<boolean>(false);
   const [scanLogs, setScanLogs] = useState<LogType[]>([]);
+  const [exhaustHistory, setExhaustHistory] = useState<string[]>([]);
 
   useEffect(() => {
     getScanPerkList(eventId, setAvailablePerks);
@@ -26,16 +35,40 @@ const Perks = () => {
 
   useEffect(() => {
     if (ticketId.length > 0 && trigger) {
-      claimUserPerk(eventId, ticketId, selectedPerk, setScanLogs, setChecking, setTrigger);
+      claimUserPerk(
+        eventId,
+        ticketId,
+        selectedPerk.id,
+        setScanLogs,
+        setChecking,
+        setTrigger,
+        setExhaustHistory,
+      );
     }
   }, [trigger, eventId]);
 
   return (
     <>
       <Theme>
+        {exhaustHistory.length > 0 && (
+          <Modal title='Previous Claims' onClose={() => setExhaustHistory([])}>
+            <div className={styles.exhaustHistoryContainer}>
+              <p className={styles.modalHeading}>Perk {selectedPerk.name}</p>
+              <p className={styles.modalDescription}>You have already claimed the this perk at</p>
+              {exhaustHistory.map((history, index) => (
+                <div key={history} className={styles.exhaustHistoryItem}>
+                  <p
+                    className={styles.exhaustHistoryItemDate}
+                  >{`${index + 1}. ${formatDate(history, true)}`}</p>
+                </div>
+              ))}
+            </div>
+          </Modal>
+        )}
+
         <EventHeader previousPageNavigate='-1' />
 
-        {!selectedPerk && (
+        {!selectedPerk.id && (
           <div className={styles.perkClaimContainer}>
             <div className={styles.perkClaimBody}>
               {availablePerks.map(
@@ -55,7 +88,10 @@ const Perks = () => {
                             <SecondaryButton
                               buttonText='Claim'
                               onClick={() => {
-                                setSelectedPerk(perkItem.id);
+                                setSelectedPerk({
+                                  id: perkItem.id,
+                                  name: perkItem.name,
+                                });
                               }}
                             />
                           </div>
@@ -68,8 +104,12 @@ const Perks = () => {
           </div>
         )}
 
-        {selectedPerk && (
+        {selectedPerk.id && (
           <div className={styles.scannerContainer}>
+            <div className={styles.pageTexts}>
+              <p className={styles.pageHeading}>Selected Perk: {selectedPerk.name}</p>
+            </div>
+
             <Scanner
               ticketId={ticketId}
               setTicketId={setTicketId}
@@ -77,7 +117,10 @@ const Perks = () => {
               setTrigger={setTrigger}
               checking={checking}
               onClose={() => {
-                setSelectedPerk('');
+                setSelectedPerk({
+                  id: '',
+                  name: '',
+                });
               }}
             />
 
