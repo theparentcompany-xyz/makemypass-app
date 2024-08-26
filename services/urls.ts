@@ -133,9 +133,9 @@ export const makeMyPass = {
   //Manage Games
   scratchCardClaim: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/games/${eventId}/scratch-card/${eventRegisterId}/claim`),
-  spinWheelList: (eventId: string) => makeMyPassURL(`/games/${eventId}/spinwheel/list`),
-  spinWheelLogCreate: (eventId: string) => makeMyPassURL(`/games/${eventId}/spinwheel/log/create`),
-  spinWheelLogList: (eventId: string) => makeMyPassURL(`/games/${eventId}/spinwheel/log/list`),
+  spinWheelList: (eventId: string) => makeMyPassURL(`/games/${eventId}/randomuser/list`),
+
+  spinWheelLogList: (eventId: string) => makeMyPassURL(`/games/${eventId}/randomuser/log/`),
 };
 
 export const makeMyPassSocket = {

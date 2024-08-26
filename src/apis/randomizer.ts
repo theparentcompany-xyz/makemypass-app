@@ -29,7 +29,7 @@ export const createSpinWheelLog = async (
   setLogList: Dispatch<SetStateAction<SpinWheelLogList[]>>,
 ) => {
   privateGateway
-    .post(makeMyPass.spinWheelLogCreate(eventId), {
+    .post(makeMyPass.spinWheelLogList(eventId), {
       event_register_id: userId,
     })
     .then((response) => {
