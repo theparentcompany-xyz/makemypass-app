@@ -71,6 +71,11 @@ const DashboardTabs = ({
       roles: [Roles.ADMIN, Roles.OWNER],
       category: 'others',
     },
+    randomsizer: {
+      title: 'Randomizer',
+      roles: [Roles.ADMIN, Roles.OWNER],
+      category: 'others',
+    },
   };
 
   if (import.meta.env.VITE_CURRENT_ENV === 'dev') {
@@ -79,11 +84,7 @@ const DashboardTabs = ({
       roles: [Roles.ADMIN, Roles.OWNER],
       category: 'postEvent',
     };
-    tabs.randomsizer = {
-      title: 'Randomizer',
-      roles: [Roles.ADMIN, Roles.OWNER],
-      category: 'others',
-    };
+
     // tabs.feedback = {
     //   title: 'Feedback',
     //   roles: [Roles.ADMIN, Roles.OWNER],
