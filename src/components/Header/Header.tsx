@@ -88,7 +88,8 @@ const Header = ({ type }: { type?: string | undefined }) => {
                         </p>
 
                         {window.location.pathname !== '/profile' &&
-                          window.location.pathname !== '/set-profile' && (
+                          window.location.pathname !== '/set-profile' &&
+                          import.meta.env.VITE_CURRENT_ENV === 'dev' && (
                             <motion.div
                               className={styles.dropdownContent}
                               initial={{ opacity: 0, y: -20 }}
