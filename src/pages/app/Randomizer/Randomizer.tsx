@@ -210,7 +210,7 @@ const Randomizer = () => {
       ) : hasLoaded && userList.length === 0 ? (
         <div className='center'>
           <p className={styles.noLogsText}>
-            No users available to pick. Please add users to the list.
+            Kindly checkin guests to view the list of users for random selection.
           </p>
         </div>
       ) : (
