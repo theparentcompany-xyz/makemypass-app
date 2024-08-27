@@ -230,7 +230,6 @@ const EventGlance = () => {
               <div>
                 <div className={styles.headingTexts}>
                   <p className={styles.eventTitle}>{eventData?.title}</p>
-                  <p className={styles.hostedByText}>{}</p>
                 </div>
 
                 <div className={styles.eventDatePlace}>

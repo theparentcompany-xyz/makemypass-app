@@ -9,12 +9,6 @@
   font-family: 'Inter', sans-serif;
 }
 
-@media (max-width: 1340px) {
-  .mailsOuterContainer {
-    padding: 0 1.25rem;
-  }
-}
-
 .mailHeader {
   display: flex;
   column-gap: 1rem;

@@ -2,13 +2,6 @@
   margin: auto;
 }
 
-@media (max-width: 1280px) {
-  .glanceContainer,
-  .insightsOuterContainer {
-    padding: 1rem;
-  }
-}
-
 .insightsContainer {
   display: flex;
   flex-direction: row;
