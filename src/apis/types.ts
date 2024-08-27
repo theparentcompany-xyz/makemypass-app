@@ -178,9 +178,9 @@ export interface EventType {
     position: string;
   }[];
   script_injection?: {
-    css?: string[];
-    script?: string[];
-  };
+    type: string;
+    value: string;
+  }[];
 }
 
 export type EventDetails = {
