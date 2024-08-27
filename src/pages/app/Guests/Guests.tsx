@@ -77,7 +77,8 @@ const Guests = () => {
     setSelectedGuest({} as RegistrationDataType);
     if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'edit') {
       getGuestEditPrefillData(eventId, selectedGuestId.id, setSelectedGuest);
-    } else if (selectedGuestId) getGuestInformation(eventId, selectedGuestId.id, setSelectedGuest);
+    } else if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'view')
+      getGuestInformation(eventId, selectedGuestId.id, setSelectedGuest);
   };
 
   const { event_id: eventId, current_user_role: userRole } = JSON.parse(
@@ -96,10 +97,10 @@ const Guests = () => {
   }, [eventRegisterId]);
 
   useEffect(() => {
-    if (eventId && !selectedGuestId?.id) {
+    if (eventId) {
       getGuestRegisterList(eventId, setGuests);
     }
-  }, [eventId, selectedGuestId, triggerFetch]);
+  }, [eventId, triggerFetch]);
 
   useEffect(() => {
     if (eventId) {
@@ -109,6 +110,8 @@ const Guests = () => {
   }, [eventId]);
 
   useEffect(() => {
+    console.log('Ivade Ethi');
+
     if (
       selectedGuestId?.id &&
       (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view')
@@ -128,10 +131,8 @@ const Guests = () => {
   };
 
   const onClose = () => {
-    setSelectedGuestId({
-      id: '',
-      type: '',
-    });
+    setSelectedGuestId(null);
+    setSelectedGuest(undefined);
   };
 
   useEffect(() => {

@@ -52,11 +52,10 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
               style={{ cursor: setSelectedGuestId ? 'pointer' : 'default' }}
               onClick={() => {
                 if (setSelectedGuestId) {
-                  setSelectedGuestId((prevState) => ({
-                    ...prevState,
+                  setSelectedGuestId({
                     id: item.id,
                     type: 'view',
-                  }));
+                  });
                 }
               }}
             >
@@ -92,11 +91,10 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
                       className='pointer'
                       onClick={() => {
                         if (setSelectedGuestId) {
-                          setSelectedGuestId((prevState) => ({
-                            ...prevState,
+                          setSelectedGuestId({
                             id: item.id,
                             type: 'edit',
-                          }));
+                          });
                         }
                       }}
                       color='#8E8E8E'
