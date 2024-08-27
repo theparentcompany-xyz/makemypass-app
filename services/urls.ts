@@ -19,6 +19,7 @@ export const makeMyPass = {
   scanGuestGiftClaim: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/gift/claim`), //Scratch Card
   scanGuestPerkClaim: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/perk/claim`),
   scanGuestPerkList: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/perk/list`),
+  scanGuestPrint: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/print`),
 
   //Manage Guests
   eventCreate: makeMyPassURL(`/manage-event/create/`),
