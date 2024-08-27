@@ -177,6 +177,10 @@ export interface EventType {
     image: string;
     position: string;
   }[];
+  script_injection?: {
+    css?: string[];
+    script?: string[];
+  };
 }
 
 export type EventDetails = {

@@ -36,6 +36,33 @@ const EventPage = () => {
   const typeParam = searchParams.get('type');
   const claimCode = searchParams.get('claim_code');
 
+  const injectScript = [
+    {
+      type: 'asyncURL',
+      value: 'https://www.googletagmanager.com/gtag/js?id=TAG_ID',
+    },
+    {
+      type: 'script',
+      value: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','TAG_ID');`,
+    },
+    {
+      type: 'url',
+      value: `console.log("Havvu");`,
+    },
+  ];
+
+  useEffect(() => {
+    const payload = {
+      hostname: window.location.hostname,
+      referrer: document.referrer !== window.location.hostname ? document.referrer : '',
+      url: window.location.pathname + window.location.search,
+      language: navigator.language,
+      timestamp: new Date().toISOString(),
+    };
+
+    console.log(payload);
+  }, []);
+
   useEffect(() => {
     if (eventTitle)
       getEventInfo({
@@ -84,6 +111,16 @@ const EventPage = () => {
               : 'Don not miss out! Register now for this event to learn, network and more. Click the link below to get started.'
           }
         />
+
+        {injectScript.map((scriptObject) => {
+          if (scriptObject.type === 'script') {
+            return <script type='text/javascript'>{scriptObject.value}</script>;
+          } else if (scriptObject.type === 'asyncURL') {
+            return <script src={scriptObject.value} async />;
+          } else if (scriptObject.type === 'url') {
+            return <script src={scriptObject.value} />;
+          }
+        })}
       </Helmet>
       <Theme type='eventForm'>
         <SuccessModal
