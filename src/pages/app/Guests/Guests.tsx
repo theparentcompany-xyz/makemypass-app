@@ -348,6 +348,13 @@ const Guests = () => {
                       }}
                     />
 
+                    <SecondaryButton
+                      buttonText='Pick User'
+                      onClick={() => {
+                        navigate(`/${eventTitle}/randomsizer`);
+                      }}
+                    />
+
                     {(userRole === Roles.ADMIN || userRole === Roles.OWNER) && (
                       <SecondaryButton
                         buttonText='CSV'

@@ -146,8 +146,8 @@ const Randomizer = () => {
           </AnimatePresence>
         </>
       )}
-      <EventHeader previousPageNavigate='/events' />
-      <DashboardTabs tab='randomizer' />
+      <EventHeader previousPageNavigate='-1' />
+
       {userList && userList.length > 0 ? (
         <div className={styles.center}>
           <div className={styles.pageTexts}>

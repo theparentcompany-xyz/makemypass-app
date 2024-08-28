@@ -1,12 +1,12 @@
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { VenueCRUDType } from '../../../../../apis/types';
 import Modal from '../../../../../components/Modal/Modal';
 import styles from './VenueModal.module.css';
 import InputField from '../../../../auth/Login/InputField';
-import { v4 as uuidv4 } from 'uuid';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaSave, FaTrash } from 'react-icons/fa';
 import toast from 'react-hot-toast';
-import { listEventVenues, updateEventVenueList } from '../../../../../apis/venue';
+import { createEventVenue, deleteEventVenue, updateEventVenue } from '../../../../../apis/venue';
+import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 
 const VenueModal = ({
   eventId,
@@ -17,85 +17,32 @@ const VenueModal = ({
   venues: VenueCRUDType;
   setVenues: Dispatch<SetStateAction<VenueCRUDType>>;
 }) => {
-  const newVenueName = useRef<HTMLInputElement>(null);
-  const selectedVenueId = useRef<string | null>(null);
-
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-
-  const updateStateVenueList = ({
-    venueName,
-    venueId,
-  }: {
-    venueName: string;
-    venueId?: string;
-  }) => {
-    if (venueId) {
-      const newVenues = venues.venueList.map((venue) => {
-        if (venue.id === venueId) {
-          return {
-            ...venue,
-            name: venueName,
-          };
-        }
-        return venue;
-      });
-
-      updateEventVenueList(newVenues, eventId)
-        .then(() => {
-          listEventVenues(eventId, setVenues);
-        })
-        .catch(() => {
-          toast.error('Failed to update venue');
-        });
-    } else {
-      const newVenue = {
-        id: uuidv4(),
-        name: venueName,
-        count: 0,
-      };
-
-      updateEventVenueList([...venues.venueList, newVenue], eventId)
-        .then(() => {
-          listEventVenues(eventId, setVenues);
-        })
-        .catch(() => {
-          toast.error('Failed to add venue');
-        });
-    }
-  };
+  const [venueData, setVenueData] = useState({ name: '', id: '', type: '' });
 
   return (
     <>
-      {showDeleteModal && (
+      {venueData && venueData.type === 'DELETE' ? (
         <Modal
           title='Delete Confirmation'
           onClose={() => setVenues({ ...venues, showModal: false })}
         >
           <div className={styles.deleteContainer}>
             <p className={styles.deleteText}>
-              {venues.venueList.find((venue) => venue.id === selectedVenueId.current)?.count ??
-              0 > 0
+              {venues.venueList.find((venue) => venue.id === venueData.id)?.count ?? 0 > 0
                 ? 'This venue has check-ins associated with it. Deleting this venue will delete all the check-ins associated  with it.'
                 : 'Are you sure you want to delete this venue?'}
             </p>
             <div className={styles.deleteButtons}>
               <button
-                onClick={() => {
-                  const newVenues = venues.venueList.filter(
-                    (venue) => venue.id !== venues.venueList[0].id,
-                  );
-                  updateEventVenueList(newVenues, eventId)
-                    .then(() => {
-                      listEventVenues(eventId, setVenues);
-                    })
-                    .catch(() => {
-                      toast.error('Failed to delete venue');
-                    })
-                    .finally(() => {
-                      setShowDeleteModal(false);
-                    });
-                }}
                 className={styles.deleteButton}
+                onClick={() => {
+                  deleteEventVenue(eventId, venueData.id!);
+                  const updateVenues = venues.venueList.filter(
+                    (venue) => venue.id !== venueData.id,
+                  );
+                  setVenues({ ...venues, venueList: updateVenues, showModal: true });
+                  setVenueData({ name: '', id: '', type: '' });
+                }}
               >
                 Delete
               </button>
@@ -108,73 +55,116 @@ const VenueModal = ({
             </div>
           </div>
         </Modal>
-      )}
-      {!showDeleteModal && (
-        <Modal title='Add Venue' onClose={() => setVenues({ ...venues, showModal: false })}>
-          <div className={styles.bulkUploadContainer}>
-            <InputField
-              placeholder='Enter Venue Name'
-              type='text'
-              name='venue_name'
-              id='venue_name'
+      ) : (
+        <Modal
+          title='Event Venue Management'
+          onClose={() => setVenues({ ...venues, showModal: false })}
+        >
+          {venueData.type === 'CREATE' && (
+            <div className={styles.createContainer}>
+              <InputField
+                placeholder='Enter Venue Name'
+                type='text'
+                name='venue_name'
+                id='venue_name'
+                icon={<></>}
+                onChange={(e) =>
+                  setVenueData({ ...venueData, name: e.target.value, type: 'CREATE' })
+                }
+              />
+
+              <button
+                className={styles.uploadButton}
+                onClick={() => {
+                  if (venueData.name) {
+                    createEventVenue(eventId, venueData.name, setVenues);
+                    setVenueData({ name: '', id: '', type: '' });
+                  } else {
+                    toast.error('Please enter a venue name');
+                  }
+                }}
+              >
+                Save Venue
+              </button>
+
+              <hr className={styles.line} />
+            </div>
+          )}
+
+          <div className={styles.headerRow}>
+            <p className={styles.sectionHeader}>{`Current Venues (${venues.venueList.length})`}</p>
+            <SecondaryButton
+              buttonText='Add Venue'
               icon={<></>}
-              ref={newVenueName}
+              onClick={() => setVenueData({ name: '', id: '', type: 'CREATE' })}
             />
           </div>
-
-          <button
-            onClick={() => {
-              if (newVenueName.current?.value && !selectedVenueId.current) {
-                updateStateVenueList({ venueName: newVenueName.current.value });
-                newVenueName.current.value = '';
-              } else if (newVenueName.current?.value && selectedVenueId.current) {
-                updateStateVenueList({
-                  venueName: newVenueName.current.value,
-                  venueId: selectedVenueId.current,
-                });
-                newVenueName.current.value = '';
-                selectedVenueId.current = null;
-              } else {
-                toast.error('Please enter a venue name');
-              }
-            }}
-            className={styles.uploadButton}
-          >
-            Save Venue
-          </button>
-
-          <hr className={styles.line} />
-
-          <p className={styles.sectionHeader}>Current Venues</p>
           <div className={styles.logsListingContainer}>
             {venues.venueList.map((venue) => (
               <div className={styles.log}>
                 <div className={styles.logDetails}>
-                  <p className={styles.logName}>{venue.name}</p>
-                  <p className={styles.total} style={{ marginTop: '0.25rem' }}>
-                    {venue.count} Check Ins
-                  </p>
+                  {venueData.id && venueData.name && venueData.id === venue.id ? (
+                    <InputField
+                      placeholder='Enter Venue Name'
+                      type='text'
+                      name='venue_name'
+                      id='venue_name'
+                      icon={<></>}
+                      value={venueData.name}
+                      onChange={(e) => setVenueData({ ...venueData, name: e.target.value })}
+                      style={{
+                        margin: '0',
+                      }}
+                    />
+                  ) : (
+                    <p className={styles.venueName}>{venue.name}</p>
+                  )}
+
+                  {venueData && venueData.id === venue.id && venueData.type === 'EDIT' ? (
+                    <div className='row'>
+                      <SecondaryButton
+                        buttonText='Save'
+                        icon={<FaSave />}
+                        key={venue.id}
+                        onClick={() => {
+                          if (venueData.name) {
+                            updateEventVenue(
+                              eventId,
+                              { name: venueData.name, id: venueData.id },
+                              setVenues,
+                            );
+                            setVenueData({ name: '', id: '', type: '' });
+                          } else {
+                            toast.error('Please enter a venue name');
+                          }
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div className='row'>
+                      <FaTrash
+                        title='Delete Venue'
+                        color='#8e8e8e'
+                        className={styles.reportIcon}
+                        onClick={() => {
+                          setVenueData({ name: venue.name, id: venue.id, type: 'DELETE' });
+                        }}
+                      />
+                      <FaEdit
+                        title='Edit Venue'
+                        color='#8e8e8e'
+                        className={styles.reportIcon}
+                        onClick={() => {
+                          setVenueData({ name: venue.name, id: venue.id, type: 'EDIT' });
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
 
-                <div className='row'>
-                  <FaTrash
-                    title='Delete Venue'
-                    color='#8e8e8e'
-                    className={styles.reportIcon}
-                    onClick={() => {
-                      setShowDeleteModal(true);
-                    }}
-                  />
-                  <FaEdit
-                    title='Edit Venue'
-                    color='#8e8e8e'
-                    className={styles.reportIcon}
-                    onClick={() => {
-                      newVenueName.current!.value = venue.name;
-                      selectedVenueId.current = venue.id;
-                    }}
-                  />
-                </div>
+                <p className={styles.total} style={{ marginTop: '0.25rem' }}>
+                  {venue.count} Check Ins
+                </p>
               </div>
             ))}
 

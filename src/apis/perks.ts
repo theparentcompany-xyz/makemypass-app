@@ -60,7 +60,16 @@ export const claimUserPerk = async (
             hasError: true,
           },
         ]);
-
+      if (setScanLogs && error.response.data.message.general) {
+        setScanLogs((prev) => [
+          ...prev,
+          {
+            message: ` ${error.response.data.message.general[0]}`,
+            timestamp: formatDate(new Date().toString(), true),
+            hasError: true,
+          },
+        ]);
+      }
       if (error.response.data.response.history) {
         setExhaustHistory(error.response.data.response.history);
       }

@@ -67,11 +67,18 @@ const EventGlance = () => {
 
   useEffect(() => {
     if (eventId) {
-      listEventSpeakers(eventId, setSpeakers);
-      listEventVenues(eventId, setVenues);
       listEventMails(eventId, setMails);
     }
   }, [eventId]);
+
+  useEffect(() => {
+    if (venues.showModal) listEventVenues(eventId, setVenues);
+  }, [venues.showModal]);
+
+  useEffect(() => {
+    if (speakers.showModal) listEventSpeakers(eventId, setSpeakers);
+  }, [speakers.showModal]);
+
   return (
     <>
       <Theme>
@@ -188,7 +195,7 @@ const EventGlance = () => {
             <div className={styles.eventLinkContainer}>
               <div
                 className={styles.eventLink}
-              >{`https://${window.location.hostname}/${eventName}`}</div>
+              >{`${import.meta.env.VITE_FRONTEND_URL}/${eventName}`}</div>
               <div className={styles.linkbuttons}>
                 <SecondaryButton
                   buttonText='Copy Link'

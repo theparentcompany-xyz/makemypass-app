@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import toast from 'react-hot-toast';
@@ -38,20 +38,72 @@ export const listEventVenues = async (
     });
 };
 
-export const updateEventVenueList = (venues: VenueType[], eventId: string) => {
-  return new Promise((resolve, reject) => {
-    privateGateway
-      .post(makeMyPass.eventVenueUpdate(eventId), {
-        venues,
-      })
-      .then((response) => {
-        toast.success(response.data.message.general[0]);
-        resolve(response.data.message.general[0]);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+export const createEventVenue = async (
+  eventId: string,
+  venueName: string,
+  setVenues: Dispatch<SetStateAction<VenueCRUDType>>,
+) => {
+  privateGateway
+    .post(makeMyPass.eventVenueCreate(eventId), {
+      name: venueName,
+    })
+    .then((response) => {
+      toast.success(response.data.response.message);
+      setVenues((prev) => ({
+        ...prev,
+        venueList: [
+          ...prev.venueList,
+          {
+            id: response.data.response.venue_id,
+            name: venueName,
+            count: 0,
+          },
+        ],
+      }));
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
+export const updateEventVenue = async (
+  eventId: string,
+  venue: VenueType,
+  setVenues: Dispatch<SetStateAction<VenueCRUDType>>,
+) => {
+  privateGateway
+    .put(makeMyPass.eventVenueUpdate(eventId, venue.id), {
+      name: venue.name,
+    })
+    .then((response) => {
+      toast.success(response.data.message.general[0]);
+      setVenues((prev) => ({
+        ...prev,
+        venueList: prev.venueList.map((item) => {
+          if (item.id === venue.id) {
+            return {
+              ...item,
+              name: venue.name,
+            };
+          }
+          return item;
+        }),
+      }));
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
+export const deleteEventVenue = async (eventId: string, venueId: string) => {
+  privateGateway
+    .delete(makeMyPass.eventVenueUpdate(eventId, venueId))
+    .then((response) => {
+      toast.success(response.data.message.general[0]);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
 };
 
 export const checkInUserVenue = async (
