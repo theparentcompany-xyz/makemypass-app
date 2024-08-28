@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import styles from './Randomizer.module.css';
 import Theme from '../../../components/Theme/Theme';
 import EventHeader from '../../../components/EventHeader/EventHeader';
-import DashboardTabs from '../../../components/DashboardTabs/DashboardTabs';
-
 import {
   createSpinWheelLog,
   getSpinWheelLogList,
