@@ -15,15 +15,21 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
   const [previews, setPreviews] = useState<previewType[]>([]);
 
   const onUpdateEmail = () => {
-    const changedData: Record<string, any> = Object.entries(mailData as Record<string, any>)
-      .filter(([key, value]) => fetchedMail?.[key as keyof MailType] !== value)
-      .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
+    const formData = new FormData();
+
+    Object.entries(mailData as Record<string, any>).forEach(([key, value]) => {
+      if (fetchedMail?.[key as keyof MailType] !== value) {
+        formData.append(key, value);
+      }
+    });
 
     attachments.forEach((attachment) => {
       if (attachment.type === 'newFile') {
-        changedData.attachments = attachment.file;
+        formData.append('attachments[]', attachment.file);
       }
     });
+
+    const changedData = formData;
 
     updateEventMail(eventId, mailData as MailType, changedData, setMails, setFetchedMail).then(
       () => {
