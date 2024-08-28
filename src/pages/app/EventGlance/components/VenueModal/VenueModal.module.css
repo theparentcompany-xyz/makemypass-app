@@ -2,15 +2,26 @@
   width: 100%;
 }
 
+.createButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1rem;
+  column-gap: 0.5rem;
+}
+
 .uploadFileButton {
-  padding: 0.5rem 1rem;
-  border: 1.5px solid rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
+  text-align: center;
   background: rgb(37, 37, 37, 0.9);
-  color: #fff;
-  font-family: 'Inter', sans-serif;
+  color: rgb(43, 42, 42);
+  border: none;
+  border-radius: 8px;
+  padding: 1rem;
+
+  font-weight: 500;
   cursor: pointer;
-  width: 100%;
+  margin-top: 1rem;
 }
 
 .sectionHeader {
@@ -127,14 +138,13 @@
 }
 
 .uploadButton {
-  width: 100%;
   text-align: center;
   background: #fdfdfd;
   color: rgb(43, 42, 42);
   border: none;
   border-radius: 8px;
   padding: 0.5rem 1rem;
-  font-size: 1rem;
+
   font-weight: 500;
   cursor: pointer;
   margin-top: 1rem;
@@ -248,7 +258,7 @@
   color: #fdfdfd;
   border: none;
   border-radius: 8px;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;

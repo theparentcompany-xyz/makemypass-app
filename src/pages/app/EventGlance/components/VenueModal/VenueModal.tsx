@@ -73,19 +73,27 @@ const VenueModal = ({
                 }
               />
 
-              <button
-                className={styles.uploadButton}
-                onClick={() => {
-                  if (venueData.name) {
-                    createEventVenue(eventId, venueData.name, setVenues);
-                    setVenueData({ name: '', id: '', type: '' });
-                  } else {
-                    toast.error('Please enter a venue name');
-                  }
-                }}
-              >
-                Save Venue
-              </button>
+              <div className={styles.createButtons}>
+                <button
+                  className={styles.uploadButton}
+                  onClick={() => {
+                    if (venueData.name) {
+                      createEventVenue(eventId, venueData.name, setVenues);
+                      setVenueData({ name: '', id: '', type: '' });
+                    } else {
+                      toast.error('Please enter a venue name');
+                    }
+                  }}
+                >
+                  Save Venue
+                </button>
+                <button
+                  onClick={() => setVenueData({ name: '', id: '', type: '' })}
+                  className={styles.cancelButton}
+                >
+                  Cancel
+                </button>
+              </div>
 
               <hr className={styles.line} />
             </div>
