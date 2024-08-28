@@ -86,9 +86,8 @@ const EventPage = () => {
         />
 
         {eventData?.script_injection &&
+          eventData?.script_injection.length > 0 &&
           eventData?.script_injection.map((scriptObject) => {
-            console.log(scriptObject);
-
             if (scriptObject.type === 'script') {
               return <script type='text/javascript'>{scriptObject.value}</script>;
             } else if (scriptObject.type === 'asyncURL') {

@@ -26,17 +26,12 @@ const EditGuest = ({
   const [updatedFormData, setUpdatedFormData] = useState<any>(formData);
 
   useEffect(() => {
-    const updatedData = Object.keys(formData).reduce((acc, key) => {
-      return {
-        ...acc,
-        [formData[key].field_key]: formData[key].value,
-      };
-    }, {});
-
-    setUpdatedFormData(updatedData);
+    setUpdatedFormData(formData);
   }, [formData]);
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
+    console.log(updatedFormData);
+
     setUpdatedFormData({
       ...updatedFormData,
       [fieldName]: fieldValue,

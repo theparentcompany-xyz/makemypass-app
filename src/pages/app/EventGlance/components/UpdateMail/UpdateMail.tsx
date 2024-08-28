@@ -5,7 +5,7 @@ import { deleteEventMailAttachment, getEventMailData } from '../../../../../apis
 import { HashLoader } from 'react-spinners';
 import { updateEventMail } from '../../../../../apis/mails';
 import { AttachmentType, previewType, PropTypes } from './types';
-import PreviewBox from './components/PreviewBox/PreviewBox';
+import UploadAttachement from './components/UploadAttachement/UploadAttachements';
 
 const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: PropTypes) => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -173,29 +173,11 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
                 <div className={styles.inputContainer}>
                   {/* Add Attachments container */}
                   <p className={styles.inputLabel}>Attachments</p>
-                  <div className={styles.attachmentsContainer}>
-                    {previews.length > 0 && (
-                      <div className={styles.previewContainer}>
-                        {previews?.map((preview, index) => (
-                          <PreviewBox
-                            key={index}
-                            index={index}
-                            preview={preview}
-                            handleDeleteAttachment={handleDeleteAttachment}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <div className={styles.uploadContainer}>
-                    <input
-                      type='file'
-                      multiple
-                      value={''}
-                      onChange={handleFileChange}
-                      className={styles.fileInput}
-                    />
-                  </div>
+                  <UploadAttachement
+                    handleFileChange={handleFileChange}
+                    handleDeleteAttachment={handleDeleteAttachment}
+                    previews={previews}
+                  />
                 </div>
               )}
               <div className={styles.inputContainer}>
