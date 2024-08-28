@@ -281,7 +281,7 @@ export type SpeakerType = {
   id: string;
   name: string;
   position: string;
-  image: string;
+  image: File | Blob | null | string;
 };
 
 export type SpeakerCRUDType = {

@@ -1,0 +1,7 @@
+export type SpeakerType = {
+  id: string;
+  name: string;
+  position: string;
+  image: File | Blob | null;
+  type: string;
+};
