@@ -78,7 +78,7 @@ const Guests = () => {
 
   const getGuestData = () => {
     if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'edit') {
-      getGuestEditPrefillData(eventId, selectedGuestId.id, setSelectedGuest);
+      getGuestEditPrefillData(eventId, selectedGuestId.id, setSelectedGuest, setFormData);
     } else if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'view')
       getGuestInformation(eventId, selectedGuestId.id, setSelectedGuest);
   };
@@ -239,10 +239,8 @@ const Guests = () => {
 
         {selectedGuestId && eventFormData && selectedGuestId.type === 'edit' && (
           <EditGuest
-            formData={{
-              ...selectedGuest?.submissions,
-              id: selectedGuestId.id,
-            }}
+            formData={formData}
+            eventRegisterId={selectedGuestId.id}
             setFormData={setFormData}
             eventFormData={eventFormData}
             setSelectedGuestId={setSelectedGuestId}
