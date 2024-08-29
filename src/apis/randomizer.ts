@@ -53,3 +53,17 @@ export const getSpinWheelLogList = async (
       toast.error('Failed to get logs');
     });
 };
+
+export const checkSpinWheelPickUser = async (
+  eventId: string,
+  setShowPicket: Dispatch<SetStateAction<boolean>>,
+) => {
+  privateGateway
+    .get(makeMyPass.spinWheelCheckPickUser(eventId))
+    .then((response) => {
+      setShowPicket(response.data.response.is_random_user);
+    })
+    .catch(() => {
+      toast.error('Failed to get logs');
+    });
+};

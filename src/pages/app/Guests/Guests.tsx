@@ -39,6 +39,7 @@ import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout
 import Glance from '../../../components/Glance/Glance';
 import Slider from '../../../components/SliderButton/Slider';
 import { useLocation } from 'react-router-dom';
+import { checkSpinWheelPickUser } from '../../../apis/randomizer';
 
 const Guests = () => {
   const navigate = useNavigate();
@@ -61,6 +62,8 @@ const Guests = () => {
   const [ticketCode, setTicketCode] = useState<string>('');
   const [showScanner, setShowScanner] = useState<boolean>(false);
   const [isCashInHand, setIsCashInHand] = useState<boolean>(false);
+
+  const [showPicker, setShowPicker] = useState<boolean>(false);
 
   const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
 
@@ -104,6 +107,7 @@ const Guests = () => {
     if (eventId) {
       getFormCategories(eventId, setCategories);
       getEventFormData(eventId, setEventFormData);
+      checkSpinWheelPickUser(eventId, setShowPicker);
     }
   }, [eventId]);
 
@@ -343,12 +347,14 @@ const Guests = () => {
                       }}
                     />
 
-                    <SecondaryButton
-                      buttonText='Pick User'
-                      onClick={() => {
-                        navigate(`/${eventTitle}/randomsizer`);
-                      }}
-                    />
+                    {showPicker && (
+                      <SecondaryButton
+                        buttonText='Pick User'
+                        onClick={() => {
+                          navigate(`/${eventTitle}/randomsizer`);
+                        }}
+                      />
+                    )}
 
                     {(userRole === Roles.ADMIN || userRole === Roles.OWNER) && (
                       <SecondaryButton
