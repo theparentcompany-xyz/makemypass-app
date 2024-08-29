@@ -12,7 +12,6 @@ export const getSpinWheelUserList = async (
   privateGateway
     .get(makeMyPass.spinWheelList(eventId))
     .then((response) => {
-      console.log(response.data.response);
       setUserList(response.data.response.participants);
     })
     .catch(() => {

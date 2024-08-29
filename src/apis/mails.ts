@@ -49,8 +49,6 @@ export const updateEventMail = async (
   setMailData: React.Dispatch<React.SetStateAction<MailType | undefined>>,
 ) => {
   try {
-    console.log('data', data);
-
     const response = await privateGateway.patch(
       makeMyPass.communicationMailUPdate(eventId, selectedMail?.id),
       data,

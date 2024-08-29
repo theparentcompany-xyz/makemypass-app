@@ -32,8 +32,6 @@ const EditGuest = ({
   }, [formData]);
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
-    console.log(updatedFormData);
-
     setUpdatedFormData({
       ...updatedFormData,
       [fieldName]: fieldValue,
