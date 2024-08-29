@@ -18,9 +18,10 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
     const formData = new FormData();
 
     Object.entries(mailData as Record<string, any>).forEach(([key, value]) => {
-      if (fetchedMail?.[key as keyof MailType] !== value) {
-        formData.append(key, value);
+      if (key === 'attachments' || key === 'id' || key === 'attachment') {
+        return;
       }
+      formData.append(key, value);
     });
 
     attachments.forEach((attachment) => {

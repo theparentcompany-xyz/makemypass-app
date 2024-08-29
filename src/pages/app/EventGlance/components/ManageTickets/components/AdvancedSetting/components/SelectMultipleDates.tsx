@@ -24,9 +24,7 @@ const SelectMultipleDates = ({ selectedTicket, setSelectedTicket }: SelectDatePr
   }, [selectedTicket]);
 
   const [selectedDates, setSelectedDates] = useState<Date[] | null | undefined>([]);
-  // useEffect(() => {
-  //   console.log(selectedDates);
-  // }, [selectedDates]);
+
   return (
     <>
       {' '}
