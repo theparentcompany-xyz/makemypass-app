@@ -300,6 +300,7 @@ const DynamicForm = ({
                   previews={previews}
                   handleFileChange={(event) => handleFileChange(event, field)}
                   handleDeleteAttachment={handleDeleteAttachment}
+                  allowedFileTypes={field.property?.extension_types}
                 />
               </CommonRenderStructure>
             );
