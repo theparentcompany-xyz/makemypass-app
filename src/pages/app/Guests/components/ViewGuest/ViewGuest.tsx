@@ -23,7 +23,6 @@ import { RegistrationDataType } from '../../../Overview/Overview/types';
 import { BiChevronDown } from 'react-icons/bi';
 import { HashLoader } from 'react-spinners';
 import { multipleTicketCount } from '../../../CheckIns/pages/ScanQR/types';
-import { LogType } from '../../../CheckIns/pages/Venue/Venue';
 import ScannerResponseModal from '../../../CheckIns/components/ScannerResponseModal/ScannerResponseModal';
 import PreviewBox from '../../../EventGlance/components/UpdateMail/components/PreviewBox/PreviewBox';
 
@@ -82,25 +81,18 @@ const ViewGuest = ({
     hasMultipleTickets: false,
   });
   const [trigger, setTrigger] = useState(false);
-  const [checking, setChecking] = useState<boolean>(false);
-  const [scanLogs, setScanLogs] = useState<LogType[]>([]);
   const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
-    console.log(checking);
-    console.log(scanLogs);
-
     if (selectedGuestData && selectedGuestData['id'] && trigger) {
-      checkInUser(
-        selectedGuestData['ticket_code'],
+      checkInUser({
+        ticketId: selectedGuestData['ticket_code'],
         eventId,
-        setScanLogs,
         setMessage,
-        setChecking,
         setMultipleTickets,
         multipleTickets,
         setTrigger,
-      );
+      });
     }
   }, [trigger, eventId, selectedGuestData]);
 
@@ -245,23 +237,19 @@ const ViewGuest = ({
             }}
           />
         </div>
-        {selectedGuestData && Object.keys(selectedGuestData).length > 0 ? (
-          <div
-            className={styles.viewGuests}
-            style={{
-              maxWidth: '30rem',
-            }}
-          >
+        {selectedGuestData &&
+        Object.keys(selectedGuestData).length > 0 &&
+        selectedGuestData.submissions.length > 0 ? (
+          <div className={styles.viewGuests}>
             <div className={styles.topSection}>
               <div className={styles.row}>
                 <div className={styles.tsTexts}>
                   <p className={styles.name}>
                     <span>
-                      {
+                      {Array.isArray(selectedGuestData.submissions) &&
                         selectedGuestData.submissions.find(
                           (submission) => submission.title === 'Name',
-                        )?.value
-                      }{' '}
+                        )?.value}{' '}
                     </span>
                     {selectedGuestData['is_approved'] && (
                       <span className={styles.rowType}>Shortlisted</span>
@@ -271,11 +259,10 @@ const ViewGuest = ({
                     )}
                   </p>
                   <p className={styles.emailAddress}>
-                    {
+                    {Array.isArray(selectedGuestData.submissions) &&
                       selectedGuestData.submissions.find(
                         (submission) => submission.type === 'email',
-                      )?.value
-                    }
+                      )?.value}
                   </p>
                   <p className={styles.ticketCode}>
                     <span>Ticket Code:</span> {selectedGuestData['ticket_code']}
@@ -418,7 +405,7 @@ const ViewGuest = ({
                     <div
                       className={styles.icon}
                       onClick={() => {
-                        if (setResentTicket) {
+                        if (setResentTicket && Array.isArray(selectedGuestData.submissions)) {
                           setResentTicket((prevState) => ({
                             ...prevState,
                             status: true,
@@ -480,16 +467,14 @@ const ViewGuest = ({
                     <div
                       onClick={() => {
                         if (!isArray(selectedGuestData['ticket_code']))
-                          checkInUser(
-                            selectedGuestData['ticket_code'],
+                          checkInUser({
+                            ticketId: selectedGuestData['ticket_code'],
                             eventId,
-                            setScanLogs,
                             setMessage,
-                            setChecking,
                             setMultipleTickets,
                             multipleTickets,
                             setTrigger,
-                          );
+                          });
                       }}
                       className={styles.icon}
                     >
@@ -684,44 +669,47 @@ const ViewGuest = ({
               </>
             )}
             <div className={styles.bottomSection}>
-              {selectedGuestData.submissions.map((submission, index) => {
-                return (
-                  <div className={styles.field} key={index}>
-                    <p className={styles.fieldLabel}>{submission.title}</p>
-                    <p className={styles.fieldData}>
-                      {submission.type === 'file' ? (
-                        Array.isArray(submission.value) ? (
-                          submission.value.map((file, index) => {
-                            return (
+              {Array.isArray(selectedGuestData.submissions) &&
+                selectedGuestData.submissions.map((submission, index) => {
+                  return (
+                    <div className={styles.field} key={index}>
+                      <p className={styles.fieldLabel}>{submission.title}</p>
+                      <p className={styles.fieldData}>
+                        <div className={styles.previewBoxContainer}>
+                          {submission.type === 'file' ? (
+                            Array.isArray(submission.value) ? (
+                              submission.value.map((file, index) => {
+                                return (
+                                  <PreviewBox
+                                    key={index}
+                                    index={index}
+                                    preview={{
+                                      previewURL: file,
+                                      previewExtension: 'image/png',
+                                      previewName: file.split('/').pop() as string,
+                                    }}
+                                  />
+                                );
+                              })
+                            ) : (
                               <PreviewBox
                                 key={index}
                                 index={index}
                                 preview={{
-                                  previewURL: file,
+                                  previewURL: submission.value,
                                   previewExtension: 'image/png',
-                                  previewName: file.split('/').pop() as string,
+                                  previewName: submission.value.split('/').pop() as string,
                                 }}
                               />
-                            );
-                          })
-                        ) : (
-                          <PreviewBox
-                            key={index}
-                            index={index}
-                            preview={{
-                              previewURL: submission.value,
-                              previewExtension: 'image/png',
-                              previewName: submission.value.split('/').pop() as string,
-                            }}
-                          />
-                        )
-                      ) : (
-                        submission.value
-                      )}
-                    </p>
-                  </div>
-                );
-              })}
+                            )
+                          ) : (
+                            submission.value
+                          )}
+                        </div>
+                      </p>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         ) : (

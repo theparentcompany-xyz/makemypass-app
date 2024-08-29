@@ -9,7 +9,7 @@ export interface Field {
     | {
         extension_types: string[];
         max_size: number;
-        is_multiple: boolean;
+        max_no_of_files: number;
         max_length?: number;
         min_length?: number;
       }

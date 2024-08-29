@@ -1,39 +1,35 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import Modal from '../../../../../components/Modal/Modal';
 import styles from '../../Guests.module.css';
 import { updateGuestSubmission } from '../../../../../apis/guests';
-import { FormEventData, SelectedGuest } from '../../types';
+import { FormEventData, GuestsType, SelectedGuest } from '../../types';
 import { FormDataType } from '../../../../../apis/types';
 
 const EditGuest = ({
   formData,
+  eventRegisterId,
   setFormData,
   eventFormData,
   setSelectedGuestId,
   eventId,
   onClose,
+  setGuests,
 }: {
-  formData: any;
+  formData: FormDataType;
+  eventRegisterId: string;
   setFormData: Dispatch<SetStateAction<FormDataType>>;
   eventFormData: FormEventData;
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;
   onClose: () => void;
+  setGuests: Dispatch<SetStateAction<GuestsType[]>>;
 }) => {
   const [formErrors, setFormErrors] = useState<any>({});
 
-  const [updatedFormData, setUpdatedFormData] = useState<any>(formData);
-
-  useEffect(() => {
-    setUpdatedFormData(formData);
-  }, [formData]);
-
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
-    console.log(updatedFormData);
-
-    setUpdatedFormData({
-      ...updatedFormData,
+    setFormData({
+      ...formData,
       [fieldName]: fieldValue,
     });
 
@@ -46,7 +42,15 @@ const EditGuest = ({
   };
 
   const handleSubmissionEdit = () => {
-    updateGuestSubmission(eventId, updatedFormData, setSelectedGuestId, setFormData, setFormErrors);
+    updateGuestSubmission(
+      eventId,
+      eventRegisterId,
+      formData,
+      setSelectedGuestId,
+      setFormData,
+      setFormErrors,
+      setGuests,
+    );
   };
 
   return (
@@ -58,7 +62,7 @@ const EditGuest = ({
               <DynamicForm
                 formFields={eventFormData.form}
                 formErrors={formErrors}
-                formData={updatedFormData}
+                formData={formData}
                 onFieldChange={onFieldChange}
               />
             </div>
@@ -67,9 +71,9 @@ const EditGuest = ({
                 onClick={() => {
                   handleSubmissionEdit();
                 }}
-                className={`pointer ${styles.button}`}
+                className={`pointer ${styles.primaryButton}`}
               >
-                Edit
+                Save Changes
               </p>
               <p
                 onClick={() => {

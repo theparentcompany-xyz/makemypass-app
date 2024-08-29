@@ -194,29 +194,160 @@ const EditEvent = () => {
     <>
       <Theme>
         {showAdvancedSettings && (
-          <Modal title='Advanced Settings' onClose={() => setShowAdvancedSettings(false)}>
-            <div className={styles.followupMessageContainer}>
-              <label>Followup Message</label>
-              <p className={styles.subText}>
-                This message will be shown once the user has registered for the event.
-              </p>
-              <div className={styles.followupMessage}>
-                <Editor
-                  description={eventData?.followup_msg ?? ''}
-                  setNewDescription={setFollowupMessage}
-                />
+          <Modal
+            title='Advanced Settings'
+            type='side'
+            onClose={() => setShowAdvancedSettings(false)}
+          >
+            <div className={styles.advancedModalContainer}>
+              {eventData && (
+                <>
+                  <div className={styles.option}>
+                    <label>
+                      <HiOutlineTicket size={20} color='#949597' />
+                      Show Tickets First
+                    </label>
+                    <Slider
+                      checked={eventData.show_ticket_first as boolean}
+                      text={''}
+                      onChange={() =>
+                        setEventData({
+                          ...eventData,
+                          show_ticket_first: !eventData.show_ticket_first,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className={styles.option}>
+                    <label>
+                      <AiOutlineTeam size={20} color='#949597' /> Allow Team Registration
+                    </label>
+                    <Slider
+                      checked={eventData.is_team as boolean}
+                      text={''}
+                      onChange={() =>
+                        setEventData({
+                          ...eventData,
+                          is_team: !eventData.is_team,
+                        })
+                      }
+                    />
+                  </div>
+                  {!eventData.is_team && (
+                    <>
+                      <div className={styles.option}>
+                        <label>
+                          <BsTicketDetailed size={20} color='#949597' /> Allow Multi Ticket
+                        </label>
+                        <Slider
+                          checked={eventData.select_multi_ticket as boolean}
+                          text={''}
+                          onChange={() =>
+                            setEventData({
+                              ...eventData,
+                              select_multi_ticket: !eventData.select_multi_ticket,
+                            })
+                          }
+                        />
+                      </div>
+                      {eventData.select_multi_ticket && (
+                        <motion.div
+                          className={styles.subOption}
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <label>
+                            <BsTicketDetailed size={20} color='#949597' /> Grouped Ticket
+                          </label>
+                          <Slider
+                            checked={eventData.is_grouped_ticket}
+                            text={''}
+                            onChange={() =>
+                              setEventData({
+                                ...eventData,
+                                is_grouped_ticket: !eventData.is_grouped_ticket,
+                              })
+                            }
+                          />
+                        </motion.div>
+                      )}
+                    </>
+                  )}
+
+                  <div className={styles.option}>
+                    <label>
+                      <MdOutlineShoppingCartCheckout size={20} color='#949597' /> Enable Checkout
+                      Scan
+                    </label>
+                    <Slider
+                      checked={eventData.is_checkout as boolean}
+                      text={''}
+                      onChange={() =>
+                        setEventData({
+                          ...eventData,
+                          is_checkout: !eventData.is_checkout,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className={styles.option}>
+                    <label>
+                      <MdOutlineShoppingCartCheckout size={20} color='#949597' /> Enable Randomizer
+                    </label>
+                    <Slider
+                      checked={eventData.is_random_user as boolean}
+                      text={''}
+                      onChange={() =>
+                        setEventData({
+                          ...eventData,
+                          is_random_user: !eventData.is_random_user,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className={styles.option}>
+                    <label>
+                      <HiOutlineUserGroup size={20} color='#949597' />
+                      Allow Multiple Check-In
+                    </label>
+                    <Slider
+                      checked={eventData.is_multiple_checkin as boolean}
+                      text={''}
+                      onChange={() =>
+                        setEventData({
+                          ...eventData,
+                          is_multiple_checkin: !eventData.is_multiple_checkin,
+                        })
+                      }
+                    />
+                  </div>
+                </>
+              )}
+              <div className={styles.followupMessageContainer}>
+                <label>Followup Message</label>
+                <p className={styles.subText}>
+                  This message will be shown once the user has registered for the event.
+                </p>
+                <div className={styles.followupMessage}>
+                  <Editor
+                    description={eventData?.followup_msg ?? ''}
+                    setNewDescription={setFollowupMessage}
+                  />
+                </div>
               </div>
+              <button
+                onClick={() => {
+                  if (eventData)
+                    setEventData({ ...eventData, followup_msg: followupMessage.toString() });
+                  setShowAdvancedSettings(false);
+                }}
+                className={styles.continueButton}
+              >
+                Continue
+              </button>
             </div>
-            <button
-              onClick={() => {
-                if (eventData)
-                  setEventData({ ...eventData, followup_msg: followupMessage.toString() });
-                setShowAdvancedSettings(false);
-              }}
-              className={styles.continueButton}
-            >
-              Continue
-            </button>
           </Modal>
         )}
         <DashboardLayout prevPage='-1'>
@@ -552,112 +683,6 @@ const EditEvent = () => {
                           text={''}
                           onChange={() =>
                             setEventData({ ...eventData, is_online: !eventData.is_online })
-                          }
-                        />
-                      </div>
-                      <div className={styles.option}>
-                        <label>
-                          <HiOutlineUserGroup size={20} color='#949597' />
-                          Allow Multiple Check-In
-                        </label>
-                        <Slider
-                          checked={eventData.is_multiple_checkin as boolean}
-                          text={''}
-                          onChange={() =>
-                            setEventData({
-                              ...eventData,
-                              is_multiple_checkin: !eventData.is_multiple_checkin,
-                            })
-                          }
-                        />
-                      </div>
-                      <div className={styles.option}>
-                        <label>
-                          <HiOutlineTicket size={20} color='#949597' />
-                          Show Tickets First
-                        </label>
-                        <Slider
-                          checked={eventData.show_ticket_first as boolean}
-                          text={''}
-                          onChange={() =>
-                            setEventData({
-                              ...eventData,
-                              show_ticket_first: !eventData.show_ticket_first,
-                            })
-                          }
-                        />
-                      </div>
-                      {!eventData.is_team && (
-                        <>
-                          <div className={styles.option}>
-                            <label>
-                              <BsTicketDetailed size={20} color='#949597' /> Allow Multi Ticket
-                            </label>
-                            <Slider
-                              checked={eventData.select_multi_ticket as boolean}
-                              text={''}
-                              onChange={() =>
-                                setEventData({
-                                  ...eventData,
-                                  select_multi_ticket: !eventData.select_multi_ticket,
-                                })
-                              }
-                            />
-                          </div>
-                          {eventData.select_multi_ticket && (
-                            <motion.div
-                              className={styles.subOption}
-                              initial={{ opacity: 0, y: -10 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: -10 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              <label>
-                                <BsTicketDetailed size={20} color='#949597' /> Grouped Ticket
-                              </label>
-                              <Slider
-                                checked={eventData.is_grouped_ticket}
-                                text={''}
-                                onChange={() =>
-                                  setEventData({
-                                    ...eventData,
-                                    is_grouped_ticket: !eventData.is_grouped_ticket,
-                                  })
-                                }
-                              />
-                            </motion.div>
-                          )}
-                        </>
-                      )}
-
-                      <div className={styles.option}>
-                        <label>
-                          <AiOutlineTeam size={20} color='#949597' /> Allow Team Registration
-                        </label>
-                        <Slider
-                          checked={eventData.is_team as boolean}
-                          text={''}
-                          onChange={() =>
-                            setEventData({
-                              ...eventData,
-                              is_team: !eventData.is_team,
-                            })
-                          }
-                        />
-                      </div>
-                      <div className={styles.option}>
-                        <label>
-                          <MdOutlineShoppingCartCheckout size={20} color='#949597' /> Enable
-                          Checkout Scan
-                        </label>
-                        <Slider
-                          checked={eventData.is_checkout as boolean}
-                          text={''}
-                          onChange={() =>
-                            setEventData({
-                              ...eventData,
-                              is_checkout: !eventData.is_checkout,
-                            })
                           }
                         />
                       </div>

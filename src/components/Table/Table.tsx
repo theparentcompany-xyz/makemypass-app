@@ -51,12 +51,11 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
               className={styles.rowData}
               style={{ cursor: setSelectedGuestId ? 'pointer' : 'default' }}
               onClick={() => {
-                if (setSelectedGuestId) {
+                if (setSelectedGuestId)
                   setSelectedGuestId({
                     id: item.id,
                     type: 'view',
                   });
-                }
               }}
             >
               <p className={styles.rowName}>

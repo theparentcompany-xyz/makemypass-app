@@ -25,7 +25,7 @@ const changeTypeModal = (field: Field, newType: FieldType) => {
     field.property = {
       extension_types: [],
       max_size: 5000,
-      is_multiple: false,
+      max_no_of_files: 1,
     };
   }
 

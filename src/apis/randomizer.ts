@@ -12,11 +12,10 @@ export const getSpinWheelUserList = async (
   privateGateway
     .get(makeMyPass.spinWheelList(eventId))
     .then((response) => {
-      console.log(response.data.response);
       setUserList(response.data.response.participants);
     })
-    .catch(() => {
-      toast.error('Failed to get perks');
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0]);
     })
     .finally(() => {
       setHasLoaded(true);

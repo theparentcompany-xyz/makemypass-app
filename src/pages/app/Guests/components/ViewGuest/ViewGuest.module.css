@@ -115,6 +115,17 @@
   color: #d2d4d7;
 }
 
+.previewBoxContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+  row-gap: 0.5rem;
+  margin-top: 1rem;
+}
+
 .fieldLabel {
   margin-top: 0.25rem;
   font-size: 1rem;

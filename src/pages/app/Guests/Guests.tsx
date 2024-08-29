@@ -41,13 +41,18 @@ import Slider from '../../../components/SliderButton/Slider';
 import { useLocation } from 'react-router-dom';
 
 const Guests = () => {
-  const { eventTitle } = useParams<{ eventTitle: string }>();
-  const [guests, setGuests] = useState<GuestsType[]>([]);
-  const [searchKeyword, setSearchKeyword] = useState<string>('');
-
+  const navigate = useNavigate();
   const location = useLocation();
+  const { eventTitle } = useParams<{ eventTitle: string }>();
+  const { event_id: eventId, current_user_role: userRole } = JSON.parse(
+    sessionStorage.getItem('eventData')!,
+  );
+
   const searchParams = new URLSearchParams(location.search);
   const eventRegisterId = searchParams.get('eventRegisterId');
+
+  const [guests, setGuests] = useState<GuestsType[]>([]);
+  const [searchKeyword, setSearchKeyword] = useState<string>('');
 
   const [eventFormData, setEventFormData] = useState<FormEventData>();
   const [formData, setFormData] = useState<FormDataType>({});
@@ -58,8 +63,6 @@ const Guests = () => {
   const [isCashInHand, setIsCashInHand] = useState<boolean>(false);
 
   const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
-
-  const navigate = useNavigate();
 
   const [selectedGuestId, setSelectedGuestId] = useState<SelectedGuest | null>({
     id: '',
@@ -74,16 +77,11 @@ const Guests = () => {
   });
 
   const getGuestData = () => {
-    setSelectedGuest({} as RegistrationDataType);
     if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'edit') {
-      getGuestEditPrefillData(eventId, selectedGuestId.id, setSelectedGuest);
+      getGuestEditPrefillData(eventId, selectedGuestId.id, setSelectedGuest, setFormData);
     } else if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'view')
       getGuestInformation(eventId, selectedGuestId.id, setSelectedGuest);
   };
-
-  const { event_id: eventId, current_user_role: userRole } = JSON.parse(
-    sessionStorage.getItem('eventData')!,
-  );
 
   useEffect(() => {
     if (eventRegisterId) {
@@ -110,8 +108,6 @@ const Guests = () => {
   }, [eventId]);
 
   useEffect(() => {
-    console.log('Ivade Ethi');
-
     if (
       selectedGuestId?.id &&
       (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view')
@@ -243,15 +239,14 @@ const Guests = () => {
 
         {selectedGuestId && eventFormData && selectedGuestId.type === 'edit' && (
           <EditGuest
-            formData={{
-              ...selectedGuest?.submissions,
-              id: selectedGuestId.id,
-            }}
+            formData={formData}
+            eventRegisterId={selectedGuestId.id}
             setFormData={setFormData}
             eventFormData={eventFormData}
             setSelectedGuestId={setSelectedGuestId}
             eventId={eventId}
             onClose={onClose}
+            setGuests={setGuests}
           />
         )}
 

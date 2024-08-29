@@ -49,9 +49,7 @@ export const updateEventMail = async (
   setMailData: React.Dispatch<React.SetStateAction<MailType | undefined>>,
 ) => {
   try {
-    console.log('data', data);
-
-    const response = await privateGateway.patch(
+    const response = await privateGateway.put(
       makeMyPass.communicationMailUPdate(eventId, selectedMail?.id),
       data,
       {
@@ -119,22 +117,5 @@ export const updateEventMailService = (
       toast.error(
         error?.response?.data?.message?.general[0] || 'Error while updating mail service',
       );
-    });
-};
-
-export const deleteEventMailAttachment = (
-  eventId: string,
-  mailId: string,
-  attachmentPath: string,
-) => {
-  privateGateway
-    .post(makeMyPass.communicationMailDeleteAttachment(eventId, mailId), {
-      attachment_path: attachmentPath,
-    })
-    .then((response) => {
-      toast.success(response.data.message.general[0] || 'Attachment deleted successfully');
-    })
-    .catch((error) => {
-      toast.error(error?.response?.data?.message?.general[0] || 'Error while deleting attachment');
     });
 };

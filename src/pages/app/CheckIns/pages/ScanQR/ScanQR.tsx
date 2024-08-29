@@ -22,7 +22,6 @@ const ScanQR = () => {
   const [trigger, setTrigger] = useState(false);
 
   const [message, setMessage] = useState<string>('');
-  const [isError, setIsError] = useState<boolean>(false);
   const [isTicketSelected, setIsTicketSelected] = useState<boolean>(false);
   const [multipleTickets, setMultipleTickets] = useState<multipleTicketCount>({
     hasMultipleTickets: false,
@@ -44,7 +43,7 @@ const ScanQR = () => {
 
   useEffect(() => {
     if (ticketId.length > 0 && trigger) {
-      checkInUser(
+      checkInUser({
         ticketId,
         eventId,
         setScanLogs,
@@ -53,7 +52,7 @@ const ScanQR = () => {
         setMultipleTickets,
         multipleTickets,
         setTrigger,
-      );
+      });
     }
   }, [trigger, eventId]);
 
@@ -89,19 +88,7 @@ const ScanQR = () => {
               {previewData && previewData.name && (
                 <>
                   <div className={styles.backgroundBlur}></div>
-                  <Modal
-                    style={
-                      isError
-                        ? {
-                            borderBottom: '3px solid #f71e1e',
-                            background: 'rgba(185, 31, 31, 0.09)',
-                          }
-                        : {
-                            borderBottom: '3px solid #47c97e',
-                            background: 'rgba(31, 185, 31, 0.09)',
-                          }
-                    }
-                  >
+                  <Modal title='CheckIn Confirmation'>
                     <br />
                     <div className={styles.previewDataContainer}>
                       <p className={styles.previewDataText}> {previewData.name}</p>
@@ -134,7 +121,16 @@ const ScanQR = () => {
                             entry_date: '',
                             tickets: {},
                           });
-                          checkInUser(ticketId, eventId, setScanLogs, setMessage, setIsError);
+                          checkInUser({
+                            ticketId,
+                            eventId,
+                            setScanLogs,
+                            setMessage,
+                            setChecking,
+                            setMultipleTickets,
+                            multipleTickets,
+                            setTrigger,
+                          });
                           setTicketId('');
                         }}
                         buttonColor='red'

@@ -335,7 +335,7 @@ li {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: last baseline;
   justify-content: flex-start;
   width: 100%;
   column-gap: 1rem;

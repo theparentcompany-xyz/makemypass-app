@@ -51,6 +51,7 @@ const CustomMail = ({ setCustomMail }: Props) => {
       setMailData(fetchedMailData);
     }
   }, [fetchedMailData]);
+
   return (
     <>
       <div className={styles.modalSubText}>

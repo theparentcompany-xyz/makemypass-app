@@ -4,7 +4,6 @@ import { makeMyPass } from '../../services/urls';
 import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { Dispatch, SetStateAction } from 'react';
 import { ErrorMessages, FormDataType } from './types';
-import { isArray } from 'chart.js/helpers';
 import { BulkUploadType } from '../pages/app/Guests/components/BulkUpload/types';
 import { EmailType, VisitedVenues } from '../pages/app/Guests/components/ViewGuest/types';
 import { RegistrationDataType } from '../pages/app/Overview/Overview/types';
@@ -32,10 +31,12 @@ export const resentGuestTicket = async (
 
 export const updateGuestSubmission = async (
   eventId: string,
+  eventRegisterId: string,
   data: FormDataType,
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
   setFormData: Dispatch<React.SetStateAction<FormDataType>>,
   setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
+  setGuests: Dispatch<SetStateAction<GuestsType[]>>,
 ) => {
   const backendFormData = new FormData();
 
@@ -57,17 +58,29 @@ export const updateGuestSubmission = async (
     }
   });
 
-  if (data && !isArray(data.id) && typeof data.id === 'string')
+  if (eventRegisterId && data)
     privateGateway
-      .put(makeMyPass.guestEditSubmission(eventId, data.id), backendFormData, {
+      .put(makeMyPass.guestEditSubmission(eventId, eventRegisterId), backendFormData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       })
       .then((response) => {
         toast.success(response.data.message.general[0] || 'Submission edited successfully');
+        const updatedData = response.data.response;
         setSelectedGuestId(null);
         setFormData({});
+        setGuests((prev) => {
+          return prev.map((guest) => {
+            if (guest.id === updatedData.id) {
+              return {
+                ...guest,
+                ...updatedData,
+              };
+            }
+            return guest;
+          });
+        });
       })
       .catch((error) => {
         setFormErrors(error.response.data.response);
@@ -81,12 +94,14 @@ export const updateGuestSubmission = async (
 export const getGuestEditPrefillData = async (
   eventId: string,
   eventRegisterId: string,
-  setFormData: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>,
+  setSelectedGuest: Dispatch<React.SetStateAction<RegistrationDataType | undefined>>,
+  setFormData: Dispatch<React.SetStateAction<FormDataType>>,
 ) => {
   privateGateway
     .get(makeMyPass.guestEditSubmission(eventId, eventRegisterId))
     .then((response) => {
-      setFormData(response.data.response);
+      setSelectedGuest(response.data.response);
+      setFormData(response.data.response.submissions);
     })
     .catch(() => {
       toast.error('Something went wrong');
