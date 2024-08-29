@@ -307,7 +307,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
+  font-size: 0.9rem;
+  opacity: 0.9;
   row-gap: 0.5rem;
   column-gap: 0.5rem;
 }
@@ -825,4 +826,8 @@ input[type='color']::-webkit-color-swatch {
   width: 100%;
   max-height: 4rem;
   overflow: hidden;
+}
+
+.advancedModalContainer {
+  padding: 0 0.5rem;
 }

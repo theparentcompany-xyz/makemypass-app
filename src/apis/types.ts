@@ -171,6 +171,7 @@ export interface EventType {
   parse_audio: boolean;
   select_multi_ticket?: boolean;
   is_sub_event: boolean;
+  is_random_user: boolean;
   status: string;
   is_scratch_card: boolean;
   speakers?: {

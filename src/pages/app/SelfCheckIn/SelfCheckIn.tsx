@@ -7,6 +7,7 @@ import CheckInHeader from '../CheckIns/components/CheckInHeader/CheckInHeader/Ch
 import Scanner from '../../../components/Scanner/Scanner';
 import ScanLogs from '../CheckIns/components/ScanLogs/ScanLogs';
 import { LogType } from '../CheckIns/pages/Venue/Venue';
+import { printTicket } from './functions';
 
 const SelfCheckIn = () => {
   const [printData, setPrintData] = useState<SelfCheckInData>({} as SelfCheckInData);
@@ -25,7 +26,9 @@ const SelfCheckIn = () => {
   }, [trigger, eventId]);
 
   useEffect(() => {
-    console.log(printData);
+    if (printData?.qr?.url) {
+      printTicket({ printData });
+    }
   }, [printData]);
 
   return (
