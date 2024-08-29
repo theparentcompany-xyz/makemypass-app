@@ -222,7 +222,7 @@ const EventForm = ({
         setFormErrors &&
           setFormErrors({
             ...formErrors,
-            [field.field_key]: ['File size exceeds the limit'],
+            [field.field_key]: [`File size should be less than ${field.property?.max_size} KB`],
           });
       } else {
         if (!isWithinFileCount) {
