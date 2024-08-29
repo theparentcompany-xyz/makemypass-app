@@ -107,6 +107,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         gateway_fee: 0,
         user_count: 0,
         category: '',
+        allowed_dates: '',
       };
       const newTicketId = await createTicket(eventId, newTicket as TicketType);
       if (newTicketId) {

@@ -1,0 +1,76 @@
+.remainingTickets {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #bbbaba;
+    font-family: 'Inter', sans-serif;
+    text-align: right;
+}
+
+.datePicker input {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    width: 95%;
+    display: flex;
+    font-family: 'Inter', sans-serif;
+
+    border: none;
+}
+
+.selectDateContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    column-gap: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px solid rgb(42, 53, 51);
+}
+
+.ticketTypesTitle {
+    margin-top: 1rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+.eventDescription {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #fff;
+    opacity: 0.8;
+    font-family: 'Inter', sans-serif;
+}
+
+.selectDateContainerAddGuest {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    column-gap: 1rem;
+}
+
+.line {
+    margin: auto;
+    width: 100%;
+    height: 2px;
+    background: #a4a4a4;
+    opacity: 0.2;
+    border: none;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.calendar {
+    background: rgb(29, 29, 29);
+    border-radius: 8px;
+    display: flex;
+    font-family: 'Inter', sans-serif;
+    border: none;
+}

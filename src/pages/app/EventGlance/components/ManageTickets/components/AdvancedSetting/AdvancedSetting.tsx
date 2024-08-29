@@ -4,7 +4,7 @@ import styles from './AdvancedSetting.module.css';
 import { TicketType } from '../../../../../../../apis/types';
 import InputField from '../../../../../../auth/Login/InputField';
 import Slider from '../../../../../../../components/SliderButton/Slider';
-
+import SelectMultipleDates from './components/SelectMultipleDates';
 import { MdDelete } from 'react-icons/md';
 import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
@@ -171,6 +171,8 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
           </button>
         </div>
       )}
+
+      <SelectMultipleDates selectedTicket={selectedTicket} setSelectedTicket={setSelectedTicket} />
 
       <button
         className={styles.cancelButton}
