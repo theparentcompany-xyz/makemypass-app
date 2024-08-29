@@ -487,18 +487,6 @@ const FormBuilder = () => {
                                   </>
                                 )}
                               </div>
-
-                              {field.type === FieldType.File && (
-                                <Slider
-                                  checked={field.property.is_multiple}
-                                  text={'Allow Multiple Files'}
-                                  onChange={() => {
-                                    field.property.is_multiple = !field.property.is_multiple;
-                                    updateFormStateVariable();
-                                  }}
-                                  size='small'
-                                />
-                              )}
                             </div>
                             {field.type === FieldType.File && (
                               <div className={styles.customFieldOption}>
@@ -528,20 +516,35 @@ const FormBuilder = () => {
                                     />
                                   </div>
                                   <div>
-                                    <label className={styles.customFieldOptionLabel}>
-                                      Max Size:
-                                    </label>
                                     <InputField
                                       name='max_size'
                                       id='max_size'
                                       icon={<MdOutlineSdStorage size={20} color='#606264' />}
                                       type='number'
-                                      placeholder='Enter max file size(kb)'
+                                      placeholder='Maximal File Size'
+                                      description='Maximal file size in KB(1mb = 1024kb)'
                                       value={field?.property?.max_size?.toString()}
                                       onChange={(event) => {
                                         if (parseInt(event.target.value) > 5000)
                                           event.target.value = '5000';
                                         field.property.max_size = parseInt(event.target.value);
+                                        updateFormStateVariable();
+                                      }}
+                                    />
+                                  </div>
+                                  <div>
+                                    <InputField
+                                      name='max_no_of_files'
+                                      id='max_no_of_files'
+                                      icon={<MdOutlineSdStorage size={20} color='#606264' />}
+                                      type='number'
+                                      placeholder='Enter max no of files'
+                                      description='Max.number of files that can be uploaded'
+                                      value={field?.property?.max_no_of_files?.toString()}
+                                      onChange={(event) => {
+                                        field.property.max_no_of_files = parseInt(
+                                          event.target.value,
+                                        );
                                         updateFormStateVariable();
                                       }}
                                     />

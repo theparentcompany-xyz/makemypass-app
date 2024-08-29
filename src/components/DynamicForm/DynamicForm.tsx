@@ -9,6 +9,7 @@ import ValidateInput from '../ValidateInput/ValidateInput.tsx';
 import React, { useEffect, useState } from 'react';
 import { previewType } from '../../pages/app/EventGlance/components/UpdateMail/types.ts';
 import UploadAttachement from '../../pages/app/EventGlance/components/UpdateMail/components/UploadAttachement/UploadAttachements.tsx';
+import toast from 'react-hot-toast';
 
 const variants = {
   initial: { opacity: 0, y: -10 },
@@ -95,6 +96,7 @@ const DynamicForm = ({
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, field: FormFieldType) => {
     let withinSize = true;
+    let isWithinFileCount = true;
     Array.from(event.target.files || []).forEach((file) => {
       if (file.size <= (field.property?.max_size ?? 0) * 1024) {
         withinSize = withinSize && true;
@@ -103,7 +105,13 @@ const DynamicForm = ({
       }
     });
 
-    if (event.target.files && withinSize) {
+    if (field.property?.max_no_of_files) {
+      isWithinFileCount =
+        attachements.fieldAttachements.length + Array.from(event.target.files || []).length <=
+        field.property?.max_no_of_files;
+    }
+
+    if (event.target.files && withinSize && isWithinFileCount) {
       const newAttachments = [
         ...attachements.fieldAttachements,
         ...Array.from(event.target.files || []),
@@ -113,18 +121,25 @@ const DynamicForm = ({
         field_key: field.field_key,
         fieldAttachements: newAttachments,
       });
+      setPreviews([
+        ...previews,
+        ...Array.from(event.target.files || []).map((file) => {
+          return {
+            previewURL: URL.createObjectURL(file),
+            previewExtension: file.type,
+            previewName: file.name,
+          };
+        }),
+      ]);
+    } else {
+      if (!withinSize) {
+        toast.error('File size exceeds the limit');
+      } else {
+        toast.error(
+          'You can only upload a maximum of ' + field.property?.max_no_of_files + ' files',
+        );
+      }
     }
-
-    setPreviews([
-      ...previews,
-      ...Array.from(event.target.files || []).map((file) => {
-        return {
-          previewURL: URL.createObjectURL(file),
-          previewExtension: file.type,
-          previewName: file.name,
-        };
-      }),
-    ]);
   };
 
   const handleDeleteAttachment = (index: number) => {

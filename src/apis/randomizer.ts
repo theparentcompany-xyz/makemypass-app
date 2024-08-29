@@ -14,8 +14,8 @@ export const getSpinWheelUserList = async (
     .then((response) => {
       setUserList(response.data.response.participants);
     })
-    .catch(() => {
-      toast.error('Failed to get perks');
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0]);
     })
     .finally(() => {
       setHasLoaded(true);
