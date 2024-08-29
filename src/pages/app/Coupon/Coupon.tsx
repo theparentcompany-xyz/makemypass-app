@@ -83,6 +83,7 @@ const Coupon = () => {
     getCouponsList(eventId, setCoupons, setActivateCoupon);
     getTicketShortlist(eventId, setTickets);
     getFormBuilderForm(eventId, setFormFields);
+    setCouponError({});
   }, []);
 
   useEffect(() => {
@@ -167,6 +168,7 @@ const Coupon = () => {
                     required={true}
                     onChange={(event) => {
                       setNewCouponData({ ...newCouponData, code: event.target.value });
+                      setCouponError((prev: CreateCouponTypeError) => ({ ...prev, code: [''] }));
                     }}
                     value={newCouponData.code}
                     description='Customer must enter this coupon code at checkout'
@@ -209,6 +211,10 @@ const Coupon = () => {
                             ...newCouponData,
                             ticket_restricted: options.map((option) => option.value),
                           });
+                          setCouponError((prev: CreateCouponTypeError) => ({
+                            ...prev,
+                            tickets: [''],
+                          }));
                         }}
                       />
                       {
@@ -230,6 +236,10 @@ const Coupon = () => {
                         required={true}
                         disabled={newCouponData.consumed > 0}
                         onChange={(event) => {
+                          setCouponError((prev: CreateCouponTypeError) => ({
+                            ...prev,
+                            value: [''],
+                          }));
                           if (
                             newCouponData.type === 'percentage' &&
                             Number(event.target.value) > 100
@@ -276,6 +286,11 @@ const Coupon = () => {
                                 ...newCouponData,
                                 type: selectedOption.value as 'percentage' | 'amount',
                               });
+
+                            setCouponError((prev: CreateCouponTypeError) => ({
+                              ...prev,
+                              value: [''],
+                            }));
                           }}
                         />
                         {couponError.value && <p className={styles.error}>{couponError.value}</p>}
@@ -294,6 +309,10 @@ const Coupon = () => {
                     required={false}
                     onChange={(event) => {
                       setNewCouponData({ ...newCouponData, description: event.target.value });
+                      setCouponError((prev: CreateCouponTypeError) => ({
+                        ...prev,
+                        description: [''],
+                      }));
                     }}
                     value={newCouponData.description}
                     error={couponError.description}
