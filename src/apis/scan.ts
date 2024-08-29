@@ -6,16 +6,25 @@ import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
 import { checkInButtonsType } from '../pages/app/CheckIns/types';
 import { multipleTicketCount } from '../pages/app/CheckIns/pages/ScanQR/types';
 
-export const checkInUser = async (
-  ticketId: string,
-  eventId: string,
-  setScanLogs?: React.Dispatch<React.SetStateAction<LogType[]>>,
-  setMessage?: React.Dispatch<React.SetStateAction<string>>,
-  setChecking?: React.Dispatch<React.SetStateAction<boolean>>,
-  setMultipleTickets?: React.Dispatch<React.SetStateAction<multipleTicketCount>>,
-  multtipleTickets?: multipleTicketCount,
-  setTrigger?: React.Dispatch<React.SetStateAction<boolean>>,
-) => {
+export const checkInUser = async ({
+  ticketId,
+  eventId,
+  setScanLogs,
+  setMessage,
+  setChecking,
+  setMultipleTickets,
+  multipleTickets,
+  setTrigger,
+}: {
+  ticketId: string;
+  eventId: string;
+  setScanLogs?: React.Dispatch<React.SetStateAction<LogType[]>>;
+  setMessage?: React.Dispatch<React.SetStateAction<string>>;
+  setChecking?: React.Dispatch<React.SetStateAction<boolean>>;
+  setMultipleTickets?: React.Dispatch<React.SetStateAction<multipleTicketCount>>;
+  multipleTickets?: multipleTicketCount;
+  setTrigger?: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   if (setChecking) {
     setChecking(true);
   }
@@ -24,8 +33,8 @@ export const checkInUser = async (
     ticket_code: ticketId,
   };
 
-  if (multtipleTickets && multtipleTickets.hasMultipleTickets) {
-    dataToSend.user_count = multtipleTickets.tickets?.reduce(
+  if (multipleTickets && multipleTickets.hasMultipleTickets) {
+    dataToSend.user_count = multipleTickets.tickets?.reduce(
       (acc, ticket) => {
         acc[ticket.ticket_id] = ticket.checked_in_count || 0;
         return acc;
@@ -105,7 +114,7 @@ export const checkOutUser = async (
   setMessage?: React.Dispatch<React.SetStateAction<string>>,
   setChecking?: React.Dispatch<React.SetStateAction<boolean>>,
   setMultipleTickets?: React.Dispatch<React.SetStateAction<multipleTicketCount>>,
-  multtipleTickets?: multipleTicketCount,
+  multipleTickets?: multipleTicketCount,
   setTrigger?: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   if (setChecking) {
@@ -116,8 +125,8 @@ export const checkOutUser = async (
     ticket_code: ticketId,
   };
 
-  if (multtipleTickets && multtipleTickets.hasMultipleTickets) {
-    dataToSend.user_count = multtipleTickets.tickets?.reduce(
+  if (multipleTickets && multipleTickets.hasMultipleTickets) {
+    dataToSend.user_count = multipleTickets.tickets?.reduce(
       (acc, ticket) => {
         acc[ticket.ticket_id] = ticket.checked_in_count || 0;
         return acc;

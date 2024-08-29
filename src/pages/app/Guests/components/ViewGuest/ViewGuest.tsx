@@ -23,7 +23,6 @@ import { RegistrationDataType } from '../../../Overview/Overview/types';
 import { BiChevronDown } from 'react-icons/bi';
 import { HashLoader } from 'react-spinners';
 import { multipleTicketCount } from '../../../CheckIns/pages/ScanQR/types';
-import { LogType } from '../../../CheckIns/pages/Venue/Venue';
 import ScannerResponseModal from '../../../CheckIns/components/ScannerResponseModal/ScannerResponseModal';
 import PreviewBox from '../../../EventGlance/components/UpdateMail/components/PreviewBox/PreviewBox';
 
@@ -82,25 +81,18 @@ const ViewGuest = ({
     hasMultipleTickets: false,
   });
   const [trigger, setTrigger] = useState(false);
-  const [checking, setChecking] = useState<boolean>(false);
-  const [scanLogs, setScanLogs] = useState<LogType[]>([]);
   const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
-    console.log(checking);
-    console.log(scanLogs);
-
     if (selectedGuestData && selectedGuestData['id'] && trigger) {
-      checkInUser(
-        selectedGuestData['ticket_code'],
+      checkInUser({
+        ticketId: selectedGuestData['ticket_code'],
         eventId,
-        setScanLogs,
         setMessage,
-        setChecking,
         setMultipleTickets,
         multipleTickets,
         setTrigger,
-      );
+      });
     }
   }, [trigger, eventId, selectedGuestData]);
 
@@ -475,16 +467,14 @@ const ViewGuest = ({
                     <div
                       onClick={() => {
                         if (!isArray(selectedGuestData['ticket_code']))
-                          checkInUser(
-                            selectedGuestData['ticket_code'],
+                          checkInUser({
+                            ticketId: selectedGuestData['ticket_code'],
                             eventId,
-                            setScanLogs,
                             setMessage,
-                            setChecking,
                             setMultipleTickets,
                             multipleTickets,
                             setTrigger,
-                          );
+                          });
                       }}
                       className={styles.icon}
                     >
