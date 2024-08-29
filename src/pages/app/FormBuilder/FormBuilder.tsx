@@ -544,11 +544,9 @@ const FormBuilder = () => {
                                       onChange={(event) => {
                                         if (parseInt(event.target.value) < 1)
                                           event.target.value = '1';
-                                        else {
-                                          field.property.max_no_of_files = parseInt(
-                                            event.target.value,
-                                          );
-                                        }
+                                        field.property.max_no_of_files = parseInt(
+                                          event.target.value,
+                                        );
                                         updateFormStateVariable();
                                       }}
                                     />
