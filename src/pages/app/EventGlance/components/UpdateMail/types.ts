@@ -7,12 +7,6 @@ export type PropTypes = {
   setMails: React.Dispatch<React.SetStateAction<listMailType[]>>;
 };
 
-export type AttachmentType = {
-  type: 'newFile' | 'existingFile';
-  file: File;
-  fileURL?: string;
-};
-
 export type previewType = {
   previewURL: string;
   previewExtension: string;

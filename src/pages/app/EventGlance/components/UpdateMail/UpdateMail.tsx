@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { MailType } from '../../../../../apis/types';
 import styles from './UpdateMail.module.css';
-import { deleteEventMailAttachment, getEventMailData } from '../../../../../apis/mails';
+import { getEventMailData } from '../../../../../apis/mails';
 import { HashLoader } from 'react-spinners';
 import { updateEventMail } from '../../../../../apis/mails';
-import { AttachmentType, previewType, PropTypes } from './types';
+import { previewType, PropTypes } from './types';
 import UploadAttachement from './components/UploadAttachement/UploadAttachements';
 
 const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: PropTypes) => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [mailData, setMailData] = useState<MailType>();
   const [fetchedMail, setFetchedMail] = useState<MailType>();
-  const [attachments, setAttachments] = useState<AttachmentType[]>([]);
+  const [attachments, setAttachments] = useState<any[]>([]);
   const [previews, setPreviews] = useState<previewType[]>([]);
 
   const onUpdateEmail = () => {
@@ -24,9 +24,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
     });
 
     attachments.forEach((attachment) => {
-      if (attachment.type === 'newFile') {
-        formData.append('attachments[]', attachment.file);
-      }
+      formData.append('attachments[]', attachment);
     });
 
     const changedData = formData;
@@ -39,16 +37,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const files = [...attachments, ...Array.from(e.target.files || [])];
-    const files: AttachmentType[] = [
-      ...attachments,
-      ...Array.from(e.target.files || []).map((file) => {
-        return {
-          type: 'newFile' as const,
-          file: file,
-        };
-      }),
-    ];
+    const files = [...attachments, ...e.target.files!];
 
     setAttachments(files);
     setPreviews([
@@ -65,10 +54,11 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
 
   const handleDeleteAttachment = (index: number) => {
     const newAttachments = attachments.filter((_, i) => i !== index);
+
+    console.log('newAttachments', newAttachments);
+
     setAttachments(newAttachments);
     setPreviews(previews.filter((_, i) => i !== index));
-    if (selectedMail)
-      deleteEventMailAttachment(eventId, selectedMail?.id, previews[index].previewURL);
   };
 
   useEffect(() => {
@@ -101,14 +91,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
         };
       });
 
-      setAttachments(
-        attachmentList.map((attachment) => {
-          return {
-            type: 'existingFile',
-            file: attachment.file,
-          };
-        }),
-      );
+      setAttachments(fetchedMail.attachments);
 
       setPreviews(
         attachmentList.map((attachment) => {
