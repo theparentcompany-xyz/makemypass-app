@@ -14,7 +14,7 @@ type ItemDataType = {
     [key: string]: TableType[];
   };
   setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
-  setSelectedGuestId?: React.Dispatch<React.SetStateAction<SelectedGuest | null>>;
+  setSelectedGuestId?: React.Dispatch<React.SetStateAction<SelectedGuest>>;
   setHostId?: Dispatch<React.SetStateAction<hostId>>;
   categoryColorMapping: TabType;
 };
@@ -51,12 +51,10 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
               className={styles.rowData}
               style={{ cursor: setSelectedGuestId ? 'pointer' : 'default' }}
               onClick={() => {
-                if (setSelectedGuestId) {
-                  setSelectedGuestId({
-                    id: item.id,
-                    type: 'view',
-                  });
-                }
+                setSelectedGuestId({
+                  id: item.id,
+                  type: 'view',
+                });
               }}
             >
               <p className={styles.rowName}>
@@ -173,7 +171,7 @@ const Table = ({
   tableData: TableType[];
   search?: string;
   setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
-  setSelectedGuestId?: Dispatch<React.SetStateAction<SelectedGuest | null>>;
+  setSelectedGuestId?: Dispatch<React.SetStateAction<SelectedGuest>>;
   secondaryButton?: React.ReactElement;
   setHostId?: Dispatch<React.SetStateAction<hostId>>;
 }) => {

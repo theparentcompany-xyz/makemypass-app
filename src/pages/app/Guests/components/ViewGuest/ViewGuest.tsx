@@ -245,18 +245,19 @@ const ViewGuest = ({
             }}
           />
         </div>
-        {selectedGuestData && Object.keys(selectedGuestData).length > 0 ? (
+        {selectedGuestData &&
+        Object.keys(selectedGuestData).length > 0 &&
+        selectedGuestData.submissions.length > 0 ? (
           <div className={styles.viewGuests}>
             <div className={styles.topSection}>
               <div className={styles.row}>
                 <div className={styles.tsTexts}>
                   <p className={styles.name}>
                     <span>
-                      {
+                      {Array.isArray(selectedGuestData.submissions) &&
                         selectedGuestData.submissions.find(
                           (submission) => submission.title === 'Name',
-                        )?.value
-                      }{' '}
+                        )?.value}{' '}
                     </span>
                     {selectedGuestData['is_approved'] && (
                       <span className={styles.rowType}>Shortlisted</span>
@@ -266,11 +267,10 @@ const ViewGuest = ({
                     )}
                   </p>
                   <p className={styles.emailAddress}>
-                    {
+                    {Array.isArray(selectedGuestData.submissions) &&
                       selectedGuestData.submissions.find(
                         (submission) => submission.type === 'email',
-                      )?.value
-                    }
+                      )?.value}
                   </p>
                   <p className={styles.ticketCode}>
                     <span>Ticket Code:</span> {selectedGuestData['ticket_code']}
@@ -413,7 +413,7 @@ const ViewGuest = ({
                     <div
                       className={styles.icon}
                       onClick={() => {
-                        if (setResentTicket) {
+                        if (setResentTicket && Array.isArray(selectedGuestData.submissions)) {
                           setResentTicket((prevState) => ({
                             ...prevState,
                             status: true,
@@ -679,46 +679,47 @@ const ViewGuest = ({
               </>
             )}
             <div className={styles.bottomSection}>
-              {selectedGuestData.submissions.map((submission, index) => {
-                return (
-                  <div className={styles.field} key={index}>
-                    <p className={styles.fieldLabel}>{submission.title}</p>
-                    <p className={styles.fieldData}>
-                      <div className={styles.previewBoxContainer}>
-                        {submission.type === 'file' ? (
-                          Array.isArray(submission.value) ? (
-                            submission.value.map((file, index) => {
-                              return (
-                                <PreviewBox
-                                  key={index}
-                                  index={index}
-                                  preview={{
-                                    previewURL: file,
-                                    previewExtension: 'image/png',
-                                    previewName: file.split('/').pop() as string,
-                                  }}
-                                />
-                              );
-                            })
+              {Array.isArray(selectedGuestData.submissions) &&
+                selectedGuestData.submissions.map((submission, index) => {
+                  return (
+                    <div className={styles.field} key={index}>
+                      <p className={styles.fieldLabel}>{submission.title}</p>
+                      <p className={styles.fieldData}>
+                        <div className={styles.previewBoxContainer}>
+                          {submission.type === 'file' ? (
+                            Array.isArray(submission.value) ? (
+                              submission.value.map((file, index) => {
+                                return (
+                                  <PreviewBox
+                                    key={index}
+                                    index={index}
+                                    preview={{
+                                      previewURL: file,
+                                      previewExtension: 'image/png',
+                                      previewName: file.split('/').pop() as string,
+                                    }}
+                                  />
+                                );
+                              })
+                            ) : (
+                              <PreviewBox
+                                key={index}
+                                index={index}
+                                preview={{
+                                  previewURL: submission.value,
+                                  previewExtension: 'image/png',
+                                  previewName: submission.value.split('/').pop() as string,
+                                }}
+                              />
+                            )
                           ) : (
-                            <PreviewBox
-                              key={index}
-                              index={index}
-                              preview={{
-                                previewURL: submission.value,
-                                previewExtension: 'image/png',
-                                previewName: submission.value.split('/').pop() as string,
-                              }}
-                            />
-                          )
-                        ) : (
-                          submission.value
-                        )}
-                      </div>
-                    </p>
-                  </div>
-                );
-              })}
+                            submission.value
+                          )}
+                        </div>
+                      </p>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         ) : (
