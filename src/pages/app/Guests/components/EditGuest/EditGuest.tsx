@@ -4,7 +4,7 @@ import Modal from '../../../../../components/Modal/Modal';
 import styles from '../../Guests.module.css';
 import { updateGuestSubmission } from '../../../../../apis/guests';
 import { FormEventData, GuestsType, SelectedGuest } from '../../types';
-import { FormDataType } from '../../../../../apis/types';
+import { FormDataType, FormFieldType } from '../../../../../apis/types';
 import { previewType } from '../../../EventGlance/components/UpdateMail/types';
 
 const EditGuest = ({

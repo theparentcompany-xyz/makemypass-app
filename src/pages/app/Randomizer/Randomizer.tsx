@@ -100,122 +100,126 @@ const Randomizer = () => {
 
   return (
     <Theme>
-      {result && result.id && (
-        <>
-          <Confetti className={styles.confetti} />
-          <AnimatePresence>
-            <>
-              <div className={styles.backgroundBlur}></div>
-              <motion.dialog
-                initial={{
-                  opacity: 0,
-                  scale: 0.5,
-                }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                }}
-                exit={{
-                  opacity: 0,
-                  scale: 0.5,
-                }}
-                open
-                className={styles.welcomeContainer}
-              >
-                <img
-                  src='/app/congo.png'
-                  alt='welcome image with confetti for card '
-                  className={styles.image}
-                />
-                <div className={styles.welcomeText}>
-                  <p className={styles.welcomeHeading}>
-                    We have a Winner! <span role='img'>🎉</span>
-                  </p>
-                  <p className={styles.welcomeDescription}>
-                    {`${result.name} is the lucky Winner.`}
-                  </p>
-                  <SecondaryButton
-                    onClick={() => navigate(`/${eventTitle}/guests?eventRegisterId=${result.id}`)}
-                    buttonText='View Winner'
+      <div className={styles.outerContainer}>
+        {result && result.id && (
+          <>
+            <Confetti className={styles.confetti} />
+            <AnimatePresence>
+              <>
+                <div className={styles.backgroundBlur}></div>
+                <motion.dialog
+                  initial={{
+                    opacity: 0,
+                    scale: 0.5,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.5,
+                  }}
+                  open
+                  className={styles.welcomeContainer}
+                >
+                  <img
+                    src='/app/congo.png'
+                    alt='welcome image with confetti for card '
+                    className={styles.image}
                   />
-                </div>
-              </motion.dialog>
-            </>
-          </AnimatePresence>
-        </>
-      )}
-      <EventHeader previousPageNavigate='-1' />
-
-      {userList && userList.length > 0 ? (
-        <div className={styles.center}>
-          <div className={styles.pageTexts}>
-            <p className={styles.pageHeading}>Pick a Random User</p>
-            <p className={styles.pageDescription}>
-              Click the SPIN button to randomly select a user from the list.
-            </p>
-          </div>
-          {userList.length > 0 && (
-            <div className={styles.spinWheelContainer}>
-              <div className={`${styles.spinWheel} ${spinning ? styles.spinning : ''}`}>
-                {getVisibleNames().map((name, index) => (
-                  <div
-                    key={index}
-                    className={`${styles.spinItem} ${index === 3 ? styles.centerItem : ''}`}
-                    style={{ opacity: getOpacity(index) }}
-                  >
-                    {name}
+                  <div className={styles.welcomeText}>
+                    <p className={styles.welcomeHeading}>
+                      We have a Winner! <span role='img'>🎉</span>
+                    </p>
+                    <p className={styles.welcomeDescription}>
+                      {`${result.name} is the lucky Winner.`}
+                    </p>
+                    <SecondaryButton
+                      onClick={() => navigate(`/${eventTitle}/guests?eventRegisterId=${result.id}`)}
+                      buttonText='View Winner'
+                    />
                   </div>
-                ))}
-                <div className={styles.pointer}></div>
-              </div>
-              {showButton && (
-                <button className={styles.spinButton} onClick={spin}>
-                  SPIN
-                </button>
-              )}
-            </div>
-          )}
+                </motion.dialog>
+              </>
+            </AnimatePresence>
+          </>
+        )}
+        <EventHeader previousPageNavigate='-1' />
 
-          <div className={styles.previousLogs}>
+        {userList && userList.length > 0 ? (
+          <div className={styles.center}>
             <div className={styles.pageTexts}>
-              <p className={styles.pageHeading}>Randomly Picked Users</p>
+              <p className={styles.pageHeading}>Pick a Random User</p>
               <p className={styles.pageDescription}>
-                List of users that were randomly picked in the past.
+                Click the SPIN button to randomly select a user from the list.
               </p>
             </div>
-            <div className={styles.logsContainer}>
-              {logList.length > 0 ? (
-                logList.map((log, index) => (
-                  <div key={index} className={styles.logItem}>
-                    <p className={styles.logItemText}>{`${index + 1}). ${log.name}`}</p>
-                    <div className='row'>
-                      <p className={styles.logItemText}>{formatDate(log.created_at, true)}</p>
-                      <SecondaryButton
-                        onClick={() =>
-                          navigate(`/${eventTitle}/guests?eventRegisterId=${log.event_register_id}`)
-                        }
-                        buttonText='View Guest'
-                      />
+            {userList.length > 0 && (
+              <div className={styles.spinWheelContainer}>
+                <div className={`${styles.spinWheel} ${spinning ? styles.spinning : ''}`}>
+                  {getVisibleNames().map((name, index) => (
+                    <div
+                      key={index}
+                      className={`${styles.spinItem} ${index === 3 ? styles.centerItem : ''}`}
+                      style={{ opacity: getOpacity(index) }}
+                    >
+                      {name}
                     </div>
-                  </div>
-                ))
-              ) : (
-                <p className={styles.noLogsText}>No Logs Available</p>
-              )}
+                  ))}
+                  <div className={styles.pointer}></div>
+                </div>
+                {showButton && (
+                  <button className={styles.spinButton} onClick={spin}>
+                    SPIN
+                  </button>
+                )}
+              </div>
+            )}
+
+            <div className={styles.previousLogs}>
+              <div className={styles.pageTexts}>
+                <p className={styles.pageHeading}>Randomly Picked Users</p>
+                <p className={styles.pageDescription}>
+                  List of users that were randomly picked in the past.
+                </p>
+              </div>
+              <div className={styles.logsContainer}>
+                {logList.length > 0 ? (
+                  logList.map((log, index) => (
+                    <div key={index} className={styles.logItem}>
+                      <p className={styles.logItemText}>{`${index + 1}). ${log.name}`}</p>
+                      <div className='row'>
+                        <p className={styles.logItemText}>{formatDate(log.created_at, true)}</p>
+                        <SecondaryButton
+                          onClick={() =>
+                            navigate(
+                              `/${eventTitle}/guests?eventRegisterId=${log.event_register_id}`,
+                            )
+                          }
+                          buttonText='View Guest'
+                        />
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className={styles.noLogsText}>No Logs Available</p>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      ) : hasLoaded && userList.length === 0 ? (
-        <div className='center'>
-          <p className={styles.noLogsText}>
-            Kindly checkin guests to view the list of users for random selection.
-          </p>
-        </div>
-      ) : (
-        <div className='center'>
-          <HashLoader color={'#46BF75'} size={50} />
-        </div>
-      )}
+        ) : hasLoaded && userList.length === 0 ? (
+          <div className='center'>
+            <p className={styles.noLogsText}>
+              Kindly checkin guests to view the list of users for random selection.
+            </p>
+          </div>
+        ) : (
+          <div className='center'>
+            <HashLoader color={'#46BF75'} size={50} />
+          </div>
+        )}
+      </div>
     </Theme>
   );
 };

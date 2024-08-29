@@ -9,6 +9,16 @@
   position: relative;
 }
 
+.outerContainer {
+  padding: 0;
+}
+
+@media screen and (max-width: 1300px) {
+  .outerContainer {
+    padding: 0 1.25rem;
+  }
+}
+
 .spinWheel {
   display: flex;
   flex-direction: column;
