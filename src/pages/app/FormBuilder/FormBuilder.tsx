@@ -542,9 +542,13 @@ const FormBuilder = () => {
                                       description='Max.number of files that can be uploaded'
                                       value={field?.property?.max_no_of_files?.toString()}
                                       onChange={(event) => {
-                                        field.property.max_no_of_files = parseInt(
-                                          event.target.value,
-                                        );
+                                        if (parseInt(event.target.value) < 1)
+                                          event.target.value = '1';
+                                        else {
+                                          field.property.max_no_of_files = parseInt(
+                                            event.target.value,
+                                          );
+                                        }
                                         updateFormStateVariable();
                                       }}
                                     />
