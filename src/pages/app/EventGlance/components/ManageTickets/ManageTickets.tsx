@@ -17,9 +17,9 @@ import { isEqual } from 'lodash';
 import toast from 'react-hot-toast';
 import AdvancedSetting from './components/AdvancedSetting/AdvancedSetting';
 import UnsavedChanges from './components/UnsavedChanges/UnsavedChanges';
-import ConfirmDelete from './components/ConfirmDelete/ConfirmDelete';
 import Editor from '../../../../../components/Editor/Editor';
 import { useOverrideCtrlS } from '../../../../../hooks/common';
+import DeleteModal from '../../../../../components/Modal/DeleteModal/DeleteModal';
 
 export interface ChildProps {
   setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -366,13 +366,12 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         </Modal>
       )}
       {deleteModal && (
-        <Modal title=' ' onClose={() => setDeleteModal(false)} style={{ zIndex: 999 }}>
-          <ConfirmDelete
-            selectedTicket={selectedTicket as TicketType}
-            setDeleteModal={setDeleteModal}
-            onDeleteTicket={onDeleteTicket}
-          />
-        </Modal>
+        <DeleteModal
+          deleteText={`Are you sure you want to Delete ${selectedTicket?.title ? selectedTicket?.title : 'this ticket'}?`}
+          setDeleteModal={setDeleteModal}
+          onDelete={onDeleteTicket}
+          style={{ zIndex: 999 }}
+        />
       )}
 
       {ticketData.length || hasFetched ? (
