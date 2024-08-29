@@ -252,6 +252,7 @@ const Guests = () => {
             setSelectedGuestId={setSelectedGuestId}
             eventId={eventId}
             onClose={onClose}
+            setGuests={setGuests}
           />
         )}
 

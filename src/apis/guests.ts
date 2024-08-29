@@ -36,6 +36,7 @@ export const updateGuestSubmission = async (
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>,
   setFormData: Dispatch<React.SetStateAction<FormDataType>>,
   setFormErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
+  setGuests: Dispatch<SetStateAction<GuestsType[]>>,
 ) => {
   const backendFormData = new FormData();
 
@@ -66,8 +67,20 @@ export const updateGuestSubmission = async (
       })
       .then((response) => {
         toast.success(response.data.message.general[0] || 'Submission edited successfully');
+        const updatedData = response.data.response;
         setSelectedGuestId(null);
         setFormData({});
+        setGuests((prev) => {
+          return prev.map((guest) => {
+            if (guest.id === updatedData.id) {
+              return {
+                ...guest,
+                ...updatedData,
+              };
+            }
+            return guest;
+          });
+        });
       })
       .catch((error) => {
         setFormErrors(error.response.data.response);

@@ -246,12 +246,7 @@ const ViewGuest = ({
           />
         </div>
         {selectedGuestData && Object.keys(selectedGuestData).length > 0 ? (
-          <div
-            className={styles.viewGuests}
-            style={{
-              maxWidth: '30rem',
-            }}
-          >
+          <div className={styles.viewGuests}>
             <div className={styles.topSection}>
               <div className={styles.row}>
                 <div className={styles.tsTexts}>
@@ -689,35 +684,37 @@ const ViewGuest = ({
                   <div className={styles.field} key={index}>
                     <p className={styles.fieldLabel}>{submission.title}</p>
                     <p className={styles.fieldData}>
-                      {submission.type === 'file' ? (
-                        Array.isArray(submission.value) ? (
-                          submission.value.map((file, index) => {
-                            return (
-                              <PreviewBox
-                                key={index}
-                                index={index}
-                                preview={{
-                                  previewURL: file,
-                                  previewExtension: 'image/png',
-                                  previewName: file.split('/').pop() as string,
-                                }}
-                              />
-                            );
-                          })
+                      <div className={styles.previewBoxContainer}>
+                        {submission.type === 'file' ? (
+                          Array.isArray(submission.value) ? (
+                            submission.value.map((file, index) => {
+                              return (
+                                <PreviewBox
+                                  key={index}
+                                  index={index}
+                                  preview={{
+                                    previewURL: file,
+                                    previewExtension: 'image/png',
+                                    previewName: file.split('/').pop() as string,
+                                  }}
+                                />
+                              );
+                            })
+                          ) : (
+                            <PreviewBox
+                              key={index}
+                              index={index}
+                              preview={{
+                                previewURL: submission.value,
+                                previewExtension: 'image/png',
+                                previewName: submission.value.split('/').pop() as string,
+                              }}
+                            />
+                          )
                         ) : (
-                          <PreviewBox
-                            key={index}
-                            index={index}
-                            preview={{
-                              previewURL: submission.value,
-                              previewExtension: 'image/png',
-                              previewName: submission.value.split('/').pop() as string,
-                            }}
-                          />
-                        )
-                      ) : (
-                        submission.value
-                      )}
+                          submission.value
+                        )}
+                      </div>
                     </p>
                   </div>
                 );

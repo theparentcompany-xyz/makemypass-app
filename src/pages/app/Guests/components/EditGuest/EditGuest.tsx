@@ -3,7 +3,7 @@ import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import Modal from '../../../../../components/Modal/Modal';
 import styles from '../../Guests.module.css';
 import { updateGuestSubmission } from '../../../../../apis/guests';
-import { FormEventData, SelectedGuest } from '../../types';
+import { FormEventData, GuestsType, SelectedGuest } from '../../types';
 import { FormDataType } from '../../../../../apis/types';
 
 const EditGuest = ({
@@ -13,6 +13,7 @@ const EditGuest = ({
   setSelectedGuestId,
   eventId,
   onClose,
+  setGuests,
 }: {
   formData: any;
   setFormData: Dispatch<SetStateAction<FormDataType>>;
@@ -20,6 +21,7 @@ const EditGuest = ({
   setSelectedGuestId: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   eventId: string;
   onClose: () => void;
+  setGuests: Dispatch<SetStateAction<GuestsType[]>>;
 }) => {
   const [formErrors, setFormErrors] = useState<any>({});
 
@@ -46,7 +48,14 @@ const EditGuest = ({
   };
 
   const handleSubmissionEdit = () => {
-    updateGuestSubmission(eventId, updatedFormData, setSelectedGuestId, setFormData, setFormErrors);
+    updateGuestSubmission(
+      eventId,
+      updatedFormData,
+      setSelectedGuestId,
+      setFormData,
+      setFormErrors,
+      setGuests,
+    );
   };
 
   return (
@@ -67,9 +76,9 @@ const EditGuest = ({
                 onClick={() => {
                   handleSubmissionEdit();
                 }}
-                className={`pointer ${styles.button}`}
+                className={`pointer ${styles.primaryButton}`}
               >
-                Edit
+                Save Changes
               </p>
               <p
                 onClick={() => {

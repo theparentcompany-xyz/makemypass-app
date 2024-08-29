@@ -118,9 +118,9 @@
 .buttons {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  column-gap: 1rem;
+  column-gap: 0.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
@@ -133,6 +133,17 @@
   color: #fff;
   font-family: 'Inter', sans-serif;
   border: none;
+  cursor: pointer;
+}
+
+.primaryButton {
+  text-align: center;
+  background: #fdfdfd;
+  color: rgb(43, 42, 42);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
 }
 
