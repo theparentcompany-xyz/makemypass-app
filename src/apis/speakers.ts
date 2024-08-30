@@ -41,8 +41,8 @@ export const createEventSpeaker = async (
     .then((response) => {
       setSpeakers((prev) => ({
         ...prev,
-        speakerList: [...prev.speakerList, response.data.response.speaker],
-        showModal: false,
+        speakerList: [...prev.speakerList, response.data.response],
+        showModal: true,
       }));
       toast.success('Speaker added successfully');
     })
@@ -86,14 +86,14 @@ export const updateEventSpeaker = async (
         'Content-Type': 'multipart/form-data',
       },
     })
-    .then((response) => {
+    .then(() => {
       setSpeakers((prev) => ({
         ...prev,
         speakerList: prev.speakerList.map((speaker) =>
-          speaker.id === speakerData.id ? response.data.response.speaker : speaker,
+          speaker.id === speakerData.id ? speakerData : speaker,
         ),
-        showModal: false,
       }));
+
       toast.success('Speaker updated successfully');
     })
     .catch((error) => {

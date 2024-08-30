@@ -211,6 +211,7 @@
   object-fit: cover;
   border-radius: 8px;
   width: 3rem;
+  height: 3rem;
   border-radius: 100%;
 }
 

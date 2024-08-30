@@ -130,10 +130,14 @@ const SpeakerModal = ({
                       createEventSpeaker(eventId, speakerData, setSpeakers);
                     else if (speakerData.type === 'EDIT')
                       updateEventSpeaker(eventId, speakerData, setSpeakers);
-                    setSpeakers((prev) => ({
-                      ...prev,
-                      showModal: false,
-                    }));
+
+                    setSpeakerData({
+                      id: '',
+                      name: '',
+                      position: '',
+                      image: null,
+                      type: '',
+                    });
                   }}
                 >
                   Save Speaker
@@ -182,11 +186,15 @@ const SpeakerModal = ({
                 <div className={styles.log}>
                   <div className={styles.logDetails}>
                     {typeof speaker?.image === 'string' && speaker?.image?.length > 0 && (
-                      <img className={styles.speakerImage} src={speaker.image} alt='' />
+                      <img
+                        className={styles.speakerImage}
+                        src={speaker.image || `https://placehold.co/600x400`}
+                        alt=''
+                      />
                     )}
                     <div>
-                      {speaker.name && <p className={styles.venueName}>{speaker.name}</p>}
-                      {speaker.position && (
+                      {speaker?.name && <p className={styles.venueName}>{speaker.name}</p>}
+                      {speaker?.position && (
                         <p className={styles.total} style={{ marginTop: '0.25rem' }}>
                           {speaker.position}
                         </p>
