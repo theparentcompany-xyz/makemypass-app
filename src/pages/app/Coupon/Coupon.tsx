@@ -240,7 +240,11 @@ const Coupon = () => {
                             ...prev,
                             value: [''],
                           }));
-                          if (
+
+                          if (Number(event.target.value) < 0) {
+                            toast.error('Enter a positive value');
+                            return;
+                          } else if (
                             newCouponData.type === 'percentage' &&
                             Number(event.target.value) > 100
                           ) {
