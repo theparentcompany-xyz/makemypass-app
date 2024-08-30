@@ -383,7 +383,7 @@ const Coupon = () => {
                       onChange={() => {
                         setNewCouponData({
                           ...newCouponData,
-                          is_active: !newCouponData.is_private,
+                          is_active: !newCouponData.is_active,
                         });
                       }}
                       text='Activate Coupon'
@@ -516,27 +516,12 @@ const Coupon = () => {
 
                 <div className={styles.buttons}>
                   <SecondaryButton
-                    buttonText='Discard Coupon'
-                    onClick={() => {
-                      setCouponModal({ showModal: false });
-                      setNewCouponData({
-                        code: '',
-                        value: 0,
-                        type: 'amount',
-                        ticket_restricted: [],
-                        description: '',
-                        is_active: true,
-                        count: 0,
-                        conditions: [],
-                        is_private: false,
-                      });
-                    }}
-                  />
-                  <SecondaryButton
                     buttonText='Save Coupon'
                     onClick={() => {
-                      if (newCouponData.id) updateCouponData(eventId, newCouponData, setCoupons);
-                      else
+                      if (newCouponData.id) {
+                        setCouponModal({ showModal: false });
+                        updateCouponData(eventId, newCouponData, setCoupons);
+                      } else
                         createCoupon(eventId, newCouponData, setCoupons, setCouponError).then(
                           () => {
                             setCouponModal({ showModal: false });
@@ -553,6 +538,23 @@ const Coupon = () => {
                             });
                           },
                         );
+                    }}
+                  />
+                  <SecondaryButton
+                    buttonText='Discard Coupon'
+                    onClick={() => {
+                      setCouponModal({ showModal: false });
+                      setNewCouponData({
+                        code: '',
+                        value: 0,
+                        type: 'amount',
+                        ticket_restricted: [],
+                        description: '',
+                        is_active: true,
+                        count: 0,
+                        conditions: [],
+                        is_private: false,
+                      });
                     }}
                   />
                 </div>

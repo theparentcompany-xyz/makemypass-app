@@ -116,8 +116,12 @@ export const updateCouponData = async (
         'Content-Type': 'multipart/form-data',
       },
     })
-    .then(() => {
+    .then((response) => {
       getCouponsList(eventId, setCoupons);
+      toast.success(response.data.response.message.general[0]);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0]);
     });
 };
 
