@@ -292,6 +292,7 @@ const Coupon = () => {
                               value: [''],
                             }));
                           }}
+                          isSearchable={false}
                         />
                         {couponError.value && <p className={styles.error}>{couponError.value}</p>}
                       </div>
