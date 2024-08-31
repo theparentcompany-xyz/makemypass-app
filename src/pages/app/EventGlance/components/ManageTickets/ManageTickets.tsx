@@ -3,7 +3,7 @@ import styles from './ManageTickets.module.css';
 import Slider from '../../../../../components/SliderButton/Slider';
 import TicketBox from './components/TicketBox/TicketBox';
 import { TbSettings } from 'react-icons/tb';
-import { EventType, TicketType } from '../../../../../apis/types';
+import { TicketType } from '../../../../../apis/types';
 import {
   updateTicketData,
   createTicket,
@@ -107,7 +107,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         gateway_fee: 0,
         user_count: 0,
         category: '',
-        allowed_dates: '',
+        allowed_dates: [],
       };
       const newTicketId = await createTicket(eventId, newTicket as TicketType);
       if (newTicketId) {
@@ -153,18 +153,19 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
 
     if (matchingTicket) {
       const changedData: Record<string, any> = Object.entries(selection as Record<string, any>)
-        .filter(
-          ([key, value]) =>
-            matchingTicket?.[key as keyof EventType] !== value && key != 'description',
-        )
+        // .filter(
+        //   ([key, value]) =>
+        //     matchingTicket?.[key as keyof EventType] !== value && key != 'description',
+        // )
+        // .filter(([key]) => !checkArr.includes(key))
         .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
 
-      if (selection?.description != newDescription) {
-        changedData['description'] = newDescription;
-      }
+      // if (selection?.description != newDescription) {
+      //   changedData['description'] = newDescription;
+      // }
 
-      if (changedData?.description == '' && matchingTicket?.description == null)
-        delete changedData['description'];
+      // if (changedData?.description == '' && matchingTicket?.description == null)
+      //   delete changedData['description'];
 
       const formData = new FormData();
       Object.keys(changedData).forEach((key) => {
@@ -178,7 +179,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                 typeof value === 'object' ? JSON.stringify(value) : value,
               ),
             );
-          } else {
+          } else if (changedData[key]) {
             value = changedData[key].toString();
           }
         }

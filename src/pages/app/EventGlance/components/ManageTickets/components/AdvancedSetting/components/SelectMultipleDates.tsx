@@ -8,15 +8,7 @@ interface SelectDateProps {
 }
 const SelectMultipleDates = ({ selectedTicket, setSelectedTicket }: SelectDateProps) => {
   const getDatesArray = () => {
-    console.log(selectedTicket?.allowed_dates);
-    const arr = JSON.parse(selectedTicket?.allowed_dates || '[]');
-    if (!arr) return [];
-
-    console.log(
-      'HAHAHA',
-      arr?.map((dateStr: string) => new Date(dateStr)),
-    );
-    return arr?.map((dateStr: string) => new Date(dateStr));
+    return selectedTicket.allowed_dates?.map((dateStr: string) => new Date(dateStr));
   };
 
   useEffect(() => {
@@ -39,9 +31,7 @@ const SelectMultipleDates = ({ selectedTicket, setSelectedTicket }: SelectDatePr
                   setSelectedDates(dates);
                   setSelectedTicket({
                     ...selectedTicket,
-                    allowed_dates: JSON.stringify(
-                      dates?.map((date) => date.toISOString().split('T')[0]),
-                    ),
+                    allowed_dates: dates?.map((date) => date.toISOString().split('T')[0]),
                   } as TicketType);
                 }}
                 dateFormat={'yyyy-MM-dd'}

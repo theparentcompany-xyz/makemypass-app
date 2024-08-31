@@ -40,7 +40,7 @@ export const updateTicketData = async (
   setTickets: React.Dispatch<React.SetStateAction<TicketType[]>>,
 ) => {
   try {
-    const response = await privateGateway.patch(
+    const response = await privateGateway.put(
       makeMyPass.ticketInformation(eventId, selectedTicket?.id),
       changedData,
       {
