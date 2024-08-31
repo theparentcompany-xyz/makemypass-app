@@ -33,6 +33,7 @@ const EventForm = ({
   setSelectedGuestId,
   claimCodeExceed,
   isCashInHand,
+  utmData,
 }: {
   eventFormData: FormEventData;
   eventTitle: string | undefined;
@@ -44,6 +45,13 @@ const EventForm = ({
   setSelectedGuestId?: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   claimCodeExceed?: ClaimCodeExceedType;
   isCashInHand?: boolean;
+  utmData?: {
+    source: string | null;
+    medium: string | null;
+    campaign: string | null;
+    term: string | null;
+    content: string | null;
+  };
 }) => {
   const [previews, setPreviews] = useState<previewType[]>([]);
   const [attachements, setAttachements] = useState<{
@@ -403,6 +411,7 @@ const EventForm = ({
                     setLoading,
                     setCoupon,
                     ticketCode,
+                    utmData,
                   });
               });
             } else if (formNumber === 1 && eventFormData.show_ticket_first) {
@@ -439,6 +448,7 @@ const EventForm = ({
                   setLoading,
                   setCoupon,
                   ticketCode,
+                  utmData,
                 });
               }
             }

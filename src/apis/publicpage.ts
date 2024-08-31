@@ -39,6 +39,7 @@ export const submitForm = async ({
   setLoading,
   setCoupon,
   ticketCode,
+  utmData,
 }: {
   eventId: string;
   isCouponFirst?: boolean;
@@ -58,6 +59,13 @@ export const submitForm = async ({
   setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   setCoupon?: React.Dispatch<React.SetStateAction<CouponData>>;
   ticketCode?: string | null;
+  utmData?: {
+    source: string | null;
+    medium: string | null;
+    campaign: string | null;
+    term: string | null;
+    content: string | null;
+  };
 }) => {
   setLoading && setLoading(true);
   const selectedDateFormatted = selectedDate
@@ -100,6 +108,10 @@ export const submitForm = async ({
   tickets.forEach((ticket: Tickets) => backendFormData.append('tickets[]', JSON.stringify(ticket)));
   if (selectedDateFormatted) backendFormData.append('ticket_date', selectedDateFormatted);
   if (ticketCode) backendFormData.append('ticket_code', ticketCode);
+
+  if (utmData){
+    let dataToAppend = 
+  }
 
   publicGateway
     .post(makeMyPass.formSubmit(eventId), backendFormData, {
@@ -328,6 +340,7 @@ export const getEventInfo = async ({
   setClaimCodeExceed,
   setShowTicketFirst,
   setSuccess,
+  utmData,
 }: {
   eventTitle: string;
   setEventData: Dispatch<React.SetStateAction<EventType | undefined>>;
@@ -336,8 +349,22 @@ export const getEventInfo = async ({
   setClaimCodeExceed?: React.Dispatch<React.SetStateAction<ClaimCodeExceedType>>;
   setShowTicketFirst?: React.Dispatch<React.SetStateAction<boolean>>;
   setSuccess?: React.Dispatch<React.SetStateAction<SuccessModalProps>>;
+  utmData?: {
+    source: string | null;
+    medium: string | null;
+    campaign: string | null;
+    term: string | null;
+    content: string | null;
+  };
 }) => {
   let backendURL = makeMyPass.formEventInfo(eventTitle);
+  if (utmData) {
+    if (utmData.source) backendURL += `?utm_source=${utmData.source}`;
+    if (utmData.medium) backendURL += `&utm_medium=${utmData.medium}`;
+    if (utmData.campaign) backendURL += `&utm_campaign=${utmData.campaign}`;
+    if (utmData.term) backendURL += `&utm_term=${utmData.term}`;
+    if (utmData.content) backendURL += `&utm_content=${utmData.content}`;
+  }
   if (claimCode) backendURL += `?claim_code=${claimCode}`;
   privateGateway
     .get(backendURL)
