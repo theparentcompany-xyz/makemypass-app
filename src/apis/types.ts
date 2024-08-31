@@ -94,7 +94,7 @@ export interface TicketType {
   is_active: boolean;
   description: string;
   approval_required: boolean;
-  allowed_dates: string;
+  allowed_dates: string[];
   code_prefix: string;
   code_digits: number;
   maintain_code_order?: boolean;
