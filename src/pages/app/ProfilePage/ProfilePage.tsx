@@ -46,19 +46,6 @@ const ProfilePage = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState<boolean>(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-  // const tabs: TabsType = {
-  //   owner: {
-  //     title: 'Your Events',
-  //     roles: ['Admin', 'Owner', 'Volunteer'],
-  //   },
-  //   booked: {
-  //     title: 'Booked Events',
-  //     roles: ['Admin', 'Owner', 'Volunteer'],
-  //   },
-  // };
-  // const updateTab = (tab: string) => {
-  //   setCurrentTab(tab);
-  // };
 
   const handleUpdateProfile = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -339,35 +326,8 @@ const ProfilePage = () => {
                   <FiEdit3 /> Edit Profile
                 </motion.button>
               </div>
-              <div className={styles.lineBar}></div>
-              <div className={styles.eventSection}>
-                {/* <div className={styles.tabs}>
-                  <ol>
-                    <>
-                      {Object.keys(tabs)
 
-                        .map((tab, index) => (
-                          <div key={index}>
-                            <motion.li
-                              whileHover={{
-                                scale: 1.02,
-                                marginRight: 2,
-                                marginLeft: 2,
-                                color: '#fdfdfd',
-                              }}
-                              className={`pointer ${styles.tab}`}
-                              onClick={() => updateTab(tab)}
-                            >
-                              {tabs[tab as keyof typeof tabs].title}
-                            </motion.li>
-                            {currentTab === tab && (
-                              <motion.div layoutId='tab-indicator' className={styles.active} />
-                            )}
-                          </div>
-                        ))}
-                    </>
-                  </ol>
-                </div> */}
+              <div className={styles.eventSection}>
                 <div className={styles.eventBoxesContainer}>
                   {eventsData.map((event) => (
                     <EventBox eventData={event} />

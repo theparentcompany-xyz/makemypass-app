@@ -53,3 +53,13 @@
   justify-content: space-between;
   margin-top: 1rem;
 }
+
+.closeButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  background-color: transparent;
+  border: none;
+}

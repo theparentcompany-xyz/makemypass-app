@@ -29,6 +29,17 @@ const UTMManager = ({
 
   return (
     <div className={styles.utmContainer}>
+      <button
+        className={styles.closeButton}
+        onClick={() => {
+          setUTMData({
+            ...UTMData,
+            showUTM: false,
+          });
+        }}
+      >
+        <MdClose color='white' size={20} />
+      </button>
       {Object.keys(UTMData.data).map((key: string) => (
         <div className={styles.utmColumn} key={key}>
           <p className={styles.utmHeading}>{key.charAt(0).toUpperCase() + key.slice(1)}</p>

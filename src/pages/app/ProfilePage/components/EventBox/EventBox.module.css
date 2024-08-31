@@ -12,8 +12,9 @@
 
   color: white;
   font-family: 'Inter', sans-serif;
-
+  padding: 1rem;
   position: relative;
+  max-width: 23rem;
 }
 
 .headingTexts {
@@ -31,7 +32,7 @@
 
 .eventDate,
 .eventPlace {
-  margin-top: 1rem;
+  margin-top: 0.25rem;
   display: flex;
   align-items: center;
   row-gap: 0.5rem;
@@ -104,12 +105,11 @@
 }
 
 .banner {
-  padding: 0.5rem;
-  max-width: 25rem;
   width: 100%;
   height: 100%;
-  border-radius: 14px;
+  border-radius: 12px;
   fill: #d8ffff11;
+  max-width: 23rem;
 }
 
 .hostedByText {
@@ -120,20 +120,20 @@
 }
 
 .eventTitle {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
+  max-width: 10;
   font-weight: 600;
+  max-width: 26rem;
   font-family: 'Inter', sans-serif;
 }
 
 .buttons {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-end;
-  padding: 1rem;
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 1rem;
+  column-gap: 0.5rem;
 }
 
 .editEventButton {

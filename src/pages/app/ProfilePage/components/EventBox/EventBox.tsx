@@ -39,10 +39,9 @@ const EventBox = ({ eventData }: Props) => {
             </svg>
           )}
 
-          <div>
+          <div className={styles.eventDetailsContainer}>
             <div className={styles.headingTexts}>
               <p className={styles.eventTitle}>{eventData?.title}</p>
-              <p className={styles.hostedByText}>{}</p>
             </div>
 
             <div className={styles.eventDatePlace}>
@@ -108,7 +107,7 @@ const EventBox = ({ eventData }: Props) => {
                     navigator.clipboard.writeText(eventLink);
                     toast.success('Event link copied to clipboard');
                   }}
-                  className={styles.shareEventButton}
+                  className={styles.editEventButton}
                 >
                   Share Event
                 </button>

@@ -19,6 +19,14 @@
   font-family: 'Inter', sans-serif;
 }
 
+.eventBoxesContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .profilePageContainer {
   display: flex;
   justify-content: center;
