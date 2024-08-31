@@ -5,6 +5,7 @@ import styles from './UTMManager.module.css';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { useEffect, useState } from 'react';
 import { createUTM, getUTMList } from '../../../../../apis/utm';
+import { MdClose } from 'react-icons/md';
 
 const UTMManager = ({
   UTMData,
@@ -43,48 +44,53 @@ const UTMManager = ({
                   type='text'
                   value={UTMData.editUTM.value}
                   onChange={(e) => {
-                    setUTMData({
-                      ...UTMData,
+                    setUTMData((prevState) => ({
+                      ...prevState,
                       editUTM: {
-                        type: key as keyof UTMDataType['data'],
+                        ...prevState.editUTM,
                         value: e.target.value,
-                        index: index,
                       },
-                    });
-                  }}
-                  onBlur={() => {
-                    setUTMData({
-                      ...UTMData,
-                      editUTM: {
-                        type: '',
-                        value: '',
-                        index: 0,
-                      },
-                    });
+                    }));
                   }}
                 />
 
-                <SecondaryButton
-                  buttonText='Save'
-                  icon={<LuSave size={15} />}
-                  onClick={() => {
-                    setUTMData({
-                      ...UTMData,
-                      data: {
-                        ...UTMData.data,
-                        [key]: [
-                          ...UTMData.data[key as keyof UTMDataType['data']],
-                          UTMData.editUTM.value,
-                        ],
-                      },
-                      editUTM: {
-                        type: '',
-                        value: '',
-                        index: 0,
-                      },
-                    });
-                  }}
-                />
+                <div className={styles.buttonsContainer}>
+                  <SecondaryButton
+                    buttonText='Save'
+                    icon={<LuSave size={15} />}
+                    onClick={() => {
+                      const newData = [...UTMData.data[key as keyof UTMDataType['data']]];
+                      newData[index] = UTMData.editUTM.value;
+                      setUTMData({
+                        ...UTMData,
+                        data: {
+                          ...UTMData.data,
+                          [key]: newData,
+                        },
+                        editUTM: {
+                          type: '',
+                          value: '',
+                          index: -1,
+                        },
+                      });
+                    }}
+                  />
+
+                  <SecondaryButton
+                    buttonText='Cancel'
+                    icon={<MdClose size={15} />}
+                    onClick={() => {
+                      setUTMData({
+                        ...UTMData,
+                        editUTM: {
+                          type: '',
+                          value: '',
+                          index: -1,
+                        },
+                      });
+                    }}
+                  />
+                </div>
               </div>
             ) : (
               <div key={index} className={styles.utmValue}>
