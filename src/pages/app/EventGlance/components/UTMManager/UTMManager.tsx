@@ -3,6 +3,8 @@ import InputField from '../../../../auth/Login/InputField';
 import { UTMDataType } from '../../types';
 import styles from './UTMManager.module.css';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
+import { useEffect, useState } from 'react';
+import { createUTM, getUTMList } from '../../../../../apis/utm';
 
 const UTMManager = ({
   UTMData,
@@ -11,11 +13,24 @@ const UTMManager = ({
   UTMData: UTMDataType;
   setUTMData: React.Dispatch<React.SetStateAction<UTMDataType>>;
 }) => {
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
+  const [firstRender, setFirstRender] = useState(true);
+
+  useEffect(() => {
+    getUTMList(eventId, UTMData, setUTMData, setFirstRender);
+  }, []);
+
+  useEffect(() => {
+    if (!firstRender) {
+      createUTM(eventId, UTMData.data);
+    }
+  }, [UTMData.data]);
+
   return (
     <div className={styles.utmContainer}>
       {Object.keys(UTMData.data).map((key: string) => (
         <div className={styles.utmColumn} key={key}>
-          <p className={styles.utmHeading}>{key}</p>
+          <p className={styles.utmHeading}>{key.charAt(0).toUpperCase() + key.slice(1)}</p>
 
           {UTMData.data[key as keyof UTMDataType['data']].map((value, index) =>
             UTMData.editUTM.type === key && UTMData.editUTM.index === index ? (
@@ -28,14 +43,8 @@ const UTMManager = ({
                   type='text'
                   value={UTMData.editUTM.value}
                   onChange={(e) => {
-                    const newData = [...UTMData.data[key as keyof UTMDataType['data']]];
-                    newData[index] = e.target.value;
                     setUTMData({
                       ...UTMData,
-                      data: {
-                        ...UTMData.data,
-                        [key]: newData,
-                      },
                       editUTM: {
                         type: key as keyof UTMDataType['data'],
                         value: e.target.value,

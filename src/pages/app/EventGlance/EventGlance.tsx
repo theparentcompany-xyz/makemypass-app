@@ -44,18 +44,18 @@ const EventGlance = () => {
   const [UTMData, setUTMData] = useState<UTMDataType>({
     showUTM: false,
     data: {
-      utm_source: ['Facebook', 'Google', 'Twitter'],
-      utm_medium: ['Social', 'Search', 'Display'],
-      utm_campaign: ['Summer Sale', 'Winter Sale', 'Spring Sale'],
-      utm_term: ['Summer', 'Winter', 'Spring'],
-      utm_content: ['Image', 'Video', 'Text'],
+      source: [],
+      medium: [],
+      campaign: [],
+      term: [],
+      content: [],
     },
     selectedData: {
-      utm_source: '',
-      utm_medium: '',
-      utm_campaign: '',
-      utm_term: '',
-      utm_content: '',
+      source: '',
+      medium: '',
+      campaign: '',
+      term: '',
+      content: '',
     },
     addUTM: {
       type: '',
@@ -118,12 +118,15 @@ const EventGlance = () => {
     Object.keys(UTMData.selectedData).forEach((key, index) => {
       if (UTMData.selectedData[key as keyof UTMDataType['selectedData']]) {
         if (index === 0)
-          utmString += `?${key}=${UTMData.selectedData[key as keyof UTMDataType['selectedData']].replace(' ', '+')}`;
+          utmString += `?${key}=${UTMData.selectedData[key as keyof UTMDataType['selectedData']]}`;
         else
-          utmString += `&${key}=${UTMData.selectedData[key as keyof UTMDataType['selectedData']].replace(' ', '+')}`;
+          utmString += `&${key}=${UTMData.selectedData[key as keyof UTMDataType['selectedData']]}`;
       }
     });
-    setEventLink(`${import.meta.env.VITE_FRONTEND_URL}/${eventName}${utmString}`);
+
+    const parsedURL = new URL(`${import.meta.env.VITE_FRONTEND_URL}/${eventName}${utmString}`);
+
+    setEventLink(parsedURL.toString());
 
     return () => {};
   }, [UTMData.selectedData]);
@@ -207,10 +210,7 @@ const EventGlance = () => {
           {showQR && (
             <Modal title='QR Code' onClose={() => setShowQR(false)}>
               <div className={styles.qrContainer}>
-                <img
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://${window.location.hostname}/${eventName}`}
-                  alt='QR Code'
-                />
+                <img src={eventLink} alt='QR Code' />
 
                 <p className={styles.qrText}>
                   Scan this QR code to visit the event page on your mobile device
@@ -220,7 +220,7 @@ const EventGlance = () => {
                   buttonText='Download QR'
                   icon={<LuDownload size={15} />}
                   onClick={() => {
-                    const url = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://${window.location.hostname}/${eventName}`;
+                    const url = eventLink;
 
                     fetch(url)
                       .then((response) => response.blob())

@@ -14,13 +14,17 @@
   font-family: 'Inter', sans-serif;
   padding: 1rem;
   position: relative;
+
+  row-gap: 1rem;
+  column-gap: 1rem;
 }
 
 .utmColumn {
   display: flex;
   flex-direction: column;
   row-gap: 0.75rem;
-  max-width: 12rem;
+  width: 100%;
+  max-width: 14rem;
 }
 
 .utmHeader {
@@ -39,6 +43,6 @@
   label {
     margin: 0 0.5rem;
     display: inline-block;
-    width: 7rem;
+    width: 10rem;
   }
 }

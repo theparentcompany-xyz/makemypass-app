@@ -144,6 +144,11 @@ export const makeMyPass = {
   spinWheelCheckPickUser: (eventId: string) => makeMyPassURL(`/games/${eventId}/check-pick-user/`),
 
   spinWheelLogList: (eventId: string) => makeMyPassURL(`/games/${eventId}/randomuser/log/`),
+
+  //UTM
+
+  utmList: (eventId: string) => makeMyPassURL(`/utm/${eventId}/list/`),
+  createUtm: (eventId: string) => makeMyPassURL(`/utm/${eventId}/create/`),
 };
 
 export const makeMyPassSocket = {

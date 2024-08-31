@@ -1,18 +1,18 @@
 export type UTMDataType = {
   showUTM: boolean;
   data: {
-    utm_source: string[];
-    utm_medium: string[];
-    utm_campaign: string[];
-    utm_term: string[];
-    utm_content: string[];
+    source: string[];
+    medium: string[];
+    campaign: string[];
+    term: string[];
+    content: string[];
   };
   selectedData: {
-    utm_source: string;
-    utm_medium: string;
-    utm_campaign: string;
-    utm_term: string;
-    utm_content: string;
+    source: string;
+    medium: string;
+    campaign: string;
+    term: string;
+    content: string;
   };
   addUTM: {
     type: keyof UTMDataType['data'] | '';
