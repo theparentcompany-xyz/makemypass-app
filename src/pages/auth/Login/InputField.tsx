@@ -16,6 +16,7 @@ interface FormProps {
   style?: React.CSSProperties;
   disabled?: boolean;
   key?: string;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProps }, ref) => {

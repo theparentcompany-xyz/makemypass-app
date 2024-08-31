@@ -16,7 +16,7 @@ import { getEventData } from '../../../apis/events';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import ManageTickets from './components/ManageTickets/ManageTickets';
-import { LuCopy, LuDownload, LuMail, LuPencil, LuQrCode } from 'react-icons/lu';
+import { LuCopy, LuDownload, LuMail, LuPencil, LuPlus, LuQrCode, LuSave } from 'react-icons/lu';
 import { listEventMails } from '../../../apis/mails';
 import CustomMail from './components/CustomMail/CustomMail';
 import UpdateMail from './components/UpdateMail/UpdateMail';
@@ -29,12 +29,45 @@ import { listEventVenues } from '../../../apis/venue';
 import VenueModal from './components/VenueModal/VenueModal';
 import { listEventSpeakers } from '../../../apis/speakers';
 import SpeakerModal from './components/SpeakerModal/SpeakerModal';
+import { MdCampaign } from 'react-icons/md';
+import { UTMDataType } from './types';
+import InputField from '../../auth/Login/InputField';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const modalRef = useRef<ChildRef>(null);
   const [eventTitle, setEventTitle] = useState('');
+  const [eventLink, setEventLink] = useState(
+    `${import.meta.env.VITE_FRONTEND_URL}/${JSON.parse(sessionStorage.getItem('eventData')!).event_name}`,
+  );
   const [eventData, setEventData] = useState<EventType>();
+  const [UTMData, setUTMData] = useState<UTMDataType>({
+    showUTM: false,
+    data: {
+      utm_source: ['Facebook', 'Google', 'Twitter'],
+      utm_medium: ['Social', 'Search', 'Display'],
+      utm_campaign: ['Summer Sale', 'Winter Sale', 'Spring Sale'],
+      utm_term: ['Summer', 'Winter', 'Spring'],
+      utm_content: ['Image', 'Video', 'Text'],
+    },
+    selectedData: {
+      utm_source: '',
+      utm_medium: '',
+      utm_campaign: '',
+      utm_term: '',
+      utm_content: '',
+    },
+    addUTM: {
+      type: '',
+      value: '',
+    },
+    editUTM: {
+      type: '',
+      value: '',
+      index: 0,
+    },
+  });
+
   const [confirmTestMail, setConfirmTestMail] = useState({
     status: false,
     mailId: '',
@@ -79,6 +112,22 @@ const EventGlance = () => {
     if (speakers.showModal) listEventSpeakers(eventId, setSpeakers);
   }, [speakers.showModal]);
 
+  useEffect(() => {
+    //add utmSelectedData to eventLink
+    let utmString = '';
+    Object.keys(UTMData.selectedData).forEach((key, index) => {
+      if (UTMData.selectedData[key as keyof UTMDataType['selectedData']]) {
+        if (index === 0)
+          utmString += `?${key}=${UTMData.selectedData[key as keyof UTMDataType['selectedData']].replace(' ', '+')}`;
+        else
+          utmString += `&${key}=${UTMData.selectedData[key as keyof UTMDataType['selectedData']].replace(' ', '+')}`;
+      }
+    });
+    setEventLink(`${import.meta.env.VITE_FRONTEND_URL}/${eventName}${utmString}`);
+
+    return () => {};
+  }, [UTMData.selectedData]);
+
   return (
     <>
       <Theme>
@@ -107,7 +156,6 @@ const EventGlance = () => {
               <CustomMail setCustomMail={setCustomMail} />
             </Modal>
           )}
-
           {selectedMail && (
             <Modal onClose={() => setSelectedMail(undefined)} type='side'>
               <UpdateMail
@@ -118,7 +166,6 @@ const EventGlance = () => {
               />
             </Modal>
           )}
-
           {confirmTestMail.status && (
             <Modal
               title='Test Mail'
@@ -157,7 +204,6 @@ const EventGlance = () => {
               </div>
             </Modal>
           )}
-
           {showQR && (
             <Modal title='QR Code' onClose={() => setShowQR(false)}>
               <div className={styles.qrContainer}>
@@ -193,15 +239,12 @@ const EventGlance = () => {
 
           <div className={styles.eventGlance}>
             <div className={styles.eventLinkContainer}>
-              <div
-                className={styles.eventLink}
-              >{`${import.meta.env.VITE_FRONTEND_URL}/${eventName}`}</div>
+              <div className={styles.eventLink}>{eventLink}</div>
               <div className={styles.linkbuttons}>
                 <SecondaryButton
                   buttonText='Copy Link'
                   icon={<LuCopy size={15} />}
                   onClick={() => {
-                    const eventLink = `https://${window.location.hostname}/${eventName}`;
                     navigator.clipboard.writeText(eventLink);
                     toast.success('Event link copied to clipboard');
                   }}
@@ -213,8 +256,185 @@ const EventGlance = () => {
                     setShowQR(true);
                   }}
                 />
+                <SecondaryButton
+                  buttonText='UTM'
+                  icon={<MdCampaign size={15} />}
+                  onClick={() => {
+                    setUTMData({ ...UTMData, showUTM: !UTMData.showUTM });
+                  }}
+                />
               </div>
             </div>
+
+            {UTMData && (
+              <div className={styles.utmContainer}>
+                {Object.keys(UTMData.data).map((key: string) => (
+                  <div className={styles.utmColumn} key={key}>
+                    <p className={styles.utmHeading}>{key}</p>
+
+                    {UTMData.data[key as keyof UTMDataType['data']].map((value, index) =>
+                      UTMData.editUTM.type === key && UTMData.editUTM.index === index ? (
+                        <div key={index} className={styles.utmValue}>
+                          <InputField
+                            placeholder='Edit UTM'
+                            icon={<LuPencil size={15} />}
+                            id='utm'
+                            name='utm'
+                            type='text'
+                            value={UTMData.editUTM.value}
+                            onChange={(e) => {
+                              const newData = [...UTMData.data[key as keyof UTMDataType['data']]];
+                              newData[index] = e.target.value;
+                              setUTMData({
+                                ...UTMData,
+                                data: {
+                                  ...UTMData.data,
+                                  [key]: newData,
+                                },
+                                editUTM: {
+                                  type: key as keyof UTMDataType['data'],
+                                  value: e.target.value,
+                                  index: index,
+                                },
+                              });
+                            }}
+                            onBlur={() => {
+                              setUTMData({
+                                ...UTMData,
+                                editUTM: {
+                                  type: '',
+                                  value: '',
+                                  index: 0,
+                                },
+                              });
+                            }}
+                          />
+                          <SecondaryButton
+                            buttonText='Save'
+                            icon={<LuSave size={15} />}
+                            onClick={() => {
+                              setUTMData({
+                                ...UTMData,
+                                data: {
+                                  ...UTMData.data,
+                                  [key]: [
+                                    ...UTMData.data[key as keyof UTMDataType['data']],
+                                    UTMData.editUTM.value,
+                                  ],
+                                },
+                                editUTM: {
+                                  type: '',
+                                  value: '',
+                                  index: 0,
+                                },
+                              });
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <div key={index} className={styles.utmValue}>
+                          <input
+                            type='radio'
+                            name={key}
+                            value={value}
+                            onDoubleClick={(e) => {
+                              e.currentTarget.checked = false;
+                              setUTMData({
+                                ...UTMData,
+                                selectedData: {
+                                  ...UTMData.selectedData,
+                                  [key]: '',
+                                },
+                              });
+                            }}
+                            onClick={(e) => {
+                              setUTMData({
+                                ...UTMData,
+                                selectedData: {
+                                  ...UTMData.selectedData,
+                                  [key]: e.currentTarget.value,
+                                },
+                              });
+                            }}
+                          />
+                          <label>{value}</label>
+                          <LuPencil
+                            color='#939597'
+                            size={15}
+                            onClick={() => {
+                              setUTMData({
+                                ...UTMData,
+                                editUTM: {
+                                  type: key as keyof UTMDataType['data'],
+                                  value: value,
+                                  index: index,
+                                },
+                              });
+                            }}
+                          />
+                        </div>
+                      ),
+                    )}
+
+                    {
+                      // Add UTM
+                      UTMData.addUTM.type === key && (
+                        <div className={styles.utmValue}>
+                          <InputField
+                            icon={<LuPlus size={15} />}
+                            type='text'
+                            name='utm'
+                            value={UTMData.addUTM.value}
+                            id='utm'
+                            placeholder='Add UTM'
+                            onChange={(e) => {
+                              setUTMData({
+                                ...UTMData,
+                                addUTM: {
+                                  type: key,
+                                  value: e.target.value,
+                                },
+                              });
+                            }}
+                          />
+                        </div>
+                      )
+                    }
+                    <SecondaryButton
+                      buttonText={UTMData.addUTM.type === key ? 'Save' : 'Add'}
+                      icon={<LuPlus size={15} />}
+                      onClick={() => {
+                        if (UTMData.addUTM.type === key && UTMData.addUTM.value !== '') {
+                          setUTMData({
+                            ...UTMData,
+                            data: {
+                              ...UTMData.data,
+                              [key]: [
+                                ...UTMData.data[key as keyof UTMDataType['data']],
+                                UTMData.addUTM.value,
+                              ],
+                            },
+                            addUTM: {
+                              type: '',
+                              value: '',
+                            },
+                          });
+                        } else {
+                          setUTMData({
+                            ...UTMData,
+                            addUTM: {
+                              type: key as keyof UTMDataType['data'],
+                              value: '',
+                            },
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div className={styles.bannerContainer}>
               {eventData?.banner ? (
                 <img src={eventData?.banner} alt='' className={styles.banner} />
