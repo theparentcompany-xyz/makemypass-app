@@ -24,7 +24,7 @@ import { BiChevronDown } from 'react-icons/bi';
 import { HashLoader } from 'react-spinners';
 import { multipleTicketCount } from '../../../CheckIns/pages/ScanQR/types';
 import ScannerResponseModal from '../../../CheckIns/components/ScannerResponseModal/ScannerResponseModal';
-import PreviewBox from '../../../EventGlance/components/UpdateMail/components/PreviewBox/PreviewBox';
+import PreviewBox from '../../../EventGlance/components/MailModals/UpdateMail/components/PreviewBox/PreviewBox';
 
 const ViewGuest = ({
   selectedGuestData,
