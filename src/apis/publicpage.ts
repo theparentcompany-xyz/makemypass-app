@@ -109,8 +109,16 @@ export const submitForm = async ({
   if (selectedDateFormatted) backendFormData.append('ticket_date', selectedDateFormatted);
   if (ticketCode) backendFormData.append('ticket_code', ticketCode);
 
-  if (utmData){
-    let dataToAppend = 
+  if (utmData) {
+    const dataToAppend = {
+      source: utmData.source,
+      medium: utmData.medium,
+      campaign: utmData.campaign,
+      term: utmData.term,
+      content: utmData.content,
+    };
+
+    backendFormData.append('utm', JSON.stringify(dataToAppend));
   }
 
   publicGateway
