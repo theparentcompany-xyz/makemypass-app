@@ -8,27 +8,36 @@ type ModalProps = {
   onClose?: () => void;
   type?: string;
   title?: string;
+  zIndexCount?: number;
 };
 
-const Modal = ({ children, onClose, style, type, title, ...inputProps }: ModalProps) => {
+const Modal = ({
+  children,
+  onClose,
+  style,
+  type,
+  title,
+  zIndexCount,
+  ...inputProps
+}: ModalProps) => {
   return ReactDOM.createPortal(
     type && type == 'side' ? (
       <>
-        <div onClick={onClose} className={styles.backgroundBlur}></div>
-        <dialog {...inputProps} className={styles.sideModal} style={style}>
+        <div
+          onClick={onClose}
+          className={styles.backgroundBlur}
+          style={{
+            zIndex: zIndexCount,
+          }}
+        ></div>
+        <dialog {...inputProps} className={styles.sideModal}>
           <ManageTicketHeader title={title} onClose={onClose} />
           {children}
         </dialog>
       </>
     ) : (
       <>
-        <div
-          onClick={onClose}
-          className={styles.backgroundBlur}
-          style={{
-            zIndex: 105,
-          }}
-        ></div>
+        <div onClick={onClose} className={styles.backgroundBlur}></div>
         <dialog {...inputProps} className={styles.onClickModal} style={style}>
           {title && (
             <div className={styles.modalHeader}>

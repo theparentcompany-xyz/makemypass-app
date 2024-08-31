@@ -6,10 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Select, { MultiValue } from 'react-select';
 import { validateCondition } from './condition';
 import ValidateInput from '../ValidateInput/ValidateInput.tsx';
-import React, { useEffect, useState } from 'react';
 import { previewType } from '../../pages/app/EventGlance/components/UpdateMail/types.ts';
 import UploadAttachement from '../../pages/app/EventGlance/components/UpdateMail/components/UploadAttachement/UploadAttachements.tsx';
-import toast from 'react-hot-toast';
 
 const variants = {
   initial: { opacity: 0, y: -10 },
@@ -79,121 +77,18 @@ const DynamicForm = ({
   formErrors,
   formData,
   onFieldChange,
+  previews,
+  handleFileChange,
+  handleDeleteAttachment,
 }: {
   formFields: FormFieldType[];
   formErrors: ErrorMessages;
   formData: FormDataType;
   onFieldChange: (fieldName: string, fieldValue: string | string[]) => void;
+  previews?: previewType[];
+  handleFileChange?: (event: React.ChangeEvent<HTMLInputElement>, field: FormFieldType) => void;
+  handleDeleteAttachment?: (index: number) => void;
 }) => {
-  const [previews, setPreviews] = useState<previewType[]>([]);
-  const [attachements, setAttachements] = useState<{
-    field_key: string;
-    fieldAttachements: File[];
-  }>({
-    field_key: '',
-    fieldAttachements: [],
-  });
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, field: FormFieldType) => {
-    let withinSize = true;
-    let isWithinFileCount = true;
-    Array.from(event.target.files || []).forEach((file) => {
-      if (file.size <= (field.property?.max_size ?? 0) * 1024) {
-        withinSize = withinSize && true;
-      } else {
-        withinSize = false;
-      }
-    });
-
-    if (field.property?.max_no_of_files) {
-      isWithinFileCount =
-        attachements.fieldAttachements.length + Array.from(event.target.files || []).length <=
-        field.property?.max_no_of_files;
-    }
-
-    if (event.target.files && withinSize && isWithinFileCount) {
-      const newAttachments = [
-        ...attachements.fieldAttachements,
-        ...Array.from(event.target.files || []),
-      ];
-      onFieldChange(field.field_key, newAttachments as any);
-      setAttachements({
-        field_key: field.field_key,
-        fieldAttachements: newAttachments,
-      });
-      setPreviews([
-        ...previews,
-        ...Array.from(event.target.files || []).map((file) => {
-          return {
-            previewURL: URL.createObjectURL(file),
-            previewExtension: file.type,
-            previewName: file.name,
-          };
-        }),
-      ]);
-    } else {
-      if (!withinSize) {
-        toast.error('File size exceeds the limit');
-      } else {
-        toast.error(
-          'You can only upload a maximum of ' + field.property?.max_no_of_files + ' files',
-        );
-      }
-    }
-  };
-
-  const handleDeleteAttachment = (index: number) => {
-    const newAttachements = attachements.fieldAttachements.filter((_, i) => i !== index);
-    const newPreviews = previews.filter((_, i) => i !== index);
-
-    onFieldChange(attachements.field_key, newAttachements as any);
-
-    setAttachements({
-      field_key: attachements.field_key,
-      fieldAttachements: newAttachements,
-    });
-
-    setPreviews(newPreviews);
-  };
-
-  useEffect(() => {
-    //take field_key which is the keyy of the form data and check if it is of type file from formFields, if so update preview
-
-    if (previews.length === 0) {
-      formFields.forEach((field) => {
-        if (field.type === 'file' && formData[field.field_key]) {
-          setPreviews([
-            ...previews,
-            ...Array.from(formData[field.field_key] as unknown as string[]).map((file: string) => {
-              const fileName = file.split('/').pop() || 'file';
-              const fileExtension = file.split('.').pop();
-              const fileType =
-                fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png'
-                  ? `image/${fileExtension}`
-                  : fileExtension === 'mp3'
-                    ? 'audio/mp3'
-                    : fileExtension === 'mp4'
-                      ? 'video/mp4'
-                      : fileExtension === 'pdf'
-                        ? 'application/pdf'
-                        : 'application/octet-stream';
-              return {
-                previewURL: file,
-                previewExtension: fileType,
-                previewName: fileName,
-              };
-            }),
-          ]);
-
-          setAttachements({
-            field_key: field.field_key,
-            fieldAttachements: formData[field.field_key] as unknown as File[],
-          });
-        }
-      });
-    }
-  }, [formData]);
-
   return (
     <>
       <div className={styles.formFields}>
@@ -388,7 +283,12 @@ const DynamicForm = ({
                 </div>
               </CommonRenderStructure>
             );
-          } else if (field.type === 'file') {
+          } else if (
+            field.type === 'file' &&
+            handleFileChange &&
+            handleDeleteAttachment &&
+            previews
+          ) {
             return (
               <CommonRenderStructure
                 formErrors={formErrors}
@@ -400,6 +300,7 @@ const DynamicForm = ({
                   previews={previews}
                   handleFileChange={(event) => handleFileChange(event, field)}
                   handleDeleteAttachment={handleDeleteAttachment}
+                  allowedFileTypes={field.property?.extension_types}
                 />
               </CommonRenderStructure>
             );

@@ -6,10 +6,12 @@ const UploadAttachement = ({
   previews,
   handleFileChange,
   handleDeleteAttachment,
+  allowedFileTypes,
 }: {
   previews: previewType[];
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleDeleteAttachment: (index: number) => void;
+  allowedFileTypes?: string[];
 }) => {
   return (
     <>
@@ -34,6 +36,7 @@ const UploadAttachement = ({
           value={''}
           onChange={handleFileChange}
           className={styles.fileInput}
+          accept={allowedFileTypes ? allowedFileTypes.join(',') : '*'}
         />
       </div>
     </>

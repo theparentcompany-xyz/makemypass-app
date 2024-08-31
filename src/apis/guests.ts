@@ -44,19 +44,23 @@ export const updateGuestSubmission = async (
     let value = data[key];
 
     if (!(value instanceof FileList)) {
-      if (Array.isArray(value) && value.length > 0) {
+      if (Array.isArray(value) && value.length >= 0) {
+        console.log(key, value);
+
         value.forEach((value) => backendFormData.append(key + '[]', value));
       } else {
         value = data[key]?.toString();
       }
     }
 
-    if (typeof value === 'string' && value.length > 0) {
+    if (typeof value === 'string' && value.length >= 0) {
       backendFormData.append(key, value);
     } else if (value instanceof FileList) {
       Array.from(value).forEach((value) => backendFormData.append(key + '[]', value));
     }
   });
+
+  console.log(backendFormData);
 
   if (eventRegisterId && data)
     privateGateway

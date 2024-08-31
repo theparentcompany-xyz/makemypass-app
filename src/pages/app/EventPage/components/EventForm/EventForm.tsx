@@ -8,7 +8,7 @@ import {
 } from '../../types';
 import styles from '../../EventPage.module.css';
 import { submitForm, validateRSVPData } from '../../../../../apis/publicpage';
-import { EventType, FormDataType, TicketType } from '../../../../../apis/types';
+import { EventType, FormDataType, FormFieldType, TicketType } from '../../../../../apis/types';
 import { motion } from 'framer-motion';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import CouponForm from '../CouponForm/CouponForm';
@@ -20,6 +20,7 @@ import VoiceInput from './components/VoiceInput';
 import { addGuest } from '../../../../../apis/guest';
 import { MdError } from 'react-icons/md';
 import toast from 'react-hot-toast';
+import { previewType } from '../../../EventGlance/components/UpdateMail/types';
 
 const EventForm = ({
   eventFormData,
@@ -44,6 +45,15 @@ const EventForm = ({
   claimCodeExceed?: ClaimCodeExceedType;
   isCashInHand?: boolean;
 }) => {
+  const [previews, setPreviews] = useState<previewType[]>([]);
+  const [attachements, setAttachements] = useState<{
+    field_key: string;
+    fieldAttachements: File[];
+  }>({
+    field_key: '',
+    fieldAttachements: [],
+  });
+
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({});
   const [formNumber, setFormNumber] = useState<number>(eventFormData.show_ticket_first ? 1 : 0);
@@ -170,6 +180,112 @@ const EventForm = ({
     }
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, field: FormFieldType) => {
+    let withinSize = true;
+    let isWithinFileCount = true;
+    Array.from(event.target.files || []).forEach((file) => {
+      if (file.size <= (field.property?.max_size ?? 0) * 1024) {
+        withinSize = withinSize && true;
+      } else {
+        withinSize = false;
+      }
+    });
+
+    if (field.property?.max_no_of_files) {
+      isWithinFileCount =
+        attachements.fieldAttachements.length + Array.from(event.target.files || []).length <=
+        field.property?.max_no_of_files;
+    }
+
+    if (event.target.files && withinSize && isWithinFileCount) {
+      const newAttachments = [
+        ...attachements.fieldAttachements,
+        ...Array.from(event.target.files || []),
+      ];
+      onFieldChange(field.field_key, newAttachments as any);
+      setAttachements({
+        field_key: field.field_key,
+        fieldAttachements: newAttachments,
+      });
+      setPreviews([
+        ...previews,
+        ...Array.from(event.target.files || []).map((file) => {
+          return {
+            previewURL: URL.createObjectURL(file),
+            previewExtension: file.type,
+            previewName: file.name,
+          };
+        }),
+      ]);
+    } else {
+      if (!withinSize) {
+        setFormErrors &&
+          setFormErrors({
+            ...formErrors,
+            [field.field_key]: [`File size should be less than ${field.property?.max_size} KB`],
+          });
+      } else {
+        if (!isWithinFileCount) {
+          setFormErrors &&
+            setFormErrors({
+              ...formErrors,
+              [field.field_key]: [`You can only upload ${field.property?.max_no_of_files} files`],
+            });
+        }
+      }
+    }
+  };
+
+  const handleDeleteAttachment = (index: number) => {
+    const newAttachements = attachements.fieldAttachements.filter((_, i) => i !== index);
+    const newPreviews = previews.filter((_, i) => i !== index);
+
+    onFieldChange(attachements.field_key, newAttachements as any);
+
+    setAttachements({
+      field_key: attachements.field_key,
+      fieldAttachements: newAttachements,
+    });
+
+    setPreviews(newPreviews);
+  };
+
+  useEffect(() => {
+    if (previews.length === 0) {
+      eventFormData.form.forEach((field) => {
+        if (field.type === 'file' && formData[field.field_key]) {
+          setPreviews([
+            ...previews,
+            ...Array.from(formData[field.field_key] as unknown as string[]).map((file: string) => {
+              const fileName = file.split('/').pop() || 'file';
+              const fileExtension = file.split('.').pop();
+              const fileType =
+                fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png'
+                  ? `image/${fileExtension}`
+                  : fileExtension === 'mp3'
+                    ? 'audio/mp3'
+                    : fileExtension === 'mp4'
+                      ? 'video/mp4'
+                      : fileExtension === 'pdf'
+                        ? 'application/pdf'
+                        : 'application/octet-stream';
+              return {
+                previewURL: file,
+                previewExtension: fileType,
+                previewName: fileName,
+              };
+            }),
+          ]);
+
+          setAttachements({
+            field_key: field.field_key,
+            fieldAttachements: formData[field.field_key] as unknown as File[],
+          });
+        }
+      });
+    }
+  }, [formData]);
+
   return (
     <>
       {claimCodeExceed?.exceeded && (
@@ -210,6 +326,9 @@ const EventForm = ({
                   formErrors={formErrors}
                   formData={formData}
                   onFieldChange={onFieldChange}
+                  previews={previews}
+                  handleFileChange={handleFileChange}
+                  handleDeleteAttachment={handleDeleteAttachment}
                 />
               </div>
             )}

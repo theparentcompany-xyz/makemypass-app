@@ -341,9 +341,11 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     <>
       {isOpen && (
         <Modal
+          type='side'
           title='Advanced Setting'
           onClose={() => setIsOpen(false)}
           style={{ zIndex: 999, alignItems: 'flex-start' }}
+          zIndexCount={100}
         >
           <AdvancedSetting
             selectedTicket={selectedTicket as TicketType}

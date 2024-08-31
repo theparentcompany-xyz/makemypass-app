@@ -83,6 +83,7 @@ const Coupon = () => {
     getCouponsList(eventId, setCoupons, setActivateCoupon);
     getTicketShortlist(eventId, setTickets);
     getFormBuilderForm(eventId, setFormFields);
+    setCouponError({});
   }, []);
 
   useEffect(() => {
@@ -167,6 +168,7 @@ const Coupon = () => {
                     required={true}
                     onChange={(event) => {
                       setNewCouponData({ ...newCouponData, code: event.target.value });
+                      setCouponError((prev: CreateCouponTypeError) => ({ ...prev, code: [''] }));
                     }}
                     value={newCouponData.code}
                     description='Customer must enter this coupon code at checkout'
@@ -209,6 +211,10 @@ const Coupon = () => {
                             ...newCouponData,
                             ticket_restricted: options.map((option) => option.value),
                           });
+                          setCouponError((prev: CreateCouponTypeError) => ({
+                            ...prev,
+                            tickets: [''],
+                          }));
                         }}
                       />
                       {
@@ -230,6 +236,10 @@ const Coupon = () => {
                         required={true}
                         disabled={newCouponData.consumed > 0}
                         onChange={(event) => {
+                          setCouponError((prev: CreateCouponTypeError) => ({
+                            ...prev,
+                            value: [''],
+                          }));
                           if (
                             newCouponData.type === 'percentage' &&
                             Number(event.target.value) > 100
@@ -276,7 +286,13 @@ const Coupon = () => {
                                 ...newCouponData,
                                 type: selectedOption.value as 'percentage' | 'amount',
                               });
+
+                            setCouponError((prev: CreateCouponTypeError) => ({
+                              ...prev,
+                              value: [''],
+                            }));
                           }}
+                          isSearchable={false}
                         />
                         {couponError.value && <p className={styles.error}>{couponError.value}</p>}
                       </div>
@@ -294,6 +310,10 @@ const Coupon = () => {
                     required={false}
                     onChange={(event) => {
                       setNewCouponData({ ...newCouponData, description: event.target.value });
+                      setCouponError((prev: CreateCouponTypeError) => ({
+                        ...prev,
+                        description: [''],
+                      }));
                     }}
                     value={newCouponData.description}
                     error={couponError.description}
@@ -364,7 +384,7 @@ const Coupon = () => {
                       onChange={() => {
                         setNewCouponData({
                           ...newCouponData,
-                          is_active: !newCouponData.is_private,
+                          is_active: !newCouponData.is_active,
                         });
                       }}
                       text='Activate Coupon'
@@ -497,27 +517,12 @@ const Coupon = () => {
 
                 <div className={styles.buttons}>
                   <SecondaryButton
-                    buttonText='Discard Coupon'
-                    onClick={() => {
-                      setCouponModal({ showModal: false });
-                      setNewCouponData({
-                        code: '',
-                        value: 0,
-                        type: 'amount',
-                        ticket_restricted: [],
-                        description: '',
-                        is_active: true,
-                        count: 0,
-                        conditions: [],
-                        is_private: false,
-                      });
-                    }}
-                  />
-                  <SecondaryButton
                     buttonText='Save Coupon'
                     onClick={() => {
-                      if (newCouponData.id) updateCouponData(eventId, newCouponData, setCoupons);
-                      else
+                      if (newCouponData.id) {
+                        setCouponModal({ showModal: false });
+                        updateCouponData(eventId, newCouponData, setCoupons);
+                      } else
                         createCoupon(eventId, newCouponData, setCoupons, setCouponError).then(
                           () => {
                             setCouponModal({ showModal: false });
@@ -534,6 +539,23 @@ const Coupon = () => {
                             });
                           },
                         );
+                    }}
+                  />
+                  <SecondaryButton
+                    buttonText='Discard Coupon'
+                    onClick={() => {
+                      setCouponModal({ showModal: false });
+                      setNewCouponData({
+                        code: '',
+                        value: 0,
+                        type: 'amount',
+                        ticket_restricted: [],
+                        description: '',
+                        is_active: true,
+                        count: 0,
+                        conditions: [],
+                        is_private: false,
+                      });
                     }}
                   />
                 </div>

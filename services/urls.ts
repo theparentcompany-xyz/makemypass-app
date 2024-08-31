@@ -141,6 +141,7 @@ export const makeMyPass = {
   scratchCardClaim: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/games/${eventId}/scratch-card/${eventRegisterId}/claim`),
   spinWheelList: (eventId: string) => makeMyPassURL(`/games/${eventId}/randomuser/list`),
+  spinWheelCheckPickUser: (eventId: string) => makeMyPassURL(`/games/${eventId}/check-pick-user/`),
 
   spinWheelLogList: (eventId: string) => makeMyPassURL(`/games/${eventId}/randomuser/log/`),
 };
