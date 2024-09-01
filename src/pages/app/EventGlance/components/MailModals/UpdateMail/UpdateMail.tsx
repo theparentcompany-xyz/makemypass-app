@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { MailType } from '../../../../../apis/types';
+import { MailType } from '../../../../../../apis/types';
 import styles from './UpdateMail.module.css';
-import { getEventMailData } from '../../../../../apis/mails';
+import { getEventMailData } from '../../../../../../apis/mails';
 import { HashLoader } from 'react-spinners';
-import { updateEventMail } from '../../../../../apis/mails';
+import { updateEventMail } from '../../../../../../apis/mails';
 import { previewType, PropTypes } from './types';
 import UploadAttachement from './components/UploadAttachement/UploadAttachements';
 

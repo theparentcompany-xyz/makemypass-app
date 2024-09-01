@@ -11,15 +11,21 @@ import SectionButton from '../../../components/SectionButton/SectionButton';
 import { useEffect, useRef, useState } from 'react';
 import Modal from '../../../components/Modal/Modal';
 import { getDay, getMonthAbbreviation } from '../EventPage/constants';
-import { EventType, listMailType, SpeakerCRUDType, VenueCRUDType } from '../../../apis/types';
+import {
+  EventType,
+  listMailType,
+  MailType,
+  SpeakerCRUDType,
+  VenueCRUDType,
+} from '../../../apis/types';
 import { getEventData } from '../../../apis/events';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import ManageTickets from './components/ManageTickets/ManageTickets';
 import { LuCopy, LuDownload, LuMail, LuPencil, LuQrCode } from 'react-icons/lu';
-import { listEventMails } from '../../../apis/mails';
-import CustomMail from './components/CustomMail/CustomMail';
-import UpdateMail from './components/UpdateMail/UpdateMail';
+import { getEventMailData, listEventMails } from '../../../apis/mails';
+import CustomMail from './components/MailModals/CustomMail/CustomMail';
+import UpdateMail from './components/MailModals/UpdateMail/UpdateMail';
 import { sentTestMail } from '../../../apis/postevent';
 import { ChildRef } from './components/ManageTickets/ManageTickets';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
@@ -29,6 +35,8 @@ import { listEventVenues } from '../../../apis/venue';
 import VenueModal from './components/VenueModal/VenueModal';
 import { listEventSpeakers } from '../../../apis/speakers';
 import SpeakerModal from './components/SpeakerModal/SpeakerModal';
+import TestMail from './components/MailModals/TestMail/TestMail';
+import DummyData from './components/MailModals/DummyData/DummyData';
 import { MdCampaign } from 'react-icons/md';
 import { UTMDataType } from './types';
 import UTMManager from './components/UTMManager/UTMManager';
@@ -72,16 +80,16 @@ const EventGlance = () => {
     status: false,
     mailId: '',
   });
+  const [dummyData, setDummyData] = useState<{
+    showModal: boolean;
+    data: { [key: string]: any } | null;
+    mailId: string;
+  }>({
+    showModal: false,
+    data: null,
+    mailId: '',
+  });
 
-  const handleCloseTicketModal = () => {
-    if (modalRef.current) {
-      modalRef.current.closeTicketModal();
-    }
-  };
-
-  useEffect(() => {
-    if (eventId) getEventData(eventId, setEventTitle, setEventData);
-  }, [eventId]);
   const [selectedMail, setSelectedMail] = useState<listMailType>();
   const [customMail, setCustomMail] = useState<boolean>(false);
   const eventName = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
@@ -97,6 +105,39 @@ const EventGlance = () => {
     showModal: false,
     speakerList: [],
   });
+  const handleCloseTicketModal = () => {
+    if (modalRef.current) {
+      modalRef.current.closeTicketModal();
+    }
+  };
+
+  const getDummydata = async (id: string) => {
+    try {
+      if (!id) return;
+      const regex = /\{\{([^}]+)\}\}/g;
+      const mailData: MailType = await getEventMailData(eventId, id);
+      const text = `${mailData?.subject} \n ${mailData?.body}`;
+      const matches = text.matchAll(regex);
+      const variableNames = Array.from(new Set(Array.from(matches, (match) => match[1])));
+
+      if (variableNames.length > 0) {
+        setDummyData((prevData) => ({
+          ...prevData,
+          data: variableNames.reduce((acc: { [key: string]: string }, variableName) => {
+            acc[variableName] = '';
+            return acc;
+          }, {}),
+          mailId: id,
+        }));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (eventId) getEventData(eventId, setEventTitle, setEventData);
+  }, [eventId]);
 
   useEffect(() => {
     if (eventId) {
@@ -111,6 +152,10 @@ const EventGlance = () => {
   useEffect(() => {
     if (speakers.showModal) listEventSpeakers(eventId, setSpeakers);
   }, [speakers.showModal]);
+
+  useEffect(() => {
+    if (dummyData.showModal) getDummydata(confirmTestMail.mailId);
+  }, [dummyData.showModal]);
 
   useEffect(() => {
     //add utmSelectedData to eventLink
@@ -179,34 +224,27 @@ const EventGlance = () => {
                 })
               }
             >
-              <div className={styles.modalContainer}>
-                <div className={styles.sectionContent1}>
-                  <p className={styles.sectionText}>Are you sure you want to sent</p>
-                </div>
-                <div className={styles.modalButtons}>
-                  <button
-                    className={styles.confirmButton}
-                    onClick={() => {
-                      sentTestMail(eventId, confirmTestMail.mailId);
-                    }}
-                  >
-                    Send
-                  </button>
-                  <button
-                    onClick={() => {
-                      setConfirmTestMail({
-                        status: false,
-                        mailId: '',
-                      });
-                    }}
-                    className={styles.cancelButton}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
+              <TestMail
+                setConfirmTestMail={setConfirmTestMail}
+                sentTestMail={sentTestMail}
+                eventId={eventId}
+                confirmTestMail={confirmTestMail}
+                setDummyData={setDummyData}
+                getDummyData={getDummydata}
+              />
             </Modal>
           )}
+
+          {dummyData.showModal && (
+            <Modal
+              title='Dummy Data'
+              onClose={() => setDummyData({ showModal: false, data: {}, mailId: '' })}
+              style={{ zIndex: 999 }}
+            >
+              <DummyData eventId={eventId} dummyData={dummyData} setDummyData={setDummyData} />
+            </Modal>
+          )}
+
           {showQR && (
             <Modal title='QR Code' onClose={() => setShowQR(false)}>
               <div className={styles.qrContainer}>

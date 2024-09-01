@@ -1,4 +1,4 @@
-import { listMailType } from '../../../../../apis/types';
+import { listMailType } from '../../../../../../apis/types';
 
 export type PropTypes = {
   selectedMail: listMailType | undefined;

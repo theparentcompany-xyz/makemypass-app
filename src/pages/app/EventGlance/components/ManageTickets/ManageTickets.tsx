@@ -179,7 +179,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
                 typeof value === 'object' ? JSON.stringify(value) : value,
               ),
             );
-          } else if (changedData[key]) {
+          } else if (changedData[key] != null) {
             value = changedData[key].toString();
           }
         }

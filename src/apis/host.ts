@@ -3,6 +3,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { hostData } from '../pages/app/Overview/Overview/types';
 import { Dispatch } from 'react';
+import { hostList } from './types';
 
 export const createEventHost = async (
   eventId: string,
@@ -38,6 +39,7 @@ export const updateEventHost = async (
   role: string,
   is_private: boolean,
   setHostData: Dispatch<React.SetStateAction<hostData>>,
+  setHostList: Dispatch<React.SetStateAction<hostList[]>>,
 ) => {
   privateGateway
     .put(makeMyPass.host(eventId, hostId), {
@@ -46,6 +48,12 @@ export const updateEventHost = async (
     })
     .then((response) => {
       toast.success(response.data.message.general[0] || 'Host added successfully');
+      setHostList((prevState) => [
+        ...prevState.map((host) =>
+          host.id == hostId ? { ...host, role: role, is_private: is_private } : host,
+        ),
+      ]);
+
       setHostData({
         email: '',
         role: '',
