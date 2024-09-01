@@ -54,6 +54,7 @@ const DummyData = ({ eventId, dummyData, setDummyData }: Props) => {
               className={styles.confirmButton}
               onClick={() => {
                 sentTestMail(eventId, dummyData.mailId, dummyData.data);
+                setDummyData({ showModal: false, data: {}, mailId: '' });
               }}
             >
               Send
