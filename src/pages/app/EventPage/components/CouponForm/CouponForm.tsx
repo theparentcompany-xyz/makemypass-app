@@ -471,7 +471,8 @@ const CouponForm = ({
                     <div className='row' style={{ columnGap: 0 }}>
                       <button
                         className={styles.ticketCountUpdateButton}
-                        onClick={() => {
+                        onClick={(event) => {
+                          event.stopPropagation();
                           filteredTicket.capacity && filteredTicket.capacity <= 0
                             ? ticketSoldAlert()
                             : updateTicketCount(filteredTicket.id, false);
@@ -485,7 +486,8 @@ const CouponForm = ({
                       </p>
                       <button
                         className={styles.ticketCountUpdateButton}
-                        onClick={() => {
+                        onClick={(event) => {
+                          event.stopPropagation();
                           const currentTicketCount = tickets.find(
                             (ticket) => ticket.ticket_id === filteredTicket.id,
                           )?.count;

@@ -228,7 +228,13 @@ const ViewGuest = ({
           </div>
         </Modal>
       )}
-      <Modal type='side' title='View Guest' onClose={() => setSelectedGuestId(null)}>
+      <Modal
+        type='side'
+        title='View Guest'
+        onClose={() => {
+          setSelectedGuestId(null);
+        }}
+      >
         <div className={styles.closeButton}>
           <SecondaryButton
             buttonText='Close'

@@ -112,18 +112,19 @@ const Guests = () => {
   }, [eventId]);
 
   useEffect(() => {
-    if (
-      selectedGuestId?.id &&
-      (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view')
-    ) {
-      getGuestData();
-    } else if (
-      selectedGuestId?.id &&
-      selectedGuestId.type === 'download' &&
-      !isArray(selectedGuestId.id)
-    )
-      if (selectedGuestId.id) viewGuestTicket(eventId, selectedGuestId?.id, navigate);
-      else toast.error('Ticket download failed');
+    if (!selectedGuestId?.id) {
+      setSelectedGuest(undefined);
+    } else {
+      if (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view') {
+        getGuestData();
+      } else if (selectedGuestId.type === 'download' && !isArray(selectedGuestId.id)) {
+        if (selectedGuestId.id) {
+          viewGuestTicket(eventId, selectedGuestId.id, navigate);
+        } else {
+          toast.error('Ticket download failed');
+        }
+      }
+    }
   }, [selectedGuestId]);
 
   const handleTicketResend = () => {

@@ -38,7 +38,7 @@ const Randomizer = () => {
 
   useEffect(() => {
     if (result.id && result.id.length > 0) {
-      createSpinWheelLog(eventId, result.id, setLogList);
+      createSpinWheelLog(eventId, setLogList);
 
       setTimeout(() => {
         setResult({
