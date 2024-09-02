@@ -5,7 +5,7 @@ import styles from '../../Guests.module.css';
 import { updateGuestSubmission } from '../../../../../apis/guests';
 import { FormEventData, GuestsType, SelectedGuest } from '../../types';
 import { FormDataType, FormFieldType } from '../../../../../apis/types';
-import { previewType } from '../../../EventGlance/components/UpdateMail/types';
+import { previewType } from '../../../EventGlance/components/MailModals/UpdateMail/types';
 
 const EditGuest = ({
   formData,

@@ -6,8 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Select, { MultiValue } from 'react-select';
 import { validateCondition } from './condition';
 import ValidateInput from '../ValidateInput/ValidateInput.tsx';
-import { previewType } from '../../pages/app/EventGlance/components/UpdateMail/types.ts';
-import UploadAttachement from '../../pages/app/EventGlance/components/UpdateMail/components/UploadAttachement/UploadAttachements.tsx';
+import { previewType } from '../../pages/app/EventGlance/components/MailModals/UpdateMail/types.ts';
+import UploadAttachement from '../../pages/app/EventGlance/components/MailModals/UpdateMail/components/UploadAttachement/UploadAttachements.tsx';
 
 const variants = {
   initial: { opacity: 0, y: -10 },

@@ -20,7 +20,7 @@ import VoiceInput from './components/VoiceInput';
 import { addGuest } from '../../../../../apis/guest';
 import { MdError } from 'react-icons/md';
 import toast from 'react-hot-toast';
-import { previewType } from '../../../EventGlance/components/UpdateMail/types';
+import { previewType } from '../../../EventGlance/components/MailModals/UpdateMail/types';
 
 const EventForm = ({
   eventFormData,

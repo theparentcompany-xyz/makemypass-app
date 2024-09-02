@@ -26,19 +26,18 @@ export const listEventMails = (
     });
 };
 
-export const getEventMailData = (
+export const getEventMailData = async (
   eventId: string,
   mailId: string,
-  setMail: React.Dispatch<React.SetStateAction<MailType | undefined>>,
+  setMail?: React.Dispatch<React.SetStateAction<MailType | undefined>>,
 ) => {
-  privateGateway
-    .get(makeMyPass.communcationMailGet(eventId, mailId))
-    .then((response) => {
-      setMail(response.data);
-    })
-    .catch((error) => {
-      toast.error(error?.response?.data?.message?.general[0] || 'Error while fetching mail');
-    });
+  try {
+    const response = await privateGateway.get(makeMyPass.communcationMailGet(eventId, mailId));
+    setMail && setMail(response.data);
+    return response.data;
+  } catch (error: any) {
+    toast.error(error?.response?.data?.message?.general[0] || 'Error while fetching mail');
+  }
 };
 
 export const updateEventMail = async (

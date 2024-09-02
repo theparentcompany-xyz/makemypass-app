@@ -183,7 +183,14 @@ const Overview = () => {
     if (!hostData.id)
       createEventHost(eventId, hostData.email, hostData.role, hostData.is_private, setHostData);
     if (hostData.id)
-      updateEventHost(eventId, hostData.id, hostData.role, hostData.is_private, setHostData);
+      updateEventHost(
+        eventId,
+        hostData.id,
+        hostData.role,
+        hostData.is_private,
+        setHostData,
+        setHostList,
+      );
     setOpenAddModal(false);
   };
 

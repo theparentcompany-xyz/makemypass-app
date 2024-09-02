@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getEventMailService, updateEventMailService } from '../../../../../apis/mails';
+import { getEventMailService, updateEventMailService } from '../../../../../../apis/mails';
 import styles from './CustomMail.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
-import Slider from '../../../../../components/SliderButton/Slider';
+import Slider from '../../../../../../components/SliderButton/Slider';
 import { motion } from 'framer-motion';
 import { HashLoader } from 'react-spinners';
 

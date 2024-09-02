@@ -172,6 +172,7 @@
   border-radius: 14px;
   fill: #d8ffff11;
 }
+
 .hostedByText {
   font-size: 0.7rem;
   font-weight: 400;
@@ -493,11 +494,13 @@
   font-size: 1rem;
   position: relative;
 }
+
 @media screen and (max-width: 435px) {
   .svgText {
     transform: translateX(-0.5rem);
   }
 }
+
 @media screen and (max-width: 376px) {
   .svgText {
     transform: translateX(-1.4rem);
@@ -519,7 +522,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-
+  flex-wrap: wrap;
   row-gap: 0.5rem;
   column-gap: 0.5rem;
 }
@@ -533,7 +536,20 @@
   font-size: 0.8rem;
   cursor: pointer;
   margin-top: 1rem;
-  max-width: 5rem;
+  /* max-width: 5rem; */
+  width: 100%;
+}
+
+.dummyButton {
+  background: #fdfdfd;
+  color: rgb(43, 42, 42);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  /* max-width: 11rem; */
   width: 100%;
 }
 
@@ -546,8 +562,13 @@
   font-size: 0.8rem;
   cursor: pointer;
   margin-top: 1rem;
-  max-width: 5rem;
+  /* max-width: 5rem; */
   width: 100%;
+}
+
+.sectionContent1 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .testMail {
