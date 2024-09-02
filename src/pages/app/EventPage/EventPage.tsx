@@ -88,7 +88,7 @@ const EventPage = () => {
           content={
             eventData?.description
               ? eventData?.description
-              : 'Don not miss out! Register now for this event to learn, network and more. Click the link below to get started.'
+              : 'Do not miss out! Register now for this event to learn, network and more. Click the link below to get started.'
           }
         />
 
@@ -101,10 +101,6 @@ const EventPage = () => {
               return <script src={scriptObject.value} async />;
             } else if (scriptObject.type === 'url') {
               return <script src={scriptObject.value} />;
-            }
-
-            if (scriptObject.type === 'noscript') {
-              return <noscript dangerouslySetInnerHTML={{ __html: scriptObject.value }}></noscript>;
             }
           })}
       </Helmet>
