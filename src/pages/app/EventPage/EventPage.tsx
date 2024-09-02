@@ -104,7 +104,7 @@ const EventPage = () => {
             }
 
             if (scriptObject.type === 'noscript') {
-              return <noscript>{scriptObject.value}</noscript>;
+              return <noscript dangerouslySetInnerHTML={{ __html: scriptObject.value }}></noscript>;
             }
           })}
       </Helmet>
