@@ -36,8 +36,6 @@ const EventPage = () => {
   const typeParam = searchParams.get('type');
   const claimCode = searchParams.get('claim_code');
 
-  // http://localhost:5173/the-kerala-summit?source=Facebook&medium=Social%20Media&campaign=Facebook%20Campaign&term=ariella%20dudee&content=This%20is%20the%20fb%20campaign
-
   useEffect(() => {
     if (eventTitle)
       getEventInfo({
@@ -90,7 +88,7 @@ const EventPage = () => {
           content={
             eventData?.description
               ? eventData?.description
-              : 'Don not miss out! Register now for this event to learn, network and more. Click the link below to get started.'
+              : 'Do not miss out! Register now for this event to learn, network and more. Click the link below to get started.'
           }
         />
 
