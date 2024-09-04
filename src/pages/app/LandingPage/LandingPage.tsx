@@ -32,7 +32,7 @@ const LandingPage = () => {
             />
           </div>
           <WhyUs />
-          <Projects />
+
           <div className={styles.footerContainer}>
             <div className={styles.fLogoText}>
               <img src='/app/logoText.webp' alt='' className={styles.fLogo} />
