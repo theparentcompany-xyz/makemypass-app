@@ -564,7 +564,7 @@ const FormBuilder = () => {
                                 }}
                               >
                                 <Slider
-                                  checked={field.conditions.length > 0}
+                                  checked={field.conditions?.length > 0}
                                   text={''}
                                   onChange={() => {
                                     addOrRemoveCondition(field);
@@ -577,7 +577,7 @@ const FormBuilder = () => {
                               </div>
                             )}
 
-                            {field.conditions.length > 0 && (
+                            {field.conditions?.length > 0 && (
                               <div className={styles.conditions}>
                                 {field.conditions.map((condition, idx) => (
                                   <div className={styles.conditionRow} key={idx}>
