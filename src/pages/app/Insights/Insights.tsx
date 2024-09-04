@@ -509,7 +509,7 @@ const Insights = ({ type }: { type?: string }) => {
                   <div className={styles.countSection}>
                     <div className={styles.cLeftSection}>
                       <div className={styles.totalRegistered}>
-                        <div className='row'>
+                        <div className='row' style={{ columnGap: '1.5rem' }}>
                           <div>
                             <p className={styles.total}>Page Visits</p>
                             <p className={styles.count}>

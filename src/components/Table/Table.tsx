@@ -262,7 +262,7 @@ const Table = ({
       >
         <div className={styles.tableHeader}>
           <p className={styles.tableHeading}>
-            {tableHeading}({filteredData.length})
+            {`${tableHeading}${filteredData.length > 10 ? `(${filteredData.length})` : ''}`}
           </p>
           {secondaryButton && secondaryButton}
         </div>
@@ -271,7 +271,7 @@ const Table = ({
           <div className={styles.table}>
             <AnimatePresence>
               <FixedSizeList
-                height={Object.keys(groupByTeam).length > 50 ? 550 : filteredData.length * 37}
+                height={Object.keys(groupByTeam).length > 50 ? 550 : filteredData.length * 38}
                 width='100%'
                 itemCount={Object.keys(groupByTeam).length}
                 itemSize={37} // Adjust based on row height
