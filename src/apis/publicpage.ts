@@ -12,6 +12,7 @@ import {
 import React, { Dispatch, SetStateAction } from 'react';
 import { ErrorMessages, EventType, FormDataType, RazorpayPaymentDetails } from './types';
 import { convertWebmToWav } from './helpers';
+import { NavigateFunction } from 'react-router';
 
 declare global {
   interface Window {
@@ -40,6 +41,7 @@ export const submitForm = async ({
   setCoupon,
   ticketCode,
   utmData,
+  navigate,
 }: {
   eventId: string;
   isCouponFirst?: boolean;
@@ -66,6 +68,7 @@ export const submitForm = async ({
     term: string | null;
     content: string | null;
   };
+  navigate?: NavigateFunction;
 }) => {
   setLoading && setLoading(true);
   const selectedDateFormatted = selectedDate
@@ -216,6 +219,8 @@ export const submitForm = async ({
         else if (setFormNumber) setFormNumber(0);
         setFormData && setFormData({});
         setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
+
+        navigate && navigate('?event_register_id=' + response.data.response.event_register_id);
       }
     })
     .catch((error) => {

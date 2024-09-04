@@ -13,7 +13,7 @@ import { motion } from 'framer-motion';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import CouponForm from '../CouponForm/CouponForm';
 import { validateCondition } from '../../../../../components/DynamicForm/condition';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { FormEventData, SelectedGuest } from '../../../Guests/types';
 import { PropagateLoader } from 'react-spinners';
 import VoiceInput from './components/VoiceInput';
@@ -83,6 +83,7 @@ const EventForm = ({
   });
 
   let formIdToKey: { [key: string]: string } = {};
+  const navigate = useNavigate();
 
   const location = useLocation();
   const newSearchParams = new URLSearchParams(location.search);
@@ -412,6 +413,7 @@ const EventForm = ({
                     setCoupon,
                     ticketCode,
                     utmData,
+                    navigate,
                   });
               });
             } else if (formNumber === 1 && eventFormData.show_ticket_first) {
@@ -449,6 +451,7 @@ const EventForm = ({
                   setCoupon,
                   ticketCode,
                   utmData,
+                  navigate,
                 });
               }
             }
