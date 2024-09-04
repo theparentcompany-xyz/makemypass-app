@@ -220,7 +220,7 @@ export const submitForm = async ({
         setFormData && setFormData({});
         setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
 
-        navigate && navigate('?event_register_id=' + response.data.response.event_register_id);
+        navigate && navigate('?registrationsuccess=true');
       }
     })
     .catch((error) => {
