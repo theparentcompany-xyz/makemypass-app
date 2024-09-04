@@ -36,26 +36,11 @@ const Randomizer = () => {
     getSpinWheelLogList(eventId, setLogList);
   }, []);
 
-  useEffect(() => {
-    if (result.id && result.id.length > 0) {
-      createSpinWheelLog(eventId, setLogList);
-
-      setTimeout(() => {
-        setResult({
-          name: '',
-          id: '',
-        });
-      }, 4000);
-    }
-  }, [result]);
-
   const spin = () => {
     if (!spinning) {
+      createSpinWheelLog(eventId, setLogList, setResult);
       setSpinning(true);
-      setResult({
-        name: '',
-        id: '',
-      });
+
       setShowButton(false);
 
       const spins = 50 + Math.floor(Math.random() * 50); // 50-100 moves
@@ -69,11 +54,6 @@ const Randomizer = () => {
       setTimeout(() => {
         clearInterval(intervalId);
         setSpinning(false);
-        if (userList[currentIndex].name && userList[currentIndex].id)
-          setResult({
-            name: userList[currentIndex].name,
-            id: userList[currentIndex].id,
-          });
         setShowButton(true);
       }, spins * 100);
     }
@@ -101,7 +81,7 @@ const Randomizer = () => {
   return (
     <Theme>
       <div className={styles.outerContainer}>
-        {result && result.id && (
+        {result && result.id && !spinning && (
           <>
             <Confetti className={styles.confetti} />
             <AnimatePresence>

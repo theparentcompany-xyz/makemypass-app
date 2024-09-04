@@ -24,17 +24,20 @@ export const getSpinWheelUserList = async (
 
 export const createSpinWheelLog = async (
   eventId: string,
-
   setLogList: Dispatch<SetStateAction<SpinWheelLogList[]>>,
+  setResult: Dispatch<SetStateAction<{ name: string; id: string }>>,
 ) => {
   privateGateway
     .post(makeMyPass.spinWheelLogList(eventId))
     .then((response) => {
-      toast.success('Log created successfully');
       setLogList((prev) => [...prev, response.data.response]);
+      setResult({
+        name: response.data.response.name,
+        id: response.data.response.id,
+      });
     })
     .catch(() => {
-      toast.error('Failed to create log');
+      toast.error('There was an error while spinning, please try again');
     });
 };
 
