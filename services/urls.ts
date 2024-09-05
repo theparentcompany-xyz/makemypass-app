@@ -136,6 +136,8 @@ export const makeMyPass = {
   //Analytics API
   getAnalyticsVisibility: (eventId: string) =>
     makeMyPassURL(`/analytics/${eventId}/analytics-visibility/`),
+  getPerkAnalytics: (eventId: string) => makeMyPassURL(`/analytics/${eventId}/perk-analytics/`),
+  getVenueAnalytics: (eventId: string) => makeMyPassURL(`/analytics/${eventId}/venue-analytics/`),
 
   //Manage Games
   scratchCardClaim: (eventId: string, eventRegisterId: string) =>
