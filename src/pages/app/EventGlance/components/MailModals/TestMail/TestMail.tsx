@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './TestMail.module.css';
 type Props = {
   setConfirmTestMail: React.Dispatch<React.SetStateAction<{ status: boolean; mailId: string }>>;
-  sentTestMail: (eventId: string, mailId: string) => void;
+  sentTestMail: (eventId: string, mailId: string, data?: Object | null) => void;
   confirmTestMail: { status: boolean; mailId: string };
   eventId: string;
   setDummyData: React.Dispatch<
@@ -28,7 +28,7 @@ const TestMail = ({
         <button
           className={styles.confirmButton}
           onClick={() => {
-            sentTestMail(eventId, confirmTestMail.mailId);
+            sentTestMail(eventId, confirmTestMail.mailId, {});
           }}
         >
           Send
