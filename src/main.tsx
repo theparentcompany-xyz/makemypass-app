@@ -41,6 +41,8 @@ import PaymentAnalytics from './pages/app/PaymentAnalytics/PaymentAnalytics';
 import SelfCheckIn from './pages/app/SelfCheckIn/SelfCheckIn';
 import Randomizer from './pages/app/Randomizer/Randomizer';
 import Perks from './pages/app/CheckIns/pages/Perks/Perks';
+import VenueAnalytics from './pages/app/Insights/pages/VenueAnalytics/VenueAnalytics';
+import PerkAnalytics from './pages/app/Insights/pages/PerkAnalytics/PerkAnalytics';
 
 // import EventFeedback from './pages/app/EventFeedback/EventFeedback';
 // import SpinWheel from './pages/app/SpinWheel/SpinWheel';
@@ -209,6 +211,14 @@ const routes = [
       {
         path: '/:eventTitle/payment-analytics',
         element: <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]} children={<PaymentAnalytics />} />,
+      },
+      {
+        path: '/:eventTitle/perks-analytics',
+        element: <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]} children={<PerkAnalytics />} />,
+      },
+      {
+        path: '/:eventTitle/venue-analytics',
+        element: <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]} children={<VenueAnalytics />} />,
       },
       {
         path: '/:eventTitle/randomsizer',

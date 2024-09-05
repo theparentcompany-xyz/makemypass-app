@@ -683,6 +683,14 @@ const Insights = ({ type }: { type?: string }) => {
 
                 {venueBarData && venueBarData.datasets[0].data.length > 0 && (
                   <div className={styles.registrationCount}>
+                    <div className={styles.logButton}>
+                      <SecondaryButton
+                        buttonText='View More'
+                        onClick={() => {
+                          navigate(`/${eventTitle}/venue-analytics`);
+                        }}
+                      />
+                    </div>
                     <div className={styles.graphContainer}>
                       {venueBarData && venueBarData.datasets[0].data && (
                         <Bar options={options} data={venueBarData} />
@@ -693,6 +701,14 @@ const Insights = ({ type }: { type?: string }) => {
 
                 {perkData && perkData.datasets[0].data.length > 0 && (
                   <div className={styles.registrationCount}>
+                    <div className={styles.logButton}>
+                      <SecondaryButton
+                        buttonText='View More'
+                        onClick={() => {
+                          navigate(`/${eventTitle}/perks-analytics`);
+                        }}
+                      />
+                    </div>
                     <div className={styles.graphContainer}>
                       {perkData && perkData.datasets[0].data && (
                         <Bar options={options} data={perkData} />
