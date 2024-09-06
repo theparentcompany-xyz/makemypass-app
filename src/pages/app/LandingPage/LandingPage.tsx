@@ -14,6 +14,7 @@ const LandingPage = () => {
     if (localStorage.getItem('accessToken') && location.pathname === '/') {
       navigate('/events');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

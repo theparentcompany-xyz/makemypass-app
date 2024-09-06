@@ -197,6 +197,7 @@ const InEventStats = () => {
 
         setSocket(ws);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId]);
 
   useEffect(() => {
@@ -221,12 +222,16 @@ const InEventStats = () => {
 
         setSocket(ws);
       });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId]);
 
   useEffect(() => {
     return () => {
       socket?.close();
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const findDistrictWithMostNumber = () => {

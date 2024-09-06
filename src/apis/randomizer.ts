@@ -5,10 +5,10 @@ import { Dispatch, SetStateAction } from 'react';
 import { SpinWheelLogList, userListType } from '../pages/app/Randomizer/types';
 
 export const getSpinWheelUserList = async (
-  eventId: string,
   setUserList: Dispatch<SetStateAction<userListType[]>>,
   setHasLoaded: Dispatch<SetStateAction<boolean>>,
 ) => {
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   privateGateway
     .get(makeMyPass.spinWheelList(eventId))
     .then((response) => {
@@ -23,10 +23,10 @@ export const getSpinWheelUserList = async (
 };
 
 export const createSpinWheelLog = async (
-  eventId: string,
   setLogList: Dispatch<SetStateAction<SpinWheelLogList[]>>,
   setResult: Dispatch<SetStateAction<{ name: string; id: string }>>,
 ) => {
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   privateGateway
     .post(makeMyPass.spinWheelLogList(eventId))
     .then((response) => {
@@ -42,9 +42,9 @@ export const createSpinWheelLog = async (
 };
 
 export const getSpinWheelLogList = async (
-  eventId: string,
   setLogList: Dispatch<SetStateAction<SpinWheelLogList[]>>,
 ) => {
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   privateGateway
     .get(makeMyPass.spinWheelLogList(eventId))
     .then((response) => {

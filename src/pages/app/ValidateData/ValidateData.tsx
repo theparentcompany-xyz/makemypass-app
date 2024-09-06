@@ -26,7 +26,7 @@ const ValidateData = () => {
     if (verificationCode) {
       verifyParticipant(verificationCode, setVerified);
     }
-  }, []);
+  }, [verificationCode]);
 
   return (
     <Theme>

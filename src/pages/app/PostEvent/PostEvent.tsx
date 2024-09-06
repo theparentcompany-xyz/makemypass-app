@@ -14,10 +14,9 @@ const PostEvent = () => {
     value: false,
   });
 
-  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [postEventStatus, setPostEventStatus] = useState<PostEventStatus>();
   useEffect(() => {
-    getPostEventStatus(eventId, setPostEventStatus);
+    getPostEventStatus(setPostEventStatus);
   }, []);
   return (
     <>
@@ -33,7 +32,7 @@ const PostEvent = () => {
           <div className={styles.buttons}>
             <p
               onClick={() => {
-                sentPostEventMail(eventId, openConfirmModal.value).then(() => {
+                sentPostEventMail(openConfirmModal.value).then(() => {
                   setPostEventStatus(
                     (prevStatus) =>
                       ({

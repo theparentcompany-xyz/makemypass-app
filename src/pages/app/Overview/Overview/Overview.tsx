@@ -58,20 +58,21 @@ const Overview = () => {
   });
 
   useEffect(() => {
-    if ((eventId && hostList.length === 0 && userRole == Roles.ADMIN) || userRole == Roles.OWNER)
+    if ((eventId && userRole == Roles.ADMIN) || userRole == Roles.OWNER)
       getEventHosts(eventId, setHostList);
-  }, [eventId]);
+  }, [eventId, userRole]);
 
   useEffect(() => {
     return () => {
       socket?.close();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (selectedGuestId?.id)
       navigate(`/${eventTitle}/guests?eventRegisterId=${selectedGuestId?.id}`);
-  }, [selectedGuestId]);
+  }, [selectedGuestId, eventTitle, navigate]);
 
   useEffect(() => {
     if (eventId)
@@ -168,7 +169,7 @@ const Overview = () => {
       }));
       setOpenDeleteModal(true);
     }
-  }, [hostId]);
+  }, [hostId, hostList]);
 
   const addHost = () => {
     addRef.current = true;

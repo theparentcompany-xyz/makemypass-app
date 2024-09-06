@@ -20,10 +20,10 @@ const SelfCheckIn = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
   useEffect(() => {
-    if (ticketId.length > 0 && trigger) {
+    if (trigger) {
       getPrintData(eventId, ticketId, setPrintData, setScanLogs, setChecking, setTrigger);
     }
-  }, [trigger, eventId]);
+  }, [trigger, eventId, ticketId]);
 
   useEffect(() => {
     if (printData?.qr?.url) {

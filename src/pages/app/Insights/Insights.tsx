@@ -234,6 +234,7 @@ const Insights = ({ type }: { type?: string }) => {
 
         setSocket(ws);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId, eventData]);
 
   const publishPage = () => {

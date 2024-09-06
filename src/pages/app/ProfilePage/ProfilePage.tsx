@@ -91,7 +91,7 @@ const ProfilePage = () => {
         email: user.email,
       });
     }
-  }, [isOpenModal]);
+  }, [isOpenModal, user]);
 
   return (
     <>

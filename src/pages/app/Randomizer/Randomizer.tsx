@@ -28,17 +28,15 @@ const Randomizer = () => {
   const [logList, setLogList] = useState<SpinWheelLogList[]>([]);
   const [hasLoaded, setHasLoaded] = useState(false);
 
-  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
-
   const { eventTitle } = useParams<{ eventTitle: string }>();
   useEffect(() => {
-    getSpinWheelUserList(eventId, setUserList, setHasLoaded);
-    getSpinWheelLogList(eventId, setLogList);
+    getSpinWheelUserList(setUserList, setHasLoaded);
+    getSpinWheelLogList(setLogList);
   }, []);
 
   const spin = () => {
     if (!spinning) {
-      createSpinWheelLog(eventId, setLogList, setResult);
+      createSpinWheelLog(setLogList, setResult);
       setSpinning(true);
 
       setShowButton(false);

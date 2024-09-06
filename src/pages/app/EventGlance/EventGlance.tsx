@@ -241,7 +241,7 @@ const EventGlance = () => {
               onClose={() => setDummyData({ showModal: false, data: {}, mailId: '' })}
               style={{ zIndex: 999 }}
             >
-              <DummyData eventId={eventId} dummyData={dummyData} setDummyData={setDummyData} />
+              <DummyData dummyData={dummyData} setDummyData={setDummyData} />
             </Modal>
           )}
 

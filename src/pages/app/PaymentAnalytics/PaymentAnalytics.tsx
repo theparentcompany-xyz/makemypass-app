@@ -7,10 +7,9 @@ import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryBut
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 
 const PaymentAnalytics = () => {
-  const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   const [paymentAnalyticsList, setPaymentAnalyticsList] = useState<PaymentAnalyticsType[]>([]);
   useEffect(() => {
-    getEventPaymentLog(eventId, setPaymentAnalyticsList);
+    getEventPaymentLog(setPaymentAnalyticsList);
   }, []);
 
   useEffect;
@@ -24,7 +23,7 @@ const PaymentAnalytics = () => {
           secondaryButton={
             <SecondaryButton
               onClick={() => {
-                getPaymentAnalyticsCSV(eventId);
+                getPaymentAnalyticsCSV();
               }}
               buttonText='Download CSV'
             />

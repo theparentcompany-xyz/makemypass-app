@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { SetStateAction } from 'react';
 import styles from './AddHosts.module.css';
 import { hostData } from '../../../Overview/types';

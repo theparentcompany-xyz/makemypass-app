@@ -11,7 +11,7 @@ const downloadCSV = (csvContent: BlobPart, fileName: string) => {
   document.body.removeChild(a);
 };
 
-const convertToCSV = (data: any[]) => {
+const convertToCSV = (data: { [key: string]: string }[]) => {
   const headers = Object.keys(data[0]);
   const csvContent =
     headers.join(',') +

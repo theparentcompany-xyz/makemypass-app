@@ -6,7 +6,6 @@ import { BiLoader } from 'react-icons/bi';
 import InputField from '../../../../../auth/Login/InputField';
 import { sentTestMail } from '../../../../../../apis/postevent';
 type Props = {
-  eventId: string;
   dummyData: { showModal: boolean; data: { [key: string]: any } | null; mailId: string };
   setDummyData: React.Dispatch<
     React.SetStateAction<{
@@ -17,7 +16,7 @@ type Props = {
   >;
 };
 
-const DummyData = ({ eventId, dummyData, setDummyData }: Props) => {
+const DummyData = ({ dummyData, setDummyData }: Props) => {
   useEffect(() => {
     console.log(dummyData);
   }, [dummyData]);
@@ -53,7 +52,7 @@ const DummyData = ({ eventId, dummyData, setDummyData }: Props) => {
             <button
               className={styles.confirmButton}
               onClick={() => {
-                sentTestMail(eventId, dummyData.mailId, dummyData.data);
+                sentTestMail(dummyData.mailId, dummyData.data);
                 setDummyData({ showModal: false, data: {}, mailId: '' });
               }}
             >

@@ -14,32 +14,33 @@ export const getPrintData = async (
   setChecking: Dispatch<SetStateAction<boolean>>,
   setTrigger: Dispatch<SetStateAction<boolean>>,
 ) => {
-  privateGateway
-    .post(makeMyPass.scanGuestPrint(eventId), {
-      ticket_code: ticketCode,
-    })
-    .then((response) => {
-      setPrintData(response.data.response);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+  if (ticketCode.length > 0)
+    privateGateway
+      .post(makeMyPass.scanGuestPrint(eventId), {
+        ticket_code: ticketCode,
+      })
+      .then((response) => {
+        setPrintData(response.data.response);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message.general[0] || 'Unable to process the request');
 
-      setScanLogs((prev) => [
-        ...prev,
-        {
-          message: ` ${error.response.data.message.general[0]}`,
-          timestamp: formatDate(new Date().toString(), true),
-          hasError: true,
-        },
-      ]);
-    })
-    .finally(() => {
-      if (setChecking) {
-        setChecking(false);
-      }
+        setScanLogs((prev) => [
+          ...prev,
+          {
+            message: ` ${error.response.data.message.general[0]}`,
+            timestamp: formatDate(new Date().toString(), true),
+            hasError: true,
+          },
+        ]);
+      })
+      .finally(() => {
+        if (setChecking) {
+          setChecking(false);
+        }
 
-      if (setTrigger) {
-        setTrigger(false);
-      }
-    });
+        if (setTrigger) {
+          setTrigger(false);
+        }
+      });
 };
