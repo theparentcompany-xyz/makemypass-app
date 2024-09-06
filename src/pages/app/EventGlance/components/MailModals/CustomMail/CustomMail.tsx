@@ -10,7 +10,7 @@ type Props = {
   setCustomMail: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-type mailData = {
+export type mailData = {
   smtp_server: string;
   smtp_port: string;
   smtp_username: string;
@@ -27,8 +27,8 @@ const CustomMail = ({ setCustomMail }: Props) => {
   const [mailData, setMailData] = useState<mailData>();
 
   const onUpdate = () => {
-    let changedData: Record<string, any> = Object.entries(mailData as Record<string, any>)
-      .filter(([key, value]) => fetchedMailData?.[key as keyof mailData] != value)
+    let changedData: Record<string, unknown> = Object.entries(mailData as Record<string, unknown>)
+      .filter(([key, value]) => fetchedMailData?.[key as keyof mailData] !== value)
       .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
 
     if (!showCustomMail) {

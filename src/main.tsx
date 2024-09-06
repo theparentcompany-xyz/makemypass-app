@@ -3,7 +3,6 @@ import './index.css';
 import * as React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/auth/Login/Login';
-import './index.css';
 import LandingPage from './pages/app/LandingPage/LandingPage';
 import { Toaster, ToastPosition } from 'react-hot-toast';
 import Insights from './pages/app/Insights/Insights';
@@ -33,8 +32,6 @@ import Venue from './pages/app/CheckIns/pages/Venue/Venue';
 import CheckOutScan from './pages/app/CheckIns/pages/CheckOutScan/CheckOutScan';
 import EventLogs from './pages/app/EventLogs/EventLogs';
 import SetProfilePage from './pages/app/SetProfilePage/SetProfilePage';
-
-import { Roles } from '../services/enums';
 import ViewTicket from './components/ViewTicket/ViewTicket';
 import Gifts from './pages/app/Gifts/Gifts';
 import PaymentAnalytics from './pages/app/PaymentAnalytics/PaymentAnalytics';
@@ -44,10 +41,7 @@ import Perks from './pages/app/CheckIns/pages/Perks/Perks';
 import VenueAnalytics from './pages/app/Insights/pages/VenueAnalytics/VenueAnalytics';
 import PerkAnalytics from './pages/app/Insights/pages/PerkAnalytics/PerkAnalytics';
 
-// import EventFeedback from './pages/app/EventFeedback/EventFeedback';
-// import SpinWheel from './pages/app/SpinWheel/SpinWheel';
-// import ClaimGifts from './pages/app/ClaimGifts/ClaimGifts';
-// import Perks from './pages/app/CheckIns/pages/Perks/Perks';
+import { Roles } from '../services/enums';
 
 const routes = [
   {
@@ -164,7 +158,6 @@ const routes = [
           />
         ),
       },
-
       {
         path: '/:eventTitle/inevent',
         element: (
@@ -224,26 +217,12 @@ const routes = [
         path: '/:eventTitle/randomsizer',
         element: <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]} children={<Randomizer />} />,
       },
-      // {
-      //   path: `/:eventTitle/checkins/claimgifts`,
-      //   element: <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]} children={<ClaimGifts />} />,
-      // },
       {
         path: '/:eventTitle/checkins/perks',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.VOLUNTEER, Roles.OWNER]} children={<Perks />} />
         ),
       },
-      // {
-      //   path: '/:eventTitle/spinwheel',
-      //   element: <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.GAMER]} children={<SpinWheel />} />,
-      // },
-      // {
-      //   path: '/:eventTitle/feedback',
-      //   element: (
-      //     <RoleChecker roles={[roles.ADMIN, roles.OWNER, roles.VOLUNTEER]} children={<EventFeedback />} />
-      //   ),
-      // },
     ],
   },
 

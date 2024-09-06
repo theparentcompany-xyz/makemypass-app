@@ -40,49 +40,50 @@ export const getEventMailData = async (
   }
 };
 
-export const updateEventMail = async (
+export const updateEventMail = (
   eventId: string,
   selectedMail: MailType,
-  data: Record<string, any>,
+  data: FormData,
   setMails: React.Dispatch<React.SetStateAction<listMailType[]>>,
   setMailData: React.Dispatch<React.SetStateAction<MailType | undefined>>,
+  setSelectedMail: React.Dispatch<React.SetStateAction<listMailType | undefined>>,
 ) => {
-  try {
-    const response = await privateGateway.put(
-      makeMyPass.communicationMailUPdate(eventId, selectedMail?.id),
-      data,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+  privateGateway
+    .put(makeMyPass.communicationMailUPdate(eventId, selectedMail?.id), data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-    );
+    })
+    .then((response) => {
+      setMails((mails) =>
+        mails.map((mail) =>
+          mail.id === selectedMail.id
+            ? {
+                id: response?.data?.response?.id ? response.data.response.id : selectedMail.id,
+                type: selectedMail.type,
+                subject: selectedMail.subject,
+              }
+            : mail,
+        ),
+      );
+      setMailData({
+        ...selectedMail,
+        id: response?.data?.response?.id ? response.data.response.id : selectedMail.id,
+      } as MailType);
 
-    setMails((mails) =>
-      mails.map((mail) =>
-        mail.id === selectedMail.id
-          ? {
-              id: response?.data?.response?.id ? response.data.response.id : selectedMail.id,
-              type: selectedMail.type,
-              subject: selectedMail.subject,
-            }
-          : mail,
-      ),
-    );
-    setMailData({
-      ...selectedMail,
-      id: response?.data?.response?.id ? response.data.response.id : selectedMail.id,
-    } as MailType);
-
-    toast.success(response.data.message.general[0] || 'Mail updated successfully');
-  } catch (error: any) {
-    toast.error(error?.response?.data?.message?.general[0] || 'Error while updating mail');
-  }
+      toast.success(response.data.message.general[0] || 'Mail updated successfully');
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.message?.general[0] || 'Error while updating mail');
+    })
+    .finally(() => {
+      setSelectedMail(undefined);
+    });
 };
 
 export const getEventMailService = (
   eventId: string,
-  setMailData: React.Dispatch<React.SetStateAction<any>>,
+  setMailData: React.Dispatch<React.SetStateAction<mailData | undefined>>,
 ) => {
   privateGateway
     .get(makeMyPass.communicationServiceMail(eventId))
@@ -98,7 +99,7 @@ export const getEventMailService = (
 
 export const updateEventMailService = (
   eventId: string,
-  data: Record<string, any>,
+  data: Record<string, unknown>,
   setFetchedData: React.Dispatch<React.SetStateAction<mailData | undefined>>,
   mailData: mailData | undefined,
 ) => {

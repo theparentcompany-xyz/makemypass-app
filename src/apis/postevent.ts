@@ -3,33 +3,41 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 
 export const sentPostEventMail = async (eventId: string, type: boolean) => {
-  try {
-    await privateGateway.post(makeMyPass.communcationPostEventSendMail(eventId), {
+  privateGateway
+    .post(makeMyPass.communcationPostEventSendMail(eventId), {
       checkedin_user: type,
+    })
+    .then((response) => {
+      toast.success(response.data.message.general[0]);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Error in Sending Post Event Mail');
     });
-    toast.success('Mail Sent Successfully');
-  } catch (e) {
-    toast.error('Mail Sent Failed');
-  }
 };
 
 export const sentTestMail = async (eventId: string, mailId: string, data?: Object | null) => {
-  try {
-    await privateGateway.post(makeMyPass.communicationMailTest(eventId, mailId), data);
-    toast.success('Mail Sent Successfully');
-  } catch (e) {
-    toast.error('Mail Sent Failed');
-  }
+  console.log(data);
+
+  privateGateway
+    .post(makeMyPass.communicationMailTest(eventId, mailId), data)
+    .then((response) => {
+      toast.success(response.data.message.general[0]);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Error in Sending Test Mail');
+    });
 };
 
 export const getPostEventStatus = async (
   eventId: string,
   setPostEventStatus: React.Dispatch<React.SetStateAction<PostEventStatus | undefined>>,
 ) => {
-  try {
-    const response = await privateGateway.get(makeMyPass.communicationPostEventStatus(eventId));
-    setPostEventStatus(response.data.response);
-  } catch (e) {
-    toast.error('Error getting post event status');
-  }
+  privateGateway
+    .get(makeMyPass.communicationPostEventStatus(eventId))
+    .then((response) => {
+      setPostEventStatus(response.data.response);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Error in Fetching Post Event Status');
+    });
 };

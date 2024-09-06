@@ -19,6 +19,7 @@ import { TbAlertTriangleFilled } from 'react-icons/tb';
 import { errorType } from './types';
 import { FaGoogle } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
+import { AuthApiSuccessResponse } from '../../../apis/types.ts';
 const Login = () => {
   const navigate = useNavigate();
 
@@ -78,7 +79,7 @@ const Login = () => {
           otpRef.current?.value,
           passwordRef.current?.value,
           setError,
-        ).then((responseData: any) => {
+        ).then((responseData: AuthApiSuccessResponse) => {
           if (responseData.response.access_token) {
             const userEmail = emailRef.current?.value.split('@')[0];
             localStorage.setItem('accessToken', responseData.response.access_token);

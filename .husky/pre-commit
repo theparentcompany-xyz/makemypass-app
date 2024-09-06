@@ -1,0 +1,11 @@
+# Run TypeScript compilation
+npm run build
+
+# Run ESLint
+# npm run lint
+
+# Run Prettier
+npm run format
+
+# If everything passes, allow the commit
+exit 0

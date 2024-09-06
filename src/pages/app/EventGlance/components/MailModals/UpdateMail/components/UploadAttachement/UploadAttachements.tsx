@@ -16,7 +16,7 @@ const UploadAttachement = ({
   return (
     <>
       <div className={styles.attachmentsContainer}>
-        {previews.length > 0 && (
+        {previews?.length > 0 && (
           <div className={styles.previewContainer}>
             {previews?.map((preview, index) => (
               <PreviewBox

@@ -290,3 +290,26 @@ export type SpeakerCRUDType = {
   showModal: boolean;
   speakerList: SpeakerType[];
 };
+
+//Reset Password Auth Type
+export type AuthApiSuccessResponse = {
+  hasError: boolean;
+  statusCode: number;
+  message: {
+    general: string[];
+  };
+  response: {
+    access_token: string;
+    refresh_token: string;
+  };
+};
+
+export type ApiErrorResponse = {
+  hasError: boolean;
+  statusCode: number;
+  message: {
+    general: string[];
+    [key: string]: string[];
+  };
+  response: object;
+};

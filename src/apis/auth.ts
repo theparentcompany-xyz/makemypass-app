@@ -3,6 +3,7 @@ import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { buildVerse, makeMyPass } from '../../services/urls';
 import { Dispatch } from 'react';
 import { errorType } from '../pages/auth/Login/types';
+import { AuthApiSuccessResponse } from './types';
 
 export const userLogin = async (
   email: string,
@@ -164,7 +165,7 @@ export const resetUserPassword = (
   otp: string,
   password: string,
   setError: Dispatch<React.SetStateAction<errorType | undefined>>,
-): Promise<any> => {
+): Promise<AuthApiSuccessResponse> => {
   return new Promise((resolve, reject) => {
     publicGateway
       .post(buildVerse.resetPassword, {

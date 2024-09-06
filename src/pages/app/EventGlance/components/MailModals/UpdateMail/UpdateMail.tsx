@@ -30,10 +30,13 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
 
     const changedData = formData;
 
-    updateEventMail(eventId, mailData as MailType, changedData, setMails, setFetchedMail).then(
-      () => {
-        setSelectedMail(undefined);
-      },
+    updateEventMail(
+      eventId,
+      mailData as MailType,
+      changedData,
+      setMails,
+      setFetchedMail,
+      setSelectedMail,
     );
   };
 
@@ -72,7 +75,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
     if (fetchedMail) {
       setMailData(fetchedMail);
 
-      const attachmentList = fetchedMail.attachments.map((attachment) => {
+      const attachmentList = fetchedMail?.attachments?.map((attachment) => {
         const fileName = attachment.split('/').pop() || 'file';
         const fileExtension = attachment.split('.').pop();
         const fileType =
@@ -95,7 +98,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
       setAttachments(fetchedMail.attachments);
 
       setPreviews(
-        attachmentList.map((attachment) => {
+        attachmentList?.map((attachment) => {
           return {
             previewURL: attachment.fileURL!,
             previewExtension: attachment.file.type,
