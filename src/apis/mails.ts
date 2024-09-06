@@ -33,8 +33,8 @@ export const getEventMailData = async (
 ) => {
   try {
     const response = await privateGateway.get(makeMyPass.communcationMailGet(eventId, mailId));
-    setMail && setMail(response.data);
-    return response.data;
+    setMail && setMail(response.data.response);
+    return response.data.response;
   } catch (error: any) {
     toast.error(error?.response?.data?.message?.general[0] || 'Error while fetching mail');
   }
