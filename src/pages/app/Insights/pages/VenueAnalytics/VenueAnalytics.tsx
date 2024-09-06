@@ -10,6 +10,7 @@ const VenueAnalytics = () => {
 
   useEffect(() => {
     getVenueAnalytics(eventId, setVenueAnalytics);
+    console.log(venueAnalytics);
   }, []);
   return (
     <Theme>

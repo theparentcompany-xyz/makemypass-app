@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import EventPartners from './components/EventPartners/EventPartners';
 import Hero from './components/Hero/Hero';
 import WhyUs from './components/WhyUs/WhyUs';
-import Projects from './components/Projects/Projects';
 
 const LandingPage = () => {
   const navigate = useNavigate();
