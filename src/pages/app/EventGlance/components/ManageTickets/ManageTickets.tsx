@@ -46,10 +46,9 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
   const [paidTicket, setPaidTicket] = useState(true);
   const [ticketPair, setTicketPair] = useState<TicketType[]>();
   const [newDescription, setNewDescription] = useState('');
-  const getDeepCopy = (obj: any) => JSON.parse(JSON.stringify(obj));
+  const getDeepCopy = (obj: TicketType | undefined) => JSON.parse(JSON.stringify(obj));
 
   const onNewTicket = async () => {
-    // setSettingNewTicket(true);
     if (tickets.findIndex((t) => t.default_selected == true) != -1 || tickets.length > 0) {
       const newTicket: TicketType = {
         ...(getDeepCopy(
@@ -62,20 +61,6 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         id: '',
         default_selected: false,
         registration_count: 0,
-        // approval_required: false,
-        // price: 0,
-        // perks: undefined,
-        // registration_count: 0,
-        // capacity: 0,
-        // default_selected: false,
-        // platform_fee: 0,
-        // platform_fee_from_user: false,
-        // currency: '',
-        // entry_date: [],
-        // code_prefix: '',
-        // code_digits: 0,
-        // maintain_code_order: false,
-        // is_active: true,
       };
       const newTicketId = await createTicket(eventId, newTicket as TicketType);
       if (newTicketId) {
@@ -152,21 +137,9 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
     }
 
     if (matchingTicket) {
-      const changedData: Record<string, any> = Object.entries(selection as Record<string, any>)
-        // .filter(
-        //   ([key, value]) =>
-        //     matchingTicket?.[key as keyof EventType] !== value && key != 'description',
-        // )
-        // .filter(([key]) => !checkArr.includes(key))
-        .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
-
-      // if (selection?.description != newDescription) {
-      //   changedData['description'] = newDescription;
-      // }
-
-      // if (changedData?.description == '' && matchingTicket?.description == null)
-      //   delete changedData['description'];
-
+      const changedData: Record<string, string | number | FileList> = Object.entries(
+        selection as Record<string, string | number | FileList>,
+      ).reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
       const formData = new FormData();
       Object.keys(changedData).forEach((key) => {
         let value = changedData[key];
@@ -316,11 +289,13 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
       getTicketsList(eventId, setTicketData);
       setHasFetched(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId, ticketData]);
 
   useEffect(() => {
     setPaidTicket(selectedTicket?.price != 0);
     setLimitCapacity(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTicket?.id]);
 
   useEffect(() => {
@@ -335,6 +310,7 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
         setSelectedTicket(ticketData[0]);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ticketData]);
 
   return (

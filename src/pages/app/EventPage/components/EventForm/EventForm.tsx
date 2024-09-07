@@ -66,7 +66,8 @@ const EventForm = ({
   const [formData, setFormData] = useState<FormDataType>({});
   const [formNumber, setFormNumber] = useState<number>(eventFormData.show_ticket_first ? 1 : 0);
   const [selectedDate, setSelectedDate] = useState<string | null>();
-  const [formErrors, setFormErrors] = useState<any>({});
+  const [formErrors, setFormErrors] = useState<{ [key: string]: string[] }>({});
+  const [formIdToKey, setFormIdToKey] = useState<{ [key: string]: string }>({});
   const [tickets, setTickets] = useState<Tickets[]>([]);
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
@@ -82,7 +83,6 @@ const EventForm = ({
     error: '',
   });
 
-  let formIdToKey: { [key: string]: string } = {};
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -91,17 +91,16 @@ const EventForm = ({
   useEffect(() => {
     if (eventFormData?.form) {
       setFormData(
-        eventFormData?.form.reduce((data: any, field: any) => {
+        eventFormData?.form.reduce((data: FormDataType, field: FormFieldType) => {
           data[field.field_key] = newSearchParams.get(field.field_key) || '';
           return data;
         }, {}),
       );
 
       eventFormData?.form.forEach((field) => {
-        formIdToKey = {
-          ...formIdToKey,
-          [field.id]: field.field_key,
-        };
+        setFormIdToKey((prevState) => {
+          return { ...prevState, [field.id]: field.field_key };
+        });
       });
 
       if (eventFormData?.tickets) {
@@ -125,12 +124,14 @@ const EventForm = ({
     }
 
     if (eventFormData?.coupon) setCoupon(eventFormData?.coupon);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventFormData]);
 
   useEffect(() => {
     if (ticketConditionalFields.some((field) => field in formData)) {
       checkDirectRegister();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
   const checkDirectRegister = () => {
@@ -184,7 +185,7 @@ const EventForm = ({
     if (formErrors[fieldName]) {
       setFormErrors({
         ...formErrors,
-        [fieldName]: '',
+        [fieldName]: [],
       });
     }
   };
@@ -211,7 +212,7 @@ const EventForm = ({
         ...attachements.fieldAttachements,
         ...Array.from(event.target.files || []),
       ];
-      onFieldChange(field.field_key, newAttachments as any);
+      onFieldChange(field.field_key, newAttachments as unknown as string[]);
       setAttachements({
         field_key: field.field_key,
         fieldAttachements: newAttachments,
@@ -249,7 +250,7 @@ const EventForm = ({
     const newAttachements = attachements.fieldAttachements.filter((_, i) => i !== index);
     const newPreviews = previews.filter((_, i) => i !== index);
 
-    onFieldChange(attachements.field_key, newAttachements as any);
+    onFieldChange(attachements.field_key, newAttachements as unknown as string[]);
 
     setAttachements({
       field_key: attachements.field_key,
@@ -293,6 +294,7 @@ const EventForm = ({
         }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
   return (

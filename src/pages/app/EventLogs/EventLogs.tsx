@@ -14,6 +14,7 @@ const EventLogs = () => {
 
   useEffect(() => {
     getEventMailLog(eventId, setMailLogs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleMailContent = (id: string) => {

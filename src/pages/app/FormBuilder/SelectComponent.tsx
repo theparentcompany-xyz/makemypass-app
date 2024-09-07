@@ -33,6 +33,7 @@ const SelectComponent = ({
         options={options}
         styles={{
           ...customStyles,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           control: (provided: any) => ({
             ...provided,
             border: 'none',
@@ -45,6 +46,7 @@ const SelectComponent = ({
             zIndex: 1000,
             width: isSmall ? '100px' : '12rem',
           }),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           menu: (provided: any) => ({
             ...provided,
             border: '1px solid rgba(255, 255, 255, 0.08)',

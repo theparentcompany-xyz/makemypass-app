@@ -21,7 +21,6 @@ import EventPage from './pages/app/EventPage/EventPage';
 import PostEvent from './pages/app/PostEvent/PostEvent';
 import ProfilePage from './pages/app/ProfilePage/ProfilePage';
 import RoleChecker from '../services/RoleChecker';
-import Feedback from './pages/app/Feedback/Feedback';
 import CreateEvent from './pages/app/CreateEvent/CreateEvent';
 import EventGlance from './pages/app/EventGlance/EventGlance';
 import EditEvent from './pages/app/EditEvent/EditEvent';
@@ -233,10 +232,6 @@ const routes = [
   {
     path: '/:eventTitle',
     element: <EventPage />,
-  },
-  {
-    path: '/:eventTitle/feedback-form',
-    element: <Feedback />,
   },
   {
     path: '*',

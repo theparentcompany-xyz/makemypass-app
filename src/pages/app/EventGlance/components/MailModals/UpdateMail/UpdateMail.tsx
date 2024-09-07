@@ -11,17 +11,23 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const [mailData, setMailData] = useState<MailType>();
   const [fetchedMail, setFetchedMail] = useState<MailType>();
-  const [attachments, setAttachments] = useState<any[]>([]);
+  const [attachments, setAttachments] = useState<(string | File)[]>([]);
   const [previews, setPreviews] = useState<previewType[]>([]);
 
   const onUpdateEmail = () => {
     const formData = new FormData();
 
-    Object.entries(mailData as Record<string, any>).forEach(([key, value]) => {
+    Object.entries(mailData ?? {}).forEach(([key, value]) => {
       if (key === 'attachments' || key === 'id' || key === 'attachment') {
         return;
       }
-      formData.append(key, value);
+      if (Array.isArray(value)) {
+        value.forEach((item) => {
+          formData.append(key, item);
+        });
+      } else {
+        formData.append(key, value);
+      }
     });
 
     attachments.forEach((attachment) => {
@@ -69,6 +75,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
     if (selectedMail) {
       getEventMailData(eventId, selectedMail?.id, setFetchedMail);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -122,6 +129,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

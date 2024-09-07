@@ -19,12 +19,14 @@ const UTMManager = ({
 
   useEffect(() => {
     getUTMList(eventId, UTMData, setUTMData, setFirstRender);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!firstRender) {
       createUTM(eventId, UTMData.data);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [UTMData.data]);
 
   return (

@@ -34,6 +34,7 @@ const RightClickMenu: React.FC<RightClickMenuProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!isOpen) {

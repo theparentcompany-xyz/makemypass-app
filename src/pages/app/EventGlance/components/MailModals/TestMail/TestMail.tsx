@@ -2,11 +2,11 @@ import React from 'react';
 import styles from './TestMail.module.css';
 type Props = {
   setConfirmTestMail: React.Dispatch<React.SetStateAction<{ status: boolean; mailId: string }>>;
-  sentTestMail: (eventId: string, mailId: string, data?: Object | null) => void;
+  sentTestMail: (eventId: string, mailId: string, data?: object | null) => void;
   confirmTestMail: { status: boolean; mailId: string };
   eventId: string;
   setDummyData: React.Dispatch<
-    React.SetStateAction<{ showModal: boolean; data: Object | null; mailId: string }>
+    React.SetStateAction<{ showModal: boolean; data: object | null; mailId: string }>
   >;
   getDummyData: (mailId: string) => void;
 };

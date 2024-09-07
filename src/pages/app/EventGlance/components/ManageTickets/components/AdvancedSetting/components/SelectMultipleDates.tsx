@@ -13,6 +13,7 @@ const SelectMultipleDates = ({ selectedTicket, setSelectedTicket }: SelectDatePr
 
   useEffect(() => {
     setSelectedDates(getDatesArray());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTicket]);
 
   const [selectedDates, setSelectedDates] = useState<Date[] | null | undefined>([]);

@@ -99,6 +99,86 @@ const CouponForm = ({
     }
 
     if (!selectedTicketCategory) setSelectedTicketCategory(firstCategory);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filteredTickets]);
+
+  useEffect(() => {
+    const localBillReceipt: billReceipt[] = [];
+    tickets.forEach((ticket) => {
+      const ticketData = filteredTickets.find(
+        (filteredTicket) => filteredTicket.id === ticket.ticket_id,
+      );
+      if (ticketData) {
+        localBillReceipt.push({
+          ticketName: ticketData.title,
+          ticketPrice: ticketData.price,
+          ticketCount: ticket.count,
+          total: findPriceAfterCharge(
+            ticketData.price * ticket.count,
+            ticketData.platform_fee,
+            ticketData.gateway_fee,
+            ticketData.platform_fee_from_user,
+          ),
+          category: ticketData.category,
+          youTicket: ticket.my_ticket,
+          currency: ticketData.currency,
+          is_fee:
+            ticketData.platform_fee_from_user &&
+            ticketData.platform_fee + ticketData.gateway_fee > 0,
+        });
+      }
+    });
+    setBillReceipt(localBillReceipt);
+  }, [tickets, filteredTickets]);
+
+  useEffect(() => {
+    if (eventFormData) {
+      handleDateChange(findMinDate(eventFormData));
+      filterTickets({
+        eventFormData,
+        selectedDate,
+        discount,
+        setFilteredTickets,
+        formData,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eventFormData]);
+
+  useEffect(() => {
+    filterTickets({
+      eventFormData,
+      selectedDate,
+      discount,
+      setFilteredTickets,
+      formData,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [discount]);
+
+  useEffect(() => {
+    filterTickets({
+      eventFormData,
+      selectedDate,
+      discount,
+      setFilteredTickets,
+      formData,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDate]);
+
+  useEffect(() => {
+    setTickets(newTickets);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newTickets]);
+
+  useEffect(() => {
+    if (tickets.length === 0 && filteredTickets.length > 0) {
+      const defaultTicket =
+        filteredTickets.find((ticket: TicketType) => ticket.default_selected) || filteredTickets[0];
+      setTickets([{ ticket_id: defaultTicket.id, count: 1, my_ticket: true }]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredTickets]);
 
   const onSelectTicket = (currentTicketId: string) => {
@@ -189,80 +269,6 @@ const CouponForm = ({
       return netPrice;
     }
   };
-
-  useEffect(() => {
-    const localBillReceipt: billReceipt[] = [];
-    tickets.forEach((ticket) => {
-      const ticketData = filteredTickets.find(
-        (filteredTicket) => filteredTicket.id === ticket.ticket_id,
-      );
-      if (ticketData) {
-        localBillReceipt.push({
-          ticketName: ticketData.title,
-          ticketPrice: ticketData.price,
-          ticketCount: ticket.count,
-          total: findPriceAfterCharge(
-            ticketData.price * ticket.count,
-            ticketData.platform_fee,
-            ticketData.gateway_fee,
-            ticketData.platform_fee_from_user,
-          ),
-          category: ticketData.category,
-          youTicket: ticket.my_ticket,
-          currency: ticketData.currency,
-          is_fee:
-            ticketData.platform_fee_from_user &&
-            ticketData.platform_fee + ticketData.gateway_fee > 0,
-        });
-      }
-    });
-    setBillReceipt(localBillReceipt);
-  }, [tickets, filteredTickets]);
-
-  useEffect(() => {
-    if (eventFormData) {
-      handleDateChange(findMinDate(eventFormData));
-      filterTickets({
-        eventFormData,
-        selectedDate,
-        discount,
-        setFilteredTickets,
-        formData,
-      });
-    }
-  }, [eventFormData]);
-
-  useEffect(() => {
-    filterTickets({
-      eventFormData,
-      selectedDate,
-      discount,
-      setFilteredTickets,
-      formData,
-    });
-  }, [discount]);
-
-  useEffect(() => {
-    filterTickets({
-      eventFormData,
-      selectedDate,
-      discount,
-      setFilteredTickets,
-      formData,
-    });
-  }, [selectedDate]);
-
-  useEffect(() => {
-    setTickets(newTickets);
-  }, [newTickets]);
-
-  useEffect(() => {
-    if (tickets.length === 0 && filteredTickets.length > 0) {
-      const defaultTicket =
-        filteredTickets.find((ticket: TicketType) => ticket.default_selected) || filteredTickets[0];
-      setTickets([{ ticket_id: defaultTicket.id, count: 1, my_ticket: true }]);
-    }
-  }, [filteredTickets]);
 
   return (
     <>
