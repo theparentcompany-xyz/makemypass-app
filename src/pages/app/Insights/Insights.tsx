@@ -16,7 +16,7 @@ import { useEffect, useRef, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
-import { ChartData, AnalyticsData } from './types';
+import { ChartData, AnalyticsData, utmDataType } from './types';
 import Theme from '../../../components/Theme/Theme';
 import Modal from '../../../components/Modal/Modal';
 import { MdOutlinePublishedWithChanges } from 'react-icons/md';
