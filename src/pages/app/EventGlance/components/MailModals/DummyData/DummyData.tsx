@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BiLoader } from 'react-icons/bi';
 
 import { sentTestMail } from '../../../../../../apis/postevent';
@@ -17,10 +17,6 @@ type Props = {
 };
 
 const DummyData = ({ dummyData, setDummyData }: Props) => {
-  useEffect(() => {
-    console.log(dummyData);
-  }, [dummyData]);
-
   return (
     <>
       {dummyData.data && Object.keys(dummyData?.data).length != 0 ? (

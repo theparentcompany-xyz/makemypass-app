@@ -46,8 +46,6 @@ export const updateGuestSubmission = async (
 
     if (!(value instanceof FileList)) {
       if (Array.isArray(value) && value.length >= 0) {
-        console.log(key, value);
-
         value.forEach((value) => backendFormData.append(key + '[]', value));
       } else {
         value = data[key]?.toString();
@@ -60,8 +58,6 @@ export const updateGuestSubmission = async (
       Array.from(value).forEach((value) => backendFormData.append(key + '[]', value));
     }
   });
-
-  console.log(backendFormData);
 
   if (eventRegisterId && data)
     privateGateway

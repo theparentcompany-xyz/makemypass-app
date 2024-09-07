@@ -170,10 +170,6 @@ const EditGuest = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
-  useEffect(() => {
-    console.log(formErrors);
-  }, [formErrors]);
-
   return (
     <Modal title='Edit Guest' onClose={onClose} type='side'>
       <div className={styles.userInfoModalContainer}>

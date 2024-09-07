@@ -65,8 +65,6 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
   const handleDeleteAttachment = (index: number) => {
     const newAttachments = attachments.filter((_, i) => i !== index);
 
-    console.log('newAttachments', newAttachments);
-
     setAttachments(newAttachments);
     setPreviews(previews.filter((_, i) => i !== index));
   };

@@ -10,7 +10,6 @@ const VenueAnalytics = () => {
 
   // useEffect(() => {
   //   getVenueAnalytics(eventId, setVenueAnalytics);
-  //   console.log(venueAnalytics);
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
   return (
