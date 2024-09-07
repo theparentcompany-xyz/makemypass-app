@@ -1,7 +1,7 @@
 import { FaTelegramPlane } from 'react-icons/fa';
+import { FaInstagram, FaXTwitter } from 'react-icons/fa6';
+
 import styles from './Footer.module.css';
-import { FaInstagram } from 'react-icons/fa6';
-import { FaXTwitter } from 'react-icons/fa6';
 
 const Footer = () => {
   return (

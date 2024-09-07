@@ -1,4 +1,5 @@
 import { HashLoader } from 'react-spinners';
+
 import Theme from './Theme/Theme';
 
 const Loader = () => {

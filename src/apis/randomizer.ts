@@ -1,7 +1,8 @@
+import { Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
+
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { Dispatch, SetStateAction } from 'react';
 import { SpinWheelLogList, userListType } from '../pages/app/Randomizer/types';
 
 export const getSpinWheelUserList = async (

@@ -1,16 +1,20 @@
-import Theme from '../../../components/Theme/Theme';
-
-import styles from './EventGlance.module.css';
-import { IoLocationOutline } from 'react-icons/io5';
-import { ImTicket } from 'react-icons/im';
-import { HiUserGroup } from 'react-icons/hi2';
-import { FaHouse, FaWrench } from 'react-icons/fa6';
-import { BsQrCodeScan } from 'react-icons/bs';
-import SectionButton from '../../../components/SectionButton/SectionButton';
 // import { LuClock, LuPencil } from 'react-icons/lu';
 import { useEffect, useRef, useState } from 'react';
-import Modal from '../../../components/Modal/Modal';
-import { getDay, getMonthAbbreviation } from '../EventPage/constants';
+import toast from 'react-hot-toast';
+import { BsQrCodeScan } from 'react-icons/bs';
+import { FaHouse, FaWrench } from 'react-icons/fa6';
+import { HiUserGroup } from 'react-icons/hi2';
+import { ImTicket } from 'react-icons/im';
+import { IoLocationOutline } from 'react-icons/io5';
+import { LuCopy, LuDownload, LuMail, LuPencil, LuQrCode } from 'react-icons/lu';
+import { MdCampaign } from 'react-icons/md';
+import { RiCoupon2Fill } from 'react-icons/ri';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { getEventData } from '../../../apis/events';
+import { getEventMailData, listEventMails } from '../../../apis/mails';
+import { sentTestMail } from '../../../apis/postevent';
+import { listEventSpeakers } from '../../../apis/speakers';
 import {
   EventType,
   listMailType,
@@ -18,28 +22,23 @@ import {
   SpeakerCRUDType,
   VenueCRUDType,
 } from '../../../apis/types';
-import { getEventData } from '../../../apis/events';
-import { Link, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import ManageTickets from './components/ManageTickets/ManageTickets';
-import { LuCopy, LuDownload, LuMail, LuPencil, LuQrCode } from 'react-icons/lu';
-import { getEventMailData, listEventMails } from '../../../apis/mails';
-import CustomMail from './components/MailModals/CustomMail/CustomMail';
-import UpdateMail from './components/MailModals/UpdateMail/UpdateMail';
-import { sentTestMail } from '../../../apis/postevent';
-import { ChildRef } from './components/ManageTickets/ManageTickets';
-import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import { RiCoupon2Fill } from 'react-icons/ri';
-import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import { listEventVenues } from '../../../apis/venue';
-import VenueModal from './components/VenueModal/VenueModal';
-import { listEventSpeakers } from '../../../apis/speakers';
-import SpeakerModal from './components/SpeakerModal/SpeakerModal';
-import TestMail from './components/MailModals/TestMail/TestMail';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import Modal from '../../../components/Modal/Modal';
+import SectionButton from '../../../components/SectionButton/SectionButton';
+import Theme from '../../../components/Theme/Theme';
+import { getDay, getMonthAbbreviation } from '../EventPage/constants';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import CustomMail from './components/MailModals/CustomMail/CustomMail';
 import DummyData from './components/MailModals/DummyData/DummyData';
-import { MdCampaign } from 'react-icons/md';
-import { UTMDataType } from './types';
+import TestMail from './components/MailModals/TestMail/TestMail';
+import UpdateMail from './components/MailModals/UpdateMail/UpdateMail';
+import ManageTickets, { ChildRef } from './components/ManageTickets/ManageTickets';
+import SpeakerModal from './components/SpeakerModal/SpeakerModal';
 import UTMManager from './components/UTMManager/UTMManager';
+import VenueModal from './components/VenueModal/VenueModal';
+import styles from './EventGlance.module.css';
+import { UTMDataType } from './types';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);

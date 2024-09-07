@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AnimatePresence, motion } from 'framer-motion';
 import { isDate } from 'lodash';
+import { useState } from 'react';
+
 import { deleteCoupon, getCouponData } from '../../apis/coupons';
 import { formatDate } from '../../common/commonFunctions';
 import CouponType, { CreateCouponType } from '../../pages/app/Coupon/types';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
-import styles from './Table.module.css';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
 import Modal from '../Modal/Modal';
+import styles from './Table.module.css';
 
 type CouponModalType = {
   showModal: boolean;

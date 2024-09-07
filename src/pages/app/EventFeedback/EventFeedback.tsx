@@ -1,9 +1,9 @@
 // import { useContext, useEffect, useState } from 'react';
 // import { getFeedback } from '../../../apis/feedback';
 // import { GlobalContext } from '../../../contexts/globalContext';
-import Theme from '../../../components/Theme/Theme';
-import Header from '../../../components/EventHeader/EventHeader';
 import DashboardTabs from '../../../components/DashboardTabs/DashboardTabs';
+import Header from '../../../components/EventHeader/EventHeader';
+import Theme from '../../../components/Theme/Theme';
 // import GenericTable from '../../../components/Table/GenericTable';
 import styles from './EventFeedback.module.css';
 

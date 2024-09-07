@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { CouponData, DiscountData, Tickets } from '../../types';
-import { FormDataType, TicketType } from '../../../../../apis/types';
-import styles from './CouponForm.module.css';
-import { getIcon } from '../../constants';
-import InputField from '../../../../auth/Login/InputField.tsx';
-import { motion } from 'framer-motion';
-import { validateFormCoupon } from '../../../../../apis/publicpage';
-
 import 'react-datepicker/dist/react-datepicker.css';
-import SelectDate from '../../../../../components/SelectDate/SelectDate';
+
+import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { FaBookOpen, FaDollarSign } from 'react-icons/fa';
+import { RiInformationFill } from 'react-icons/ri';
+
+import { validateFormCoupon } from '../../../../../apis/publicpage';
+import { FormDataType, TicketType } from '../../../../../apis/types';
 import { findMinDate } from '../../../../../common/commonFunctions';
 import { filterTickets } from '../../../../../common/coreLogics.ts';
+import SelectDate from '../../../../../components/SelectDate/SelectDate';
+import InputField from '../../../../auth/Login/InputField.tsx';
 import { FormEventData } from '../../../Guests/types.ts';
-import { RiInformationFill } from 'react-icons/ri';
-import { FaBookOpen, FaDollarSign } from 'react-icons/fa';
+import { getIcon } from '../../constants';
+import { CouponData, DiscountData, Tickets } from '../../types';
 import ExpectedInvoice from '../ExpectedInvoice/ExpectedInvoice.tsx';
+import styles from './CouponForm.module.css';
 
 const CouponForm = ({
   setTickets,

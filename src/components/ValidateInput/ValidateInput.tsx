@@ -1,7 +1,8 @@
-import { forwardRef } from 'react';
-import styles from './ValidateInput.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
+import { forwardRef } from 'react';
+
 import { sendVerfication } from '../../apis/publicpage';
+import styles from './ValidateInput.module.css';
 
 interface FormProps {
   type: string;

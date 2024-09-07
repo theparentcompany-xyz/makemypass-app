@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import Theme from '../../../components/Theme/Theme';
-import styles from './EventLogs.module.css';
-import { getEventMailLog } from '../../../apis/logs';
-import { EmailType } from '../Guests/components/ViewGuest/types';
 import { BiChevronDown } from 'react-icons/bi';
+
+import { getEventMailLog } from '../../../apis/logs';
 import { formatDate } from '../../../common/commonFunctions';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import Theme from '../../../components/Theme/Theme';
+import { EmailType } from '../Guests/components/ViewGuest/types';
+import styles from './EventLogs.module.css';
 
 const EventLogs = () => {
   const [mailLogs, setMailLogs] = useState<EmailType[]>([]);

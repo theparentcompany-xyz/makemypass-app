@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction } from 'react';
+import toast from 'react-hot-toast';
+
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { Gift, GiftsType } from '../pages/app/Gifts/types';
-import toast from 'react-hot-toast';
 
 export const getGuestGiftList = async (
   eventId: string,

@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction } from 'react';
+import toast from 'react-hot-toast';
+
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import CouponType, { CreateCouponType, CreateCouponTypeError } from '../pages/app/Coupon/types';
-import toast from 'react-hot-toast';
 import { ActivateCouponType } from './types';
 
 export const getCouponsList = async (

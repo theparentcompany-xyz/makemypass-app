@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
-import styles from './Modal.module.css';
+
 import ManageTicketHeader from '../../pages/app/EventGlance/components/ManageTickets/components/ManageTicketHeader/ManageTicketHeader';
+import styles from './Modal.module.css';
 
 type ModalProps = {
   children: React.ReactNode;

@@ -1,30 +1,31 @@
-import styles from './ViewGuest.module.css';
-import { ResentTicket, SelectedGuest } from '../../types';
-import React, { Dispatch, useEffect, useState } from 'react';
-import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
-import { setGuestShortlistStatus } from '../../../../../apis/guest';
-import { AnimatePresence, motion } from 'framer-motion';
-import { BsTicketPerforatedFill } from 'react-icons/bs';
-import { MdDownload, MdMail } from 'react-icons/md';
-import { FaCheck } from 'react-icons/fa6';
-import { checkInUser } from '../../../../../apis/scan';
-import { formatDate } from '../../../../../common/commonFunctions';
 import { isArray } from 'chart.js/helpers';
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { Dispatch, useEffect, useState } from 'react';
+import { BiChevronDown } from 'react-icons/bi';
+import { BsTicketPerforatedFill } from 'react-icons/bs';
+import { FaEdit, FaMailBulk, FaTrash, FaWalking } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa6';
+import { MdDownload, MdMail } from 'react-icons/md';
+import { HashLoader } from 'react-spinners';
+
+import { setGuestShortlistStatus } from '../../../../../apis/guest';
 import {
   deleteGuestSubmission,
   getGuestMailLog,
   getGuestVisistedVenues,
   initateGuestRefund,
 } from '../../../../../apis/guests';
-import { FaEdit, FaMailBulk, FaTrash, FaWalking } from 'react-icons/fa';
+import { checkInUser } from '../../../../../apis/scan';
+import { formatDate } from '../../../../../common/commonFunctions';
 import Modal from '../../../../../components/Modal/Modal';
-import { EmailType, VisitedVenues } from './types';
-import { RegistrationDataType } from '../../../Overview/Overview/types';
-import { BiChevronDown } from 'react-icons/bi';
-import { HashLoader } from 'react-spinners';
-import { multipleTicketCount } from '../../../CheckIns/pages/ScanQR/types';
 import ScannerResponseModal from '../../../CheckIns/components/ScannerResponseModal/ScannerResponseModal';
+import { multipleTicketCount } from '../../../CheckIns/pages/ScanQR/types';
 import PreviewBox from '../../../EventGlance/components/MailModals/UpdateMail/components/PreviewBox/PreviewBox';
+import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
+import { RegistrationDataType } from '../../../Overview/Overview/types';
+import { ResentTicket, SelectedGuest } from '../../types';
+import { EmailType, VisitedVenues } from './types';
+import styles from './ViewGuest.module.css';
 
 const ViewGuest = ({
   selectedGuestData,

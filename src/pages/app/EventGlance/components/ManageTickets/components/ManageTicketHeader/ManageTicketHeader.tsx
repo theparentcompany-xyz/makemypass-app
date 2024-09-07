@@ -1,5 +1,6 @@
-import styles from './ManageTicketHeader.module.css';
 import { motion } from 'framer-motion';
+
+import styles from './ManageTicketHeader.module.css';
 
 const ManageTicketHeader = ({
   title,

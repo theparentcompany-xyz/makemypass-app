@@ -1,33 +1,33 @@
-import styles from './Insights.module.css';
 import {
-  Chart as ChartJS,
+  ArcElement,
+  BarElement,
   CategoryScale,
+  Chart as ChartJS,
+  Legend,
   LinearScale,
-  PointElement,
   LineElement,
+  PointElement,
   Title,
   Tooltip,
-  Legend,
-  BarElement,
-  ArcElement,
 } from 'chart.js';
-import { Line, Doughnut, Bar } from 'react-chartjs-2';
 import { useEffect, useRef, useState } from 'react';
+import { Bar, Doughnut, Line } from 'react-chartjs-2';
+import toast from 'react-hot-toast';
+import { IoCopyOutline } from 'react-icons/io5';
+import { MdOutlinePublishedWithChanges } from 'react-icons/md';
+import { useNavigate, useParams } from 'react-router';
 import { HashLoader } from 'react-spinners';
+
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
-import { ChartData, AnalyticsData, utmDataType } from './types';
-import Theme from '../../../components/Theme/Theme';
-import Modal from '../../../components/Modal/Modal';
-import { MdOutlinePublishedWithChanges } from 'react-icons/md';
 import { getEventId, updateEventData } from '../../../apis/events';
-import { IoCopyOutline } from 'react-icons/io5';
-import toast from 'react-hot-toast';
 import { getInsightsVisibility } from '../../../apis/insights';
-import { useNavigate, useParams } from 'react-router';
-
-import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import Modal from '../../../components/Modal/Modal';
+import Theme from '../../../components/Theme/Theme';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import styles from './Insights.module.css';
+import { AnalyticsData, ChartData, utmDataType } from './types';
 
 ChartJS.register(
   CategoryScale,

@@ -1,10 +1,11 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Theme from '../../../components/Theme/Theme';
-import styles from './LandingPage.module.css';
 import { useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+import Theme from '../../../components/Theme/Theme';
 import EventPartners from './components/EventPartners/EventPartners';
 import Hero from './components/Hero/Hero';
 import WhyUs from './components/WhyUs/WhyUs';
+import styles from './LandingPage.module.css';
 
 const LandingPage = () => {
   const navigate = useNavigate();

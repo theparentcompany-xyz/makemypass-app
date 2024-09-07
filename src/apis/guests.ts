@@ -1,13 +1,14 @@
+import { Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
+import { NavigateFunction } from 'react-router';
+
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
-import { Dispatch, SetStateAction } from 'react';
-import { ErrorMessages, FormDataType } from './types';
 import { BulkUploadType } from '../pages/app/Guests/components/BulkUpload/types';
 import { EmailType, VisitedVenues } from '../pages/app/Guests/components/ViewGuest/types';
+import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
 import { RegistrationDataType } from '../pages/app/Overview/Overview/types';
-import { NavigateFunction } from 'react-router';
+import { ErrorMessages, FormDataType } from './types';
 
 export const resentGuestTicket = async (
   ticketData: ResentTicket,

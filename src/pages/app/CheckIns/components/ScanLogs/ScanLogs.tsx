@@ -1,6 +1,7 @@
 import { MdError, MdVerified } from 'react-icons/md';
-import styles from './ScanLogs.module.css';
+
 import { LogType } from '../../pages/Venue/Venue';
+import styles from './ScanLogs.module.css';
 
 const ScanLogs = ({ scanLogs }: { scanLogs: LogType[] }) => {
   return (

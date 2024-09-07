@@ -1,11 +1,12 @@
+import { useEffect, useState } from 'react';
 import { LuPencil, LuPlus, LuSave, LuTrash } from 'react-icons/lu';
+import { MdClose } from 'react-icons/md';
+
+import { createUTM, getUTMList } from '../../../../../apis/utm';
 import InputField from '../../../../auth/Login/InputField';
+import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import { UTMDataType } from '../../types';
 import styles from './UTMManager.module.css';
-import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
-import { useEffect, useState } from 'react';
-import { createUTM, getUTMList } from '../../../../../apis/utm';
-import { MdClose } from 'react-icons/md';
 
 const UTMManager = ({
   UTMData,

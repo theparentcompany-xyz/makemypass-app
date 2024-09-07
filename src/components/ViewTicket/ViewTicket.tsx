@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import Theme from '../Theme/Theme';
 import styles from './ViewTicket.module.css';
 

@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { SetStateAction } from 'react';
-import styles from './AddHosts.module.css';
-import { hostData } from '../../../Overview/types';
-
 import Select from 'react-select';
-import roleOptions from './data';
-import Slider from '../../../../../../components/SliderButton/Slider';
+
 import Modal from '../../../../../../components/Modal/Modal';
+import Slider from '../../../../../../components/SliderButton/Slider';
+import { hostData } from '../../../Overview/types';
+import styles from './AddHosts.module.css';
+import roleOptions from './data';
 
 const AddHosts = ({
   hostData,

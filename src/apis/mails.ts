@@ -1,8 +1,9 @@
 import React from 'react';
+import toast from 'react-hot-toast';
+
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { listMailType, MailType } from './types';
-import toast from 'react-hot-toast';
 
 type mailData = {
   smtp_server: string;

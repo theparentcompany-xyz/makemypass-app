@@ -1,4 +1,5 @@
 import Select, { ActionMeta, SingleValue } from 'react-select';
+
 import { customStyles } from '../EventPage/constants';
 
 const SelectComponent = ({

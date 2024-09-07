@@ -1,10 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
+import toast from 'react-hot-toast';
+
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import toast from 'react-hot-toast';
+import { formatDate } from '../common/commonFunctions';
 import { TicketPerkType } from '../pages/app/CheckIns/pages/Perks/types';
 import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
-import { formatDate } from '../common/commonFunctions';
 
 export const getScanPerkList = async (
   eventId: string,

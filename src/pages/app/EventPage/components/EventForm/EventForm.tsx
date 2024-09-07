@@ -1,26 +1,27 @@
+import { motion } from 'framer-motion';
 import { Dispatch, useEffect, useState } from 'react';
-import {
-  CouponData,
-  DiscountData,
-  Tickets,
-  SuccessModalProps,
-  ClaimCodeExceedType,
-} from '../../types';
-import styles from '../../EventPage.module.css';
+import toast from 'react-hot-toast';
+import { MdError } from 'react-icons/md';
+import { useLocation, useNavigate } from 'react-router';
+import { PropagateLoader } from 'react-spinners';
+
+import { addGuest } from '../../../../../apis/guest';
 import { submitForm, validateRSVPData } from '../../../../../apis/publicpage';
 import { EventType, FormDataType, FormFieldType, TicketType } from '../../../../../apis/types';
-import { motion } from 'framer-motion';
-import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
-import CouponForm from '../CouponForm/CouponForm';
 import { validateCondition } from '../../../../../components/DynamicForm/condition';
-import { useLocation, useNavigate } from 'react-router';
-import { FormEventData, SelectedGuest } from '../../../Guests/types';
-import { PropagateLoader } from 'react-spinners';
-import VoiceInput from './components/VoiceInput';
-import { addGuest } from '../../../../../apis/guest';
-import { MdError } from 'react-icons/md';
-import toast from 'react-hot-toast';
+import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import { previewType } from '../../../EventGlance/components/MailModals/UpdateMail/types';
+import { FormEventData, SelectedGuest } from '../../../Guests/types';
+import styles from '../../EventPage.module.css';
+import {
+  ClaimCodeExceedType,
+  CouponData,
+  DiscountData,
+  SuccessModalProps,
+  Tickets,
+} from '../../types';
+import CouponForm from '../CouponForm/CouponForm';
+import VoiceInput from './components/VoiceInput';
 
 const EventForm = ({
   eventFormData,

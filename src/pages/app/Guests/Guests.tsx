@@ -1,45 +1,42 @@
-import styles from './Guests.module.css';
+import { isArray } from 'chart.js/helpers';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { RiSearchLine } from 'react-icons/ri';
+import { useNavigate, useParams } from 'react-router';
+import { useLocation } from 'react-router-dom';
+import Select from 'react-select';
+import { HashLoader } from 'react-spinners';
 
-import Theme from '../../../components/Theme/Theme';
+import { Roles } from '../../../../services/enums';
+import { getFormCategories } from '../../../apis/events';
 import {
   downloadRegisterCSVData,
-  viewGuestTicket,
-  getGuestEditPrefillData,
   getEventFormData,
+  getGuestEditPrefillData,
   getGuestInformation,
   getGuestRegisterList,
   resentGuestTicket,
+  viewGuestTicket,
 } from '../../../apis/guests';
+import { checkSpinWheelPickUser } from '../../../apis/randomizer';
 import { FormDataType } from '../../../apis/types';
-import { getFormCategories } from '../../../apis/events';
-
-import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from './types';
-import { TableType } from '../../../components/Table/types';
-
-import { RiSearchLine } from 'react-icons/ri';
-import { HashLoader } from 'react-spinners';
-
-import Table from '../../../components/Table/Table';
-import ViewGuest from './components/ViewGuest/ViewGuest';
-import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import { customStyles } from '../EventPage/constants';
-import Select from 'react-select';
-import { isArray } from 'chart.js/helpers';
-import Modal from '../../../components/Modal/Modal';
-import toast from 'react-hot-toast';
-import Scanner from '../../../components/Scanner/Scanner';
-import EventForm from '../EventPage/components/EventForm/EventForm';
-import { useNavigate, useParams } from 'react-router';
-import EditGuest from './components/EditGuest/EditGuest';
-import BulkUpload from './components/BulkUpload/BulkUpload';
-import { RegistrationDataType } from '../Overview/Overview/types';
-import { Roles } from '../../../../services/enums';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Glance from '../../../components/Glance/Glance';
+import Modal from '../../../components/Modal/Modal';
+import Scanner from '../../../components/Scanner/Scanner';
 import Slider from '../../../components/SliderButton/Slider';
-import { useLocation } from 'react-router-dom';
-import { checkSpinWheelPickUser } from '../../../apis/randomizer';
+import Table from '../../../components/Table/Table';
+import { TableType } from '../../../components/Table/types';
+import Theme from '../../../components/Theme/Theme';
+import EventForm from '../EventPage/components/EventForm/EventForm';
+import { customStyles } from '../EventPage/constants';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import { RegistrationDataType } from '../Overview/Overview/types';
+import BulkUpload from './components/BulkUpload/BulkUpload';
+import EditGuest from './components/EditGuest/EditGuest';
+import ViewGuest from './components/ViewGuest/ViewGuest';
+import styles from './Guests.module.css';
+import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from './types';
 
 const Guests = () => {
   const navigate = useNavigate();

@@ -1,4 +1,5 @@
 import { MdClose } from 'react-icons/md';
+
 import { previewType } from '../../types';
 import styles from '../../UpdateMail.module.css';
 

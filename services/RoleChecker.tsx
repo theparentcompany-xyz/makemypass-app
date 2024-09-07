@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useEffect,useState } from 'react';
+import { Navigate,useParams } from 'react-router-dom';
+
 import { setEventInfoLocal } from '../src/apis/events';
 import Loader from '../src/components/Loader.tsx';
 

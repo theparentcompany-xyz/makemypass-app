@@ -1,20 +1,21 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import styles from './Randomizer.module.css';
-import Theme from '../../../components/Theme/Theme';
-import EventHeader from '../../../components/EventHeader/EventHeader';
+import Confetti from 'react-confetti';
+import { useNavigate, useParams } from 'react-router-dom';
+import { HashLoader } from 'react-spinners';
+
 import {
   createSpinWheelLog,
   getSpinWheelLogList,
   getSpinWheelUserList,
 } from '../../../apis/randomizer';
-import { SpinWheelLogList, userListType } from './types';
-import Confetti from 'react-confetti';
-import { HashLoader } from 'react-spinners';
 import { formatDate } from '../../../common/commonFunctions';
+import EventHeader from '../../../components/EventHeader/EventHeader';
+import Theme from '../../../components/Theme/Theme';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import { useNavigate, useParams } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
-import { motion } from 'framer-motion';
+import styles from './Randomizer.module.css';
+import { SpinWheelLogList, userListType } from './types';
+
 const Randomizer = () => {
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState({

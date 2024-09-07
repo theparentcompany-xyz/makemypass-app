@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { MailType } from '../../../../../../apis/types';
-import styles from './UpdateMail.module.css';
-import { getEventMailData } from '../../../../../../apis/mails';
 import { HashLoader } from 'react-spinners';
-import { updateEventMail } from '../../../../../../apis/mails';
-import { previewType, PropTypes } from './types';
+
+import { getEventMailData, updateEventMail } from '../../../../../../apis/mails';
+import { MailType } from '../../../../../../apis/types';
 import UploadAttachement from './components/UploadAttachement/UploadAttachements';
+import { previewType, PropTypes } from './types';
+import styles from './UpdateMail.module.css';
 
 const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: PropTypes) => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);

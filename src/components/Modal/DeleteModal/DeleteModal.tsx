@@ -1,6 +1,8 @@
 import React from 'react';
+
 import Modal from '../Modal';
 import styles from './DeleteModal.module.css';
+
 type Props = {
   setDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
   onDelete: () => void;

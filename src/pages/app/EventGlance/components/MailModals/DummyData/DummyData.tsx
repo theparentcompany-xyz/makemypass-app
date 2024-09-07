@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import styles from './DummyData.module.css';
-
 import { BiLoader } from 'react-icons/bi';
 
-import InputField from '../../../../../auth/Login/InputField';
 import { sentTestMail } from '../../../../../../apis/postevent';
+import InputField from '../../../../../auth/Login/InputField';
+import styles from './DummyData.module.css';
+
 type Props = {
   dummyData: { showModal: boolean; data: { [key: string]: string } | null; mailId: string };
   setDummyData: React.Dispatch<

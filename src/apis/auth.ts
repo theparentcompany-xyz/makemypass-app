@@ -1,7 +1,8 @@
+import { Dispatch } from 'react';
 import toast from 'react-hot-toast';
+
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { buildVerse, makeMyPass } from '../../services/urls';
-import { Dispatch } from 'react';
 import { errorType } from '../pages/auth/Login/types';
 import { AuthApiSuccessResponse } from './types';
 

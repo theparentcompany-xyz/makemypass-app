@@ -1,8 +1,9 @@
 import { Dispatch } from 'react';
+
 import { resentGuestTicket } from '../../../../../apis/guests';
-import { ResentTicket, SelectedGuest } from '../../types';
-import styles from './ResentModal.module.css';
 import Modal from '../../../../../components/Modal/Modal';
+import styles from '../../Guests.module.css';
+import { ResentTicket, SelectedGuest } from '../../types';
 
 const ResentModal = ({
   resentTicket,

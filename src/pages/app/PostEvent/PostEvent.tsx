@@ -1,12 +1,13 @@
-import Theme from '../../../components/Theme/Theme';
-import styles from './PostEvent.module.css';
-import SectionButton from '../../../components/SectionButton/SectionButton';
+import { useEffect, useState } from 'react';
 import { LuMailPlus, LuMailX } from 'react-icons/lu';
 import { TiTick } from 'react-icons/ti';
-import { sentPostEventMail, getPostEventStatus } from '../../../apis/postevent';
-import { useState, useEffect } from 'react';
-import Modal from '../../../components/Modal/Modal';
+
+import { getPostEventStatus, sentPostEventMail } from '../../../apis/postevent';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import Modal from '../../../components/Modal/Modal';
+import SectionButton from '../../../components/SectionButton/SectionButton';
+import Theme from '../../../components/Theme/Theme';
+import styles from './PostEvent.module.css';
 
 const PostEvent = () => {
   const [openConfirmModal, setConfirmModal] = useState({

@@ -4,6 +4,7 @@ import { GoPerson } from 'react-icons/go';
 import { IoCallOutline } from 'react-icons/io5';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { RiCoupon3Line } from 'react-icons/ri';
+
 import { DiscountData } from './types';
 
 export const customStyles = {

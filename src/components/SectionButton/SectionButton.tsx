@@ -1,5 +1,6 @@
-import styles from './SectionButton.module.css';
 import { motion } from 'framer-motion';
+
+import styles from './SectionButton.module.css';
 
 type ButtonProps = {
   buttonText: string;

@@ -1,8 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom';
-import styles from './CheckInHeader.module.css';
 import { BsQrCodeScan } from 'react-icons/bs';
+import { Link, useNavigate } from 'react-router-dom';
 
 import SectionButton from '../../../../../../components/SectionButton/SectionButton';
+import styles from './CheckInHeader.module.css';
 
 const CheckInHeader = ({
   title,

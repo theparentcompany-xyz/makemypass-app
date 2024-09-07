@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
+
+import { checkOutUser } from '../../../../../apis/scan';
 import Scanner from '../../../../../components/Scanner/Scanner';
 import Theme from '../../../../../components/Theme/Theme';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
-import { checkOutUser } from '../../../../../apis/scan';
-import styles from './CheckOutScan.module.css';
-import { LogType } from '../Venue/Venue';
-import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerResponseModal';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
+import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerResponseModal';
 import { multipleTicketCount } from '../ScanQR/types';
+import { LogType } from '../Venue/Venue';
+import styles from './CheckOutScan.module.css';
 
 const CheckOutScan = () => {
   const [ticketId, setTicketId] = useState('');

@@ -1,10 +1,11 @@
+import { QrScanner } from '@yudiel/react-qr-scanner';
+import { Dispatch } from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
+import { HashLoader } from 'react-spinners';
+
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Scanner.module.css';
-import { QrScanner } from '@yudiel/react-qr-scanner';
-import toast from 'react-hot-toast';
-import { Dispatch } from 'react';
-import { HashLoader } from 'react-spinners';
 
 const Scanner = ({
   ticketId,

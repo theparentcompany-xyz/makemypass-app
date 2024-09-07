@@ -1,21 +1,22 @@
-import Theme from '../../../../../components/Theme/Theme';
-import Header from '../../../../../components/EventHeader/EventHeader';
-import styles from './CheckIn.module.css';
-import { RiSearchLine } from 'react-icons/ri';
 import { useEffect, useState } from 'react';
-import { guests } from './types';
-import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
-import { getFormCategories } from '../../../../../apis/events';
-import { connectPrivateSocket } from '../../../../../../services/apiGateway';
-import { makeMyPassSocket } from '../../../../../../services/urls';
-import { transformTableData } from '../../../../../common/commonFunctions';
-import { TableType } from '../../../../../components/Table/types';
-import Table from '../../../../../components/Table/Table';
-import { customStyles } from '../../../EventPage/constants';
+import { RiSearchLine } from 'react-icons/ri';
 import Select from 'react-select';
-import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
-import { handleClick } from '../../../Guests/components/csvExport';
+
+import { connectPrivateSocket } from '../../../../../../services/apiGateway';
 import { Roles } from '../../../../../../services/enums';
+import { makeMyPassSocket } from '../../../../../../services/urls';
+import { getFormCategories } from '../../../../../apis/events';
+import { transformTableData } from '../../../../../common/commonFunctions';
+import Header from '../../../../../components/EventHeader/EventHeader';
+import Table from '../../../../../components/Table/Table';
+import { TableType } from '../../../../../components/Table/types';
+import Theme from '../../../../../components/Theme/Theme';
+import { customStyles } from '../../../EventPage/constants';
+import { handleClick } from '../../../Guests/components/csvExport';
+import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
+import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
+import styles from './CheckIn.module.css';
+import { guests } from './types';
 
 const CheckIn = () => {
   const [recentRegistrations, setRecentRegistrations] = useState<guests[]>([]);

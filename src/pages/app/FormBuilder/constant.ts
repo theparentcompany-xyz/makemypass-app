@@ -1,20 +1,21 @@
 import { IconType } from 'react-icons/lib';
 import {
-  MdTextFields,
-  MdEmail,
-  MdPhone,
+  Md123,
+  MdAccessTime,
   MdArrowDropDown,
-  MdSubject,
-  MdRadioButtonChecked,
   MdAttachFile,
   MdCalendarToday,
-  MdAccessTime,
-  Md123,
-  MdStar,
   MdCheckBox,
+  MdEmail,
+  MdPhone,
+  MdRadioButtonChecked,
+  MdStar,
+  MdSubject,
+  MdTextFields,
 } from 'react-icons/md';
-import { DefaultFieldTypes, FieldType } from './types.ts';
+
 import { ConditionalQuestionOperator } from '../../../../services/enums.ts';
+import { DefaultFieldTypes, FieldType } from './types.ts';
 
 export interface ConditionType {
   value: ConditionalQuestionOperator;

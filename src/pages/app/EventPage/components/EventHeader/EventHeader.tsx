@@ -1,3 +1,6 @@
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { FaExpandAlt } from 'react-icons/fa';
 import {
   IoAlertCircleOutline,
   IoContract,
@@ -5,13 +8,11 @@ import {
   IoMapOutline,
   IoPodiumOutline,
 } from 'react-icons/io5';
-import { EventHosts, EventType } from '../../../../../apis/types';
-import styles from './EventHeader.module.css';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
-import { useState } from 'react';
-import { FaExpandAlt } from 'react-icons/fa';
+
+import { EventHosts, EventType } from '../../../../../apis/types';
 import { getDay, getMonthAbbreviation } from '../../constants';
+import styles from './EventHeader.module.css';
 
 const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
   const [showFullDesc, setShowFullDesc] = useState(false);

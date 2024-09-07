@@ -1,7 +1,8 @@
-import million from 'million/compiler';
 import react from '@vitejs/plugin-react';
-import { defineConfig, type PluginOption } from 'vite';
+import million from 'million/compiler';
 import { visualizer } from 'rollup-plugin-visualizer'; // Import the 'visualizer' plugin
+import { defineConfig, type PluginOption } from 'vite';
+
 const _plugins = [
   million.vite({
     auto: {

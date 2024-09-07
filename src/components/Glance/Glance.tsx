@@ -1,11 +1,11 @@
-import styles from './Glance.module.css';
-import { formatDate } from '../../common/commonFunctions';
-
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+
 import { connectPrivateSocket } from '../../../services/apiGateway';
-import PoppingText from './components/PoppingText';
 import { makeMyPassSocket } from '../../../services/urls';
+import { formatDate } from '../../common/commonFunctions';
+import PoppingText from './components/PoppingText';
+import styles from './Glance.module.css';
 
 const Glance = ({ tab }: { tab: string }) => {
   const [progressData, setprogressData] = useState<progressDataType>([]);

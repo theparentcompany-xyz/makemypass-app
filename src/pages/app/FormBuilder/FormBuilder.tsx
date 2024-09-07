@@ -1,31 +1,30 @@
-import { FaAddressCard, FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
-import Theme from '../../../components/Theme/Theme';
-import styles from './FormBuilder.module.css';
-import Slider from '../../../components/SliderButton/Slider';
-import { RxDragHandleDots2 } from 'react-icons/rx';
-import { LuPlus } from 'react-icons/lu';
-import { RiDeleteBinLine } from 'react-icons/ri';
-import Select from 'react-select';
-
-import { useEffect, useState } from 'react';
-import { getFormBuilderForm, updateFormBuilderForm } from '../../../apis/formbuilder';
-import { DefaultFieldTypes, ErrorResponse, Field, FieldType } from './types';
-import SelectComponent from './SelectComponent';
-import { IoCloseSharp } from 'react-icons/io5';
-import { DefaultFiledTypeMapping, FileExtensions, getConditions } from './constant';
-import { v4 as uuidv4 } from 'uuid';
-import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
-import { FaChevronDown } from 'react-icons/fa';
 import { AnimatePresence, Reorder } from 'framer-motion';
-import InputField from '../../auth/Login/InputField';
-import { MdDelete, MdOutlineSdStorage } from 'react-icons/md';
-import { customStyles } from '../EventPage/constants';
-import Modal from '../../../components/Modal/Modal';
-
-import CreatableSelect from 'react-select/creatable';
-import { GrContract } from 'react-icons/gr';
+import { useEffect, useState } from 'react';
 import { CgArrowsExpandRight } from 'react-icons/cg';
+import { FaChevronDown } from 'react-icons/fa';
+import { FaAddressCard, FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
+import { GrContract } from 'react-icons/gr';
+import { IoCloseSharp } from 'react-icons/io5';
+import { LuPlus } from 'react-icons/lu';
+import { MdDelete, MdOutlineSdStorage } from 'react-icons/md';
+import { RiDeleteBinLine } from 'react-icons/ri';
+import { RxDragHandleDots2 } from 'react-icons/rx';
+import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
+import { v4 as uuidv4 } from 'uuid';
+
+import { getFormBuilderForm, updateFormBuilderForm } from '../../../apis/formbuilder';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import Modal from '../../../components/Modal/Modal';
+import Slider from '../../../components/SliderButton/Slider';
+import Theme from '../../../components/Theme/Theme';
+import InputField from '../../auth/Login/InputField';
+import { customStyles } from '../EventPage/constants';
+import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
+import { DefaultFiledTypeMapping, FileExtensions, getConditions } from './constant';
+import styles from './FormBuilder.module.css';
+import SelectComponent from './SelectComponent';
+import { DefaultFieldTypes, ErrorResponse, Field, FieldType } from './types';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);

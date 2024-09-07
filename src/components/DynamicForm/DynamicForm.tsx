@@ -1,13 +1,14 @@
+import { AnimatePresence, motion } from 'framer-motion';
+import Select, { MultiValue } from 'react-select';
+
 import { ErrorMessages, FormDataType, FormFieldType } from '../../apis/types';
+import UploadAttachement from '../../pages/app/EventGlance/components/MailModals/UpdateMail/components/UploadAttachement/UploadAttachements.tsx';
+import { previewType } from '../../pages/app/EventGlance/components/MailModals/UpdateMail/types.ts';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
 import InputField from '../../pages/auth/Login/InputField.tsx';
-import styles from './DynamicForm.module.css';
-import { motion, AnimatePresence } from 'framer-motion';
-import Select, { MultiValue } from 'react-select';
-import { validateCondition } from './condition';
 import ValidateInput from '../ValidateInput/ValidateInput.tsx';
-import { previewType } from '../../pages/app/EventGlance/components/MailModals/UpdateMail/types.ts';
-import UploadAttachement from '../../pages/app/EventGlance/components/MailModals/UpdateMail/components/UploadAttachement/UploadAttachements.tsx';
+import { validateCondition } from './condition';
+import styles from './DynamicForm.module.css';
 
 const variants = {
   initial: { opacity: 0, y: -10 },

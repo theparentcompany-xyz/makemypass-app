@@ -1,32 +1,33 @@
-import styles from './EditEvent.module.css';
-import Theme from '../../../components/Theme/Theme';
-import { customStyles } from '../EventPage/constants';
-import { GrLocation } from 'react-icons/gr';
-import { getEventData, updateEventData, deleteEvent } from '../../../apis/events';
-import { TbMicrophone, TbSettings, TbUserCheck, TbWorld } from 'react-icons/tb';
-import { TbMailStar } from 'react-icons/tb';
-import { BiArrowToTop } from 'react-icons/bi';
-import { LuPencil } from 'react-icons/lu';
-import { FiGlobe } from 'react-icons/fi';
-import { HiOutlineTicket, HiOutlineUserGroup } from 'react-icons/hi2';
-import { BsTicketDetailed } from 'react-icons/bs';
-import { IoCloseOutline } from 'react-icons/io5';
+import './google.css';
+
+import { Autocomplete, GoogleMap, Libraries, MarkerF, useLoadScript } from '@react-google-maps/api';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineTeam } from 'react-icons/ai';
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { BiArrowToTop } from 'react-icons/bi';
+import { BsTicketDetailed } from 'react-icons/bs';
+import { FiGlobe } from 'react-icons/fi';
+import { GrLocation } from 'react-icons/gr';
+import { HiOutlineTicket, HiOutlineUserGroup } from 'react-icons/hi2';
+import { IoCloseOutline } from 'react-icons/io5';
+import { LuPencil } from 'react-icons/lu';
+import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
+import { TbMailStar, TbMicrophone, TbSettings, TbUserCheck, TbWorld } from 'react-icons/tb';
+import Select from 'react-select';
 import { HashLoader } from 'react-spinners';
+
+import { deleteEvent, getEventData, updateEventData } from '../../../apis/events';
 import { ErrorMessages, EventType } from '../../../apis/types';
-import Slider from '../../../components/SliderButton/Slider';
-import { getCurrentTimezone, convertDate } from '../../../common/commonFunctions';
-import { Autocomplete, GoogleMap, useLoadScript, Libraries, MarkerF } from '@react-google-maps/api';
+import { convertDate, getCurrentTimezone } from '../../../common/commonFunctions';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Editor from '../../../components/Editor/Editor';
 import Modal from '../../../components/Modal/Modal';
-import Select from 'react-select';
-
-import './google.css';
-import { AnimatePresence, motion } from 'framer-motion';
-import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
-import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import Slider from '../../../components/SliderButton/Slider';
+import Theme from '../../../components/Theme/Theme';
 import { useOverrideCtrlS } from '../../../hooks/common';
+import { customStyles } from '../EventPage/constants';
+import styles from './EditEvent.module.css';
+
 const libraries: Libraries = ['places'];
 
 const EditEvent = () => {

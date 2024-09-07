@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
-import Theme from '../../../../../components/Theme/Theme';
-import styles from './Perks.module.css';
+
 import { claimUserPerk, getScanPerkList } from '../../../../../apis/perks';
+import { formatDate } from '../../../../../common/commonFunctions';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
-import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
+import Modal from '../../../../../components/Modal/Modal';
 import Scanner from '../../../../../components/Scanner/Scanner';
+import Theme from '../../../../../components/Theme/Theme';
+import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
 import { LogType } from '../Venue/Venue';
-import Modal from '../../../../../components/Modal/Modal';
-import { formatDate } from '../../../../../common/commonFunctions';
+import styles from './Perks.module.css';
 import { TicketPerkType } from './types';
 
 const Perks = () => {

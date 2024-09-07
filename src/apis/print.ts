@@ -1,10 +1,11 @@
+import { Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
+
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { Dispatch, SetStateAction } from 'react';
-import { SelfCheckInData } from '../pages/app/SelfCheckIn/types';
 import { formatDate } from '../common/commonFunctions';
 import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
+import { SelfCheckInData } from '../pages/app/SelfCheckIn/types';
 
 export const getPrintData = async (
   eventId: string,

@@ -1,7 +1,8 @@
-import Modal from '../../../../../components/Modal/Modal';
-import styles from './ScannerResponseModal.module.css';
 import React, { Dispatch } from 'react';
+
+import Modal from '../../../../../components/Modal/Modal';
 import { multipleTicketCount } from '../../pages/ScanQR/types';
+import styles from './ScannerResponseModal.module.css';
 
 const ScannerResponseModal = ({
   message,

@@ -1,4 +1,5 @@
 import toast from 'react-hot-toast';
+
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { TicketType } from './types';

@@ -1,13 +1,15 @@
 import { motion } from 'framer-motion';
-import styles from './SuccessModal.module.css';
-import Modal from '../../../../../components/Modal/Modal';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { SuccessModalProps } from '../../types';
+import toast from 'react-hot-toast';
 import { HashLoader } from 'react-spinners';
+
+import { claimScratchCard } from '../../../../../apis/publicpage';
+import Modal from '../../../../../components/Modal/Modal';
+import { SuccessModalProps } from '../../types';
 import ScratchCard from './ScratchCardComponent/ScratchCardComponent';
 import image from './scratchImage.png';
-import { claimScratchCard } from '../../../../../apis/publicpage';
-import toast from 'react-hot-toast';
+import styles from './SuccessModal.module.css';
+
 const SuccessModal = ({
   success,
   setSuccess,

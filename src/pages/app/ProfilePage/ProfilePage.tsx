@@ -1,25 +1,26 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styles from './ProfilePage.module.css';
-import Theme from '../../../components/Theme/Theme';
-import {
-  setUserData,
-  udpateUserProfile,
-  getProfileInfo,
-  updateProfilePassword,
-} from '../../../apis/user';
-import { useLocation } from 'react-router-dom';
-import { FiEdit3 } from 'react-icons/fi';
-import EventBox from './components/EventBox/EventBox';
-import Loader from '../../../components/Loader';
 import { motion } from 'framer-motion';
-import Modal from '../../../components/Modal/Modal';
-import { getEventsList } from '../../../apis/events';
-import { Event } from '../../../apis/types';
-import ButtonLoader from '../../../components/ButtonLoader/ButtonLoader';
-import { FaCamera } from 'react-icons/fa';
+import React, { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 import { BiUser } from 'react-icons/bi';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
-import toast from 'react-hot-toast';
+import { FaCamera } from 'react-icons/fa';
+import { FiEdit3 } from 'react-icons/fi';
+import { useLocation } from 'react-router-dom';
+
+import { getEventsList } from '../../../apis/events';
+import { Event } from '../../../apis/types';
+import {
+  getProfileInfo,
+  setUserData,
+  udpateUserProfile,
+  updateProfilePassword,
+} from '../../../apis/user';
+import ButtonLoader from '../../../components/ButtonLoader/ButtonLoader';
+import Loader from '../../../components/Loader';
+import Modal from '../../../components/Modal/Modal';
+import Theme from '../../../components/Theme/Theme';
+import EventBox from './components/EventBox/EventBox';
+import styles from './ProfilePage.module.css';
 
 const ProfilePage = () => {
   const location = useLocation();

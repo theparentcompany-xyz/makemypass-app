@@ -1,32 +1,33 @@
 import { useEffect, useState } from 'react';
-import Theme from '../../../components/Theme/Theme';
-import styles from './Coupon.module.css';
+import toast from 'react-hot-toast';
+import { BiSolidHide, BiSolidShow } from 'react-icons/bi';
+import { LuPlus } from 'react-icons/lu';
+import { RiDeleteBinLine } from 'react-icons/ri';
+import { RxDragHandleDots2 } from 'react-icons/rx';
+import Select from 'react-select';
+
 import {
   createCoupon,
-  updateCouponData,
-  getTicketShortlist,
   getCouponsList,
+  getTicketShortlist,
+  updateCouponData,
   updateFormCouponStatus,
 } from '../../../apis/coupons';
-import GenericTable from '../../../components/Table/GenericTable';
-import CouponType, { ActivateCouponType, CreateCouponType, CreateCouponTypeError } from './types';
-import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import { getFormBuilderForm } from '../../../apis/formbuilder';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Modal from '../../../components/Modal/Modal';
-import InputField from '../../auth/Login/InputField';
-import { customStyles } from '../EventPage/constants';
-import Select from 'react-select';
 // import { getTickets } from '../../../apis/tickets';
 import Slider from '../../../components/SliderButton/Slider';
-import { LuPlus } from 'react-icons/lu';
-import { RxDragHandleDots2 } from 'react-icons/rx';
-import { RiDeleteBinLine } from 'react-icons/ri';
-import SelectComponent from '../FormBuilder/SelectComponent';
+import GenericTable from '../../../components/Table/GenericTable';
+import Theme from '../../../components/Theme/Theme';
+import InputField from '../../auth/Login/InputField';
+import { customStyles } from '../EventPage/constants';
 import { getConditions } from '../FormBuilder/constant';
-import toast from 'react-hot-toast';
-import { getFormBuilderForm } from '../../../apis/formbuilder';
+import SelectComponent from '../FormBuilder/SelectComponent';
 import { Field } from '../FormBuilder/types';
-import { BiSolidHide, BiSolidShow } from 'react-icons/bi';
-import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import styles from './Coupon.module.css';
+import CouponType, { ActivateCouponType, CreateCouponType, CreateCouponTypeError } from './types';
 
 const Coupon = () => {
   type CouponModalType = {

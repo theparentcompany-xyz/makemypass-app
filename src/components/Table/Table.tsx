@@ -1,13 +1,14 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { Dispatch, useMemo } from 'react';
-import { ResentTicket, SelectedGuest } from '../../pages/app/Guests/types';
-import styles from './Table.module.css';
-import { TabType, TableType } from './types';
-import { motion, AnimatePresence } from 'framer-motion';
+import { FaCheck, FaDollarSign } from 'react-icons/fa6';
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdDelete, MdEdit } from 'react-icons/md';
 import { FixedSizeList } from 'react-window';
-import { FaCheck, FaDollarSign } from 'react-icons/fa6';
-import { hostId } from '../../pages/app/Overview/Overview/types';
+
 import { timeAgo } from '../../common/commonFunctions';
+import { ResentTicket, SelectedGuest } from '../../pages/app/Guests/types';
+import { hostId } from '../../pages/app/Overview/Overview/types';
+import styles from './Table.module.css';
+import { TableType, TabType } from './types';
 
 type ItemDataType = {
   groupByTeam: {

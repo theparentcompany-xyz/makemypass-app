@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { BiSolidReport } from 'react-icons/bi';
+import Select from 'react-select';
+
 import {
   getBulkImportCSV,
   getGuestBulkImportList,
   uploadBulkGuestData,
 } from '../../../../../apis/guests';
+import { getTicketsList } from '../../../../../apis/tickets';
 import { TicketType } from '../../../../../apis/types';
+import { formatDate } from '../../../../../common/commonFunctions';
 import Modal from '../../../../../components/Modal/Modal';
+import Slider from '../../../../../components/SliderButton/Slider';
 import { customStyles } from '../../../EventPage/constants';
 import styles from './BulkUpload.module.css';
-import Select from 'react-select';
-import { getTicketsList } from '../../../../../apis/tickets';
-import toast from 'react-hot-toast';
-import { formatDate } from '../../../../../common/commonFunctions';
-import { BiSolidReport } from 'react-icons/bi';
 import { BulkUploadType } from './types';
-import Slider from '../../../../../components/SliderButton/Slider';
 
 const BulkUpload = ({ onClose }: { onClose: () => void }) => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);

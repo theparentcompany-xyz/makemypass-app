@@ -1,8 +1,9 @@
+import { Dispatch } from 'react';
 import toast from 'react-hot-toast';
+
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { hostData } from '../pages/app/Overview/Overview/types';
-import { Dispatch } from 'react';
 import { hostList } from './types';
 
 export const createEventHost = async (

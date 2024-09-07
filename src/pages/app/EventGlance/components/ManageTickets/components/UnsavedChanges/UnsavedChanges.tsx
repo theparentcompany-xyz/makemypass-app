@@ -1,6 +1,8 @@
 import React from 'react';
-import styles from './UnsavedChanges.module.css';
+
 import { TicketType } from '../../../../../../../apis/types';
+import styles from './UnsavedChanges.module.css';
+
 type Props = {
   setIsChangedModal: React.Dispatch<React.SetStateAction<boolean>>;
   ticketData: TicketType[];

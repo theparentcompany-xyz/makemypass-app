@@ -1,30 +1,30 @@
-import Theme from '../../../components/Theme/Theme';
-import styles from './InEventStats.module.css';
-import { AnimatePresence, motion } from 'framer-motion';
-
 import {
-  Chart as ChartJS,
+  ArcElement,
+  BarElement,
   CategoryScale,
+  Chart as ChartJS,
+  Legend,
   LinearScale,
-  PointElement,
   LineElement,
+  PointElement,
   Title,
   Tooltip,
-  Legend,
-  BarElement,
-  ArcElement,
 } from 'chart.js';
-import { Line, Bar } from 'react-chartjs-2';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { ChartData } from '../Insights/types';
-import { GuestsType } from '../Guests/types';
+import { Bar, Line } from 'react-chartjs-2';
+import Confetti from 'react-confetti';
+
 import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { makeMyPassSocket } from '../../../../services/urls';
-import Confetti from 'react-confetti';
 import { formatDate } from '../../../common/commonFunctions';
-import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Glance from '../../../components/Glance/Glance';
+import Theme from '../../../components/Theme/Theme';
+import { GuestsType } from '../Guests/types';
+import { ChartData } from '../Insights/types';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import styles from './InEventStats.module.css';
 
 ChartJS.register(
   CategoryScale,

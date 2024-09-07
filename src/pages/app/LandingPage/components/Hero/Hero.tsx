@@ -1,5 +1,6 @@
-import styles from './Hero.module.css';
 import { motion } from 'framer-motion';
+
+import styles from './Hero.module.css';
 
 const Hero = () => {
   const boxShadowVariants = {

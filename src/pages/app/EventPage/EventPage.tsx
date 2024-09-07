@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styles from './EventPage.module.css';
-import Theme from '../../../components/Theme/Theme';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { HashLoader } from 'react-spinners';
-import { getEventInfo } from '../../../apis/publicpage';
 import { motion } from 'framer-motion';
-import { EventType } from '../../../apis/types';
+import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { HashLoader } from 'react-spinners';
 
+import { getEventInfo } from '../../../apis/publicpage';
+import { EventType } from '../../../apis/types';
+import Theme from '../../../components/Theme/Theme';
+import EventForm from './components/EventForm/EventForm';
 import EventHeader from './components/EventHeader/EventHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
-import { Helmet } from 'react-helmet';
-import EventForm from './components/EventForm/EventForm';
+import styles from './EventPage.module.css';
 import { ClaimCodeExceedType, SuccessModalProps } from './types';
 
 const EventPage = () => {

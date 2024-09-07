@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import styles from './SetProfilePage.module.css';
-import Theme from '../../../components/Theme/Theme';
-import { setUserData, udpateUserProfile, getProfileInfo } from '../../../apis/user';
 import { useLocation } from 'react-router-dom';
+
+import { getProfileInfo, setUserData, udpateUserProfile } from '../../../apis/user';
 import ButtonLoader from '../../../components/ButtonLoader/ButtonLoader';
+import Theme from '../../../components/Theme/Theme';
+import styles from './SetProfilePage.module.css';
 
 const SetProfilePage = () => {
   const location = useLocation();

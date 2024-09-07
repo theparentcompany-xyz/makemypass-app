@@ -1,12 +1,13 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { VenueCRUDType } from '../../../../../apis/types';
-import Modal from '../../../../../components/Modal/Modal';
-import styles from './VenueModal.module.css';
-import InputField from '../../../../auth/Login/InputField';
-import { FaEdit, FaSave, FaTrash } from 'react-icons/fa';
 import toast from 'react-hot-toast';
+import { FaEdit, FaSave, FaTrash } from 'react-icons/fa';
+
+import { VenueCRUDType } from '../../../../../apis/types';
 import { createEventVenue, deleteEventVenue, updateEventVenue } from '../../../../../apis/venue';
+import Modal from '../../../../../components/Modal/Modal';
+import InputField from '../../../../auth/Login/InputField';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
+import styles from './VenueModal.module.css';
 
 const VenueModal = ({
   eventId,

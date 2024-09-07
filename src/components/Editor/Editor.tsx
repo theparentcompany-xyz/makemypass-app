@@ -1,4 +1,7 @@
 import '@blocknote/core/fonts/inter.css';
+import '@blocknote/react/style.css';
+import './Editor.css';
+
 import {
   BlockNoteView,
   darkDefaultTheme,
@@ -6,10 +9,8 @@ import {
   Theme as BlockNoteTheme,
   useCreateBlockNote,
 } from '@blocknote/react';
-
-import '@blocknote/react/style.css';
 import { useEffect } from 'react';
-import './Editor.css';
+
 type Props = {
   description: string;
   setNewDescription: React.Dispatch<React.SetStateAction<string>>;

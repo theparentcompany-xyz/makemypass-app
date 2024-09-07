@@ -1,7 +1,8 @@
 import { Dispatch } from 'react';
+import toast from 'react-hot-toast';
+
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import toast from 'react-hot-toast';
 import { SpeakerCRUDType, SpeakerType } from './types';
 
 export const listEventSpeakers = async (

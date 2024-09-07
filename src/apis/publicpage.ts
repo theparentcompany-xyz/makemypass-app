@@ -1,18 +1,19 @@
+import React, { Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
+import { NavigateFunction } from 'react-router';
+
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import {
   AudioControlsType,
+  ClaimCodeExceedType,
   CouponData,
   DiscountData,
-  Tickets,
   SuccessModalProps,
-  ClaimCodeExceedType,
+  Tickets,
 } from '../pages/app/EventPage/types';
-import React, { Dispatch, SetStateAction } from 'react';
-import { ErrorMessages, EventType, FormDataType, RazorpayPaymentDetails } from './types';
 import { convertWebmToWav } from './helpers';
-import { NavigateFunction } from 'react-router';
+import { ErrorMessages, EventType, FormDataType, RazorpayPaymentDetails } from './types';
 
 declare global {
   interface Window {

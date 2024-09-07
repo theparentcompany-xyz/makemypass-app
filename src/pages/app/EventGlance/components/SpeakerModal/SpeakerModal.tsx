@@ -1,17 +1,18 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { SpeakerCRUDType } from '../../../../../apis/types';
-import Modal from '../../../../../components/Modal/Modal';
-import InputField from '../../../../auth/Login/InputField';
-import styles from './SpeakerModal.module.css';
+import toast from 'react-hot-toast';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
+
 import {
   createEventSpeaker,
   deleteEventSpeaker,
   updateEventSpeaker,
 } from '../../../../../apis/speakers';
+import { SpeakerCRUDType } from '../../../../../apis/types';
+import Modal from '../../../../../components/Modal/Modal';
+import InputField from '../../../../auth/Login/InputField';
+import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
+import styles from './SpeakerModal.module.css';
 import { SpeakerType } from './types';
-import toast from 'react-hot-toast';
 
 const SpeakerModal = ({
   speakers,

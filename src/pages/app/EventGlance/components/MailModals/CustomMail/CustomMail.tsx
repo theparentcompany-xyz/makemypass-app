@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
-import { getEventMailService, updateEventMailService } from '../../../../../../apis/mails';
-import styles from './CustomMail.module.css';
-import { FaEye, FaEyeSlash } from 'react-icons/fa6';
-import Slider from '../../../../../../components/SliderButton/Slider';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import { HashLoader } from 'react-spinners';
+
+import { getEventMailService, updateEventMailService } from '../../../../../../apis/mails';
+import Slider from '../../../../../../components/SliderButton/Slider';
+import styles from './CustomMail.module.css';
 
 type Props = {
   setCustomMail: React.Dispatch<React.SetStateAction<boolean>>;

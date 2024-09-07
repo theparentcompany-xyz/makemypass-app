@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import EventHeader from '../../../../../components/EventHeader/EventHeader';
-import Theme from '../../../../../components/Theme/Theme';
-import styles from './Venue.module.css';
+
 import { checkInUserVenue, listGuestVenues } from '../../../../../apis/venue';
-import { VenueType } from './types';
+import EventHeader from '../../../../../components/EventHeader/EventHeader';
 import Scanner from '../../../../../components/Scanner/Scanner';
+import Theme from '../../../../../components/Theme/Theme';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
 import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerResponseModal';
+import { VenueType } from './types';
+import styles from './Venue.module.css';
 
 export type LogType = {
   message: string;

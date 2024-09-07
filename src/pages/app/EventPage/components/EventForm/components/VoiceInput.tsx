@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { IoMicOutline } from 'react-icons/io5';
-import styles from './VoiceInput.module.css';
 import { Dispatch, useEffect, useState } from 'react';
-import { AudioControlsType } from '../../../types';
-import { parseAudio } from '../../../../../../apis/publicpage';
-import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
 import toast from 'react-hot-toast';
+import { IoMicOutline } from 'react-icons/io5';
 import { PropagateLoader } from 'react-spinners';
-import { FormEventData } from '../../../../Guests/types';
+import { useVoiceVisualizer, VoiceVisualizer } from 'react-voice-visualizer';
+
+import { parseAudio } from '../../../../../../apis/publicpage';
 import { FormDataType } from '../../../../../../apis/types';
+import { FormEventData } from '../../../../Guests/types';
+import { AudioControlsType } from '../../../types';
+import styles from './VoiceInput.module.css';
 
 const VoiceInput = ({
   eventFormData,

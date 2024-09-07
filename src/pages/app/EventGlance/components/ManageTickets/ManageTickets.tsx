@@ -1,25 +1,26 @@
-import { forwardRef, useImperativeHandle, useEffect, useState } from 'react';
-import styles from './ManageTickets.module.css';
-import Slider from '../../../../../components/SliderButton/Slider';
-import TicketBox from './components/TicketBox/TicketBox';
+import { motion } from 'framer-motion';
+import { isEqual } from 'lodash';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import toast from 'react-hot-toast';
 import { TbSettings } from 'react-icons/tb';
-import { TicketType } from '../../../../../apis/types';
+import { HashLoader } from 'react-spinners';
+
 import {
-  updateTicketData,
   createTicket,
   deleteTicket,
   getTicketsList,
+  updateTicketData,
 } from '../../../../../apis/tickets';
-import Modal from '../../../../../components/Modal/Modal';
-import { motion } from 'framer-motion';
-import { HashLoader } from 'react-spinners';
-import { isEqual } from 'lodash';
-import toast from 'react-hot-toast';
-import AdvancedSetting from './components/AdvancedSetting/AdvancedSetting';
-import UnsavedChanges from './components/UnsavedChanges/UnsavedChanges';
+import { TicketType } from '../../../../../apis/types';
 import Editor from '../../../../../components/Editor/Editor';
-import { useOverrideCtrlS } from '../../../../../hooks/common';
 import DeleteModal from '../../../../../components/Modal/DeleteModal/DeleteModal';
+import Modal from '../../../../../components/Modal/Modal';
+import Slider from '../../../../../components/SliderButton/Slider';
+import { useOverrideCtrlS } from '../../../../../hooks/common';
+import AdvancedSetting from './components/AdvancedSetting/AdvancedSetting';
+import TicketBox from './components/TicketBox/TicketBox';
+import UnsavedChanges from './components/UnsavedChanges/UnsavedChanges';
+import styles from './ManageTickets.module.css';
 
 export interface ChildProps {
   setIsTicketsOpen: React.Dispatch<React.SetStateAction<boolean>>;

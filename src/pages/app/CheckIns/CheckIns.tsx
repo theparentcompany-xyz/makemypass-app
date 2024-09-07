@@ -1,14 +1,14 @@
+import { useEffect, useState } from 'react';
+import { BsGift, BsQrCodeScan } from 'react-icons/bs';
+import { FaShop } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
+
+import { getCheckInButtons } from '../../../apis/scan';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import SectionButton from '../../../components/SectionButton/SectionButton';
 import Theme from '../../../components/Theme/Theme';
 import styles from './CheckIns.module.css';
-
-import SectionButton from '../../../components/SectionButton/SectionButton';
-import { BsGift, BsQrCodeScan } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
-import { FaShop } from 'react-icons/fa6';
-import { useEffect, useState } from 'react';
-import { getCheckInButtons } from '../../../apis/scan';
 import { checkInButtonsType } from './types';
-import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 
 const CheckIns = () => {
   const [checkInsButtons, setCheckInsButtons] = useState<checkInButtonsType>();

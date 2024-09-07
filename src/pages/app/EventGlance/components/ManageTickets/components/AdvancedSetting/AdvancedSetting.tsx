@@ -1,13 +1,14 @@
 import React from 'react';
-// import Slider from '../../../../../../../components/SliderButton/Slider';
-import styles from './AdvancedSetting.module.css';
-import { TicketType } from '../../../../../../../apis/types';
-import InputField from '../../../../../../auth/Login/InputField';
-import Slider from '../../../../../../../components/SliderButton/Slider';
+import toast from 'react-hot-toast';
 // import SelectMultipleDates from './components/SelectMultipleDates';
 import { MdDelete } from 'react-icons/md';
 import { v4 as uuidv4 } from 'uuid';
-import toast from 'react-hot-toast';
+
+import { TicketType } from '../../../../../../../apis/types';
+import Slider from '../../../../../../../components/SliderButton/Slider';
+import InputField from '../../../../../../auth/Login/InputField';
+// import Slider from '../../../../../../../components/SliderButton/Slider';
+import styles from './AdvancedSetting.module.css';
 
 type Props = {
   selectedTicket: TicketType;

@@ -1,20 +1,20 @@
-import Theme from '../../../../../components/Theme/Theme';
-import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
-import styles from './ScanQR.module.css';
-
 import { useEffect, useState } from 'react';
-import { checkInUser } from '../../../../../apis/scan';
-import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import { CgClose } from 'react-icons/cg';
-import Modal from '../../../../../components/Modal/Modal';
+import { LuCheck } from 'react-icons/lu';
+
+import { checkInUser } from '../../../../../apis/scan';
 import { PreviewData } from '../../../../../apis/types';
 import Loader from '../../../../../components/Loader';
-import MultipleTicket from './components/MultipleTicket';
+import Modal from '../../../../../components/Modal/Modal';
 import Scanner from '../../../../../components/Scanner/Scanner';
-import { LuCheck } from 'react-icons/lu';
-import { LogType } from '../Venue/Venue';
+import SectionButton from '../../../../../components/SectionButton/SectionButton';
+import Theme from '../../../../../components/Theme/Theme';
+import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
 import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerResponseModal';
+import { LogType } from '../Venue/Venue';
+import MultipleTicket from './components/MultipleTicket';
+import styles from './ScanQR.module.css';
 import { multipleTicketCount } from './types';
 
 const ScanQR = () => {

@@ -1,13 +1,15 @@
 import './SelfCheckIn.css';
-import { SelfCheckInData } from './types';
+
 import { useEffect, useState } from 'react';
+
 import { getPrintData } from '../../../apis/print';
+import Scanner from '../../../components/Scanner/Scanner';
 import Theme from '../../../components/Theme/Theme';
 import CheckInHeader from '../CheckIns/components/CheckInHeader/CheckInHeader/CheckInHeader';
-import Scanner from '../../../components/Scanner/Scanner';
 import ScanLogs from '../CheckIns/components/ScanLogs/ScanLogs';
 import { LogType } from '../CheckIns/pages/Venue/Venue';
 import { printTicket } from './functions';
+import { SelfCheckInData } from './types';
 
 const SelfCheckIn = () => {
   const [printData, setPrintData] = useState<SelfCheckInData>({} as SelfCheckInData);

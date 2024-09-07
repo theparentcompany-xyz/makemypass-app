@@ -1,7 +1,8 @@
-import EventHeader from '../EventHeader/EventHeader';
-import DashboardTabs from '../DashboardTabs/DashboardTabs';
-import styles from './DashboardLayout.module.css';
 import { Dispatch, SetStateAction } from 'react';
+
+import DashboardTabs from '../DashboardTabs/DashboardTabs';
+import EventHeader from '../EventHeader/EventHeader';
+import styles from './DashboardLayout.module.css';
 
 const DashboardLayout = ({
   prevPage,

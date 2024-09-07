@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import styles from './SelectMultipleDates.module.css';
 import DatePicker from 'react-datepicker';
+
 import { TicketType } from '../../../../../../../../apis/types';
+import styles from './SelectMultipleDates.module.css';
+
 interface SelectDateProps {
   selectedTicket: TicketType;
   setSelectedTicket: React.Dispatch<React.SetStateAction<TicketType | undefined>>;

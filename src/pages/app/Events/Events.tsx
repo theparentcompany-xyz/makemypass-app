@@ -1,19 +1,20 @@
-import Theme from '../../../components/Theme/Theme';
-import styles from './Events.module.css';
-import { GoPeople } from 'react-icons/go';
-import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
-import { useEffect, useState } from 'react';
-import { createDuplicateEvent, setEventInfoLocal, getEventsList } from '../../../apis/events';
-
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
+import { GoPeople } from 'react-icons/go';
 import { useNavigate } from 'react-router';
-import RightClickMenu from './RightClickMenu';
-import Modal from '../../../components/Modal/Modal';
-import { formatDate } from '../../../common/commonFunctions';
-import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import Loader from '../../../components/Loader';
-import { Event } from '../../../apis/types';
+
 import { Roles } from '../../../../services/enums';
+import { createDuplicateEvent, getEventsList, setEventInfoLocal } from '../../../apis/events';
+import { Event } from '../../../apis/types';
+import { formatDate } from '../../../common/commonFunctions';
+import Loader from '../../../components/Loader';
+import Modal from '../../../components/Modal/Modal';
+import Theme from '../../../components/Theme/Theme';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
+import styles from './Events.module.css';
+import RightClickMenu from './RightClickMenu';
+
 const Events = () => {
   interface Position {
     x: number;

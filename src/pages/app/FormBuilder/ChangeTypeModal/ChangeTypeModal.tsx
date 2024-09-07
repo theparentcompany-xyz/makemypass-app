@@ -1,8 +1,9 @@
+import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
+
 import { HexColors, IconsMapping } from '../constant';
 import { Field, FieldType } from '../types';
 import styles from './ChangeTypeModal.module.css';
-import { motion } from 'framer-motion';
 
 const changeTypeModal = (field: Field, newType: FieldType) => {
   if (field.type === newType) return;

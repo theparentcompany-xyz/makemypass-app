@@ -24,4 +24,4 @@ const categoryOptions = [
   { value: 'Other', label: 'Other' },
 ];
 
-export { districtOptions, categoryOptions };
+export { categoryOptions, districtOptions };

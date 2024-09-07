@@ -1,6 +1,7 @@
-import { forwardRef } from 'react';
-import styles from '../Authstyles.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
+import { forwardRef } from 'react';
+
+import styles from '../Authstyles.module.css';
 
 interface FormProps {
   type: string;

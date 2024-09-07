@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
-import styles from './Header.module.css';
-import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
-import { Link } from 'react-router-dom';
-import { FaUser } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { FaUser } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+
+import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
+import styles from './Header.module.css';
+
 const Header = ({ type }: { type?: string | undefined }) => {
   const [openSettings, setOpenSettings] = useState(false);
 

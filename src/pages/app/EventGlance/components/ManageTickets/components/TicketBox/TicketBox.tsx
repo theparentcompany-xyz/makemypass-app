@@ -1,6 +1,6 @@
-import styles from './TicketBox.module.css';
 import { TicketType } from '../../../../../../../apis/types';
 import Slider from '../../../../../../../components/SliderButton/Slider';
+import styles from './TicketBox.module.css';
 
 type Props = {
   ticketInfo: TicketType;

@@ -1,4 +1,5 @@
 import toast from 'react-hot-toast';
+
 import { TicketType } from '../../../../../apis/types';
 import { Tickets } from '../../../EventPage/types';
 import styles from './SelectTicket.module.css';

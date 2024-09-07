@@ -1,6 +1,7 @@
-import styles from './EventHeader.module.css';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+
+import styles from './EventHeader.module.css';
 
 const EventHeader = ({ previousPageNavigate }: { previousPageNavigate: string }) => {
   const localEventData = JSON.parse(sessionStorage.getItem('eventData')!);

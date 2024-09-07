@@ -1,25 +1,27 @@
-import styles from '../Authstyles.module.css';
-import { GoPerson } from 'react-icons/go';
-import { LuKey } from 'react-icons/lu';
-import { IoIosArrowRoundForward } from 'react-icons/io';
-import Theme from '../../../components/Theme/Theme';
+import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
+import { FaGoogle } from 'react-icons/fa6';
+import { GoPerson } from 'react-icons/go';
+import { IoIosArrowRoundForward } from 'react-icons/io';
+import { LuKey } from 'react-icons/lu';
+import { TbAlertTriangleFilled } from 'react-icons/tb';
+import { useNavigate } from 'react-router-dom';
+
 import {
-  userLogin,
   generateOTP,
   initiatePreRegistration,
-  registerUser,
   loginUsingGoogle,
+  registerUser,
   resetUserPassword,
+  userLogin,
 } from '../../../apis/auth';
-import InputField from './InputField.tsx';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { TbAlertTriangleFilled } from 'react-icons/tb';
-import { errorType } from './types';
-import { FaGoogle } from 'react-icons/fa6';
-import toast from 'react-hot-toast';
 import { AuthApiSuccessResponse } from '../../../apis/types.ts';
+import Theme from '../../../components/Theme/Theme';
+import styles from '../Authstyles.module.css';
+import InputField from './InputField.tsx';
+import { errorType } from './types';
+
 const Login = () => {
   const navigate = useNavigate();
 

@@ -1,6 +1,9 @@
 # Run TypeScript compilation
 npm run build
 
+# Run EsLint Fix
+npm run lint:fix
+
 # Run ESLint
 npm run lint
 

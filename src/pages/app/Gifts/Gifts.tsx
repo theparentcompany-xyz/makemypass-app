@@ -1,12 +1,14 @@
-import styles from './Gifts.module.css';
-import Theme from '../../../components/Theme/Theme';
 import { useEffect, useState } from 'react';
+
 import { claimUserGift, getGuestGiftList } from '../../../apis/gifts';
+import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import Modal from '../../../components/Modal/Modal';
 import Scanner from '../../../components/Scanner/Scanner';
 import SectionButton from '../../../components/SectionButton/SectionButton';
+import Theme from '../../../components/Theme/Theme';
+import styles from './Gifts.module.css';
 import { Gift, GiftsType } from './types';
-import Modal from '../../../components/Modal/Modal';
-import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+
 const Gifts = () => {
   const [ticketId, setTicketId] = useState<string>('');
   const [trigger, setTrigger] = useState<boolean>(false);

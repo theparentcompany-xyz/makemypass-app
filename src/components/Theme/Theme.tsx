@@ -1,8 +1,9 @@
 import { AnimatePresence } from 'framer-motion';
+import { useSearchParams } from 'react-router-dom';
+
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import styles from './Theme.module.css';
-import { useSearchParams } from 'react-router-dom';
 
 const Theme = ({ type, children }: { type?: string | undefined; children: React.ReactNode }) => {
   const [searchParams] = useSearchParams();

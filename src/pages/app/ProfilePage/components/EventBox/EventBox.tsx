@@ -1,10 +1,12 @@
-import styles from './EventBox.module.css';
-import { getDay, getMonthAbbreviation } from '../../../EventPage/constants';
+import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { IoLocationOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router';
+
 import { Event } from '../../../../../apis/types';
-import { motion } from 'framer-motion';
+import { getDay, getMonthAbbreviation } from '../../../EventPage/constants';
+import styles from './EventBox.module.css';
+
 type Props = {
   eventData: Event;
 };

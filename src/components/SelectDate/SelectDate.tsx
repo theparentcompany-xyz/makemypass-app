@@ -1,7 +1,9 @@
-import styles from './SelectDate.module.css';
 import DatePicker from 'react-datepicker';
+
 import { findMaxDate, findMinDate } from '../../common/commonFunctions';
 import { FormEventData } from '../../pages/app/Guests/types';
+import styles from './SelectDate.module.css';
+
 interface SelectDateProps {
   eventFormData: FormEventData;
   selectedDate: string | null | undefined;

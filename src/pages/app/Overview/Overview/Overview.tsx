@@ -1,32 +1,30 @@
-import { HiUserGroup } from 'react-icons/hi2';
-import { FaWrench } from 'react-icons/fa';
-import { BsQrCodeScan } from 'react-icons/bs';
-
-import styles from './Overview.module.css';
-import SectionButton from '../../../../components/SectionButton/SectionButton';
-import { useEffect, useRef, useState } from 'react';
-
-import { hostData, hostId, hostList, recentRegistration } from './types';
-
-import { HashLoader } from 'react-spinners';
-import { getEventHosts } from '../../../../apis/overview';
-import { connectPrivateSocket } from '../../../../../services/apiGateway';
-import { makeMyPassSocket } from '../../../../../services/urls';
-import Theme from '../../../../components/Theme/Theme';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import Table from '../../../../components/Table/Table';
-import { TableType } from '../../../../components/Table/types';
-import { transformTableData } from '../../../../common/commonFunctions';
-import SecondaryButton from '../components/SecondaryButton/SecondaryButton';
-import AddHosts from '../components/SecondaryButton/AddHosts/AddHosts';
-import { createEventHost, removeEventHost, updateEventHost } from '../../../../apis/host';
 import { AnimatePresence } from 'framer-motion';
-import Modal from '../../../../components/Modal/Modal';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
+import { BsQrCodeScan } from 'react-icons/bs';
+import { FaWrench } from 'react-icons/fa';
+import { HiUserGroup } from 'react-icons/hi2';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { HashLoader } from 'react-spinners';
+
+import { connectPrivateSocket } from '../../../../../services/apiGateway';
 import { Roles } from '../../../../../services/enums';
+import { makeMyPassSocket } from '../../../../../services/urls';
+import { createEventHost, removeEventHost, updateEventHost } from '../../../../apis/host';
+import { getEventHosts } from '../../../../apis/overview';
+import { transformTableData } from '../../../../common/commonFunctions';
 import DashboardLayout from '../../../../components/DashboardLayout/DashboardLayout';
 import Glance from '../../../../components/Glance/Glance';
+import Modal from '../../../../components/Modal/Modal';
+import SectionButton from '../../../../components/SectionButton/SectionButton';
+import Table from '../../../../components/Table/Table';
+import { TableType } from '../../../../components/Table/types';
+import Theme from '../../../../components/Theme/Theme';
 import { SelectedGuest } from '../../Guests/types';
+import AddHosts from '../components/SecondaryButton/AddHosts/AddHosts';
+import SecondaryButton from '../components/SecondaryButton/SecondaryButton';
+import styles from './Overview.module.css';
+import { hostData, hostId, hostList, recentRegistration } from './types';
 
 const Overview = () => {
   const navigate = useNavigate();

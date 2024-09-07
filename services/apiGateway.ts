@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { buildVerse } from './urls.ts';
 import toast from 'react-hot-toast';
+
+import { buildVerse } from './urls.ts';
 
 export const publicGateway = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL as string,

@@ -1,7 +1,8 @@
+import { Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
+
 import { publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { Dispatch, SetStateAction } from 'react';
 
 export const getInsightsVisibility = (
   id: string,

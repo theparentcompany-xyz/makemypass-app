@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { TicketType } from '../../../../../../apis/types';
 import SectionButton from '../../../../../../components/SectionButton/SectionButton';
 import styles from './MultipleTicket.module.css';

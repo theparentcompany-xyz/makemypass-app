@@ -1,8 +1,9 @@
-import styles from './CreateEvent.module.css';
-import Theme from '../../../components/Theme/Theme';
-import { createEvent } from '../../../apis/events';
-import InputField from '../../auth/Login/InputField.tsx';
 import { useState } from 'react';
+
+import { createEvent } from '../../../apis/events';
+import Theme from '../../../components/Theme/Theme';
+import InputField from '../../auth/Login/InputField.tsx';
+import styles from './CreateEvent.module.css';
 
 const CreateEvent = () => {
   const [eventTitle, setEventTitle] = useState('');

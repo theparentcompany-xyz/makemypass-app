@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import styles from './DashboardTabs.module.css';
-import { useNavigate, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import { Roles } from '../../../services/enums';
+import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
+import styles from './DashboardTabs.module.css';
 
 const DashboardTabs = ({
   tab,

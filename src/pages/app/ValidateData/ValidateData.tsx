@@ -1,11 +1,12 @@
+import { useEffect, useState } from 'react';
+import { MdError } from 'react-icons/md';
+import { RiVerifiedBadgeFill } from 'react-icons/ri';
 import { useSearchParams } from 'react-router-dom';
+import { HashLoader } from 'react-spinners';
+
+import { verifyParticipant } from '../../../apis/validate';
 import Theme from '../../../components/Theme/Theme';
 import styles from './ValidateData.module.css';
-import { useEffect, useState } from 'react';
-import { verifyParticipant } from '../../../apis/validate';
-import { HashLoader } from 'react-spinners';
-import { RiVerifiedBadgeFill } from 'react-icons/ri';
-import { MdError } from 'react-icons/md';
 
 const ValidateData = () => {
   const [searchParams] = useSearchParams();
