@@ -1,6 +1,6 @@
 import { ClipLoader } from 'react-spinners';
 
-import styles from './ButtonLoader.module.css';
+import styles from './LoaderButton.module.css';
 
 type Props = {
   loading?: boolean | undefined;

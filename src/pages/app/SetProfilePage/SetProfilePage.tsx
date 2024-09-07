@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { getProfileInfo, setUserData, udpateUserProfile } from '../../../apis/user';
-import ButtonLoader from '../../../components/ButtonLoader/ButtonLoader';
+import ButtonLoader from '../../../components/LoaderButton/LoaderButton';
 import Theme from '../../../components/Theme/Theme';
 import styles from './SetProfilePage.module.css';
 

@@ -1,11 +1,3 @@
-.remainingTickets {
-  font-size: 0.8rem;
-  font-weight: 400;
-  color: #bbbaba;
-  font-family: 'Inter', sans-serif;
-  text-align: right;
-}
-
 .datePicker input {
   margin-top: 1rem;
   margin-bottom: 1rem;

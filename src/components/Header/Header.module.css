@@ -43,7 +43,6 @@ header {
 
 .userName {
   font-size: 0.9rem;
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -103,7 +102,6 @@ header {
   position: absolute;
   top: 2.5rem;
   right: 0;
-
   background: #212729;
   color: white;
   min-width: 160px;

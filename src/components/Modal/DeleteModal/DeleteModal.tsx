@@ -15,13 +15,8 @@ const ConfirmDelete = ({ setDeleteModal, onDelete, deleteText, style }: Props) =
     <>
       <Modal onClose={() => setDeleteModal(false)} style={style} title=' '>
         <div className={styles.modalContainer}>
-          {/* Get Confirmation to continue event though user has not saved changes.*/}
           <div className={styles.sectionContent1}>
-            <p className={styles.sectionSubTitle}>
-              {deleteText}
-              {/* Are you sure you want to Delete{' '}
-            {selectedTicket?.title ? selectedTicket?.title : 'this ticket'}? */}
-            </p>
+            <p className={styles.sectionSubTitle}>{deleteText}</p>
           </div>
           <div className={styles.modalButtons}>
             <button

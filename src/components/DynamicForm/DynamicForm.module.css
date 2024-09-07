@@ -100,46 +100,6 @@
   opacity: 1;
 }
 
-.radioLabel {
-  margin-left: 0.5rem;
-  font-family: 'Inter', sans-serif;
-  color: #a4a4a4;
-  opacity: 0.8;
-  font-size: 0.875rem;
-  font-weight: 400;
-}
-
-.fileInput {
-  margin-top: 0.25rem;
-  border-radius: 8px;
-  border: none;
-  padding: 0.5rem 0.5rem;
-  background: rgba(255, 255, 255, 0.04);
-  width: 95%;
-  display: flex;
-  font-family: 'Inter', sans-serif;
-  color: #a4a4a4;
-}
-
-.fileInput::file-selector-button {
-  font-family: 'Inter', sans-serif;
-  margin-right: 20px;
-  border: none;
-  background: transparent;
-  padding: 10px 20px;
-
-  border-radius: 10px;
-  color: #a4a4a487;
-  background: #1b2725ca;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.fileInput::file-selector-button:hover {
-  color: #a4a4a4;
-  background: #1b2725;
-}
-
 .dateInput {
   margin-top: 0.25rem;
   border-radius: 8px;
@@ -167,12 +127,6 @@
   transition: all 0.2s ease-in-out;
 }
 
-.dateInput::date-selector-button:hover {
-  color: #a4a4a4;
-  background: #1b2725;
-  border: none;
-}
-
 input {
   color-scheme: dark;
 }
@@ -185,16 +139,6 @@ input {
   margin-top: 0.5rem;
 }
 
-.fieldDescription {
-  color: #a4a4a4;
-  font-size: 0.8rem;
-  font-weight: 400;
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-
-  max-width: 18rem;
-}
-
 .line {
   margin: auto;
   width: 95%;
@@ -205,6 +149,7 @@ input {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
 .numberInput {
   margin-top: 0.25rem;
   border-radius: 8px;

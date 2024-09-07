@@ -76,10 +76,6 @@ input:focus + .slider {
   height: 26px;
 }
 
-/* .small {
-    transform: scale(0.8);  
-  } */
-
 .small::before {
   height: 18px;
   width: 18px;
