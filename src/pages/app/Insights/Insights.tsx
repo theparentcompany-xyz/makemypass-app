@@ -54,6 +54,7 @@ const Insights = ({ type }: { type?: string }) => {
   const [venueBarData, setVenueBarData] = useState<ChartData>();
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [perkData, setPerkData] = useState<ChartData>();
+  const [utmData, setUtmData] = useState<utmDataType>();
 
   const expandedColors = [
     '#47C97E',
@@ -229,6 +230,14 @@ const Insights = ({ type }: { type?: string }) => {
                 borderColor: ['#35A1EB', '#47C97E', '#FBD85B', '#C33D7B'],
               },
             ],
+          });
+
+          setUtmData({
+            utm_source: lineBarData.utm.utm_source,
+            utm_medium: lineBarData.utm.utm_medium,
+            utm_campaign: lineBarData.utm.utm_campaign,
+            utm_term: lineBarData.utm.utm_term,
+            utm_content: lineBarData.utm.utm_content,
           });
         };
 
@@ -753,31 +762,32 @@ const Insights = ({ type }: { type?: string }) => {
                 )}
               </div>
 
-              {/* <div className={styles.insightsContainer}>
-                {Object.entries(message?.coupon_analytics || {}).length > 0 && (
-                  <div className={styles.categorySection}>
-                    <p className={styles.rightSectionHeading}>Referral Analytics</p>
-
-                    <div className={styles.categories}>
-                      <div className={styles.category}>
-                        <p className={styles.categoryName}>Coupon Code</p>
-                        <p className={styles.categoryCount}>Registrations</p>
-
-                        <p className={styles.categoryCount}>Amount(Rs.)</p>
+              {utmData && (
+                <div className={styles.utmContainer}>
+                  {Object.entries(utmData).map(([key, value]) => (
+                    <div className={styles.registrationCount}>
+                      <div className={styles.graphContainer}>
+                        <Bar
+                          options={options}
+                          data={{
+                            labels: Object.keys(value),
+                            datasets: [
+                              {
+                                label: key
+                                  .replace('_', ' ')
+                                  .replace(/\b\w/g, (c) => c.toUpperCase()),
+                                data: Object.values(value),
+                                borderColor: expandedColors,
+                                backgroundColor: expandedColors,
+                              },
+                            ],
+                          }}
+                        />
                       </div>
-
-                      {Object.entries(message?.coupon_analytics || {}).map(([key, value]) => (
-                        <div className={styles.category}>
-                          <p className={styles.categoryName}>{key}</p>
-                          <p className={styles.categoryCount}>{value.count}</p>
-
-                          <p className={styles.categoryCount}>Rs.{value.amount}</p>
-                        </div>
-                      ))}
                     </div>
-                  </div>
-                )}
-              </div> */}
+                  ))}
+                </div>
+              )}
             </div>
           </>
         ) : (

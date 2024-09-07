@@ -83,3 +83,21 @@ export interface LineChartProps {
   data: ChartData;
   title: string;
 }
+
+export type utmDataType = {
+  utm_source: {
+    [key: string]: number;
+  };
+  utm_medium: {
+    [key: string]: number;
+  };
+  utm_campaign: {
+    [key: string]: number;
+  };
+  utm_term: {
+    [key: string]: number;
+  };
+  utm_content: {
+    [key: string]: number;
+  };
+};
