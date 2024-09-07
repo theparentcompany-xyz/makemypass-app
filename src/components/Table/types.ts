@@ -9,7 +9,7 @@ export type TableType = {
   category: string;
   date: string;
   is_private: string;
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 export type TabType = {

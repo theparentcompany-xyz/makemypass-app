@@ -35,6 +35,7 @@ const TestMail = ({
       <div className={styles.modalButtons}>
         <button
           className={styles.confirmButton}
+          //Fix this onClick function
           onClick={() => {
             sentTestMail(
               eventId,

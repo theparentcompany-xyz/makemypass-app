@@ -37,6 +37,8 @@ export const createTicket = async (eventId: string, ticket: TicketType) => {
 export const updateTicketData = async (
   eventId: string,
   selectedTicket: TicketType,
+  //Fix this any type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   changedData: Record<string, any>,
   setTickets: React.Dispatch<React.SetStateAction<TicketType[]>>,
 ) => {
