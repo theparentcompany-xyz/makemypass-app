@@ -6,11 +6,11 @@ import { BiLoader } from 'react-icons/bi';
 import InputField from '../../../../../auth/Login/InputField';
 import { sentTestMail } from '../../../../../../apis/postevent';
 type Props = {
-  dummyData: { showModal: boolean; data: { [key: string]: any } | null; mailId: string };
+  dummyData: { showModal: boolean; data: { [key: string]: string } | null; mailId: string };
   setDummyData: React.Dispatch<
     React.SetStateAction<{
       showModal: boolean;
-      data: { [key: string]: any } | null;
+      data: { [key: string]: string } | null;
       mailId: string;
     }>
   >;

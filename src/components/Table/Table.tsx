@@ -202,6 +202,7 @@ const Table = ({
     });
 
     return categoryColorMap;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableData]);
 
   const filteredData = useMemo(() => {

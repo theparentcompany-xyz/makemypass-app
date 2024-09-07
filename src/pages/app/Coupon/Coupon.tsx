@@ -84,6 +84,7 @@ const Coupon = () => {
     getTicketShortlist(eventId, setTickets);
     getFormBuilderForm(eventId, setFormFields);
     setCouponError({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -540,6 +541,7 @@ const Coupon = () => {
                               count: 0,
                               conditions: [],
                               is_private: false,
+                              consumed: 0,
                             });
                           },
                         );
@@ -559,6 +561,7 @@ const Coupon = () => {
                         count: 0,
                         conditions: [],
                         is_private: false,
+                        consumed: 0,
                       });
                     }}
                   />
@@ -586,6 +589,7 @@ const Coupon = () => {
                           count: 0,
                           conditions: [],
                           is_private: false,
+                          consumed: 0,
                         });
                         setCouponModal({ showModal: true });
                       }}

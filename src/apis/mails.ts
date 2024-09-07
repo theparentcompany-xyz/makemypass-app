@@ -35,6 +35,8 @@ export const getEventMailData = async (
     const response = await privateGateway.get(makeMyPass.communcationMailGet(eventId, mailId));
     setMail && setMail(response.data.response);
     return response.data.response;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     toast.error(error?.response?.data?.message?.general[0] || 'Error while fetching mail');
   }

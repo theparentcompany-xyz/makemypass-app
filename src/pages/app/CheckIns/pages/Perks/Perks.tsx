@@ -45,6 +45,7 @@ const Perks = () => {
         setExhaustHistory,
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trigger, eventId]);
 
   return (

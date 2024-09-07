@@ -28,6 +28,7 @@ export const createTicket = async (eventId: string, ticket: TicketType) => {
 
     toast.success(response.data.message.general[0] || 'Ticket Created Successfully');
     return response.data.response.ticket_id as string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     toast.error(error.response.data.message.general[0] || 'Unable to process the request');
   }
@@ -50,8 +51,6 @@ export const updateTicketData = async (
       },
     );
 
-    // window.location.reload();
-
     if (changedData.default_selected === true) {
       setTickets((prev) =>
         prev.map((t) =>
@@ -68,6 +67,7 @@ export const updateTicketData = async (
     changedData.default_selected === true
       ? toast.success(response?.data?.message?.general[0] || 'Default Ticket Changed')
       : toast.success(response?.data?.message?.general[0] || 'Ticket Updated Successfully');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     toast.error(error?.response?.data?.message?.general[0] || 'Unable to process the request');
   }

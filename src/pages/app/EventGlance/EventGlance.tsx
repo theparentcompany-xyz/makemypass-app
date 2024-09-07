@@ -82,7 +82,7 @@ const EventGlance = () => {
   });
   const [dummyData, setDummyData] = useState<{
     showModal: boolean;
-    data: { [key: string]: any } | null;
+    data: { [key: string]: string } | null;
     mailId: string;
   }>({
     showModal: false,
@@ -147,14 +147,17 @@ const EventGlance = () => {
 
   useEffect(() => {
     if (venues.showModal) listEventVenues(eventId, setVenues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [venues.showModal]);
 
   useEffect(() => {
     if (speakers.showModal) listEventSpeakers(eventId, setSpeakers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [speakers.showModal]);
 
   useEffect(() => {
     if (dummyData.showModal) getDummydata(confirmTestMail.mailId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dummyData.showModal]);
 
   useEffect(() => {
@@ -174,6 +177,7 @@ const EventGlance = () => {
     setEventLink(parsedURL.toString());
 
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [UTMData.selectedData]);
 
   return (
@@ -307,7 +311,7 @@ const EventGlance = () => {
             {UTMData.showUTM && <UTMManager UTMData={UTMData} setUTMData={setUTMData} />}
 
             <div className={styles.bannerContainer}>
-              {eventData?.banner ? (
+              {eventData?.banner && typeof eventData.banner === 'string' ? (
                 <img src={eventData?.banner} alt='' className={styles.banner} />
               ) : (
                 <svg height='250' width='100%' className={styles.banner}>

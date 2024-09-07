@@ -22,6 +22,7 @@ const Glance = ({ tab }: { tab: string }) => {
     return () => {
       socket?.close();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);

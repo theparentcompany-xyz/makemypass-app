@@ -101,7 +101,6 @@ export interface TicketType {
   id: string;
   price: number;
   show_price?: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   perks: {
     id: string;
     name: string;
@@ -156,8 +155,8 @@ export interface EventType {
   reg_end_date: string;
   followup_msg: string;
   is_online: boolean;
-  logo: string;
-  banner: string;
+  logo: string | File;
+  banner: string | File;
   location: LocationType;
   place: string;
   claim_code_message: string;

@@ -101,7 +101,9 @@ const EditEvent = () => {
   );
 
   const onSubmit = () => {
-    const changedData: Record<string, any> = Object.entries(eventData as Record<string, any>)
+    const changedData: Record<string, EventType[keyof EventType]> = Object.entries(
+      eventData as EventType,
+    )
       .filter(
         ([key, value]) => fetchedEvent?.[key as keyof EventType] !== value && key !== 'location',
       )
@@ -152,7 +154,9 @@ const EditEvent = () => {
 
     const formData = new FormData();
     for (const key in changedData) {
-      formData.append(key, changedData[key]);
+      if (changedData[key] !== undefined) {
+        formData.append(key, String(changedData[key]));
+      }
     }
 
     for (const key in changedData) {
@@ -188,6 +192,7 @@ const EditEvent = () => {
         end: eventData.reg_end_date ? new Date(eventData?.reg_end_date) : undefined,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventData]);
 
   return (
@@ -418,7 +423,9 @@ const EditEvent = () => {
                             setEventData({ ...eventData, banner: '' });
                           }}
                         />
-                        <img src={eventData?.banner} alt='' className={styles.banner} />
+                        {eventData?.banner && typeof eventData?.banner === 'string' && (
+                          <img src={eventData?.banner} alt='' className={styles.banner} />
+                        )}
                       </>
                     ) : (
                       <>
@@ -722,7 +729,7 @@ const EditEvent = () => {
                               alt='Uploaded Image'
                               className={styles.noImage}
                             />
-                          ) : eventData?.logo ? (
+                          ) : eventData?.logo && typeof eventData?.logo === 'string' ? (
                             <img src={eventData.logo} className={styles.noImage} />
                           ) : (
                             <div className={styles.noImage}></div>

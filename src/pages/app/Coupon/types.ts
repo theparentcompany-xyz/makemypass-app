@@ -12,6 +12,7 @@ interface CouponType {
 export default CouponType;
 
 export type CreateCouponType = {
+  id?: string;
   code: string;
   type: 'percentage' | 'amount';
   value: number;
@@ -25,7 +26,7 @@ export type CreateCouponType = {
     value: string;
     operator: string;
   }[];
-  [key: string]: any;
+  consumed: number;
 };
 
 export type CreateCouponTypeError = {

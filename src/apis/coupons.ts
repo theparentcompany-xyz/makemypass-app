@@ -31,7 +31,7 @@ export const createCoupon = (
   return new Promise<void>((resolve, reject) => {
     const backendFormData = new FormData();
     Object.keys(data).forEach((key) => {
-      let value = data[key];
+      let value = data[key as keyof CreateCouponType];
 
       if (!(value instanceof FileList)) {
         if (Array.isArray(value) && value.length > 0) {
@@ -42,7 +42,7 @@ export const createCoupon = (
             ),
           );
         } else {
-          value = data[key].toString();
+          value = (data[key as keyof CreateCouponType] as unknown as string).toString();
         }
       }
 
@@ -86,7 +86,7 @@ export const updateCouponData = async (
   const backendFormData = new FormData();
 
   Object.keys(data).forEach((key) => {
-    const value = data[key];
+    const value = data[key as keyof CreateCouponType];
 
     if (!(value instanceof FileList)) {
       if (Array.isArray(value) && value.length > 0) {
@@ -110,19 +110,20 @@ export const updateCouponData = async (
     }
   });
 
-  return privateGateway
-    .patch(makeMyPass.coupon(eventId, data.id), backendFormData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    .then((response) => {
-      getCouponsList(eventId, setCoupons);
-      toast.success(response.data.response.message.general[0]);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0]);
-    });
+  if (data.id)
+    return privateGateway
+      .patch(makeMyPass.coupon(eventId, data.id), backendFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        getCouponsList(eventId, setCoupons);
+        toast.success(response.data.response.message.general[0]);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message.general[0]);
+      });
 };
 
 export const updateFormCouponStatus = async (

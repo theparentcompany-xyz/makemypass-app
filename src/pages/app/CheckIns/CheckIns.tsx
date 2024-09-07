@@ -15,6 +15,7 @@ const CheckIns = () => {
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   useEffect(() => {
     getCheckInButtons(eventId, setCheckInsButtons);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

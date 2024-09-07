@@ -1,15 +1,5 @@
 import React from 'react';
 import styles from './TestMail.module.css';
-type Props = {
-  setConfirmTestMail: React.Dispatch<React.SetStateAction<{ status: boolean; mailId: string }>>;
-  sentTestMail: (eventId: string, mailId: string, data?: object | null) => void;
-  confirmTestMail: { status: boolean; mailId: string };
-  eventId: string;
-  setDummyData: React.Dispatch<
-    React.SetStateAction<{ showModal: boolean; data: object | null; mailId: string }>
-  >;
-  getDummyData: (mailId: string) => void;
-};
 
 const TestMail = ({
   setConfirmTestMail,
@@ -18,7 +8,25 @@ const TestMail = ({
   confirmTestMail,
   setDummyData,
   getDummyData,
-}: Props) => {
+}: {
+  setConfirmTestMail: React.Dispatch<React.SetStateAction<{ status: boolean; mailId: string }>>;
+  sentTestMail: (
+    mailId: string,
+    data?: {
+      [key: string]: string;
+    } | null,
+  ) => Promise<void>;
+  confirmTestMail: { status: boolean; mailId: string };
+  eventId: string;
+  setDummyData: React.Dispatch<
+    React.SetStateAction<{
+      showModal: boolean;
+      data: { [key: string]: string } | null;
+      mailId: string;
+    }>
+  >;
+  getDummyData: (mailId: string) => void;
+}) => {
   return (
     <div className={styles.modalContainer}>
       <div className={styles.sectionContent1}>
@@ -28,7 +36,10 @@ const TestMail = ({
         <button
           className={styles.confirmButton}
           onClick={() => {
-            sentTestMail(eventId, confirmTestMail.mailId, {});
+            sentTestMail(
+              eventId,
+              confirmTestMail.mailId === '1' ? null : { mail_id: confirmTestMail.mailId },
+            );
           }}
         >
           Send

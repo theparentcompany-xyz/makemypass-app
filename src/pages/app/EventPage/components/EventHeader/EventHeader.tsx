@@ -30,7 +30,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
         }}
       >
         <div className={styles.eventTopHeader}>
-          {eventData?.banner && (
+          {eventData?.banner && typeof eventData.banner === 'string' && (
             <img
               className={styles.bannerImg}
               src={eventData?.banner}

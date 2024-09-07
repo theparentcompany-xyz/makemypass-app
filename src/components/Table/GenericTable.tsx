@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { isDate } from 'lodash';
 import { deleteCoupon, getCouponData } from '../../apis/coupons';
 import { formatDate } from '../../common/commonFunctions';

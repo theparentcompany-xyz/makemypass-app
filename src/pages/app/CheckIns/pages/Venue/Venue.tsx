@@ -40,6 +40,7 @@ const Venue = () => {
     if (ticketId.length > 0 && scanTrigger) {
       checkInUserVenue(ticketId, eventId, selectedVenue, setScanLogs);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ticketId, scanTrigger]);
 
   return (

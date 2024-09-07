@@ -76,6 +76,7 @@ const Editor = ({ description, setNewDescription }: Props) => {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [description]);
 
   const onChange = async () => {

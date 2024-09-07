@@ -17,28 +17,28 @@ export const getInsightsVisibility = (
     });
 };
 
-export const getPerkAnalytics = (id: string, setPerkAnalytics: Dispatch<SetStateAction<any>>) => {
-  publicGateway
-    .get(makeMyPass.getPerkAnalytics(id))
-    .then((response) => {
-      setPerkAnalytics(response.data.response);
-    })
-    .catch((error) => {
-      toast.error(
-        error.response.data.message.general[0] || 'Error in Fetching Perk Analytics Data',
-      );
-    });
-};
+// export const getPerkAnalytics = (id: string, setPerkAnalytics: Dispatch<SetStateAction<any>>) => {
+//   publicGateway
+//     .get(makeMyPass.getPerkAnalytics(id))
+//     .then((response) => {
+//       setPerkAnalytics(response.data.response);
+//     })
+//     .catch((error) => {
+//       toast.error(
+//         error.response.data.message.general[0] || 'Error in Fetching Perk Analytics Data',
+//       );
+//     });
+// };
 
-export const getVenueAnalytics = (id: string, setVenueAnalytics: Dispatch<SetStateAction<any>>) => {
-  publicGateway
-    .get(makeMyPass.getVenueAnalytics(id))
-    .then((response) => {
-      setVenueAnalytics(response.data.response);
-    })
-    .catch((error) => {
-      toast.error(
-        error.response.data.message.general[0] || 'Error in Fetching Venue Analytics Data',
-      );
-    });
-};
+// export const getVenueAnalytics = (id: string, setVenueAnalytics: Dispatch<SetStateAction<any>>) => {
+//   publicGateway
+//     .get(makeMyPass.getVenueAnalytics(id))
+//     .then((response) => {
+//       setVenueAnalytics(response.data.response);
+//     })
+//     .catch((error) => {
+//       toast.error(
+//         error.response.data.message.general[0] || 'Error in Fetching Venue Analytics Data',
+//       );
+//     });
+// };

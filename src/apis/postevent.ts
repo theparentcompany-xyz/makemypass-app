@@ -16,7 +16,7 @@ export const sentPostEventMail = async (type: boolean) => {
     });
 };
 
-export const sentTestMail = async (mailId: string, data?: Object | null) => {
+export const sentTestMail = async (mailId: string, data?: { [key: string]: string } | null) => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   privateGateway
     .post(makeMyPass.communicationMailTest(eventId, mailId), data)

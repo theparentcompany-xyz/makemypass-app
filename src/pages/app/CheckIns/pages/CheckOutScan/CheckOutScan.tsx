@@ -37,6 +37,7 @@ const CheckOutScan = () => {
         setTrigger,
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trigger]);
 
   return (
