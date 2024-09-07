@@ -376,7 +376,7 @@ const EditEvent = () => {
                       className={styles.selectDropdown}
                       styles={{
                         ...customStyles,
-                        menu: (provided: any) => ({
+                        menu: (provided) => ({
                           ...provided,
                           border: '1px solid rgba(255, 255, 255, 0.08)',
                           backgroundColor: '#1C2222',

@@ -96,6 +96,7 @@ const DynamicForm = ({
           const fieldTitle = field?.title + (field.required ? '*' : '');
           if (!validateCondition(field.conditions, formData, formFields) || field.hidden)
             return null;
+
           if (field.type === 'text' || field.type === 'email') {
             return field.validate ? (
               <CommonRenderStructure formErrors={formErrors} field={field}>
@@ -283,27 +284,6 @@ const DynamicForm = ({
                 </div>
               </CommonRenderStructure>
             );
-          } else if (
-            field.type === 'file' &&
-            handleFileChange &&
-            handleDeleteAttachment &&
-            previews
-          ) {
-            return (
-              <CommonRenderStructure
-                formErrors={formErrors}
-                field={field}
-                title={fieldTitle}
-                description={field.description}
-              >
-                <UploadAttachement
-                  previews={previews}
-                  handleFileChange={(event) => handleFileChange(event, field)}
-                  handleDeleteAttachment={handleDeleteAttachment}
-                  allowedFileTypes={field.property?.extension_types}
-                />
-              </CommonRenderStructure>
-            );
           } else if (field.type === 'date') {
             return (
               <CommonRenderStructure
@@ -446,6 +426,27 @@ const DynamicForm = ({
                     </>
                   ))}
                 </div>
+              </CommonRenderStructure>
+            );
+          } else if (
+            field.type === 'file' &&
+            handleFileChange &&
+            handleDeleteAttachment &&
+            previews
+          ) {
+            return (
+              <CommonRenderStructure
+                formErrors={formErrors}
+                field={field}
+                title={fieldTitle}
+                description={field.description}
+              >
+                <UploadAttachement
+                  previews={previews}
+                  handleFileChange={(event) => handleFileChange(event, field)}
+                  handleDeleteAttachment={handleDeleteAttachment}
+                  allowedFileTypes={field.property?.extension_types}
+                />
               </CommonRenderStructure>
             );
           }

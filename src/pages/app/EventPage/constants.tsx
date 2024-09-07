@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BsSuitcaseLg } from 'react-icons/bs';
 import { GoPerson } from 'react-icons/go';
 import { IoCallOutline } from 'react-icons/io5';

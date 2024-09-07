@@ -439,7 +439,7 @@ const Coupon = () => {
                                       : []
                                   }
                                   value={condition.field}
-                                  onChange={(option: { value: string; label: string }) => {
+                                  onChange={(option: { value: string; label: string } | null) => {
                                     if (!option) condition.field = '';
                                     else condition.field = option.value;
 
@@ -457,7 +457,7 @@ const Coupon = () => {
                                     ),
                                   ]}
                                   value={condition.operator}
-                                  onChange={(option: { value: string; label: string }) => {
+                                  onChange={(option: { value: string; label: string } | null) => {
                                     if (!option) condition.operator = '';
                                     else condition.operator = option.value;
 

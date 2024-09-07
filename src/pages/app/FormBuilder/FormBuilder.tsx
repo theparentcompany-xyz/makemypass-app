@@ -586,7 +586,9 @@ const FormBuilder = () => {
                                       <SelectComponent
                                         options={getConditionalFields(field)}
                                         value={condition.field}
-                                        onChange={(option: { value: string; label: string }) => {
+                                        onChange={(
+                                          option: { value: string; label: string } | null,
+                                        ) => {
                                           if (!option) condition.field = '';
                                           else condition.field = option.value;
 
@@ -603,7 +605,9 @@ const FormBuilder = () => {
                                           ),
                                         ]}
                                         value={condition.operator}
-                                        onChange={(option: { value: string; label: string }) => {
+                                        onChange={(
+                                          option: { value: string; label: string } | null,
+                                        ) => {
                                           if (!option) condition.operator = '';
                                           else condition.operator = option.value;
                                           updateFormStateVariable();
@@ -666,10 +670,9 @@ const FormBuilder = () => {
                                                   ? condition.value
                                                   : ''
                                               }
-                                              onChange={(option: {
-                                                value: string;
-                                                label: string;
-                                              }) => {
+                                              onChange={(
+                                                option: { value: string; label: string } | null,
+                                              ) => {
                                                 if (!option) condition.value = '';
                                                 else condition.value = option.value;
                                                 updateFormStateVariable();

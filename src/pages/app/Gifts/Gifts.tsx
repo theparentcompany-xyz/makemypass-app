@@ -18,6 +18,7 @@ const Gifts = () => {
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   useEffect(() => {
     if (ticketId.length > 0) getGuestGiftList(eventId, ticketId, setGifts);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trigger]);
   return (
     <>

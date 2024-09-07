@@ -11,11 +11,13 @@ const VenueAnalytics = () => {
   useEffect(() => {
     getVenueAnalytics(eventId, setVenueAnalytics);
     console.log(venueAnalytics);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Theme>
-      <EventHeader previousPageNavigate='-1' />
-      <div className={styles.detailedVenueAnalyticsContainer}></div>
+      <div className={styles.detailedVenueAnalyticsContainer}>
+        <EventHeader previousPageNavigate='-1' />
+      </div>
     </Theme>
   );
 };

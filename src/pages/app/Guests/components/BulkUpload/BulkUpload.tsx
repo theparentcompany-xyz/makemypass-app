@@ -29,6 +29,7 @@ const BulkUpload = ({ onClose }: { onClose: () => void }) => {
   useEffect(() => {
     getTicketsList(eventId, setTickets);
     getGuestBulkImportList(eventId, setFileStatus);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const generateCSVReport = async (reportPath: string) => {

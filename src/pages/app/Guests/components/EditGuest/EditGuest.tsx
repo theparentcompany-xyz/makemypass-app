@@ -26,7 +26,7 @@ const EditGuest = ({
   onClose: () => void;
   setGuests: Dispatch<SetStateAction<GuestsType[]>>;
 }) => {
-  const [formErrors, setFormErrors] = useState<any>({});
+  const [formErrors, setFormErrors] = useState<{ [key: string]: string[] }>({});
   const [previews, setPreviews] = useState<previewType[]>([]);
   const [attachements, setAttachements] = useState<{
     field_key: string;
@@ -45,7 +45,7 @@ const EditGuest = ({
     if (formErrors[fieldName]) {
       setFormErrors({
         ...formErrors,
-        [fieldName]: '',
+        [fieldName]: [],
       });
     }
   };
@@ -84,7 +84,7 @@ const EditGuest = ({
         ...attachements.fieldAttachements,
         ...Array.from(event.target.files || []),
       ];
-      onFieldChange(field.field_key, newAttachments as any);
+      onFieldChange(field.field_key, newAttachments as unknown as string[]);
       setAttachements({
         field_key: field.field_key,
         fieldAttachements: newAttachments,
@@ -122,7 +122,7 @@ const EditGuest = ({
     const newAttachements = attachements.fieldAttachements.filter((_, i) => i !== index);
     const newPreviews = previews.filter((_, i) => i !== index);
 
-    onFieldChange(attachements.field_key, newAttachements as any);
+    onFieldChange(attachements.field_key, newAttachements as unknown as string[]);
 
     setAttachements({
       field_key: attachements.field_key,
@@ -166,7 +166,12 @@ const EditGuest = ({
         }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
+
+  useEffect(() => {
+    console.log(formErrors);
+  }, [formErrors]);
 
   return (
     <Modal title='Edit Guest' onClose={onClose} type='side'>

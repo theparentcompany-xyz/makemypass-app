@@ -95,6 +95,7 @@ const Guests = () => {
 
       getGuestInformation(eventId, eventRegisterId, setSelectedGuest);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventRegisterId]);
 
   useEffect(() => {
@@ -125,6 +126,7 @@ const Guests = () => {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedGuestId]);
 
   const handleTicketResend = () => {
@@ -143,6 +145,7 @@ const Guests = () => {
         ticket_code: ticketCode,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ticketCode]);
 
   return (
@@ -385,7 +388,7 @@ const Guests = () => {
                         ]}
                         styles={{
                           ...customStyles,
-                          menu: (provided: any) => ({
+                          menu: (provided) => ({
                             ...provided,
                             border: '1px solid rgba(255, 255, 255, 0.08)',
                             backgroundColor: '#1C2222',

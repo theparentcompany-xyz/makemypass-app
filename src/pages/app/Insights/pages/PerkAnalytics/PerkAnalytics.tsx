@@ -11,6 +11,7 @@ const PerkAnalytics = () => {
   useEffect(() => {
     getPerkAnalytics(eventId, setPerkAnalytics);
     console.log(perkAnalytics);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Theme>

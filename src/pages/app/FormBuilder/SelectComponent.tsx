@@ -1,4 +1,4 @@
-import Select from 'react-select';
+import Select, { ActionMeta, SingleValue } from 'react-select';
 import { customStyles } from '../EventPage/constants';
 
 const SelectComponent = ({
@@ -13,7 +13,12 @@ const SelectComponent = ({
     value: string;
     label: string;
   }[];
-  onChange?: any;
+  onChange?:
+    | ((
+        newValue: SingleValue<{ value: string; label: string }>,
+        actionMeta: ActionMeta<{ value: string; label: string }>,
+      ) => void)
+    | undefined;
   value?: string;
   isSmall?: boolean;
 }) => {
