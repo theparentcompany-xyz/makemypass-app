@@ -2,7 +2,7 @@
 npm run build
 
 # Run ESLint
-# npm run lint
+npm run lint
 
 # Run Prettier
 npm run format

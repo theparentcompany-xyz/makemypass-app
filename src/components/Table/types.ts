@@ -9,7 +9,9 @@ export type TableType = {
   category: string;
   date: string;
   is_private: string;
-  [key: string]: unknown;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
 };
 
 export type TabType = {
