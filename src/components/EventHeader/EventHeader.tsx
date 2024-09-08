@@ -17,21 +17,20 @@ const EventHeader = ({ previousPageNavigate }: { previousPageNavigate: string })
           transition={{ duration: 0.5 }}
           className={styles.headerRow}
         >
-          <div className={styles.row}>
-            <div className={styles.backButton}>
-              <button
-                onClick={() => {
-                  if (previousPageNavigate === '-1') {
-                    navigate(-1);
-                  } else {
-                    navigate(previousPageNavigate);
-                  }
-                }}
-                className={styles.goBack}
-              >
-                {'<'}
-              </button>
-            </div>
+          <div className='row'>
+            <button
+              onClick={() => {
+                if (previousPageNavigate === '-1') {
+                  navigate(-1);
+                } else {
+                  navigate(previousPageNavigate);
+                }
+              }}
+              className={styles.goBack}
+            >
+              {'<'}
+            </button>
+
             <div className={styles.headerText}>
               {localEventData.logo ? (
                 <img
