@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { SpinWheelLogList, userListType } from '../pages/app/Randomizer/types';
+import type { SpinWheelLogList, userListType } from '../pages/app/Randomizer/types';
 
 export const getSpinWheelUserList = async (
   setUserList: Dispatch<SetStateAction<userListType[]>>,

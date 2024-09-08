@@ -15,7 +15,7 @@ import Modal from '../../../../../components/Modal/Modal';
 import Slider from '../../../../../components/SliderButton/Slider';
 import { customStyles } from '../../../EventPage/constants';
 import styles from './BulkUpload.module.css';
-import { BulkUploadType } from './types';
+import type { BulkUploadType } from './types';
 
 const BulkUpload = ({ onClose }: { onClose: () => void }) => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);

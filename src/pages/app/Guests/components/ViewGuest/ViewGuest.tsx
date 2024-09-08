@@ -22,9 +22,9 @@ import ScannerResponseModal from '../../../CheckIns/components/ScannerResponseMo
 import { multipleTicketCount } from '../../../CheckIns/pages/ScanQR/types';
 import PreviewBox from '../../../EventGlance/components/MailModals/UpdateMail/components/PreviewBox/PreviewBox';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
-import { RegistrationDataType } from '../../../Overview/Overview/types';
+import type { RegistrationDataType } from '../../../Overview/Overview/types';
 import { ResentTicket, SelectedGuest } from '../../types';
-import { EmailType, VisitedVenues } from './types';
+import type { EmailType, VisitedVenues } from './types';
 import styles from './ViewGuest.module.css';
 
 const ViewGuest = ({

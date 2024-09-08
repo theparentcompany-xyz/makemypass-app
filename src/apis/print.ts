@@ -5,7 +5,7 @@ import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { formatDate } from '../common/commonFunctions';
 import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
-import { SelfCheckInData } from '../pages/app/SelfCheckIn/types';
+import type { SelfCheckInData } from '../pages/app/SelfCheckIn/types';
 
 export const getPrintData = async (
   eventId: string,

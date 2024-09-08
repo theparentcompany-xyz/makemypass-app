@@ -21,10 +21,10 @@ import Table from '../../../../components/Table/Table';
 import { TableType } from '../../../../components/Table/types';
 import Theme from '../../../../components/Theme/Theme';
 import { SelectedGuest } from '../../Guests/types';
-import AddHosts from '../components/SecondaryButton/AddHosts/AddHosts';
+import AddHosts from '../components/AddHosts/AddHosts';
 import SecondaryButton from '../components/SecondaryButton/SecondaryButton';
 import styles from './Overview.module.css';
-import { hostData, hostId, hostList, recentRegistration } from './types';
+import type { hostData, hostId, hostList, recentRegistration } from './types';
 
 const Overview = () => {
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import { Dispatch } from 'react';
 
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { EmailType } from '../pages/app/Guests/components/ViewGuest/types';
+import type { EmailType } from '../pages/app/Guests/components/ViewGuest/types';
 
 export const getEventMailLog = async (
   eventId: string,

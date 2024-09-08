@@ -107,12 +107,6 @@
   background: rgba(0, 0, 0, 0.1); /* Reduced opacity */
 }
 
-.result {
-  margin-top: 1rem;
-  font-weight: 600;
-  font-size: 1.25rem;
-}
-
 .spinning .spinItem {
   transition: transform 0.1s linear;
 }
@@ -149,12 +143,6 @@
 .previousLogs {
   font-family: 'Inter', sans-serif;
   color: white;
-}
-
-.previousLogsHeading {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
 }
 
 .logsContainer {

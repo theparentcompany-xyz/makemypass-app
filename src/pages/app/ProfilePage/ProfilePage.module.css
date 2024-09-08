@@ -162,22 +162,6 @@
   padding: 0.5rem 1rem;
 }
 
-.lineBar {
-  border: 1px solid #6b6b6b3a;
-  border-radius: 10%;
-  width: 85%;
-}
-
-.profileInfo {
-  margin-left: 1rem;
-  font-family: 'Inter', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 0.5rem;
-  color: #f3f3f3;
-}
-
 .infoName {
   font-weight: 500;
   font-size: 1.8rem;
@@ -202,49 +186,6 @@
   flex-direction: column;
   width: 85%;
   max-width: 80rem;
-}
-
-/* TABS */
-
-.tabs {
-  margin-top: 0.5rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.tabs ol {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  column-gap: 0.5rem;
-  padding-bottom: 1rem;
-}
-
-@media screen and (max-width: 496px) {
-  .tabs ol {
-    overflow: auto;
-    padding-bottom: 1rem;
-  }
-}
-
-.tab {
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.5);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  padding-bottom: 0.5rem;
-  width: 100%;
-  white-space: nowrap;
-}
-
-.active {
-  border: 1.5px solid #fff;
-  border-radius: 8px;
 }
 
 /* Modal Stuff*/

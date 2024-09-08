@@ -8,7 +8,7 @@ import { useVoiceVisualizer, VoiceVisualizer } from 'react-voice-visualizer';
 import { parseAudio } from '../../../../../../apis/publicpage';
 import { FormDataType } from '../../../../../../apis/types';
 import { FormEventData } from '../../../../Guests/types';
-import { AudioControlsType } from '../../../types';
+import type { AudioControlsType } from '../../../types';
 import styles from './VoiceInput.module.css';
 
 const VoiceInput = ({

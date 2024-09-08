@@ -4,10 +4,10 @@ import { NavigateFunction } from 'react-router';
 
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { BulkUploadType } from '../pages/app/Guests/components/BulkUpload/types';
-import { EmailType, VisitedVenues } from '../pages/app/Guests/components/ViewGuest/types';
+import type { BulkUploadType } from '../pages/app/Guests/components/BulkUpload/types';
+import type { EmailType, VisitedVenues } from '../pages/app/Guests/components/ViewGuest/types';
 import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from '../pages/app/Guests/types';
-import { RegistrationDataType } from '../pages/app/Overview/Overview/types';
+import type { RegistrationDataType } from '../pages/app/Overview/Overview/types';
 import { ErrorMessages, FormDataType } from './types';
 
 export const resentGuestTicket = async (

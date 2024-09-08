@@ -2,9 +2,9 @@
 import React, { SetStateAction } from 'react';
 import Select from 'react-select';
 
-import Modal from '../../../../../../components/Modal/Modal';
-import Slider from '../../../../../../components/SliderButton/Slider';
-import { hostData } from '../../../Overview/types';
+import Modal from '../../../../../components/Modal/Modal';
+import Slider from '../../../../../components/SliderButton/Slider';
+import type { hostData } from '../../Overview/types';
 import styles from './AddHosts.module.css';
 import roleOptions from './data';
 

@@ -22,9 +22,10 @@ import InputField from '../../auth/Login/InputField';
 import { customStyles } from '../EventPage/constants';
 import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
 import { DefaultFiledTypeMapping, FileExtensions, getConditions } from './constant';
+import { DefaultFieldTypes, FieldType } from './enum';
 import styles from './FormBuilder.module.css';
 import SelectComponent from './SelectComponent';
-import { DefaultFieldTypes, ErrorResponse, Field, FieldType } from './types';
+import type { ErrorResponse, Field } from './types';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);

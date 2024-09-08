@@ -23,7 +23,7 @@ import InputField from '../../auth/Login/InputField';
 import { customStyles } from '../EventPage/constants';
 import { getConditions } from '../FormBuilder/constant';
 import SelectComponent from '../FormBuilder/SelectComponent';
-import { Field } from '../FormBuilder/types';
+import type { Field } from '../FormBuilder/types';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Coupon.module.css';
 import type {

@@ -27,7 +27,7 @@ import Modal from '../../../components/Modal/Modal';
 import Theme from '../../../components/Theme/Theme';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Insights.module.css';
-import { AnalyticsData, ChartData, utmDataType } from './types';
+import type { AnalyticsData, ChartData, utmDataType } from './types';
 
 ChartJS.register(
   CategoryScale,

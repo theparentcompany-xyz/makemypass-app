@@ -29,23 +29,6 @@
   }
 }
 
-/* @media (max-width: 1320px) {
-  .insightsContainer {
-    margin: 0 1rem;
-  }
-} */
-
-/* .registrationCount,
-.todayRegistered,
-.pieContainer,
-.pageVisitsCount {
-  margin: 0 0.5rem;
-} */
-
-.percentage {
-  color: white;
-}
-
 .registrationCount {
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.04);
@@ -102,7 +85,6 @@
 
 .total {
   color: #fff;
-
   font-family: Inter;
   font-size: 18.75px;
   font-style: normal;
@@ -425,17 +407,6 @@
 
 .publicLink:focus {
   outline: none;
-}
-
-.IoCopyOutline {
-  color: white;
-  cursor: pointer;
-}
-
-.gif {
-  width: 3.5rem;
-  filter: grayscale(100%);
-  color: #2383e2;
 }
 
 .alert {

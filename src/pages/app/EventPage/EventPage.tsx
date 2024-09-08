@@ -12,7 +12,7 @@ import EventForm from './components/EventForm/EventForm';
 import EventHeader from './components/EventHeader/EventHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
 import styles from './EventPage.module.css';
-import { ClaimCodeExceedType, SuccessModalProps } from './types';
+import type { ClaimCodeExceedType, SuccessModalProps } from './types';
 
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();

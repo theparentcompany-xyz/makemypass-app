@@ -15,7 +15,7 @@ import {
 } from 'react-icons/md';
 
 import { ConditionalQuestionOperator } from '../../../../services/enums.ts';
-import { DefaultFieldTypes, FieldType } from './types.ts';
+import { DefaultFieldTypes, FieldType } from './enum.ts';
 
 export interface ConditionType {
   value: ConditionalQuestionOperator;

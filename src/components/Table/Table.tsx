@@ -6,7 +6,7 @@ import { FixedSizeList } from 'react-window';
 
 import { timeAgo } from '../../common/commonFunctions';
 import { ResentTicket, SelectedGuest } from '../../pages/app/Guests/types';
-import { hostId } from '../../pages/app/Overview/Overview/types';
+import type { hostId } from '../../pages/app/Overview/Overview/types';
 import styles from './Table.module.css';
 import { TableType, TabType } from './types';
 

@@ -13,7 +13,7 @@ import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import type { previewType } from '../../../EventGlance/components/MailModals/UpdateMail/types';
 import { FormEventData, SelectedGuest } from '../../../Guests/types';
 import styles from '../../EventPage.module.css';
-import {
+import type {
   ClaimCodeExceedType,
   CouponData,
   DiscountData,

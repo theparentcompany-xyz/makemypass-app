@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { PaymentAnalyticsType } from '../pages/app/PaymentAnalytics/types';
+import type { PaymentAnalyticsType } from '../pages/app/PaymentAnalytics/types';
 
 export const getEventPaymentLog = async (
   setPaymentAnalyticsList: Dispatch<SetStateAction<PaymentAnalyticsType[]>>,

@@ -60,29 +60,6 @@
   font-family: 'Inter', sans-serif;
 }
 
-.fileInput {
-  display: none;
-}
-
-.fileInput::file-selector-button {
-  font-family: 'Inter', sans-serif;
-  margin-right: 20px;
-  border: none;
-  background: transparent;
-  padding: 10px 15px;
-
-  border-radius: 10px;
-  color: #a4a4a4;
-  background: rgba(255, 255, 255, 0.08);
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.fileInput::file-selector-button:hover {
-  color: white;
-  background: rgba(255, 255, 255, 0.16);
-}
-
 .optional {
   font-size: 0.8rem;
   opacity: 0.5 !important;

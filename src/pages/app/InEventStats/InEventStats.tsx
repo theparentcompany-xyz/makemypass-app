@@ -22,7 +22,7 @@ import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout
 import Glance from '../../../components/Glance/Glance';
 import Theme from '../../../components/Theme/Theme';
 import { GuestsType } from '../Guests/types';
-import { ChartData } from '../Insights/types';
+import type { ChartData } from '../Insights/types';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import styles from './InEventStats.module.css';
 
@@ -327,7 +327,7 @@ const InEventStats = () => {
                       }}
                       className={styles.day}
                     >
-                      {formatDate(day.day, false, true)}
+                      {formatDate(day.day, false, true)}fcategoryName
                     </p>
                     <p className={styles.dcount}>
                       {day.count} <span>guests</span>

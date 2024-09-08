@@ -14,7 +14,7 @@ import SelectDate from '../../../../../components/SelectDate/SelectDate';
 import InputField from '../../../../auth/Login/InputField.tsx';
 import { FormEventData } from '../../../Guests/types.ts';
 import { getIcon } from '../../constants';
-import { CouponData, DiscountData, Tickets } from '../../types';
+import type { CouponData, DiscountData, Tickets } from '../../types';
 import ExpectedInvoice from '../ExpectedInvoice/ExpectedInvoice.tsx';
 import styles from './CouponForm.module.css';
 

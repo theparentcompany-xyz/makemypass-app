@@ -1,4 +1,4 @@
-export interface PaymentAnalyticsType {
+export type PaymentAnalyticsType = {
   user_name: string;
   amount: number;
   currency: string;
@@ -10,4 +10,4 @@ export interface PaymentAnalyticsType {
   status: string;
   is_cash_in_hand: boolean;
   created_at: string;
-}
+};

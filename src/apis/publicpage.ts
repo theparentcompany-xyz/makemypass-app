@@ -4,7 +4,7 @@ import { NavigateFunction } from 'react-router';
 
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import {
+import type {
   AudioControlsType,
   ClaimCodeExceedType,
   CouponData,

@@ -7,7 +7,7 @@ import Scanner from '../../../components/Scanner/Scanner';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 import Theme from '../../../components/Theme/Theme';
 import styles from './Gifts.module.css';
-import { Gift, GiftsType } from './types';
+import type { Gift, GiftsType } from './types';
 
 const Gifts = () => {
   const [ticketId, setTicketId] = useState<string>('');

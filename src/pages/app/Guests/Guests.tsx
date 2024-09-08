@@ -31,7 +31,7 @@ import Theme from '../../../components/Theme/Theme';
 import EventForm from '../EventPage/components/EventForm/EventForm';
 import { customStyles } from '../EventPage/constants';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import { RegistrationDataType } from '../Overview/Overview/types';
+import type { RegistrationDataType } from '../Overview/Overview/types';
 import BulkUpload from './components/BulkUpload/BulkUpload';
 import EditGuest from './components/EditGuest/EditGuest';
 import ViewGuest from './components/ViewGuest/ViewGuest';

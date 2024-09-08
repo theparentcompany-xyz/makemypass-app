@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 
 import { HexColors, IconsMapping } from '../constant';
-import { Field, FieldType } from '../types';
+import { FieldType } from '../enum';
+import type { Field } from '../types';
 import styles from './ChangeTypeModal.module.css';
 
 const changeTypeModal = (field: Field, newType: FieldType) => {

@@ -1,4 +1,4 @@
-import { Roles } from '../../../../../../../services/enums';
+import { Roles } from '../../../../../../services/enums';
 
 const roleOptions = [
   { value: Roles.ADMIN, label: Roles.ADMIN },

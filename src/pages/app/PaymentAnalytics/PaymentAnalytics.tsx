@@ -5,7 +5,7 @@ import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout
 import GenericTable from '../../../components/Table/GenericTable';
 import Theme from '../../../components/Theme/Theme';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
-import { PaymentAnalyticsType } from './types';
+import type { PaymentAnalyticsType } from './types';
 
 const PaymentAnalytics = () => {
   const [paymentAnalyticsList, setPaymentAnalyticsList] = useState<PaymentAnalyticsType[]>([]);

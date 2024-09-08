@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { ErrorResponse, Field } from '../pages/app/FormBuilder/types';
+import type { ErrorResponse, Field } from '../pages/app/FormBuilder/types';
 
 export const getFormBuilderForm = (
   eventId: string,

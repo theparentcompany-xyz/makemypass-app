@@ -1,6 +1,6 @@
 import { jsPDF } from 'jspdf';
 
-import { SelfCheckInData } from './types';
+import type { SelfCheckInData } from './types';
 
 export const printTicket = async ({ printData }: { printData: SelfCheckInData }) => {
   const pdf = new jsPDF({

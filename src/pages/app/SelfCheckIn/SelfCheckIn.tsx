@@ -9,7 +9,7 @@ import CheckInHeader from '../CheckIns/components/CheckInHeader/CheckInHeader/Ch
 import ScanLogs from '../CheckIns/components/ScanLogs/ScanLogs';
 import { LogType } from '../CheckIns/pages/Venue/Venue';
 import { printTicket } from './functions';
-import { SelfCheckInData } from './types';
+import type { SelfCheckInData } from './types';
 
 const SelfCheckIn = () => {
   const [printData, setPrintData] = useState<SelfCheckInData>({} as SelfCheckInData);

@@ -1,6 +1,6 @@
 import { FormDataType, TicketType } from '../apis/types';
 import { validateCondition } from '../components/DynamicForm/condition';
-import { DiscountData } from '../pages/app/EventPage/types';
+import type { DiscountData } from '../pages/app/EventPage/types';
 import { FormEventData } from '../pages/app/Guests/types';
 
 enum DiscountType {

@@ -5,7 +5,7 @@ import { HashLoader } from 'react-spinners';
 
 import { claimScratchCard } from '../../../../../apis/publicpage';
 import Modal from '../../../../../components/Modal/Modal';
-import { SuccessModalProps } from '../../types';
+import type { SuccessModalProps } from '../../types';
 import ScratchCard from './ScratchCardComponent/ScratchCardComponent';
 import image from './scratchImage.png';
 import styles from './SuccessModal.module.css';

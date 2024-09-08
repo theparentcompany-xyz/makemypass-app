@@ -5,7 +5,7 @@ import { getEventMailLog } from '../../../apis/logs';
 import { formatDate } from '../../../common/commonFunctions';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Theme from '../../../components/Theme/Theme';
-import { EmailType } from '../Guests/components/ViewGuest/types';
+import type { EmailType } from '../Guests/components/ViewGuest/types';
 import styles from './EventLogs.module.css';
 
 const EventLogs = () => {

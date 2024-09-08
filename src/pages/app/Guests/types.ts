@@ -1,5 +1,5 @@
 import { FormFieldType, TicketType } from '../../../apis/types';
-import { CouponData } from '../EventPage/types';
+import type { CouponData } from '../EventPage/types';
 
 export type GuestsType = {
   id: string;

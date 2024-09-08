@@ -1,7 +1,3 @@
-.builderContainer {
-  padding: 0 1.75rem;
-}
-
 .image {
   width: 2rem;
   height: 2rem;
@@ -249,12 +245,6 @@
   background: rgba(255, 255, 255, 0.04);
 }
 
-.addCustomField {
-  margin-top: 1rem;
-  margin-left: 2rem;
-  font-size: 0.95rem;
-}
-
 .addQuestionButton {
   margin-top: 1rem;
   margin-left: 2.5rem;
@@ -313,11 +303,6 @@
   margin-top: 1rem;
   font-size: 0.9rem;
   margin-left: 0.5rem;
-}
-
-.changeTypeButton {
-  position: relative;
-  display: inline-block;
 }
 
 .changeTypeContainer {

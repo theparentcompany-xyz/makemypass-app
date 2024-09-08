@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { Tickets } from '../pages/app/EventPage/types';
+import type { Tickets } from '../pages/app/EventPage/types';
 import { SelectedGuest } from '../pages/app/Guests/types';
 import { ErrorMessages, FormDataType, PaymentDetails } from './types';
 

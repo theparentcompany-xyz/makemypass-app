@@ -2,17 +2,6 @@
   width: 100%;
 }
 
-.uploadFileButton {
-  padding: 0.5rem 1rem;
-  border: 1.5px solid rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
-  background: rgb(37, 37, 37, 0.9);
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  cursor: pointer;
-  width: 100%;
-}
-
 .sectionHeader {
   text-align: left;
   margin-top: 0.5rem;
@@ -64,12 +53,6 @@
 .logDate {
   font-size: 0.85rem;
   caret-color: #939597;
-}
-
-.logUploadCount {
-  font-size: 0.9rem;
-  font-weight: 400;
-  color: #939597;
 }
 
 .downloadTemplate {

@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { hostData } from '../pages/app/Overview/Overview/types';
+import type { hostData } from '../pages/app/Overview/Overview/types';
 import { hostList } from './types';
 
 export const createEventHost = async (

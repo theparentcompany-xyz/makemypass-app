@@ -14,7 +14,7 @@ import EventHeader from '../../../components/EventHeader/EventHeader';
 import Theme from '../../../components/Theme/Theme';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Randomizer.module.css';
-import { SpinWheelLogList, userListType } from './types';
+import type { SpinWheelLogList, userListType } from './types';
 
 const Randomizer = () => {
   const [spinning, setSpinning] = useState(false);

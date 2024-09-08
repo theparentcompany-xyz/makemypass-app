@@ -16,10 +16,6 @@
   }
 }
 
-.create {
-  width: 10rem;
-}
-
 .eventsContainer {
   display: flex;
   justify-content: flex-start;
@@ -185,21 +181,6 @@
   bottom: 1.25rem;
 }
 
-.create {
-  border-radius: 8px;
-  opacity: 0.8;
-  background: rgba(255, 255, 255, 0.08);
-  border: none;
-  color: #a4a4a4;
-  padding: 0.75rem 1.5rem;
-  width: 12rem;
-
-  text-align: center;
-  display: flex;
-  column-gap: 0.25rem;
-  margin-top: 1rem;
-}
-
 .date {
   font-weight: 200;
   opacity: 0.9;
@@ -232,19 +213,6 @@
 }
 
 /* Menu Styles */
-
-.rightClickMenu {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  position: absolute;
-  background: #282d30;
-  border-radius: 8px;
-
-  min-width: 10rem;
-  z-index: 1000;
-  font-family: 'Inter', sans-serif;
-  color: #fff;
-}
 
 .rightClickMenu ul {
   list-style-type: none;
