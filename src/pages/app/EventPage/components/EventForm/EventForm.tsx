@@ -10,7 +10,7 @@ import { submitForm, validateRSVPData } from '../../../../../apis/publicpage';
 import { EventType, FormDataType, FormFieldType, TicketType } from '../../../../../apis/types';
 import { validateCondition } from '../../../../../components/DynamicForm/condition';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
-import { previewType } from '../../../EventGlance/components/MailModals/UpdateMail/types';
+import type { previewType } from '../../../EventGlance/components/MailModals/UpdateMail/types';
 import { FormEventData, SelectedGuest } from '../../../Guests/types';
 import styles from '../../EventPage.module.css';
 import {

@@ -1,7 +1,7 @@
 import { MdClose } from 'react-icons/md';
 
-import { previewType } from '../../types';
-import styles from '../../UpdateMail.module.css';
+import type { previewType } from '../../types';
+import styles from './PreviewBox.module.css';
 
 const PreviewBox = ({
   index,

@@ -25,15 +25,6 @@
   cursor: pointer;
 }
 
-.line {
-  margin-top: 0.5rem;
-  width: 100%;
-  color: #a4a4a4;
-  opacity: 0.05;
-  width: 10rem;
-  margin-bottom: 1rem;
-}
-
 .checkInActions {
   display: flex;
   flex-direction: row;

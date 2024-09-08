@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { deleteCoupon, getCouponData } from '../../apis/coupons';
 import { formatDate } from '../../common/commonFunctions';
-import CouponType, { CreateCouponType } from '../../pages/app/Coupon/types';
+import type { CouponType, CreateCouponType } from '../../pages/app/Coupon/types';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import Modal from '../Modal/Modal';
 import styles from './Table.module.css';

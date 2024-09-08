@@ -3,7 +3,11 @@ import toast from 'react-hot-toast';
 
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import CouponType, { CreateCouponType, CreateCouponTypeError } from '../pages/app/Coupon/types';
+import type {
+  CouponType,
+  CreateCouponType,
+  CreateCouponTypeError,
+} from '../pages/app/Coupon/types';
 import { ActivateCouponType } from './types';
 
 export const getCouponsList = async (

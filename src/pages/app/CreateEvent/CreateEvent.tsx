@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { createEvent } from '../../../apis/events';
 import Theme from '../../../components/Theme/Theme';
 import InputField from '../../auth/Login/InputField.tsx';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton.tsx';
 import styles from './CreateEvent.module.css';
 
 const CreateEvent = () => {
@@ -29,9 +30,7 @@ const CreateEvent = () => {
               onChange={(e) => setEventTitle(e.target.value)}
             />
           </div>
-          <button className={styles.createButton} onClick={submitCreateEvent}>
-            Create Event
-          </button>
+          <SecondaryButton buttonText='Create Event' onClick={submitCreateEvent} />
         </div>
       </div>
     </Theme>

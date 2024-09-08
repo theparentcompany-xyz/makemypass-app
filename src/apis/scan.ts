@@ -5,7 +5,7 @@ import { makeMyPass } from '../../services/urls';
 import { formatDate } from '../common/commonFunctions';
 import { multipleTicketCount } from '../pages/app/CheckIns/pages/ScanQR/types';
 import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
-import { checkInButtonsType } from '../pages/app/CheckIns/types';
+import type { checkInButtonsType } from '../pages/app/CheckIns/types';
 
 export const checkInUser = async ({
   ticketId,

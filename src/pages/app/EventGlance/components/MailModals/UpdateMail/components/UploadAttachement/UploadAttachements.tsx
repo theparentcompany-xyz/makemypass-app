@@ -1,4 +1,4 @@
-import { previewType } from '../../types';
+import type { previewType } from '../../types';
 import PreviewBox from '../PreviewBox/PreviewBox';
 import styles from './UploadAttachements.module.css';
 

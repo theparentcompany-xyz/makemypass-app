@@ -15,8 +15,8 @@ import {
   udpateUserProfile,
   updateProfilePassword,
 } from '../../../apis/user';
-import ButtonLoader from '../../../components/LoaderButton/LoaderButton';
 import Loader from '../../../components/Loader';
+import ButtonLoader from '../../../components/LoaderButton/LoaderButton';
 import Modal from '../../../components/Modal/Modal';
 import Theme from '../../../components/Theme/Theme';
 import EventBox from './components/EventBox/EventBox';

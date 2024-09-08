@@ -35,10 +35,10 @@ import TestMail from './components/MailModals/TestMail/TestMail';
 import UpdateMail from './components/MailModals/UpdateMail/UpdateMail';
 import ManageTickets, { ChildRef } from './components/ManageTickets/ManageTickets';
 import SpeakerModal from './components/SpeakerModal/SpeakerModal';
+import type { UTMDataType } from './components/UTMManager/types';
 import UTMManager from './components/UTMManager/UTMManager';
 import VenueModal from './components/VenueModal/VenueModal';
 import styles from './EventGlance.module.css';
-import { UTMDataType } from './types';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);

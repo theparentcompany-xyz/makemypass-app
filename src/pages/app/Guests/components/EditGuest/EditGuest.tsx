@@ -4,7 +4,7 @@ import { updateGuestSubmission } from '../../../../../apis/guests';
 import { FormDataType, FormFieldType } from '../../../../../apis/types';
 import DynamicForm from '../../../../../components/DynamicForm/DynamicForm';
 import Modal from '../../../../../components/Modal/Modal';
-import { previewType } from '../../../EventGlance/components/MailModals/UpdateMail/types';
+import type { previewType } from '../../../EventGlance/components/MailModals/UpdateMail/types';
 import styles from '../../Guests.module.css';
 import { FormEventData, GuestsType, SelectedGuest } from '../../types';
 

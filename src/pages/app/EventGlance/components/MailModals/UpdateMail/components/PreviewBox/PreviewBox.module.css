@@ -1,0 +1,41 @@
+.nameContainer {
+  font-family: 'Inter', sans-serif;
+  color: #a4a4a4;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  word-break: keep-all;
+  max-width: 5rem;
+  overflow: hidden;
+}
+
+.previewBox {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  row-gap: 0.5rem;
+  align-items: center;
+  column-gap: 1rem;
+  width: 7rem;
+  padding: 1rem;
+  border: #bbbaba60 1px dashed;
+  border-radius: 16px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: #a4a4a487;
+  background: #1b2725ca;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.closeButton:hover {
+  color: #a4a4a4;
+  background: #1b2725;
+  transform: scale(1.1);
+}

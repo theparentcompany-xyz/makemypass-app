@@ -8,7 +8,7 @@ import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout
 import SectionButton from '../../../components/SectionButton/SectionButton';
 import Theme from '../../../components/Theme/Theme';
 import styles from './CheckIns.module.css';
-import { checkInButtonsType } from './types';
+import type { checkInButtonsType } from './types.d.ts';
 
 const CheckIns = () => {
   const [checkInsButtons, setCheckInsButtons] = useState<checkInButtonsType>();

@@ -16,7 +16,6 @@ import {
 import { getFormBuilderForm } from '../../../apis/formbuilder';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Modal from '../../../components/Modal/Modal';
-// import { getTickets } from '../../../apis/tickets';
 import Slider from '../../../components/SliderButton/Slider';
 import GenericTable from '../../../components/Table/GenericTable';
 import Theme from '../../../components/Theme/Theme';
@@ -27,7 +26,12 @@ import SelectComponent from '../FormBuilder/SelectComponent';
 import { Field } from '../FormBuilder/types';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Coupon.module.css';
-import CouponType, { ActivateCouponType, CreateCouponType, CreateCouponTypeError } from './types';
+import type {
+  ActivateCouponType,
+  CouponType,
+  CreateCouponType,
+  CreateCouponTypeError,
+} from './types';
 
 const Coupon = () => {
   type CouponModalType = {

@@ -3,7 +3,7 @@ import Select, { MultiValue } from 'react-select';
 
 import { ErrorMessages, FormDataType, FormFieldType } from '../../apis/types';
 import UploadAttachement from '../../pages/app/EventGlance/components/MailModals/UpdateMail/components/UploadAttachement/UploadAttachements.tsx';
-import { previewType } from '../../pages/app/EventGlance/components/MailModals/UpdateMail/types.ts';
+import type { previewType } from '../../pages/app/EventGlance/components/MailModals/UpdateMail/types.ts';
 import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
 import InputField from '../../pages/auth/Login/InputField.tsx';
 import ValidateInput from '../ValidateInput/ValidateInput.tsx';

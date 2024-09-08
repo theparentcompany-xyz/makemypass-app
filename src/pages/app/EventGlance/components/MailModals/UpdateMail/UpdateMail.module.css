@@ -24,14 +24,6 @@
   padding: 1rem 0rem;
 }
 
-.nameContainer {
-  font-family: 'Inter', sans-serif;
-  color: #a4a4a4;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-  word-break: keep-all;
-}
-
 .button {
   padding: 0.5rem 1rem;
   border-radius: 8px;
@@ -44,13 +36,6 @@
 
 .button:hover {
   background: rgba(255, 255, 255, 0.1);
-}
-
-.blur {
-  box-shadow: 0px 0px 20px 20px rgba(255, 255, 255, 1);
-  text-shadow: 0px 0px 10px rgba(51, 51, 51, 0.9);
-  transform: scale(0.9);
-  opacity: 0.6;
 }
 
 .inputContainers {
@@ -102,14 +87,6 @@
   text-decoration: underline;
 }
 
-.inputSubText {
-  font-weight: 400;
-  font-size: 0.8rem;
-  margin-top: 0.25rem;
-  padding-left: 0.5rem;
-  color: #bbbaba;
-}
-
 .dropdownContainer {
   display: flex;
   flex-direction: row;
@@ -121,15 +98,6 @@
 .inputLabel {
   text-align: left;
   margin-bottom: 0.25rem;
-}
-
-.dropdown {
-  margin-top: 1rem;
-  width: 20rem;
-}
-
-.basic-multi-select {
-  width: 100%;
 }
 
 .textarea {
@@ -146,46 +114,6 @@
   resize: none;
 }
 
-.previewBox {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  row-gap: 0.5rem;
-  align-items: center;
-  column-gap: 1rem;
-  width: 7rem;
-  padding: 1rem;
-  border: #bbbaba60 1px dashed;
-  border-radius: 16px;
-}
-
-.uploadContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  column-gap: 1rem;
-  margin-top: 1rem;
-}
-
-.closeButton {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
-  color: #a4a4a487;
-  background: #1b2725ca;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.closeButton:hover {
-  color: #a4a4a4;
-  background: #1b2725;
-  transform: scale(1.1);
-}
-
 @media screen and (max-width: 500px) {
   .textarea {
     width: 95%;
@@ -196,22 +124,4 @@
 .textarea:focus {
   border: none;
   outline: none;
-}
-
-.svgText {
-  color: #fff;
-  font-weight: 500;
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  position: relative;
-}
-@media screen and (max-width: 435px) {
-  .svgText {
-    transform: translateX(-0.5rem);
-  }
-}
-@media screen and (max-width: 376px) {
-  .svgText {
-    transform: translateX(-1.4rem);
-  }
 }

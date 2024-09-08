@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { UTMDataType } from '../pages/app/EventGlance/types';
+import type { UTMDataType } from '../pages/app/EventGlance/components/UTMManager/types';
 
 export const getUTMList = (
   eventId: string,

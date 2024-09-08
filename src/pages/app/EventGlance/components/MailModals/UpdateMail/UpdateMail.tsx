@@ -4,7 +4,7 @@ import { HashLoader } from 'react-spinners';
 import { getEventMailData, updateEventMail } from '../../../../../../apis/mails';
 import { MailType } from '../../../../../../apis/types';
 import UploadAttachement from './components/UploadAttachement/UploadAttachements';
-import { previewType, PropTypes } from './types';
+import type { previewType, PropTypes } from './types';
 import styles from './UpdateMail.module.css';
 
 const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: PropTypes) => {
