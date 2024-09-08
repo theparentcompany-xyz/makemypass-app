@@ -4,7 +4,7 @@ import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-d
 import { Roles } from '../services/enums';
 import RoleChecker from '../services/RoleChecker';
 import AuthCheck from './components/AuthCheck/AuthCheck';
-import Theme from './components/Theme/Theme';
+import Loader from './components/Loader';
 import PrivacyPolicy from './pages/app/PrivacyPolicy/PrivacyPolicy';
 import TermsConditions from './pages/app/TermsCondictions/TermsConditions';
 import Login from './pages/auth/Login/Login';
@@ -56,7 +56,7 @@ const routes: RouteObject[] = [
   {
     path: '/:eventTitle/ticket',
     element: (
-      <React.Suspense fallback={<Theme>Loading...</Theme>}>
+      <React.Suspense fallback={<Loader />}>
         <ViewTicket />
       </React.Suspense>
     ),
@@ -72,7 +72,7 @@ const routes: RouteObject[] = [
   {
     path: '/',
     element: (
-      <React.Suspense fallback={<Theme>Loading...</Theme>}>
+      <React.Suspense fallback={<Loader />}>
         <LandingPage />
       </React.Suspense>
     ),
@@ -80,7 +80,7 @@ const routes: RouteObject[] = [
   {
     path: '/home',
     element: (
-      <React.Suspense fallback={<Theme>Loading...</Theme>}>
+      <React.Suspense fallback={<Loader />}>
         <LandingPage />
       </React.Suspense>
     ),
@@ -88,7 +88,7 @@ const routes: RouteObject[] = [
   {
     path: '/profile',
     element: (
-      <React.Suspense fallback={<Theme>Loading...</Theme>}>
+      <React.Suspense fallback={<Loader />}>
         <ProfilePage />
       </React.Suspense>
     ),
@@ -96,7 +96,7 @@ const routes: RouteObject[] = [
   {
     path: '/set-profile',
     element: (
-      <React.Suspense fallback={<Theme>Loading...</Theme>}>
+      <React.Suspense fallback={<Loader />}>
         <SetProfilePage />
       </React.Suspense>
     ),
@@ -104,7 +104,7 @@ const routes: RouteObject[] = [
   {
     path: '/:eventTitle/public/insights',
     element: (
-      <React.Suspense fallback={<Theme>Loading...</Theme>}>
+      <React.Suspense fallback={<Loader />}>
         <Insights type='public' />
       </React.Suspense>
     ),
@@ -112,7 +112,7 @@ const routes: RouteObject[] = [
   {
     path: '/validate-participant/',
     element: (
-      <React.Suspense fallback={<Theme>Loading...</Theme>}>
+      <React.Suspense fallback={<Loader />}>
         <ValidateData />
       </React.Suspense>
     ),
@@ -120,7 +120,7 @@ const routes: RouteObject[] = [
   {
     path: '/:eventTitle/checkins/self-checkin',
     element: (
-      <React.Suspense fallback={<Theme>Loading...</Theme>}>
+      <React.Suspense fallback={<Loader />}>
         <SelfCheckIn />
       </React.Suspense>
     ),
@@ -132,7 +132,7 @@ const routes: RouteObject[] = [
       {
         path: '/events',
         element: (
-          <React.Suspense fallback={<Theme>Loading...</Theme>}>
+          <React.Suspense fallback={<Loader />}>
             <Events />
           </React.Suspense>
         ),
@@ -141,7 +141,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/overview',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <Overview />
             </React.Suspense>
           </RoleChecker>
@@ -151,7 +151,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/insights',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <Insights />
             </React.Suspense>
           </RoleChecker>
@@ -161,7 +161,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/guests',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <Guests />
             </React.Suspense>
           </RoleChecker>
@@ -171,7 +171,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/checkins',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <CheckIns />
             </React.Suspense>
           </RoleChecker>
@@ -181,7 +181,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/checkins/checkin',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <CheckIn />
             </React.Suspense>
           </RoleChecker>
@@ -191,7 +191,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/checkins/checkin/venue',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <Venue />
             </React.Suspense>
           </RoleChecker>
@@ -201,7 +201,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/checkins/checkin/scan',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <ScanQR />
             </React.Suspense>
           </RoleChecker>
@@ -211,7 +211,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/checkins/checkin/gifts',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <Gifts />
             </React.Suspense>
           </RoleChecker>
@@ -221,7 +221,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/checkins/checkin/checkout',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <CheckOutScan />
             </React.Suspense>
           </RoleChecker>
@@ -231,7 +231,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/inevent',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <InEventStats />
             </React.Suspense>
           </RoleChecker>
@@ -241,7 +241,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/postevent',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <PostEvent />
             </React.Suspense>
           </RoleChecker>
@@ -250,7 +250,7 @@ const routes: RouteObject[] = [
       {
         path: '/create-event',
         element: (
-          <React.Suspense fallback={<Theme>Loading...</Theme>}>
+          <React.Suspense fallback={<Loader />}>
             <CreateEvent />
           </React.Suspense>
         ),
@@ -259,7 +259,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/manage',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <EventGlance />
             </React.Suspense>
           </RoleChecker>
@@ -269,7 +269,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/manage/edit-event',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <EditEvent />
             </React.Suspense>
           </RoleChecker>
@@ -279,7 +279,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/formbuilder',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <FormBuilder />
             </React.Suspense>
           </RoleChecker>
@@ -289,7 +289,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/coupon',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <Coupon />
             </React.Suspense>
           </RoleChecker>
@@ -299,7 +299,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/logs',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <EventLogs />
             </React.Suspense>
           </RoleChecker>
@@ -309,7 +309,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/payment-analytics',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <PaymentAnalytics />
             </React.Suspense>
           </RoleChecker>
@@ -319,7 +319,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/perks-analytics',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <PerkAnalytics />
             </React.Suspense>
           </RoleChecker>
@@ -329,7 +329,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/venue-analytics',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <VenueAnalytics />
             </React.Suspense>
           </RoleChecker>
@@ -339,7 +339,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/randomsizer',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <Randomizer />
             </React.Suspense>
           </RoleChecker>
@@ -349,7 +349,7 @@ const routes: RouteObject[] = [
         path: '/:eventTitle/checkins/perks',
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.VOLUNTEER, Roles.OWNER]}>
-            <React.Suspense fallback={<Theme>Loading...</Theme>}>
+            <React.Suspense fallback={<Loader />}>
               <Perks />
             </React.Suspense>
           </RoleChecker>
@@ -364,7 +364,7 @@ const routes: RouteObject[] = [
   {
     path: '/:eventTitle',
     element: (
-      <React.Suspense fallback={<Theme>Loading...</Theme>}>
+      <React.Suspense fallback={<Loader />}>
         <EventPage />
       </React.Suspense>
     ),
