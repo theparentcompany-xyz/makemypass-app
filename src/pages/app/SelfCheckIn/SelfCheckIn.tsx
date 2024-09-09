@@ -35,21 +35,6 @@ const SelfCheckIn = () => {
 
   return (
     <>
-      {/* <div className='printableContent'></div>
-      <img src={printData?.qr?.url} alt='QR Code' />
-      {printData?.data?.map((item: DataItem, index: number) => (
-        <p key={index} style={{ fontSize: item.fontSize }}>
-          {item.value}
-        </p>
-      ))}
-      <button
-        className='printButton'
-        onClick={() => {
-          printTicket({ printData });
-        }}
-      >
-        Print
-      </button> */}
       <Theme>
         <CheckInHeader title='Check-In' buttonType='back' />
 
