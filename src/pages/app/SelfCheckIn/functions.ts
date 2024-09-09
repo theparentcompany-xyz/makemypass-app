@@ -4,9 +4,9 @@ import type { SelfCheckInData } from './types';
 
 export const printTicket = async ({ printData }: { printData: SelfCheckInData }) => {
   const pdf = new jsPDF({
-    orientation: 'portrait',
-    unit: 'mm',
-    format: 'dl',
+    orientation: printData.printerData.orientation,
+    unit: printData.printerData.unit,
+    format: printData.printerData.format,
   });
 
   // Load QR code image

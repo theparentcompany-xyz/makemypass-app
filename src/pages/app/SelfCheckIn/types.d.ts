@@ -12,9 +12,10 @@ export interface DataItem {
 }
 
 interface PrinterData {
-  orientation: 'portrait' | 'landscape';
-  unit: 'mm' | 'inch';
-  format: 'dl' | 'a4' | 'letter';
+  orientation?: 'p' | 'portrait' | 'l' | 'landscape',
+  unit?: 'pt' | 'px' | 'in' | 'mm' | 'cm' | 'ex' | 'em' | 'pc',
+  format?: string | number[],
+  compressPdf?: boolean
 }
 
 export interface SelfCheckInData {
