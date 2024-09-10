@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaExpandAlt } from 'react-icons/fa';
 import {
   IoAlertCircleOutline,
@@ -16,6 +16,31 @@ import styles from './EventHeader.module.css';
 
 const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
   const [showFullDesc, setShowFullDesc] = useState(false);
+  const [timer, setTimer] = useState({
+    days: 0 as number | string,
+    hours: 0 as number | string,
+    minutes: 0 as number | string,
+    seconds: 0 as number | string,
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const eventDate = new Date(eventData?.event_start_date ?? '');
+      const currentDate = new Date();
+      const diff = eventDate.getTime() - currentDate.getTime();
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      setTimer({
+        days: days < 10 ? `0${days}` : days,
+        hours: hours < 10 ? `0${hours}` : hours,
+        minutes: minutes < 10 ? `0${minutes}` : minutes,
+        seconds: seconds < 10 ? `0${seconds}` : seconds,
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [eventData]);
 
   const navigate = useNavigate();
   return (
@@ -41,6 +66,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
           <div
             style={{
               width: '100%',
+              position: 'relative',
             }}
           >
             <p className={styles.eventTitle}>{eventData?.title}</p>
@@ -123,6 +149,33 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                 </div>
               )}
             </div>
+            {eventData?.event_start_date && new Date() < new Date(eventData.event_start_date) && (
+              <div className={styles.eventTimer}>
+                <div className={styles.timerBox}>
+                  <p className={styles.starsin}>
+                    <span>Stars in</span>
+                  </p>
+                  <div className={styles.timer}>
+                    <div className={styles.timerBox}>
+                      <p className={styles.timerNum}>{timer.days}</p>
+                      <p className={styles.timerText}>Days</p>
+                    </div>
+                    <div className={styles.timerBox}>
+                      <p className={styles.timerNum}>{timer.hours}</p>
+                      <p className={styles.timerText}>Hrs</p>
+                    </div>
+                    <div className={styles.timerBox}>
+                      <p className={styles.timerNum}>{timer.minutes}</p>
+                      <p className={styles.timerText}>Mins</p>
+                    </div>
+                    <div className={styles.timerBox}>
+                      <p className={styles.timerNum}>{timer.seconds}</p>
+                      <p className={styles.timerText}>Secs</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             {eventData && eventData?.form?.length > 0 && (
               <a href='#formFields'>
                 <button className={styles.registerButton}>Register Now!</button>
@@ -140,6 +193,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
+              style={{ width: '100%' }}
             >
               <p className={styles.eventDescHeading}>
                 <IoAlertCircleOutline color='white' size={25} />
