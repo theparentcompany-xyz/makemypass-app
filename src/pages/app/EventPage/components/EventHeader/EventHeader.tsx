@@ -148,7 +148,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                 </div>
               )}
             </div>
-            {eventData?.event_start_date && new Date() < new Date(eventData.event_start_date) && (
+            {eventData?.reg_start_date && new Date() < new Date(eventData.reg_start_date) && (
               <div className={styles.eventTimer}>
                 <div className={styles.timerBox}>
                   <p className={styles.starsin}>
