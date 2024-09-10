@@ -16,10 +16,10 @@ import { getDay, getMonthAbbreviation } from '../../constants';
 const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
   const [showFullDesc, setShowFullDesc] = useState(false);
   const [timer, setTimer] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+    days: 0 as number | string,
+    hours: 0 as number | string,
+    minutes: 0 as number | string,
+    seconds: 0 as number | string,
   });
 
   useEffect(() => {
@@ -32,10 +32,10 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
       setTimer({
-        days,
-        hours,
-        minutes,
-        seconds,
+        days: days < 10 ? `0${days}` : days,
+        hours: hours < 10 ? `0${hours}` : hours,
+        minutes: minutes < 10 ? `0${minutes}` : minutes,
+        seconds: seconds < 10 ? `0${seconds}` : seconds,
       });
     }, 1000);
     return () => clearInterval(interval);
@@ -65,6 +65,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
           <div
             style={{
               width: '100%',
+              position: 'relative',
             }}
           >
             <p className={styles.eventTitle}>{eventData?.title}</p>
@@ -150,14 +151,8 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
             {eventData?.name === 'override.py' && (
               <div className={styles.eventTimer}>
                 <div className={styles.timerBox}>
-                  <p
-                    className={styles.timerText}
-                    style={{
-                      marginRight: '0.5rem',
-                    }}
-                  >
-                    {' '}
-                    Starts In
+                  <p className={styles.starsin}>
+                    <span>Stars in</span>
                   </p>
                   <div className={styles.timer}>
                     <div className={styles.timerBox}>
