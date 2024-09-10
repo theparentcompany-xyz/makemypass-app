@@ -405,3 +405,35 @@
   display: block;
   margin: 0 auto;
 }
+
+.eventTimer {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.timerBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.timerText {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #bbbaba;
+  font-family: 'Inter', sans-serif;
+}
+
+.timer {
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+.timerNum {
+  font-size: 1rem;
+  margin-right: 0.25rem;
+  font-weight: 500;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}

@@ -9,12 +9,37 @@ import { EventHosts, EventType } from '../../../../../apis/types';
 import styles from './EventHeader.module.css';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaExpandAlt } from 'react-icons/fa';
 import { getDay, getMonthAbbreviation } from '../../constants';
 
 const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
   const [showFullDesc, setShowFullDesc] = useState(false);
+  const [timer, setTimer] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const eventDate = new Date(eventData?.event_start_date ?? '');
+      const currentDate = new Date();
+      const diff = eventDate.getTime() - currentDate.getTime();
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      setTimer({
+        days,
+        hours,
+        minutes,
+        seconds,
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [eventData]);
 
   const navigate = useNavigate();
   return (
@@ -122,6 +147,39 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
                 </div>
               )}
             </div>
+            {eventData?.name === 'override.py' && (
+              <div className={styles.eventTimer}>
+                <div className={styles.timerBox}>
+                  <p
+                    className={styles.timerText}
+                    style={{
+                      marginRight: '0.5rem',
+                    }}
+                  >
+                    {' '}
+                    Starts In
+                  </p>
+                  <div className={styles.timer}>
+                    <div className={styles.timerBox}>
+                      <p className={styles.timerNum}>{timer.days}</p>
+                      <p className={styles.timerText}>Days</p>
+                    </div>
+                    <div className={styles.timerBox}>
+                      <p className={styles.timerNum}>{timer.hours}</p>
+                      <p className={styles.timerText}>Hrs</p>
+                    </div>
+                    <div className={styles.timerBox}>
+                      <p className={styles.timerNum}>{timer.minutes}</p>
+                      <p className={styles.timerText}>Mins</p>
+                    </div>
+                    <div className={styles.timerBox}>
+                      <p className={styles.timerNum}>{timer.seconds}</p>
+                      <p className={styles.timerText}>Secs</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             {eventData && eventData?.form?.length > 0 && (
               <a href='#formFields'>
                 <button className={styles.registerButton}>Register Now!</button>
@@ -139,6 +197,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
+              style={{ width: '100%' }}
             >
               <p className={styles.eventDescHeading}>
                 <IoAlertCircleOutline color='white' size={25} />
