@@ -153,7 +153,7 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
               <div className={styles.eventTimer}>
                 <div className={styles.timerBox}>
                   <p className={styles.starsin}>
-                    <span>Stars in</span>
+                    <span>Starts in</span>
                   </p>
                   <div className={styles.timer}>
                     <div className={styles.timerBox}>
