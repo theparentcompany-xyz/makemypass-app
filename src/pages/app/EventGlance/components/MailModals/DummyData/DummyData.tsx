@@ -1,7 +1,7 @@
 import React from 'react';
 import { BiLoader } from 'react-icons/bi';
 
-import { sentTestMail } from '../../../../../../apis/postevent';
+import { sendTestMail } from '../../../../../../apis/postevent';
 import InputField from '../../../../../auth/Login/InputField';
 import styles from './DummyData.module.css';
 
@@ -48,7 +48,7 @@ const DummyData = ({ dummyData, setDummyData }: Props) => {
             <button
               className={styles.confirmButton}
               onClick={() => {
-                sentTestMail(dummyData.mailId, dummyData.data);
+                sendTestMail(dummyData.mailId, dummyData.data);
                 setDummyData({ showModal: false, data: {}, mailId: '' });
               }}
             >
