@@ -13,7 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { getEventData } from '../../../apis/events';
 import { getEventMailData, listEventMails } from '../../../apis/mails';
-import { sentTestMail } from '../../../apis/postevent';
+import { sendTestMail } from '../../../apis/postevent';
 import { listEventSpeakers } from '../../../apis/speakers';
 import {
   EventType,
@@ -229,8 +229,7 @@ const EventGlance = () => {
             >
               <TestMail
                 setConfirmTestMail={setConfirmTestMail}
-                sentTestMail={sentTestMail}
-                eventId={eventId}
+                sendTestMail={sendTestMail}
                 confirmTestMail={confirmTestMail}
                 setDummyData={setDummyData}
                 getDummyData={getDummydata}
