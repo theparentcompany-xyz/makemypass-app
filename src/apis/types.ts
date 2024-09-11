@@ -312,3 +312,23 @@ export type ApiErrorResponse = {
   };
   response: object;
 };
+
+export type PerkClaimedHourly = {
+  [perkName: string]: {
+    [date: string]: {
+      [hour: string]: number;
+    };
+  };
+};
+
+export type EventPerkClaimedHourly = {
+  [ticketName: string]: PerkClaimedHourly;
+};
+
+export type HourlyDataVenue = {
+  [key: string]: {
+    [date: string]: {
+      [hour: string]: number;
+    };
+  };
+};
