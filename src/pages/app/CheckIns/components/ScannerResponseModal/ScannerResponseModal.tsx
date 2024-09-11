@@ -130,6 +130,21 @@ const ScannerResponseModal = ({
               </button>
             </>
           )}
+          {!multipleTickets && (
+            <>
+              <p className={styles.modalSubText}>{message}</p>
+              <button
+                className={styles.modalButton}
+                onClick={() => {
+                  setMessage('');
+                  if (setTicketId) setTicketId('');
+                  setTrigger(false);
+                }}
+              >
+                Close
+              </button>
+            </>
+          )}
         </Modal>
       </>
     )

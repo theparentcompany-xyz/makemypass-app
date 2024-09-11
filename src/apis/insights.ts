@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { EventPerkClaimedHourly } from './types';
+import { EventPerkClaimedHourly, HourlyDataVenue } from './types';
 
 export const getInsightsVisibility = (
   id: string,
@@ -35,15 +35,18 @@ export const getPerkAnalytics = (
     });
 };
 
-// export const getVenueAnalytics = (id: string, setVenueAnalytics: Dispatch<SetStateAction<any>>) => {
-//   publicGateway
-//     .get(makeMyPass.getVenueAnalytics(id))
-//     .then((response) => {
-//       setVenueAnalytics(response.data.response);
-//     })
-//     .catch((error) => {
-//       toast.error(
-//         error.response.data.message.general[0] || 'Error in Fetching Venue Analytics Data',
-//       );
-//     });
-// };
+export const getVenueAnalytics = (
+  id: string,
+  setVenueAnalytics: Dispatch<SetStateAction<HourlyDataVenue>>,
+) => {
+  privateGateway
+    .get(makeMyPass.getVenueAnalytics(id))
+    .then((response) => {
+      setVenueAnalytics(response.data.response);
+    })
+    .catch((error) => {
+      toast.error(
+        error.response.data.message.general[0] || 'Error in Fetching Venue Analytics Data',
+      );
+    });
+};
