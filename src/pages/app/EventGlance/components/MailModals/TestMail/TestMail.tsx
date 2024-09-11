@@ -4,21 +4,19 @@ import styles from './TestMail.module.css';
 
 const TestMail = ({
   setConfirmTestMail,
-  sentTestMail,
-  eventId,
+  sendTestMail,
   confirmTestMail,
   setDummyData,
   getDummyData,
 }: {
   setConfirmTestMail: React.Dispatch<React.SetStateAction<{ status: boolean; mailId: string }>>;
-  sentTestMail: (
+  sendTestMail: (
     mailId: string,
     data?: {
       [key: string]: string;
     } | null,
   ) => Promise<void>;
   confirmTestMail: { status: boolean; mailId: string };
-  eventId: string;
   setDummyData: React.Dispatch<
     React.SetStateAction<{
       showModal: boolean;
@@ -38,10 +36,7 @@ const TestMail = ({
           className={styles.confirmButton}
           //Fix this onClick function
           onClick={() => {
-            sentTestMail(
-              eventId,
-              confirmTestMail.mailId === '1' ? null : { mail_id: confirmTestMail.mailId },
-            );
+            sendTestMail(confirmTestMail.mailId);
           }}
         >
           Send
