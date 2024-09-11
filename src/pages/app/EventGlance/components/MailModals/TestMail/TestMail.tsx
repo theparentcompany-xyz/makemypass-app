@@ -36,7 +36,7 @@ const TestMail = ({
           className={styles.confirmButton}
           //Fix this onClick function
           onClick={() => {
-            sendTestMail(confirmTestMail.mailId);
+            sendTestMail(confirmTestMail.mailId, {});
           }}
         >
           Send
