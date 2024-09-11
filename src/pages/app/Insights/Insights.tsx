@@ -27,7 +27,7 @@ import Modal from '../../../components/Modal/Modal';
 import Theme from '../../../components/Theme/Theme';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Insights.module.css';
-import type { AnalyticsData, ChartData, utmDataType } from './types';
+import type { AnalyticsData, ChartData, LineBarData, utmDataType } from './types';
 
 ChartJS.register(
   CategoryScale,
@@ -48,7 +48,7 @@ const Insights = ({ type }: { type?: string }) => {
   const [message, setMessage] = useState<AnalyticsData>();
   const navigate = useNavigate();
   const [lineData, setLineData] = useState<ChartData>();
-  const [lineData2, setLineData2] = useState<ChartData>();
+  const [lineData2, setLineData2] = useState<LineBarData>();
   const [entryDateCount, setEntryDateCount] = useState<ChartData>();
   const [pieData, setPieData] = useState<ChartData>();
   const [venueBarData, setVenueBarData] = useState<ChartData>();
@@ -203,17 +203,15 @@ const Insights = ({ type }: { type?: string }) => {
             ],
           });
 
-          setLineData2({
-            labels: Object.keys(lineBarData?.daily_analytics || {}),
-            datasets: [
-              {
-                label: 'Daily Analytics',
-                data: Object.values(lineBarData?.daily_analytics || {}),
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-              },
-            ],
-          });
+          setLineData2(
+            Object.entries(lineBarData.daily_analytics).map(([key, value]) => ({
+              label: key,
+              data: value,
+              fill: false,
+              backgroundColor: ['#35A1EB', '#47C97E'],
+              borderColor: ['#35A1EB', '#47C97E'],
+            })),
+          );
 
           setPieData({
             labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
@@ -400,7 +398,14 @@ const Insights = ({ type }: { type?: string }) => {
                 </div>
 
                 <div className={styles.todayRegistered}>
-                  {lineData2 && <Line options={options} data={lineData2} />}
+                  {lineData2 && (
+                    <Line
+                      options={options}
+                      data={{
+                        datasets: lineData2,
+                      }}
+                    />
+                  )}
                   <div className={styles.countSection}>
                     <div className={styles.cLeftSection}>
                       <div className={styles.totalRegistered}>

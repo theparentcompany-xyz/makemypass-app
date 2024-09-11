@@ -101,3 +101,11 @@ export type utmDataType = {
     [key: string]: number;
   };
 };
+
+export type LineBarData = {
+  label: string;
+  data: unknown;
+  fill: boolean;
+  backgroundColor: string[];
+  borderColor: string[];
+}[];
