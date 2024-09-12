@@ -64,6 +64,7 @@ export type SuccessModalProps = {
     url: string;
     type: 'on_submit' | 'on_button_click';
   };
+  newPage?: boolean;
 };
 
 export type AudioControlsType = {

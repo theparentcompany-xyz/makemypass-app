@@ -206,22 +206,29 @@ export const submitForm = async ({
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
       } else {
-        setSuccess &&
-          setSuccess((prev) => ({
-            ...prev,
-            showModal: true,
-            ticketURL: response.data.response.ticket_url,
-            followupMessage: response.data.response.followup_msg,
-            eventRegisterId: response.data.response.event_register_id,
-            loading: false,
-            redirection: response.data.response.redirection,
-          }));
+        const eventName = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
+
+        const successData = {
+          showModal: true,
+          ticketURL: response.data.response.ticket_url,
+          followupMessage: response.data.response.followup_msg,
+          eventRegisterId: response.data.response.event_register_id,
+          loading: false,
+          redirection: response.data.response.redirection,
+          newPage: eventName === 'fabfusion',
+        };
+
+        if (eventName === 'fabfusion') {
+          localStorage.setItem('successData', JSON.stringify(successData));
+
+          navigate && navigate(`/${eventName}/thank-you`);
+        }
+
+        setSuccess && setSuccess(successData);
         if (isCouponFirst && setFormNumber) setFormNumber(1);
         else if (setFormNumber) setFormNumber(0);
         setFormData && setFormData({});
         setDiscount && setDiscount({ discount_value: 0, discount_type: 'error', ticket: [] });
-
-        navigate && navigate('?registrationsuccess=true');
       }
     })
     .catch((error) => {
@@ -399,6 +406,7 @@ export const getEventInfo = async ({
         event_name: response.data.response.name,
         logo: response.data.response.logo,
         event_id: response.data.response.id,
+        is_scratch_card: response.data.response.is_scratch_card,
       };
       sessionStorage.setItem('eventData', JSON.stringify(eventData));
 
