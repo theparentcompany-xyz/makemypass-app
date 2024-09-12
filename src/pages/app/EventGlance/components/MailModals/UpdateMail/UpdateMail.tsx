@@ -142,8 +142,8 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
               <div className={styles.inputContainer}>
                 <p className={styles.inputLabel}>Subject</p>
                 <input
-                  type="text"
-                  placeholder="Enter Subject"
+                  type='text'
+                  placeholder='Enter Subject'
                   className={styles.input}
                   value={mailData?.subject}
                   onChange={(e) =>
@@ -156,7 +156,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
                 <p className={styles.inputLabel}>Body</p>
 
                 <textarea
-                  placeholder="Enter Email Body"
+                  placeholder='Enter Email Body'
                   className={styles.textarea}
                   value={mailData?.body}
                   onChange={(e) => mailData && setMailData({ ...mailData, body: e.target.value })}
