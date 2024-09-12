@@ -408,7 +408,9 @@ const EditEvent = () => {
                     <textarea
                       placeholder='Event Name'
                       className={styles.inputEventName}
-                      onChange={(e) => setEventTitle(e.target.value)}
+                      onChange={(e) => {
+                        setEventTitle(e.target.value);
+                      }}
                       value={eventTitle}
                     />
                   </div>
@@ -496,7 +498,10 @@ const EditEvent = () => {
                         className={styles.urlInput}
                         placeholder='event-url'
                         value={eventData?.name}
-                        onChange={(e) => setEventData({ ...eventData, name: e.target.value })}
+                        onChange={(e) => {
+                          e.target.value = e.target.value.replace(/[^a-zA-Z0-9-]/g, '');
+                          setEventData({ ...eventData, name: e.target.value });
+                        }}
                       />
                     </div>
                     <AnimatePresence>

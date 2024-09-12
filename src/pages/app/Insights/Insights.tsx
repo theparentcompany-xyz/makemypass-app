@@ -203,15 +203,22 @@ const Insights = ({ type }: { type?: string }) => {
             ],
           });
 
-          setLineData2(
-            Object.entries(lineBarData.daily_analytics).map(([key, value], index) => ({
-              label: key,
-              data: value,
+          setLineData2([
+            {
+              label: 'Today',
+              data: lineBarData.daily_analytics['Today'],
               fill: false,
-              backgroundColor: expandedColors[index],
-              borderColor: expandedColors[index],
-            })),
-          );
+              backgroundColor: '#47C97E',
+              borderColor: '#47C97E',
+            },
+            {
+              label: 'Yesterday',
+              data: lineBarData.daily_analytics['Yesterday'],
+              fill: false,
+              backgroundColor: 'rgba(53, 161, 235, 0.4)',
+              borderColor: 'rgba(53, 161, 235, 0.4)',
+            },
+          ]);
 
           setPieData({
             labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
@@ -409,11 +416,19 @@ const Insights = ({ type }: { type?: string }) => {
                   )}
                   <div className={styles.countSection}>
                     <div className={styles.cLeftSection}>
-                      <div className={styles.totalRegistered}>
-                        <p className={styles.total}>Today Registered</p>
-                        <p className={styles.count}>
-                          {message?.today_reg} <span>guests</span>
-                        </p>
+                      <div className='row' style={{ columnGap: '1.5rem' }}>
+                        <div className={styles.totalRegistered}>
+                          <p className={styles.total}>Today</p>
+                          <p className={styles.count}>
+                            {message?.today_reg} <span>guests</span>
+                          </p>
+                        </div>
+                        <div className={styles.totalRegistered}>
+                          <p className={styles.total}>Yesterday</p>
+                          <p className={styles.count}>
+                            {message?.yesterday_reg} <span>guests</span>
+                          </p>
+                        </div>
                       </div>
                       <div className={styles.weeklyCounts}>
                         {Object.entries(message?.today_category || {}).map(([key, value]) => (
