@@ -20,64 +20,66 @@ const CheckIns = () => {
 
   return (
     <Theme>
-      <DashboardLayout prevPage='/events' tabName='checkins'>
+      <DashboardLayout prevPage="/events" tabName="checkins">
         <div className={styles.checkInsButtons}>
           <p className={styles.checkInsHeading}>On-Site Event Management</p>
           <hr className={styles.line} />
           <div className={styles.buttons}>
-            <div className='row'>
+            <div className="row">
               {checkInsButtons?.checkin && (
-                <Link to='checkin/scan'>
+                <Link to="checkin/scan">
                   <SectionButton
-                    buttonText='Check-In User'
-                    buttonColor='#C33D7B'
-                    icon={<BsQrCodeScan size={25} color='#5B75FB' />}
+                    buttonText="Check-In User"
+                    buttonColor="#C33D7B"
+                    icon={<BsQrCodeScan size={25} color="#5B75FB" />}
                   />
                 </Link>
               )}
               {checkInsButtons?.venues && (
-                <Link to='checkin/venue'>
+                <Link to="checkin/venue">
                   <SectionButton
-                    buttonText='Venue Check-In'
-                    buttonColor='#C33D7B'
-                    icon={<FaShop size={25} color='#5B75FB' />}
+                    buttonText="Venue Check-In"
+                    buttonColor="#C33D7B"
+                    icon={<FaShop size={25} color="#5B75FB" />}
                   />
                 </Link>
               )}
               {checkInsButtons?.checkout && (
-                <Link to='checkin/checkout'>
+                <Link to="checkin/checkout">
                   <SectionButton
-                    buttonText='Check-Out User'
-                    buttonColor='#C33D7B'
-                    icon={<BsQrCodeScan size={25} color='#5B75FB' />}
+                    buttonText="Check-Out User"
+                    buttonColor="#C33D7B"
+                    icon={<BsQrCodeScan size={25} color="#5B75FB" />}
                   />
                 </Link>
               )}
               {checkInsButtons?.gift && (
-                <Link to='checkin/gifts'>
+                <Link to="checkin/gifts">
                   <SectionButton
-                    buttonText='Gifts'
-                    buttonColor='#C33D7B'
-                    icon={<BsGift size={25} color='#5B75FB' />}
+                    buttonText="Gifts"
+                    buttonColor="#C33D7B"
+                    icon={<BsGift size={25} color="#5B75FB" />}
                   />
                 </Link>
               )}
               {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
-                <Link to='self-checkin'>
+                <Link to="self-checkin">
                   <SectionButton
-                    buttonText='Print Ticket'
-                    buttonColor='#C33D7B'
-                    icon={<BsGift size={25} color='#5B75FB' />}
+                    buttonText="Print Ticket"
+                    buttonColor="#C33D7B"
+                    icon={<BsGift size={25} color="#5B75FB" />}
                   />
                 </Link>
               )}
-              <Link to='perks'>
-                <SectionButton
-                  buttonText='Perks'
-                  buttonColor='#C33D7B'
-                  icon={<BsGift size={25} color='#5B75FB' />}
-                />
-              </Link>
+              {checkInsButtons?.perk && (
+                <Link to="perks">
+                  <SectionButton
+                    buttonText="Perks"
+                    buttonColor="#C33D7B"
+                    icon={<BsGift size={25} color="#5B75FB" />}
+                  />
+                </Link>
+              )}
               {/* <Link to='claimgifts'>
                 <SectionButton
                   buttonText='Claim Gifts'
