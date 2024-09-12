@@ -10,6 +10,7 @@ export type GuestsType = {
   district: string;
   category: string;
   organization: string;
+  is_checked_in: boolean;
 };
 
 export type ResentTicket = {

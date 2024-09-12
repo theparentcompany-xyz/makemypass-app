@@ -326,11 +326,15 @@ const Guests = () => {
               <Table
                 tableHeading='Recent Guests'
                 tableData={
-                  currentCategory
+                  currentCategory === 'checked_in'
                     ? (guests.filter(
-                        (guest) => guest.category === currentCategory,
+                        (guest) => guest.is_checked_in === true,
                       ) as unknown as TableType[])
-                    : (guests as unknown as TableType[])
+                    : currentCategory
+                      ? (guests.filter(
+                          (guest) => guest.category === currentCategory,
+                        ) as unknown as TableType[])
+                      : (guests as unknown as TableType[])
                 }
                 search={searchKeyword}
                 setResentTicket={setResentTicket}
@@ -381,6 +385,10 @@ const Guests = () => {
                           {
                             value: '',
                             label: 'All',
+                          },
+                          {
+                            value: 'checked_in',
+                            label: 'Checked In',
                           },
                         ]}
                         styles={{
