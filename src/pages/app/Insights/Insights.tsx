@@ -256,6 +256,7 @@ const Insights = ({ type }: { type?: string }) => {
         prevPage='/events'
         tabName='insights'
         setShowPublishModal={setShowPublishModal}
+        isLive={true}
       >
         {showPublishModal && (
           <Modal

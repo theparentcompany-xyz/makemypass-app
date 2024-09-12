@@ -253,7 +253,7 @@ const InEventStats = () => {
 
   return (
     <Theme>
-      <DashboardLayout prevPage='-1' tabName='inevent'>
+      <DashboardLayout prevPage='-1' tabName='inevent' isLive={true}>
         <Glance tab='inevent' />
         <div className={styles.makemypassbranding}>
           <div className={`${styles.backgroundBrand}`}>
