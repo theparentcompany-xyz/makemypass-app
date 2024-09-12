@@ -51,7 +51,7 @@ const Guests = () => {
 
   const [guests, setGuests] = useState<GuestsType[]>([]);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
-
+  const [showCheckedInOnly, setShowCheckedInOnly] = useState<boolean>(false);
   const [eventFormData, setEventFormData] = useState<FormEventData>();
   const [formData, setFormData] = useState<FormDataType>({});
   const [categories, setCategories] = useState<string[]>([]);
@@ -97,9 +97,9 @@ const Guests = () => {
 
   useEffect(() => {
     if (eventId) {
-      getGuestRegisterList(eventId, setGuests);
+      getGuestRegisterList(eventId, setGuests, showCheckedInOnly);
     }
-  }, [eventId, triggerFetch]);
+  }, [eventId, triggerFetch, showCheckedInOnly]);
 
   useEffect(() => {
     if (eventId) {
@@ -326,21 +326,24 @@ const Guests = () => {
               <Table
                 tableHeading='Recent Guests'
                 tableData={
-                  currentCategory === 'checked_in'
+                  currentCategory
                     ? (guests.filter(
-                        (guest) => guest.is_checked_in === true,
+                        (guest) => guest.category === currentCategory,
                       ) as unknown as TableType[])
-                    : currentCategory
-                      ? (guests.filter(
-                          (guest) => guest.category === currentCategory,
-                        ) as unknown as TableType[])
-                      : (guests as unknown as TableType[])
+                    : (guests as unknown as TableType[])
                 }
                 search={searchKeyword}
                 setResentTicket={setResentTicket}
                 setSelectedGuestId={setSelectedGuestId}
                 secondaryButton={
                   <div className={styles.tableButtons}>
+                    <Slider
+                      checked={showCheckedInOnly}
+                      onChange={() => setShowCheckedInOnly(!showCheckedInOnly)}
+                      size='medium'
+                      text='Checked In'
+                    />
+
                     <SecondaryButton
                       buttonText='Invite Guests +'
                       onClick={() => {
@@ -365,10 +368,11 @@ const Guests = () => {
                       <SecondaryButton
                         buttonText='CSV'
                         onClick={() => {
-                          downloadRegisterCSVData(eventId);
+                          downloadRegisterCSVData(eventId, showCheckedInOnly);
                         }}
                       />
                     )}
+
                     {categories.length > 0 && (
                       <Select
                         className='basic-single'
@@ -385,10 +389,6 @@ const Guests = () => {
                           {
                             value: '',
                             label: 'All',
-                          },
-                          {
-                            value: 'checked_in',
-                            label: 'Checked In',
                           },
                         ]}
                         styles={{
