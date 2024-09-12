@@ -151,7 +151,7 @@ const Coupon = () => {
         </Modal>
       )}
       <Theme>
-        <DashboardLayout prevPage='/events' tabName='coupon'>
+        <DashboardLayout prevPage='-1' tabName='coupon'>
           {couponModal.showModal && (
             <Modal
               type='side'

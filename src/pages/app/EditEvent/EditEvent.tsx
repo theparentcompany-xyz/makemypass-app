@@ -12,7 +12,14 @@ import { HiOutlineTicket, HiOutlineUserGroup } from 'react-icons/hi2';
 import { IoCloseOutline } from 'react-icons/io5';
 import { LuPencil } from 'react-icons/lu';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
-import { TbMailStar, TbMicrophone, TbSettings, TbUserCheck, TbWorld } from 'react-icons/tb';
+import {
+  TbHeartHandshake,
+  TbMailStar,
+  TbMicrophone,
+  TbSettings,
+  TbUserCheck,
+  TbWorld,
+} from 'react-icons/tb';
 import Select from 'react-select';
 import { HashLoader } from 'react-spinners';
 
@@ -297,6 +304,21 @@ const EditEvent = () => {
                         setEventData({
                           ...eventData,
                           is_checkout: !eventData.is_checkout,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className={styles.option}>
+                    <label>
+                      <TbHeartHandshake size={20} color='#949597' /> Thank You Page
+                    </label>
+                    <Slider
+                      checked={eventData.thank_you_new_page as boolean}
+                      text={''}
+                      onChange={() =>
+                        setEventData({
+                          ...eventData,
+                          thank_you_new_page: !eventData.thank_you_new_page,
                         })
                       }
                     />

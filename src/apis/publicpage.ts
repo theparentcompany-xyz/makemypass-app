@@ -215,10 +215,10 @@ export const submitForm = async ({
           eventRegisterId: response.data.response.event_register_id,
           loading: false,
           redirection: response.data.response.redirection,
-          newPage: eventName === 'fabfusion',
+          newPage: response.data.response.thank_you_new_page,
         };
 
-        if (eventName === 'fabfusion') {
+        if (response.data.response.thank_you_new_page) {
           localStorage.setItem('successData', JSON.stringify(successData));
 
           navigate && navigate(`/${eventName}/thank-you`);
