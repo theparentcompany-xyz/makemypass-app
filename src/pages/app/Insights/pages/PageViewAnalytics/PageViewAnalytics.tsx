@@ -77,23 +77,6 @@ const PageViewAnalytics = () => {
     'rgb(225, 57, 57)',
   ];
 
-  const utmDatas = {
-    utm_source: {
-      'Page view': { facebook: 1567, whatsapp: 169 },
-      Register: { facebook: 85, whatsapp: 25 },
-    },
-    utm_medium: {
-      'Page view': { ads: 1736 },
-      Register: { ads: 110 },
-    },
-    utm_campaign: {
-      'Page view': { traffic: 903, leads: 664, boat: 136, direct: 1, lead: 32 },
-      Register: { leads: 82, boat: 17, traffic: 3, lead: 8 },
-    },
-    utm_content: {},
-    utm_term: {},
-  };
-
   interface UTMData {
     [key: string]: {
       [key: string]: number;
@@ -175,12 +158,16 @@ const PageViewAnalytics = () => {
       </div>
 
       <div className={styles.utmGraphContainer}>
-        <p className={styles.pageHeader}>UTM Analytics</p>
+        {pageViewAnalytics && pageViewAnalytics.utm && (
+          <p className={styles.pageHeader}>UTM Analytics</p>
+        )}
         <div className={styles.utmGraphContainer}>
-          {Object.entries(utmDatas).map(([utmKey, utmData]) => {
-            if (Object.keys(utmData).length === 0) return null; // Skip empty utm sections
-            return renderBarChart(utmKey, utmData);
-          })}
+          {pageViewAnalytics &&
+            pageViewAnalytics.utm &&
+            Object.entries(pageViewAnalytics.utm).map(([utmKey, utmData]) => {
+              if (Object.keys(utmData).length === 0) return null; // Skip empty utm sections
+              return renderBarChart(utmKey, utmData);
+            })}
         </div>
       </div>
     </Theme>

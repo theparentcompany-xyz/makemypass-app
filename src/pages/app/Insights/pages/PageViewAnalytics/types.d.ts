@@ -7,30 +7,32 @@ export type AnalyticsData = {
       [date: string]: number;
     };
   };
-  utm_source: {
-    'Page view': {
-      [source: string]: number;
+  utm: {
+    source: {
+      'Page view': {
+        [source: string]: number;
+      };
+      Register: {
+        [source: string]: number;
+      };
     };
-    Register: {
-      [source: string]: number;
+    medium: {
+      'Page view': {
+        [medium: string]: number;
+      };
+      Register: {
+        [medium: string]: number;
+      };
     };
+    campaign: {
+      'Page view': {
+        [campaign: string]: number;
+      };
+      Register: {
+        [campaign: string]: number;
+      };
+    };
+    content: Record<string, never>;
+    term: Record<string, never>;
   };
-  utm_medium: {
-    'Page view': {
-      [medium: string]: number;
-    };
-    Register: {
-      [medium: string]: number;
-    };
-  };
-  utm_campaign: {
-    'Page view': {
-      [campaign: string]: number;
-    };
-    Register: {
-      [campaign: string]: number;
-    };
-  };
-  utm_content: Record<string, never>;
-  utm_term: Record<string, never>;
 };
