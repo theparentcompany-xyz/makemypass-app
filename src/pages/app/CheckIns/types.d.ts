@@ -14,4 +14,5 @@ export type checkInButtonsType = {
   checkout: boolean;
   venues: boolean;
   gift: boolean;
+  perk: boolean;
 };
