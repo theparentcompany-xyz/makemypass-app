@@ -194,6 +194,7 @@
   flex: 1 1 0;
   min-width: 15rem;
   width: 0;
+  position: relative;
   /* width: 22.5%; */
 }
 

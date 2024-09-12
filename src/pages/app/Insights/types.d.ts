@@ -106,6 +106,6 @@ export type LineBarData = {
   label: string;
   data: unknown;
   fill: boolean;
-  backgroundColor: string[];
-  borderColor: string[];
+  backgroundColor: string;
+  borderColor: string;
 }[];

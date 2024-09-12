@@ -50,3 +50,19 @@ export const getVenueAnalytics = (
       );
     });
 };
+
+// export const getPageViewAnalytics = (
+//   id: string,
+//   setVenueAnalytics: Dispatch<SetStateAction<any>>,
+// ) => {
+//   privateGateway
+//     .get(makeMyPass.getPageViewAnalytics(id))
+//     .then((response) => {
+//       setVenueAnalytics(response.data.response);
+//     })
+//     .catch((error) => {
+//       toast.error(
+//         error.response.data.message.general[0] || 'Error in Fetching Page View Analytics Data',
+//       );
+//     });
+// };

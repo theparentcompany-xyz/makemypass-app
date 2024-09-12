@@ -155,8 +155,11 @@ const EditEvent = () => {
 
     const formData = new FormData();
     for (const key in changedData) {
-      if (changedData[key] !== undefined) {
-        formData.append(key, String(changedData[key]));
+      const value = changedData[key];
+      if (value !== undefined && typeof value !== 'object') {
+        formData.append(key, String(value));
+      } else if (value instanceof Blob) {
+        formData.append(key, value);
       }
     }
 

@@ -50,17 +50,8 @@ const SuccessModal = ({
       >
         {success && success.showModal && (
           <>
-            <Modal>
+            <Modal title='Registration Successful'>
               <div className={styles.modalContainer}>
-                <button
-                  onClick={() => {
-                    setSuccess({ showModal: false });
-                  }}
-                  className={styles.closeButton}
-                >
-                  X
-                </button>
-
                 {!success.loading ? (
                   <div className={styles.modalTexts}>
                     <div dangerouslySetInnerHTML={{ __html: success.followupMessage || '' }}></div>

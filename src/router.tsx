@@ -5,6 +5,7 @@ import { Roles } from '../services/enums';
 import RoleChecker from '../services/RoleChecker';
 import AuthCheck from './components/AuthCheck/AuthCheck';
 import Loader from './components/Loader';
+import PageViewAnalytics from './pages/app/Insights/pages/PageViewAnalytics/PageViewAnalytics';
 import PrivacyPolicy from './pages/app/PrivacyPolicy/PrivacyPolicy';
 import TermsConditions from './pages/app/TermsCondictions/TermsConditions';
 import Login from './pages/auth/Login/Login';
@@ -351,6 +352,16 @@ const routes: RouteObject[] = [
           <RoleChecker roles={[Roles.ADMIN, Roles.VOLUNTEER, Roles.OWNER]}>
             <React.Suspense fallback={<Loader />}>
               <Perks />
+            </React.Suspense>
+          </RoleChecker>
+        ),
+      },
+      {
+        path: '/:eventTitle/page-view-analytics/',
+        element: (
+          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
+            <React.Suspense fallback={<Loader />}>
+              <PageViewAnalytics />
             </React.Suspense>
           </RoleChecker>
         ),
