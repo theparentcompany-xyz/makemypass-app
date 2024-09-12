@@ -14,8 +14,7 @@
 .modalTexts {
   color: white;
   font-family: 'Inter', sans-serif;
-  text-align: center;
-  text-align: center;
+  text-align: left;
 }
 
 .scratchCard {
@@ -98,7 +97,7 @@
   font-family: 'Inter', sans-serif;
   max-width: 23rem;
   display: block;
-  margin: 0.5rem auto;
+  margin-top: 1rem;
 }
 
 .loaderContainer {

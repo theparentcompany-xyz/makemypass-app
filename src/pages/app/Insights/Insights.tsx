@@ -204,12 +204,12 @@ const Insights = ({ type }: { type?: string }) => {
           });
 
           setLineData2(
-            Object.entries(lineBarData.daily_analytics).map(([key, value]) => ({
+            Object.entries(lineBarData.daily_analytics).map(([key, value], index) => ({
               label: key,
               data: value,
               fill: false,
-              backgroundColor: ['#35A1EB', '#47C97E'],
-              borderColor: ['#35A1EB', '#47C97E'],
+              backgroundColor: expandedColors[index],
+              borderColor: expandedColors[index],
             })),
           );
 
@@ -521,6 +521,14 @@ const Insights = ({ type }: { type?: string }) => {
                 </div>
 
                 <div className={styles.pageVisitsCount}>
+                  <div className={styles.logButton}>
+                    <SecondaryButton
+                      buttonText='View More'
+                      onClick={() => {
+                        navigate(`/${eventTitle}/page-view-analytics`);
+                      }}
+                    />
+                  </div>
                   <div className={styles.countSection}>
                     <div className={styles.cLeftSection}>
                       <div className={styles.totalRegistered}>
