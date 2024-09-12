@@ -5,6 +5,7 @@ import { Roles } from '../services/enums';
 import RoleChecker from '../services/RoleChecker';
 import AuthCheck from './components/AuthCheck/AuthCheck';
 import Loader from './components/Loader';
+import ThankYouPage from './pages/app/EventPage/components/ThankYouPage/ThankYouPage';
 import PageViewAnalytics from './pages/app/Insights/pages/PageViewAnalytics/PageViewAnalytics';
 import PrivacyPolicy from './pages/app/PrivacyPolicy/PrivacyPolicy';
 import TermsConditions from './pages/app/TermsCondictions/TermsConditions';
@@ -377,6 +378,14 @@ const routes: RouteObject[] = [
     element: (
       <React.Suspense fallback={<Loader />}>
         <EventPage />
+      </React.Suspense>
+    ),
+  },
+  {
+    path: '/:eventTitle/thank-you',
+    element: (
+      <React.Suspense fallback={<Loader />}>
+        <ThankYouPage />
       </React.Suspense>
     ),
   },
