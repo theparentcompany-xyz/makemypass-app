@@ -50,7 +50,12 @@ const SuccessModal = ({
       >
         {success && success.showModal && (
           <>
-            <Modal title='Registration Successful'>
+            <Modal
+              title='Registration Successful'
+              onClose={() => {
+                setSuccess({ showModal: false });
+              }}
+            >
               <div className={styles.modalContainer}>
                 {!success.loading ? (
                   <div className={styles.modalTexts}>
