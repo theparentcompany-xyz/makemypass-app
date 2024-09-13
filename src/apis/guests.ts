@@ -125,9 +125,9 @@ export const viewGuestTicket = async (
     });
 };
 
-export const downloadRegisterCSVData = async (eventId: string) => {
+export const downloadRegisterCSVData = async (eventId: string, showCheckedInOnly: boolean) => {
   privateGateway
-    .get(makeMyPass.guestDownloadCSV(eventId))
+    .get(makeMyPass.guestDownloadCSV(eventId) + (showCheckedInOnly ? '?checkin=true' : ''))
     .then((response) => {
       const csvData = response.data;
       const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
@@ -197,9 +197,10 @@ export const deleteGuestSubmission = async (
 export const getGuestRegisterList = async (
   eventId: string,
   setGuestList: Dispatch<React.SetStateAction<GuestsType[]>>,
+  showCheckedInOnly: boolean,
 ) => {
   privateGateway
-    .get(makeMyPass.guestRegisterList(eventId))
+    .get(makeMyPass.guestRegisterList(eventId) + (showCheckedInOnly ? '?checkin=true' : ''))
     .then((response) => {
       setGuestList(response.data.response);
     })

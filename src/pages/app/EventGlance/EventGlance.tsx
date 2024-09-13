@@ -250,7 +250,10 @@ const EventGlance = () => {
           {showQR && (
             <Modal title='QR Code' onClose={() => setShowQR(false)}>
               <div className={styles.qrContainer}>
-                <img src={eventLink} alt='QR Code' />
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${eventLink}`}
+                  alt='QR Code'
+                />
 
                 <p className={styles.qrText}>
                   Scan this QR code to visit the event page on your mobile device
@@ -260,7 +263,7 @@ const EventGlance = () => {
                   buttonText='Download QR'
                   icon={<LuDownload size={15} />}
                   onClick={() => {
-                    const url = eventLink;
+                    const url = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${eventLink}`;
 
                     fetch(url)
                       .then((response) => response.blob())

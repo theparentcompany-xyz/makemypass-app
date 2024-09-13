@@ -18,6 +18,7 @@
 .text {
   font-size: 13px;
   color: #cacaca;
+  font-family: 'Inter', sans-serif;
 }
 
 .switch input {

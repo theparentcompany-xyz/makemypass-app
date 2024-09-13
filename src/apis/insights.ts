@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
-import { EventPerkClaimedHourly, HourlyDataVenue } from './types';
+import { AnalyticsData, EventPerkClaimedHourly, HourlyDataVenue } from './types';
 
 export const getInsightsVisibility = (
   id: string,
@@ -51,18 +51,18 @@ export const getVenueAnalytics = (
     });
 };
 
-// export const getPageViewAnalytics = (
-//   id: string,
-//   setVenueAnalytics: Dispatch<SetStateAction<any>>,
-// ) => {
-//   privateGateway
-//     .get(makeMyPass.getPageViewAnalytics(id))
-//     .then((response) => {
-//       setVenueAnalytics(response.data.response);
-//     })
-//     .catch((error) => {
-//       toast.error(
-//         error.response.data.message.general[0] || 'Error in Fetching Page View Analytics Data',
-//       );
-//     });
-// };
+export const getPageViewAnalytics = (
+  id: string,
+  setVenueAnalytics: Dispatch<SetStateAction<AnalyticsData | undefined>>,
+) => {
+  privateGateway
+    .get(makeMyPass.getPageViewAnalytics(id))
+    .then((response) => {
+      setVenueAnalytics(response.data.response);
+    })
+    .catch((error) => {
+      toast.error(
+        error.response.data.message.general[0] || 'Error in Fetching Page View Analytics Data',
+      );
+    });
+};

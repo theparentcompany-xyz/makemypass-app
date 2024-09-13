@@ -50,6 +50,7 @@
 .tableButtons {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: flex-end;
   row-gap: 1rem;

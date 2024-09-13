@@ -51,7 +51,7 @@ const Guests = () => {
 
   const [guests, setGuests] = useState<GuestsType[]>([]);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
-
+  const [showCheckedInOnly, setShowCheckedInOnly] = useState<boolean>(false);
   const [eventFormData, setEventFormData] = useState<FormEventData>();
   const [formData, setFormData] = useState<FormDataType>({});
   const [categories, setCategories] = useState<string[]>([]);
@@ -97,9 +97,9 @@ const Guests = () => {
 
   useEffect(() => {
     if (eventId) {
-      getGuestRegisterList(eventId, setGuests);
+      getGuestRegisterList(eventId, setGuests, showCheckedInOnly);
     }
-  }, [eventId, triggerFetch]);
+  }, [eventId, triggerFetch, showCheckedInOnly]);
 
   useEffect(() => {
     if (eventId) {
@@ -337,6 +337,13 @@ const Guests = () => {
                 setSelectedGuestId={setSelectedGuestId}
                 secondaryButton={
                   <div className={styles.tableButtons}>
+                    <Slider
+                      checked={showCheckedInOnly}
+                      onChange={() => setShowCheckedInOnly(!showCheckedInOnly)}
+                      size='medium'
+                      text='Checked In'
+                    />
+
                     <SecondaryButton
                       buttonText='Invite Guests +'
                       onClick={() => {
@@ -361,10 +368,11 @@ const Guests = () => {
                       <SecondaryButton
                         buttonText='CSV'
                         onClick={() => {
-                          downloadRegisterCSVData(eventId);
+                          downloadRegisterCSVData(eventId, showCheckedInOnly);
                         }}
                       />
                     )}
+
                     {categories.length > 0 && (
                       <Select
                         className='basic-single'

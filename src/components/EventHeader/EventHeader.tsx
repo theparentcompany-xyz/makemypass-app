@@ -3,7 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from './EventHeader.module.css';
 
-const EventHeader = ({ previousPageNavigate }: { previousPageNavigate: string }) => {
+const EventHeader = ({
+  previousPageNavigate,
+  isLive,
+}: {
+  previousPageNavigate: string;
+  isLive?: boolean;
+}) => {
   const localEventData = JSON.parse(sessionStorage.getItem('eventData')!);
 
   const navigate = useNavigate();
@@ -46,7 +52,7 @@ const EventHeader = ({ previousPageNavigate }: { previousPageNavigate: string })
           </div>
           <div className='row'>
             <p className={styles.date}>{localEventData?.date}</p>
-            <img src='/app/live.gif' alt='Live indicator gif' className={styles.gif} />
+            {isLive && <img src='/app/live.gif' alt='Live indicator gif' className={styles.gif} />}
           </div>
         </motion.div>
       )}

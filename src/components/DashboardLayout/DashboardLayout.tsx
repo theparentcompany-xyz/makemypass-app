@@ -9,16 +9,18 @@ const DashboardLayout = ({
   tabName,
   children,
   setShowPublishModal,
+  isLive,
 }: {
   prevPage: string;
   tabName?: string;
   children: React.ReactNode;
   setShowPublishModal?: Dispatch<SetStateAction<boolean>>;
+  isLive?: boolean;
 }) => {
   return (
     <>
       <div className={styles.dashoardLayoutContainer}>
-        <EventHeader previousPageNavigate={prevPage} />
+        <EventHeader previousPageNavigate={prevPage} isLive={isLive} />
         {tabName && <DashboardTabs tab={tabName} setShowPublishModal={setShowPublishModal} />}
         <div className={styles.dashboardContent}>{children}</div>
       </div>

@@ -207,7 +207,7 @@ const Overview = () => {
 
   return (
     <Theme>
-      <DashboardLayout prevPage='/events' tabName='overview'>
+      <DashboardLayout prevPage='/events' tabName='overview' isLive={true}>
         <Glance tab='overview' />
 
         <>
