@@ -10,6 +10,7 @@ import { LuCopy, LuDownload, LuMail, LuPencil, LuQrCode } from 'react-icons/lu';
 import { MdCampaign } from 'react-icons/md';
 import { RiCoupon2Fill } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
+import { HashLoader } from 'react-spinners';
 
 import { getEventData } from '../../../apis/events';
 import { getEventMailData, listEventMails } from '../../../apis/mails';
@@ -96,6 +97,7 @@ const EventGlance = () => {
   const [isTicketsOpen, setIsTicketsOpen] = useState(false);
   const [mails, setMails] = useState<listMailType[]>([]);
   const [showQR, setShowQR] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false); // state to track image load
   const [venues, setVenues] = useState<VenueCRUDType>({
     showModal: false,
     venueList: [],
@@ -248,34 +250,49 @@ const EventGlance = () => {
           )}
 
           {showQR && (
-            <Modal title='QR Code' onClose={() => setShowQR(false)}>
+            <Modal
+              title='QR Code'
+              onClose={() => setShowQR(false)}
+              style={{
+                maxHeight: '19rem',
+              }}
+            >
               <div className={styles.qrContainer}>
                 <img
                   src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${eventLink}`}
                   alt='QR Code'
+                  onLoad={() => setImageLoaded(true)} // set imageLoaded to true when the image is loaded
                 />
 
-                <p className={styles.qrText}>
-                  Scan this QR code to visit the event page on your mobile device
-                </p>
+                {imageLoaded ? ( // only show this content when image is loaded
+                  <>
+                    <p className={styles.qrText}>
+                      Scan this QR code to visit the event page on your mobile device
+                    </p>
 
-                <SecondaryButton
-                  buttonText='Download QR'
-                  icon={<LuDownload size={15} />}
-                  onClick={() => {
-                    const url = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${eventLink}`;
+                    <SecondaryButton
+                      buttonText='Download QR'
+                      icon={<LuDownload size={15} />}
+                      onClick={() => {
+                        const url = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${eventLink}`;
 
-                    fetch(url)
-                      .then((response) => response.blob())
-                      .then((blob) => {
-                        const link = document.createElement('a');
-                        link.href = window.URL.createObjectURL(blob);
-                        link.download = 'QR Code.png';
-                        link.click();
-                      })
-                      .catch((error) => console.error('Error downloading the QR code:', error));
-                  }}
-                />
+                        fetch(url)
+                          .then((response) => response.blob())
+                          .then((blob) => {
+                            const link = document.createElement('a');
+                            link.href = window.URL.createObjectURL(blob);
+                            link.download = 'QR Code.png';
+                            link.click();
+                          })
+                          .catch((error) => console.error('Error downloading the QR code:', error));
+                      }}
+                    />
+                  </>
+                ) : (
+                  <div className='center'>
+                    <HashLoader color={'#46BF75'} size={50} />
+                  </div>
+                )}
               </div>
             </Modal>
           )}
