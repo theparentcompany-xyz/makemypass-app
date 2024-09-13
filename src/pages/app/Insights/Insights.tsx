@@ -537,16 +537,15 @@ const Insights = ({ type }: { type?: string }) => {
                 </div>
 
                 <div className={styles.pageVisitsCount}>
-                  {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
-                    <div className={styles.logButton}>
-                      <SecondaryButton
-                        buttonText='View More'
-                        onClick={() => {
-                          navigate(`/${eventTitle}/page-view-analytics`);
-                        }}
-                      />
-                    </div>
-                  )}
+                  <div className={styles.logButton}>
+                    <SecondaryButton
+                      buttonText='View More'
+                      onClick={() => {
+                        navigate(`/${eventTitle}/page-view-analytics`);
+                      }}
+                    />
+                  </div>
+
                   <div className={styles.countSection}>
                     <div className={styles.cLeftSection}>
                       <div className={styles.totalRegistered}>
