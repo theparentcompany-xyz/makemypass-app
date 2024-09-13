@@ -12,6 +12,7 @@ import {
 } from 'chart.js';
 import { useEffect, useState } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
+import { HashLoader } from 'react-spinners';
 
 import { getPageViewAnalytics } from '../../../../../apis/insights';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
@@ -36,10 +37,11 @@ ChartJS.register(
 
 const PageViewAnalytics = () => {
   const [pageViewAnalytics, setPageViewAnalytics] = useState<AnalyticsData | undefined>();
+  const [dataLoaded, setDataLoaded] = useState(false);
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!)?.event_id;
 
   useEffect(() => {
-    getPageViewAnalytics(eventId, setPageViewAnalytics);
+    getPageViewAnalytics(eventId, setPageViewAnalytics, setDataLoaded);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -137,39 +139,47 @@ const PageViewAnalytics = () => {
   return (
     <Theme>
       <EventHeader previousPageNavigate='-1' />
-      <div className={styles.pageGraphContainer}>
-        <p className={styles.pageHeader}>Page View Analytics</p>
-        <div className={styles.pageGraph}>
-          <Line
-            data={{
-              datasets: Object.entries(pageViewAnalytics?.page_to_reg_total ?? {}).map(
-                ([key, value], index) => ({
-                  label: key,
-                  data: value,
-                  fill: false,
-                  backgroundColor: colors[index],
-                  borderColor: colors[index],
-                }),
-              ),
-            }}
-            options={options}
-          />
-        </div>
-      </div>
+      {dataLoaded ? (
+        <>
+          <div className={styles.pageGraphContainer}>
+            <p className={styles.pageHeader}>Page View Analytics</p>
+            <div className={styles.pageGraph}>
+              <Line
+                data={{
+                  datasets: Object.entries(pageViewAnalytics?.page_to_reg_total ?? {}).map(
+                    ([key, value], index) => ({
+                      label: key,
+                      data: value,
+                      fill: false,
+                      backgroundColor: colors[index],
+                      borderColor: colors[index],
+                    }),
+                  ),
+                }}
+                options={options}
+              />
+            </div>
+          </div>
 
-      <div className={styles.utmGraphContainer}>
-        {pageViewAnalytics && pageViewAnalytics.utm && (
-          <p className={styles.pageHeader}>UTM Analytics</p>
-        )}
-        <div className={styles.utmGraphContainer}>
-          {pageViewAnalytics &&
-            pageViewAnalytics.utm &&
-            Object.entries(pageViewAnalytics.utm).map(([utmKey, utmData]) => {
-              if (Object.keys(utmData).length === 0) return null; // Skip empty utm sections
-              return renderBarChart(utmKey, utmData);
-            })}
+          <div className={styles.utmGraphContainer}>
+            {pageViewAnalytics && pageViewAnalytics.utm && (
+              <p className={styles.pageHeader}>UTM Analytics</p>
+            )}
+            <div className={styles.utmGraphContainer}>
+              {pageViewAnalytics &&
+                pageViewAnalytics.utm &&
+                Object.entries(pageViewAnalytics.utm).map(([utmKey, utmData]) => {
+                  if (Object.keys(utmData).length === 0) return null; // Skip empty utm sections
+                  return renderBarChart(utmKey, utmData);
+                })}
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className='center'>
+          <HashLoader color={'#46BF75'} size={50} />
         </div>
-      </div>
+      )}
     </Theme>
   );
 };

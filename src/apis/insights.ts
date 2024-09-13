@@ -54,6 +54,7 @@ export const getVenueAnalytics = (
 export const getPageViewAnalytics = (
   id: string,
   setVenueAnalytics: Dispatch<SetStateAction<AnalyticsData | undefined>>,
+  setDataLoaded: Dispatch<SetStateAction<boolean>>,
 ) => {
   privateGateway
     .get(makeMyPass.getPageViewAnalytics(id))
@@ -64,5 +65,8 @@ export const getPageViewAnalytics = (
       toast.error(
         error.response.data.message.general[0] || 'Error in Fetching Page View Analytics Data',
       );
+    })
+    .finally(() => {
+      setDataLoaded(true);
     });
 };
