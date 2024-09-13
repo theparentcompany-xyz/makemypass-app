@@ -13,6 +13,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import toast from 'react-hot-toast';
+import { FaExpandArrowsAlt } from 'react-icons/fa';
 import { IoCopyOutline } from 'react-icons/io5';
 import { MdOutlinePublishedWithChanges } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router';
@@ -25,7 +26,6 @@ import { getInsightsVisibility } from '../../../apis/insights';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Modal from '../../../components/Modal/Modal';
 import Theme from '../../../components/Theme/Theme';
-import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Insights.module.css';
 import type { AnalyticsData, ChartData, LineBarData, utmDataType } from './types';
 
@@ -539,11 +539,12 @@ const Insights = ({ type }: { type?: string }) => {
                 <div className={styles.pageVisitsCount}>
                   {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
                     <div className={styles.logButton}>
-                      <SecondaryButton
-                        buttonText='View More'
+                      <FaExpandArrowsAlt
+                        color='rgb(255, 255, 255, 0.8)'
                         onClick={() => {
                           navigate(`/${eventTitle}/page-view-analytics`);
                         }}
+                        className='pointer'
                       />
                     </div>
                   )}
@@ -612,11 +613,12 @@ const Insights = ({ type }: { type?: string }) => {
                 {(message?.payment_analytics.total_paid_users ?? 0 > 0) && (
                   <div className={styles.paymentCounts}>
                     <div className={styles.logButton}>
-                      <SecondaryButton
-                        buttonText='View Logs'
+                      <FaExpandArrowsAlt
+                        color='rgb(255, 255, 255, 0.8)'
                         onClick={() => {
                           navigate(`/${eventTitle}/payment-analytics`);
                         }}
+                        className='pointer'
                       />
                     </div>
                     <div className={styles.countSection}>
@@ -725,11 +727,12 @@ const Insights = ({ type }: { type?: string }) => {
                 {venueBarData && venueBarData.datasets[0].data.length > 0 && (
                   <div className={styles.registrationCount}>
                     <div className={styles.logButton}>
-                      <SecondaryButton
-                        buttonText='View More'
+                      <FaExpandArrowsAlt
+                        color='rgb(255, 255, 255, 0.8)'
                         onClick={() => {
                           navigate(`/${eventTitle}/venue-analytics`);
                         }}
+                        className='pointer'
                       />
                     </div>
                     <div className={styles.graphContainer}>
@@ -743,11 +746,12 @@ const Insights = ({ type }: { type?: string }) => {
                 {perkData && perkData.datasets[0].data.length > 0 && (
                   <div className={styles.registrationCount}>
                     <div className={styles.logButton}>
-                      <SecondaryButton
-                        buttonText='View More'
+                      <FaExpandArrowsAlt
+                        color='rgb(255, 255, 255, 0.8)'
                         onClick={() => {
                           navigate(`/${eventTitle}/perks-analytics`);
                         }}
+                        className='pointer'
                       />
                     </div>
                     <div className={styles.graphContainer}>
