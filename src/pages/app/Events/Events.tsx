@@ -161,11 +161,13 @@ const Events = () => {
                                 <div className={styles.eventDetails}>
                                   <div className={styles.eventDetailsHeader}>
                                     <div>
-                                      <motion.div className={styles.eventDate}>
-                                        <p className={styles.date}>
-                                          {formatDate(event?.event_start_date)}
-                                        </p>
-                                      </motion.div>
+                                      {event.event_start_date && (
+                                        <motion.div className={styles.eventDate}>
+                                          <p className={styles.date}>
+                                            {formatDate(event?.event_start_date)}
+                                          </p>
+                                        </motion.div>
+                                      )}
                                       <p className={styles.eventName}>
                                         {event.title.substring(0, 40)}
                                         {event.title.length > 40 ? '...' : ''}

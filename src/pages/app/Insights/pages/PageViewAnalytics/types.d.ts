@@ -35,4 +35,41 @@ export type AnalyticsData = {
     content: Record<string, never>;
     term: Record<string, never>;
   };
+
+  metadata: Metadata;
+};
+
+export type Metadata = {
+  browser: {
+    'Page view': Record<string, number>;
+    Register: Record<string, number>;
+  };
+  device_type: {
+    'Page view': Record<string, number>;
+    Register: Record<string, number>;
+  };
+  operating_system: {
+    'Page view': Record<string, number>;
+    Register: Record<string, number>;
+  };
+  city: {
+    'Page view': Record<string, number>;
+    Register: Record<string, number>;
+  };
+  region: {
+    'Page view': Record<string, number>;
+    Register: Record<string, number>;
+  };
+  country: {
+    'Page view': Record<string, number>;
+    Register: Record<string, number>;
+  };
+  location: {
+    'Page view': Record<string, number>;
+    Register: Record<string, number>;
+  };
+  locale: {
+    'Page view': Record<string, number>;
+    Register: Record<string, number>;
+  };
 };

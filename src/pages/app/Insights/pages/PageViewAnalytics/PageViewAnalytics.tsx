@@ -16,7 +16,9 @@ import { HashLoader } from 'react-spinners';
 
 import { getPageViewAnalytics } from '../../../../../apis/insights';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
+import GenericTable from '../../../../../components/Table/GenericTable';
 import Theme from '../../../../../components/Theme/Theme';
+import { transformData } from './functions';
 import styles from './PageViewAnalytics.module.css';
 import type { AnalyticsData } from './types';
 
@@ -44,6 +46,13 @@ const PageViewAnalytics = () => {
     getPageViewAnalytics(eventId, setPageViewAnalytics, setDataLoaded);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (pageViewAnalytics) {
+      console.log(transformData(pageViewAnalytics.metadata));
+      console.log(Object.keys(pageViewAnalytics.metadata));
+    }
+  }, [pageViewAnalytics]);
 
   const options = {
     responsive: true,
@@ -173,6 +182,21 @@ const PageViewAnalytics = () => {
                   return renderBarChart(utmKey, utmData);
                 })}
             </div>
+          </div>
+
+          <div className={styles.analyticsTableContainers}>
+            {pageViewAnalytics &&
+              pageViewAnalytics.metadata &&
+              Object.keys(pageViewAnalytics.metadata).map((key) => (
+                <div key={key} className={styles.analyticsTableContainer}>
+                  <GenericTable
+                    tableData={transformData(pageViewAnalytics.metadata)[key]}
+                    tableHeading={
+                      key.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) + ' Analytics'
+                    }
+                  />
+                </div>
+              ))}
           </div>
         </>
       ) : (

@@ -150,8 +150,6 @@ const GenericTable = ({
                                 setNewCouponData(response);
                                 if (setCouponModal) setCouponModal({ showModal: true });
                               });
-                              // setNewCouponData(data);
-                              // if (setCouponModal) setCouponModal({ showModal: true });
                             }}
                           />
                         </td>
@@ -163,11 +161,6 @@ const GenericTable = ({
                             onClick={() => {
                               setSelectedCoupon(data);
                               setShowConfirmModal(true);
-                              // deleteCoupon(
-                              //   JSON.parse(sessionStorage.getItem('eventData')!).event_id,
-                              //   data.id,
-                              //   setTableData as React.Dispatch<React.SetStateAction<CouponType[]>>,
-                              // );
                             }}
                           />
                         </td>
