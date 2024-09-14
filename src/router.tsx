@@ -6,7 +6,6 @@ import RoleChecker from '../services/RoleChecker';
 import AuthCheck from './components/AuthCheck/AuthCheck';
 import ViewTicket from './components/ViewTicket/ViewTicket';
 import CheckIns from './pages/app/CheckIns/CheckIns';
-import CheckIn from './pages/app/CheckIns/pages/CheckIn/CheckIn';
 import CheckOutScan from './pages/app/CheckIns/pages/CheckOutScan/CheckOutScan';
 import Perks from './pages/app/CheckIns/pages/Perks/Perks';
 import ScanQR from './pages/app/CheckIns/pages/ScanQR/ScanQR';
@@ -126,14 +125,7 @@ const routes: RouteObject[] = [
           </RoleChecker>
         ),
       },
-      {
-        path: '/:eventTitle/checkins/checkin',
-        element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
-            <CheckIn />
-          </RoleChecker>
-        ),
-      },
+
       {
         path: '/:eventTitle/checkins/checkin/venue',
         element: (

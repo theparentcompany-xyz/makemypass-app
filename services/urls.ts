@@ -46,6 +46,8 @@ export const makeMyPass = {
   guestDownloadCSV: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/download-csv/`),
   guestListFormCategories: (eventId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/list-form-categories/`),
+  guestListPagination: (eventId = '') =>
+    makeMyPassURL(`/manage-guest/${eventId}/register-list-pagination/`),
 
   //Manage Logs
   mailLog: (eventId: string) => makeMyPassURL(`/manage-log/${eventId}/mail-log/`),

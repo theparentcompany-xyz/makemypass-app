@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { IoLocationOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router';
@@ -15,13 +14,7 @@ const EventBox = ({ eventData }: Props) => {
   const navigate = useNavigate();
   return (
     <>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 20 }}
-        transition={{ duration: 0.3 }}
-        className={styles.eventGlance}
-      >
+      <div className={styles.eventGlance}>
         <div className={styles.bannerContainer}>
           {eventData?.banner ? (
             <img src={eventData?.banner} alt='' className={styles.banner} />
@@ -40,90 +33,89 @@ const EventBox = ({ eventData }: Props) => {
               )}
             </svg>
           )}
+        </div>
+        <div className={styles.eventDetailsContainer}>
+          <div className={styles.headingTexts}>
+            <p className={styles.eventTitle}>{eventData?.title}</p>
+          </div>
 
-          <div className={styles.eventDetailsContainer}>
-            <div className={styles.headingTexts}>
-              <p className={styles.eventTitle}>{eventData?.title}</p>
+          <div className={styles.eventDatePlace}>
+            <div className={styles.eventDate}>
+              {eventData?.event_start_date && (
+                <>
+                  <div className={styles.dateBox}>
+                    <p className={styles.eventMonth}>
+                      {getMonthAbbreviation(eventData?.event_start_date)}
+                    </p>
+                    <p className={styles.eventDateNum}>{getDay(eventData?.event_start_date)}</p>
+                  </div>
+                  <div className={styles.eventDateTimeText}>
+                    <p className={styles.eventDateText}>
+                      {new Date(eventData?.event_start_date).toLocaleDateString([], {
+                        weekday: 'long',
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric',
+                      }) ?? ''}
+                    </p>
+                    <p className={styles.eventTimeText}>
+                      {new Date(eventData?.event_start_date).toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}{' '}
+                      -{' '}
+                      {eventData?.event_end_date && (
+                        <>
+                          {new Date(eventData?.event_end_date).toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
+                          {', '}
+                          {new Date(eventData?.event_end_date).toLocaleDateString([], {
+                            month: 'long',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })}
+                        </>
+                      )}
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
-
-            <div className={styles.eventDatePlace}>
-              <div className={styles.eventDate}>
-                {eventData?.event_start_date && (
-                  <>
-                    <div className={styles.dateBox}>
-                      <p className={styles.eventMonth}>
-                        {getMonthAbbreviation(eventData?.event_start_date)}
-                      </p>
-                      <p className={styles.eventDateNum}>{getDay(eventData?.event_start_date)}</p>
-                    </div>
-                    <div className={styles.eventDateTimeText}>
-                      <p className={styles.eventDateText}>
-                        {new Date(eventData?.event_start_date).toLocaleDateString([], {
-                          weekday: 'long',
-                          month: 'long',
-                          day: 'numeric',
-                          year: 'numeric',
-                        }) ?? ''}
-                      </p>
-                      <p className={styles.eventTimeText}>
-                        {new Date(eventData?.event_start_date).toLocaleTimeString([], {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}{' '}
-                        -{' '}
-                        {eventData?.event_end_date && (
-                          <>
-                            {new Date(eventData?.event_end_date).toLocaleTimeString([], {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                            {', '}
-                            {new Date(eventData?.event_end_date).toLocaleDateString([], {
-                              month: 'long',
-                              day: 'numeric',
-                              year: 'numeric',
-                            })}
-                          </>
-                        )}
-                      </p>
-                    </div>
-                  </>
-                )}
-              </div>
-              <div className={styles.eventPlace}>
-                {eventData?.place && (
-                  <>
-                    <div className={styles.locationBox}>
-                      <IoLocationOutline size={25} className={styles.locationIcon} />
-                    </div>
-                    <div className={styles.eventDateTimeText}>
-                      <p className={styles.eventDateText}>{eventData?.place}</p>
-                    </div>
-                  </>
-                )}
-              </div>
-              <div className={styles.buttons}>
-                <button
-                  onClick={() => {
-                    const eventLink = `https://makemypass.com/${eventData?.name}`;
-                    navigator.clipboard.writeText(eventLink);
-                    toast.success('Event link copied to clipboard');
-                  }}
-                  className={styles.editEventButton}
-                >
-                  Share Event
-                </button>
-                <button
-                  onClick={() => navigate(`/${eventData?.name}/manage/edit-event`)}
-                  className={styles.editEventButton}
-                >
-                  Edit Event
-                </button>
-              </div>
+            <div className={styles.eventPlace}>
+              {eventData?.place && (
+                <>
+                  <div className={styles.locationBox}>
+                    <IoLocationOutline size={25} className={styles.locationIcon} />
+                  </div>
+                  <div className={styles.eventDateTimeText}>
+                    <p className={styles.eventDateText}>{eventData?.place}</p>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className={styles.buttons}>
+              <button
+                onClick={() => {
+                  const eventLink = `https://makemypass.com/${eventData?.name}`;
+                  navigator.clipboard.writeText(eventLink);
+                  toast.success('Event link copied to clipboard');
+                }}
+                className={styles.editEventButton}
+              >
+                Share Event
+              </button>
+              <button
+                onClick={() => navigate(`/${eventData?.name}/manage/edit-event`)}
+                className={styles.editEventButton}
+              >
+                Edit Event
+              </button>
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </>
   );
 };

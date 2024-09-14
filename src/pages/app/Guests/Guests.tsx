@@ -9,12 +9,12 @@ import { HashLoader } from 'react-spinners';
 
 import { Roles } from '../../../../services/enums';
 import { getFormCategories } from '../../../apis/events';
+import { listGuestsPagination } from '../../../apis/guest';
 import {
   downloadRegisterCSVData,
   getEventFormData,
   getGuestEditPrefillData,
   getGuestInformation,
-  getGuestRegisterList,
   resentGuestTicket,
   viewGuestTicket,
 } from '../../../apis/guests';
@@ -36,7 +36,13 @@ import BulkUpload from './components/BulkUpload/BulkUpload';
 import EditGuest from './components/EditGuest/EditGuest';
 import ViewGuest from './components/ViewGuest/ViewGuest';
 import styles from './Guests.module.css';
-import { FormEventData, GuestsType, ResentTicket, SelectedGuest } from './types';
+import {
+  FormEventData,
+  GuestsType,
+  PaginationDataType,
+  ResentTicket,
+  SelectedGuest,
+} from './types';
 
 const Guests = () => {
   const navigate = useNavigate();
@@ -50,6 +56,15 @@ const Guests = () => {
   const eventRegisterId = searchParams.get('eventRegisterId');
 
   const [guests, setGuests] = useState<GuestsType[]>([]);
+  const [paginationData, setPaginationData] = useState<PaginationDataType>({
+    page: 1,
+    total_pages: 0,
+    total_items: 0,
+    per_page: 10,
+    next: null,
+    previous: null,
+    fetchingData: false,
+  });
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [showCheckedInOnly, setShowCheckedInOnly] = useState<boolean>(false);
   const [eventFormData, setEventFormData] = useState<FormEventData>();
@@ -97,9 +112,18 @@ const Guests = () => {
 
   useEffect(() => {
     if (eventId) {
-      getGuestRegisterList(eventId, setGuests, showCheckedInOnly);
+      // getGuestRegisterList(eventId, setGuests, showCheckedInOnly);
+      listGuestsPagination(
+        eventId,
+        setGuests,
+        paginationData,
+        setPaginationData,
+        showCheckedInOnly,
+        searchKeyword,
+      );
     }
-  }, [eventId, triggerFetch, showCheckedInOnly]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eventId, triggerFetch, showCheckedInOnly, searchKeyword]);
 
   useEffect(() => {
     if (eventId) {
@@ -332,7 +356,6 @@ const Guests = () => {
                       ) as unknown as TableType[])
                     : (guests as unknown as TableType[])
                 }
-                search={searchKeyword}
                 setResentTicket={setResentTicket}
                 setSelectedGuestId={setSelectedGuestId}
                 secondaryButton={
@@ -409,6 +432,9 @@ const Guests = () => {
                     )}
                   </div>
                 }
+                paginationData={paginationData}
+                setPaginationData={setPaginationData}
+                setTriggerFetch={setTriggerFetch}
               />
             </div>
           </>

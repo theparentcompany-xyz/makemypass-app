@@ -1,11 +1,12 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { Dispatch, useMemo } from 'react';
+import React, { Dispatch, useEffect, useMemo } from 'react';
 import { FaCheck, FaDollarSign } from 'react-icons/fa6';
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdDelete, MdEdit } from 'react-icons/md';
+import { HashLoader } from 'react-spinners';
 import { FixedSizeList } from 'react-window';
 
 import { timeAgo } from '../../common/commonFunctions';
-import { ResentTicket, SelectedGuest } from '../../pages/app/Guests/types';
+import { PaginationDataType, ResentTicket, SelectedGuest } from '../../pages/app/Guests/types';
 import type { hostId } from '../../pages/app/Overview/Overview/types';
 import styles from './Table.module.css';
 import { TableType, TabType } from './types';
@@ -163,20 +164,30 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
 const Table = ({
   tableHeading,
   tableData,
-  search,
+
   setResentTicket,
   setSelectedGuestId,
   secondaryButton,
   setHostId,
+  paginationData,
+  setPaginationData,
+  setTriggerFetch,
 }: {
   tableHeading: string;
   tableData: TableType[];
-  search?: string;
+
   setResentTicket?: Dispatch<React.SetStateAction<ResentTicket>>;
   setSelectedGuestId?: Dispatch<React.SetStateAction<SelectedGuest | null>>;
   secondaryButton?: React.ReactElement;
   setHostId?: Dispatch<React.SetStateAction<hostId>>;
+  paginationData?: PaginationDataType;
+  setPaginationData?: Dispatch<React.SetStateAction<PaginationDataType>>;
+  setTriggerFetch?: Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  useEffect(() => {
+    console.log('paginationData', paginationData);
+  }, [paginationData]);
+
   const categoryColors = ['#47C97E', '#7662FC', '#C33D7B', '#FBD85B', '#5B75FB', '#D2D4D7'];
 
   const rgbaArray = [
@@ -206,41 +217,30 @@ const Table = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableData]);
 
-  const filteredData = useMemo(() => {
-    let keyword = '';
-    let field = '';
+  // const filteredData = useMemo(() => {
+  //   const keyword = '';
+  //   const field = '';
 
-    if (search) {
-      if (search.includes('from:')) {
-        field = (search.match(/from:(\S+)/) || [])[1] || '';
-        field = field.trim().toLowerCase();
-        if (search.includes('has:')) {
-          keyword = (search.match(/has:(.+)$/) || [])[1]?.trim() || '';
-          keyword = keyword.trim().toLowerCase();
-        }
-      } else keyword = search.toLowerCase();
-    }
+  //   if (field) {
+  //     return tableData.filter((item) => item[field]?.toLowerCase().includes(keyword));
+  //   } else
+  //     return tableData.filter(
+  //       (item) =>
+  //         item.name?.toLowerCase().includes(keyword) ||
+  //         item.email?.toLowerCase().includes(keyword) ||
+  //         item.phonenumber?.toLowerCase().includes(keyword) ||
+  //         item.fullName?.toLowerCase().includes(keyword),
+  //     );
+  // }, [tableData]);
 
-    if (field) {
-      return tableData.filter((item) => item[field]?.toLowerCase().includes(keyword));
-    } else
-      return tableData.filter(
-        (item) =>
-          item.name?.toLowerCase().includes(keyword) ||
-          item.email?.toLowerCase().includes(keyword) ||
-          item.phonenumber?.toLowerCase().includes(keyword) ||
-          item.fullName?.toLowerCase().includes(keyword),
-      );
-  }, [tableData, search]);
-
-  const groupBy = (filteredData: TableType[], key: string) => {
-    return filteredData.reduce((result: { [key: string]: TableType[] }, currentValue) => {
+  const groupBy = (tableData: TableType[], key: string) => {
+    return tableData.reduce((result: { [key: string]: TableType[] }, currentValue) => {
       (result[currentValue[key]] = result[currentValue[key]] || []).push(currentValue);
       return result;
     }, {});
   };
 
-  const groupByTeam = groupBy(filteredData, 'team_id');
+  const groupByTeam = groupBy(tableData, 'team_id');
 
   const itemData: ItemDataType = useMemo(
     () => ({
@@ -264,25 +264,96 @@ const Table = ({
       >
         <div className={styles.tableHeader}>
           <p className={styles.tableHeading}>
-            {`${tableHeading}${filteredData.length > 10 ? `(${filteredData.length})` : ''}`}
+            {`${tableHeading}${tableData.length > 10 ? `(${tableData.length})` : ''}`}
           </p>
           {secondaryButton && secondaryButton}
         </div>
 
         <div className={styles.tableContainer}>
           <div className={styles.table}>
-            <AnimatePresence>
-              <FixedSizeList
-                height={Object.keys(groupByTeam).length > 50 ? 550 : filteredData.length * 38}
-                width='100%'
-                itemCount={Object.keys(groupByTeam).length}
-                itemSize={37} // Adjust based on row height
-                itemData={itemData}
+            {paginationData && paginationData.fetchingData ? (
+              <div
+                className='center'
+                style={{
+                  height: '34vh',
+                }}
               >
-                {RowComponent}
-              </FixedSizeList>
-            </AnimatePresence>
+                <HashLoader color='#47c97e' size={50} />
+              </div>
+            ) : (
+              <AnimatePresence>
+                <FixedSizeList
+                  height={Object.keys(groupByTeam).length > 50 ? 550 : tableData.length * 38}
+                  width='100%'
+                  itemCount={Object.keys(groupByTeam).length}
+                  itemSize={37} // Adjust based on row height
+                  itemData={itemData}
+                >
+                  {RowComponent}
+                </FixedSizeList>
+              </AnimatePresence>
+            )}
           </div>
+        </div>
+
+        <div className={styles.paginationContainer}>
+          {paginationData && (
+            <>
+              <div className={styles.totalRecords}>
+                <p className={styles.paginationText}>{paginationData.total_items} Records</p>
+              </div>
+              <div className={styles.pagination}>
+                <p className={styles.paginationText}>
+                  {paginationData.page} of {paginationData.total_pages}
+                </p>
+                <button
+                  className={styles.paginationButton}
+                  disabled={paginationData.page === 1}
+                  onClick={() => {
+                    setTriggerFetch && setTriggerFetch((prevState) => !prevState);
+                    setPaginationData &&
+                      setPaginationData((prevState) => ({
+                        ...prevState,
+                        page: prevState.page - 1,
+                      }));
+                  }}
+                  style={
+                    paginationData.previous === null
+                      ? {
+                          opacity: 0.4,
+                          cursor: 'not-allowed',
+                        }
+                      : {}
+                  }
+                >
+                  {'<'}
+                </button>
+
+                <button
+                  className={styles.paginationButton}
+                  disabled={paginationData.page === paginationData.total_pages}
+                  onClick={() => {
+                    setTriggerFetch && setTriggerFetch((prevState) => !prevState);
+                    setPaginationData &&
+                      setPaginationData((prevState) => ({
+                        ...prevState,
+                        page: prevState.page + 1,
+                      }));
+                  }}
+                  style={
+                    paginationData.next === null
+                      ? {
+                          opacity: 0.4,
+                          cursor: 'not-allowed',
+                        }
+                      : {}
+                  }
+                >
+                  {'>'}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </motion.div>
     </>

@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import type { Tickets } from '../pages/app/EventPage/types';
-import { SelectedGuest } from '../pages/app/Guests/types';
+import { GuestsType, PaginationDataType, SelectedGuest } from '../pages/app/Guests/types';
 import { ErrorMessages, FormDataType, PaymentDetails } from './types';
 
 export const setGuestShortlistStatus = (
@@ -149,4 +149,36 @@ export const addGuest = (
       toast.error(error.response.data.message.general[0] || 'Guest adding failed');
       setFormErrors(error.response.data.message);
     });
+};
+
+export const listGuestsPagination = (
+  eventId: string,
+  setGuests: Dispatch<React.SetStateAction<GuestsType[]>>,
+  paginationData: PaginationDataType | undefined,
+  setPaginationData: Dispatch<React.SetStateAction<PaginationDataType>>,
+  showCheckedInOnly: boolean,
+  searchKeyword: string,
+) => {
+  if (paginationData && paginationData.page && paginationData.page) {
+    setPaginationData((prev) => ({ ...prev, fetchingData: true }));
+    privateGateway
+      .get(makeMyPass.guestListPagination(eventId), {
+        params: {
+          per_page: paginationData.per_page,
+          page: paginationData.page,
+          checkin: showCheckedInOnly,
+          search: searchKeyword,
+        },
+      })
+      .then((response) => {
+        setGuests(response.data.response.data);
+        setPaginationData(response.data.response.pagination);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message.general[0] || 'Error in fetching guests');
+      })
+      .finally(() => {
+        setPaginationData((prev) => ({ ...prev, fetchingData: false }));
+      });
+  }
 };

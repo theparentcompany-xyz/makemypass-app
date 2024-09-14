@@ -36,3 +36,13 @@ export interface FormEventData {
   claim_ticket_id?: string;
   show_ticket_first?: boolean;
 }
+
+export type PaginationDataType = {
+  page: number;
+  total_pages: number;
+  total_items: number;
+  per_page: number;
+  next: number | null;
+  previous: number | null;
+  fetchingData: boolean;
+};

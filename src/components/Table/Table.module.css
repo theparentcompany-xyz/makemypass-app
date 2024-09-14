@@ -37,7 +37,7 @@
   margin-top: 1rem;
 
   padding: 1rem;
-  max-height: 60vh;
+  max-height: 41vh;
   overflow: auto;
 }
 
@@ -153,4 +153,43 @@ th {
   font-weight: 600;
 }
 
-/* Path: src/components/Table/Table.js */
+.paginationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.pagination {
+  display: flex;
+
+  align-items: center;
+}
+
+.paginationText {
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: 400;
+  margin-right: 0.5rem;
+}
+
+.paginationButton {
+  margin: 0 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  border: none;
+
+  padding: 0.35rem 0.7rem; /* Modified size */
+  max-height: 2rem;
+
+  cursor: pointer;
+}

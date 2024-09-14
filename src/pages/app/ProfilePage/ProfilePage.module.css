@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: calc(100% - 2rem);
 }
 
 .viewProfile {
@@ -19,12 +20,44 @@
   font-family: 'Inter', sans-serif;
 }
 
+.profileSection {
+  gap: 0.5rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+
+  width: calc(100% - 4rem);
+  padding: 2rem;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
 .eventBoxesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.homeHeader {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.eventsContainer {
   display: flex;
   flex-direction: row;
   gap: 1rem;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .profilePageContainer {
@@ -32,7 +65,6 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 2rem;
 }
 
 .profileForm {
@@ -48,6 +80,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-top: 0.5rem;
 }
 
 .formGroup input {
@@ -57,6 +90,10 @@
   background: rgba(255, 255, 255, 0.08);
   color: white;
   font-family: 'Inter', sans-serif;
+}
+
+.formGroupContainer {
+  margin-top: 2rem;
 }
 
 .formGroup label {
@@ -134,41 +171,17 @@
   align-items: center;
   margin-bottom: 2.5rem;
   gap: 1rem;
-  width: 85%;
   flex-wrap: wrap;
-}
-
-.editProfileButton {
-  display: flex;
-  align-items: center;
-  font-weight: 400;
-  font-family: 'Inter', sans-serif;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.25rem;
-  outline: none;
-  color: #ffffff;
-  background-color: #212325;
-  border: 1px solid #3e3e3e;
-  margin-left: auto;
-  align-self: flex-start;
-  gap: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease-out;
-}
-
-.editProfileButton:hover {
-  background-color: #3e3e3eb5;
-  color: #ffffff;
-  padding: 0.5rem 1rem;
 }
 
 .infoName {
   font-weight: 500;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
 }
 
 .infoEmail {
-  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  font-size: 1rem;
   color: #a4a4a4;
 }
 
@@ -184,8 +197,6 @@
 .eventSection {
   display: flex;
   flex-direction: column;
-  width: 85%;
-  max-width: 80rem;
 }
 
 /* Modal Stuff*/

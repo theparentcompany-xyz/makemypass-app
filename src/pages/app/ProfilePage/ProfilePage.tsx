@@ -19,6 +19,7 @@ import Loader from '../../../components/Loader';
 import ButtonLoader from '../../../components/LoaderButton/LoaderButton';
 import Modal from '../../../components/Modal/Modal';
 import Theme from '../../../components/Theme/Theme';
+import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import EventBox from './components/EventBox/EventBox';
 import styles from './ProfilePage.module.css';
 
@@ -47,6 +48,12 @@ const ProfilePage = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState<boolean>(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+
+  enum EventStatus {
+    Published = 'Published',
+    Completed = 'Completed',
+    Draft = 'Draft',
+  }
 
   const handleUpdateProfile = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -100,9 +107,9 @@ const ProfilePage = () => {
         <>
           <Theme>
             {isOpenModal && (
-              <Modal type='side' onClose={() => setIsOpenModal(false)}>
+              <Modal type='side' onClose={() => setIsOpenModal(false)} title='Edit Profile'>
                 <div className={styles.modalContainer}>
-                  <form className={styles.profileForm} onSubmit={handleUpdateProfile}>
+                  <form onSubmit={handleUpdateProfile}>
                     <div className={styles.userDetailsContainer}>
                       {user?.profile_pic?.includes('.png') && !editUser?.profile_pic && (
                         <>
@@ -153,9 +160,8 @@ const ProfilePage = () => {
                         <label className={styles.modalUserName}>{editUser?.name}</label>
                         <label className={styles.modalUserMail}>{editUser?.email}</label>
                       </div>
-                    </div>
-                    <label>Personal Information</label>
-                    <div className={styles.viewProfile}>
+                    </div>{' '}
+                    <div className={styles.formGroupContainer}>
                       <div className={styles.formGroup}>
                         <label htmlFor='name'>Full Name</label>
                         <input
@@ -174,7 +180,9 @@ const ProfilePage = () => {
                         </div>
                       ) : (
                         <div className={styles.formGroup}>
-                          <label htmlFor='email'>Email Address</label>
+                          <label htmlFor='email' style={{ opacity: 0.5 }}>
+                            Email Address
+                          </label>
                           <input
                             required
                             type='email'
@@ -183,6 +191,7 @@ const ProfilePage = () => {
                             value={editUser?.email}
                             onChange={(e) => setEditUser({ ...editUser, email: e.target.value })}
                             disabled={true}
+                            style={{ opacity: 0.5 }}
                           />
                         </div>
                       )}
@@ -208,8 +217,7 @@ const ProfilePage = () => {
                       </div>
                     </div>
                   </form>
-
-                  <form className={styles.viewProfile} onSubmit={handleUpdatePassword}>
+                  <form onSubmit={handleUpdatePassword}>
                     <div className={styles.formGroup}>
                       <label htmlFor='current_password'>Current Password</label>
                       <div className={styles.passwordContainer}>
@@ -281,58 +289,48 @@ const ProfilePage = () => {
             <div className={styles.profilePageContainer}>
               <div className={styles.profileSection}>
                 {user?.profile_pic?.includes('.png') ? (
-                  <motion.img
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                    src={user?.profile_pic}
-                    alt='profile picture'
-                    className={styles.profilePic}
-                  />
+                  <img src={user?.profile_pic} className={styles.profilePic} />
                 ) : (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
+                  <div>
                     <BiUser className={styles.profilePic} style={{ padding: '10px' }} />
-                  </motion.div>
+                  </div>
                 )}
                 <div className={styles.profileInfo}>
-                  <motion.label
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className={styles.infoName}
-                  >
-                    {user?.name}
-                  </motion.label>
-                  <motion.label
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className={styles.infoEmail}
-                  >
-                    {user?.email}
-                  </motion.label>
+                  <label className={styles.infoName}>{user?.name}</label>
+                  <label className={styles.infoEmail}>{user?.email}</label>
+                  <SecondaryButton
+                    onClick={() => setIsOpenModal(true)}
+                    buttonText='Edit Profile'
+                    icon={<FiEdit3 />}
+                  />
                 </div>
-
-                <motion.button
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className={styles.editProfileButton}
-                  onClick={() => setIsOpenModal(true)}
-                >
-                  <FiEdit3 /> Edit Profile
-                </motion.button>
               </div>
 
               <div className={styles.eventSection}>
                 <div className={styles.eventBoxesContainer}>
-                  {eventsData.map((event) => (
-                    <EventBox eventData={event} />
-                  ))}
+                  {Object.values(EventStatus).map((status) => {
+                    return (
+                      <div>
+                        <motion.p
+                          initial={{ opacity: 0, y: 50 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5 }}
+                          className={styles.homeHeader}
+                        >
+                          {eventsData.filter((event) => event.status == status).length > 0
+                            ? `${status} Events (${eventsData.filter((event) => event.status == status).length})`
+                            : ''}
+                        </motion.p>
+                        <div className={styles.eventsContainer}>
+                          {eventsData
+                            .filter((event) => event.status == status)
+                            .map((event) => (
+                              <EventBox key={event.id} eventData={event} />
+                            ))}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
