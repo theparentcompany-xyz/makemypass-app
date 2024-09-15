@@ -81,11 +81,14 @@
   font-size: 0.8rem;
   line-height: 1.5;
   color: white;
-  pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    font-family: 'Inter', sans-serif;
-  }
+}
+
+.mailContent pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .mailLogsHeaders {
