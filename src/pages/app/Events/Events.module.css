@@ -10,12 +10,6 @@
   height: 100%;
 }
 
-@media screen and (max-width: 1350px) {
-  .homeContainer {
-    padding: 0 1.75rem;
-  }
-}
-
 .eventsContainer {
   display: flex;
   justify-content: flex-start;

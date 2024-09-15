@@ -310,8 +310,7 @@ const InEventStats = () => {
                 <div className={styles.totalRegistered}>
                   <p className={styles.total}>Total Check-Ins</p>
                   <p className={styles.count}>
-                    {totalCheckIns}
-                    <span> guests</span>
+                    {totalCheckIns}d<span> guests</span>
                   </p>
                 </div>
               </div>
@@ -327,10 +326,10 @@ const InEventStats = () => {
                       }}
                       className={styles.day}
                     >
-                      {formatDate(day.day, false, true)}fcategoryName
+                      {formatDate(day.day, false, true)}
                     </p>
                     <p className={styles.dcount}>
-                      {day.count} <span>guests</span>
+                      {day.count} <span>guestsd</span>
                     </p>
                   </div>
                 ))}

@@ -89,6 +89,7 @@
 }
 
 .mailLogsHeaders {
+  margin-top: 1rem;
   color: white;
   font-family: 'Inter', sans-serif;
   font-size: 1.25rem;

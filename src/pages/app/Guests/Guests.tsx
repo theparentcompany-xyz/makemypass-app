@@ -1,7 +1,9 @@
 import { isArray } from 'chart.js/helpers';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { FaFileCsv } from 'react-icons/fa';
 import { RiSearchLine } from 'react-icons/ri';
+import { TiUserAdd } from 'react-icons/ti';
 import { useNavigate, useParams } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import Select from 'react-select';
@@ -363,19 +365,8 @@ const Guests = () => {
                     <Slider
                       checked={showCheckedInOnly}
                       onChange={() => setShowCheckedInOnly(!showCheckedInOnly)}
-                      size='medium'
-                      text='Checked In'
-                    />
-
-                    <SecondaryButton
-                      buttonText='Invite Guests +'
-                      onClick={() => {
-                        setSelectedGuestId({
-                          id: '',
-                          type: 'add',
-                        });
-                        setFormData({});
-                      }}
+                      size='small'
+                      text='Checked-In'
                     />
 
                     {showPicker && (
@@ -383,15 +374,6 @@ const Guests = () => {
                         buttonText='Pick User'
                         onClick={() => {
                           navigate(`/${eventTitle}/randomsizer`);
-                        }}
-                      />
-                    )}
-
-                    {(userRole === Roles.ADMIN || userRole === Roles.OWNER) && (
-                      <SecondaryButton
-                        buttonText='CSV'
-                        onClick={() => {
-                          downloadRegisterCSVData(eventId, showCheckedInOnly);
                         }}
                       />
                     )}
@@ -430,6 +412,30 @@ const Guests = () => {
                         }}
                       />
                     )}
+
+                    {(userRole === Roles.ADMIN || userRole === Roles.OWNER) && (
+                      <FaFileCsv
+                        onClick={() => {
+                          downloadRegisterCSVData(eventId, showCheckedInOnly);
+                        }}
+                        size={20}
+                        color='#575f61'
+                        className='pointer'
+                      />
+                    )}
+
+                    <TiUserAdd
+                      onClick={() => {
+                        setSelectedGuestId({
+                          id: '',
+                          type: 'add',
+                        });
+                        setFormData({});
+                      }}
+                      size={25}
+                      color='#575f61'
+                      className='pointer'
+                    />
                   </div>
                 }
                 paginationData={paginationData}

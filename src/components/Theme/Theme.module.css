@@ -38,10 +38,3 @@
   overflow: auto;
   z-index: 1;
 }
-
-@media (max-width: 1300px) {
-  .childrenContainer {
-    padding: 0 1.25rem;
-    width: calc(100% - 2.5rem);
-  }
-}

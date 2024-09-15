@@ -302,56 +302,58 @@ const Table = ({
               <div className={styles.totalRecords}>
                 <p className={styles.paginationText}>{paginationData.total_items} Records</p>
               </div>
-              <div className={styles.pagination}>
-                <p className={styles.paginationText}>
-                  {paginationData.page} of {paginationData.total_pages}
-                </p>
-                <button
-                  className={styles.paginationButton}
-                  disabled={paginationData.page === 1}
-                  onClick={() => {
-                    setTriggerFetch && setTriggerFetch((prevState) => !prevState);
-                    setPaginationData &&
-                      setPaginationData((prevState) => ({
-                        ...prevState,
-                        page: prevState.page - 1,
-                      }));
-                  }}
-                  style={
-                    paginationData.previous === null
-                      ? {
-                          opacity: 0.4,
-                          cursor: 'not-allowed',
-                        }
-                      : {}
-                  }
-                >
-                  {'<'}
-                </button>
+              {(paginationData.next || paginationData.previous) && (
+                <div className={styles.pagination}>
+                  <p className={styles.paginationText}>
+                    {paginationData.page} of {paginationData.total_pages}
+                  </p>
+                  <button
+                    className={styles.paginationButton}
+                    disabled={paginationData.page === 1}
+                    onClick={() => {
+                      setTriggerFetch && setTriggerFetch((prevState) => !prevState);
+                      setPaginationData &&
+                        setPaginationData((prevState) => ({
+                          ...prevState,
+                          page: prevState.page - 1,
+                        }));
+                    }}
+                    style={
+                      paginationData.previous === null
+                        ? {
+                            opacity: 0.4,
+                            cursor: 'not-allowed',
+                          }
+                        : {}
+                    }
+                  >
+                    {'<'}
+                  </button>
 
-                <button
-                  className={styles.paginationButton}
-                  disabled={paginationData.page === paginationData.total_pages}
-                  onClick={() => {
-                    setTriggerFetch && setTriggerFetch((prevState) => !prevState);
-                    setPaginationData &&
-                      setPaginationData((prevState) => ({
-                        ...prevState,
-                        page: prevState.page + 1,
-                      }));
-                  }}
-                  style={
-                    paginationData.next === null
-                      ? {
-                          opacity: 0.4,
-                          cursor: 'not-allowed',
-                        }
-                      : {}
-                  }
-                >
-                  {'>'}
-                </button>
-              </div>
+                  <button
+                    className={styles.paginationButton}
+                    disabled={paginationData.page === paginationData.total_pages}
+                    onClick={() => {
+                      setTriggerFetch && setTriggerFetch((prevState) => !prevState);
+                      setPaginationData &&
+                        setPaginationData((prevState) => ({
+                          ...prevState,
+                          page: prevState.page + 1,
+                        }));
+                    }}
+                    style={
+                      paginationData.next === null
+                        ? {
+                            opacity: 0.4,
+                            cursor: 'not-allowed',
+                          }
+                        : {}
+                    }
+                  >
+                    {'>'}
+                  </button>
+                </div>
+              )}
             </>
           )}
         </div>

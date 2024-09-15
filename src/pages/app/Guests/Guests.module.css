@@ -150,6 +150,14 @@
   justify-content: flex-end;
   row-gap: 1rem;
   column-gap: 0.25rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 428px) {
+  .tableButtons {
+    justify-content: flex-start;
+  }
 }
 
 .ticketCode {
