@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsQrCodeScan } from 'react-icons/bs';
 import { FaHouse, FaWrench } from 'react-icons/fa6';
+import { PiSpinnerDuotone } from 'react-icons/pi';
 import { HiUserGroup } from 'react-icons/hi2';
 import { ImTicket } from 'react-icons/im';
 import { IoLocationOutline } from 'react-icons/io5';
@@ -487,6 +488,16 @@ const EventGlance = () => {
                   icon={<FaHouse size={25} color='#5B75FB' />}
                   onClick={() => {
                     setSpeakers({ ...speakers, showModal: true });
+                  }}
+                />
+              )}
+              {import.meta.env.VITE_CURRENT_ENV == 'dev' && (
+                <SectionButton
+                  buttonText='Spinwheel'
+                  buttonColor='#5B75FB'
+                  icon={<PiSpinnerDuotone size={25} color='#5B75FB' />}
+                  onClick={() => {
+                    navigate(`/${eventName}/manage/spinwheel`);
                   }}
                 />
               )}

@@ -21,6 +21,8 @@ export const makeMyPass = {
   scanGuestPerkList: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/perk/list`),
   scanGuestPrint: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/print`),
 
+  getSpinWheelData: (eventId: string) => makeMyPassURL(`/games/${eventId}/spin-wheel/scan`),
+  getSpinWheelGift: (eventId: string) => makeMyPassURL(`/games/${eventId}/spin-wheel/spin`),
   //Manage Guests
   eventCreate: makeMyPassURL(`/manage-event/create/`),
 

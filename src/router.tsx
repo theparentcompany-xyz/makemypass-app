@@ -39,6 +39,7 @@ import TermsConditions from './pages/app/TermsCondictions/TermsConditions';
 import ValidateData from './pages/app/ValidateData/ValidateData';
 import Login from './pages/auth/Login/Login';
 import FourNotFour from './pages/FourNotFour/FourNotFour';
+import Spinwheel from './pages/app/Spinwheel/Spinwheel';
 
 const routes: RouteObject[] = [
   {
@@ -191,6 +192,14 @@ const routes: RouteObject[] = [
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
             <EditEvent />
+          </RoleChecker>
+        ),
+      },
+      {
+        path: '/:eventTitle/manage/spinwheel',
+        element: (
+          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
+            <Spinwheel />
           </RoleChecker>
         ),
       },
