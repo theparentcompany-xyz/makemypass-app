@@ -193,3 +193,33 @@ th {
 
   cursor: pointer;
 }
+
+.perPage {
+  display: flex;
+  align-items: center;
+
+  .paginationText {
+    display: flex;
+    align-items: center;
+  }
+}
+.perPageSelect {
+  margin-left: 0.5rem;
+  padding: 0.25rem;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  opacity: 0.5;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  cursor: pointer;
+}
+
+select:focus {
+  outline: none;
+}
+
+option {
+  background-color: #131c1a;
+  opacity: 0.5;
+}
