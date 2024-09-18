@@ -217,13 +217,17 @@ const Events = () => {
                                       </p>
                                     </div>
                                     <div className={styles.absoluteButtons}>
-                                      <div className={styles.tagsButton}>
-                                        <FaTags
-                                          color='#ffffff'
-                                          className='pointer'
-                                          title={event.tags.length > 0 ? event.tags.join(', ') : ''}
-                                        />
-                                      </div>
+                                      {event.tags.length > 0 && (
+                                        <div className={styles.tagsButton}>
+                                          <FaTags
+                                            color='#ffffff'
+                                            className='pointer'
+                                            title={
+                                              event.tags.length > 0 ? event.tags.join(', ') : ''
+                                            }
+                                          />
+                                        </div>
+                                      )}
                                       {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
                                         <div className={styles.rightMenuButton}>
                                           <BsThreeDots
