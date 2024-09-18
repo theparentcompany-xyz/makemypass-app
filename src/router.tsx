@@ -35,11 +35,11 @@ import ProfilePage from './pages/app/ProfilePage/ProfilePage';
 import Randomizer from './pages/app/Randomizer/Randomizer';
 import SelfCheckIn from './pages/app/SelfCheckIn/SelfCheckIn';
 import SetProfilePage from './pages/app/SetProfilePage/SetProfilePage';
+import Spinwheel from './pages/app/Spinwheel/Spinwheel';
 import TermsConditions from './pages/app/TermsCondictions/TermsConditions';
 import ValidateData from './pages/app/ValidateData/ValidateData';
 import Login from './pages/auth/Login/Login';
 import FourNotFour from './pages/FourNotFour/FourNotFour';
-import Spinwheel from './pages/app/Spinwheel/Spinwheel';
 
 const routes: RouteObject[] = [
   {
