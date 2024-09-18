@@ -8,6 +8,7 @@ import { ImTicket } from 'react-icons/im';
 import { IoLocationOutline } from 'react-icons/io5';
 import { LuCopy, LuDownload, LuMail, LuPencil, LuQrCode } from 'react-icons/lu';
 import { MdCampaign } from 'react-icons/md';
+import { PiSpinnerDuotone } from 'react-icons/pi';
 import { RiCoupon2Fill } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
@@ -487,6 +488,16 @@ const EventGlance = () => {
                   icon={<FaHouse size={25} color='#5B75FB' />}
                   onClick={() => {
                     setSpeakers({ ...speakers, showModal: true });
+                  }}
+                />
+              )}
+              {import.meta.env.VITE_CURRENT_ENV == 'dev' && (
+                <SectionButton
+                  buttonText='Spinwheel'
+                  buttonColor='#5B75FB'
+                  icon={<PiSpinnerDuotone size={25} color='#5B75FB' />}
+                  onClick={() => {
+                    navigate(`/${eventName}/manage/spinwheel`);
                   }}
                 />
               )}

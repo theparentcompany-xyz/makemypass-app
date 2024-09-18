@@ -35,6 +35,7 @@ import ProfilePage from './pages/app/ProfilePage/ProfilePage';
 import Randomizer from './pages/app/Randomizer/Randomizer';
 import SelfCheckIn from './pages/app/SelfCheckIn/SelfCheckIn';
 import SetProfilePage from './pages/app/SetProfilePage/SetProfilePage';
+import Spinwheel from './pages/app/Spinwheel/Spinwheel';
 import TermsConditions from './pages/app/TermsCondictions/TermsConditions';
 import ValidateData from './pages/app/ValidateData/ValidateData';
 import Login from './pages/auth/Login/Login';
@@ -191,6 +192,14 @@ const routes: RouteObject[] = [
         element: (
           <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
             <EditEvent />
+          </RoleChecker>
+        ),
+      },
+      {
+        path: '/:eventTitle/manage/spinwheel',
+        element: (
+          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
+            <Spinwheel />
           </RoleChecker>
         ),
       },
