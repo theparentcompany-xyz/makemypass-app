@@ -77,6 +77,7 @@ const Guests = () => {
   const [ticketCode, setTicketCode] = useState<string>('');
   const [showScanner, setShowScanner] = useState<boolean>(false);
   const [isCashInHand, setIsCashInHand] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState('');
 
   const [showPicker, setShowPicker] = useState<boolean>(false);
 
@@ -100,6 +101,13 @@ const Guests = () => {
     } else if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'view')
       getGuestInformation(eventId, selectedGuestId.id, setSelectedGuest);
   };
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      setSearchKeyword(searchInput);
+    }, 750);
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchInput]);
 
   useEffect(() => {
     if (eventRegisterId) {
@@ -342,9 +350,7 @@ const Guests = () => {
               <div className={styles.searchInput}>
                 <RiSearchLine color='#5F6063' />
                 <input
-                  onChange={(event) => {
-                    setSearchKeyword(event.target.value);
-                  }}
+                  onChange={(event) => setSearchInput(event.target.value)}
                   placeholder='Search'
                   type='text'
                 />

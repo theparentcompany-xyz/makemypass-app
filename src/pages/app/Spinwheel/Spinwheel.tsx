@@ -32,6 +32,7 @@ const Spinwheel = () => {
     if (start && trigger) {
       getSpinWheelData(eventId, ticketId, setValidatedTicket, setSpinWheelData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [start, trigger]);
 
   useEffect(() => {
