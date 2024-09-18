@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
+import Confetti from 'react-confetti';
 import { Wheel } from 'react-custom-roulette';
+import { WheelData } from 'react-custom-roulette/dist/components/Wheel/types';
+
+import { getSpinWheelData, spinTheWheel } from '../../../apis/gifts';
+import Modal from '../../../components/Modal/Modal';
+import Scanner from '../../../components/Scanner/Scanner';
 import Theme from '../../../components/Theme/Theme';
 import styles from './Spinwheel.module.css';
-import Scanner from '../../../components/Scanner/Scanner';
-import { getSpinWheelData, spinTheWheel } from '../../../apis/gifts';
 import { spinWheelType } from './types';
-import { WheelData } from 'react-custom-roulette/dist/components/Wheel/types';
-import Modal from '../../../components/Modal/Modal';
-import Confetti from 'react-confetti';
 
 const Spinwheel = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -34,11 +35,7 @@ const Spinwheel = () => {
     if (start && trigger) {
       getSpinWheelData(eventId, ticketId, setValidatedTicket, setSpinWheelData);
     }
-  }, [start, trigger]);
-
-  useEffect(() => {
-    console.log(prizeNumber);
-  }, [prizeNumber]);
+  }, [eventId, start, ticketId, trigger]);
 
   return (
     <Theme>
