@@ -66,6 +66,7 @@ const Guests = () => {
     next: null,
     previous: null,
     fetchingData: false,
+    searchKeyword: '',
   });
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [showCheckedInOnly, setShowCheckedInOnly] = useState<boolean>(false);

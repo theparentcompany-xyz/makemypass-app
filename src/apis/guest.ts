@@ -160,6 +160,7 @@ export const listGuestsPagination = (
   searchKeyword: string,
 ) => {
   if (paginationData && paginationData.page && paginationData.page) {
+    const previouslyHadSearchKeyword = paginationData.searchKeyword !== searchKeyword;
     setPaginationData((prev) => ({ ...prev, fetchingData: true }));
     privateGateway
       .get(makeMyPass.guestListPagination(eventId), {
@@ -172,7 +173,17 @@ export const listGuestsPagination = (
       })
       .then((response) => {
         setGuests(response.data.response.data);
-        setPaginationData(response.data.response.pagination);
+        setPaginationData((prev) => ({
+          ...prev,
+          total_pages: response.data.response.pagination.total_pages,
+          total_items: response.data.response.pagination.total_items,
+          per_page: response.data.response.pagination.per_page,
+          page: previouslyHadSearchKeyword ? 1 : response.data.response.pagination.page,
+          fetchingData: false,
+          next: response.data.response.pagination.next,
+          previous: response.data.response.pagination.previous,
+          searchKeyword: searchKeyword,
+        }));
       })
       .catch((error) => {
         toast.error(error.response.data.message.general[0] || 'Error in fetching guests');

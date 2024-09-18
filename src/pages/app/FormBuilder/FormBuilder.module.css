@@ -47,8 +47,10 @@
 
 .requiredFields {
   margin-top: 0.75rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 1rem;
   max-width: 30rem;
 }
 
