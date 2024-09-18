@@ -302,6 +302,27 @@ const Table = ({
               <div className={styles.totalRecords}>
                 <p className={styles.paginationText}>{paginationData.total_items} Records</p>
               </div>
+              <div className={styles.perPage}>
+                <p className={styles.paginationText}>
+                  Per Page:{' '}
+                  <select
+                    className={styles.perPageSelect}
+                    value={paginationData.per_page}
+                    onChange={(e) => {
+                      setTriggerFetch && setTriggerFetch((prevState) => !prevState);
+                      setPaginationData &&
+                        setPaginationData((prevState) => ({
+                          ...prevState,
+                          per_page: Number(e.target.value),
+                        }));
+                    }}
+                  >
+                    <option value={20}>30</option>
+                    <option value={50}>50</option>
+                    <option value={100}>100</option>
+                  </select>
+                </p>
+              </div>
               {(paginationData.next || paginationData.previous) && (
                 <div className={styles.pagination}>
                   <p className={styles.paginationText}>
