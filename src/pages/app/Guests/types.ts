@@ -45,4 +45,5 @@ export type PaginationDataType = {
   next: number | null;
   previous: number | null;
   fetchingData: boolean;
+  searchKeyword: string;
 };
