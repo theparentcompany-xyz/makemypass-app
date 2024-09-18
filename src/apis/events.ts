@@ -22,6 +22,17 @@ export const getEventsList = async (
     });
 };
 
+export const getCommonTags = async (setTags: React.Dispatch<React.SetStateAction<string[]>>) => {
+  privateGateway
+    .get(makeMyPass.listCommonTags)
+    .then((response) => {
+      setTags(response.data.response);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
 interface EventData {
   title: string;
   current_user_role: string;

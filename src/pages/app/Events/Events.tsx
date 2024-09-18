@@ -1,16 +1,24 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
+import { FaTags } from 'react-icons/fa';
 import { GoPeople } from 'react-icons/go';
 import { useNavigate } from 'react-router';
+import Select from 'react-select';
 
 import { Roles } from '../../../../services/enums';
-import { createDuplicateEvent, getEventsList, setEventInfoLocal } from '../../../apis/events';
+import {
+  createDuplicateEvent,
+  getCommonTags,
+  getEventsList,
+  setEventInfoLocal,
+} from '../../../apis/events';
 import { Event } from '../../../apis/types';
 import { formatDate } from '../../../common/commonFunctions';
 import Loader from '../../../components/Loader';
 import Modal from '../../../components/Modal/Modal';
 import Theme from '../../../components/Theme/Theme';
+import { customStyles } from '../EventPage/constants';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Events.module.css';
 import RightClickMenu from './RightClickMenu';
@@ -22,6 +30,8 @@ const Events = () => {
   }
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [tags, setTags] = useState([] as string[]);
+  const [selectedTags, setSelectedTags] = useState([] as string[]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState<Position>({ x: 0, y: 0 });
   const [showModal, setShowModal] = useState(false);
@@ -46,6 +56,7 @@ const Events = () => {
 
   useEffect(() => {
     getEventsList(setEvents, setIsDataLoaded);
+    getCommonTags(setTags);
   }, []);
 
   const navigate = useNavigate();
@@ -112,6 +123,20 @@ const Events = () => {
             </div>
           )}
           <div className={styles.homeContainer}>
+            <div className={styles.tagSelector}>
+              <p className={styles.homeHeader}>Filter by tags</p>
+              <Select
+                styles={customStyles}
+                isMulti
+                options={tags.map((tag) => ({ value: tag, label: tag }))}
+                className='basic-multi-select'
+                classNamePrefix='select'
+                placeholder='Select tags'
+                onChange={(selectedOptions) => {
+                  setSelectedTags(selectedOptions.map((option) => option.value));
+                }}
+              />
+            </div>
             {Object.values(EventStatus).map((status) => {
               return (
                 <div>
@@ -121,13 +146,31 @@ const Events = () => {
                     transition={{ duration: 0.5 }}
                     className={styles.homeHeader}
                   >
-                    {events.filter((event) => event.status == status).length > 0
-                      ? `${status} Events (${events.filter((event) => event.status == status).length})`
+                    {events.filter(
+                      (event) =>
+                        event.status == status &&
+                        (selectedTags.length === 0 ||
+                          event.tags.some((tag) => selectedTags.includes(tag))),
+                    ).length > 0
+                      ? `${status} Events (${
+                          events.filter(
+                            (event) =>
+                              event.status == status &&
+                              (selectedTags.length === 0 ||
+                                event.tags.some((tag) => selectedTags.includes(tag))),
+                          ).length
+                        })`
                       : ''}
                   </motion.p>
+
                   <div className={styles.eventsContainer}>
                     {events
-                      .filter((event) => event.status == status)
+                      .filter(
+                        (event) =>
+                          event.status == status &&
+                          (selectedTags.length === 0 ||
+                            event.tags.some((tag) => selectedTags.includes(tag))),
+                      )
                       .map((event) => (
                         <div key={event.id} className={styles.event}>
                           <div>
@@ -173,24 +216,33 @@ const Events = () => {
                                         {event.title.length > 40 ? '...' : ''}
                                       </p>
                                     </div>
-                                    {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
-                                      <div className={styles.rightMenuButton}>
-                                        <BsThreeDots
-                                          onClick={(
-                                            e: React.MouseEvent<SVGElement, MouseEvent>,
-                                          ) => {
-                                            handleButtonClick(e);
-                                            setDuplicateEventId(event?.id);
-                                          }}
-                                          size={15}
+                                    <div className={styles.absoluteButtons}>
+                                      <div className={styles.tagsButton}>
+                                        <FaTags
                                           color='#ffffff'
                                           className='pointer'
-                                          style={{
-                                            zIndex: 10,
-                                          }}
+                                          title={event.tags.length > 0 ? event.tags.join(', ') : ''}
                                         />
                                       </div>
-                                    )}
+                                      {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
+                                        <div className={styles.rightMenuButton}>
+                                          <BsThreeDots
+                                            onClick={(
+                                              e: React.MouseEvent<SVGElement, MouseEvent>,
+                                            ) => {
+                                              handleButtonClick(e);
+                                              setDuplicateEventId(event?.id);
+                                            }}
+                                            size={15}
+                                            color='#ffffff'
+                                            className='pointer'
+                                            style={{
+                                              zIndex: 10,
+                                            }}
+                                          />
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
                                   {isMenuOpen && (
                                     <RightClickMenu

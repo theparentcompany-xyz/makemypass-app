@@ -14,6 +14,7 @@ export type Event = {
   place: string | null;
   location: string | null;
   status: string;
+  tags: string[];
 };
 
 export type hostList = {

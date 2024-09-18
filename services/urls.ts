@@ -7,6 +7,7 @@ export const makeMyPass = {
   //Common
   onboardUser: makeMyPassURL('/common/onboard-user/'),
   listEvents: makeMyPassURL('/common/user/events/'),
+  listCommonTags: makeMyPassURL('/common/user/list-tags/'),
 
   //Scan Guest
   scanGuestCheckin: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkin`),
