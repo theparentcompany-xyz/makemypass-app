@@ -77,6 +77,14 @@
   position: relative;
 }
 
+.tagButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
 .headingTexts {
   display: flex;
   flex-direction: column;
@@ -360,4 +368,63 @@
   color: #fff;
   opacity: 0.5;
   cursor: pointer;
+}
+
+.saveButton {
+  text-align: center;
+  background: #fdfdfd;
+  color: rgb(43, 42, 42);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.cancelButton {
+  text-align: center;
+  background: rgba(253, 253, 253, 0.1);
+  color: #fdfdfd;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+
+  max-width: 10rem;
+}
+
+.createButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  column-gap: 0.5rem;
+}
+
+.tagModalContent {
+  width: 100%;
+}
+
+.tagModalHeading {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+  text-align: left;
+  opacity: 0.8;
+}
+
+.tagModalSubHeading {
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  color: #bbbaba;
+  text-align: left;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }

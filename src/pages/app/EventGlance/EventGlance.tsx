@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsQrCodeScan } from 'react-icons/bs';
+import { FaTags } from 'react-icons/fa';
 import { FaHouse, FaWrench } from 'react-icons/fa6';
 import { HiUserGroup } from 'react-icons/hi2';
 import { ImTicket } from 'react-icons/im';
@@ -11,12 +12,14 @@ import { MdCampaign } from 'react-icons/md';
 import { PiSpinnerDuotone } from 'react-icons/pi';
 import { RiCoupon2Fill } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
+import CreatableSelect from 'react-select/creatable';
 import { HashLoader } from 'react-spinners';
 
 import { getEventData } from '../../../apis/events';
 import { getEventMailData, listEventMails } from '../../../apis/mails';
 import { sendTestMail } from '../../../apis/postevent';
 import { listEventSpeakers } from '../../../apis/speakers';
+import { createEventTags, listTags } from '../../../apis/tags';
 import {
   EventType,
   listMailType,
@@ -29,7 +32,7 @@ import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout
 import Modal from '../../../components/Modal/Modal';
 import SectionButton from '../../../components/SectionButton/SectionButton';
 import Theme from '../../../components/Theme/Theme';
-import { getDay, getMonthAbbreviation } from '../EventPage/constants';
+import { customStyles, getDay, getMonthAbbreviation } from '../EventPage/constants';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
 import CustomMail from './components/MailModals/CustomMail/CustomMail';
 import DummyData from './components/MailModals/DummyData/DummyData';
@@ -41,6 +44,7 @@ import type { UTMDataType } from './components/UTMManager/types';
 import UTMManager from './components/UTMManager/UTMManager';
 import VenueModal from './components/VenueModal/VenueModal';
 import styles from './EventGlance.module.css';
+import type { TagType } from './types';
 
 const EventGlance = () => {
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -50,6 +54,10 @@ const EventGlance = () => {
     `${import.meta.env.VITE_FRONTEND_URL}/${JSON.parse(sessionStorage.getItem('eventData')!).event_name}`,
   );
   const [eventData, setEventData] = useState<EventType>();
+  const [tags, setTags] = useState<TagType>({
+    tags: [],
+    showModal: false,
+  });
   const [UTMData, setUTMData] = useState<UTMDataType>({
     showUTM: false,
     data: {
@@ -188,6 +196,53 @@ const EventGlance = () => {
         {venues.showModal && <VenueModal venues={venues} setVenues={setVenues} eventId={eventId} />}
         {speakers.showModal && (
           <SpeakerModal eventId={eventId} speakers={speakers} setSpeakers={setSpeakers} />
+        )}
+        {tags.showModal && (
+          <Modal
+            title='Manage Tags'
+            onClose={() => setTags((prev) => ({ ...prev, showModal: false }))}
+          >
+            <div className={styles.tagModalContent}>
+              <p className={styles.tagModalHeading}>Add/Edit Tags</p>
+              <p className={styles.tagModalSubHeading}>
+                Add tags to categorize your event. Tags can be used to filter events at the listing
+                page.
+              </p>
+              <CreatableSelect
+                styles={customStyles}
+                isMulti
+                options={tags.tags.map((tag) => ({ label: tag, value: tag }))}
+                value={tags.tags.map((tag) => ({ label: tag, value: tag }))}
+                onChange={(selectedOptions) => {
+                  const newTags = selectedOptions.map((option) => option.value);
+                  setTags((prev) => ({ ...prev, tags: newTags }));
+                }}
+                onCreateOption={(inputValue: string) => {
+                  setTags((prev) => ({
+                    ...prev,
+                    tags: [...prev.tags, inputValue],
+                  }));
+                }}
+                placeholder='Select or create tags'
+              />
+
+              <div className={styles.createButtons}>
+                <button
+                  className={styles.saveButton}
+                  onClick={() => {
+                    createEventTags({
+                      eventId,
+                      tags,
+                      setTags,
+                    });
+                  }}
+                >
+                  Save Tags
+                </button>
+                <button className={styles.cancelButton}>Cancel</button>
+              </div>
+            </div>
+          </Modal>
         )}
         <DashboardLayout prevPage='/events' tabName='manage'>
           {isTicketsOpen && (
@@ -330,6 +385,18 @@ const EventGlance = () => {
             {UTMData.showUTM && <UTMManager UTMData={UTMData} setUTMData={setUTMData} />}
 
             <div className={styles.bannerContainer}>
+              <FaTags
+                size={20}
+                color='#7662FC'
+                className={styles.tagButton}
+                onClick={() => {
+                  setTags({
+                    tags: [],
+                    showModal: true,
+                  });
+                  listTags({ eventId, setTags });
+                }}
+              />
               {eventData?.banner && typeof eventData.banner === 'string' ? (
                 <img src={eventData?.banner} alt='' className={styles.banner} />
               ) : (

@@ -7,6 +7,7 @@ export const makeMyPass = {
   //Common
   onboardUser: makeMyPassURL('/common/onboard-user/'),
   listEvents: makeMyPassURL('/common/user/events/'),
+  listCommonTags: makeMyPassURL('/common/user/list-tags/'),
 
   //Scan Guest
   scanGuestCheckin: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkin`),
@@ -82,6 +83,9 @@ export const makeMyPass = {
   eventSpeakerCreate: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/speaker/create`),
   eventSpeakerUpdate: (eventId: string, speakerId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/speaker/${speakerId}`),
+
+  addTags: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/add-tags/`),
+  listTags: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-tags/`),
 
   //Feedback
   feedbackList: (eventId: string) => makeMyPassURL(`/feedback/${eventId}/list/`),

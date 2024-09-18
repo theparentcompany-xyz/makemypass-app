@@ -8,7 +8,7 @@ import { RiCoupon3Line } from 'react-icons/ri';
 import type { DiscountData } from './types';
 
 export const customStyles = {
-  control: (provided: any) => ({
+  control: (provided: any, state: any) => ({
     ...provided,
     border: 'none',
     backgroundColor: 'rgba(255, 255, 255, 0.04)',
@@ -16,8 +16,8 @@ export const customStyles = {
     fontStyle: 'normal',
     fontWeight: 400,
     fontSize: '0.9rem',
-    // maxWidth: '25rem',
     minWidth: '10rem',
+    boxShadow: state.isFocused ? 'none' : 'none', // Remove blue border on focus
   }),
 
   group: (provided: any) => ({
@@ -29,6 +29,7 @@ export const customStyles = {
     ...base,
     color: '#fff',
   }),
+
   option: (provided: any) => ({
     ...provided,
     fontFamily: 'Inter, sans-serif',
@@ -40,7 +41,6 @@ export const customStyles = {
     ':hover': {
       backgroundColor: ' rgba(147, 149, 151, 0.13);',
     },
-    // maxWidth: '24rem',
   }),
 
   multiValue: (provided: any) => ({
