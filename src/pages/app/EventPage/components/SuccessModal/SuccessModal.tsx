@@ -61,7 +61,6 @@ const SuccessModal = ({
                     : 'Thank you for Registering'}
                 </p>
                 <div className={styles.modalTexts}>
-                  <div dangerouslySetInnerHTML={{ __html: success.followupMessage || '' }}></div>
                   <SuccessButtonsContainer
                     success={success}
                     setSuccess={setSuccess}
