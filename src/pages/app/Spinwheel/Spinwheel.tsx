@@ -19,16 +19,23 @@ const Spinwheel = () => {
   const [validatedTicket, setValidatedTicket] = useState<boolean>(false);
   const [prizeNumber, setPrizeNumber] = useState<number>();
   const [popPrize, setPopPrize] = useState<boolean>(false);
-  //   const data = [
-  //     { option: '0', style: { backgroundColor: 'green', textColor: 'black' } },
-  //     { option: '1', style: { backgroundColor: 'white' } },
-  //     { option: '2' },
-  //   ];
 
   const [spinWheelData, setSpinWheelData] = useState<spinWheelType[]>();
 
   const onSpin = () => {
     spinTheWheel(eventId, ticketId, spinWheelData, setPrizeNumber, setSpin);
+  };
+
+  const onCloseModal = () => {
+    setPopPrize(false);
+    setStart(false);
+    setValidatedTicket(false);
+    setTicketId('');
+    setSpin(false);
+    setPrizeNumber(undefined);
+    setSpinWheelData([]);
+    setTrigger(false);
+    setStart(false);
   };
 
   useEffect(() => {
@@ -41,8 +48,13 @@ const Spinwheel = () => {
     <Theme>
       {!start && (
         <div className={styles.clickHeading} onClick={() => setStart(true)}>
-          Click Here to <br />
-          Spin The Wheel
+          <div className={styles.textsContainer}>
+            <p className={styles.ctaText}>
+              <span>Hey,</span> You Could Be <br /> The <span>Next Winner!</span> <br /> Just{' '}
+              <span>Click Here!</span>
+            </p>
+          </div>
+          <img src='/app/mascot.webp' alt='' className={styles.tickachuImage} />
         </div>
       )}
 
@@ -127,29 +139,30 @@ const Spinwheel = () => {
       )}
       {popPrize && (
         <>
-          <Modal>
+          <Modal
+            title={
+              spinWheelData?.[prizeNumber!]?.name.toLowerCase().includes('better luck')
+                ? 'Wrong Luck!'
+                : "You're Lucky Winner!"
+            }
+            onClose={() => {
+              onCloseModal();
+            }}
+          >
             <div className={styles.prizePopup}>
-              <h2>
-                {spinWheelData?.[prizeNumber!].name.toLowerCase().includes('better luck')
+              <p className={styles.prizeModalHeader}>
+                {spinWheelData?.[prizeNumber!]?.name.toLowerCase().includes('better luck')
                   ? `Oh No! `
                   : `Congratulations!`}
-              </h2>
+              </p>
               <p>
-                {spinWheelData?.[prizeNumber!].name.toLowerCase().includes('better luck')
-                  ? `${spinWheelData?.[prizeNumber!].name}`
-                  : `You've won ${spinWheelData?.[prizeNumber!].name}!`}
+                {spinWheelData?.[prizeNumber!]?.name.toLowerCase().includes('better luck')
+                  ? `${spinWheelData?.[prizeNumber!]?.name}, You are allowed spin only once.`
+                  : `You've won ${spinWheelData?.[prizeNumber!]?.name}!, Kindly collect your prizes from the prize distribution counter.`}
               </p>
               <button
                 onClick={() => {
-                  setPopPrize(false);
-                  setStart(false);
-                  setValidatedTicket(false);
-                  setTicketId('');
-                  setSpin(false);
-                  setPrizeNumber(undefined);
-                  setSpinWheelData([]);
-                  setTrigger(false);
-                  setStart(false);
+                  onCloseModal();
                 }}
                 className={styles.closeButton}
               >
