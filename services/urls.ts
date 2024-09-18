@@ -83,6 +83,9 @@ export const makeMyPass = {
   eventSpeakerUpdate: (eventId: string, speakerId: string) =>
     makeMyPassURL(`/manage-event/${eventId}/speaker/${speakerId}`),
 
+  addTags: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/add-tags/`),
+  listTags: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-tags/`),
+
   //Feedback
   feedbackList: (eventId: string) => makeMyPassURL(`/feedback/${eventId}/list/`),
   feedbackFormInfo: (eventId: string) => makeMyPassURL(`/feedback/${eventId}/form-info/`),
