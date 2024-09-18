@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
@@ -31,8 +31,107 @@ const SpeakerModal = ({
     type: '',
   });
 
+  useEffect(() => {
+    console.log(speakers.speakerList);
+  }, [speakers]);
+
   return (
     <>
+      {(speakerData.type === 'CREATE' || speakerData.type === 'EDIT') && (
+        <Modal
+          title='Add Speaker'
+          onClose={() => {
+            setSpeakers((prev) => ({
+              ...prev,
+              showModal: false,
+            }));
+          }}
+        >
+          <>
+            <div className={styles.bulkUploadContainer}>
+              <InputField
+                placeholder='Enter Speaker Name'
+                type='text'
+                name='speaker_name'
+                id='speaker_name'
+                icon={<></>}
+                value={speakerData?.name}
+                onChange={(event) => {
+                  setSpeakerData({
+                    ...speakerData,
+                    name: event.target.value,
+                  });
+                }}
+              />
+              <InputField
+                placeholder='Enter Speaker Position'
+                type='text'
+                name='speaker_name'
+                id='speaker_name'
+                value={speakerData.position}
+                icon={<></>}
+                onChange={(event) => {
+                  setSpeakerData({
+                    ...speakerData,
+                    position: event.target.value,
+                  });
+                }}
+              />
+
+              <InputField
+                placeholder='Enter Speaker Image URL'
+                type='file'
+                name='speaker_name'
+                id='speaker_name'
+                icon={<></>}
+                onChange={(event) => {
+                  setSpeakerData({
+                    ...speakerData,
+                    image: event.target.files![0],
+                  });
+                }}
+              />
+            </div>
+
+            <div className={styles.createButtons}>
+              <button
+                className={styles.uploadButton}
+                onClick={() => {
+                  if (speakerData.type === 'CREATE')
+                    createEventSpeaker(eventId, speakerData, setSpeakers);
+                  else if (speakerData.type === 'EDIT')
+                    updateEventSpeaker(eventId, speakerData, setSpeakers);
+
+                  setSpeakerData({
+                    id: '',
+                    name: '',
+                    position: '',
+                    image: null,
+                    type: '',
+                  });
+                }}
+              >
+                Save Speaker
+              </button>
+              <button
+                className={styles.cancelButton}
+                onClick={() => {
+                  setSpeakerData({
+                    id: '',
+                    name: '',
+                    position: '',
+                    image: null,
+                    type: '',
+                  });
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </>
+        </Modal>
+      )}
+
       {speakerData.type === 'DELETE' && speakerData.id ? (
         <Modal
           title='Delete Confirmation'
@@ -63,7 +162,20 @@ const SpeakerModal = ({
             >
               Delete
             </button>
-            <button className={styles.cancelButton}>Cancel</button>
+            <button
+              className={styles.cancelButton}
+              onClick={() => {
+                setSpeakerData(
+                  (prev) =>
+                    ({
+                      ...prev,
+                      type: '',
+                    }) as SpeakerType,
+                );
+              }}
+            >
+              Cancel
+            </button>
           </div>
         </Modal>
       ) : (
@@ -76,93 +188,6 @@ const SpeakerModal = ({
             }));
           }}
         >
-          {(speakerData.type === 'CREATE' || speakerData.type === 'EDIT') && (
-            <>
-              <div className={styles.bulkUploadContainer}>
-                <InputField
-                  placeholder='Enter Speaker Name'
-                  type='text'
-                  name='speaker_name'
-                  id='speaker_name'
-                  icon={<></>}
-                  value={speakerData?.name}
-                  onChange={(event) => {
-                    setSpeakerData({
-                      ...speakerData,
-                      name: event.target.value,
-                    });
-                  }}
-                />
-                <InputField
-                  placeholder='Enter Speaker Position'
-                  type='text'
-                  name='speaker_name'
-                  id='speaker_name'
-                  value={speakerData.position}
-                  icon={<></>}
-                  onChange={(event) => {
-                    setSpeakerData({
-                      ...speakerData,
-                      position: event.target.value,
-                    });
-                  }}
-                />
-
-                <InputField
-                  placeholder='Enter Speaker Image URL'
-                  type='file'
-                  name='speaker_name'
-                  id='speaker_name'
-                  icon={<></>}
-                  onChange={(event) => {
-                    setSpeakerData({
-                      ...speakerData,
-                      image: event.target.files![0],
-                    });
-                  }}
-                />
-              </div>
-
-              <div className={styles.createButtons}>
-                <button
-                  className={styles.uploadButton}
-                  onClick={() => {
-                    if (speakerData.type === 'CREATE')
-                      createEventSpeaker(eventId, speakerData, setSpeakers);
-                    else if (speakerData.type === 'EDIT')
-                      updateEventSpeaker(eventId, speakerData, setSpeakers);
-
-                    setSpeakerData({
-                      id: '',
-                      name: '',
-                      position: '',
-                      image: null,
-                      type: '',
-                    });
-                  }}
-                >
-                  Save Speaker
-                </button>
-                <button
-                  className={styles.cancelButton}
-                  onClick={() => {
-                    setSpeakerData({
-                      id: '',
-                      name: '',
-                      position: '',
-                      image: null,
-                      type: '',
-                    });
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-
-              <hr className={styles.line} />
-            </>
-          )}
-
           <div className={styles.listHeader}>
             <p
               className={styles.sectionHeader}
@@ -186,10 +211,16 @@ const SpeakerModal = ({
               speakers.speakerList.map((speaker) => (
                 <div className={styles.log}>
                   <div className={styles.logDetails}>
-                    {typeof speaker?.image === 'string' && speaker?.image?.length > 0 && (
+                    {(typeof speaker?.image === 'string' || speaker.image instanceof File) && (
                       <img
                         className={styles.speakerImage}
-                        src={speaker.image || `https://placehold.co/600x400`}
+                        src={
+                          typeof speaker.image === 'string'
+                            ? speaker.image
+                            : speaker.image
+                              ? URL.createObjectURL(speaker.image)
+                              : ''
+                        }
                         alt=''
                       />
                     )}
@@ -219,35 +250,41 @@ const SpeakerModal = ({
                       }}
                     />
                     <FaEdit
-                      title='Edit Venue'
+                      title='Edit Speaker'
                       color='#8e8e8e'
                       className={styles.reportIcon}
                       onClick={() => {
                         if (!speaker) return;
-                        const imageURL = speaker?.image as string;
-                        fetch(imageURL)
-                          .then((response) => response.blob())
-                          .then((blob) => {
-                            const file = new File([blob], 'speaker_image');
-                            setSpeakerData((prev) => ({
-                              ...prev,
-                              image: file,
-                            }));
-                          })
-                          .catch((error) => {
-                            toast.error(
-                              error.response.data.message.general[0] ||
-                                'Unable to process the request',
-                            );
-                          });
+                        const imageURL = speaker?.image;
+                        if (typeof imageURL === 'string')
+                          fetch(imageURL)
+                            .then((response) => response.blob())
+                            .then((blob) => {
+                              const file = new File([blob], speaker.name);
+                              setSpeakerData((prev) => ({
+                                ...prev,
+                                image: file,
+                              }));
+                            })
+                            .catch((error) => {
+                              toast.error(
+                                error.response.data.message.general[0] ||
+                                  'Unable to process the request',
+                              );
+                            });
+                        else
+                          setSpeakerData((prev) => ({
+                            ...prev,
+                            image: speaker.image,
+                          }));
 
-                        setSpeakerData({
+                        setSpeakerData((prev) => ({
+                          ...prev,
                           id: speaker.id,
-                          name: speaker?.name,
+                          name: speaker.name,
                           position: speaker.position,
-                          image: null,
                           type: 'EDIT',
-                        });
+                        }));
                       }}
                     />
                   </div>
