@@ -194,21 +194,6 @@ export const deleteGuestSubmission = async (
     });
 };
 
-export const getGuestRegisterList = async (
-  eventId: string,
-  setGuestList: Dispatch<React.SetStateAction<GuestsType[]>>,
-  showCheckedInOnly: boolean,
-) => {
-  privateGateway
-    .get(makeMyPass.guestRegisterList(eventId) + (showCheckedInOnly ? '?checkin=true' : ''))
-    .then((response) => {
-      setGuestList(response.data.response);
-    })
-    .catch(() => {
-      setGuestList([]);
-    });
-};
-
 export const getGuestInformation = async (
   eventId: string,
   eventRegisterId: string,

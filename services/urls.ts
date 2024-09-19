@@ -10,94 +10,91 @@ export const makeMyPass = {
   listCommonTags: makeMyPassURL('/common/user/list-tags/'),
 
   //Scan Guest
-  scanGuestCheckin: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkin`),
-  scanGuestButtons: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/buttons/`),
-  scanGuestCheckout: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkout`),
+  scanGuestCheckin: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkin`), //Till Volunteer
+  scanGuestButtons: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/buttons/`), //Till Volunteer
+  scanGuestCheckout: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkout`), //Till Volunteer
   scanGuestVenueCheckin: (eventId: string) =>
-    makeMyPassURL(`/scan-guest/${eventId}/venue/checkin/`),
-  scanGuestVenueList: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/venue/list`),
-  scanGuestGiftList: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/gift/list`),
-  scanGuestGiftClaim: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/gift/claim`), //Scratch Card
-  scanGuestPerkClaim: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/perk/claim`),
-  scanGuestPerkList: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/perk/list`),
-  scanGuestPrint: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/print`),
+    makeMyPassURL(`/scan-guest/${eventId}/venue/checkin/`), //Till Volunteer
+  scanGuestVenueList: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/venue/list`), //Till Volunteer
+  scanGuestGiftList: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/gift/list`), //Till Viweer, Patch Editor
+  scanGuestGiftClaim: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/gift/claim`), //TODO: FIX //Scratch Card //Till Volunteer
+  scanGuestPerkClaim: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/perk/claim`), //Till Volunteer
+  scanGuestPerkList: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/perk/list`), //Till Viewer, Patch Editor
+  scanGuestPrint: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/print`), //Till Volunteer
 
-  getSpinWheelData: (eventId: string) => makeMyPassURL(`/games/${eventId}/spin-wheel/scan`),
-  getSpinWheelGift: (eventId: string) => makeMyPassURL(`/games/${eventId}/spin-wheel/spin`),
   //Manage Guests
-  eventCreate: makeMyPassURL(`/manage-event/create/`),
+  eventCreate: makeMyPassURL(`/manage-event/create/`), // SuperUser
 
   guestVisitedVenues: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/visited-venues/`),
   guestMailLog: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/mail-log/`),
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/mail-log/`), //Till Volunteer
   guestResentTicket: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/resend-ticket/`),
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/resend-ticket/`), //Till Volunteer
   guestEditSubmission: (eventId: string, submissionId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest/${submissionId}/edit/`),
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${submissionId}/edit/`), //Till Volunteer
   guestDownloadTicket: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/download-ticket`),
-  guestSendInvite: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/send-invite/`),
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/download-ticket`), //Till Volunteer
+  guestSendInvite: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/send-invite/`), //Till Volunteer
   guestShortList: (eventId: string, userId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest/${userId}/shortlist`),
-  guestRegisterList: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/register-list/`),
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${userId}/shortlist`), //Till Volunteer
+  guestRegisterList: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/register-list/`), //Till Volunteer
   guestInitateRefund: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/initiate-refund/`),
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/initiate-refund/`), //Till Admin
   guestInformation: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/`),
+    makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/`), //Till Volunteer
   guestFormInfo: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/form-info/`),
-  guestDownloadCSV: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/download-csv/`),
+  guestDownloadCSV: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/download-csv/`), //Till Admin
   guestListFormCategories: (eventId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/list-form-categories/`),
-  guestListPagination: (eventId = '') =>
-    makeMyPassURL(`/manage-guest/${eventId}/register-list-pagination/`),
+  guestList: (eventId = '') => makeMyPassURL(`/manage-guest/${eventId}/register-list/`), //Till Volunteer
 
   //Manage Logs
-  mailLog: (eventId: string) => makeMyPassURL(`/manage-log/${eventId}/mail-log/`),
-  paymentLog: (eventId: string) => makeMyPassURL(`/manage-log/${eventId}/payment-log/`),
-  paymentLogCSV: (eventId: string) => makeMyPassURL(`/manage-log/${eventId}/payment-log/csv/`),
+  mailLog: (eventId: string) => makeMyPassURL(`/manage-log/${eventId}/mail-log/`), //Till Admin
+  paymentLog: (eventId: string) => makeMyPassURL(`/manage-log/${eventId}/payment-log/`), //Till Admin
+  paymentLogCSV: (eventId: string) => makeMyPassURL(`/manage-log/${eventId}/payment-log/csv/`), //Till Admin
 
   //Manage Ticket
-  ticketList: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/list/`),
-  ticketCreate: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/create/`),
+  ticketList: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/list/`), //Till Viewer
+  ticketCreate: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/create/`), //Till Editor
   ticketInformation: (eventId: string, ticketCode: string) =>
-    makeMyPassURL(`/manage-ticket/${eventId}/ticket/${ticketCode}`),
+    makeMyPassURL(`/manage-ticket/${eventId}/ticket/${ticketCode}`), //Till Editor
   ticketShortList: (eventId: string) => makeMyPassURL(`/manage-ticket/${eventId}/list/short`),
 
   // Manage Event
-  event: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/event/`),
+  event: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/event/`), // Till Viewer, Patch Editor, Delete Owner.
   getEventInfo: (eventName: string) => makeMyPassURL(`/manage-event/get-event-info/${eventName}/`),
   getEventId: (eventName: string) => makeMyPassURL(`/manage-event/get-event-id/${eventName}/`),
   eventHostList: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/host/list`),
-  eventHostCreate: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/host/create`),
+  eventHostCreate: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/host/create`), // Till Admin
   host: (eventId: string, hostId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/host/${hostId}`),
-  eventCreateDuplicate: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/duplicate/`),
+    makeMyPassURL(`/manage-event/${eventId}/host/${hostId}`), // Till Admin
+  eventCreateDuplicate: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/duplicate/`), // Till Admin
 
-  eventVenueList: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/venue/list`),
-  eventVenueCreate: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/venue/create`),
+  eventVenueList: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/venue/list`), // Till Viewer
+  eventVenueCreate: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/venue/create`), // Till Editor
   eventVenueUpdate: (eventId: string, venueId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/venue/${venueId}`),
+    makeMyPassURL(`/manage-event/${eventId}/venue/${venueId}`), //Till Editor
 
-  eventSpeakerList: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/speaker/list`),
-  eventSpeakerCreate: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/speaker/create`),
+  eventSpeakerList: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/speaker/list`), // Till Viewer
+  eventSpeakerCreate: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/speaker/create`), // Till Editor
   eventSpeakerUpdate: (eventId: string, speakerId: string) =>
-    makeMyPassURL(`/manage-event/${eventId}/speaker/${speakerId}`),
+    makeMyPassURL(`/manage-event/${eventId}/speaker/${speakerId}`), // Till Editor
 
-  addTags: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/add-tags/`),
-  listTags: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-tags/`),
+  addTags: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/add-tags/`), //Till Admin
+  listTags: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-tags/`), //Till Admin
 
   //Feedback
   feedbackList: (eventId: string) => makeMyPassURL(`/feedback/${eventId}/list/`),
-  feedbackFormInfo: (eventId: string) => makeMyPassURL(`/feedback/${eventId}/form-info/`),
+  feedbackFormInfo: (eventId: string) => makeMyPassURL(`/feedback/${eventId}/form-info/`), //
   feedbackSubmit: (eventId: string) => makeMyPassURL(`/feedback/${eventId}/submit/`),
   feedbackCategories: (eventId: string) => makeMyPassURL(`/feedback/${eventId}/categories/`),
 
   //Bulk Import
-  bulkGuestUpload: (eventId: string) => makeMyPassURL(`/bulk/${eventId}/import-guest/upload`),
+  bulkGuestUpload: (eventId: string) => makeMyPassURL(`/bulk/${eventId}/import-guest/upload`), //Till Editor
   bulkDownloadTemplate: (event_id: string) =>
-    makeMyPassURL(`/bulk/${event_id}/import-guest/download-template/`),
-  bulkGuestList: (eventId: string) => makeMyPassURL(`/bulk/${eventId}/import-guest/list`),
+    makeMyPassURL(`/bulk/${event_id}/import-guest/download-template/`), //Till Editor
+  bulkGuestList: (eventId: string) => makeMyPassURL(`/bulk/${eventId}/import-guest/list`), //Till Editor
 
   //Public Form
   formValidatePayment: makeMyPassURL(`/public-form/validate-payment/`),
@@ -115,61 +112,60 @@ export const makeMyPass = {
     makeMyPassURL(`/public-form/${eventId}/send-verification/`),
 
   //FormBuilder
-  formBuilderForm: (eventId: string) => makeMyPassURL(`/form-builder/${eventId}/register-form/`),
+  formBuilderForm: (eventId: string) => makeMyPassURL(`/form-builder/${eventId}/register-form/`), //Till Editor for Edit and Viewer for View
 
   //Communication
-  communicationMailList: (eventId: string) => makeMyPassURL(`/communication/${eventId}/mail/list/`),
+  communicationMailList: (eventId: string) => makeMyPassURL(`/communication/${eventId}/mail/list/`), //Till Viewer
   communicationMailTest: (eventId: string, mailId: string) =>
-    makeMyPassURL(`/communication/${eventId}/mail/${mailId}/send-test`),
+    makeMyPassURL(`/communication/${eventId}/mail/${mailId}/send-test`), //Till Viewer
   communcationMailGet: (eventId: string, mailId: string) =>
-    makeMyPassURL(`/communication/${eventId}/mail/${mailId}/`),
+    makeMyPassURL(`/communication/${eventId}/mail/${mailId}/`), //Till Viewer, TODO: Disable Editing for Viewer
   communicationMailUPdate: (eventId: string, mailId: string) =>
-    makeMyPassURL(`/communication/${eventId}/mail/${mailId}/`),
+    makeMyPassURL(`/communication/${eventId}/mail/${mailId}/`), //Till Editor
   communcationPostEventSendMail: (eventId: string) =>
-    makeMyPassURL(`/communication/${eventId}/post-event/send-mail/`),
+    makeMyPassURL(`/communication/${eventId}/post-event/send-mail/`), //Till Editor
   communicationPostEventStatus: (eventId: string) =>
-    makeMyPassURL(`/communication/${eventId}/post-event/status/`),
+    makeMyPassURL(`/communication/${eventId}/post-event/status/`), //Till Viewer
   communicationServiceMail: (eventId: string) =>
-    makeMyPassURL(`/communication/${eventId}/service/mail`),
-  communicationMailDeleteAttachment: (eventId: string, mailId: string) =>
-    makeMyPassURL(`/communication/${eventId}/mail/${mailId}/delete-attachment/`),
+    makeMyPassURL(`/communication/${eventId}/service/mail`), //Till Admin
 
   //manage-coupon
-  couponsList: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/list/`),
-  couponCreate: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/create/`),
+  couponsList: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/list/`), // Till Viewer
+  couponCreate: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/create/`), // Till Editor
   coupon: (eventId: string, couponId: string) =>
-    makeMyPassURL(`/manage-coupon/${eventId}/coupon/${couponId}/`),
-  couponStatusUpdate: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/status`),
+    makeMyPassURL(`/manage-coupon/${eventId}/coupon/${couponId}/`), //Till Viewer
+  couponStatusUpdate: (eventId: string) => makeMyPassURL(`/manage-coupon/${eventId}/status`), //Till Editro
 
   //Analytics API
   getAnalyticsVisibility: (eventId: string) =>
     makeMyPassURL(`/analytics/${eventId}/analytics-visibility/`),
-  getPerkAnalytics: (eventId: string) => makeMyPassURL(`/analytics/${eventId}/perk-analytics/`),
-  getVenueAnalytics: (eventId: string) => makeMyPassURL(`/analytics/${eventId}/venue-analytics/`),
+  getPerkAnalytics: (eventId: string) => makeMyPassURL(`/analytics/${eventId}/perk-analytics/`), //Till Volunteer
+  getVenueAnalytics: (eventId: string) => makeMyPassURL(`/analytics/${eventId}/venue-analytics/`), //Till Volunteer
   getPageViewAnalytics: (eventId: string) =>
-    makeMyPassURL(`/analytics/${eventId}/page-view-analytics/`),
+    makeMyPassURL(`/analytics/${eventId}/page-view-analytics/`), //Till Viewer
 
   //Manage Games
   scratchCardClaim: (eventId: string, eventRegisterId: string) =>
-    makeMyPassURL(`/games/${eventId}/scratch-card/${eventRegisterId}/claim`),
-  spinWheelList: (eventId: string) => makeMyPassURL(`/games/${eventId}/randomuser/list`),
-  spinWheelCheckPickUser: (eventId: string) => makeMyPassURL(`/games/${eventId}/check-pick-user/`),
-
-  spinWheelLogList: (eventId: string) => makeMyPassURL(`/games/${eventId}/randomuser/log/`),
+    makeMyPassURL(`/games/${eventId}/scratch-card/${eventRegisterId}/scratch`),
+  spinWheelList: (eventId: string) => makeMyPassURL(`/games/${eventId}/pick-user/list`), //Till Editor
+  spinWheelCheckPickUser: (eventId: string) => makeMyPassURL(`/games/${eventId}/check-pick-user/`), //Till Editor
+  spinWheelLogList: (eventId: string) => makeMyPassURL(`/games/${eventId}/pick-user/log/`), //Till Editor
+  getSpinWheelData: (eventId: string) => makeMyPassURL(`/games/${eventId}/spin-wheel/scan`), //Till Device Only
+  getSpinWheelGift: (eventId: string) => makeMyPassURL(`/games/${eventId}/spin-wheel/spin`), //Till Device Only
 
   //UTM
 
-  utmList: (eventId: string) => makeMyPassURL(`/utm/${eventId}/list/`),
-  createUtm: (eventId: string) => makeMyPassURL(`/utm/${eventId}/create/`),
+  utmList: (eventId: string) => makeMyPassURL(`/utm/${eventId}/list/`), //Till Viewer
+  createUtm: (eventId: string) => makeMyPassURL(`/utm/${eventId}/create/`), //Till Viewer
 };
 
 export const makeMyPassSocket = {
-  registerInsights: (eventId: string) => `analytics/${eventId}/register-insights/`,
-  registerGlanceCount: (eventId: string) => `analytics/${eventId}/register-glance-count/`,
+  registerInsights: (eventId: string) => `analytics/${eventId}/register-insights/`, //Till Volunteer
+  registerGlanceCount: (eventId: string) => `analytics/${eventId}/register-glance-count/`, //Till Volunteer
   checkinGlanceCount: (eventId: string) => `analytics/${eventId}/checkin-glance-count/`,
   checkinInsights: (eventId: string) => `analytics/${eventId}/checkin-insights/`,
   guestCheckinList: (eventId: string) => `manage-guest/${eventId}/checkin-list/`,
-  guestRecentRegistrations: (eventId: string) => `manage-guest/${eventId}/recent-registrations/`,
+  guestRecentRegistrations: (eventId: string) => `manage-guest/${eventId}/recent-registrations/`, //Till Volunteer
 };
 
 export const buildVerse = {

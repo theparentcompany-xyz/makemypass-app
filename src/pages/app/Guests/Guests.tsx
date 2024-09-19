@@ -124,7 +124,6 @@ const Guests = () => {
 
   useEffect(() => {
     if (eventId) {
-      // getGuestRegisterList(eventId, setGuests, showCheckedInOnly);
       listGuestsPagination(
         eventId,
         setGuests,

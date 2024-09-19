@@ -163,7 +163,7 @@ export const listGuestsPagination = (
     const previouslyHadSearchKeyword = paginationData.searchKeyword !== searchKeyword;
     setPaginationData((prev) => ({ ...prev, fetchingData: true }));
     privateGateway
-      .get(makeMyPass.guestListPagination(eventId), {
+      .get(makeMyPass.guestList(eventId), {
         params: {
           per_page: paginationData.per_page,
           page: paginationData.page,
