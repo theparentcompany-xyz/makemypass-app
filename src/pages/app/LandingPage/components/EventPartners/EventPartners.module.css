@@ -1,12 +1,11 @@
 .eventPartnersContainer {
   margin-top: 3rem;
-
-  padding: 1rem;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
   overflow: hidden;
   white-space: nowrap;
   position: relative;
+  padding: 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .eventPartnersContainer:hover .eventPartners {
@@ -24,10 +23,20 @@
 
 .eventPartners {
   display: inline-block;
-  animation: 15s slide infinite linear;
+  animation: 20s slide infinite linear;
 }
 
 .eventPartners img {
   height: 30px;
   margin: 0 30px;
+}
+
+.partnersText {
+  font-family: 'inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  opacity: 0.7;
 }

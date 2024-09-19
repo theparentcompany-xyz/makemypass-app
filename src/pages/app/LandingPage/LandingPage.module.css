@@ -137,7 +137,12 @@
 .landingPageContainer {
   color: white;
   min-height: 100vh;
-  padding: 2rem;
+}
+
+@media screen and (max-width: 1350px) {
+  .landingPageContainer {
+    padding: 0 1.25rem;
+  }
 }
 
 /* Landing Page CSS */

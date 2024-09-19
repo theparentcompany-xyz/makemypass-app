@@ -15,14 +15,21 @@ const Hero = () => {
     <div className={styles.firstSection}>
       <div className={styles.fsTexts}>
         <p className={styles.fsHeading}>
-          Elevate Your Event Experience! Explore <span>MakeMyPass!</span>
+          Organize Events
+          <span
+            style={{ display: 'inline-block', transform: 'rotate(-2deg)', marginRight: '1rem' }}
+          >
+            {' '}
+            Smart Way
+          </span>
+          Not The Hard Way.
         </p>
-        <div className={styles.arrowCircle}>
+        {/* <div className={styles.arrowCircle}>
           <motion.div initial={{ x: -100 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
             <img className={styles.arrow} src='/app/landing/arrow.webp' alt='white color arrow' />
           </motion.div>
           <img className={styles.circle} src='/app/landing/circle.webp' alt='white color circle' />
-        </div>
+        </div> */}
         <p className={styles.fsSubHeading}>
           Unforgettable Moments Commence with Tickets in your Digital Grasp. At MakeMyPass,
           Anticipation Meets Convenience, without the Chaos of Pass Logistics!
@@ -51,7 +58,7 @@ const Hero = () => {
       </div>
 
       <img
-        src='/app/landing/fsImage.webp'
+        src='/app/landing/landingimg.png'
         alt='features of makemypass.com'
         className={styles.fsImage}
       />

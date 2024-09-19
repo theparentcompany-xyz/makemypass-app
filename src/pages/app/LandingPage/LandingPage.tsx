@@ -23,6 +23,7 @@ const LandingPage = () => {
       <Theme type='landing'>
         <div className={styles.landingPageContainer}>
           <Hero />
+
           <EventPartners />
           <div className={styles.secondSection}>
             <p className={styles.ssText}>Erase the Hassle with Our Ticketing Magic!</p>
