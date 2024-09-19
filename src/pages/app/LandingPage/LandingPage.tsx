@@ -75,6 +75,96 @@ const LandingPage = () => {
           </div>
 
           <p className={styles.theEasyWay}>↓ Let's do it the easy way!</p>
+
+          <div className={styles.thirdSection}>
+            <div className={styles.tsTexts}>
+              <p className={styles.tsHeading}>
+                You Can Send Custom{' '}
+                <span
+                  style={{
+                    display: 'inline-block',
+                    transform: 'rotate(-2deg)',
+                    marginRight: '1rem',
+                  }}
+                >
+                  {' '}
+                  Mails & Tickets,
+                </span>
+                and Even{' '}
+                <span
+                  style={{
+                    display: 'inline-block',
+                    transform: 'rotate(-2deg)',
+                    marginRight: '1rem',
+                  }}
+                >
+                  {' '}
+                  Schedule Them.
+                </span>
+              </p>
+              <p className={styles.tsSubHeading}>
+                We had to revamp our previous landing page because it didn't communicate the value,
+                similarly, communication is key to any successful event. Why do it the hard way when
+                you can do it the easy way?
+              </p>
+              <p className={styles.theEasyWay}>
+                We've already send 34,563+ emails and 15,345+ tickets for our users.
+              </p>
+            </div>
+
+            <img
+              src='/app/landing/tickets.png'
+              alt='features of makemypass.com'
+              className={styles.tsImage}
+            />
+          </div>
+
+          <div className={styles.thirdSection}>
+            <a
+              href='https://makemypass.com/override.py/public/insights'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <img
+                src='/app/landing/tsImg.webp'
+                alt='features of makemypass.com'
+                className={styles.frsImage}
+              />
+            </a>
+            <div className={styles.frsTexts}>
+              <p className={styles.frHeading}>
+                Looking at CSVs aren't Insightful. <br />
+                <span
+                  style={{
+                    display: 'inline-block',
+                    transform: 'rotate(-2deg)',
+                    marginRight: '1rem',
+                  }}
+                >
+                  {' '}
+                  But We Have
+                </span>
+                Something{' '}
+                <span
+                  style={{
+                    display: 'inline-block',
+                    transform: 'rotate(-2deg)',
+                    marginRight: '1rem',
+                  }}
+                >
+                  {' '}
+                  Insighful
+                </span>
+              </p>
+              <p className={styles.frSubHeading}>
+                Insights Tada!, Who doesn't love having a graphical view at their data?. What if
+                they are realtime. You guessed it. We've got it too.
+              </p>
+              <p className={styles.theEasyWay}>
+                Try clicking the image aside, whoo know what it beholds.
+              </p>
+            </div>
+          </div>
         </div>
       </Theme>
     </>
