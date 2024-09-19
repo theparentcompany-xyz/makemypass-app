@@ -127,7 +127,7 @@ export const viewGuestTicket = async (
 
 export const downloadRegisterCSVData = async (eventId: string, showCheckedInOnly: boolean) => {
   privateGateway
-    .get(makeMyPass.guestDownloadCSV(eventId) + (showCheckedInOnly ? '?checkin=true' : ''))
+    .get(makeMyPass.guestDownloadCSV(eventId) + (showCheckedInOnly ? '?checkin_only=true' : ''))
     .then((response) => {
       const csvData = response.data;
       const csvContent = 'data:text/csv;charset=utf-8,' + csvData;

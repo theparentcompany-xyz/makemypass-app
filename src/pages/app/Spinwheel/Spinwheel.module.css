@@ -146,3 +146,18 @@
   font-size: 1.5rem;
   margin-top: 0.5rem;
 }
+
+.textsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+@media screen and (max-width: 473px) {
+  .textsContainer {
+    justify-content: center;
+    align-items: center;
+  }
+}

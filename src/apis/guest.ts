@@ -167,7 +167,7 @@ export const listGuestsPagination = (
         params: {
           per_page: paginationData.per_page,
           page: paginationData.page,
-          checkin: showCheckedInOnly,
+          checkin_only: showCheckedInOnly,
           search: searchKeyword,
         },
       })

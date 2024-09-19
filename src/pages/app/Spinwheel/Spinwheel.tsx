@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import Confetti from 'react-confetti';
 import { Wheel } from 'react-custom-roulette';
 import { WheelData } from 'react-custom-roulette/dist/components/Wheel/types';
+import { FaGift } from 'react-icons/fa';
 
 import { getSpinWheelData, spinTheWheel } from '../../../apis/gifts';
 import Modal from '../../../components/Modal/Modal';
 import Scanner from '../../../components/Scanner/Scanner';
+import SectionButton from '../../../components/SectionButton/SectionButton';
 import Theme from '../../../components/Theme/Theme';
 import styles from './Spinwheel.module.css';
 import { spinWheelType } from './types';
@@ -53,6 +55,11 @@ const Spinwheel = () => {
               <span>Hey,</span> You Could Be <br /> The <span>Next Winner!</span> <br /> Just{' '}
               <span>Click Here!</span>
             </p>
+            <SectionButton
+              onClick={() => setStart(true)}
+              buttonText='Click Here'
+              icon={<FaGift size={25} />}
+            />
           </div>
           <img src='/app/mascot.webp' alt='' className={styles.tickachuImage} />
         </div>

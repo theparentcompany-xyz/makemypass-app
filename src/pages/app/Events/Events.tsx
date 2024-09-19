@@ -123,45 +123,50 @@ const Events = () => {
             </div>
           )}
           <div className={styles.homeContainer}>
-            <div className={styles.tagSelector}>
-              <p className={styles.homeHeader}>Filter by tags</p>
-              <Select
-                styles={customStyles}
-                isMulti
-                options={tags.map((tag) => ({ value: tag, label: tag }))}
-                className='basic-multi-select'
-                classNamePrefix='select'
-                placeholder='Select tags'
-                onChange={(selectedOptions) => {
-                  setSelectedTags(selectedOptions.map((option) => option.value));
-                }}
-              />
-            </div>
             {Object.values(EventStatus).map((status) => {
               return (
                 <div>
-                  <motion.p
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className={styles.homeHeader}
+                  <div
+                    className='row'
+                    style={{
+                      justifyContent: 'space-between',
+                    }}
                   >
-                    {events.filter(
-                      (event) =>
-                        event.status == status &&
-                        (selectedTags.length === 0 ||
-                          event.tags.some((tag) => selectedTags.includes(tag))),
-                    ).length > 0
-                      ? `${status} Events (${
-                          events.filter(
-                            (event) =>
-                              event.status == status &&
-                              (selectedTags.length === 0 ||
-                                event.tags.some((tag) => selectedTags.includes(tag))),
-                          ).length
-                        })`
-                      : ''}
-                  </motion.p>
+                    <motion.p
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className={styles.homeHeader}
+                    >
+                      {events.filter(
+                        (event) =>
+                          event.status == status &&
+                          (selectedTags.length === 0 ||
+                            event.tags.some((tag) => selectedTags.includes(tag))),
+                      ).length > 0
+                        ? `${status} Events (${
+                            events.filter(
+                              (event) =>
+                                event.status == status &&
+                                (selectedTags.length === 0 ||
+                                  event.tags.some((tag) => selectedTags.includes(tag))),
+                            ).length
+                          })`
+                        : ''}
+                    </motion.p>
+
+                    <Select
+                      styles={customStyles}
+                      isMulti
+                      options={tags.map((tag) => ({ value: tag, label: tag }))}
+                      className='basic-multi-select'
+                      classNamePrefix='select'
+                      placeholder='Select tags'
+                      onChange={(selectedOptions) => {
+                        setSelectedTags(selectedOptions.map((option) => option.value));
+                      }}
+                    />
+                  </div>
 
                   <div className={styles.eventsContainer}>
                     {events

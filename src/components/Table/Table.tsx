@@ -217,22 +217,6 @@ const Table = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableData]);
 
-  // const filteredData = useMemo(() => {
-  //   const keyword = '';
-  //   const field = '';
-
-  //   if (field) {
-  //     return tableData.filter((item) => item[field]?.toLowerCase().includes(keyword));
-  //   } else
-  //     return tableData.filter(
-  //       (item) =>
-  //         item.name?.toLowerCase().includes(keyword) ||
-  //         item.email?.toLowerCase().includes(keyword) ||
-  //         item.phonenumber?.toLowerCase().includes(keyword) ||
-  //         item.fullName?.toLowerCase().includes(keyword),
-  //     );
-  // }, [tableData]);
-
   const groupBy = (tableData: TableType[], key: string) => {
     return tableData.reduce((result: { [key: string]: TableType[] }, currentValue) => {
       (result[currentValue[key]] = result[currentValue[key]] || []).push(currentValue);
@@ -317,7 +301,7 @@ const Table = ({
                         }));
                     }}
                   >
-                    <option value={20}>30</option>
+                    <option value={30}>30</option>
                     <option value={50}>50</option>
                     <option value={100}>100</option>
                   </select>

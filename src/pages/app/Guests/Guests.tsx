@@ -62,7 +62,7 @@ const Guests = () => {
     page: 1,
     total_pages: 0,
     total_items: 0,
-    per_page: 10,
+    per_page: 30,
     next: null,
     previous: null,
     fetchingData: false,
@@ -96,6 +96,7 @@ const Guests = () => {
   });
 
   const getGuestData = () => {
+    if (!eventFormData) getEventFormData(eventId, setEventFormData);
     if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'edit') {
       getGuestEditPrefillData(eventId, selectedGuestId.id, setSelectedGuest, setFormData);
     } else if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'view')
@@ -139,7 +140,6 @@ const Guests = () => {
   useEffect(() => {
     if (eventId) {
       getFormCategories(eventId, setCategories);
-      getEventFormData(eventId, setEventFormData);
       checkSpinWheelPickUser(eventId, setShowPicker);
     }
   }, [eventId]);

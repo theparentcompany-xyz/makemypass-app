@@ -10,6 +10,12 @@
   height: 100%;
 }
 
+@media screen and (max-width: 1300px) {
+  .homeContainer {
+    padding: 0 1.25rem;
+  }
+}
+
 .eventsContainer {
   display: flex;
   justify-content: flex-start;
@@ -94,7 +100,7 @@
 @media (min-width: 1200px) {
   .eventCard {
     max-width: 22rem;
-    min-width: 22rem;
+    min-width: 23.85rem;
   }
 }
 
@@ -266,4 +272,11 @@
   font-size: 0.9rem;
   margin-top: 0.5rem;
   max-width: 20rem;
+}
+
+.labelFilterText {
+  color: white;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
 }

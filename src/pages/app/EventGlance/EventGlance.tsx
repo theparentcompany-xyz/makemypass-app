@@ -15,7 +15,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import CreatableSelect from 'react-select/creatable';
 import { HashLoader } from 'react-spinners';
 
-import { getEventData } from '../../../apis/events';
+import { getCommonTags, getEventData } from '../../../apis/events';
 import { getEventMailData, listEventMails } from '../../../apis/mails';
 import { sendTestMail } from '../../../apis/postevent';
 import { listEventSpeakers } from '../../../apis/speakers';
@@ -58,6 +58,7 @@ const EventGlance = () => {
     tags: [],
     showModal: false,
   });
+  const [allTags, setAllTags] = useState<string[]>([]);
   const [UTMData, setUTMData] = useState<UTMDataType>({
     showUTM: false,
     data: {
@@ -147,6 +148,7 @@ const EventGlance = () => {
 
   useEffect(() => {
     if (eventId) getEventData(eventId, setEventTitle, setEventData);
+    getCommonTags(setAllTags);
   }, [eventId]);
 
   useEffect(() => {
@@ -211,7 +213,7 @@ const EventGlance = () => {
               <CreatableSelect
                 styles={customStyles}
                 isMulti
-                options={tags.tags.map((tag) => ({ label: tag, value: tag }))}
+                options={allTags.map((tag) => ({ label: tag, value: tag }))}
                 value={tags.tags.map((tag) => ({ label: tag, value: tag }))}
                 onChange={(selectedOptions) => {
                   const newTags = selectedOptions.map((option) => option.value);
@@ -387,7 +389,7 @@ const EventGlance = () => {
             <div className={styles.bannerContainer}>
               <FaTags
                 size={20}
-                color='#7662FC'
+                color='#FFFFFF'
                 className={styles.tagButton}
                 onClick={() => {
                   setTags({
