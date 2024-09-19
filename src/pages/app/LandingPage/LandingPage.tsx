@@ -25,6 +25,56 @@ const LandingPage = () => {
           <Hero />
 
           <EventPartners />
+
+          <div className={styles.secondSection}>
+            <div className={styles.fsTexts}>
+              <p
+                className={styles.didyouknow}
+                style={{
+                  display: 'inline-block',
+                  transform: 'rotate(-2deg)',
+                  marginRight: '1rem',
+                }}
+              >
+                DID YOU KNOW?
+              </p>
+              <p className={styles.ssHeading}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    transform: 'rotate(-2deg)',
+                    marginRight: '1rem',
+                  }}
+                >
+                  {' '}
+                  17+ Hours
+                </span>
+                of Your Time is Wasted/Event
+              </p>
+            </div>
+            <ul className={styles.timeWastedContainer}>
+              <li>
+                <span>+ 4 hrs</span> Sending emails to users at various points.
+              </li>
+              <li>
+                <span>+ 3 hrs</span> Sending custom tickets to the participants.
+              </li>
+              <li>
+                <span>+ 3 hrs</span> Generating event statistics from CSVs. using Excel
+              </li>
+              <li>
+                <span>+ 2 hrs</span> Distribution of event materials to the attendees.
+              </li>
+              <li>
+                <span>+ 3 hrs</span> Setting up attendee check-ins at the venue.
+              </li>
+              <li>
+                <span>+ 2 hrs</span> Managing on-site attendance and ticket sales.
+              </li>
+            </ul>
+          </div>
+
+          <p className={styles.theEasyWay}>↓ Let's do it the easy way!</p>
         </div>
       </Theme>
     </>

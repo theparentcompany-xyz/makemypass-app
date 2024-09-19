@@ -217,3 +217,118 @@
   font-size: 0.9rem;
   row-gap: 1rem;
 }
+
+.fsHeading {
+  font-family: 'CooperLight';
+  font-size: 3.25rem;
+
+  margin-bottom: 1rem;
+}
+
+.ssHeading {
+  font-family: 'CooperLight';
+  font-size: 2.5rem;
+
+  margin-bottom: 1rem;
+}
+
+.fsHeading span {
+  color: #272727;
+  background-color: #01f77e;
+  font-size: 3rem;
+  padding: 0.2;
+  transform: rotate(90deg);
+}
+
+.ssHeading span {
+  color: #272727;
+  background-color: #01f77e;
+  font-size: 2.5rem;
+  padding: 0.2;
+  transform: rotate(90deg);
+}
+
+@media screen and (max-width: 768px) {
+  .fsHeading {
+    font-size: 4rem;
+    max-width: 20rem;
+  }
+
+  .ssHeading {
+    font-size: 2.5rem;
+    max-width: 25rem;
+  }
+
+  .fsSubHeading {
+    font-size: 1rem;
+    max-width: 25rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .fsHeading {
+    font-size: 2.75rem;
+  }
+
+  .ssHeading {
+    font-size: 2rem;
+  }
+
+  .fsSubHeading {
+    font-size: 1.1rem;
+    max-width: 20rem;
+  }
+}
+
+.timeWastedContainer {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: white;
+  margin-top: 1rem;
+}
+
+.timeWastedContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.timeWastedContainer li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  opacity: 0.9;
+  width: 25rem;
+}
+
+.timeWastedContainer li span {
+  font-weight: bold;
+  margin-right: 0.5rem;
+  color: #01f77e;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 768px) {
+  .timeWastedContainer li {
+    font-size: 0.9rem;
+  }
+}
+
+.didyouknow {
+  color: #01f77e;
+  font-weight: 700;
+  font-size: 1.25rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.theEasyWay {
+  margin-top: 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: #01f77cc2;
+}

@@ -13,7 +13,12 @@ const Hero = () => {
 
   return (
     <div className={styles.firstSection}>
-      <div className={styles.fsTexts}>
+      <div
+        className={styles.fsTexts}
+        style={{
+          width: '100%',
+        }}
+      >
         <p className={styles.fsHeading}>
           Organize Events
           <span
