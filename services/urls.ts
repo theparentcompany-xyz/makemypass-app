@@ -49,8 +49,7 @@ export const makeMyPass = {
   guestDownloadCSV: (eventId: string) => makeMyPassURL(`/manage-guest/${eventId}/download-csv/`),
   guestListFormCategories: (eventId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/list-form-categories/`),
-  guestListPagination: (eventId = '') =>
-    makeMyPassURL(`/manage-guest/${eventId}/register-list-pagination/`),
+  guestListPagination: (eventId = '') => makeMyPassURL(`/manage-guest/${eventId}/register-list/`),
 
   //Manage Logs
   mailLog: (eventId: string) => makeMyPassURL(`/manage-log/${eventId}/mail-log/`),
@@ -152,10 +151,10 @@ export const makeMyPass = {
   //Manage Games
   scratchCardClaim: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/games/${eventId}/scratch-card/${eventRegisterId}/claim`),
-  spinWheelList: (eventId: string) => makeMyPassURL(`/games/${eventId}/randomuser/list`),
+  spinWheelList: (eventId: string) => makeMyPassURL(`/games/${eventId}/pick-user/list`),
   spinWheelCheckPickUser: (eventId: string) => makeMyPassURL(`/games/${eventId}/check-pick-user/`),
 
-  spinWheelLogList: (eventId: string) => makeMyPassURL(`/games/${eventId}/randomuser/log/`),
+  spinWheelLogList: (eventId: string) => makeMyPassURL(`/games/${eventId}/pick-user/log/`),
 
   //UTM
 
