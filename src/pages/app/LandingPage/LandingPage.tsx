@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Theme from '../../../components/Theme/Theme';
 import EventPartners from './components/EventPartners/EventPartners';
 import Hero from './components/Hero/Hero';
-import WhyUs from './components/WhyUs/WhyUs';
+// import WhyUs from './components/WhyUs/WhyUs';
 import styles from './LandingPage.module.css';
 
 const LandingPage = () => {
@@ -25,31 +25,6 @@ const LandingPage = () => {
           <Hero />
 
           <EventPartners />
-          <div className={styles.secondSection}>
-            <p className={styles.ssText}>Erase the Hassle with Our Ticketing Magic!</p>
-            <img
-              src='/app/landing/ssImg.webp'
-              alt='image showing the table ui of makemypass'
-              className={styles.ssImg}
-            />
-          </div>
-          <WhyUs />
-
-          <div className={styles.footerContainer}>
-            <div className={styles.fLogoText}>
-              <img src='/app/logoText.webp' alt='' className={styles.fLogo} />
-              <p className={styles.fText}>MakeMyPass</p>
-            </div>
-            <p className={styles.location}>Thiruvanathapuram, Kerala, India</p>
-            <div className={styles.otherLinks}>
-              <Link to='/privacypolicy'>
-                <p className={styles.link}>Privacy Policy</p>
-              </Link>
-              <Link to='/termsandconditions'>
-                <p className={styles.link}>Terms and Conditions</p>
-              </Link>
-            </div>
-          </div>
         </div>
       </Theme>
     </>

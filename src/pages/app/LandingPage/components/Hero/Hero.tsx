@@ -24,12 +24,6 @@ const Hero = () => {
           </span>
           Not The Hard Way.
         </p>
-        {/* <div className={styles.arrowCircle}>
-          <motion.div initial={{ x: -100 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-            <img className={styles.arrow} src='/app/landing/arrow.webp' alt='white color arrow' />
-          </motion.div>
-          <img className={styles.circle} src='/app/landing/circle.webp' alt='white color circle' />
-        </div> */}
         <p className={styles.fsSubHeading}>
           Unforgettable Moments Commence with Tickets in your Digital Grasp. At MakeMyPass,
           Anticipation Meets Convenience, without the Chaos of Pass Logistics!
