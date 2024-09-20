@@ -192,7 +192,10 @@ const FormBuilder = () => {
                   This message will be shown once the form has been closed.
                 </p>
                 <div className={styles.followupMessage}>
-                  <Editor description={tempFollowupMessage} setNewDescription={setFollowupMessage} />
+                  <Editor
+                    description={tempFollowupMessage}
+                    setNewDescription={setFollowupMessage}
+                  />
                 </div>
                 <br />
                 <Slider
