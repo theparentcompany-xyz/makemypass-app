@@ -384,6 +384,7 @@ const EventForm = ({
           animate={{ opacity: 1, y: 0 }}
           whileTap={{ scale: 0.95 }}
           type='submit'
+          disabled={loading}
           onClick={() => {
             if (
               (formNumber === 0 && !directRegister) ||
