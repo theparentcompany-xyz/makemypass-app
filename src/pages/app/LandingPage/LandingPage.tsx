@@ -165,6 +165,48 @@ const LandingPage = () => {
               </p>
             </div>
           </div>
+
+          <div className={styles.thirdSection}>
+            <div className={styles.tsTexts}>
+              <p className={styles.tsHeading}>
+                Just Like That, You Can{' '}
+                <span
+                  style={{
+                    display: 'inline-block',
+                    transform: 'rotate(-2deg)',
+                    marginRight: '1rem',
+                  }}
+                >
+                  {' '}
+                  Check In
+                </span>
+                Attendees. Yeah{' '}
+                <span
+                  style={{
+                    display: 'inline-block',
+                    transform: 'rotate(-2deg)',
+                    marginRight: '1rem',
+                  }}
+                >
+                  Just 3 Clicks.
+                </span>
+              </p>
+              <p className={styles.tsSubHeading}>
+                One of the biggest time consuming thing is checkin, but not anymore. Just 3 clicks
+                and you're done. No more long queues.
+              </p>
+              <p className={styles.theEasyWay}>
+                At Scale Conclave 2023 with over 6500 registrations we checked in over ~750
+                attendees/hours.
+              </p>
+            </div>
+
+            <img
+              src='/app/landing/scanning.png'
+              alt='features of makemypass.com'
+              className={styles.frsImage}
+            />
+          </div>
         </div>
       </Theme>
     </>
