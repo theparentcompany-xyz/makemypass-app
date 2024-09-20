@@ -127,7 +127,9 @@ const EventPage = () => {
             >
               <EventHeader eventData={eventData} />
             </motion.div>
-            <p className={styles.privateEventText}>{eventData?.err_message}</p>
+            <p className={styles.privateEventText} dangerouslySetInnerHTML={
+              { __html: eventData.err_message }
+            }></p>
           </div>
         )}
 

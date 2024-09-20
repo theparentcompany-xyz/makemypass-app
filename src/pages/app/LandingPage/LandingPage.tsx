@@ -196,10 +196,6 @@ const LandingPage = () => {
                 One of the biggest time consuming thing is checkin, but not anymore. Just 3 clicks
                 and you're done. No more long queues.
               </p>
-              <p className={styles.theEasyWay}>
-                At Scale Conclave 2023 with over 6500 registrations we checked in over ~750
-                attendees/hours.
-              </p>
             </div>
 
             <img
