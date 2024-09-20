@@ -13,8 +13,14 @@ import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 import { v4 as uuidv4 } from 'uuid';
 
-import { getFormBuilderForm, updateFormBuilderForm } from '../../../apis/formbuilder';
+import {
+  closeFormMessage,
+  getCloseFormMessage,
+  getFormBuilderForm,
+  updateFormBuilderForm,
+} from '../../../apis/formbuilder';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
+import Editor from '../../../components/Editor/Editor';
 import Modal from '../../../components/Modal/Modal';
 import Slider from '../../../components/SliderButton/Slider';
 import Theme from '../../../components/Theme/Theme';
@@ -34,10 +40,20 @@ const FormBuilder = () => {
   const [showChangeTypeModal, setShowChangeTypeModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [formFieldErrors, setFormFieldErrors] = useState<ErrorResponse>({});
+  const [closeForm, setCloseForm] = useState(false);
+  const [showFollowUpMessage, setShowFollowUpMessage] = useState(false);
+  const [followUpMessage, setFollowupMessage] = useState('');
+
+  const [tempFollowupMessage, setTempFollowupMessage] = useState('');
 
   useEffect(() => {
     getFormBuilderForm(event_id, setFormFields);
+    getCloseFormMessage(event_id, setFollowupMessage);
   }, [event_id]);
+
+  useEffect(() => {
+    setTempFollowupMessage(followUpMessage);
+  }, [followUpMessage]);
 
   const updateFormStateVariable = () => {
     setFormFields([...formFields]);
@@ -164,6 +180,40 @@ const FormBuilder = () => {
                   <button onClick={() => removeField()}>Yes</button>
                   <button onClick={() => setShowConfirmationModal(false)}>No</button>
                 </div>
+              </div>
+            </Modal>
+          )}
+
+          {closeForm && (
+            <Modal type='center' title='Enter Message' onClose={() => setCloseForm(false)}>
+              <div className={styles.followupMessageContainer}>
+                <label className={styles.headingText}>Form Closed Message</label>
+                <p className={styles.subText}>
+                  This message will be shown once the form has been closed.
+                </p>
+                <div className={styles.followupMessage}>
+                  <Editor
+                    description={tempFollowupMessage}
+                    setNewDescription={setFollowupMessage}
+                  />
+                </div>
+                <br />
+                <Slider
+                  checked={showFollowUpMessage}
+                  text={'Close Registration Form'}
+                  onChange={() => {
+                    setShowFollowUpMessage(!showFollowUpMessage);
+                  }}
+                  size='small'
+                />
+                <button
+                  className={styles.continueButton}
+                  onClick={() => {
+                    closeFormMessage(event_id, followUpMessage, showFollowUpMessage);
+                  }}
+                >
+                  Continue
+                </button>
               </div>
             </Modal>
           )}
@@ -758,23 +808,33 @@ const FormBuilder = () => {
                     );
                   })}
                 </Reorder.Group>
-                <button
-                  onClick={() => {
-                    addField();
+                <br />
+                <Slider
+                  checked={closeForm}
+                  text={'Close Form'}
+                  onChange={() => {
+                    setCloseForm(!closeForm);
                   }}
-                  className={styles.addQuestionButton}
-                >
-                  <span>+</span>Add Question
-                </button>
-                <button
-                  onClick={() => {
-                    setFormFieldErrors({});
-                    updateFormBuilderForm(event_id, formFields, setFormFieldErrors);
-                  }}
-                  className={styles.addQuestionButton}
-                >
-                  Save Form
-                </button>
+                />
+                <div className={styles.actionButtons}>
+                  <button
+                    onClick={() => {
+                      addField();
+                    }}
+                    className={styles.addQuestionButton}
+                  >
+                    <span>+</span>Add Question
+                  </button>
+                  <button
+                    onClick={() => {
+                      setFormFieldErrors({});
+                      updateFormBuilderForm(event_id, formFields, setFormFieldErrors);
+                    }}
+                    className={styles.addQuestionButton}
+                  >
+                    Save Form
+                  </button>
+                </div>
               </div>
             </div>
           </div>

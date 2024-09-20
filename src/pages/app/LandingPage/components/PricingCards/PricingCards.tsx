@@ -32,13 +32,15 @@ const PricingCard: React.FC<PricingCardProps> = ({
       {popular && <div className={styles.popularTag}>POPULAR</div>}
       <h2 className={styles.cardTitle}>{title}</h2>
       <p className={styles.cardFooter}>{tagline}</p>
-      <div className={styles.priceContainer}>
-        {typeof price === 'number' && (
-          <span className={styles.originalPrice}>{(price * 1.5).toFixed(0)}</span>
-        )}
-        <span className={styles.currentPrice}>{price}</span>
-        <span className={styles.currency}>{currency}</span>
-      </div>
+      {price.toString().length > 0 && (
+        <div className={styles.priceContainer}>
+          {typeof price === 'number' && (
+            <span className={styles.originalPrice}>{(price * 1.5).toFixed(0)}</span>
+          )}
+          <span className={styles.currentPrice}>{price}</span>
+          <span className={styles.currency}>{currency}</span>
+        </div>
+      )}
       <ul className={styles.featureList}>
         {features.map((feature, index) => (
           <li key={index} className={feature.included ? styles.included : styles.excluded}>
@@ -88,7 +90,6 @@ const PricingSection: React.FC = () => {
     { name: 'Team Registration', included: true },
     { name: 'Followup Communication', included: true },
     { name: 'Scratch Card', included: true },
-    { name: 'Live Techical Support', included: true },
   ];
 
   const largeEvents: Feature[] = [
@@ -126,9 +127,9 @@ const PricingSection: React.FC = () => {
         popular={true}
       />
       <PricingCard
-        title='Large Paid Events'
-        tagline='Paid Events with large Participants'
-        price={'Contact Sales'}
+        title='Large Events'
+        tagline='Large Events with large Participants'
+        price={''}
         currency=''
         features={largeEvents}
         popular={false}
