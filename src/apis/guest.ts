@@ -166,7 +166,7 @@ export const listGuestsPagination = (
       .get(makeMyPass.guestList(eventId), {
         params: {
           per_page: paginationData.per_page,
-          page: paginationData.page,
+          page: previouslyHadSearchKeyword ? 1 : paginationData.page,
           checkin_only: showCheckedInOnly,
           search: searchKeyword,
         },

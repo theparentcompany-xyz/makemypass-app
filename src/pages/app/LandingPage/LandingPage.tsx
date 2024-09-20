@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import Theme from '../../../components/Theme/Theme';
 import EventPartners from './components/EventPartners/EventPartners';
@@ -238,7 +238,7 @@ const LandingPage = () => {
             </p>
           </div>
           <PricingSection />
-          <div className={styles.tsTexts}>
+          {/* <div className={styles.tsTexts}>
             <p className={styles.tsHeading}>
               Don't Believe
               <span
@@ -264,8 +264,23 @@ const LandingPage = () => {
                 Users.
               </span>
             </p>
+          </div> */}
+          {/* <TestimonialSection /> */}
+          <div className={styles.footerContainer}>
+            <div className={styles.fLogoText}>
+              <img src='/app/logoText.webp' alt='' className={styles.fLogo} />
+              <p className={styles.fText}>MakeMyPass</p>
+            </div>
+            <p className={styles.location}>Thiruvanathapuram, Kerala, India</p>
+            <div className={styles.otherLinks}>
+              <Link to='/privacypolicy'>
+                <p className={styles.link}>Privacy Policy</p>
+              </Link>
+              <Link to='/termsandconditions'>
+                <p className={styles.link}>Terms and Conditions</p>
+              </Link>
+            </div>
           </div>
-          <TestimonialSection />
         </div>
       </Theme>
     </>
