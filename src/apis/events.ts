@@ -158,7 +158,12 @@ export const updateEventData = ({
     .catch((error) => {
       setIsPublished && setIsPublished(false);
       setFormErrors && setFormErrors(error.response.data.message);
-      toast.error(error?.response?.data?.message?.general[0] || 'Unable to process the request');
+      // toast.error(error?.response?.data?.message?.general[0] || 'Unable to process the request');
+
+      Object.keys(error.response.data.message).forEach((key) => {
+        if (error.response.data.message[key][0].length > 0)
+          toast.error(error.response.data.message[key][0]);
+      });
     });
 };
 

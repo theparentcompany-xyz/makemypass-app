@@ -171,7 +171,7 @@ const EditEvent = () => {
     }
 
     for (const key in changedData) {
-      if (['event_name', 'logo', 'title'].includes(key)) {
+      if (['event_name', 'logo', 'title'].includes(key) && !changedData[key]) {
         sessionStorage.clear();
       }
     }
