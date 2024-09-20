@@ -310,7 +310,7 @@ const InEventStats = () => {
                 <div className={styles.totalRegistered}>
                   <p className={styles.total}>Total Check-Ins</p>
                   <p className={styles.count}>
-                    {totalCheckIns}d<span> guests</span>
+                    {totalCheckIns}<span> guests</span>
                   </p>
                 </div>
               </div>

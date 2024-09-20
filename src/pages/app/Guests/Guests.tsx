@@ -146,6 +146,7 @@ const Guests = () => {
   useEffect(() => {
     if (!selectedGuestId?.id) {
       setSelectedGuest(undefined);
+      getEventFormData(eventId, setEventFormData);
     } else {
       if (selectedGuestId.type === 'edit' || selectedGuestId.type === 'view') {
         getGuestData();
