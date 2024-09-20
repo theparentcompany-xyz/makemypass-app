@@ -147,63 +147,69 @@ const PageViewAnalytics = () => {
 
   return (
     <Theme>
-      <EventHeader previousPageNavigate='-1' />
-      {dataLoaded ? (
-        <>
-          <div className={styles.pageGraphContainer}>
-            <p className={styles.pageHeader}>Page View Analytics</p>
-            <div className={styles.pageGraph}>
-              <Line
-                data={{
-                  datasets: Object.entries(pageViewAnalytics?.page_to_reg_total ?? {}).map(
-                    ([key, value], index) => ({
-                      label: key,
-                      data: value,
-                      fill: false,
-                      backgroundColor: colors[index],
-                      borderColor: colors[index],
-                    }),
-                  ),
-                }}
-                options={options}
-              />
+      <div className={styles.homeContainer}>
+        <EventHeader previousPageNavigate='-1' />
+        {dataLoaded ? (
+          <>
+            <div className={styles.pageGraphContainer}>
+              <p className={styles.pageHeader}>Page View Analytics</p>
+              <div className={styles.pageGraph}>
+                <Line
+                  data={{
+                    datasets: Object.entries(pageViewAnalytics?.page_to_reg_total ?? {}).map(
+                      ([key, value], index) => ({
+                        label: key,
+                        data: value,
+                        fill: false,
+                        backgroundColor: colors[index],
+                        borderColor: colors[index],
+                      }),
+                    ),
+                  }}
+                  options={options}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className={styles.utmGraphContainer}>
-            {pageViewAnalytics && pageViewAnalytics.utm && (
-              <p className={styles.pageHeader}>UTM Analytics</p>
-            )}
             <div className={styles.utmGraphContainer}>
               {pageViewAnalytics &&
                 pageViewAnalytics.utm &&
-                Object.entries(pageViewAnalytics.utm).map(([utmKey, utmData]) => {
-                  if (Object.keys(utmData).length === 0) return null; // Skip empty utm sections
-                  return renderBarChart(utmKey, utmData);
-                })}
+                Object.keys(pageViewAnalytics.utm).length > 0 && (
+                  <p className={styles.pageHeader}>UTM Analytics</p>
+                )}
+              <div className={styles.utmGraphContainer}>
+                <p className={styles.pageHeader}>Metadata Analytics</p>
+                {pageViewAnalytics &&
+                  pageViewAnalytics.utm &&
+                  Object.entries(pageViewAnalytics.utm).map(([utmKey, utmData]) => {
+                    if (Object.keys(utmData).length === 0) return null; // Skip empty utm sections
+                    return renderBarChart(utmKey, utmData);
+                  })}
+              </div>
             </div>
-          </div>
 
-          <div className={styles.analyticsTableContainers}>
-            {pageViewAnalytics &&
-              pageViewAnalytics.metadata &&
-              Object.keys(pageViewAnalytics.metadata).map((key) => (
-                <div key={key} className={styles.analyticsTableContainer}>
-                  <GenericTable
-                    tableData={transformData(pageViewAnalytics.metadata)[key]}
-                    tableHeading={
-                      key.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) + ' Analytics'
-                    }
-                  />
-                </div>
-              ))}
+            <div className={styles.analyticsTableContainers}>
+              {pageViewAnalytics &&
+                pageViewAnalytics.metadata &&
+                Object.keys(pageViewAnalytics.metadata).map((key) => (
+                  <div key={key} className={styles.analyticsTableContainer}>
+                    <GenericTable
+                      tableData={transformData(pageViewAnalytics.metadata)[key]}
+                      tableHeading={
+                        key.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) +
+                        ' Analytics'
+                      }
+                    />
+                  </div>
+                ))}
+            </div>
+          </>
+        ) : (
+          <div className='center'>
+            <HashLoader color={'#46BF75'} size={50} />
           </div>
-        </>
-      ) : (
-        <div className='center'>
-          <HashLoader color={'#46BF75'} size={50} />
-        </div>
-      )}
+        )}
+      </div>
     </Theme>
   );
 };

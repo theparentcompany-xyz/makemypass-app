@@ -70,6 +70,7 @@ const Guests = () => {
   });
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [showCheckedInOnly, setShowCheckedInOnly] = useState<boolean>(false);
+  const [showApprovedOnly, setShowApprovedOnly] = useState<boolean>(false);
   const [eventFormData, setEventFormData] = useState<FormEventData>();
   const [formData, setFormData] = useState<FormDataType>({});
   const [categories, setCategories] = useState<string[]>([]);
@@ -131,10 +132,11 @@ const Guests = () => {
         setPaginationData,
         showCheckedInOnly,
         searchKeyword,
+        showApprovedOnly,
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventId, triggerFetch, showCheckedInOnly, searchKeyword]);
+  }, [eventId, triggerFetch, showCheckedInOnly, searchKeyword, showApprovedOnly]);
 
   useEffect(() => {
     if (eventId) {
@@ -376,6 +378,13 @@ const Guests = () => {
                       text='Checked-In'
                     />
 
+                    <Slider
+                      checked={showApprovedOnly}
+                      onChange={() => setShowApprovedOnly(!showApprovedOnly)}
+                      size='small'
+                      text='Shortlisted-Only'
+                    />
+
                     {showPicker && (
                       <SecondaryButton
                         buttonText='Pick User'
@@ -423,7 +432,7 @@ const Guests = () => {
                     {(userRole === Roles.ADMIN || userRole === Roles.OWNER) && (
                       <FaFileCsv
                         onClick={() => {
-                          downloadRegisterCSVData(eventId, showCheckedInOnly);
+                          downloadRegisterCSVData(eventId, showCheckedInOnly, showApprovedOnly);
                         }}
                         size={20}
                         color='#575f61'

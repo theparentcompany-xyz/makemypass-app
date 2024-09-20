@@ -13,6 +13,24 @@
   margin-top: 1rem;
 }
 
+.analyticsTableContainers {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 1rem;
+  column-gap: 1rem;
+}
+
+.analyticsTableContainer {
+  max-width: 40rem;
+  flex: 1 1 0;
+}
+
+@media screen and (min-width: 768px) {
+  .homeContainer {
+    padding: 1rem;
+  }
+}
+
 .utmGraphContainer {
   display: flex;
   flex-wrap: wrap;

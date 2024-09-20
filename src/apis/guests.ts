@@ -125,9 +125,17 @@ export const viewGuestTicket = async (
     });
 };
 
-export const downloadRegisterCSVData = async (eventId: string, showCheckedInOnly: boolean) => {
+export const downloadRegisterCSVData = async (
+  eventId: string,
+  showCheckedInOnly: boolean,
+  showApprovedOnly: boolean,
+) => {
+  const params = new URLSearchParams();
+  if (showCheckedInOnly) params.append('checkin_only', 'true');
+  if (showApprovedOnly) params.append('approved_only', 'true');
+
   privateGateway
-    .get(makeMyPass.guestDownloadCSV(eventId) + (showCheckedInOnly ? '?checkin_only=true' : ''))
+    .get(makeMyPass.guestDownloadCSV(eventId) + '?' + params.toString())
     .then((response) => {
       const csvData = response.data;
       const csvContent = 'data:text/csv;charset=utf-8,' + csvData;

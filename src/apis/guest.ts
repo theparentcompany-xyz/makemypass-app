@@ -158,6 +158,7 @@ export const listGuestsPagination = (
   setPaginationData: Dispatch<React.SetStateAction<PaginationDataType>>,
   showCheckedInOnly: boolean,
   searchKeyword: string,
+  showApprovedOnly: boolean,
 ) => {
   if (paginationData && paginationData.page && paginationData.page) {
     const previouslyHadSearchKeyword = paginationData.searchKeyword !== searchKeyword;
@@ -169,6 +170,7 @@ export const listGuestsPagination = (
           page: previouslyHadSearchKeyword ? 1 : paginationData.page,
           checkin_only: showCheckedInOnly,
           search: searchKeyword,
+          approved_only: showApprovedOnly,
         },
       })
       .then((response) => {
