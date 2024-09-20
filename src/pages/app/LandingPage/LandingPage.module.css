@@ -243,7 +243,7 @@
 .ssHeading span {
   color: #272727;
   background-color: #01f77e;
-  font-size: 2.5rem;
+  font-size: 2.75rem;
   padding: 0.2;
   transform: rotate(90deg);
 }
@@ -302,7 +302,7 @@
   margin-bottom: 0.5rem;
   font-size: 1rem;
   opacity: 0.9;
-  width: 25rem;
+  max-width: 25rem;
 }
 
 .timeWastedContainer li span {
@@ -377,7 +377,7 @@
 .tsHeading span {
   color: #272727;
   background-color: #01f77e;
-  font-size: 2.5rem;
+  font-size: 2.75rem;
   padding: 0.2;
   transform: rotate(90deg);
 }

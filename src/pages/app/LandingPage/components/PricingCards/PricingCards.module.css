@@ -1,0 +1,124 @@
+.pricingSection {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  font-family: 'Inter', sans-serif;
+  padding: 2rem 0;
+}
+
+.pricingCard {
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 2rem;
+  width: 300px;
+  color: #ffffff;
+  position: relative;
+  border: 1px solid #333;
+}
+
+.pricingCard.popular {
+  border: 1px solid #01f77e;
+}
+
+.popularTag {
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  background-color: #01f77e;
+  color: #000;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.priceContainer {
+  margin-bottom: 1rem;
+}
+
+.originalPrice {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+.currentPrice {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.currency {
+  font-size: 1rem;
+  color: #888;
+  margin-left: 0.25rem;
+}
+
+.featureList {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.featureList li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.checkIcon {
+  color: #4caf50;
+  margin-right: 0.5rem;
+}
+
+.xIcon {
+  color: #888;
+  margin-right: 0.5rem;
+}
+
+.excluded {
+  color: #888;
+}
+
+.updateTag {
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 2px 5px;
+  border-radius: 10px;
+  margin-left: 0.5rem;
+}
+
+.getShipfastBtn {
+  background-color: #01f77e;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightningIcon {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5rem;
+}
+
+.cardFooter {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
