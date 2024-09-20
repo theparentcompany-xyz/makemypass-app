@@ -5,7 +5,6 @@ import Theme from '../../../components/Theme/Theme';
 import EventPartners from './components/EventPartners/EventPartners';
 import Hero from './components/Hero/Hero';
 import PricingSection from './components/PricingCards/PricingCards';
-import TestimonialSection from './components/TestimonialSection/TestimonialSection';
 // import WhyUs from './components/WhyUs/WhyUs';
 import styles from './LandingPage.module.css';
 
