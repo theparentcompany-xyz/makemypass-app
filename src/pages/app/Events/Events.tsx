@@ -123,6 +123,19 @@ const Events = () => {
             </div>
           )}
           <div className={styles.homeContainer}>
+            <div className={styles.selectRow}>
+              <Select
+                styles={customStyles}
+                isMulti
+                options={tags.map((tag) => ({ value: tag, label: tag }))}
+                className='basic-multi-select'
+                classNamePrefix='select'
+                placeholder='Select tags'
+                onChange={(selectedOptions) => {
+                  setSelectedTags(selectedOptions.map((option) => option.value));
+                }}
+              />
+            </div>
             {Object.values(EventStatus).map((status) => {
               return (
                 <div>
@@ -154,18 +167,6 @@ const Events = () => {
                           })`
                         : ''}
                     </motion.p>
-
-                    <Select
-                      styles={customStyles}
-                      isMulti
-                      options={tags.map((tag) => ({ value: tag, label: tag }))}
-                      className='basic-multi-select'
-                      classNamePrefix='select'
-                      placeholder='Select tags'
-                      onChange={(selectedOptions) => {
-                        setSelectedTags(selectedOptions.map((option) => option.value));
-                      }}
-                    />
                   </div>
 
                   <div className={styles.eventsContainer}>
