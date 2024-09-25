@@ -128,7 +128,7 @@ const PricingSection: React.FC = () => {
       />
       <PricingCard
         title='Large Events'
-        tagline='Large Events with large Participants'
+        tagline='Large Events with > 250 Participants'
         price={''}
         currency=''
         features={largeEvents}
