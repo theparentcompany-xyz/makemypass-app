@@ -4,6 +4,7 @@ import { FaEdit, FaSave, FaTrash } from 'react-icons/fa';
 
 import { VenueCRUDType } from '../../../../../apis/types';
 import { createEventVenue, deleteEventVenue, updateEventVenue } from '../../../../../apis/venue';
+import { isUserEditor } from '../../../../../common/commonFunctions';
 import Modal from '../../../../../components/Modal/Modal';
 import InputField from '../../../../auth/Login/InputField';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
@@ -102,11 +103,13 @@ const VenueModal = ({
 
           <div className={styles.headerRow}>
             <p className={styles.sectionHeader}>{`Current Venues (${venues.venueList.length})`}</p>
-            <SecondaryButton
-              buttonText='Add Venue'
-              icon={<></>}
-              onClick={() => setVenueData({ name: '', id: '', type: 'CREATE' })}
-            />
+            {isUserEditor() && (
+              <SecondaryButton
+                buttonText='Add Venue'
+                icon={<></>}
+                onClick={() => setVenueData({ name: '', id: '', type: 'CREATE' })}
+              />
+            )}
           </div>
           <div className={styles.logsListingContainer}>
             {venues.venueList.map((venue) => (
@@ -119,6 +122,7 @@ const VenueModal = ({
                       name='venue_name'
                       id='venue_name'
                       icon={<></>}
+                      disabled={!isUserEditor()}
                       value={venueData.name}
                       onChange={(e) => setVenueData({ ...venueData, name: e.target.value })}
                       style={{
@@ -150,24 +154,26 @@ const VenueModal = ({
                       />
                     </div>
                   ) : (
-                    <div className='row'>
-                      <FaTrash
-                        title='Delete Venue'
-                        color='#8e8e8e'
-                        className={styles.reportIcon}
-                        onClick={() => {
-                          setVenueData({ name: venue.name, id: venue.id, type: 'DELETE' });
-                        }}
-                      />
-                      <FaEdit
-                        title='Edit Venue'
-                        color='#8e8e8e'
-                        className={styles.reportIcon}
-                        onClick={() => {
-                          setVenueData({ name: venue.name, id: venue.id, type: 'EDIT' });
-                        }}
-                      />
-                    </div>
+                    isUserEditor() && (
+                      <div className='row'>
+                        <FaTrash
+                          title='Delete Venue'
+                          color='#8e8e8e'
+                          className={styles.reportIcon}
+                          onClick={() => {
+                            setVenueData({ name: venue.name, id: venue.id, type: 'DELETE' });
+                          }}
+                        />
+                        <FaEdit
+                          title='Edit Venue'
+                          color='#8e8e8e'
+                          className={styles.reportIcon}
+                          onClick={() => {
+                            setVenueData({ name: venue.name, id: venue.id, type: 'EDIT' });
+                          }}
+                        />
+                      </div>
+                    )
                   )}
                 </div>
 

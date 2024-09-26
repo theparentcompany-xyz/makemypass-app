@@ -8,6 +8,7 @@ import {
   updateEventSpeaker,
 } from '../../../../../apis/speakers';
 import { SpeakerCRUDType } from '../../../../../apis/types';
+import { isUserEditor } from '../../../../../common/commonFunctions';
 import Modal from '../../../../../components/Modal/Modal';
 import InputField from '../../../../auth/Login/InputField';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
@@ -192,18 +193,20 @@ const SpeakerModal = ({
             <p
               className={styles.sectionHeader}
             >{`Current Speaker (${speakers.speakerList.length})`}</p>
-            <SecondaryButton
-              buttonText='Add Speaker'
-              onClick={() => {
-                setSpeakerData({
-                  id: '',
-                  name: '',
-                  position: '',
-                  image: null,
-                  type: 'CREATE',
-                });
-              }}
-            />
+            {isUserEditor() && (
+              <SecondaryButton
+                buttonText='Add Speaker'
+                onClick={() => {
+                  setSpeakerData({
+                    id: '',
+                    name: '',
+                    position: '',
+                    image: null,
+                    type: 'CREATE',
+                  });
+                }}
+              />
+            )}
           </div>
           <div className={styles.logsListingContainer}>
             {speakers.speakerList &&
@@ -234,60 +237,62 @@ const SpeakerModal = ({
                     </div>
                   </div>
 
-                  <div className='row'>
-                    <FaTrash
-                      title='Delete User'
-                      color='#8e8e8e'
-                      className={styles.reportIcon}
-                      onClick={() => {
-                        setSpeakerData({
-                          id: speaker.id,
-                          name: speaker.name,
-                          position: speaker.position,
-                          image: null,
-                          type: 'DELETE',
-                        });
-                      }}
-                    />
-                    <FaEdit
-                      title='Edit Speaker'
-                      color='#8e8e8e'
-                      className={styles.reportIcon}
-                      onClick={() => {
-                        if (!speaker) return;
-                        const imageURL = speaker?.image;
-                        if (typeof imageURL === 'string')
-                          fetch(imageURL)
-                            .then((response) => response.blob())
-                            .then((blob) => {
-                              const file = new File([blob], speaker.name);
-                              setSpeakerData((prev) => ({
-                                ...prev,
-                                image: file,
-                              }));
-                            })
-                            .catch((error) => {
-                              toast.error(
-                                error.response.data.message.general[0] ||
-                                  'Unable to process the request',
-                              );
-                            });
-                        else
+                  {isUserEditor() && (
+                    <div className='row'>
+                      <FaTrash
+                        title='Delete User'
+                        color='#8e8e8e'
+                        className={styles.reportIcon}
+                        onClick={() => {
+                          setSpeakerData({
+                            id: speaker.id,
+                            name: speaker.name,
+                            position: speaker.position,
+                            image: null,
+                            type: 'DELETE',
+                          });
+                        }}
+                      />
+                      <FaEdit
+                        title='Edit Speaker'
+                        color='#8e8e8e'
+                        className={styles.reportIcon}
+                        onClick={() => {
+                          if (!speaker) return;
+                          const imageURL = speaker?.image;
+                          if (typeof imageURL === 'string')
+                            fetch(imageURL)
+                              .then((response) => response.blob())
+                              .then((blob) => {
+                                const file = new File([blob], speaker.name);
+                                setSpeakerData((prev) => ({
+                                  ...prev,
+                                  image: file,
+                                }));
+                              })
+                              .catch((error) => {
+                                toast.error(
+                                  error.response.data.message.general[0] ||
+                                    'Unable to process the request',
+                                );
+                              });
+                          else
+                            setSpeakerData((prev) => ({
+                              ...prev,
+                              image: speaker.image,
+                            }));
+
                           setSpeakerData((prev) => ({
                             ...prev,
-                            image: speaker.image,
+                            id: speaker.id,
+                            name: speaker.name,
+                            position: speaker.position,
+                            type: 'EDIT',
                           }));
-
-                        setSpeakerData((prev) => ({
-                          ...prev,
-                          id: speaker.id,
-                          name: speaker.name,
-                          position: speaker.position,
-                          type: 'EDIT',
-                        }));
-                      }}
-                    />
-                  </div>
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
               ))}
           </div>
