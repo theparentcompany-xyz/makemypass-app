@@ -33,7 +33,7 @@ const DashboardTabs = ({
   const tabs: TabsType = {
     overview: {
       title: 'Overview',
-      roles: TillRoles.ADMIN,
+      roles: TillRoles.VOLUNTEER,
       category: 'preEvent',
     },
     insights: {

@@ -6,7 +6,6 @@ import { GoPeople } from 'react-icons/go';
 import { useNavigate } from 'react-router';
 import Select from 'react-select';
 
-import { Roles } from '../../../../services/enums';
 import {
   createDuplicateEvent,
   getCommonTags,
@@ -62,15 +61,8 @@ const Events = () => {
   const navigate = useNavigate();
 
   const handleClick = (eventName: string) => {
-    setEventInfoLocal(eventName).then((eventData) => {
-      if (
-        eventData.current_user_role === Roles.ADMIN ||
-        eventData.current_user_role === Roles.OWNER
-      ) {
-        navigate(`/${eventName}/overview/`);
-      } else if (eventData.current_user_role === Roles.VOLUNTEER) {
-        navigate(`/${eventName}/checkins/`);
-      }
+    setEventInfoLocal(eventName).then(() => {
+      navigate(`/${eventName}/overview/`);
     });
   };
 

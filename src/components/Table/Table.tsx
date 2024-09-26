@@ -5,7 +5,7 @@ import { MdCheckBox, MdCheckBoxOutlineBlank, MdDelete, MdEdit } from 'react-icon
 import { HashLoader } from 'react-spinners';
 import { FixedSizeList } from 'react-window';
 
-import { timeAgo } from '../../common/commonFunctions';
+import { isUserEditor, timeAgo } from '../../common/commonFunctions';
 import { PaginationDataType, ResentTicket, SelectedGuest } from '../../pages/app/Guests/types';
 import type { hostId } from '../../pages/app/Overview/Overview/types';
 import styles from './Table.module.css';
@@ -119,7 +119,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
                   </div>
                 </>
               )}
-              {setHostId && (
+              {setHostId && isUserEditor() && (
                 <>
                   <div className={styles.icon}>
                     <MdEdit

@@ -8,11 +8,11 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
 
 import { connectPrivateSocket } from '../../../../../services/apiGateway';
-import { Roles } from '../../../../../services/enums';
+import { TillRoles } from '../../../../../services/enums';
 import { makeMyPassSocket } from '../../../../../services/urls';
 import { createEventHost, removeEventHost, updateEventHost } from '../../../../apis/host';
 import { getEventHosts } from '../../../../apis/overview';
-import { transformTableData } from '../../../../common/commonFunctions';
+import { isUserAuthorized, transformTableData } from '../../../../common/commonFunctions';
 import DashboardLayout from '../../../../components/DashboardLayout/DashboardLayout';
 import Glance from '../../../../components/Glance/Glance';
 import Modal from '../../../../components/Modal/Modal';
@@ -31,7 +31,6 @@ const Overview = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
   const addRef = useRef<boolean>(false);
-  const userRole = JSON.parse(sessionStorage.getItem('eventData')!).current_user_role;
 
   const [recentRegistrations, setRecentRegistrations] = useState<recentRegistration[]>([]);
   const [recentTableData, setRecentTableData] = useState<TableType[]>([]);
@@ -56,11 +55,6 @@ const Overview = () => {
   });
 
   useEffect(() => {
-    if ((eventId && userRole == Roles.ADMIN) || userRole == Roles.OWNER)
-      getEventHosts(eventId, setHostList);
-  }, [eventId, userRole]);
-
-  useEffect(() => {
     return () => {
       socket?.close();
     };
@@ -73,7 +67,7 @@ const Overview = () => {
   }, [selectedGuestId, eventTitle, navigate]);
 
   useEffect(() => {
-    if (eventId)
+    if (eventId) {
       connectPrivateSocket({
         url: makeMyPassSocket.guestRecentRegistrations(eventId),
       }).then((ws) => {
@@ -94,6 +88,9 @@ const Overview = () => {
 
         setSocket(ws);
       });
+
+      getEventHosts(eventId, setHostList);
+    }
   }, [eventId]);
 
   useEffect(() => {
@@ -279,7 +276,7 @@ const Overview = () => {
                   />
                 </Link>
 
-                {(userRole === Roles.OWNER || userRole === Roles.ADMIN) && (
+                {isUserAuthorized(TillRoles.VOLUNTEER) && (
                   <a href='#hosts'>
                     <SectionButton
                       buttonText='Host List'
@@ -308,16 +305,18 @@ const Overview = () => {
                 )}
               </AnimatePresence>
 
-              {(userRole === Roles.ADMIN || userRole === Roles.OWNER) && (
-                <div id='hosts'>
-                  <Table
-                    tableHeading='Event Hosts'
-                    tableData={hostListTableData}
-                    secondaryButton={<SecondaryButton buttonText='Add Hosts +' onClick={addHost} />}
-                    setHostId={setHostId}
-                  />
-                </div>
-              )}
+              <div id='hosts'>
+                <Table
+                  tableHeading='Event Hosts'
+                  tableData={hostListTableData}
+                  secondaryButton={
+                    isUserAuthorized(TillRoles.VOLUNTEER) ? (
+                      <SecondaryButton buttonText='Add Hosts +' onClick={addHost} />
+                    ) : undefined
+                  }
+                  setHostId={setHostId}
+                />
+              </div>
             </>
           ) : (
             <div className={styles.center}>
