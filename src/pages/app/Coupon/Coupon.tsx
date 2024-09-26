@@ -14,6 +14,7 @@ import {
   updateFormCouponStatus,
 } from '../../../apis/coupons';
 import { getFormBuilderForm } from '../../../apis/formbuilder';
+import { isUserEditor } from '../../../common/commonFunctions';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Modal from '../../../components/Modal/Modal';
 import Slider from '../../../components/SliderButton/Slider';
@@ -179,7 +180,7 @@ const Coupon = () => {
                     value={newCouponData.code}
                     description='Customer must enter this coupon code at checkout'
                     error={couponError.code}
-                    disabled={newCouponData.consumed > 0}
+                    disabled={newCouponData.consumed > 0 || !isUserEditor()}
                   />
 
                   <hr className={styles.line} />
@@ -198,6 +199,7 @@ const Coupon = () => {
                         isMulti
                         styles={customStyles}
                         name='colors'
+                        isDisabled={!isUserEditor()}
                         className='basic-multi-select'
                         classNamePrefix='select'
                         options={tickets.map((ticket) => {
@@ -240,7 +242,7 @@ const Coupon = () => {
                         placeholder='Enter Discount Value'
                         icon={<></>}
                         required={true}
-                        disabled={newCouponData.consumed > 0}
+                        disabled={newCouponData.consumed > 0 || !isUserEditor()}
                         onChange={(event) => {
                           setCouponError((prev: CreateCouponTypeError) => ({
                             ...prev,
@@ -287,7 +289,7 @@ const Coupon = () => {
                           name='colors'
                           className={styles.basicSelect}
                           classNamePrefix='select'
-                          isDisabled={newCouponData.consumed > 0}
+                          isDisabled={newCouponData.consumed > 0 || !isUserEditor()}
                           options={couponTypes}
                           value={couponTypes.find((type) => type.value === newCouponData.type)}
                           onChange={(selectedOption) => {
@@ -315,6 +317,7 @@ const Coupon = () => {
                     type='textarea'
                     name='Description'
                     id='description'
+                    disabled={!isUserEditor()}
                     placeholder='Write a short description'
                     icon={<></>}
                     required={false}
@@ -336,9 +339,11 @@ const Coupon = () => {
                     <Slider
                       checked={limitDiscountUsage}
                       onChange={() => {
-                        setLimitDiscountUsage(!limitDiscountUsage);
-                        if (!limitDiscountUsage) {
-                          setNewCouponData({ ...newCouponData, count: 5 });
+                        if (isUserEditor()) {
+                          setLimitDiscountUsage(!limitDiscountUsage);
+                          if (!limitDiscountUsage) {
+                            setNewCouponData({ ...newCouponData, count: 5 });
+                          }
                         }
                       }}
                       text='Limit Discount Usage'
@@ -367,6 +372,7 @@ const Coupon = () => {
                           }}
                           value={newCouponData.count ? newCouponData.count.toString() : '0'}
                           error={couponError.count}
+                          disabled={!isUserEditor()}
                         />
                       </div>
                     )}
@@ -375,10 +381,11 @@ const Coupon = () => {
                     <Slider
                       checked={newCouponData.is_private}
                       onChange={() => {
-                        setNewCouponData({
-                          ...newCouponData,
-                          is_private: !newCouponData.is_private,
-                        });
+                        if (isUserEditor())
+                          setNewCouponData({
+                            ...newCouponData,
+                            is_private: !newCouponData.is_private,
+                          });
                       }}
                       text='Show Coupon in Form'
                     />
@@ -392,10 +399,11 @@ const Coupon = () => {
                     <Slider
                       checked={newCouponData.is_active}
                       onChange={() => {
-                        setNewCouponData({
-                          ...newCouponData,
-                          is_active: !newCouponData.is_active,
-                        });
+                        if (isUserEditor())
+                          setNewCouponData({
+                            ...newCouponData,
+                            is_active: !newCouponData.is_active,
+                          });
                       }}
                       text='Activate Coupon'
                     />
@@ -417,13 +425,14 @@ const Coupon = () => {
                       <Slider
                         checked={newCouponData.conditions?.length > 0}
                         onChange={() => {
-                          if (newCouponData.conditions?.length > 0) newCouponData.conditions = [];
-                          else
-                            newCouponData.conditions.push({
-                              field: '',
-                              value: '',
-                              operator: '',
-                            });
+                          if (isUserEditor())
+                            if (newCouponData.conditions?.length > 0) newCouponData.conditions = [];
+                            else
+                              newCouponData.conditions.push({
+                                field: '',
+                                value: '',
+                                operator: '',
+                              });
 
                           setNewCouponData({ ...newCouponData });
                         }}
@@ -526,32 +535,34 @@ const Coupon = () => {
                 )}
 
                 <div className={styles.buttons}>
-                  <SecondaryButton
-                    buttonText='Save Coupon'
-                    onClick={() => {
-                      if (newCouponData.id) {
-                        setCouponModal({ showModal: false });
-                        updateCouponData(eventId, newCouponData, setCoupons);
-                      } else
-                        createCoupon(eventId, newCouponData, setCoupons, setCouponError).then(
-                          () => {
-                            setCouponModal({ showModal: false });
-                            setNewCouponData({
-                              code: '',
-                              value: 0,
-                              type: 'amount',
-                              ticket_restricted: [],
-                              description: '',
-                              is_active: true,
-                              count: 0,
-                              conditions: [],
-                              is_private: false,
-                              consumed: 0,
-                            });
-                          },
-                        );
-                    }}
-                  />
+                  {isUserEditor() && (
+                    <SecondaryButton
+                      buttonText='Save Coupon'
+                      onClick={() => {
+                        if (newCouponData.id) {
+                          setCouponModal({ showModal: false });
+                          updateCouponData(eventId, newCouponData, setCoupons);
+                        } else
+                          createCoupon(eventId, newCouponData, setCoupons, setCouponError).then(
+                            () => {
+                              setCouponModal({ showModal: false });
+                              setNewCouponData({
+                                code: '',
+                                value: 0,
+                                type: 'amount',
+                                ticket_restricted: [],
+                                description: '',
+                                is_active: true,
+                                count: 0,
+                                conditions: [],
+                                is_private: false,
+                                consumed: 0,
+                              });
+                            },
+                          );
+                      }}
+                    />
+                  )}
                   <SecondaryButton
                     buttonText='Discard Coupon'
                     onClick={() => {
@@ -581,24 +592,26 @@ const Coupon = () => {
                 tableData={coupons}
                 secondaryButton={
                   <div className={styles.secondaryTableButtons}>
-                    <SecondaryButton
-                      buttonText='+ Add New Coupon Code'
-                      onClick={() => {
-                        setNewCouponData({
-                          code: '',
-                          value: 0,
-                          type: 'amount',
-                          ticket_restricted: [],
-                          description: '',
-                          is_active: true,
-                          count: 0,
-                          conditions: [],
-                          is_private: false,
-                          consumed: 0,
-                        });
-                        setCouponModal({ showModal: true });
-                      }}
-                    />
+                    {isUserEditor() && (
+                      <SecondaryButton
+                        buttonText='+ Add New Coupon Code'
+                        onClick={() => {
+                          setNewCouponData({
+                            code: '',
+                            value: 0,
+                            type: 'amount',
+                            ticket_restricted: [],
+                            description: '',
+                            is_active: true,
+                            count: 0,
+                            conditions: [],
+                            is_private: false,
+                            consumed: 0,
+                          });
+                          setCouponModal({ showModal: true });
+                        }}
+                      />
+                    )}
                     {coupons && coupons.length > 0 && (
                       <SecondaryButton
                         buttonText={
@@ -607,7 +620,7 @@ const Coupon = () => {
                             : 'Coupons are not active'
                         }
                         onClick={() => {
-                          if (setActivateCoupon) {
+                          if (setActivateCoupon && isUserEditor()) {
                             setActivateCoupon({
                               ...activateCoupon,
                               showModal: true,
@@ -641,12 +654,14 @@ const Coupon = () => {
           ) : (
             <div className={styles.noCoupon}>
               <p className={styles.noCouponText}>No Coupons Available</p>
-              <SecondaryButton
-                buttonText='+ Add New Coupon Code'
-                onClick={() => {
-                  setCouponModal({ showModal: true });
-                }}
-              />
+              {isUserEditor() && (
+                <SecondaryButton
+                  buttonText='+ Add New Coupon Code'
+                  onClick={() => {
+                    setCouponModal({ showModal: true });
+                  }}
+                />
+              )}
             </div>
           )}
         </DashboardLayout>

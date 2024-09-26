@@ -214,7 +214,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/coupon',
         element: (
-          <RoleChecker roles={TillRoles.ADMIN}>
+          <RoleChecker roles={TillRoles.VIEWER}>
             <Coupon />
           </RoleChecker>
         ),

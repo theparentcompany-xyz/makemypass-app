@@ -4,7 +4,7 @@ import { isDate } from 'lodash';
 import { useState } from 'react';
 
 import { deleteCoupon, getCouponData } from '../../apis/coupons';
-import { formatDate } from '../../common/commonFunctions';
+import { formatDate, isUserEditor } from '../../common/commonFunctions';
 import type { CouponType, CreateCouponType } from '../../pages/app/Coupon/types';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import Modal from '../Modal/Modal';
@@ -141,7 +141,7 @@ const GenericTable = ({
                           ),
                       )}
 
-                      {setNewCouponData && (
+                      {setNewCouponData && isUserEditor() && (
                         <td className={styles.buttonsContainer}>
                           <SecondaryButton
                             buttonText='Edit'
@@ -154,7 +154,7 @@ const GenericTable = ({
                           />
                         </td>
                       )}
-                      {data.consumed === 0 && (
+                      {data.consumed === 0 && isUserEditor() && (
                         <td>
                           <SecondaryButton
                             buttonText='Delete'
