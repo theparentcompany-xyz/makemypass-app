@@ -25,7 +25,7 @@ import { HashLoader } from 'react-spinners';
 
 import { deleteEvent, getEventData, updateEventData } from '../../../apis/events';
 import { ErrorMessages, EventType } from '../../../apis/types';
-import { convertDate, getCurrentTimezone } from '../../../common/commonFunctions';
+import { convertDate, getCurrentTimezone, isUserEditor } from '../../../common/commonFunctions';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Editor from '../../../components/Editor/Editor';
 import Modal from '../../../components/Modal/Modal';
@@ -227,6 +227,7 @@ const EditEvent = () => {
                       checked={eventData.show_ticket_first as boolean}
                       text={''}
                       onChange={() =>
+                        isUserEditor() &&
                         setEventData({
                           ...eventData,
                           show_ticket_first: !eventData.show_ticket_first,
@@ -242,6 +243,7 @@ const EditEvent = () => {
                       checked={eventData.is_team as boolean}
                       text={''}
                       onChange={() =>
+                        isUserEditor() &&
                         setEventData({
                           ...eventData,
                           is_team: !eventData.is_team,
@@ -259,6 +261,7 @@ const EditEvent = () => {
                           checked={eventData.select_multi_ticket as boolean}
                           text={''}
                           onChange={() =>
+                            isUserEditor() &&
                             setEventData({
                               ...eventData,
                               select_multi_ticket: !eventData.select_multi_ticket,
@@ -281,6 +284,7 @@ const EditEvent = () => {
                             checked={eventData.is_grouped_ticket}
                             text={''}
                             onChange={() =>
+                              isUserEditor() &&
                               setEventData({
                                 ...eventData,
                                 is_grouped_ticket: !eventData.is_grouped_ticket,
@@ -301,6 +305,7 @@ const EditEvent = () => {
                       checked={eventData.is_checkout as boolean}
                       text={''}
                       onChange={() =>
+                        isUserEditor() &&
                         setEventData({
                           ...eventData,
                           is_checkout: !eventData.is_checkout,
@@ -316,6 +321,7 @@ const EditEvent = () => {
                       checked={eventData.thank_you_new_page as boolean}
                       text={''}
                       onChange={() =>
+                        isUserEditor() &&
                         setEventData({
                           ...eventData,
                           thank_you_new_page: !eventData.thank_you_new_page,
@@ -331,6 +337,7 @@ const EditEvent = () => {
                       checked={eventData.is_random_user as boolean}
                       text={''}
                       onChange={() =>
+                        isUserEditor() &&
                         setEventData({
                           ...eventData,
                           is_random_user: !eventData.is_random_user,
@@ -347,6 +354,7 @@ const EditEvent = () => {
                       checked={eventData.is_multiple_checkin as boolean}
                       text={''}
                       onChange={() =>
+                        isUserEditor() &&
                         setEventData({
                           ...eventData,
                           is_multiple_checkin: !eventData.is_multiple_checkin,
@@ -370,7 +378,7 @@ const EditEvent = () => {
               </div>
               <button
                 onClick={() => {
-                  if (eventData)
+                  if (eventData && isUserEditor())
                     setEventData({ ...eventData, followup_msg: followupMessage.toString() });
                   setShowAdvancedSettings(false);
                 }}
@@ -420,6 +428,7 @@ const EditEvent = () => {
                         }),
                       }}
                       onChange={(selectedOption: { value: string; label: string } | null) =>
+                        isUserEditor() &&
                         setEventData({ ...eventData, status: selectedOption?.label || '' })
                       }
                       value={selectOptions.filter((option) => option.label === eventData?.status)}
@@ -430,8 +439,9 @@ const EditEvent = () => {
                     <textarea
                       placeholder='Event Name'
                       className={styles.inputEventName}
+                      disabled={!isUserEditor()}
                       onChange={(e) => {
-                        setEventTitle(e.target.value);
+                        isUserEditor() && setEventTitle(e.target.value);
                       }}
                       value={eventTitle}
                     />
@@ -440,15 +450,18 @@ const EditEvent = () => {
                     <input
                       type='file'
                       className={styles.fileUpload}
+                      disabled={!isUserEditor()}
                       accept='image/*'
-                      onChange={(e) => setBanner(e.target.files ? e.target.files[0] : null)}
+                      onChange={(e) =>
+                        isUserEditor() && setBanner(e.target.files ? e.target.files[0] : null)
+                      }
                     />
                     {eventData?.banner && !banner?.name ? (
                       <>
                         <IoCloseOutline
                           className={styles.closeIcon}
                           onClick={() => {
-                            setEventData({ ...eventData, banner: '' });
+                            isUserEditor() && setEventData({ ...eventData, banner: '' });
                           }}
                         />
                         {eventData?.banner && typeof eventData?.banner === 'string' && (
@@ -462,7 +475,9 @@ const EditEvent = () => {
                             <IoCloseOutline
                               className={styles.closeIcon}
                               onClick={() => {
-                                eventData?.banner && setEventData({ ...eventData, banner: '' });
+                                isUserEditor() &&
+                                  eventData?.banner &&
+                                  setEventData({ ...eventData, banner: '' });
                                 setBanner(null);
                               }}
                             />
@@ -519,10 +534,13 @@ const EditEvent = () => {
                         type='text'
                         className={styles.urlInput}
                         placeholder='event-url'
+                        disabled={!isUserEditor()}
                         value={eventData?.name}
                         onChange={(e) => {
-                          e.target.value = e.target.value.replace(/[^a-zA-Z0-9-]/g, '');
-                          setEventData({ ...eventData, name: e.target.value });
+                          if (isUserEditor()) {
+                            e.target.value = e.target.value.replace(/[^a-zA-Z0-9-]/g, '');
+                            setEventData({ ...eventData, name: e.target.value });
+                          }
                         }}
                       />
                     </div>
@@ -547,12 +565,14 @@ const EditEvent = () => {
                             <input
                               type='datetime-local'
                               className={styles.dateInput}
+                              disabled={!isUserEditor()}
                               value={dateForDateTimeLocal(eventDate?.start)}
                               onChange={(e) => {
-                                setEventDate({
-                                  end: eventDate?.end,
-                                  start: e.target.value ? new Date(e.target.value) : undefined,
-                                });
+                                isUserEditor() &&
+                                  setEventDate({
+                                    end: eventDate?.end,
+                                    start: e.target.value ? new Date(e.target.value) : undefined,
+                                  });
                               }}
                             />
                           </div>
@@ -562,7 +582,9 @@ const EditEvent = () => {
                               type='datetime-local'
                               className={styles.dateInput}
                               value={dateForDateTimeLocal(eventDate?.end)}
+                              disabled={!isUserEditor()}
                               onChange={(e) =>
+                                isUserEditor() &&
                                 setEventDate({
                                   start: eventDate?.start,
                                   end: e.target.value ? new Date(e.target.value) : undefined,
@@ -576,9 +598,11 @@ const EditEvent = () => {
                             <label>Registration Start</label>
                             <input
                               type='datetime-local'
+                              disabled={!isUserEditor()}
                               className={styles.dateInput}
                               value={dateForDateTimeLocal(regDate?.start)}
                               onChange={(e) =>
+                                isUserEditor() &&
                                 setRegDate({
                                   end: regDate?.end,
                                   start: e.target.value ? new Date(e.target.value) : undefined,
@@ -590,9 +614,11 @@ const EditEvent = () => {
                             <label>Registration End</label>
                             <input
                               type='datetime-local'
+                              disabled={!isUserEditor()}
                               className={styles.dateInput}
                               value={dateForDateTimeLocal(regDate?.end)}
                               onChange={(e) =>
+                                isUserEditor() &&
                                 setRegDate({
                                   start: regDate?.start,
                                   end: e.target.value ? new Date(e.target.value) : undefined,
@@ -657,10 +683,11 @@ const EditEvent = () => {
                             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
                               <input
                                 type='text'
+                                disabled={!isUserEditor()}
                                 placeholder='Add Event Location'
                                 className={styles.inputLocation}
                                 value={placeName}
-                                onChange={(e) => setPlaceName(e.target.value)}
+                                onChange={(e) => isUserEditor() && setPlaceName(e.target.value)}
                               />
                             </Autocomplete>
                             <p className={styles.subText}>Offline location </p>
@@ -678,6 +705,7 @@ const EditEvent = () => {
                           checked={eventData.parse_audio}
                           text={''}
                           onChange={() =>
+                            isUserEditor() &&
                             setEventData({
                               ...eventData,
                               parse_audio: !eventData.parse_audio,
@@ -693,6 +721,7 @@ const EditEvent = () => {
                           checked={eventData.approval_required}
                           text={''}
                           onChange={() =>
+                            isUserEditor() &&
                             setEventData({
                               ...eventData,
                               approval_required: !eventData.approval_required,
@@ -708,6 +737,7 @@ const EditEvent = () => {
                           checked={eventData.is_private}
                           text={''}
                           onChange={() =>
+                            isUserEditor() &&
                             setEventData({ ...eventData, is_private: !eventData.is_private })
                           }
                         />
@@ -720,6 +750,7 @@ const EditEvent = () => {
                           checked={eventData.is_online}
                           text={''}
                           onChange={() =>
+                            isUserEditor() &&
                             setEventData({ ...eventData, is_online: !eventData.is_online })
                           }
                         />
@@ -734,15 +765,18 @@ const EditEvent = () => {
                         <div>
                           <input
                             type='number'
+                            disabled={!isUserEditor()}
                             className={styles.capcityInput}
                             placeholder='Unlimited'
                             value={eventData?.capacity}
                             onChange={(e) => {
-                              const value = Number(e.target.value);
-                              setEventData({
-                                ...eventData,
-                                capacity: value === 0 ? undefined : value,
-                              });
+                              if (isUserEditor()) {
+                                const value = Number(e.target.value);
+                                setEventData({
+                                  ...eventData,
+                                  capacity: value === 0 ? undefined : value,
+                                });
+                              }
                             }}
                             min={1}
                           />
@@ -771,10 +805,13 @@ const EditEvent = () => {
                           <p className={styles.logoName}>{logo?.name}</p>
                         </div>
                         <input
+                          disabled={!isUserEditor()}
                           type='file'
                           className={styles.fileUpload}
                           accept='image/*'
-                          onChange={(e) => setLogo(e.target.files ? e.target.files[0] : null)}
+                          onChange={(e) =>
+                            isUserEditor() && setLogo(e.target.files ? e.target.files[0] : null)
+                          }
                         />
                         <div className={styles.pencil}>
                           <LuPencil size={15} color='#949597' />
@@ -783,16 +820,20 @@ const EditEvent = () => {
                       <IoCloseOutline
                         className={styles.closeIcon}
                         onClick={() => {
-                          setLogo(null);
-                          setEventData({ ...eventData, logo: '' });
+                          if (isUserEditor()) {
+                            setLogo(null);
+                            setEventData({ ...eventData, logo: '' });
+                          }
                         }}
                       />
                     </div>
 
                     <div className={styles.buttonContainer}>
-                      <button className={styles.deleteButton} onClick={() => setShowModal(true)}>
-                        Delete
-                      </button>
+                      {isUserEditor() && (
+                        <button className={styles.deleteButton} onClick={() => setShowModal(true)}>
+                          Delete
+                        </button>
+                      )}
 
                       <button
                         className={styles.settingsButton}
@@ -805,9 +846,11 @@ const EditEvent = () => {
                       <button className={styles.createButton} onClick={() => history.back()}>
                         Cancel
                       </button>
-                      <button className={styles.createButton} onClick={onSubmit}>
-                        Save
-                      </button>
+                      {isUserEditor() && (
+                        <button className={styles.createButton} onClick={onSubmit}>
+                          Save
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

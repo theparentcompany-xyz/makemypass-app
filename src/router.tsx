@@ -182,7 +182,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/manage',
         element: (
-          <RoleChecker roles={TillRoles.ADMIN}>
+          <RoleChecker roles={TillRoles.VIEWER}>
             <EventGlance />
           </RoleChecker>
         ),
@@ -190,7 +190,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/manage/edit-event',
         element: (
-          <RoleChecker roles={TillRoles.ADMIN}>
+          <RoleChecker roles={TillRoles.VIEWER}>
             <EditEvent />
           </RoleChecker>
         ),

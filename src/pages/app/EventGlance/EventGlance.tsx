@@ -15,6 +15,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import CreatableSelect from 'react-select/creatable';
 import { HashLoader } from 'react-spinners';
 
+import { TillRoles } from '../../../../services/enums';
 import { getCommonTags, getEventData } from '../../../apis/events';
 import { getEventMailData, listEventMails } from '../../../apis/mails';
 import { sendTestMail } from '../../../apis/postevent';
@@ -28,6 +29,7 @@ import {
   VenueCRUDType,
 } from '../../../apis/types';
 import { listEventVenues } from '../../../apis/venue';
+import { isUserAuthorized, isUserEditor } from '../../../common/commonFunctions';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Modal from '../../../components/Modal/Modal';
 import SectionButton from '../../../components/SectionButton/SectionButton';
@@ -387,18 +389,20 @@ const EventGlance = () => {
             {UTMData.showUTM && <UTMManager UTMData={UTMData} setUTMData={setUTMData} />}
 
             <div className={styles.bannerContainer}>
-              <FaTags
-                size={20}
-                color='#FFFFFF'
-                className={styles.tagButton}
-                onClick={() => {
-                  setTags({
-                    tags: [],
-                    showModal: true,
-                  });
-                  listTags({ eventId, setTags });
-                }}
-              />
+              {isUserAuthorized(TillRoles.ADMIN) && (
+                <FaTags
+                  size={20}
+                  color='#FFFFFF'
+                  className={styles.tagButton}
+                  onClick={() => {
+                    setTags({
+                      tags: [],
+                      showModal: true,
+                    });
+                    listTags({ eventId, setTags });
+                  }}
+                />
+              )}
               {eventData?.banner && typeof eventData.banner === 'string' ? (
                 <img src={eventData?.banner} alt='' className={styles.banner} />
               ) : (
@@ -481,16 +485,6 @@ const EventGlance = () => {
                     )}
                   </div>
                   <div className={styles.buttons}>
-                    <button
-                      onClick={() => {
-                        const eventLink = `${import.meta.env.VITE_FRONTEND_URL}/${eventName}`;
-                        navigator.clipboard.writeText(eventLink);
-                        toast.success('Event link copied to clipboard');
-                      }}
-                      className={styles.shareEventButton}
-                    >
-                      Share Event
-                    </button>
                     <button
                       onClick={() => navigate('./edit-event')}
                       className={styles.editEventButton}
@@ -589,17 +583,19 @@ const EventGlance = () => {
                       <div className={styles.scheduleText}>
                         <p className={styles.scheduleHeading}>
                           {mail.type}{' '}
-                          <span
-                            className={styles.testMail}
-                            onClick={() => {
-                              setConfirmTestMail({
-                                status: true,
-                                mailId: mail.id,
-                              });
-                            }}
-                          >
-                            Test Mail
-                          </span>
+                          {isUserEditor() && (
+                            <span
+                              className={styles.testMail}
+                              onClick={() => {
+                                setConfirmTestMail({
+                                  status: true,
+                                  mailId: mail.id,
+                                });
+                              }}
+                            >
+                              Test Mail
+                            </span>
+                          )}
                         </p>
                         <p className={styles.scheduleSubHeading}>{mail.subject}</p>
                       </div>

@@ -3,6 +3,7 @@ import { LuPencil, LuPlus, LuSave, LuTrash } from 'react-icons/lu';
 import { MdClose } from 'react-icons/md';
 
 import { createUTM, getUTMList } from '../../../../../apis/utm';
+import { isUserEditor } from '../../../../../common/commonFunctions';
 import InputField from '../../../../auth/Login/InputField';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import type { UTMDataType } from './types';
@@ -133,94 +134,98 @@ const UTMManager = ({
                   }}
                 />
                 <label>{value}</label>
-                <LuPencil
-                  color='#939597'
-                  size={15}
-                  onClick={() => {
-                    setUTMData({
-                      ...UTMData,
-                      editUTM: {
-                        type: key as keyof UTMDataType['data'],
-                        value: value,
-                        index: index,
-                      },
-                    });
-                  }}
-                />
-                <LuTrash
-                  color='#939597'
-                  size={15}
-                  style={{ marginLeft: '5px' }}
-                  onClick={() => {
-                    const newData = [...UTMData.data[key as keyof UTMDataType['data']]];
-                    newData.splice(index, 1);
-                    setUTMData({
-                      ...UTMData,
-                      data: {
-                        ...UTMData.data,
-                        [key]: newData,
-                      },
-                    });
-                  }}
-                />
+                {isUserEditor() && (
+                  <>
+                    <LuPencil
+                      color='#939597'
+                      size={15}
+                      onClick={() => {
+                        setUTMData({
+                          ...UTMData,
+                          editUTM: {
+                            type: key as keyof UTMDataType['data'],
+                            value: value,
+                            index: index,
+                          },
+                        });
+                      }}
+                    />
+                    <LuTrash
+                      color='#939597'
+                      size={15}
+                      style={{ marginLeft: '5px' }}
+                      onClick={() => {
+                        const newData = [...UTMData.data[key as keyof UTMDataType['data']]];
+                        newData.splice(index, 1);
+                        setUTMData({
+                          ...UTMData,
+                          data: {
+                            ...UTMData.data,
+                            [key]: newData,
+                          },
+                        });
+                      }}
+                    />
+                  </>
+                )}
               </div>
             ),
           )}
 
-          {
-            // Add UTM
-            UTMData.addUTM.type === key && (
-              <div className={styles.utmValue}>
-                <InputField
-                  icon={<LuPlus size={15} />}
-                  type='text'
-                  name='utm'
-                  value={UTMData.addUTM.value}
-                  id='utm'
-                  placeholder='Add UTM'
-                  onChange={(e) => {
-                    setUTMData({
-                      ...UTMData,
-                      addUTM: {
-                        type: key,
-                        value: e.target.value,
-                      },
-                    });
-                  }}
-                />
-              </div>
-            )
-          }
-          <SecondaryButton
-            buttonText={UTMData.addUTM.type === key ? 'Save' : 'Add'}
-            icon={<LuPlus size={15} />}
-            onClick={() => {
-              if (UTMData.addUTM.type === key && UTMData.addUTM.value !== '') {
-                setUTMData({
-                  ...UTMData,
-                  data: {
-                    ...UTMData.data,
-                    [key]: [
-                      ...UTMData.data[key as keyof UTMDataType['data']],
-                      UTMData.addUTM.value,
-                    ],
-                  },
-                  addUTM: {
-                    type: '',
-                    value: '',
-                  },
-                });
-              } else {
-                setUTMData({
-                  ...UTMData,
-                  addUTM: {
-                    type: key as keyof UTMDataType['data'],
-                    value: '',
-                  },
-                });
-              }
-            }}
-          />
+          {isUserEditor() && UTMData.addUTM.type === key && (
+            <div className={styles.utmValue}>
+              <InputField
+                icon={<LuPlus size={15} />}
+                type='text'
+                name='utm'
+                value={UTMData.addUTM.value}
+                id='utm'
+                placeholder='Add UTM'
+                onChange={(e) => {
+                  setUTMData({
+                    ...UTMData,
+                    addUTM: {
+                      type: key,
+                      value: e.target.value,
+                    },
+                  });
+                }}
+              />
+            </div>
+          )}
+
+          {isUserEditor() && (
+            <SecondaryButton
+              buttonText={UTMData.addUTM.type === key ? 'Save' : 'Add'}
+              icon={<LuPlus size={15} />}
+              onClick={() => {
+                if (UTMData.addUTM.type === key && UTMData.addUTM.value !== '') {
+                  setUTMData({
+                    ...UTMData,
+                    data: {
+                      ...UTMData.data,
+                      [key]: [
+                        ...UTMData.data[key as keyof UTMDataType['data']],
+                        UTMData.addUTM.value,
+                      ],
+                    },
+                    addUTM: {
+                      type: '',
+                      value: '',
+                    },
+                  });
+                } else {
+                  setUTMData({
+                    ...UTMData,
+                    addUTM: {
+                      type: key as keyof UTMDataType['data'],
+                      value: '',
+                    },
+                  });
+                }
+              }}
+            />
+          )}
         </div>
       ))}
     </div>

@@ -48,7 +48,7 @@ const DashboardTabs = ({
     },
     manage: {
       title: 'Event Page',
-      roles: TillRoles.ADMIN,
+      roles: TillRoles.VIEWER,
       category: 'eventManagement',
     },
     formbuilder: {
