@@ -105,7 +105,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/insights',
         element: (
-          <RoleChecker roles={TillRoles.ADMIN}>
+          <RoleChecker roles={TillRoles.VIEWER}>
             <Insights />
           </RoleChecker>
         ),
@@ -270,7 +270,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/page-view-analytics/',
         element: (
-          <RoleChecker roles={TillRoles.ADMIN}>
+          <RoleChecker roles={TillRoles.VIEWER}>
             <PageViewAnalytics />
           </RoleChecker>
         ),

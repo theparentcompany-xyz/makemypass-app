@@ -12,7 +12,11 @@ import { TillRoles } from '../../../../../services/enums';
 import { makeMyPassSocket } from '../../../../../services/urls';
 import { createEventHost, removeEventHost, updateEventHost } from '../../../../apis/host';
 import { getEventHosts } from '../../../../apis/overview';
-import { isUserAuthorized, transformTableData } from '../../../../common/commonFunctions';
+import {
+  isUserAuthorized,
+  isUserEditor,
+  transformTableData,
+} from '../../../../common/commonFunctions';
 import DashboardLayout from '../../../../components/DashboardLayout/DashboardLayout';
 import Glance from '../../../../components/Glance/Glance';
 import Modal from '../../../../components/Modal/Modal';
@@ -310,7 +314,7 @@ const Overview = () => {
                   tableHeading='Event Hosts'
                   tableData={hostListTableData}
                   secondaryButton={
-                    isUserAuthorized(TillRoles.VOLUNTEER) ? (
+                    isUserEditor() ? (
                       <SecondaryButton buttonText='Add Hosts +' onClick={addHost} />
                     ) : undefined
                   }

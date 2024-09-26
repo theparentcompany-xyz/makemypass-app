@@ -22,6 +22,7 @@ import {
 } from '../../../apis/guests';
 import { checkSpinWheelPickUser } from '../../../apis/randomizer';
 import { FormDataType } from '../../../apis/types';
+import { isUserEditor } from '../../../common/commonFunctions';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Glance from '../../../components/Glance/Glance';
 import Modal from '../../../components/Modal/Modal';
@@ -139,7 +140,7 @@ const Guests = () => {
   }, [eventId, triggerFetch, showCheckedInOnly, searchKeyword, showApprovedOnly]);
 
   useEffect(() => {
-    if (eventId) {
+    if (eventId && isUserEditor()) {
       getFormCategories(eventId, setCategories);
       checkSpinWheelPickUser(eventId, setShowPicker);
     }

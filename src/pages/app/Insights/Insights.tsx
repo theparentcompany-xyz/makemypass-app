@@ -20,9 +20,11 @@ import { useNavigate, useParams } from 'react-router';
 import { HashLoader } from 'react-spinners';
 
 import { connectPrivateSocket } from '../../../../services/apiGateway';
+import { TillRoles } from '../../../../services/enums';
 import { makeMyPassSocket } from '../../../../services/urls';
 import { getEventId, updateEventData } from '../../../apis/events';
 import { getInsightsVisibility } from '../../../apis/insights';
+import { isUserAuthorized, isUserEditor } from '../../../common/commonFunctions';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Modal from '../../../components/Modal/Modal';
 import Theme from '../../../components/Theme/Theme';
@@ -252,9 +254,13 @@ const Insights = ({ type }: { type?: string }) => {
   }, [eventId, eventData]);
 
   const publishPage = () => {
-    const eventData = new FormData();
-    eventData.append('is_public_insight', isPublished ? 'false' : 'true');
-    updateEventData({ eventId: eventId.current, eventData, setIsPublished });
+    if (isUserEditor()) {
+      const eventData = new FormData();
+      eventData.append('is_public_insight', isPublished ? 'false' : 'true');
+      updateEventData({ eventId: eventId.current, eventData, setIsPublished });
+    } else {
+      toast.error('You are not authorized to perform this action');
+    }
   };
 
   return (
@@ -262,7 +268,7 @@ const Insights = ({ type }: { type?: string }) => {
       <DashboardLayout
         prevPage='/events'
         tabName='insights'
-        setShowPublishModal={setShowPublishModal}
+        setShowPublishModal={isUserAuthorized(TillRoles.EDITOR) ? setShowPublishModal : undefined}
         isLive={true}
       >
         {showPublishModal && (

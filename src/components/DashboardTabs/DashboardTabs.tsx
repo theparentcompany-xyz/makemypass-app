@@ -38,7 +38,7 @@ const DashboardTabs = ({
     },
     insights: {
       title: 'Insights',
-      roles: TillRoles.ADMIN,
+      roles: TillRoles.VIEWER,
       category: 'preEvent',
     },
     guests: {
@@ -135,7 +135,7 @@ const DashboardTabs = ({
                   </>
                 )}
               </ol>
-              {tab === 'insights' && !checkUrlForTerm('public') && (
+              {tab === 'insights' && !checkUrlForTerm('public') && setShowPublishModal && (
                 <SecondaryButton
                   buttonText='Share'
                   onClick={() => {
