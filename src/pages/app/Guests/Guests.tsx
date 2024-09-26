@@ -9,20 +9,20 @@ import { useLocation } from 'react-router-dom';
 import Select from 'react-select';
 import { HashLoader } from 'react-spinners';
 
-import { Roles } from '../../../../services/enums';
-import { getFormCategories } from '../../../apis/events';
-import { listGuestsPagination } from '../../../apis/guest';
+import { TillRoles } from '../../../../services/enums';
+import { getFormCategories } from '../../../apis/events'; // No restriction
+import { listGuestsPagination } from '../../../apis/guest'; //Till Volunteer
 import {
-  downloadRegisterCSVData,
-  getEventFormData,
-  getGuestEditPrefillData,
-  getGuestInformation,
-  resentGuestTicket,
-  viewGuestTicket,
+  downloadRegisterCSVData, //Till Admin
+  getEventFormData, // No Restriction
+  getGuestEditPrefillData, //Till Volunteer
+  getGuestInformation, //Till Volunteer
+  resentGuestTicket, //Till Volunteer
+  viewGuestTicket, //Till Volunteer
 } from '../../../apis/guests';
 import { checkSpinWheelPickUser } from '../../../apis/randomizer';
 import { FormDataType } from '../../../apis/types';
-import { isUserEditor } from '../../../common/commonFunctions';
+import { isUserAuthorized, isUserEditor } from '../../../common/commonFunctions';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Glance from '../../../components/Glance/Glance';
 import Modal from '../../../components/Modal/Modal';
@@ -51,9 +51,7 @@ const Guests = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { eventTitle } = useParams<{ eventTitle: string }>();
-  const { event_id: eventId, current_user_role: userRole } = JSON.parse(
-    sessionStorage.getItem('eventData')!,
-  );
+  const { event_id: eventId } = JSON.parse(sessionStorage.getItem('eventData')!);
 
   const searchParams = new URLSearchParams(location.search);
   const eventRegisterId = searchParams.get('eventRegisterId');
@@ -99,7 +97,7 @@ const Guests = () => {
 
   const getGuestData = () => {
     if (!eventFormData) getEventFormData(eventId, setEventFormData);
-    if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'edit') {
+    if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'edit' && isUserEditor()) {
       getGuestEditPrefillData(eventId, selectedGuestId.id, setSelectedGuest, setFormData);
     } else if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'view')
       getGuestInformation(eventId, selectedGuestId.id, setSelectedGuest);
@@ -207,7 +205,7 @@ const Guests = () => {
 
         {selectedGuestId && selectedGuestId.type === 'bulk' && <BulkUpload onClose={onClose} />}
 
-        {selectedGuestId && selectedGuestId.type === 'add' && (
+        {selectedGuestId && selectedGuestId.type === 'add' && isUserEditor() && (
           <Modal title='Invite Guest' onClose={onClose} type='side'>
             <div className={styles.userInfoModalContainer}>
               <button
@@ -386,7 +384,7 @@ const Guests = () => {
                       text='Shortlisted-Only'
                     />
 
-                    {showPicker && (
+                    {showPicker && isUserAuthorized(TillRoles.ADMIN) && (
                       <SecondaryButton
                         buttonText='Pick User'
                         onClick={() => {
@@ -430,7 +428,7 @@ const Guests = () => {
                       />
                     )}
 
-                    {(userRole === Roles.ADMIN || userRole === Roles.OWNER) && (
+                    {isUserAuthorized(TillRoles.ADMIN) && (
                       <FaFileCsv
                         onClick={() => {
                           downloadRegisterCSVData(eventId, showCheckedInOnly, showApprovedOnly);
@@ -441,18 +439,20 @@ const Guests = () => {
                       />
                     )}
 
-                    <TiUserAdd
-                      onClick={() => {
-                        setSelectedGuestId({
-                          id: '',
-                          type: 'add',
-                        });
-                        setFormData({});
-                      }}
-                      size={25}
-                      color='#575f61'
-                      className='pointer'
-                    />
+                    {isUserEditor() && (
+                      <TiUserAdd
+                        onClick={() => {
+                          setSelectedGuestId({
+                            id: '',
+                            type: 'add',
+                          });
+                          setFormData({});
+                        }}
+                        size={25}
+                        color='#575f61'
+                        className='pointer'
+                      />
+                    )}
                   </div>
                 }
                 paginationData={paginationData}

@@ -16,7 +16,7 @@ import {
   initateGuestRefund,
 } from '../../../../../apis/guests';
 import { checkInUser } from '../../../../../apis/scan';
-import { formatDate } from '../../../../../common/commonFunctions';
+import { formatDate, isUserEditor } from '../../../../../common/commonFunctions';
 import Modal from '../../../../../components/Modal/Modal';
 import ScannerResponseModal from '../../../CheckIns/components/ScannerResponseModal/ScannerResponseModal';
 import { multipleTicketCount } from '../../../CheckIns/pages/ScanQR/types';
@@ -314,7 +314,7 @@ const ViewGuest = ({
                   )}
                 </div>
 
-                {selectedGuestData['event_approval_required'] && (
+                {selectedGuestData['event_approval_required'] && isUserEditor() && (
                   <AnimatePresence>
                     <motion.div
                       initial={{ opacity: 0, y: 50 }}
@@ -407,7 +407,8 @@ const ViewGuest = ({
                   </AnimatePresence>
                 )}
               </div>
-              {selectedGuestData['is_approved'] && (
+
+              {selectedGuestData['is_approved'] && isUserEditor() && (
                 <div className={styles.guestActionButtons}>
                   {type !== 'overview' && (
                     <div
@@ -502,33 +503,36 @@ const ViewGuest = ({
                   </div>
                 </div>
               )}
-              <div className='row'>
-                <div
-                  className={styles.deleteIcon}
-                  onClick={() => {
-                    setDeleteModal(true);
-                  }}
-                >
-                  <FaTrash size={15} color='#8E8E8E' />
-                  <span> Delete Submission</span>
-                </div>
-                {!type && (
+
+              {isUserEditor() && (
+                <div className='row'>
                   <div
                     className={styles.deleteIcon}
                     onClick={() => {
-                      if (setSelectedGuest) setSelectedGuest(selectedGuestData);
-                      setSelectedGuestId((prevState) => ({
-                        ...prevState,
-                        id: selectedGuestData['id'],
-                        type: 'edit',
-                      }));
+                      setDeleteModal(true);
                     }}
                   >
-                    <FaEdit size={15} color='#8E8E8E' />
-                    <span> Edit Submission</span>
+                    <FaTrash size={15} color='#8E8E8E' />
+                    <span> Delete Submission</span>
                   </div>
-                )}
-              </div>
+                  {!type && (
+                    <div
+                      className={styles.deleteIcon}
+                      onClick={() => {
+                        if (setSelectedGuest) setSelectedGuest(selectedGuestData);
+                        setSelectedGuestId((prevState) => ({
+                          ...prevState,
+                          id: selectedGuestData['id'],
+                          type: 'edit',
+                        }));
+                      }}
+                    >
+                      <FaEdit size={15} color='#8E8E8E' />
+                      <span> Edit Submission</span>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {import.meta.env.VITE_CURRENT_ENV === 'dev' &&
                 Number(selectedGuestData['amount']) > 0 &&
