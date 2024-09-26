@@ -95,7 +95,8 @@
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 2;
-
+  display: flex;
+  column-gap: 0.25rem;
   &:hover {
     color: #47c97e;
   }

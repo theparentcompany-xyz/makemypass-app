@@ -21,3 +21,8 @@ export type Ticket = {
   remaining_count: number;
   checked_in_count?: number;
 };
+
+export type RoomType = {
+  roomNumber: string;
+  showModel: boolean;
+};

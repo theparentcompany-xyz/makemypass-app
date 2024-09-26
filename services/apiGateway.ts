@@ -112,10 +112,13 @@ export const connectPrivateSocket = ({
   const baseURL = (import.meta.env.VITE_WEBSOCKET_URL as string) + 'makemypass/';
 
   let wsUrl = '';
-  if (type === 'public')
-    wsUrl = `${baseURL}${url}?timezone=${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
-  else
-    wsUrl = `${baseURL}${url}?Authorization=Bearer ${localStorage.getItem('accessToken')}&timezone=${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
+  const params = `timezone=${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
+  if (type === 'public') {
+    wsUrl = `${baseURL}${url}${url.includes('?') ? '&' : '?'}${params}`;
+  } else {
+    const authParam = `Authorization=Bearer ${localStorage.getItem('accessToken')}`;
+    wsUrl = `${baseURL}${url}${url.includes('?') ? '&' : '?'}${authParam}&${params}`;
+  }
 
   return new Promise((resolve) => {
     const ws = new WebSocket(wsUrl);

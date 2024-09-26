@@ -9,13 +9,14 @@ import Modal from '../../../../../components/Modal/Modal';
 import Scanner from '../../../../../components/Scanner/Scanner';
 import SectionButton from '../../../../../components/SectionButton/SectionButton';
 import Theme from '../../../../../components/Theme/Theme';
+import InputField from '../../../../auth/Login/InputField';
 import CheckInHeader from '../../components/CheckInHeader/CheckInHeader/CheckInHeader';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
 import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerResponseModal';
 import { LogType } from '../Venue/Venue';
 import MultipleTicket from './components/MultipleTicket';
 import styles from './ScanQR.module.css';
-import { multipleTicketCount } from './types';
+import { multipleTicketCount, RoomType } from './types';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -28,7 +29,7 @@ const ScanQR = () => {
   });
 
   const [checking, setChecking] = useState<boolean>(false);
-
+  const [roomNumber, setRoomNumber] = useState<RoomType>({} as RoomType);
   const [scanLogs, setScanLogs] = useState<LogType[]>([]);
 
   const [previewData, setPreviewData] = useState<PreviewData>({
@@ -52,6 +53,7 @@ const ScanQR = () => {
         setMultipleTickets,
         multipleTickets,
         setTrigger,
+        roomNumber: roomNumber.roomNumber,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,6 +63,34 @@ const ScanQR = () => {
     <>
       {eventData ? (
         <Theme>
+          {roomNumber.showModel && (
+            <Modal
+              title='Add Room Number'
+              onClose={() => {
+                setRoomNumber({ ...roomNumber, showModel: false });
+              }}
+            >
+              <InputField
+                id='roomNumber'
+                type='text'
+                name='roomNumber'
+                icon={<></>}
+                placeholder='Enter Room Number'
+                value={roomNumber.roomNumber}
+                onChange={(e) => {
+                  setRoomNumber({ ...roomNumber, roomNumber: e.target.value });
+                }}
+              />
+              <button
+                className={styles.submitButton}
+                onClick={() => {
+                  setRoomNumber({ ...roomNumber, showModel: false });
+                }}
+              >
+                Confirm Room
+              </button>
+            </Modal>
+          )}
           {eventData?.select_multi_ticket && !isTicketSelected ? (
             <>
               <div className={styles.scanContainer}>
@@ -85,7 +115,6 @@ const ScanQR = () => {
                 multipleTickets={multipleTickets}
                 type='checkIn'
               />
-
               {previewData && previewData.name && (
                 <>
                   <div className={styles.backgroundBlur}></div>
@@ -141,7 +170,6 @@ const ScanQR = () => {
                   </Modal>
                 </>
               )}
-
               <div className={styles.scanContainer}>
                 <CheckInHeader title='Check-In' buttonType='back' />
 
@@ -154,8 +182,8 @@ const ScanQR = () => {
                 trigger={trigger}
                 setTrigger={setTrigger}
                 checking={checking}
+                setRoomNumber={setRoomNumber}
               />
-
               <ScanLogs scanLogs={scanLogs} />
             </>
           )}

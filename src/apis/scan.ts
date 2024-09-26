@@ -16,6 +16,7 @@ export const checkInUser = async ({
   setMultipleTickets,
   multipleTickets,
   setTrigger,
+  roomNumber,
 }: {
   ticketId: string;
   eventId: string;
@@ -25,14 +26,23 @@ export const checkInUser = async ({
   setMultipleTickets?: React.Dispatch<React.SetStateAction<multipleTicketCount>>;
   multipleTickets?: multipleTicketCount;
   setTrigger?: React.Dispatch<React.SetStateAction<boolean>>;
+  roomNumber?: string;
 }) => {
   if (setChecking) {
     setChecking(true);
   }
 
-  const dataToSend: { ticket_code: string; user_count?: { [key: string]: number } } = {
+  const dataToSend: {
+    ticket_code: string;
+    user_count?: { [key: string]: number };
+    room_id?: string;
+  } = {
     ticket_code: ticketId,
   };
+
+  if (roomNumber) {
+    dataToSend.room_id = roomNumber;
+  }
 
   if (multipleTickets && multipleTickets.hasMultipleTickets) {
     dataToSend.user_count = multipleTickets.tickets?.reduce(

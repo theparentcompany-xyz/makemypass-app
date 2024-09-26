@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 import { HashLoader } from 'react-spinners';
 
+import { RoomType } from '../../pages/app/CheckIns/pages/ScanQR/types';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Scanner.module.css';
 
@@ -14,6 +15,7 @@ const Scanner = ({
   setTrigger,
   checking,
   onClose,
+  setRoomNumber,
 }: {
   ticketId: string | undefined;
   setTicketId: Dispatch<React.SetStateAction<string>> | undefined;
@@ -21,6 +23,7 @@ const Scanner = ({
   setTrigger: (trigger: boolean) => void;
   checking?: boolean;
   onClose?: () => void;
+  setRoomNumber?: Dispatch<React.SetStateAction<RoomType>>;
 }) => {
   const navigate = useNavigate();
   return (
@@ -29,6 +32,17 @@ const Scanner = ({
       <div className={styles.scannerOuterContainer}>
         <div className={styles.scanner}>
           <div className={styles.closeButton}>
+            <SecondaryButton
+              buttonText='Set Room'
+              onClick={() => {
+                if (setRoomNumber) {
+                  setRoomNumber({
+                    roomNumber: '',
+                    showModel: true,
+                  });
+                }
+              }}
+            />
             <SecondaryButton
               buttonText='Close'
               onClick={() => {

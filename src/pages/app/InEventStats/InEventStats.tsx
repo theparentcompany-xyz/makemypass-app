@@ -20,7 +20,10 @@ import { makeMyPassSocket } from '../../../../services/urls';
 import { formatDate } from '../../../common/commonFunctions';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Glance from '../../../components/Glance/Glance';
+import Modal from '../../../components/Modal/Modal';
 import Theme from '../../../components/Theme/Theme';
+import InputField from '../../auth/Login/InputField';
+import { RoomType } from '../CheckIns/pages/ScanQR/types';
 import { GuestsType } from '../Guests/types';
 import type { ChartData } from '../Insights/types';
 import SecondaryButton from '../Overview/components/SecondaryButton/SecondaryButton';
@@ -101,6 +104,7 @@ const InEventStats = () => {
   const [districtData, setDistrictData] = useState<DistrictData>({});
   const [showWelcome, setShowWelcome] = useState(true);
   const [totalCheckIns, setTotalCheckIns] = useState(0);
+  const [roomNumber, setRoomNumber] = useState<RoomType>({} as RoomType);
 
   type DailyCount = {
     day: string;
@@ -137,9 +141,9 @@ const InEventStats = () => {
   }, [newUser]);
 
   useEffect(() => {
-    if (eventId)
+    if (eventId && (!roomNumber.showModel || !roomNumber.roomNumber))
       connectPrivateSocket({
-        url: makeMyPassSocket.checkinInsights(eventId),
+        url: makeMyPassSocket.checkinInsights(eventId) + `?room_id=${roomNumber.roomNumber}`,
       }).then((ws) => {
         ws.onmessage = (event) => {
           const lineData = JSON.parse(event.data).response.time;
@@ -198,12 +202,12 @@ const InEventStats = () => {
         setSocket(ws);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventId]);
+  }, [eventId, roomNumber.showModel, roomNumber.roomNumber]);
 
   useEffect(() => {
-    if (eventId)
+    if (eventId && (!roomNumber.showModel || !roomNumber.roomNumber))
       connectPrivateSocket({
-        url: makeMyPassSocket.guestCheckinList(eventId),
+        url: makeMyPassSocket.guestCheckinList(eventId) + `?room_id=${roomNumber.roomNumber}`,
       }).then((ws) => {
         ws.onmessage = (event) => {
           if (JSON.parse(event.data).response.datas)
@@ -224,7 +228,7 @@ const InEventStats = () => {
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventId]);
+  }, [eventId, roomNumber.showModel, roomNumber.roomNumber]);
 
   useEffect(() => {
     return () => {
@@ -253,6 +257,34 @@ const InEventStats = () => {
 
   return (
     <Theme>
+      {roomNumber.showModel && (
+        <Modal
+          title='Add Room Number'
+          onClose={() => {
+            setRoomNumber({ ...roomNumber, showModel: false });
+          }}
+        >
+          <InputField
+            id='roomNumber'
+            type='text'
+            name='roomNumber'
+            icon={<></>}
+            placeholder='Enter Room Number'
+            value={roomNumber.roomNumber}
+            onChange={(e) => {
+              setRoomNumber({ ...roomNumber, roomNumber: e.target.value });
+            }}
+          />
+          <button
+            className={styles.submitButton}
+            onClick={() => {
+              setRoomNumber({ ...roomNumber, showModel: false });
+            }}
+          >
+            Confirm Room
+          </button>
+        </Modal>
+      )}
       <DashboardLayout prevPage='-1' tabName='inevent' isLive={true}>
         <Glance tab='inevent' />
         <div className={styles.makemypassbranding}>
@@ -376,12 +408,24 @@ const InEventStats = () => {
             >
               <div className={styles.checkInHeader}>
                 <p className={styles.header}>Recent Check-Ins</p>
-                <SecondaryButton
-                  onClick={() => {
-                    setShowWelcome(() => !showWelcome);
-                  }}
-                  buttonText={showWelcome ? 'Hide Card' : 'Show Card'}
-                />
+                <div className='row'>
+                  <SecondaryButton
+                    onClick={() => {
+                      setShowWelcome(() => !showWelcome);
+                    }}
+                    buttonText={showWelcome ? 'Hide Card' : 'Show Card'}
+                  />
+                  <SecondaryButton
+                    onClick={() => {
+                      setRoomNumber({ ...roomNumber, showModel: true });
+                    }}
+                    buttonText={
+                      roomNumber.roomNumber
+                        ? `Room Number: ${roomNumber.roomNumber}`
+                        : 'Add Room Number'
+                    }
+                  />
+                </div>
               </div>
               <div className={styles.countSection}>
                 <div className={styles.usersContainer}>
@@ -408,6 +452,16 @@ const InEventStats = () => {
             </div>
           </div>
         )}
+        <div className={styles.roomNumber}>
+          <InputField
+            name='roomNumber'
+            placeholder='Enter Room Number'
+            type='text'
+            value=''
+            id='roomNumber'
+            icon={<></>}
+          />
+        </div>
       </DashboardLayout>
     </Theme>
   );
