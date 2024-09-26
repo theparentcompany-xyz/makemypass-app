@@ -1,4 +1,5 @@
 import { TicketType } from '../../../../../../../apis/types';
+import { isUserEditor } from '../../../../../../../common/commonFunctions';
 import Slider from '../../../../../../../components/SliderButton/Slider';
 import styles from './TicketBox.module.css';
 
@@ -55,7 +56,7 @@ const TicketBox = ({
             <Slider
               checked={ticketInfo.default_selected}
               onChange={() => {
-                if (!hasUnsavedChanges()) handleDefaultSelected(ticketInfo?.id);
+                if (isUserEditor() && !hasUnsavedChanges()) handleDefaultSelected(ticketInfo?.id);
               }}
               sliderStyle={{ transform: 'scale(0.7)' }}
             />

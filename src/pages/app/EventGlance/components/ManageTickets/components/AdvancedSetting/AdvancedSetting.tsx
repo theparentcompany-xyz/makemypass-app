@@ -5,6 +5,7 @@ import { MdDelete } from 'react-icons/md';
 import { v4 as uuidv4 } from 'uuid';
 
 import { TicketType } from '../../../../../../../apis/types';
+import { isUserEditor } from '../../../../../../../common/commonFunctions';
 import Slider from '../../../../../../../components/SliderButton/Slider';
 import InputField from '../../../../../../auth/Login/InputField';
 // import Slider from '../../../../../../../components/SliderButton/Slider';
@@ -23,6 +24,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
         type='text'
         name='code_prefix'
         id='code_prefix'
+        disabled={!isUserEditor()}
         icon={<></>}
         description='Code Prefix'
         placeholder='Eg, PS123'
@@ -36,6 +38,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
         type='number'
         name='code_suffix'
         id='code_suffix'
+        disabled={!isUserEditor()}
         icon={<></>}
         description='No of digits'
         placeholder=''
@@ -52,6 +55,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
         type='number'
         name='user_count'
         id='user_count'
+        disabled={!isUserEditor()}
         icon={<></>}
         description='User Count'
         placeholder=''
@@ -71,6 +75,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
         type='text'
         name='category'
         id='Category'
+        disabled={!isUserEditor()}
         icon={<></>}
         description='Category'
         placeholder=''
@@ -85,7 +90,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
         <Slider
           checked={selectedTicket?.perks.length > 0}
           onChange={() => {
-            if (selectedTicket) {
+            if (selectedTicket && isUserEditor()) {
               setSelectedTicket({
                 ...selectedTicket,
                 perks:
@@ -102,6 +107,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
             <div key={index} className={styles.perkItem}>
               <input
                 type='text'
+                disabled={!isUserEditor()}
                 placeholder='Perk Name'
                 value={perk.name}
                 onChange={(e) => {
@@ -118,6 +124,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
               />
               <input
                 type='number'
+                disabled={!isUserEditor()}
                 placeholder='Perk Count'
                 value={perk.count}
                 onChange={(e) => {
@@ -133,43 +140,47 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
                 className={styles.perkCountInput}
               />
 
-              <MdDelete
-                size={22}
-                color='rgb(147, 149, 151)'
-                onClick={() => {
-                  setSelectedTicket((prevTicket) => {
-                    if (prevTicket) {
-                      const updatedPerks = [...prevTicket.perks];
-                      updatedPerks.splice(index, 1);
-                      return { ...prevTicket, perks: updatedPerks } as TicketType;
-                    }
-                    return prevTicket;
-                  });
-                }}
-              />
+              {isUserEditor() && (
+                <MdDelete
+                  size={22}
+                  color='rgb(147, 149, 151)'
+                  onClick={() => {
+                    setSelectedTicket((prevTicket) => {
+                      if (prevTicket) {
+                        const updatedPerks = [...prevTicket.perks];
+                        updatedPerks.splice(index, 1);
+                        return { ...prevTicket, perks: updatedPerks } as TicketType;
+                      }
+                      return prevTicket;
+                    });
+                  }}
+                />
+              )}
             </div>
           ))}
 
-          <button
-            className={styles.addPerkButton}
-            onClick={() => {
-              setSelectedTicket((prevTicket) => {
-                if (prevTicket) {
-                  const updatedPerks = [...prevTicket.perks];
-                  const lastPerk = updatedPerks[updatedPerks.length - 1];
-                  if (lastPerk.name && lastPerk.count) {
-                    updatedPerks.push({ id: uuidv4(), name: '', count: 1 });
-                  } else {
-                    toast.error('Please fill the previous perk');
+          {isUserEditor() && (
+            <button
+              className={styles.addPerkButton}
+              onClick={() => {
+                setSelectedTicket((prevTicket) => {
+                  if (prevTicket) {
+                    const updatedPerks = [...prevTicket.perks];
+                    const lastPerk = updatedPerks[updatedPerks.length - 1];
+                    if (lastPerk.name && lastPerk.count) {
+                      updatedPerks.push({ id: uuidv4(), name: '', count: 1 });
+                    } else {
+                      toast.error('Please fill the previous perk');
+                    }
+                    return { ...prevTicket, perks: updatedPerks } as TicketType;
                   }
-                  return { ...prevTicket, perks: updatedPerks } as TicketType;
-                }
-                return prevTicket;
-              });
-            }}
-          >
-            + Add Perk
-          </button>
+                  return prevTicket;
+                });
+              }}
+            >
+              + Add Perk
+            </button>
+          )}
         </div>
       )}
 
