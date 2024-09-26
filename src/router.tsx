@@ -206,7 +206,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/formbuilder',
         element: (
-          <RoleChecker roles={TillRoles.ADMIN}>
+          <RoleChecker roles={TillRoles.VIEWER}>
             <FormBuilder />
           </RoleChecker>
         ),

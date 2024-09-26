@@ -53,7 +53,7 @@ const DashboardTabs = ({
     },
     formbuilder: {
       title: 'Form Builder',
-      roles: TillRoles.ADMIN,
+      roles: TillRoles.VIEWER,
       category: 'eventManagement',
     },
     checkins: {
