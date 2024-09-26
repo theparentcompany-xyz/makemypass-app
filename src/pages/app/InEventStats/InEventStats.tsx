@@ -452,16 +452,6 @@ const InEventStats = () => {
             </div>
           </div>
         )}
-        <div className={styles.roomNumber}>
-          <InputField
-            name='roomNumber'
-            placeholder='Enter Room Number'
-            type='text'
-            value=''
-            id='roomNumber'
-            icon={<></>}
-          />
-        </div>
       </DashboardLayout>
     </Theme>
   );
