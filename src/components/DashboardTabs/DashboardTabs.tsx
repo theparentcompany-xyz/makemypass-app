@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Roles } from '../../../services/enums';
+import { TillRoles } from '../../../services/enums';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import styles from './DashboardTabs.module.css';
 
@@ -33,42 +33,42 @@ const DashboardTabs = ({
   const tabs: TabsType = {
     overview: {
       title: 'Overview',
-      roles: [Roles.ADMIN, Roles.OWNER],
+      roles: TillRoles.ADMIN,
       category: 'preEvent',
     },
     insights: {
       title: 'Insights',
-      roles: [Roles.ADMIN, Roles.OWNER],
+      roles: TillRoles.ADMIN,
       category: 'preEvent',
     },
     guests: {
       title: 'Guests',
-      roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
+      roles: TillRoles.VOLUNTEER,
       category: 'preEvent',
     },
     manage: {
       title: 'Event Page',
-      roles: [Roles.ADMIN, Roles.OWNER],
+      roles: TillRoles.ADMIN,
       category: 'eventManagement',
     },
     formbuilder: {
       title: 'Form Builder',
-      roles: [Roles.ADMIN, Roles.OWNER],
+      roles: TillRoles.ADMIN,
       category: 'eventManagement',
     },
     checkins: {
       title: 'Scan QR',
-      roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
+      roles: TillRoles.VOLUNTEER,
       category: 'inEvent',
     },
     inevent: {
       title: 'In-Event',
-      roles: [Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER],
+      roles: TillRoles.VOLUNTEER,
       category: 'inEvent',
     },
     logs: {
       title: 'Logs',
-      roles: [Roles.ADMIN, Roles.OWNER],
+      roles: TillRoles.ADMIN,
       category: 'others',
     },
   };
@@ -76,14 +76,9 @@ const DashboardTabs = ({
   if (import.meta.env.VITE_CURRENT_ENV === 'dev') {
     tabs.postevent = {
       title: 'Post Event',
-      roles: [Roles.ADMIN, Roles.OWNER],
+      roles: TillRoles.ADMIN,
       category: 'postEvent',
     };
-
-    // tabs.feedback = {
-    //   title: 'Feedback',
-    //   roles: [Roles.ADMIN, Roles.OWNER],
-    // };
   }
 
   const userRoles = eventData?.current_user_role;

@@ -1,11 +1,20 @@
 export enum Roles {
-  ADMIN = 'Admin',
   OWNER = 'Owner',
-  VOLUNTEER = 'Volunteer',
-  GAMER = 'Gamer',
-  VIEWER = 'Viewer',
+  ADMIN = 'Admin',
   EDITOR = 'Editor',
+  VIEWER = 'Viewer',
+  VOLUNTEER = 'Volunteer',
+  DEVICE = 'Device',
 }
+
+export const TillRoles = {
+  OWNER: [Roles.OWNER],
+  ADMIN: [Roles.OWNER, Roles.ADMIN],
+  EDITOR: [Roles.OWNER, Roles.ADMIN, Roles.EDITOR],
+  VIEWER: [Roles.OWNER, Roles.ADMIN, Roles.EDITOR, Roles.VIEWER],
+  VOLUNTEER: [Roles.OWNER, Roles.ADMIN, Roles.EDITOR, Roles.VIEWER, Roles.VOLUNTEER],
+  DEVICE: [Roles.OWNER, Roles.ADMIN, Roles.EDITOR, Roles.VIEWER, Roles.VOLUNTEER, Roles.DEVICE],
+};
 
 export enum ConditionalQuestionOperator {
   EQUALS = '=',

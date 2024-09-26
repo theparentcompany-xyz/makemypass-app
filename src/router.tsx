@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
 
-import { Roles } from '../services/enums';
+import { TillRoles } from '../services/enums';
 import RoleChecker from '../services/RoleChecker';
 import AuthCheck from './components/AuthCheck/AuthCheck';
 import ViewTicket from './components/ViewTicket/ViewTicket';
@@ -97,7 +97,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/overview',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
             <Overview />
           </RoleChecker>
         ),
@@ -105,7 +105,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/insights',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
+          <RoleChecker roles={TillRoles.ADMIN}>
             <Insights />
           </RoleChecker>
         ),
@@ -113,7 +113,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/guests',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
             <Guests />
           </RoleChecker>
         ),
@@ -121,7 +121,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/checkins',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
             <CheckIns />
           </RoleChecker>
         ),
@@ -130,7 +130,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/checkins/checkin/venue',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
             <Venue />
           </RoleChecker>
         ),
@@ -138,7 +138,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/checkins/checkin/scan',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
             <ScanQR />
           </RoleChecker>
         ),
@@ -146,7 +146,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/checkins/checkin/gifts',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
             <Gifts />
           </RoleChecker>
         ),
@@ -154,7 +154,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/checkins/checkin/checkout',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
             <CheckOutScan />
           </RoleChecker>
         ),
@@ -162,7 +162,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/inevent',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
             <InEventStats />
           </RoleChecker>
         ),
@@ -170,7 +170,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/postevent',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
             <PostEvent />
           </RoleChecker>
         ),
@@ -182,7 +182,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/manage',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
+          <RoleChecker roles={TillRoles.ADMIN}>
             <EventGlance />
           </RoleChecker>
         ),
@@ -190,7 +190,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/manage/edit-event',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
+          <RoleChecker roles={TillRoles.ADMIN}>
             <EditEvent />
           </RoleChecker>
         ),
@@ -198,7 +198,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/manage/spinwheel',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER, Roles.VOLUNTEER]}>
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
             <Spinwheel />
           </RoleChecker>
         ),
@@ -206,7 +206,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/formbuilder',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
+          <RoleChecker roles={TillRoles.ADMIN}>
             <FormBuilder />
           </RoleChecker>
         ),
@@ -214,7 +214,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/coupon',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
+          <RoleChecker roles={TillRoles.ADMIN}>
             <Coupon />
           </RoleChecker>
         ),
@@ -222,7 +222,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/logs',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
+          <RoleChecker roles={TillRoles.ADMIN}>
             <EventLogs />
           </RoleChecker>
         ),
@@ -230,7 +230,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/payment-analytics',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
+          <RoleChecker roles={TillRoles.ADMIN}>
             <PaymentAnalytics />
           </RoleChecker>
         ),
@@ -238,7 +238,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/perks-analytics',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
+          <RoleChecker roles={TillRoles.ADMIN}>
             <PerkAnalytics />
           </RoleChecker>
         ),
@@ -246,7 +246,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/venue-analytics',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
+          <RoleChecker roles={TillRoles.ADMIN}>
             <VenueAnalytics />
           </RoleChecker>
         ),
@@ -254,7 +254,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/randomsizer',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
+          <RoleChecker roles={TillRoles.ADMIN}>
             <Randomizer />
           </RoleChecker>
         ),
@@ -262,7 +262,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/checkins/perks',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.VOLUNTEER, Roles.OWNER]}>
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
             <Perks />
           </RoleChecker>
         ),
@@ -270,7 +270,7 @@ const routes: RouteObject[] = [
       {
         path: '/:eventTitle/page-view-analytics/',
         element: (
-          <RoleChecker roles={[Roles.ADMIN, Roles.OWNER]}>
+          <RoleChecker roles={TillRoles.ADMIN}>
             <PageViewAnalytics />
           </RoleChecker>
         ),

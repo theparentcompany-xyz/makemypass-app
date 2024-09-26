@@ -159,4 +159,17 @@ const getRemSizeFromCss = () => {
   return parseFloat(fontSize);
 };
 
+export const isUserAuthorized = (userRoles: string[]) => {
+  const eventData = sessionStorage.getItem('eventData');
+  const role: string = eventData ? JSON.parse(eventData).current_user_role : null;
+
+  if (!role) return false;
+
+  return userRoles.includes(role);
+};
+
+export const isUserEditor = () => {
+  return isUserAuthorized(['Admin', 'Owner', 'Editor']);
+};
+
 export const RemSize = getRemSizeFromCss();
