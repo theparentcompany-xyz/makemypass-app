@@ -42,6 +42,7 @@ const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
           disabled={inputProps.disabled}
           placeholder={`${inputProps.placeholder}`}
           ref={ref}
+          value={inputProps.value}
           style={{
             width: '100%',
             fontFamily: 'Inter',

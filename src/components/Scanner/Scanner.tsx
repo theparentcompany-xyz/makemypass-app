@@ -15,6 +15,7 @@ const Scanner = ({
   setTrigger,
   checking,
   onClose,
+  roomNumber,
   setRoomNumber,
 }: {
   ticketId: string | undefined;
@@ -23,6 +24,7 @@ const Scanner = ({
   setTrigger: (trigger: boolean) => void;
   checking?: boolean;
   onClose?: () => void;
+  roomNumber?: RoomType;
   setRoomNumber?: Dispatch<React.SetStateAction<RoomType>>;
 }) => {
   const navigate = useNavigate();
@@ -33,13 +35,10 @@ const Scanner = ({
         <div className={styles.scanner}>
           <div className={styles.closeButton}>
             <SecondaryButton
-              buttonText='Set Room'
+              buttonText={`${roomNumber?.roomNumber ? `Room: ${roomNumber.roomNumber}` : 'Set Room'}`}
               onClick={() => {
-                if (setRoomNumber) {
-                  setRoomNumber({
-                    roomNumber: '',
-                    showModel: true,
-                  });
+                if (setRoomNumber && roomNumber) {
+                  setRoomNumber({ ...roomNumber, showModel: true });
                 }
               }}
             />
