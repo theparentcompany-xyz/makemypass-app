@@ -315,7 +315,7 @@ const Overview = () => {
                   tableHeading='Event Hosts'
                   tableData={hostListTableData}
                   secondaryButton={
-                    isUserEditor() ? (
+                    isUserAuthorized(TillRoles.ADMIN) ? (
                       <SecondaryButton buttonText='Add Hosts +' onClick={addHost} />
                     ) : undefined
                   }
