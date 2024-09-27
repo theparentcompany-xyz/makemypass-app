@@ -371,7 +371,7 @@ const InEventStats = () => {
                       {formatDate(day.day, false, true)}
                     </p>
                     <p className={styles.dcount}>
-                      {day.count} <span>guestsd</span>
+                      {day.count} <span>guests</span>
                     </p>
                   </div>
                 ))}
