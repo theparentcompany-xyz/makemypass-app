@@ -64,10 +64,9 @@ const ScannerResponseModal = ({
               <div className={styles.multipleTicketsContainer}>
                 <div className='row'>
                   {multipleTickets.userData &&
-                    Object.keys(multipleTickets.userData).map((key, index) => (
+                    multipleTickets.userData.map((data, index) => (
                       <p className={styles.userName} key={index}>
-                        {key}:{' '}
-                        <span className={styles.userValue}>{multipleTickets.userData?.[key]}</span>
+                        {data.title}: <span className={styles.userValue}>{data.value}</span>
                       </p>
                     ))}
                   {multipleTickets.entryDate && (
