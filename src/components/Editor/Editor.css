@@ -11,3 +11,8 @@
   max-height: 5rem !important;
   z-index: 0;
 }
+
+.read-only-editor {
+  pointer-events: none; /* Disables clicking and other pointer events */
+  user-select: none; /* Prevents text selection */
+}

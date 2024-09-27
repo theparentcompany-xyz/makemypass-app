@@ -10,6 +10,7 @@ import {
   useCreateBlockNote,
 } from '@blocknote/react';
 import { useEffect } from 'react';
+import { isUserEditor } from '../../common/commonFunctions';
 
 type Props = {
   description: string;
@@ -86,7 +87,13 @@ const Editor = ({ description, setNewDescription }: Props) => {
   };
 
   return (
-    <BlockNoteView editor={editor} theme={editorTheme} onChange={onChange} data-theming-css-demo />
+    <BlockNoteView
+      editor={editor}
+      theme={editorTheme}
+      onChange={onChange}
+      data-theming-css-demo
+      className={!isUserEditor() ? 'read-only-editor' : ''}
+    />
   );
 };
 

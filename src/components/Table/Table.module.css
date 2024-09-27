@@ -38,7 +38,7 @@
 
   padding: 1rem;
   max-height: 41vh;
-  min-height: 18rem;
+  /* min-height: 18rem; */
   overflow: auto;
 }
 

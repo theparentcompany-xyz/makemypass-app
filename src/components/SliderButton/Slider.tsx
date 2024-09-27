@@ -1,3 +1,4 @@
+import { isUserEditor } from '../../common/commonFunctions';
 import styles from './Slider.module.css';
 
 type Props = {
@@ -13,7 +14,7 @@ const Slider = ({ checked, onChange, text, labelStyle, sliderStyle, size }: Prop
   if (!text) {
     return (
       <label className={styles.switch} style={sliderStyle}>
-        <input type='checkbox' checked={checked} onChange={onChange} />
+        <input type='checkbox' checked={checked} onChange={onChange} disabled={!isUserEditor()} />
         <span
           className={`${styles.slider} ${styles.round} ${checked ? `${styles.checked}` : ''} ${size && styles[size]}`}
         ></span>
@@ -29,7 +30,7 @@ const Slider = ({ checked, onChange, text, labelStyle, sliderStyle, size }: Prop
         </label>
       )}
       <label className={styles.switch} style={sliderStyle}>
-        <input type='checkbox' checked={checked} onChange={onChange} />
+        <input type='checkbox' checked={checked} onChange={onChange} disabled={!isUserEditor()} />
         <span
           className={`${styles.slider} ${styles.round} ${checked ? `${styles.checked}` : ''} ${size && styles[size]}`}
         ></span>
