@@ -2,8 +2,11 @@
 import React, { SetStateAction } from 'react';
 import Select from 'react-select';
 
+import { Roles } from '../../../../../../services/enums';
+import { getLoggedInUserRole } from '../../../../../common/commonFunctions';
 import Modal from '../../../../../components/Modal/Modal';
 import Slider from '../../../../../components/SliderButton/Slider';
+import { customStyles } from '../../../EventPage/constants';
 import type { hostData } from '../../Overview/types';
 import styles from './AddHosts.module.css';
 import roleOptions from './data';
@@ -29,40 +32,28 @@ const AddHosts = ({
     }));
   };
 
-  const customStyles = {
-    control: (provided: any) => ({
-      ...provided,
-      border: 'none',
-      backgroundColor: '#2A3533',
-      fontFamily: 'Inter, sans-serif',
-      fontStyle: 'normal',
-      fontWeight: 400,
-      fontSize: '0.9rem',
-    }),
+  function getOptionsForUserRole(): { value: Roles; label: Roles }[] {
+    const userRole = getLoggedInUserRole() as Roles;
+    const options: { value: Roles; label: Roles }[] = [];
 
-    group: (provided: any) => ({
-      ...provided,
-      paddingTop: 0,
-    }),
+    const roleHierarchy: { [key in Roles]?: Roles[] } = {
+      [Roles.EDITOR]: [Roles.EDITOR, Roles.VIEWER, Roles.VOLUNTEER, Roles.DEVICE],
+      [Roles.ADMIN]: [Roles.ADMIN, Roles.EDITOR, Roles.VIEWER, Roles.VOLUNTEER, Roles.DEVICE],
+      [Roles.OWNER]: [Roles.ADMIN, Roles.EDITOR, Roles.VIEWER, Roles.VOLUNTEER, Roles.DEVICE],
+    };
 
-    singleValue: (base: any) => ({
-      ...base,
-      color: '#fff',
-    }),
-    option: (provided: any) => ({
-      ...provided,
-      fontFamily: 'Inter, sans-serif',
-      color: '#000',
-      fontStyle: 'normal',
-      fontWeight: 400,
-      fontSize: '0.9rem',
-    }),
-  };
+    if (roleHierarchy[userRole]) {
+      roleHierarchy[userRole]!.forEach((role) => {
+        options.push({ value: role, label: role });
+      });
+    }
+
+    return options;
+  }
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={onClose} title={add ? 'Add Host' : 'Edit Host'}>
       <div className={styles.userInfoModalContainer}>
-        <p className={styles.modalHeader}>{add ? 'Add Host' : 'Edit Host'}</p>
         <div className={styles.inputContainers}>
           <div className={styles.inputContainer}>
             <p className={styles.inputLabel}>Email</p>
@@ -92,7 +83,7 @@ const AddHosts = ({
                 handleRoleChange(event);
               }}
               name='role'
-              options={roleOptions}
+              options={getOptionsForUserRole()}
               styles={customStyles}
             />
           </div>

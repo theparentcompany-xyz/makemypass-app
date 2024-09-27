@@ -168,6 +168,11 @@ export const isUserAuthorized = (allowedRoles: string[]) => {
   return allowedRoles.includes(role);
 };
 
+export const getLoggedInUserRole = () => {
+  const eventData = sessionStorage.getItem('eventData');
+  return eventData ? JSON.parse(eventData).current_user_role : null;
+};
+
 export const isUserEditor = () => {
   return isUserAuthorized(['Admin', 'Owner', 'Editor']);
 };

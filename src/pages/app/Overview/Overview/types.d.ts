@@ -26,7 +26,7 @@ export type hostData = {
 
 export type hostId = {
   id: string;
-  type: 'edit' | 'delete';
+  type: 'edit' | 'delete' | null;
 };
 export type RegistrationDataType = {
   id: string;

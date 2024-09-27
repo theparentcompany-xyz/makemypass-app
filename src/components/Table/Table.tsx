@@ -5,8 +5,10 @@ import { MdCheckBox, MdCheckBoxOutlineBlank, MdDelete, MdEdit } from 'react-icon
 import { HashLoader } from 'react-spinners';
 import { FixedSizeList } from 'react-window';
 
+import { Roles } from '../../../services/enums';
 import { isUserEditor, timeAgo } from '../../common/commonFunctions';
 import { PaginationDataType, ResentTicket, SelectedGuest } from '../../pages/app/Guests/types';
+import { checkUserHierarchy } from '../../pages/app/Overview/Overview/functions';
 import type { hostId } from '../../pages/app/Overview/Overview/types';
 import styles from './Table.module.css';
 import { TableType, TabType } from './types';
@@ -119,7 +121,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
                   </div>
                 </>
               )}
-              {setHostId && isUserEditor() && (
+              {setHostId && isUserEditor() && checkUserHierarchy(item.category as Roles) && (
                 <>
                   <div className={styles.icon}>
                     <MdEdit

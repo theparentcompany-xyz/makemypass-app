@@ -47,7 +47,7 @@ const Overview = () => {
   const [hostListTableData, setHostListTableData] = useState<TableType[]>([]);
   const [hostId, setHostId] = useState<hostId>({
     id: '',
-    type: 'edit',
+    type: null,
   });
 
   const [openAddModal, setOpenAddModal] = useState(false);
@@ -221,6 +221,7 @@ const Overview = () => {
                   onSubmit();
                 }
                 setHostData({ email: '', role: '', is_private: true });
+                setHostId({ id: '', type: null });
                 addRef.current = false;
               }}
               onClose={() => {
