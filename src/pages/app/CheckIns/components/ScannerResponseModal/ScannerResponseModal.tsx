@@ -63,11 +63,13 @@ const ScannerResponseModal = ({
             <>
               <div className={styles.multipleTicketsContainer}>
                 <div className='row'>
-                  {multipleTickets.userName && (
-                    <p className={styles.userName}>
-                      Name: <span className={styles.userValue}>{multipleTickets.userName}</span>
-                    </p>
-                  )}
+                  {multipleTickets.userData &&
+                    Object.keys(multipleTickets.userData).map((key, index) => (
+                      <p className={styles.userName} key={index}>
+                        {key}:{' '}
+                        <span className={styles.userValue}>{multipleTickets.userData?.[key]}</span>
+                      </p>
+                    ))}
                   {multipleTickets.entryDate && (
                     <p className={styles.userName}>
                       Entry Date:{' '}
@@ -91,10 +93,10 @@ const ScannerResponseModal = ({
                       <input
                         className={styles.inputField}
                         type='number'
-                        min={0}
+                        min={1}
                         ref={inputRef}
                         value={ticket.checked_in_count}
-                        placeholder='0'
+                        placeholder='1'
                         onChange={(e) => {
                           const value = e.target.value;
                           if (setMultipleTickets) {

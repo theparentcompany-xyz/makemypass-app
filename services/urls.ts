@@ -84,7 +84,9 @@ export const makeMyPass = {
   addTags: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/add-tags/`), //Till Admin
   listTags: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/list-tags/`), //Till Admin
 
-  closeForm : (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/close-form/`), //Till Editor
+  closeForm: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/close-form/`), //Till Editor
+
+  getFormKeys: (eventId: string) => makeMyPassURL(`/manage-event/${eventId}/get-form-keys/`), //Till Admin
 
   //Feedback
   feedbackList: (eventId: string) => makeMyPassURL(`/feedback/${eventId}/list/`),

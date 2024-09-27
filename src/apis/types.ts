@@ -175,6 +175,8 @@ export interface EventType {
   is_random_user: boolean;
   status: string;
   is_scratch_card: boolean;
+  need_confirmation: boolean;
+  confirmation_fields: string[];
   speakers?: {
     name: string;
     image: string;

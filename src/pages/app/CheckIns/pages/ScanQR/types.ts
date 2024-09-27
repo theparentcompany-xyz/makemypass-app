@@ -12,6 +12,7 @@ export type multipleTicketCount = {
   entryDate?: string;
   hasMultipleTickets: boolean;
   tickets?: Ticket[];
+  userData?: { [key: string]: string };
 };
 
 export type Ticket = {

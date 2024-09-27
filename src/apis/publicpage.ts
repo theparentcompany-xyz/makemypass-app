@@ -524,3 +524,17 @@ export const claimScratchCard = async (
       });
     });
 };
+
+export const getFormKeys = async (
+  eventId: string,
+  setFormKeys: Dispatch<SetStateAction<string[]>>,
+) => {
+  privateGateway
+    .get(makeMyPass.getFormKeys(eventId))
+    .then((response) => {
+      setFormKeys(response.data.response.keys);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0]);
+    });
+};

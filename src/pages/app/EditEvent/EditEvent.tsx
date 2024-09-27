@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineTeam } from 'react-icons/ai';
 import { BiArrowToTop } from 'react-icons/bi';
 import { BsTicketDetailed } from 'react-icons/bs';
+import { FaDatabase } from 'react-icons/fa';
 import { FiGlobe } from 'react-icons/fi';
 import { GrLocation } from 'react-icons/gr';
 import { HiOutlineTicket, HiOutlineUserGroup } from 'react-icons/hi2';
@@ -24,6 +25,7 @@ import Select from 'react-select';
 import { HashLoader } from 'react-spinners';
 
 import { deleteEvent, getEventData, updateEventData } from '../../../apis/events';
+import { getFormKeys } from '../../../apis/publicpage';
 import { ErrorMessages, EventType } from '../../../apis/types';
 import { convertDate, getCurrentTimezone, isUserEditor } from '../../../common/commonFunctions';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
@@ -50,6 +52,11 @@ const EditEvent = () => {
   const [banner, setBanner] = useState<File | null>(null);
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
   const [followupMessage, setFollowupMessage] = useState('');
+  // const [modalDataField, setModalDataField] = useState({
+  //   needConfirmation: false,
+  //   confirmationFields: [''],
+  // });
+  const [formKeys, setFormKeys] = useState<string[]>([]);
 
   const [location, setLocation] = useState<google.maps.LatLngLiteral | null>(null);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
@@ -163,10 +170,16 @@ const EditEvent = () => {
     const formData = new FormData();
     for (const key in changedData) {
       const value = changedData[key];
-      if (value !== undefined && typeof value !== 'object') {
-        formData.append(key, String(value));
-      } else if (value instanceof Blob) {
-        formData.append(key, value);
+      if (value !== undefined) {
+        if (Array.isArray(value)) {
+          value.forEach((item) => {
+            formData.append(`${key}[]`, String(item));
+          });
+        } else if (typeof value !== 'object') {
+          formData.append(key, String(value));
+        } else if (value instanceof Blob) {
+          formData.append(key, value);
+        }
       }
     }
 
@@ -186,13 +199,17 @@ const EditEvent = () => {
   useOverrideCtrlS(onSubmit);
 
   useEffect(() => {
-    if (eventId) getEventData(eventId, setEventTitle, setEventData);
+    if (eventId) {
+      getEventData(eventId, setEventTitle, setEventData);
+      getFormKeys(eventId, setFormKeys);
+    }
   }, [eventId]);
 
   useEffect(() => {
     if (eventData && !fetchedEvent) {
       setFetchedEvent(eventData);
       setLocation({ lat: eventData.location?.lat || 0, lng: eventData.location?.lng || 0 });
+
       setPlaceName(eventData.place);
       setEventDate({
         start: eventData.event_start_date ? new Date(eventData?.event_start_date) : undefined,
@@ -360,6 +377,49 @@ const EditEvent = () => {
                           is_multiple_checkin: !eventData.is_multiple_checkin,
                         })
                       }
+                    />
+                  </div>
+                  <div className={styles.option}>
+                    <label>
+                      <FaDatabase size={20} color='#949597' />
+                      Show Data Modal
+                    </label>
+                    <Slider
+                      checked={eventData.need_confirmation as boolean}
+                      text={''}
+                      onChange={() =>
+                        isUserEditor() &&
+                        setEventData({
+                          ...eventData,
+                          need_confirmation: !eventData.need_confirmation,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className={styles.optionSelect}>
+                    <p className={styles.label}>Select Confirmation Fields</p>
+                    <Select
+                      options={formKeys.map((key) => ({ value: key, label: key }))}
+                      className={styles.selectDropdown}
+                      styles={{
+                        ...customStyles,
+                        container: (provided) => ({
+                          ...provided,
+                          minWidth: '20rem',
+                        }),
+                      }}
+                      onChange={(newValue) =>
+                        setEventData({
+                          ...eventData,
+                          confirmation_fields: newValue.map((option) => option.value),
+                        })
+                      }
+                      value={formKeys
+                        .filter((key) => eventData.confirmation_fields.includes(key))
+                        .map((key) => ({ value: key, label: key }))}
+                      placeholder={`Select options`}
+                      isMulti
+                      isSearchable={false}
                     />
                   </div>
                 </>

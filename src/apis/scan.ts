@@ -7,6 +7,14 @@ import { multipleTicketCount } from '../pages/app/CheckIns/pages/ScanQR/types';
 import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
 import type { checkInButtonsType } from '../pages/app/CheckIns/types';
 
+type ResponseTicketType = {
+  ticket_id: string;
+  ticket_name: string;
+  total_count: number;
+  remaining_count: number;
+  checked_in_count: number;
+};
+
 export const checkInUser = async ({
   ticketId,
   eventId,
@@ -36,6 +44,7 @@ export const checkInUser = async ({
     ticket_code: string;
     user_count?: { [key: string]: number };
     room_id?: string;
+    confirmation?: boolean;
   } = {
     ticket_code: ticketId,
   };
@@ -52,6 +61,8 @@ export const checkInUser = async ({
       },
       {} as { [key: string]: number },
     );
+
+    dataToSend.confirmation = true;
   }
 
   privateGateway
@@ -80,11 +91,19 @@ export const checkInUser = async ({
     })
     .catch((error) => {
       if (error.response.data.statusCode === 1101 && setMultipleTickets) {
+        if (setMessage) setMessage('Confirmation Required');
         setMultipleTickets((prevData) => ({
           ...prevData,
           hasMultipleTickets: true,
-          tickets: error.response.data.response.tickets,
-          userName: error.response.data.response.user_name,
+          tickets: error.response.data.response.tickets.map((ticket: ResponseTicketType) => ({
+            ticket_id: ticket.ticket_id,
+            ticket_name: ticket.ticket_name,
+            total_count: ticket.total_count,
+            remaining_count: ticket.remaining_count,
+            checked_in_count: ticket.remaining_count > 0 ? 1 : 0,
+          })),
+          // userName: error.response.data.response.user_name,
+          userData: error.response.data.response.user_data,
           entryDate: error.response.data.response.entry_date,
         }));
       } else if (setMultipleTickets) {
@@ -94,20 +113,22 @@ export const checkInUser = async ({
           tickets: [],
         }));
       }
-      if (setMessage) {
-        setMessage(error.response.data.message.general[0] || 'Check-In Failed');
-        if (setScanLogs)
-          setScanLogs((prev) => [
-            ...prev,
-            {
-              message: ` ${error.response.data.message.general[0]}`,
-              timestamp: formatDate(new Date().toString(), true),
-              hasError: true,
-            },
-          ]);
-      } else {
-        toast.error(error.response.data.message.general[0] || 'Check-In Failed');
-      }
+
+      if (error.response.data.statusCode !== 1101)
+        if (setMessage) {
+          setMessage(error.response.data.message.general[0] || 'Check-In Failed');
+          if (setScanLogs)
+            setScanLogs((prev) => [
+              ...prev,
+              {
+                message: ` ${error.response.data.message.general[0]}`,
+                timestamp: formatDate(new Date().toString(), true),
+                hasError: true,
+              },
+            ]);
+        } else {
+          toast.error(error.response.data.message.general[0] || 'Check-In Failed');
+        }
     })
     .finally(() => {
       if (setChecking) {
@@ -132,7 +153,11 @@ export const checkOutUser = async (
     setChecking(true);
   }
 
-  const dataToSend: { ticket_code: string; user_count?: { [key: string]: number } } = {
+  const dataToSend: {
+    ticket_code: string;
+    user_count?: { [key: string]: number };
+    confirmation?: boolean;
+  } = {
     ticket_code: ticketId,
   };
 
@@ -144,6 +169,8 @@ export const checkOutUser = async (
       },
       {} as { [key: string]: number },
     );
+
+    dataToSend.confirmation = true;
   }
 
   privateGateway
@@ -171,12 +198,19 @@ export const checkOutUser = async (
     })
     .catch((error) => {
       if (error.response.data.statusCode === 1101 && setMultipleTickets) {
+        if (setMessage) setMessage('Confirmation Required');
         setMultipleTickets((prevData) => ({
           ...prevData,
           hasMultipleTickets: true,
-          userName: error.response.data.response.user_name,
+          userData: error.response.data.response.user_data,
           entryDate: error.response.data.response.entry_date,
-          tickets: error.response.data.response.tickets,
+          tickets: error.response.data.response.tickets.map((ticket: ResponseTicketType) => ({
+            ticket_id: ticket.ticket_id,
+            ticket_name: ticket.ticket_name,
+            total_count: ticket.total_count,
+            remaining_count: ticket.remaining_count,
+            checked_in_count: ticket.remaining_count > 0 ? 1 : 0,
+          })),
         }));
       } else if (setMultipleTickets) {
         setMultipleTickets((prevData) => ({
@@ -185,19 +219,20 @@ export const checkOutUser = async (
           tickets: [],
         }));
       }
-      if (setMessage) {
-        setMessage(error.response.data.message.general[0] || 'Check-Out Failed');
-        setScanLogs((prev) => [
-          ...prev,
-          {
-            message: ` ${error.response.data.message.general[0]}`,
-            timestamp: formatDate(new Date().toString(), true),
-            hasError: true,
-          },
-        ]);
-      } else {
-        toast.error(error.response.data.message.general[0] || 'Check-Out Failed');
-      }
+      if (error.response.data.statusCode !== 1101)
+        if (setMessage) {
+          setMessage(error.response.data.message.general[0] || 'Check-Out Failed');
+          setScanLogs((prev) => [
+            ...prev,
+            {
+              message: ` ${error.response.data.message.general[0]}`,
+              timestamp: formatDate(new Date().toString(), true),
+              hasError: true,
+            },
+          ]);
+        } else {
+          toast.error(error.response.data.message.general[0] || 'Check-Out Failed');
+        }
     })
     .finally(() => {
       if (setChecking) {
