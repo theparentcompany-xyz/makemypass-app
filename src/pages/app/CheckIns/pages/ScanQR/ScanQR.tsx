@@ -29,11 +29,10 @@ const ScanQR = () => {
   });
 
   const [checking, setChecking] = useState<boolean>(false);
-  const [roomNumber, setRoomNumber] = useState<RoomType>(
-    JSON.parse(
-      sessionStorage.getItem('roomNumber') || JSON.stringify({ showModel: false, roomNumber: '' }),
-    ) as RoomType,
-  );
+  const [roomNumber, setRoomNumber] = useState<RoomType>({
+    roomNumber: sessionStorage.getItem('roomNumber') || '',
+    showModel: false,
+  } as RoomType);
   const [scanLogs, setScanLogs] = useState<LogType[]>([]);
 
   const [previewData, setPreviewData] = useState<PreviewData>({
@@ -64,7 +63,7 @@ const ScanQR = () => {
   }, [trigger, eventId]);
 
   useEffect(() => {
-    sessionStorage.setItem('roomNumber', JSON.stringify(roomNumber));
+    sessionStorage.setItem('roomNumber', roomNumber.roomNumber);
   }, [roomNumber]);
 
   return (

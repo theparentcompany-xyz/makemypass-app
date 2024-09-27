@@ -104,7 +104,10 @@ const InEventStats = () => {
   const [districtData, setDistrictData] = useState<DistrictData>({});
   const [showWelcome, setShowWelcome] = useState(true);
   const [totalCheckIns, setTotalCheckIns] = useState(0);
-  const [roomNumber, setRoomNumber] = useState<RoomType>({} as RoomType);
+  const [roomNumber, setRoomNumber] = useState<RoomType>({
+    showModel: false,
+    roomNumber: sessionStorage.getItem('roomNumber') || '',
+  } as RoomType);
 
   type DailyCount = {
     day: string;
@@ -139,6 +142,12 @@ const InEventStats = () => {
       audio.play();
     }
   }, [newUser]);
+
+  useEffect(() => {
+    if (roomNumber.showModel && roomNumber.roomNumber) {
+      sessionStorage.setItem('roomNumber', roomNumber.roomNumber);
+    }
+  }, [roomNumber]);
 
   useEffect(() => {
     if (eventId && (!roomNumber.showModel || !roomNumber.roomNumber))
