@@ -18,6 +18,8 @@ export const customStyles = {
     fontSize: '0.9rem',
     minWidth: '10rem',
     boxShadow: state.isFocused ? 'none' : 'none', // Remove blue border on focus
+    position: 'relative', // Add this to establish a positioning context
+    zIndex: 10001, // Ensure the control stays above the menu
   }),
 
   group: (provided: any) => ({
@@ -75,21 +77,23 @@ export const customStyles = {
 
   menu: (provided: any) => ({
     ...provided,
-    border: '1px solid rgba(255, 255, 255, 0.08)',
-    backgroundColor: 'rgba(255, 255, 255, 0.04)',
+    backgroundColor: '#242525',
     color: '#fff',
     fontFamily: 'Inter, sans-serif',
     fontStyle: 'normal',
     fontWeight: 400,
     fontSize: '0.9rem',
     zIndex: 10000,
-    position: 'relative',
+    position: 'absolute', // Change from 'relative' to 'absolute'
+    width: '100%', // Ensure the menu width matches the control
   }),
 
   menuList: (provided: any) => ({
     ...provided,
     paddingTop: 0,
     paddingBottom: 0,
+    maxHeight: '200px', // Add a max height to enable scrolling if needed
+    overflowY: 'auto', // Enable vertical scrolling
   }),
 
   noOptionsMessage: (provided: any) => ({
