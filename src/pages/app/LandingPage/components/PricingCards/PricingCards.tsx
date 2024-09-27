@@ -122,7 +122,7 @@ const PricingSection: React.FC = () => {
         title='Paid Events'
         tagline='Paid Events with < 250 Participants'
         price={'4%'}
-        currency=' of Ticket Price'
+        currency=' of Ticket Price + Gateway Fee'
         features={paidEvents}
         popular={true}
       />
