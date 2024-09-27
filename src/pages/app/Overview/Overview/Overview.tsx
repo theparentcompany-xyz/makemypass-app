@@ -12,11 +12,7 @@ import { TillRoles } from '../../../../../services/enums';
 import { makeMyPassSocket } from '../../../../../services/urls';
 import { createEventHost, removeEventHost, updateEventHost } from '../../../../apis/host';
 import { getEventHosts } from '../../../../apis/overview';
-import {
-  isUserAuthorized,
-  isUserEditor,
-  transformTableData,
-} from '../../../../common/commonFunctions';
+import { isUserAuthorized, transformTableData } from '../../../../common/commonFunctions';
 import DashboardLayout from '../../../../components/DashboardLayout/DashboardLayout';
 import Glance from '../../../../components/Glance/Glance';
 import Modal from '../../../../components/Modal/Modal';
