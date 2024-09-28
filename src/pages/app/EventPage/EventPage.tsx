@@ -53,6 +53,7 @@ const EventPage = () => {
           term: searchParams.get('term'),
           content: searchParams.get('content'),
         },
+        accessCode: searchParams.get('access_code'),
       });
   }, [eventTitle]);
 
@@ -65,6 +66,7 @@ const EventPage = () => {
         claimCode,
         setClaimCodeExceed,
         setShowTicketFirst,
+        accessCode: searchParams.get('access_code'),
       });
   }, [success]);
 

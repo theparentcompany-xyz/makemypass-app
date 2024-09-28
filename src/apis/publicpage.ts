@@ -114,6 +114,7 @@ export const submitForm = async ({
   tickets.forEach((ticket: Tickets) => backendFormData.append('tickets[]', JSON.stringify(ticket)));
   if (selectedDateFormatted) backendFormData.append('ticket_date', selectedDateFormatted);
   if (ticketCode) backendFormData.append('ticket_code', ticketCode);
+  if (accessCode) backendFormData.append('access_code', accessCode);
 
   if (utmData) {
     const dataToAppend = {
@@ -129,9 +130,6 @@ export const submitForm = async ({
 
   publicGateway
     .post(makeMyPass.formSubmit(eventId), backendFormData, {
-      params: {
-        access_code: accessCode,
-      },
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -367,6 +365,7 @@ export const getEventInfo = async ({
   setShowTicketFirst,
   setSuccess,
   utmData,
+  accessCode,
 }: {
   eventTitle: string;
   setEventData: Dispatch<React.SetStateAction<EventType | undefined>>;
@@ -382,6 +381,7 @@ export const getEventInfo = async ({
     term: string | null;
     content: string | null;
   };
+  accessCode?: string | null;
 }) => {
   let backendURL = makeMyPass.formEventInfo(eventTitle);
   if (utmData) {
@@ -391,9 +391,13 @@ export const getEventInfo = async ({
     if (utmData.term) backendURL += `&utm_term=${utmData.term}`;
     if (utmData.content) backendURL += `&utm_content=${utmData.content}`;
   }
-  if (claimCode) backendURL += `?claim_code=${claimCode}`;
   privateGateway
-    .get(backendURL)
+    .get(backendURL, {
+      params: {
+        claim_code: claimCode,
+        access_code: accessCode,
+      },
+    })
     .then((response) => {
       setEventData(response.data.response);
       setSuccess &&

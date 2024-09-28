@@ -133,6 +133,8 @@ const Overview = () => {
           is_private: `${host.is_private}`,
         })),
       );
+
+
       setHostListTableData(transformedHostList as unknown as TableType[]);
     }
   }, [hostList]);
