@@ -134,7 +134,6 @@ const Overview = () => {
         })),
       );
 
-
       setHostListTableData(transformedHostList as unknown as TableType[]);
     }
   }, [hostList]);

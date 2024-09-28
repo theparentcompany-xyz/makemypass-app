@@ -154,8 +154,6 @@ const DynamicForm = ({
                       onFieldChange(field.field_key, e.target.value)
                     }
                     className={styles.numberInput}
-                    accept=''
-                    pattern='^\d{10}$'
                   />
                 </CommonRenderStructure>
               </>
