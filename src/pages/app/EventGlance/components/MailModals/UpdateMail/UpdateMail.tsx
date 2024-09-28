@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 
+import { TillRoles } from '../../../../../../../services/enums';
 import { getEventMailData, updateEventMail } from '../../../../../../apis/mails';
 import { MailType } from '../../../../../../apis/types';
+import { isUserAuthorized, isUserEditor } from '../../../../../../common/commonFunctions';
 import UploadAttachement from './components/UploadAttachement/UploadAttachements';
 import type { previewType, PropTypes } from './types';
 import styles from './UpdateMail.module.css';
@@ -63,10 +65,12 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
   };
 
   const handleDeleteAttachment = (index: number) => {
-    const newAttachments = attachments.filter((_, i) => i !== index);
+    if (isUserEditor()) {
+      const newAttachments = attachments.filter((_, i) => i !== index);
 
-    setAttachments(newAttachments);
-    setPreviews(previews.filter((_, i) => i !== index));
+      setAttachments(newAttachments);
+      setPreviews(previews.filter((_, i) => i !== index));
+    }
   };
 
   useEffect(() => {
@@ -144,6 +148,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
                 <input
                   type='text'
                   placeholder='Enter Subject'
+                  disabled={!isUserEditor()}
                   className={styles.input}
                   value={mailData?.subject}
                   onChange={(e) =>
@@ -157,6 +162,7 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
 
                 <textarea
                   placeholder='Enter Email Body'
+                  disabled={!isUserEditor()}
                   className={styles.textarea}
                   value={mailData?.body}
                   onChange={(e) => mailData && setMailData({ ...mailData, body: e.target.value })}
@@ -172,16 +178,18 @@ const UpdateMail = ({ selectedMail, setCustomMail, setSelectedMail, setMails }: 
                 />
               </div>
 
-              <div className={styles.inputContainer}>
-                <p
-                  className={styles.inputLink}
-                  onClick={() => {
-                    setCustomMail(true);
-                  }}
-                >
-                  &#x1F6C8; Connect Custom Mail Id Here
-                </p>
-              </div>
+              {isUserAuthorized(TillRoles.ADMIN) && (
+                <div className={styles.inputContainer}>
+                  <p
+                    className={styles.inputLink}
+                    onClick={() => {
+                      setCustomMail(true);
+                    }}
+                  >
+                    &#x1F6C8; Connect Custom Mail Id Here
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 

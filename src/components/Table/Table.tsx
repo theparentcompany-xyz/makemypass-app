@@ -89,20 +89,22 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
               <p className={styles.rowDate}>{timeAgo(item.registered_at)}</p>
               {setResentTicket && (
                 <>
-                  <div className={styles.icon}>
-                    <MdEdit
-                      className='pointer'
-                      onClick={() => {
-                        if (setSelectedGuestId) {
-                          setSelectedGuestId({
-                            id: item.id,
-                            type: 'edit',
-                          });
-                        }
-                      }}
-                      color='#8E8E8E'
-                    />
-                  </div>
+                  {isUserEditor() && (
+                    <div className={styles.icon}>
+                      <MdEdit
+                        className='pointer'
+                        onClick={() => {
+                          if (setSelectedGuestId) {
+                            setSelectedGuestId({
+                              id: item.id,
+                              type: 'edit',
+                            });
+                          }
+                        }}
+                        color='#8E8E8E'
+                      />
+                    </div>
+                  )}
                   {item.is_approved ? (
                     <div className={styles.icon} title='Shortlisted'>
                       <MdCheckBox color='#8E8E8E' />

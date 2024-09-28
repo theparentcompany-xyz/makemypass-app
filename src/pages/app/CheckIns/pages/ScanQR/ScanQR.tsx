@@ -29,7 +29,11 @@ const ScanQR = () => {
   });
 
   const [checking, setChecking] = useState<boolean>(false);
-  const [roomNumber, setRoomNumber] = useState<RoomType>({} as RoomType);
+  const [roomNumber, setRoomNumber] = useState<RoomType>(
+    JSON.parse(
+      sessionStorage.getItem('roomNumber') || JSON.stringify({ showModel: false, roomNumber: '' }),
+    ) as RoomType,
+  );
   const [scanLogs, setScanLogs] = useState<LogType[]>([]);
 
   const [previewData, setPreviewData] = useState<PreviewData>({
@@ -58,6 +62,10 @@ const ScanQR = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trigger, eventId]);
+
+  useEffect(() => {
+    sessionStorage.setItem('roomNumber', JSON.stringify(roomNumber));
+  }, [roomNumber]);
 
   return (
     <>
@@ -182,6 +190,7 @@ const ScanQR = () => {
                 trigger={trigger}
                 setTrigger={setTrigger}
                 checking={checking}
+                roomNumber={roomNumber}
                 setRoomNumber={setRoomNumber}
               />
               <ScanLogs scanLogs={scanLogs} />
