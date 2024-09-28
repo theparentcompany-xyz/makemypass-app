@@ -83,6 +83,7 @@ const EventForm = ({
     value: eventFormData?.coupon.value ?? '',
     error: '',
   });
+  const [accessCode, setAccessCode] = useState('');
 
   const navigate = useNavigate();
 
@@ -90,6 +91,10 @@ const EventForm = ({
   const newSearchParams = new URLSearchParams(location.search);
 
   useEffect(() => {
+    const accessCodeParam = newSearchParams.get('access_code');
+    if (accessCodeParam) {
+      setAccessCode(accessCodeParam);
+    }
     if (eventFormData?.form) {
       setFormData(
         eventFormData?.form.reduce((data: FormDataType, field: FormFieldType) => {
@@ -418,6 +423,7 @@ const EventForm = ({
                     ticketCode,
                     utmData,
                     navigate,
+                    accessCode,
                   });
               });
             } else if (formNumber === 1 && eventFormData.show_ticket_first) {
@@ -436,6 +442,7 @@ const EventForm = ({
                   selectedDate,
                   ticketCode,
                   isCashInHand,
+                  setLoading,
                 );
               } else {
                 submitForm({
@@ -456,6 +463,7 @@ const EventForm = ({
                   ticketCode,
                   utmData,
                   navigate,
+                  accessCode,
                 });
               }
             }

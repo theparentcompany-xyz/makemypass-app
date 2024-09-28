@@ -42,7 +42,9 @@ export const addGuest = (
   selectedDate?: string | null | undefined,
   ticketCode?: string | null,
   isCashInHand?: boolean,
+  setLoading?: Dispatch<React.SetStateAction<boolean>>,
 ) => {
+  if (setLoading) setLoading(true);
   if (selectedDate) {
     formData['ticket_date'] = selectedDate;
   }
@@ -148,6 +150,11 @@ export const addGuest = (
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Guest adding failed');
       setFormErrors(error.response.data.message);
+    })
+    .finally(() => {
+      if (setLoading) {
+        setLoading(false);
+      }
     });
 };
 
