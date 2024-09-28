@@ -408,7 +408,7 @@ const ViewGuest = ({
                 )}
               </div>
 
-              {selectedGuestData['is_approved'] && isUserEditor() && (
+              {selectedGuestData['is_approved'] && (
                 <div className={styles.guestActionButtons}>
                   {type !== 'overview' && (
                     <div
