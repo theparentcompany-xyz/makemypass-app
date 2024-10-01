@@ -5,6 +5,7 @@ import Theme from '../../../components/Theme/Theme';
 import EventPartners from './components/EventPartners/EventPartners';
 import Hero from './components/Hero/Hero';
 import PricingSection from './components/PricingCards/PricingCards';
+import TestimonialSection from './components/TestimonialSection/TestimonialSection';
 // import WhyUs from './components/WhyUs/WhyUs';
 import styles from './LandingPage.module.css';
 
@@ -233,9 +234,9 @@ const LandingPage = () => {
             </p>
           </div>
           <PricingSection />
-          {/* <div className={styles.tsTexts}>
+          <div className={styles.tsTexts}>
             <p className={styles.tsHeading}>
-              Don't Believe
+              Don't Believe Us{' '}
               <span
                 style={{
                   display: 'inline-block',
@@ -243,11 +244,10 @@ const LandingPage = () => {
                   marginRight: '1rem',
                 }}
               >
-                {' '}
                 Hear
               </span>
               <br />
-              From Our{' '}
+              From{' '}
               <span
                 style={{
                   display: 'inline-block',
@@ -256,11 +256,11 @@ const LandingPage = () => {
                 }}
               >
                 {' '}
-                Users.
+                Our Users.
               </span>
             </p>
-          </div> */}
-          {/* <TestimonialSection /> */}
+          </div>
+          <TestimonialSection />
           <div className={styles.footerContainer}>
             <div className={styles.fLogoText}>
               <img src='/app/logoText.webp' alt='' className={styles.fLogo} />

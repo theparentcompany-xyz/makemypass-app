@@ -1,32 +1,21 @@
 import React from 'react';
-import { FaQuoteLeft, FaStar } from 'react-icons/fa';
+import { FaQuoteLeft } from 'react-icons/fa';
 
 import styles from './TestimonialSection.module.css';
 
 interface Testimonial {
-  name: string;
-  role: string;
   company: string;
   content: string;
-  rating: number;
 }
 
-const TestimonialCard: React.FC<Testimonial> = ({ name, role, company, content, rating }) => {
+const TestimonialCard: React.FC<Testimonial> = ({ company, content }) => {
   return (
     <div className={styles.testimonialCard}>
       <FaQuoteLeft className={styles.quoteIcon} />
       <p className={styles.testimonialContent}>{content}</p>
       <div className={styles.testimonialAuthor}>
         <div className={styles.authorInfo}>
-          <h3 className={styles.authorName}>{name}</h3>
-          <p className={styles.authorRole}>
-            {role} at {company}
-          </p>
-        </div>
-        <div className={styles.rating}>
-          {[...Array(5)].map((_, i) => (
-            <FaStar key={i} className={i < rating ? styles.starFilled : styles.starEmpty} />
-          ))}
+          <p className={styles.authorRole}>{company}</p>
         </div>
       </div>
     </div>
@@ -36,28 +25,34 @@ const TestimonialCard: React.FC<Testimonial> = ({ name, role, company, content, 
 const TestimonialSection: React.FC = () => {
   const testimonials: Testimonial[] = [
     {
-      name: 'Sarah Johnson',
-      role: 'Event Organizer',
-      company: 'TechConf',
+      company: 'ScaleUp Conclave 2024',
       content:
-        'This platform revolutionized our event management process. The custom tickets and analytics features are game-changers!',
-      rating: 5,
+        'Being an event organiser, the hassle of managing participants was a tough spot. When I started using MakeMyPass, it was easy for me to navigate the whole event. Also the customisation in each fields is cherry on top. Loved using MakeMyPass and will be using it future events.',
     },
     {
-      name: 'Michael Chen',
-      role: 'Marketing Director',
-      company: 'StartupBoost',
+      company: 'In50Hours',
       content:
-        'The marketing tools and user communication features helped us increase our event attendance by 40%. Highly recommended!',
-      rating: 4,
+        'The platform made it easy to manage registrations and track participants effectively. I also appreciated the email feature, which allowed me to communicate with all attendees seamlessly. Highly recommend MakeMyPass for event management!',
     },
     {
-      name: 'Emily Rodriguez',
-      role: 'Community Manager',
-      company: 'DevMeetup',
+      company: 'Faya:80',
       content:
-        "From registration to post-event follow-ups, this platform streamlined our entire process. It's a must-have for any event organizer.",
-      rating: 5,
+        'Working with MakeMyPass has been a smooth and efficient experience. The team is professional, responsive, and made the ticketing process seamless for our event. Highly recommend their service!',
+    },
+    {
+      company: 'FalloutVerse',
+      content:
+        'Our experience with MakeMyPass has been nothing short of smooth and efficient. The team demonstrated professionalism and quick responsiveness, making the ticketing process seamless for our event. We highly recommend their services!',
+    },
+    {
+      company: 'InitCrew',
+      content:
+        "Using MakeMyPass for our events has been a seamless experience. The real-time analytics, ease of managing tickets, communication, and check-ins all in one place have made event planning so much easier. It's a must-have tool for anyone looking to organize events efficiently.",
+    },
+    {
+      company: 'Incepto 24',
+      content:
+        "The main part we liked was the customization they have done specifically for our needs. As far as I know, Makemypass was a single-participant registration platform. But, when we reached out to the team with our hackathon and said we needed a team-based registration they modified the platform within 1-2 days and gave us for opening registration. The overall participant experience was also seamless and effective. Will suggest Makemypass for those who are looking for a stable platform for event managing. What makes it unique is not the platform or name or app, It's the people behind it and their exceptional support.",
     },
   ];
 
