@@ -43,6 +43,7 @@ export const submitForm = async ({
   ticketCode,
   utmData,
   navigate,
+  accessCode,
 }: {
   eventId: string;
   isCouponFirst?: boolean;
@@ -70,6 +71,7 @@ export const submitForm = async ({
     content: string | null;
   };
   navigate?: NavigateFunction;
+  accessCode?: string;
 }) => {
   setLoading && setLoading(true);
   const selectedDateFormatted = selectedDate
@@ -127,6 +129,9 @@ export const submitForm = async ({
 
   publicGateway
     .post(makeMyPass.formSubmit(eventId), backendFormData, {
+      params: {
+        access_code: accessCode,
+      },
       headers: {
         'Content-Type': 'multipart/form-data',
       },
