@@ -77,10 +77,10 @@ header {
 }
 
 .loginButton {
-  background-color: #7662fc;
+  background-color: #01f77e;
   padding: 0.5rem 1.5rem;
   border: none;
-  color: white;
+
   font-family: 'Inter';
   border-radius: 8px;
 }

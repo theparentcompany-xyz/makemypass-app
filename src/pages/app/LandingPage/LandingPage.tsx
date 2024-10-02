@@ -62,7 +62,7 @@ const LandingPage = () => {
                 <span>+ 3 hrs</span> Sending custom tickets to the participants.
               </li>
               <li>
-                <span>+ 3 hrs</span> Generating event statistics from CSVs. using Excel
+                <span>+ 3 hrs</span> Generating event statistics from CSVs.
               </li>
               <li>
                 <span>+ 2 hrs</span> Distribution of event materials to the attendees.
@@ -131,6 +131,7 @@ const LandingPage = () => {
                 src='/app/landing/tsImg.webp'
                 alt='features of makemypass.com'
                 className={styles.frsImage}
+                loading='lazy'
               />
             </a>
             <div className={styles.frsTexts}>
@@ -200,9 +201,10 @@ const LandingPage = () => {
             </div>
 
             <img
-              src='/app/landing/scanning.png'
+              src='/app/landing/scanning.webp'
               alt='features of makemypass.com'
               className={styles.frsImage}
+              loading='lazy'
             />
           </div>
 
@@ -263,7 +265,7 @@ const LandingPage = () => {
           <TestimonialSection />
           <div className={styles.footerContainer}>
             <div className={styles.fLogoText}>
-              <img src='/app/logoText.webp' alt='' className={styles.fLogo} />
+              <img src='/app/logoText.webp' alt='' className={styles.fLogo} loading='lazy' />
               <p className={styles.fText}>MakeMyPass</p>
             </div>
             <p className={styles.location}>Thiruvanathapuram, Kerala, India</p>

@@ -57,7 +57,7 @@ const Hero = () => {
       </div>
 
       <img
-        src='/app/landing/landingimg.png'
+        src='/app/landing/landingimg.webp'
         alt='features of makemypass.com'
         className={styles.fsImage}
       />

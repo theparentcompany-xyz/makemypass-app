@@ -129,7 +129,7 @@ const Header = ({ type }: { type?: string | undefined }) => {
                 <div className={styles.buttons}>
                   <a
                     className={styles.requestDemo}
-                    href='https://wa.me/+916238450178'
+                    href='http://cal.com/adnankattekaden/15min'
                     target='_blank'
                     rel='noopener noreferrer'
                   >

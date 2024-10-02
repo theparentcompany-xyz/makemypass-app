@@ -103,7 +103,7 @@ const Randomizer = () => {
                   className={styles.welcomeContainer}
                 >
                   <img
-                    src='/app/congo.png'
+                    src='/app/congo.webp'
                     alt='welcome image with confetti for card '
                     className={styles.image}
                   />

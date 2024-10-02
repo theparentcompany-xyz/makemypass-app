@@ -18,7 +18,7 @@ const Footer = () => {
             <a href='https://www.theparentcompany.xyz/' target='_blank' rel='noopener noreferrer'>
               <img
                 className={styles.hoomansLogo}
-                src='/app/hoomans.png'
+                src='/app/hoomans.webp'
                 alt='the hoomans project logo'
               />
             </a>

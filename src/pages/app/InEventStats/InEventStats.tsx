@@ -298,7 +298,7 @@ const InEventStats = () => {
         <Glance tab='inevent' />
         <div className={styles.makemypassbranding}>
           <div className={`${styles.backgroundBrand}`}>
-            <img src='/app/mmpcolor.png' alt='makemypass logo' />
+            <img src='/app/mmpcolor.webp' alt='makemypass logo' />
             <p className={styles.logoText}>MakeMyPass</p>
           </div>
         </div>
