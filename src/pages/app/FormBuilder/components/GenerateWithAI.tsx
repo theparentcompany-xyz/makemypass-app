@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AiFillAudio } from 'react-icons/ai';
 import { FaKeyboard } from 'react-icons/fa';
 
 import styles from './GenerateWithAI.module.css';
 
-type Props = {};
-
-const GenerateWithAI = ({}: Props) => {
+const GenerateWithAI = () => {
   const [usingAudio, setUsingAudio] = useState(false);
 
   return (
