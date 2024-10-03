@@ -2,7 +2,7 @@ import { AnimatePresence, Reorder } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { CgArrowsExpandRight } from 'react-icons/cg';
 import { FaChevronDown } from 'react-icons/fa';
-import { FaAddressCard, FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
+import { FaAddressCard, FaRegEye, FaRegEyeSlash, FaWandMagicSparkles } from 'react-icons/fa6';
 import { GrContract } from 'react-icons/gr';
 import { IoCloseSharp } from 'react-icons/io5';
 import { LuPlus } from 'react-icons/lu';
@@ -28,6 +28,7 @@ import Theme from '../../../components/Theme/Theme';
 import InputField from '../../auth/Login/InputField';
 import { customStyles } from '../EventPage/constants';
 import ChangeTypeModal from './ChangeTypeModal/ChangeTypeModal';
+import GenerateWithAI from './components/GenerateWithAI';
 import { DefaultFiledTypeMapping, FileExtensions, getConditions } from './constant';
 import { DefaultFieldTypes, FieldType } from './enum';
 import styles from './FormBuilder.module.css';
@@ -46,6 +47,7 @@ const FormBuilder = () => {
   const [followUpMessage, setFollowupMessage] = useState('');
 
   const [tempFollowupMessage, setTempFollowupMessage] = useState('');
+  const [showGenerateWithAI, setShowGenerateWithAI] = useState<boolean>(false);
 
   useEffect(() => {
     getFormBuilderForm(event_id, setFormFields);
@@ -185,6 +187,12 @@ const FormBuilder = () => {
             </Modal>
           )}
 
+          {import.meta.env.VITE_CURRENT_ENV == 'dev' && showGenerateWithAI && (
+            <Modal onClose={() => setShowGenerateWithAI(false)} title='Build Your Form with AI'>
+              <GenerateWithAI />
+            </Modal>
+          )}
+
           {closeForm && (
             <Modal type='center' title='Enter Message' onClose={() => setCloseForm(false)}>
               <div className={styles.followupMessageContainer}>
@@ -269,6 +277,15 @@ const FormBuilder = () => {
                   </div>
                   <p className={styles.customFieldsText}>Custom Fields</p>
                 </div>
+                <button
+                  className={styles.generateWithAIButton}
+                  onClick={() => {
+                    setShowGenerateWithAI(true);
+                  }}
+                >
+                  {' '}
+                  <FaWandMagicSparkles /> Generate With AI
+                </button>
               </div>
 
               <div className={styles.customFields}>
