@@ -10,6 +10,7 @@ const Hero = () => {
       const img = new Image();
       img.src = image;
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const boxShadowVariants = {
