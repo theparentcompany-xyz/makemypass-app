@@ -64,6 +64,7 @@ const EventForm = ({
   });
 
   const [loading, setLoading] = useState<boolean>(false);
+
   const [formData, setFormData] = useState<FormDataType>({});
   const [formNumber, setFormNumber] = useState<number>(eventFormData.show_ticket_first ? 1 : 0);
   const [selectedDate, setSelectedDate] = useState<string | null>();

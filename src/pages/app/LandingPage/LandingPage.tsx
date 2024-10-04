@@ -118,6 +118,8 @@ const LandingPage = () => {
               src='/app/landing/tickets.png'
               alt='features of makemypass.com'
               className={styles.tsImage}
+              width={400}
+              // height={800}
             />
           </div>
 
@@ -132,6 +134,7 @@ const LandingPage = () => {
                 alt='features of makemypass.com'
                 className={styles.frsImage}
                 loading='lazy'
+                width={400}
               />
             </a>
             <div className={styles.frsTexts}>
@@ -205,6 +208,7 @@ const LandingPage = () => {
               alt='features of makemypass.com'
               className={styles.frsImage}
               loading='lazy'
+              width={400}
             />
           </div>
 
@@ -265,7 +269,13 @@ const LandingPage = () => {
           <TestimonialSection />
           <div className={styles.footerContainer}>
             <div className={styles.fLogoText}>
-              <img src='/app/logoText.webp' alt='' className={styles.fLogo} loading='lazy' />
+              <img
+                src='/app/logoText.webp'
+                alt=''
+                className={styles.fLogo}
+                loading='lazy'
+                height={20}
+              />
               <p className={styles.fText}>MakeMyPass</p>
             </div>
             <p className={styles.location}>Thiruvanathapuram, Kerala, India</p>

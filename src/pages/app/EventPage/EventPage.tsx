@@ -9,7 +9,7 @@ import { getEventInfo } from '../../../apis/publicpage';
 import { EventType } from '../../../apis/types';
 import Theme from '../../../components/Theme/Theme';
 import EventForm from './components/EventForm/EventForm';
-import EventHeader from './components/EventHeader/EventHeader';
+import EventPageHeader from './components/EventPageHeader/EventPageHeader';
 import SuccessModal from './components/SuccessModal/SuccessModal';
 import styles from './EventPage.module.css';
 import type { ClaimCodeExceedType, SuccessModalProps } from './types';
@@ -127,7 +127,7 @@ const EventPage = () => {
                 padding: '0 1rem',
               }}
             >
-              <EventHeader eventData={eventData} />
+              <EventPageHeader eventData={eventData} />
             </motion.div>
             <p
               className={styles.privateEventText}
@@ -140,7 +140,7 @@ const EventPage = () => {
           <div className={styles.eventPageContainer}>
             {typeParam !== 'embed' && (
               <div className={styles.eventHeaderContainer}>
-                <EventHeader eventData={eventData} />
+                <EventPageHeader eventData={eventData} />
               </div>
             )}
             <div className={styles.formContainer}>

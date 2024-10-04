@@ -1,4 +1,3 @@
-import { isUserEditor } from '../../../../../../../../common/commonFunctions';
 import type { previewType } from '../../types';
 import PreviewBox from '../PreviewBox/PreviewBox';
 import styles from './UploadAttachements.module.css';
@@ -34,7 +33,6 @@ const UploadAttachement = ({
         <input
           type='file'
           multiple
-          disabled={!isUserEditor()}
           value={''}
           onChange={handleFileChange}
           className={styles.fileInput}

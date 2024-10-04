@@ -1,8 +1,17 @@
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 import styles from './Hero.module.css';
 
 const Hero = () => {
+  const images = ['/app/landing/landingimg.webp'];
+  useEffect(() => {
+    images.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+  }, []);
+
   const boxShadowVariants = {
     hover: {
       boxShadow: '9.146px 7.622px 0px 0px #000',

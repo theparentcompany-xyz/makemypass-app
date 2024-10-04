@@ -12,9 +12,9 @@ import { useNavigate } from 'react-router';
 
 import { EventHosts, EventType } from '../../../../../apis/types';
 import { getDay, getMonthAbbreviation } from '../../constants';
-import styles from './EventHeader.module.css';
+import styles from './EventPageHeader.module.css';
 
-const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
+const EventPageHeader = ({ eventData }: { eventData: EventType | undefined }) => {
   const [showFullDesc, setShowFullDesc] = useState(false);
   const [timer, setTimer] = useState({
     days: 0 as number | string,
@@ -305,4 +305,4 @@ const EventHeader = ({ eventData }: { eventData: EventType | undefined }) => {
   );
 };
 
-export default EventHeader;
+export default EventPageHeader;

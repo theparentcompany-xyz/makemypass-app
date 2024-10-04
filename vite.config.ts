@@ -5,6 +5,6 @@ export default defineConfig({
   plugins: [react()],
   build: {
     target: 'esnext', // optional, specifies the output target
-    minify: 'esbuild', // default minifier used by Vite
+    minify: 'terser',
   },
 });
