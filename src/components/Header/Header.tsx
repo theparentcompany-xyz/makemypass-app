@@ -83,7 +83,7 @@ const Header = ({ type }: { type?: string | undefined }) => {
                           }}
                           className={`pointer ${styles.userName}`}
                         >
-                          Hello, {userEmail}
+                          Hello, {userEmail?.split('@')[0]}
                           <span className={styles.avatar}>
                             {userEmail?.split('')[0].toUpperCase()}
                           </span>

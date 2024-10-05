@@ -39,7 +39,7 @@ export const userLogin = async (
       },
     })
     .then((response) => {
-      const userEmail = email.split('@')[0];
+      const userEmail = email;
       localStorage.setItem('accessToken', response.data.response.access_token);
       localStorage.setItem('refreshToken', response.data.response.refresh_token);
       localStorage.setItem('userEmail', userEmail);

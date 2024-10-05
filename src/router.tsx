@@ -181,7 +181,7 @@ const routes: RouteObject[] = [
         element: <CreateEvent />,
       },
       {
-        path: '/org-event',
+        path: '/create-org',
         element: <CreateOrg />,
       },
       {
