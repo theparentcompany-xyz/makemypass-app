@@ -11,6 +11,7 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
+import { PulseLoader } from 'react-spinners';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -33,7 +34,6 @@ import { DefaultFieldTypes, FieldType } from './enum';
 import styles from './FormBuilder.module.css';
 import SelectComponent from './SelectComponent';
 import type { ErrorResponse, Field } from './types';
-import { PulseLoader } from 'react-spinners';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -883,13 +883,11 @@ const FormBuilder = () => {
                     }}
                     className={styles.addQuestionButton}
                   >
-                      {
-                        loading ? (
-                        <PulseLoader color={'#fff'} loading={loading} size={10}/>
-                      ) : (
-                        'Save Form'
-                      )}
-                    
+                    {loading ? (
+                      <PulseLoader color={'#fff'} loading={loading} size={10} />
+                    ) : (
+                      'Save Form'
+                    )}
                   </button>
                 </div>
               </div>
