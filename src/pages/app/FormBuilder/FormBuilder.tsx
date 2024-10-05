@@ -33,6 +33,7 @@ import { DefaultFieldTypes, FieldType } from './enum';
 import styles from './FormBuilder.module.css';
 import SelectComponent from './SelectComponent';
 import type { ErrorResponse, Field } from './types';
+import { PulseLoader } from 'react-spinners';
 
 const FormBuilder = () => {
   const { event_id } = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -46,6 +47,7 @@ const FormBuilder = () => {
   const [followUpMessage, setFollowupMessage] = useState('');
 
   const [tempFollowupMessage, setTempFollowupMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getFormBuilderForm(event_id, setFormFields);
@@ -877,11 +879,17 @@ const FormBuilder = () => {
                     onClick={() => {
                       setFormFieldErrors({});
                       if (isUserEditor())
-                        updateFormBuilderForm(event_id, formFields, setFormFieldErrors);
+                        updateFormBuilderForm(event_id, formFields, setFormFieldErrors, setLoading);
                     }}
                     className={styles.addQuestionButton}
                   >
-                    Save Form
+                      {
+                        loading ? (
+                        <PulseLoader color={'#fff'} loading={loading} size={10}/>
+                      ) : (
+                        'Save Form'
+                      )}
+                    
                   </button>
                 </div>
               </div>

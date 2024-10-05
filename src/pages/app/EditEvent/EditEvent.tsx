@@ -190,7 +190,7 @@ const EditEvent = () => {
       }
     }
 
-    updateEventData({ eventId, eventData: formData, setFormErrors, setLoading, });
+    updateEventData({ eventId, eventData: formData, setFormErrors, setLoading });
   };
 
   const agreeToDelete = () => {
@@ -908,10 +908,14 @@ const EditEvent = () => {
                         Cancel
                       </button>
                       {isUserEditor() && (
-                        <button className={styles.createButton} onClick={onSubmit} disabled={loading}>
+                        <button
+                          className={styles.createButton}
+                          onClick={onSubmit}
+                          disabled={loading}
+                        >
                           {loading ? (
                             <PulseLoader color={'#fff'} loading={loading} size={8} />
-                          ):(
+                          ) : (
                             'Save'
                           )}
                         </button>
