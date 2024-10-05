@@ -11,6 +11,7 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
+import { PulseLoader } from 'react-spinners';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -48,6 +49,7 @@ const FormBuilder = () => {
 
   const [tempFollowupMessage, setTempFollowupMessage] = useState('');
   const [showGenerateWithAI, setShowGenerateWithAI] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getFormBuilderForm(event_id, setFormFields);
@@ -894,11 +896,15 @@ const FormBuilder = () => {
                     onClick={() => {
                       setFormFieldErrors({});
                       if (isUserEditor())
-                        updateFormBuilderForm(event_id, formFields, setFormFieldErrors);
+                        updateFormBuilderForm(event_id, formFields, setFormFieldErrors, setLoading);
                     }}
                     className={styles.addQuestionButton}
                   >
-                    Save Form
+                    {loading ? (
+                      <PulseLoader color={'#fff'} loading={loading} size={10} />
+                    ) : (
+                      'Save Form'
+                    )}
                   </button>
                 </div>
               </div>
