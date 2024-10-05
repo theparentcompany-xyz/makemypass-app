@@ -25,6 +25,9 @@ export const makeMyPass = {
   //Manage Guests
   eventCreate: makeMyPassURL(`/manage-event/create/`), // SuperUser
 
+  //Manage Org
+  orgCreate: makeMyPassURL(`/manage-org/create/`), // SuperUser
+
   guestVisitedVenues: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/visited-venues/`),
   guestMailLog: (eventId: string, eventRegisterId: string) =>

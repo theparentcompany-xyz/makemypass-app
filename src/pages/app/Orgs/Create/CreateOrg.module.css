@@ -1,0 +1,33 @@
+.createEventContainer {
+  padding: 0 1.25rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  color: #d7d7d7;
+  height: 100%;
+  padding-bottom: 1rem;
+}
+
+.inputContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.inputContainer h1 {
+  font-weight: 600;
+  font-size: 2rem;
+  font-family: 'Inter', sans-serif;
+}

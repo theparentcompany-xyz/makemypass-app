@@ -27,6 +27,7 @@ import PageViewAnalytics from './pages/app/Insights/pages/PageViewAnalytics/Page
 import PerkAnalytics from './pages/app/Insights/pages/PerkAnalytics/PerkAnalytics';
 import VenueAnalytics from './pages/app/Insights/pages/VenueAnalytics/VenueAnalytics';
 import LandingPage from './pages/app/LandingPage/LandingPage';
+import CreateOrg from './pages/app/Orgs/Create/CreateOrg';
 import Overview from './pages/app/Overview/Overview/Overview';
 import PaymentAnalytics from './pages/app/PaymentAnalytics/PaymentAnalytics';
 import PostEvent from './pages/app/PostEvent/PostEvent';
@@ -178,6 +179,10 @@ const routes: RouteObject[] = [
       {
         path: '/create-event',
         element: <CreateEvent />,
+      },
+      {
+        path: '/org-event',
+        element: <CreateOrg />,
       },
       {
         path: '/:eventTitle/manage',
