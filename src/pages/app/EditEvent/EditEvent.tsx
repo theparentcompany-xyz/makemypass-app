@@ -22,7 +22,7 @@ import {
   TbWorld,
 } from 'react-icons/tb';
 import Select from 'react-select';
-import { HashLoader } from 'react-spinners';
+import { HashLoader, PulseLoader } from 'react-spinners';
 
 import { deleteEvent, getEventData, updateEventData } from '../../../apis/events';
 import { getFormKeys } from '../../../apis/publicpage';
@@ -52,6 +52,7 @@ const EditEvent = () => {
   const [banner, setBanner] = useState<File | null>(null);
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
   const [followupMessage, setFollowupMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   // const [modalDataField, setModalDataField] = useState({
   //   needConfirmation: false,
   //   confirmationFields: [''],
@@ -189,7 +190,7 @@ const EditEvent = () => {
       }
     }
 
-    updateEventData({ eventId, eventData: formData, setFormErrors });
+    updateEventData({ eventId, eventData: formData, setFormErrors, setLoading, });
   };
 
   const agreeToDelete = () => {
@@ -907,8 +908,12 @@ const EditEvent = () => {
                         Cancel
                       </button>
                       {isUserEditor() && (
-                        <button className={styles.createButton} onClick={onSubmit}>
-                          Save
+                        <button className={styles.createButton} onClick={onSubmit} disabled={loading}>
+                          {loading ? (
+                            <PulseLoader color={'#fff'} loading={loading} size={8} />
+                          ):(
+                            'Save'
+                          )}
                         </button>
                       )}
                     </div>
