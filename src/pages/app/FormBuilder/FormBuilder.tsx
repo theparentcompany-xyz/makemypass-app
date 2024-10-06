@@ -872,33 +872,37 @@ const FormBuilder = () => {
                   })}
                 </Reorder.Group>
                 <br />
-                <Slider
-                  checked={closeForm}
-                  text={'Close Form'}
-                  onChange={() => {
-                    setCloseForm(!closeForm);
-                  }}
-                />
-                <div className={styles.actionButtons}>
-                  {isUserEditor() && (
+
+                <div className={styles.actionButtonsContainer}>
+                  <div className={styles.actionButtons}>
+                    {isUserEditor() && (
+                      <button
+                        onClick={() => {
+                          addField();
+                        }}
+                        className={styles.addQuestionButton}
+                      >
+                        <span>+</span>Add Question
+                      </button>
+                    )}
                     <button
                       onClick={() => {
-                        addField();
+                        setFormFieldErrors({});
+                        if (isUserEditor())
+                          updateFormBuilderForm(event_id, formFields, setFormFieldErrors);
                       }}
                       className={styles.addQuestionButton}
                     >
-                      <span>+</span>Add Question
+                      Save Form
                     </button>
-                  )}
+                  </div>
                   <button
                     onClick={() => {
-                      setFormFieldErrors({});
-                      if (isUserEditor())
-                        updateFormBuilderForm(event_id, formFields, setFormFieldErrors);
+                      setCloseForm(true);
                     }}
                     className={styles.addQuestionButton}
                   >
-                    Save Form
+                    Close Form
                   </button>
                 </div>
               </div>
