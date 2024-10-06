@@ -23,7 +23,7 @@ export const updateFormBuilderForm = (
   eventId: string,
   formFields: Field[],
   setFormFieldErrors: Dispatch<React.SetStateAction<ErrorResponse>>,
-  setLoading?: Dispatch<boolean>,
+  setLoading?: Dispatch<React.SetStateAction<boolean>>,
 ) => {
   setLoading && setLoading(true);
   privateGateway
