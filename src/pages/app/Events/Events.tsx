@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
 import { FaTags } from 'react-icons/fa';
 import { GoPeople } from 'react-icons/go';
+import { IoMdSettings } from 'react-icons/io';
 import { useNavigate } from 'react-router';
 import Select from 'react-select';
 
@@ -12,7 +13,8 @@ import {
   getEventsList,
   setEventInfoLocal,
 } from '../../../apis/events';
-import { Event } from '../../../apis/types';
+import { listOrgs } from '../../../apis/orgs';
+import { DefaultListType, Event } from '../../../apis/types';
 import { formatDate } from '../../../common/commonFunctions';
 import Loader from '../../../components/Loader';
 import Modal from '../../../components/Modal/Modal';
@@ -30,7 +32,9 @@ const Events = () => {
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [tags, setTags] = useState([] as string[]);
+  const [orgs, setOrgs] = useState([] as DefaultListType[]);
   const [selectedTags, setSelectedTags] = useState([] as string[]);
+  const [selectedOrgName, setSelectedOrgName] = useState('personal');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState<Position>({ x: 0, y: 0 });
   const [showModal, setShowModal] = useState(false);
@@ -56,6 +60,7 @@ const Events = () => {
   useEffect(() => {
     getEventsList(setEvents, setIsDataLoaded);
     getCommonTags(setTags);
+    listOrgs(setOrgs);
   }, []);
 
   const navigate = useNavigate();
@@ -127,6 +132,41 @@ const Events = () => {
                   setSelectedTags(selectedOptions.map((option) => option.value));
                 }}
               />
+              <Select
+                styles={customStyles}
+                options={
+                  orgs.length > 0
+                    ? orgs.map((org) => ({ value: org.id, label: org.name }))
+                    : [{ value: 'personal', label: 'Personal' }]
+                }
+                className='select'
+                classNamePrefix='select'
+                placeholder='Select Organization'
+                onChange={(selectedOption) => {
+                  if (selectedOption) {
+                    setSelectedOrgName(selectedOption.label);
+                    if (selectedOption.value !== 'personal') {
+                      getEventsList(setEvents, setIsDataLoaded, selectedOption.value);
+                    }
+                  }
+                }}
+              />
+
+              {selectedOrgName && selectedOrgName != 'personal' && (
+                <IoMdSettings
+                  size={20}
+                  color='#ffffff'
+                  className='pointer'
+                  onClick={() => {
+                    navigate(`/organization/${selectedOrgName}/`, {
+                      state: {
+                        orgId: orgs.find((org) => org.name === selectedOrgName)?.id,
+                        orgName: selectedOrgName,
+                      },
+                    });
+                  }}
+                />
+              )}
             </div>
             {Object.values(EventStatus).map((status) => {
               return (

@@ -4,9 +4,9 @@ import { createOrg } from '../../../../apis/orgs';
 import Theme from '../../../../components/Theme/Theme';
 import InputField from '../../../auth/Login/InputField';
 import SecondaryButton from '../../Overview/components/SecondaryButton/SecondaryButton';
-import styles from './CreateOrg.module.css';
+import styles from './CreateOrganization.module.css';
 
-const CreateOrg = () => {
+const CreateOrganization = () => {
   const [eventTitle, setEventTitle] = useState('');
   const submitCreateEvent = () => {
     if (eventTitle) {
@@ -36,4 +36,4 @@ const CreateOrg = () => {
   );
 };
 
-export default CreateOrg;
+export default CreateOrganization;

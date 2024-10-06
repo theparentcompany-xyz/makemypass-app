@@ -8,9 +8,14 @@ import { ErrorMessages, Event, EventType } from './types';
 export const getEventsList = async (
   setEvents: React.Dispatch<React.SetStateAction<Event[]>>,
   setIsDataLoaded: React.Dispatch<React.SetStateAction<boolean>>,
+  orgId?: string,
 ) => {
   privateGateway
-    .get(makeMyPass.listEvents)
+    .get(makeMyPass.listEvents, {
+      params: {
+        org_id: orgId,
+      },
+    })
     .then((response) => {
       setEvents(response.data.response.events);
     })
@@ -24,7 +29,7 @@ export const getEventsList = async (
 
 export const getCommonTags = async (setTags: React.Dispatch<React.SetStateAction<string[]>>) => {
   privateGateway
-    .get(makeMyPass.listCommonTags)
+    .get(makeMyPass.listCommonTags, {})
     .then((response) => {
       setTags(response.data.response);
     })

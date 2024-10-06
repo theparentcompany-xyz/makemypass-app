@@ -8,6 +8,7 @@ export const makeMyPass = {
   onboardUser: makeMyPassURL('/common/onboard-user/'),
   listEvents: makeMyPassURL('/common/user/events/'),
   listCommonTags: makeMyPassURL('/common/user/list-tags/'),
+  listOrgs: makeMyPassURL('/common/user/org/list'),
 
   //Scan Guest
   scanGuestCheckin: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkin`), //Till Volunteer
@@ -27,6 +28,7 @@ export const makeMyPass = {
 
   //Manage Org
   orgCreate: makeMyPassURL(`/manage-org/create/`), // SuperUser
+  orgCRUD: (orgId: string) => makeMyPassURL(`/manage-org/${orgId}/org`),
 
   guestVisitedVenues: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/guest/${eventRegisterId}/visited-venues/`),

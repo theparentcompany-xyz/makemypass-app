@@ -412,3 +412,8 @@ type Metadata = {
     Register: Record<string, number>;
   };
 };
+
+export type DefaultListType = {
+  id: string;
+  name: string;
+};
