@@ -21,6 +21,7 @@ const logos = [
   { src: '/app/landing/sp4.webp', alt: 'faya:80 brand logo' },
   { src: '/app/landing/sp14.webp', alt: 'brand logo 14' },
   { src: '/app/landing/sp2.webp', alt: 'mulearn brand logo' },
+  { src: '/app/landing/sp15.webp', alt: 'brand logo 15', style: { height: '45px' } },
 ];
 
 const shuffleArray = (array: Logo[]) => {

@@ -23,7 +23,9 @@ export const updateFormBuilderForm = (
   eventId: string,
   formFields: Field[],
   setFormFieldErrors: Dispatch<React.SetStateAction<ErrorResponse>>,
+  setLoading?: Dispatch<React.SetStateAction<boolean>>,
 ) => {
+  setLoading && setLoading(true);
   privateGateway
     .post(makeMyPass.formBuilderForm(eventId), formFields)
     .then(() => {
@@ -31,6 +33,9 @@ export const updateFormBuilderForm = (
     })
     .catch((error) => {
       setFormFieldErrors(error.response.data.message);
+    })
+    .finally(() => {
+      setLoading && setLoading(false);
     });
 };
 
