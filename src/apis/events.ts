@@ -143,12 +143,15 @@ export const updateEventData = ({
   eventData,
   setIsPublished,
   setFormErrors,
+  setLoading,
 }: {
   eventId: string;
   eventData: FormData;
   setIsPublished?: Dispatch<boolean>;
   setFormErrors?: Dispatch<ErrorMessages>;
+  setLoading?: Dispatch<boolean>;
 }) => {
+  setLoading && setLoading(true);
   privateGateway
     .patch(makeMyPass.event(eventId), eventData, {
       headers: {
@@ -169,6 +172,9 @@ export const updateEventData = ({
         if (error.response.data.message[key][0].length > 0)
           toast.error(error.response.data.message[key][0]);
       });
+    })
+    .finally(() => {
+      setLoading && setLoading(false);
     });
 };
 
