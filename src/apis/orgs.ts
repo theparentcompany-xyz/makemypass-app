@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 
 import { privateGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
+import type { OrganizationType } from '../pages/app/Organization/OrganizationGlance/types';
 import { DefaultListType } from './types';
 
 export const createOrg = (eventTitle: string) => {
@@ -34,14 +35,12 @@ export const listOrgs = (setOrgs: Dispatch<SetStateAction<DefaultListType[]>>) =
 
 export const getOrgData = (
   orgId: string,
-  setOrgTitle?: Dispatch<SetStateAction<string>>,
-  setOrgData?: Dispatch<SetStateAction<DefaultListType | undefined>>,
+  setOrganization: Dispatch<SetStateAction<OrganizationType>>,
 ) => {
   privateGateway
     .get(makeMyPass.orgCRUD(orgId))
     .then((response) => {
-      setOrgData && setOrgData(response.data.response);
-      setOrgTitle && setOrgTitle(response.data.response.title);
+      setOrganization(response.data.response);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
