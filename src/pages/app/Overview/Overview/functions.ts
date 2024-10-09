@@ -7,5 +7,8 @@ export const checkUserHierarchy = (hostRole: Roles): boolean => {
   const userRoleIndex = Object.values(Roles).indexOf(userRole);
   const hostRoleIndex = Object.values(Roles).indexOf(hostRole);
 
-  return userRoleIndex < hostRoleIndex;
+  if (userRole === Roles.OWNER) return true;
+
+  if (userRoleIndex) return userRoleIndex < hostRoleIndex;
+  return false;
 };
