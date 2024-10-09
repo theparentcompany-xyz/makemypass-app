@@ -606,7 +606,7 @@ const CouponForm = ({
           {coupon.description && <p className={styles.couponDescription}>{coupon.description}</p>}
           <InputField
             name='coupon_code'
-            placeholder='Coupon Code'
+            title='Coupon Code'
             id='coupon_code'
             key='coupon_code'
             error={[coupon.error ?? '']}

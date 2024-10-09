@@ -278,7 +278,7 @@ const InEventStats = () => {
             type='text'
             name='roomNumber'
             icon={<></>}
-            placeholder='Enter Room Number'
+            title='Enter Room Number'
             value={roomNumber.roomNumber}
             onChange={(e) => {
               setRoomNumber({ ...roomNumber, roomNumber: e.target.value });

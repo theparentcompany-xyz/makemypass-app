@@ -186,15 +186,14 @@ export interface EventType {
     type: string;
     value: string;
   }[];
-  commuinication: {
-    email: boolean;
-    whatsapp: boolean;
-  };
-  social_media: {
-    facebook: boolean;
-    linkedin: boolean;
-    twitter: boolean;
-    whatsapp: boolean;
+  host_communicate: {
+    email: string;
+    phone: string;
+    facebook: string;
+    linkedin: string;
+    twitter: string;
+    whatsapp: string;
+    instagram: string;
   };
 }
 

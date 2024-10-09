@@ -221,7 +221,7 @@ const Login = () => {
                   type='email'
                   name='email'
                   id='email'
-                  placeholder='Enter your Email*'
+                  title='Enter your Email*'
                   icon={<GoPerson color='#A4A4A4' />}
                   onChange={() => {
                     setTimer(18);
@@ -249,7 +249,7 @@ const Login = () => {
                       type='number'
                       name='otp'
                       id='otp'
-                      placeholder='Enter OTP*'
+                      title='Enter OTP*'
                       icon={<LuKey color='#A4A4A4' />}
                       onChange={() =>
                         setError((prevError) => {
@@ -271,7 +271,7 @@ const Login = () => {
                       type='password'
                       name='password'
                       id='password'
-                      placeholder={isForgetPassword ? 'Enter New Password*' : 'Enter Password*'}
+                      title={isForgetPassword ? 'Enter New Password*' : 'Enter Password*'}
                       icon={<LuKey color='#A4A4A4' />}
                       onChange={() =>
                         setError((prevError) => {

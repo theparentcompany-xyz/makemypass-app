@@ -52,7 +52,7 @@ const UTMManager = ({
             UTMData.editUTM.type === key && UTMData.editUTM.index === index ? (
               <div key={index} className={styles.utmValue}>
                 <InputField
-                  placeholder='Edit UTM'
+                  title='Edit UTM'
                   icon={<LuPencil size={15} />}
                   id='utm'
                   name='utm'
@@ -180,7 +180,7 @@ const UTMManager = ({
                 name='utm'
                 value={UTMData.addUTM.value}
                 id='utm'
-                placeholder='Add UTM'
+                title='Add UTM'
                 onChange={(e) => {
                   setUTMData({
                     ...UTMData,

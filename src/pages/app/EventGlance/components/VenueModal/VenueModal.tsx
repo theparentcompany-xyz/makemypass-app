@@ -65,7 +65,7 @@ const VenueModal = ({
           {venueData.type === 'CREATE' && (
             <div className={styles.createContainer}>
               <InputField
-                placeholder='Enter Venue Name'
+                title='Enter Venue Name'
                 type='text'
                 name='venue_name'
                 id='venue_name'
@@ -117,7 +117,7 @@ const VenueModal = ({
                 <div className={styles.logDetails}>
                   {venueData.id && venueData.name && venueData.id === venue.id ? (
                     <InputField
-                      placeholder='Enter Venue Name'
+                      title='Enter Venue Name'
                       type='text'
                       name='venue_name'
                       id='venue_name'

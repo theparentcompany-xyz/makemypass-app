@@ -29,7 +29,7 @@ const DummyData = ({ dummyData, setDummyData }: Props) => {
                 id={key}
                 icon={<></>}
                 description={`${key}`}
-                placeholder=''
+                title=''
                 value={dummyData.data ? dummyData.data[key] : ''}
                 style={{ width: '100%' }}
                 onChange={(e) => {

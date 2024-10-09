@@ -4,7 +4,11 @@ import Select, { MultiValue } from 'react-select';
 import { ErrorMessages, FormDataType, FormFieldType } from '../../apis/types';
 import UploadAttachement from '../../pages/app/EventGlance/components/MailModals/UpdateMail/components/UploadAttachement/UploadAttachements.tsx';
 import type { previewType } from '../../pages/app/EventGlance/components/MailModals/UpdateMail/types.ts';
-import { customStyles, dynamicFormCustomStyles, getIcon } from '../../pages/app/EventPage/constants';
+import {
+  customStyles,
+  dynamicFormCustomStyles,
+  getIcon,
+} from '../../pages/app/EventPage/constants';
 import InputField from '../../pages/auth/Login/InputField.tsx';
 import ValidateInput from '../ValidateInput/ValidateInput.tsx';
 import { validateCondition } from './condition';
@@ -122,7 +126,7 @@ const DynamicForm = ({
               <CommonRenderStructure formErrors={formErrors} field={field}>
                 <InputField
                   name={field.field_key}
-                  placeholder={field?.title}
+                  title={field?.title}
                   id={field.id}
                   key={field.id}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -215,7 +219,6 @@ const DynamicForm = ({
                   rows={4}
                   className={styles.textarea}
                   value={formData[field.field_key] || ''}
-                  placeholder={`Enter your ${field?.title}`}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                     onFieldChange(field.field_key, e.target.value)
                   }

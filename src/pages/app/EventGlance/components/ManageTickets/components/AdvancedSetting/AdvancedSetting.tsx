@@ -26,7 +26,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
         id='code_prefix'
         disabled={!isUserEditor()}
         icon={<></>}
-        description='Code Prefix'
+        title='Code Prefix'
         placeholder='Eg, PS123'
         value={selectedTicket?.code_prefix}
         onChange={(e) =>
@@ -40,8 +40,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
         id='code_suffix'
         disabled={!isUserEditor()}
         icon={<></>}
-        description='No of digits'
-        placeholder=''
+        title='No of digits'
         value={selectedTicket?.code_digits.toString()}
         onChange={(e) =>
           setSelectedTicket({
@@ -57,8 +56,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
         id='user_count'
         disabled={!isUserEditor()}
         icon={<></>}
-        description='User Count'
-        placeholder=''
+        title='User Count'
         value={selectedTicket?.user_count.toString()}
         onChange={(e) => {
           if (Number(e.target.value) < 1) {
@@ -77,8 +75,7 @@ const AdvancedSetting = ({ selectedTicket, setSelectedTicket, setIsOpen }: Props
         id='Category'
         disabled={!isUserEditor()}
         icon={<></>}
-        description='Category'
-        placeholder=''
+        title='Category'
         value={selectedTicket?.category}
         onChange={(e) =>
           setSelectedTicket({ ...selectedTicket, category: e.target.value } as TicketType)

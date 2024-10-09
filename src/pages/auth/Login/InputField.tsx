@@ -7,7 +7,8 @@ interface FormProps {
   type: string;
   name: string;
   id: string;
-  placeholder: string;
+  title: string;
+  placeholder?: string;
   icon: React.ReactNode;
   value?: string | string[];
   required?: boolean;
@@ -31,7 +32,7 @@ const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
       // style={inputProps.error ? { marginBottom: '0' }}
     >
       <label className={styles.formLabel} htmlFor='email'>
-        {inputProps.required ? inputProps.placeholder + '*' : inputProps.placeholder}
+        {inputProps.required ? inputProps.title + '*' : inputProps.title}
       </label>
       <p className={styles.fieldDescription}>{inputProps.description}</p>
       <div className={styles.inputField}>
@@ -40,7 +41,7 @@ const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
           {...inputProps}
           type={inputProps.type}
           disabled={inputProps.disabled}
-          placeholder={`${inputProps.placeholder}`}
+          placeholder={`${inputProps.placeholder ? inputProps.placeholder : inputProps.title}`}
           ref={ref}
           value={inputProps.value}
           style={{

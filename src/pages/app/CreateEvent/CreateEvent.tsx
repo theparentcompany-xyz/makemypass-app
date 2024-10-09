@@ -21,7 +21,7 @@ const CreateEvent = () => {
           <h1 className={styles.heading}>Create Event</h1>
           <div className={styles.eventInput}>
             <InputField
-              placeholder='Event Name'
+              title='Event Name'
               type={'text'}
               name={'name'}
               id={'name'}

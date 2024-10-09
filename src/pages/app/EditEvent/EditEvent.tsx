@@ -41,6 +41,7 @@ import Modal from '../../../components/Modal/Modal';
 import Slider from '../../../components/SliderButton/Slider';
 import Theme from '../../../components/Theme/Theme';
 import { useOverrideCtrlS } from '../../../hooks/common';
+import InputField from '../../auth/Login/InputField';
 import { customStyles } from '../EventPage/constants';
 import styles from './EditEvent.module.css';
 
@@ -60,6 +61,7 @@ const EditEvent = () => {
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
   const [followupMessage, setFollowupMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showCommunicationMediumModal, setShowCommunicationMediumModal] = useState(false);
   // const [modalDataField, setModalDataField] = useState({
   //   needConfirmation: false,
   //   confirmationFields: [''],
@@ -154,6 +156,13 @@ const EditEvent = () => {
     if (changedData['is_team'] == true) {
       if (eventData?.select_multi_ticket) changedData['select_multi_ticket'] = false;
       if (eventData?.is_grouped_ticket) changedData['is_grouped_ticket'] = false;
+    }
+
+    if (eventData?.host_communicate != fetchedEvent?.host_communicate) {
+      changedData['host_communicate'] = JSON.stringify(eventData?.host_communicate).replace(
+        /""/g,
+        'null',
+      );
     }
 
     if (logo) changedData['logo'] = logo;
@@ -457,6 +466,191 @@ const EditEvent = () => {
             </div>
           </Modal>
         )}
+        {showCommunicationMediumModal && (
+          <Modal
+            type='side'
+            onClose={() => setShowCommunicationMediumModal(false)}
+            title='Add Communication Mediums'
+          >
+            <p className={styles.modalSubHeader}>Regular Communcation Medium</p>
+            <div className={styles.modalContents}>
+              <InputField
+                name='whatsapp'
+                type='text'
+                id='whatsapp'
+                placeholder='wa.me/1234567890'
+                icon={<AiOutlineTeam size={20} color='#949597' />}
+                title='Add WhatsApp Link'
+                value={eventData?.host_communicate?.whatsapp}
+                onChange={
+                  isUserEditor()
+                    ? (e) => {
+                        if (eventData) {
+                          setEventData({
+                            ...eventData,
+                            host_communicate: {
+                              ...eventData.host_communicate,
+                              whatsapp: e.target.value,
+                            },
+                          });
+                        }
+                      }
+                    : undefined
+                }
+              />
+              <InputField
+                name='email'
+                type='email'
+                id='email'
+                icon={<AiOutlineTeam size={20} color='#949597' />}
+                title='Add Email'
+                value={eventData?.host_communicate?.email}
+                onChange={
+                  isUserEditor()
+                    ? (e) => {
+                        if (eventData) {
+                          setEventData({
+                            ...eventData,
+                            host_communicate: {
+                              ...eventData.host_communicate,
+                              email: e.target.value,
+                            },
+                          });
+                        }
+                      }
+                    : undefined
+                }
+              />
+              <InputField
+                name='phone'
+                type='tel'
+                id='phone'
+                placeholder='+91854696520'
+                icon={<AiOutlineTeam size={20} color='#949597' />}
+                title='Add Phone Number'
+                value={eventData?.host_communicate?.phone}
+                onChange={
+                  isUserEditor()
+                    ? (e) => {
+                        if (eventData) {
+                          setEventData({
+                            ...eventData,
+                            host_communicate: {
+                              ...eventData.host_communicate,
+                              phone: e.target.value,
+                            },
+                          });
+                        }
+                      }
+                    : undefined
+                }
+              />
+              <p className={styles.modalSubHeader}>Social Medias</p>
+              <InputField
+                name='facebook'
+                type='text'
+                id='facebook'
+                icon={<AiOutlineTeam size={20} color='#949597' />}
+                title='Add Facebook Link'
+                placeholder='facebook.com/username'
+                value={eventData?.host_communicate?.facebook}
+                onChange={
+                  isUserEditor()
+                    ? (e) => {
+                        if (eventData) {
+                          setEventData({
+                            ...eventData,
+                            host_communicate: {
+                              ...eventData.host_communicate,
+                              facebook: e.target.value,
+                            },
+                          });
+                        }
+                      }
+                    : undefined
+                }
+              />
+              <InputField
+                name='instagram'
+                type='text'
+                id='instagram'
+                icon={<AiOutlineTeam size={20} color='#949597' />}
+                title='Add Instagram Link'
+                placeholder='instagram.com/username'
+                value={eventData?.host_communicate?.instagram}
+                onChange={
+                  isUserEditor()
+                    ? (e) => {
+                        if (eventData) {
+                          setEventData({
+                            ...eventData,
+                            host_communicate: {
+                              ...eventData.host_communicate,
+                              instagram: e.target.value,
+                            },
+                          });
+                        }
+                      }
+                    : undefined
+                }
+              />
+              <InputField
+                name='twitter'
+                type='text'
+                id='twitter'
+                icon={<AiOutlineTeam size={20} color='#949597' />}
+                title='Add Twitter Link'
+                value={eventData?.host_communicate?.twitter}
+                placeholder='x.com/username'
+                onChange={
+                  isUserEditor()
+                    ? (e) => {
+                        if (eventData) {
+                          setEventData({
+                            ...eventData,
+                            host_communicate: {
+                              ...eventData.host_communicate,
+                              twitter: e.target.value,
+                            },
+                          });
+                        }
+                      }
+                    : undefined
+                }
+              />
+              <InputField
+                name='linkedin'
+                type='text'
+                id='linkedin'
+                icon={<AiOutlineTeam size={20} color='#949597' />}
+                title='Add LinkedIn Link'
+                value={eventData?.host_communicate?.linkedin}
+                placeholder='linkedin.com/in/username'
+                onChange={
+                  isUserEditor()
+                    ? (e) => {
+                        if (eventData) {
+                          setEventData({
+                            ...eventData,
+                            host_communicate: {
+                              ...eventData.host_communicate,
+                              linkedin: e.target.value,
+                            },
+                          });
+                        }
+                      }
+                    : undefined
+                }
+              />
+            </div>
+            <button
+              className={styles.submitButton}
+              onClick={isUserEditor() ? () => setShowCommunicationMediumModal(false) : undefined}
+            >
+              Submit
+            </button>
+          </Modal>
+        )}
         <DashboardLayout prevPage='-1'>
           {eventData && isLoaded ? (
             <>
@@ -505,7 +699,7 @@ const EditEvent = () => {
                     />
 
                     <textarea
-                      placeholder='Event Name'
+                      title='Event Name'
                       className={styles.inputEventName}
                       disabled={!isUserEditor()}
                       onChange={(e) => {
@@ -573,44 +767,82 @@ const EditEvent = () => {
 
                   <div className={styles.socialMediaContainer}>
                     <p className={styles.socialMediaContainerHeader}>Communication Mediums</p>
-                    <div className={styles.communicationMediumIcons}>
-                      <a href='tel:+1234567890'>
-                        <FiPhone size={25} color='#949597' />
-                      </a>
-                      <a href='https://wa.me/1234567890' target='_blank' rel='noopener noreferrer'>
-                        <FaWhatsapp size={25} color='#949597' />
-                      </a>
-                      <a href='mailto:example@example.com'>
-                        <FiMail size={25} color='#949597' />
-                      </a>
-                      <a
-                        href='https://www.instagram.com/yourprofile'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                      >
-                        <FaInstagram size={25} color='#949597' />
-                      </a>
-                      <a
-                        href='https://www.facebook.com/yourprofile'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                      >
-                        <FaFacebook size={25} color='#949597' />
-                      </a>
-                      <a
-                        href='https://twitter.com/yourprofile'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                      >
-                        <FaTwitter size={25} color='#949597' />
-                      </a>
-                      <a
-                        href='https://www.linkedin.com/in/yourprofile'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                      >
-                        <FaLinkedin size={25} color='#949597' />
-                      </a>
+                    <div className={styles.communcationMediumInnerContainer}>
+                      <div className={styles.communicationMediumIcons}>
+                        <a href='tel:+1234567890'>
+                          <FiPhone
+                            size={25}
+                            color={eventData?.host_communicate?.phone ? '#46BF75' : '#949597'}
+                          />
+                        </a>
+                        <a
+                          href={`https://wa.me/${eventData?.host_communicate?.whatsapp}`}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
+                          <FaWhatsapp
+                            size={25}
+                            color={eventData?.host_communicate?.whatsapp ? '#46BF75' : '#949597'}
+                          />
+                        </a>
+                        <a
+                          href={`mailto:${eventData?.host_communicate?.email}`}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
+                          <FiMail
+                            size={25}
+                            color={eventData?.host_communicate?.email ? '#46BF75' : '#949597'}
+                          />
+                        </a>
+                        <a
+                          href={eventData?.host_communicate?.instagram}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
+                          <FaInstagram
+                            size={25}
+                            color={eventData?.host_communicate?.instagram ? '#46BF75' : '#949597'}
+                          />
+                        </a>
+                        <a
+                          href={eventData?.host_communicate?.facebook}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
+                          <FaFacebook
+                            size={25}
+                            color={eventData?.host_communicate?.facebook ? '#46BF75' : '#949597'}
+                          />
+                        </a>
+                        <a
+                          href={eventData?.host_communicate?.twitter}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
+                          <FaTwitter
+                            size={25}
+                            color={eventData?.host_communicate?.twitter ? '#46BF75' : '#949597'}
+                          />
+                        </a>
+                        <a
+                          href={eventData?.host_communicate?.linkedin}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
+                          <FaLinkedin
+                            size={25}
+                            color={eventData?.host_communicate?.linkedin ? '#46BF75' : '#949597'}
+                          />
+                        </a>
+                      </div>
+                      <LuPencil
+                        size={20}
+                        color='#949597'
+                        onClick={() => {
+                          setShowCommunicationMediumModal(true);
+                        }}
+                      />
                     </div>
                   </div>
 
@@ -645,7 +877,7 @@ const EditEvent = () => {
                       <input
                         type='text'
                         className={styles.urlInput}
-                        placeholder='event-url'
+                        title='event-url'
                         disabled={!isUserEditor()}
                         value={eventData?.name}
                         onChange={(e) => {
@@ -796,7 +1028,7 @@ const EditEvent = () => {
                               <input
                                 type='text'
                                 disabled={!isUserEditor()}
-                                placeholder='Add Event Location'
+                                title='Add Event Location'
                                 className={styles.inputLocation}
                                 value={placeName}
                                 onChange={(e) => isUserEditor() && setPlaceName(e.target.value)}
@@ -879,7 +1111,7 @@ const EditEvent = () => {
                             type='number'
                             disabled={!isUserEditor()}
                             className={styles.capcityInput}
-                            placeholder='Unlimited'
+                            title='Unlimited'
                             value={eventData?.capacity}
                             onChange={(e) => {
                               if (isUserEditor()) {

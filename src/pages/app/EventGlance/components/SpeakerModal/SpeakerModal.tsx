@@ -51,7 +51,7 @@ const SpeakerModal = ({
           <>
             <div className={styles.bulkUploadContainer}>
               <InputField
-                placeholder='Enter Speaker Name'
+                title='Enter Speaker Name'
                 type='text'
                 name='speaker_name'
                 id='speaker_name'
@@ -65,7 +65,7 @@ const SpeakerModal = ({
                 }}
               />
               <InputField
-                placeholder='Enter Speaker Position'
+                title='Enter Speaker Position'
                 type='text'
                 name='speaker_name'
                 id='speaker_name'
@@ -80,7 +80,7 @@ const SpeakerModal = ({
               />
 
               <InputField
-                placeholder='Enter Speaker Image URL'
+                title='Enter Speaker Image URL'
                 type='file'
                 name='speaker_name'
                 id='speaker_name'

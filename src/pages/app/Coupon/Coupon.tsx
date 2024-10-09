@@ -131,7 +131,7 @@ const Coupon = () => {
                 type='text'
                 name='Field Description'
                 id='fieldDescription'
-                placeholder='Enter Field Description'
+                title='Enter Field Description'
                 icon={<></>}
                 required={true}
                 onChange={(event) => {
@@ -170,7 +170,7 @@ const Coupon = () => {
                     type='text'
                     name='Coupon Code'
                     id='couponCode'
-                    placeholder='Coupon Code'
+                    title='Coupon Code'
                     icon={<></>}
                     required={true}
                     onChange={(event) => {
@@ -239,7 +239,7 @@ const Coupon = () => {
                         type='number'
                         name='Discount Value'
                         id='discount'
-                        placeholder='Enter Discount Value'
+                        title='Enter Discount Value'
                         icon={<></>}
                         required={true}
                         disabled={newCouponData.consumed > 0 || !isUserEditor()}
@@ -318,7 +318,7 @@ const Coupon = () => {
                     name='Description'
                     id='description'
                     disabled={!isUserEditor()}
-                    placeholder='Write a short description'
+                    title='Write a short description'
                     icon={<></>}
                     required={false}
                     onChange={(event) => {
@@ -359,7 +359,7 @@ const Coupon = () => {
                           type='text'
                           name='Conditions'
                           id='conditions'
-                          placeholder='Enter the limit'
+                          title='Enter the limit'
                           icon={<></>}
                           required={true}
                           onChange={(event) => {

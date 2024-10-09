@@ -20,7 +20,7 @@ const CreateOrganization = () => {
         <div className={styles.inputContainer}>
           <div className={styles.eventInput}>
             <InputField
-              placeholder='Organization Name'
+              title='Organization Name'
               type={'text'}
               name={'name'}
               id={'name'}

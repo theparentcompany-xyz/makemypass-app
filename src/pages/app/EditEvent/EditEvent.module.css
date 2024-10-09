@@ -749,12 +749,45 @@ input[type='color']::-webkit-color-swatch {
 }
 
 .communicationMediumIcons {
-  margin-top: 0.5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  padding: 0.5rem;
   gap: 1rem;
+}
+
+.communcationMediumInnerContainer {
+  display: flex;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  align-items: center;
+}
+
+.modalContents {
+  width: 100%;
+}
+
+.modalSubHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.submitButton {
+  text-align: center;
+  background: #fdfdfd;
+  color: rgb(43, 42, 42);
+  border: none;
+  width: 100%;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 0.75rem;
 }

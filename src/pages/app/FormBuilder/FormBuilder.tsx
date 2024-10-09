@@ -439,7 +439,7 @@ const FormBuilder = () => {
                             <div className={styles.customFieldName}>
                               <input
                                 type='text'
-                                placeholder='Field Name'
+                                title='Field Name'
                                 disabled={!isUserEditor()}
                                 value={field.title}
                                 onChange={(event) => {
@@ -464,7 +464,7 @@ const FormBuilder = () => {
                               <input
                                 type='text'
                                 disabled={!isUserEditor()}
-                                placeholder='Add Some help text.'
+                                title='Add Some help text.'
                                 value={field.description || ''}
                                 onChange={(event) => {
                                   if (isUserEditor()) {
@@ -487,7 +487,7 @@ const FormBuilder = () => {
                                         className={styles.optionInput}
                                         type='text'
                                         disabled={!isUserEditor()}
-                                        placeholder='Option'
+                                        title='Option'
                                         value={option}
                                         onChange={(event) => {
                                           if (isUserEditor()) {
@@ -529,7 +529,7 @@ const FormBuilder = () => {
                                   id='unique'
                                   icon={<FaRegEyeSlash size={20} color='#606264' />}
                                   type='number'
-                                  placeholder='Unique'
+                                  title='Unique'
                                   description='This count indicates the number of times a value can be entered uniquely'
                                   value={field.unique?.toString()}
                                   onChange={(event) => {
@@ -551,7 +551,7 @@ const FormBuilder = () => {
                                       id='max_length'
                                       icon={<></>}
                                       type='number'
-                                      placeholder='Max Length'
+                                      title='Max Length'
                                       description='Enter the maximum length of the field'
                                       value={field.property?.max_length?.toString()}
                                       onChange={(event) => {
@@ -570,7 +570,7 @@ const FormBuilder = () => {
                                       disabled={!isUserEditor()}
                                       icon={<></>}
                                       type='number'
-                                      placeholder='Min Length'
+                                      title='Min Length'
                                       description='Enter the minimum length of the field'
                                       value={field.property?.min_length?.toString()}
                                       onChange={(event) => {
@@ -620,7 +620,7 @@ const FormBuilder = () => {
                                       id='max_size'
                                       icon={<MdOutlineSdStorage size={20} color='#606264' />}
                                       type='number'
-                                      placeholder='Maximal File Size'
+                                      title='Maximal File Size'
                                       disabled={!isUserEditor()}
                                       description='Maximal file size in KB(1mb = 1024kb)'
                                       value={field?.property?.max_size?.toString()}
@@ -639,7 +639,7 @@ const FormBuilder = () => {
                                       disabled={!isUserEditor()}
                                       icon={<MdOutlineSdStorage size={20} color='#606264' />}
                                       type='number'
-                                      placeholder='Enter max no of files'
+                                      title='Enter max no of files'
                                       description='Max.number of files that can be uploaded'
                                       value={field?.property?.max_no_of_files?.toString()}
                                       onChange={(event) => {
@@ -821,7 +821,7 @@ const FormBuilder = () => {
                                           <input
                                             disabled={!isUserEditor()}
                                             type='text'
-                                            placeholder='Value'
+                                            title='Value'
                                             value={condition.value}
                                             onChange={(event) => {
                                               condition.value = event.target.value;
