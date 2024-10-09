@@ -132,40 +132,44 @@ const Events = () => {
                   setSelectedTags(selectedOptions.map((option) => option.value));
                 }}
               />
-              <Select
-                styles={customStyles}
-                options={
-                  orgs.length > 0
-                    ? orgs.map((org) => ({ value: org.id, label: org.name }))
-                    : [{ value: 'personal', label: 'Personal' }]
-                }
-                className='select'
-                classNamePrefix='select'
-                placeholder='Select Organization'
-                onChange={(selectedOption) => {
-                  if (selectedOption) {
-                    setSelectedOrgName(selectedOption.label);
-                    if (selectedOption.value !== 'personal') {
-                      getEventsList(setEvents, setIsDataLoaded, selectedOption.value);
+              {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
+                <>
+                  <Select
+                    styles={customStyles}
+                    options={
+                      orgs.length > 0
+                        ? orgs.map((org) => ({ value: org.id, label: org.name }))
+                        : [{ value: 'personal', label: 'Personal' }]
                     }
-                  }
-                }}
-              />
+                    className='select'
+                    classNamePrefix='select'
+                    placeholder='Select Organization'
+                    onChange={(selectedOption) => {
+                      if (selectedOption) {
+                        setSelectedOrgName(selectedOption.label);
+                        if (selectedOption.value !== 'personal') {
+                          getEventsList(setEvents, setIsDataLoaded, selectedOption.value);
+                        }
+                      }
+                    }}
+                  />
 
-              {selectedOrgName && selectedOrgName != 'personal' && (
-                <IoMdSettings
-                  size={20}
-                  color='#ffffff'
-                  className='pointer'
-                  onClick={() => {
-                    navigate(`/organization/${selectedOrgName}/`, {
-                      state: {
-                        orgId: orgs.find((org) => org.name === selectedOrgName)?.id,
-                        orgName: selectedOrgName,
-                      },
-                    });
-                  }}
-                />
+                  {selectedOrgName && selectedOrgName != 'personal' && (
+                    <IoMdSettings
+                      size={20}
+                      color='#ffffff'
+                      className='pointer'
+                      onClick={() => {
+                        navigate(`/organization/${selectedOrgName}/`, {
+                          state: {
+                            orgId: orgs.find((org) => org.name === selectedOrgName)?.id,
+                            orgName: selectedOrgName,
+                          },
+                        });
+                      }}
+                    />
+                  )}
+                </>
               )}
             </div>
             {Object.values(EventStatus).map((status) => {
