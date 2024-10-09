@@ -3,8 +3,15 @@ import { useEffect, useState } from 'react';
 import { FaExpandAlt } from 'react-icons/fa';
 import {
   IoAlertCircleOutline,
+  IoCallOutline,
   IoContract,
   IoLocationOutline,
+  IoLogoFacebook,
+  IoLogoInstagram,
+  IoLogoLinkedin,
+  IoLogoTwitter,
+  IoLogoWhatsapp,
+  IoMailOutline,
   IoMapOutline,
   IoPodiumOutline,
 } from 'react-icons/io5';
@@ -136,7 +143,7 @@ const EventPageHeader = ({ eventData }: { eventData: EventType | undefined }) =>
               {eventData?.place && (
                 <div className={styles.eventPlace}>
                   <div className={styles.locationBox}>
-                    <IoLocationOutline size={25} className={styles.locationIcon} />
+                    <IoLocationOutline size={20} className={styles.locationIcon} />
                   </div>
                   <div className={styles.eventDateTimeText}>
                     <p className={styles.eventDateText}>
@@ -176,6 +183,54 @@ const EventPageHeader = ({ eventData }: { eventData: EventType | undefined }) =>
                 </div>
               </div>
             )}
+            {eventData?.host_communicate && (
+              <div className={styles.hostCommunicate}>
+                <div className={styles.hostCommunicateIcons}>
+                  {eventData.host_communicate.phone && (
+                    <a href={`tel:${eventData.host_communicate.phone}`}>
+                      <IoCallOutline size={20} />
+                    </a>
+                  )}
+                  {eventData.host_communicate.whatsapp && (
+                    <a
+                      href={
+                        eventData.host_communicate.whatsapp.startsWith('https://')
+                          ? eventData.host_communicate.whatsapp
+                          : `https://${eventData.host_communicate.whatsapp}`
+                      }
+                      target='_blank'
+                    >
+                      <IoLogoWhatsapp size={20} />
+                    </a>
+                  )}
+                  {eventData.host_communicate.email && (
+                    <a href={`mailto:${eventData.host_communicate.email}`}>
+                      <IoMailOutline size={20} />
+                    </a>
+                  )}
+                  {eventData.host_communicate.instagram && (
+                    <a href={eventData.host_communicate.instagram} target='_blank'>
+                      <IoLogoInstagram size={20} />
+                    </a>
+                  )}
+                  {eventData.host_communicate.facebook && (
+                    <a href={eventData.host_communicate.facebook} target='_blank'>
+                      <IoLogoFacebook size={20} />
+                    </a>
+                  )}
+                  {eventData.host_communicate.twitter && (
+                    <a href={eventData.host_communicate.twitter} target='_blank'>
+                      <IoLogoTwitter size={20} />
+                    </a>
+                  )}
+                  {eventData.host_communicate.linkedin && (
+                    <a href={eventData.host_communicate.linkedin} target='_blank'>
+                      <IoLogoLinkedin size={20} />
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
             {eventData && eventData?.form?.length > 0 && (
               <a href='#formFields'>
                 <button className={styles.registerButton}>Register Now!</button>
@@ -196,7 +251,7 @@ const EventPageHeader = ({ eventData }: { eventData: EventType | undefined }) =>
               style={{ width: '100%' }}
             >
               <p className={styles.eventDescHeading}>
-                <IoAlertCircleOutline color='white' size={25} />
+                <IoAlertCircleOutline color='white' size={20} />
                 <span>About the Event</span>
               </p>
               <hr className={styles.line} />

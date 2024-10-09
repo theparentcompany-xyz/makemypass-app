@@ -408,7 +408,8 @@
   margin: 0 auto;
 }
 
-.eventTimer {
+.eventTimer,
+.hostCommunicate {
   margin-top: 1rem;
   display: flex;
   align-items: flex-end;
@@ -454,4 +455,12 @@
   font-size: 0.9rem;
   margin-bottom: 0.25rem;
   opacity: 0.8;
+}
+
+.hostCommunicateIcons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.25rem;
+  opacity: 0.5;
 }
