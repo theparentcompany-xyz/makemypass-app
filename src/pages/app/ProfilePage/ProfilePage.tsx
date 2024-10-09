@@ -211,10 +211,6 @@ const ProfilePage = () => {
                         <span className={styles.buttonText}>Update details</span>
                         <ButtonLoader loading={loading} />
                       </button>
-
-                      <div className={styles.formGroup}>
-                        <label className={styles.optional}>All fields are optional</label>
-                      </div>
                     </div>
                   </form>
                   <div className={styles.lineContainer} />
@@ -279,7 +275,7 @@ const ProfilePage = () => {
                         </div>
                       </div>
                     </div>
-                    <button type='submit' className={styles.updateButton}>
+                    <button type='submit' className={styles.updateButton2}>
                       <span className={styles.buttonText}>Update Password</span>
                       <ButtonLoader loading={loading} />
                     </button>
