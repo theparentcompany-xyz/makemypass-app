@@ -186,6 +186,16 @@ export interface EventType {
     type: string;
     value: string;
   }[];
+  commuinication: {
+    email: boolean;
+    whatsapp: boolean;
+  };
+  social_media: {
+    facebook: boolean;
+    linkedin: boolean;
+    twitter: boolean;
+    whatsapp: boolean;
+  };
 }
 
 export type EventDetails = {

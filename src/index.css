@@ -142,3 +142,8 @@ input[type='number'] {
   display: block;
   margin: auto;
 }
+
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: #41df7d;
+}

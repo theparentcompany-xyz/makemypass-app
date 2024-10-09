@@ -59,14 +59,16 @@ const CommonRenderStructure = ({
   title?: string;
   description?: string;
 }) => {
+  const fields = ['phone', 'radio', 'checkbox', 'file'];
   return (
     <div
       style={{
-        marginBottom: '1rem',
+        marginBottom: fields.includes(field.type) ? '16px' : '8px',
       }}
     >
-      <p className={styles.formLabel}>{title}</p>
-      <p className={styles.formDescription}>{description}</p>
+      {/* FIX: This is repetative, some inputs are using the Input Container's Label and Title */}
+      {title && <p className={styles.formLabel}>{title}</p>}
+      {description && <p className={styles.formDescription}>{description}</p>}
       {children}
       <ErrorComponent formErrors={formErrors} field={field} variants={variants} />
     </div>

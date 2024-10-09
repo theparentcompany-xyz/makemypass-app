@@ -6,8 +6,15 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineTeam } from 'react-icons/ai';
 import { BiArrowToTop } from 'react-icons/bi';
 import { BsTicketDetailed } from 'react-icons/bs';
-import { FaDatabase } from 'react-icons/fa';
-import { FiGlobe } from 'react-icons/fi';
+import {
+  FaDatabase,
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaTwitter,
+  FaWhatsapp,
+} from 'react-icons/fa';
+import { FiGlobe, FiMail, FiPhone } from 'react-icons/fi';
 import { GrLocation } from 'react-icons/gr';
 import { HiOutlineTicket, HiOutlineUserGroup } from 'react-icons/hi2';
 import { IoCloseOutline } from 'react-icons/io5';
@@ -238,7 +245,7 @@ const EditEvent = () => {
                 <>
                   <div className={styles.option}>
                     <label>
-                      <HiOutlineTicket size={20} color='#949597' />
+                      <HiOutlineTicket size={25} color='#949597' />
                       Show Tickets First
                     </label>
                     <Slider
@@ -255,7 +262,7 @@ const EditEvent = () => {
                   </div>
                   <div className={styles.option}>
                     <label>
-                      <AiOutlineTeam size={20} color='#949597' /> Allow Team Registration
+                      <AiOutlineTeam size={25} color='#949597' /> Allow Team Registration
                     </label>
                     <Slider
                       checked={eventData.is_team as boolean}
@@ -273,7 +280,7 @@ const EditEvent = () => {
                     <>
                       <div className={styles.option}>
                         <label>
-                          <BsTicketDetailed size={20} color='#949597' /> Allow Multi Ticket
+                          <BsTicketDetailed size={25} color='#949597' /> Allow Multi Ticket
                         </label>
                         <Slider
                           checked={eventData.select_multi_ticket as boolean}
@@ -296,7 +303,7 @@ const EditEvent = () => {
                           transition={{ duration: 0.3 }}
                         >
                           <label>
-                            <BsTicketDetailed size={20} color='#949597' /> Grouped Ticket
+                            <BsTicketDetailed size={25} color='#949597' /> Grouped Ticket
                           </label>
                           <Slider
                             checked={eventData.is_grouped_ticket}
@@ -316,7 +323,7 @@ const EditEvent = () => {
 
                   <div className={styles.option}>
                     <label>
-                      <MdOutlineShoppingCartCheckout size={20} color='#949597' /> Enable Checkout
+                      <MdOutlineShoppingCartCheckout size={25} color='#949597' /> Enable Checkout
                       Scan
                     </label>
                     <Slider
@@ -333,7 +340,7 @@ const EditEvent = () => {
                   </div>
                   <div className={styles.option}>
                     <label>
-                      <TbHeartHandshake size={20} color='#949597' /> Thank You Page
+                      <TbHeartHandshake size={25} color='#949597' /> Thank You Page
                     </label>
                     <Slider
                       checked={eventData.thank_you_new_page as boolean}
@@ -349,7 +356,7 @@ const EditEvent = () => {
                   </div>
                   <div className={styles.option}>
                     <label>
-                      <MdOutlineShoppingCartCheckout size={20} color='#949597' /> Enable Randomizer
+                      <MdOutlineShoppingCartCheckout size={25} color='#949597' /> Enable Randomizer
                     </label>
                     <Slider
                       checked={eventData.is_random_user as boolean}
@@ -365,7 +372,7 @@ const EditEvent = () => {
                   </div>
                   <div className={styles.option}>
                     <label>
-                      <HiOutlineUserGroup size={20} color='#949597' />
+                      <HiOutlineUserGroup size={25} color='#949597' />
                       Allow Multiple Check-In
                     </label>
                     <Slider
@@ -382,7 +389,7 @@ const EditEvent = () => {
                   </div>
                   <div className={styles.option}>
                     <label>
-                      <FaDatabase size={20} color='#949597' />
+                      <FaDatabase size={25} color='#949597' />
                       Show Data Modal
                     </label>
                     <Slider
@@ -563,6 +570,50 @@ const EditEvent = () => {
                       </>
                     )}
                   </div>
+
+                  <div className={styles.socialMediaContainer}>
+                    <p className={styles.socialMediaContainerHeader}>Communication Mediums</p>
+                    <div className={styles.communicationMediumIcons}>
+                      <a href='tel:+1234567890'>
+                        <FiPhone size={25} color='#949597' />
+                      </a>
+                      <a href='https://wa.me/1234567890' target='_blank' rel='noopener noreferrer'>
+                        <FaWhatsapp size={25} color='#949597' />
+                      </a>
+                      <a href='mailto:example@example.com'>
+                        <FiMail size={25} color='#949597' />
+                      </a>
+                      <a
+                        href='https://www.instagram.com/yourprofile'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        <FaInstagram size={25} color='#949597' />
+                      </a>
+                      <a
+                        href='https://www.facebook.com/yourprofile'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        <FaFacebook size={25} color='#949597' />
+                      </a>
+                      <a
+                        href='https://twitter.com/yourprofile'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        <FaTwitter size={25} color='#949597' />
+                      </a>
+                      <a
+                        href='https://www.linkedin.com/in/yourprofile'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        <FaLinkedin size={25} color='#949597' />
+                      </a>
+                    </div>
+                  </div>
+
                   <div className={styles.descriptionContainer}>
                     <p className={styles.eventHeading}>About Event</p>
 
@@ -690,7 +741,7 @@ const EditEvent = () => {
                         </div>
                       </div>
                       <span className={styles.timezone}>
-                        <FiGlobe size={20} color='#949597' />
+                        <FiGlobe size={25} color='#949597' />
                         <br />
                         {timezone?.offset}
                         <br />
@@ -739,7 +790,7 @@ const EditEvent = () => {
                         </GoogleMap>
 
                         <div className={styles.eventLocation}>
-                          <GrLocation size={20} color='#949597' />
+                          <GrLocation size={25} color='#949597' />
                           <div className={styles.locationContainer}>
                             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
                               <input
@@ -760,7 +811,7 @@ const EditEvent = () => {
                     <div className={styles.optionsContainer}>
                       <div className={styles.option}>
                         <label>
-                          <TbMicrophone size={20} color='#949597' /> Audio Form Fill
+                          <TbMicrophone size={25} color='#949597' /> Audio Form Fill
                         </label>
                         <Slider
                           checked={eventData.parse_audio}
@@ -776,7 +827,7 @@ const EditEvent = () => {
                       </div>
                       <div className={styles.option}>
                         <label>
-                          <TbUserCheck size={20} color='#949597' /> Require Approval
+                          <TbUserCheck size={25} color='#949597' /> Require Approval
                         </label>
                         <Slider
                           checked={eventData.approval_required}
@@ -792,7 +843,7 @@ const EditEvent = () => {
                       </div>
                       <div className={styles.option}>
                         <label>
-                          <TbMailStar size={20} color='#949597' /> Invite Only
+                          <TbMailStar size={25} color='#949597' /> Invite Only
                         </label>
                         <Slider
                           checked={eventData.is_private}
@@ -805,7 +856,7 @@ const EditEvent = () => {
                       </div>
                       <div className={styles.option}>
                         <label>
-                          <TbWorld size={20} color='#949597' /> Online Event
+                          <TbWorld size={25} color='#949597' /> Online Event
                         </label>
                         <Slider
                           checked={eventData.is_online}
@@ -820,7 +871,7 @@ const EditEvent = () => {
                       <div className={styles.option}>
                         <label>
                           {' '}
-                          <BiArrowToTop size={20} color='#949597' />
+                          <BiArrowToTop size={25} color='#949597' />
                           Capacity
                         </label>
                         <div>

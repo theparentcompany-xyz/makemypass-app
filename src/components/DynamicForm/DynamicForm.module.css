@@ -4,7 +4,7 @@
   border: none;
   padding: 0.75rem 0.75rem;
   background: rgba(255, 255, 255, 0.04);
-  width: 95%;
+  width: 100%;
   display: flex;
   font-family: 'Inter', sans-serif;
   color: white;
@@ -35,8 +35,14 @@
   column-gap: 0.5rem;
 }
 
+.checkbox {
+  margin-right: 0.5rem;
+}
+
 .checkbox label {
   margin-left: 0.5rem;
+  font-size: 0.85rem;
+  color: #a4a4a4;
 }
 
 .formDescription {
@@ -57,7 +63,7 @@
 
 .errorText {
   color: #f04b4b;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 400;
   font-family: 'Inter', sans-serif;
   margin-top: 0.5rem;
@@ -68,14 +74,19 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   row-gap: 0.5rem;
   column-gap: 0.5rem;
 }
 
+.radio label {
+  color: #a4a4a4;
+  font-size: 0.8rem;
+}
+
 .radioInput {
-  margin-top: 0.25rem;
   border-radius: 50%;
   border: 2px solid #a4a4a4;
   width: 1rem;
@@ -156,7 +167,7 @@ input {
   border: none;
   padding: 0.75rem 1rem;
   background: rgba(255, 255, 255, 0.04);
-  width: 93%;
+  width: 100%;
   display: flex;
   font-family: 'Inter', sans-serif;
   color: #a4a4a4;
