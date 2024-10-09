@@ -80,7 +80,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
 }
 
 .formGroup input {
@@ -101,7 +101,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   opacity: 0.8;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.4rem;
 }
 
 .formGroup input[type='file'] {
@@ -258,4 +258,24 @@
   background: rgba(255, 255, 255, 0.08);
   color: white;
   font-family: 'Inter', sans-serif;
+}
+
+.lineContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 0.5rem;
+  width: 90%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  color: #a4a4a4;
+  background-color: #a4a4a44f;
+  justify-content: space-between;
+
+  padding: 0.05rem 1rem;
+  border-radius: 8px;
+  border: none;
 }

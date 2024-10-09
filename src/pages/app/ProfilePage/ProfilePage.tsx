@@ -217,6 +217,7 @@ const ProfilePage = () => {
                       </div>
                     </div>
                   </form>
+                  <div className={styles.lineContainer} />
                   <form onSubmit={handleUpdatePassword}>
                     <div className={styles.formGroup}>
                       <label htmlFor='current_password'>Current Password</label>
