@@ -4,7 +4,7 @@ import Select, { MultiValue } from 'react-select';
 import { ErrorMessages, FormDataType, FormFieldType } from '../../apis/types';
 import UploadAttachement from '../../pages/app/EventGlance/components/MailModals/UpdateMail/components/UploadAttachement/UploadAttachements.tsx';
 import type { previewType } from '../../pages/app/EventGlance/components/MailModals/UpdateMail/types.ts';
-import { customStyles, getIcon } from '../../pages/app/EventPage/constants';
+import { customStyles, dynamicFormCustomStyles, getIcon } from '../../pages/app/EventPage/constants';
 import InputField from '../../pages/auth/Login/InputField.tsx';
 import ValidateInput from '../ValidateInput/ValidateInput.tsx';
 import { validateCondition } from './condition';
@@ -181,7 +181,7 @@ const DynamicForm = ({
                       value: option,
                       label: option,
                     }))}
-                    styles={customStyles}
+                    styles={dynamicFormCustomStyles}
                     onChange={(selectedOption: { value: string } | null) =>
                       onFieldChange(field.field_key, selectedOption?.value || '')
                     }

@@ -130,6 +130,129 @@ export const customStyles = {
   }),
 };
 
+export const dynamicFormCustomStyles = {
+  control: (provided: any, state: any) => ({
+    ...provided,
+    border: 'none',
+    backgroundColor: 'rgba(255, 255, 255, 0.04)',
+    fontFamily: 'Inter, sans-serif',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: '0.9rem',
+    minWidth: '10rem',
+    boxShadow: state.isFocused ? 'none' : 'none', // Remove blue border on focus
+    position: 'relative', // Add this to establish a positioning context
+    zIndex: 10001, // Ensure the control stays above the menu
+  }),
+
+  group: (provided: any) => ({
+    ...provided,
+    paddingTop: 0,
+  }),
+
+  singleValue: (base: any) => ({
+    ...base,
+    color: '#fff',
+  }),
+
+  option: (provided: any) => ({
+    ...provided,
+    fontFamily: 'Inter, sans-serif',
+    backgroundColor: 'rgba(33, 35, 37, 0.03)',
+    color: '#ffffff',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: '0.9rem',
+    ':hover': {
+      backgroundColor: ' rgba(147, 149, 151, 0.13);',
+    },
+  }),
+
+  multiValue: (provided: any) => ({
+    ...provided,
+    backgroundColor: '#323838',
+    borderRadius: '4px',
+    padding: '2px 6px',
+    color: '#fff',
+    fontSize: '1.9rem',
+  }),
+
+  multiValueLabel: (provided: any) => ({
+    ...provided,
+    color: '#fff',
+    fontSize: '0.9rem',
+  }),
+
+  multiValueRemove: (provided: any) => ({
+    ...provided,
+    color: '#fff',
+    fontSize: '0.9rem',
+    ':hover': {
+      backgroundColor: '#323838',
+      color: '#fff',
+    },
+  }),
+
+  placeholder: (provided: any) => ({
+    ...provided,
+    color: '#9E9E9E',
+  }),
+
+  menu: (provided: any) => ({
+    ...provided,
+    backgroundColor: '#242525',
+    color: '#fff',
+    fontFamily: 'Inter, sans-serif',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: '0.9rem',
+    zIndex: 10000,
+    position: 'relative', // Change from 'relative' to 'absolute'
+    width: '100%', // Ensure the menu width matches the control
+  }),
+
+  menuList: (provided: any) => ({
+    ...provided,
+    paddingTop: 0,
+    paddingBottom: 0,
+    maxHeight: '200px', // Add a max height to enable scrolling if needed
+    overflowY: 'auto', // Enable vertical scrolling
+  }),
+
+  noOptionsMessage: (provided: any) => ({
+    ...provided,
+    color: '#9E9E9E',
+  }),
+  loadingMessage: (provided: any) => ({
+    ...provided,
+    color: '#9E9E9E',
+  }),
+  indicatorSeparator: (provided: any) => ({
+    ...provided,
+    backgroundColor: '#9E9E9E',
+  }),
+  dropdownIndicator: (provided: any) => ({
+    ...provided,
+    color: '#9E9E9E',
+  }),
+  clearIndicator: (provided: any) => ({
+    ...provided,
+    color: '#9E9E9E',
+  }),
+  valueContainer: (provided: any) => ({
+    ...provided,
+    padding: '2px 8px',
+  }),
+  input: (provided: any) => ({
+    ...provided,
+    color: '#fff',
+  }),
+  loadingIndicator: (provided: any) => ({
+    ...provided,
+    color: '#9E9E9E',
+  }),
+};
+
 export const getIcon = (type: string) => {
   switch (type) {
     case 'name':
