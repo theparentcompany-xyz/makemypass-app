@@ -28,6 +28,7 @@ import PerkAnalytics from './pages/app/Insights/pages/PerkAnalytics/PerkAnalytic
 import VenueAnalytics from './pages/app/Insights/pages/VenueAnalytics/VenueAnalytics';
 import LandingPage from './pages/app/LandingPage/LandingPage';
 import CreateOrganization from './pages/app/Organization/Create/CreateOrganization';
+import EditOrganization from './pages/app/Organization/EditOrganization/EditOrganization';
 import OrganizationGlance from './pages/app/Organization/OrganizationGlance/OrganizationGlance';
 import Overview from './pages/app/Overview/Overview/Overview';
 import PaymentAnalytics from './pages/app/PaymentAnalytics/PaymentAnalytics';
@@ -188,6 +189,14 @@ const routes: RouteObject[] = [
       {
         path: 'organization/:orgName',
         element: <OrganizationGlance />,
+      },
+      {
+        path: 'organization/:orgName/edit',
+        element: (
+          <RoleChecker roles={TillRoles.VIEWER}>
+            <EditOrganization />
+          </RoleChecker>
+        ),
       },
       {
         path: '/:eventTitle/manage',

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import { getOrgData } from '../../../../apis/orgs';
 import Theme from '../../../../components/Theme/Theme';
@@ -18,6 +18,8 @@ const OrganizationGlance = () => {
     logo: '',
     description: '',
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getOrgData(state.orgId, setOrganization);
@@ -48,7 +50,14 @@ const OrganizationGlance = () => {
             </div>
           </div>
 
-          <div className={styles.buttons}>
+          <div
+            className={styles.buttons}
+            onClick={() =>
+              navigate(`/organization/${organization.name}/edit/`, {
+                state: organization,
+              })
+            }
+          >
             <button className={styles.editEventButton}>Edit Organization</button>
           </div>
         </div>
