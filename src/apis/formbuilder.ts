@@ -59,12 +59,14 @@ export const closeFormMessage = (
 
 export const getCloseFormMessage = (
   eventId: string,
+  setShowFollowupMessage: React.Dispatch<React.SetStateAction<boolean>>,
   setFollowupMessage: React.Dispatch<React.SetStateAction<string>>,
 ) => {
   privateGateway
     .get(makeMyPass.closeForm(eventId))
     .then((response) => {
-      setFollowupMessage(response.data.response.followup_message);
+      setShowFollowupMessage(response.data.response.close_form);
+      setFollowupMessage(response.data.response.form_close_message);
     })
     .catch((error) => {
       throw error;
