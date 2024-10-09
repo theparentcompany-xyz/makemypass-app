@@ -18,7 +18,6 @@ import {
   getGuestEditPrefillData, //Till Volunteer
   getGuestInformation, //Till Volunteer
   resentGuestTicket, //Till Volunteer
-  viewGuestTicket, //Till Volunteer
 } from '../../../apis/guests';
 import { checkSpinWheelPickUser } from '../../../apis/randomizer';
 import { FormDataType } from '../../../apis/types';
@@ -153,7 +152,7 @@ const Guests = () => {
         getGuestData();
       } else if (selectedGuestId.type === 'download' && !isArray(selectedGuestId.id)) {
         if (selectedGuestId.id) {
-          viewGuestTicket(eventId, selectedGuestId.id, navigate);
+          navigate(`/${eventTitle}/view-ticket/${selectedGuestId.id}`);
         } else {
           toast.error('Ticket download failed');
         }

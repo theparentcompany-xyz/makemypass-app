@@ -31,7 +31,7 @@ const SuccessButtonsContainer = ({
               <button
                 onClick={() => {
                   const eventTitle = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
-                  window.open(`/${eventTitle}/ticket?ticketURL=${success.ticketURL}`, '_blank');
+                  window.open(`/${eventTitle}/view-ticket/${success.eventRegisterId}`, '_blank');
                 }}
                 className={styles.downloadTicketButton}
               >

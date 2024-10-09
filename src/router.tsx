@@ -54,6 +54,10 @@ const routes: RouteObject[] = [
     element: <ViewTicket />,
   },
   {
+    path: '/:eventTitle/view-ticket/:eventRegistrationId',
+    element: <ViewTicket />,
+  },
+  {
     path: '/termsandconditions',
     element: <TermsConditions />,
   },

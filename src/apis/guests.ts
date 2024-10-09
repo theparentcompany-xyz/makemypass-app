@@ -1,8 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
-import { NavigateFunction } from 'react-router';
 
-import { privateGateway } from '../../services/apiGateway';
+import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import type { BulkUploadType } from '../pages/app/Guests/components/BulkUpload/types';
 import type { EmailType, VisitedVenues } from '../pages/app/Guests/components/ViewGuest/types';
@@ -112,13 +111,12 @@ export const getGuestEditPrefillData = async (
 export const viewGuestTicket = async (
   eventId: string,
   eventRegisterId: string,
-  navigate: NavigateFunction,
+  setImageUrl: Dispatch<React.SetStateAction<string>>,
 ) => {
-  privateGateway
+  publicGateway
     .get(makeMyPass.guestDownloadTicket(eventId, eventRegisterId))
     .then((response) => {
-      const eventTitle = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
-      navigate(`/${eventTitle}/ticket?ticketURL=${response.data.response.image}`);
+      setImageUrl(response.data.response.image);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Something went wrong');
