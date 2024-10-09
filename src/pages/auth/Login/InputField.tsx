@@ -41,7 +41,7 @@ const InputField = forwardRef<HTMLInputElement, FormProps>(({ icon, ...inputProp
           {...inputProps}
           type={inputProps.type}
           disabled={inputProps.disabled}
-          placeholder={`${inputProps.placeholder ? inputProps.placeholder : inputProps.title}`}
+          placeholder={`${inputProps.placeholder ? inputProps.placeholder : ''}`}
           ref={ref}
           value={inputProps.value}
           style={{

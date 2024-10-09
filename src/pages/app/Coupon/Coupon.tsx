@@ -133,7 +133,7 @@ const Coupon = () => {
                 id='fieldDescription'
                 title='Enter Field Description'
                 icon={<></>}
-                required={true}
+                required={false}
                 onChange={(event) => {
                   setActivateCoupon({ ...activateCoupon, description: event.target.value });
                 }}

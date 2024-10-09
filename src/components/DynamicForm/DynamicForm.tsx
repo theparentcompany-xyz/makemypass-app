@@ -155,7 +155,6 @@ const DynamicForm = ({
                     id={field.field_key}
                     name={field?.title}
                     value={formData[field.field_key]}
-                    placeholder={field?.title}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       if (!/^\d*$/.test(e.target.value)) return;
                       onFieldChange(field.field_key, e.target.value);
@@ -362,7 +361,6 @@ const DynamicForm = ({
                   id={field.field_key}
                   name={field?.title}
                   value={formData[field.field_key]}
-                  placeholder={field?.title}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     onFieldChange(field.field_key, e.target.value)
                   }
