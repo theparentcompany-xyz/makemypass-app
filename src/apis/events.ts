@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import toast from 'react-hot-toast';
 
-import { privateGateway } from '../../services/apiGateway';
+import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { ErrorMessages, Event, EventType } from './types';
 
@@ -75,7 +75,7 @@ export const getEventId = async (
   name: string;
 }> => {
   return new Promise((resolve, reject) => {
-    privateGateway
+    publicGateway
       .get(makeMyPass.getEventId(eventName))
       .then((response) => {
         const eventData = {

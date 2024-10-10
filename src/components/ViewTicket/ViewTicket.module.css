@@ -14,3 +14,16 @@
   object-fit: contain;
   padding: 2rem;
 }
+
+.noTicketFound {
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 1rem;
+}
