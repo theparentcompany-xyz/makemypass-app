@@ -221,7 +221,8 @@
   word-break: break-all;
 }
 
-.locationBox {
+.locationBox,
+.socialBox {
   margin-top: 0.5rem;
   display: flex;
   align-items: center;
@@ -343,6 +344,10 @@
     position: absolute;
     right: 0px;
     bottom: 0;
+  }
+
+  .socialBox {
+    display: none;
   }
 }
 
@@ -467,11 +472,17 @@
   opacity: 0.8;
 }
 
+.hostCommunicate {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+}
+
 .hostCommunicateIcons {
+  margin-top: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-top: 1rem;
   column-gap: 0.25rem;
   opacity: 0.5;
 }

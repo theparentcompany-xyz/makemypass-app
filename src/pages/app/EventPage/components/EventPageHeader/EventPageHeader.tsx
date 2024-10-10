@@ -14,6 +14,7 @@ import {
   IoMailOutline,
   IoMapOutline,
   IoPodiumOutline,
+  IoShareSocial,
 } from 'react-icons/io5';
 import { useNavigate } from 'react-router';
 
@@ -185,6 +186,9 @@ const EventPageHeader = ({ eventData }: { eventData: EventType | undefined }) =>
             )}
             {eventData?.host_communicate && (
               <div className={styles.hostCommunicate}>
+                <div className={styles.socialBox}>
+                  <IoShareSocial size={20} className={styles.locationIcon} />
+                </div>
                 <div className={styles.hostCommunicateIcons}>
                   {eventData.host_communicate.phone && (
                     <a href={`tel:${eventData.host_communicate.phone}`}>
