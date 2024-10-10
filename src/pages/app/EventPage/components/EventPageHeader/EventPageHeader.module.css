@@ -335,6 +335,17 @@
   }
 }
 
+@media screen and (min-width: 530px) {
+  .hostCommunicate {
+    margin-top: 1rem;
+    display: flex;
+    align-items: flex-end;
+    position: absolute;
+    right: 0px;
+    bottom: 0;
+  }
+}
+
 .speakersContainer {
   margin-top: 1rem;
   width: 100%;
@@ -408,8 +419,7 @@
   margin: 0 auto;
 }
 
-.eventTimer,
-.hostCommunicate {
+.eventTimer {
   margin-top: 1rem;
   display: flex;
   align-items: flex-end;
@@ -460,7 +470,8 @@
 .hostCommunicateIcons {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  margin-top: 1rem;
   column-gap: 0.25rem;
   opacity: 0.5;
 }
