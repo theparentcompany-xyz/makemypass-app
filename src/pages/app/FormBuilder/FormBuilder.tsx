@@ -51,12 +51,8 @@ const FormBuilder = () => {
 
   useEffect(() => {
     getFormBuilderForm(event_id, setFormFields);
-    getCloseFormMessage(event_id, setFollowupMessage);
+    getCloseFormMessage(event_id, setShowFollowUpMessage, setTempFollowupMessage);
   }, [event_id]);
-
-  useEffect(() => {
-    setTempFollowupMessage(followUpMessage);
-  }, [followUpMessage]);
 
   const updateFormStateVariable = () => {
     setFormFields([...formFields]);
