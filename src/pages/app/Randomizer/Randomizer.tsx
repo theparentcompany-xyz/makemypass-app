@@ -168,8 +168,8 @@ const Randomizer = () => {
                   logList.map((log, index) => (
                     <div key={index} className={styles.logItem}>
                       <p className={styles.logItemText}>{`${index + 1}). ${log.name}`}</p>
-                      <div className='row'>
-                        <p className={styles.logItemText}>{formatDate(log.created_at, true)}</p>
+                      <div className={styles.logItemAction}>
+                        <p className={styles.logItemTimeText}>{formatDate(log.created_at, true)}</p>
                         <SecondaryButton
                           onClick={() =>
                             navigate(

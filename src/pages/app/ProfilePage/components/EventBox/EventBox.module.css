@@ -7,8 +7,9 @@
   background: rgba(255, 255, 255, 0.04);
   position: relative;
   width: 17rem;
-  min-height: 20rem;
+  min-height: 23rem;
   color: white;
+
   font-family: 'Inter', sans-serif;
   padding: 1rem;
 }
@@ -63,8 +64,7 @@
 }
 
 .eventDateText {
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 400;
   font-family: 'Inter', sans-serif;
   max-width: 15rem;
@@ -98,6 +98,7 @@
 .eventDatePlace {
   padding-right: 0;
   width: 100%;
+  opacity: 0.8;
   height: 10rem;
 }
 

@@ -279,6 +279,9 @@
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  row-gap: 1rem;
 }
 
 .buttons {
@@ -296,10 +299,11 @@
   justify-content: flex-start;
   row-gap: 1rem;
   column-gap: 1rem;
+  flex-wrap: wrap;
+  white-space: nowrap;
 }
 
 .addQuestionButton {
-  margin-top: 1rem;
   font-size: 1rem;
 
   background: rgba(255, 255, 255, 0.04);
@@ -309,7 +313,6 @@
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   color: white;
-  margin-bottom: 1rem;
 }
 
 .addQuestionButton span {

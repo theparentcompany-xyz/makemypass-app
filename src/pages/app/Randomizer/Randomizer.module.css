@@ -159,11 +159,32 @@
   background-color: rgba(255, 255, 255, 0.075);
   margin-bottom: 0.5rem;
   border-radius: 8px;
+  overflow: scroll;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  column-gap: 1rem;
 }
 
 .logItemText {
   font-size: 0.9rem;
+  white-space: nowrap;
   color: rgba(255, 255, 255, 0.712);
+}
+
+.logItemTimeText {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.712);
+  white-space: nowrap;
+}
+
+.logItemAction {
+  display: flex;
+  align-items: center;
+
+  column-gap: 0.5rem;
 }
 
 .noLogsText {

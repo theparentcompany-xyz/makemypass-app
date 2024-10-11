@@ -65,6 +65,13 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 1330px) {
+  .profilePageContainer {
+    padding: 0 1.25rem;
+  }
 }
 
 .profileForm {

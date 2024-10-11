@@ -121,18 +121,20 @@ const Events = () => {
           )}
           <div className={styles.homeContainer}>
             <div className={styles.selectRow}>
-              <Select
-                styles={customStyles}
-                isMulti
-                options={tags.map((tag) => ({ value: tag, label: tag }))}
-                className='basic-multi-select'
-                classNamePrefix='select'
-                placeholder='Select tags'
-                onChange={(selectedOptions) => {
-                  setSelectedTags(selectedOptions.map((option) => option.value));
-                }}
-              />
-              {import.meta.env.VITE_CURRENT_ENV === 'dev' && (
+              {tags && tags.length > 0 && (
+                <Select
+                  styles={customStyles}
+                  isMulti
+                  options={tags.map((tag) => ({ value: tag, label: tag }))}
+                  className='basic-multi-select'
+                  classNamePrefix='select'
+                  placeholder='Select tags'
+                  onChange={(selectedOptions) => {
+                    setSelectedTags(selectedOptions.map((option) => option.value));
+                  }}
+                />
+              )}
+              {import.meta.env.VITE_CURRENT_ENV === 'dev' && orgs && orgs.length > 0 && (
                 <>
                   <Select
                     styles={customStyles}

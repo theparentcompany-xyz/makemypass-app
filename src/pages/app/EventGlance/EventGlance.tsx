@@ -484,14 +484,16 @@ const EventGlance = () => {
                       </>
                     )}
                   </div>
-                  <div className={styles.buttons}>
-                    <button
-                      onClick={() => navigate('./edit-event')}
-                      className={styles.editEventButton}
-                    >
-                      Edit Event
-                    </button>
-                  </div>
+                  {isUserEditor() && (
+                    <div className={styles.buttons}>
+                      <button
+                        onClick={() => navigate('./edit-event')}
+                        className={styles.editEventButton}
+                      >
+                        Edit Event
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -579,24 +581,26 @@ const EventGlance = () => {
                     onClick={() => setSelectedMail(mail)}
                   >
                     <div className='row'>
-                      <LuMail color='#939597' size={20} />
                       <div className={styles.scheduleText}>
-                        <p className={styles.scheduleHeading}>
-                          {mail.type}{' '}
-                          {isUserEditor() && (
-                            <span
-                              className={styles.testMail}
-                              onClick={() => {
-                                setConfirmTestMail({
-                                  status: true,
-                                  mailId: mail.id,
-                                });
-                              }}
-                            >
-                              Test Mail
-                            </span>
-                          )}
-                        </p>
+                        <div className={styles.scheduleTextHeader}>
+                          <LuMail color='#939597' size={20} />
+                          <p className={styles.scheduleHeading}>
+                            {mail.type}{' '}
+                            {isUserEditor() && (
+                              <span
+                                className={styles.testMail}
+                                onClick={() => {
+                                  setConfirmTestMail({
+                                    status: true,
+                                    mailId: mail.id,
+                                  });
+                                }}
+                              >
+                                Test Mail
+                              </span>
+                            )}
+                          </p>
+                        </div>
                         <p className={styles.scheduleSubHeading}>{mail.subject}</p>
                       </div>
                     </div>

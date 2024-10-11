@@ -587,23 +587,23 @@ const ManageTickets = forwardRef<ChildRef, ChildProps>(({ setIsTicketsOpen }, re
               </div>
 
               <div className={styles.buttonContainer}>
-                {isUserEditor() && (
-                  <button className={styles.deleteButton} onClick={() => setDeleteModal(true)}>
-                    Delete
-                  </button>
-                )}
                 <div className={styles.buttonGroup}>
-                  <button className={styles.settingsButton} onClick={() => setIsOpen(true)}>
-                    {' '}
-                    <TbSettings />
-                    Advanced Settings
-                  </button>
+                  {isUserEditor() && (
+                    <button className={styles.deleteButton} onClick={() => setDeleteModal(true)}>
+                      Delete
+                    </button>
+                  )}
                   {isUserEditor() && (
                     <button className={styles.updateButton} onClick={() => updateTicket()}>
                       {'Update Ticket'}
                     </button>
                   )}
                 </div>
+                <button className={styles.settingsButton} onClick={() => setIsOpen(true)}>
+                  {' '}
+                  <TbSettings />
+                  Advanced Settings
+                </button>
               </div>
             </motion.div>
           )}

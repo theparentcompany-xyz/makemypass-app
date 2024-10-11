@@ -308,7 +308,7 @@ const EventForm = ({
     <>
       {claimCodeExceed?.exceeded && (
         <div className={styles.claimCodeExccededMessage}>
-          <MdError color='#F04B4B' />
+          <MdError color='#F04B4B' size={25} />
           <span>{claimCodeExceed?.message}</span>
         </div>
       )}
