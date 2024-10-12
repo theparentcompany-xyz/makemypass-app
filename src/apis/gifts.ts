@@ -87,7 +87,6 @@ export const spinTheWheel = (
         }),
       );
       setSpin(true);
-      console.log(response);
     })
     .catch((err) => {
       toast.error(err?.response?.data.message.general[0]);

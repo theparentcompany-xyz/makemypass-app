@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { Dispatch, useEffect, useMemo } from 'react';
+import React, { Dispatch, useMemo } from 'react';
 import { FaCheck, FaDollarSign } from 'react-icons/fa6';
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdDelete, MdEdit } from 'react-icons/md';
 import { HashLoader } from 'react-spinners';
@@ -188,10 +188,6 @@ const Table = ({
   setPaginationData?: Dispatch<React.SetStateAction<PaginationDataType>>;
   setTriggerFetch?: Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  useEffect(() => {
-    console.log('paginationData', paginationData);
-  }, [paginationData]);
-
   const categoryColors = ['#47C97E', '#7662FC', '#C33D7B', '#FBD85B', '#5B75FB', '#D2D4D7'];
 
   const rgbaArray = [

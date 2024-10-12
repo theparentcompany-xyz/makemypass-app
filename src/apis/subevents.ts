@@ -12,7 +12,6 @@ export const getSubEvents = (
   privateGateway
     .get(makeMyPass.viewSubEvent(eventId, eventRegisterId))
     .then((response) => {
-      console.log(response.data.response);
       setSubEvents(response.data.response.sub_events);
     })
     .catch((error) => {

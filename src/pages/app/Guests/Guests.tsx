@@ -77,6 +77,7 @@ const Guests = () => {
   const [showScanner, setShowScanner] = useState<boolean>(false);
   const [isCashInHand, setIsCashInHand] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState('');
+  const [formNumber, setFormNumber] = useState(eventFormData?.show_ticket_first ? 1 : 0);
 
   const [showPicker, setShowPicker] = useState<boolean>(false);
 
@@ -101,6 +102,10 @@ const Guests = () => {
     } else if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'view')
       getGuestInformation(eventId, selectedGuestId.id, setSelectedGuest);
   };
+
+  useEffect(() => {
+    setFormNumber(eventFormData?.show_ticket_first ? 1 : 0);
+  }, [eventFormData]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -254,6 +259,8 @@ const Guests = () => {
                       text='Cash in Hand'
                     />
                     <EventForm
+                      formNumber={formNumber}
+                      setFormNumber={setFormNumber}
                       eventFormData={eventFormData}
                       eventTitle={eventTitle}
                       type='addGuest'

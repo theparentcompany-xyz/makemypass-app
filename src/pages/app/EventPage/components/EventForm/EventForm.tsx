@@ -24,6 +24,8 @@ import CouponForm from '../CouponForm/CouponForm';
 import VoiceInput from './components/VoiceInput';
 
 const EventForm = ({
+  formNumber,
+  setFormNumber,
   eventFormData,
   setSuccess,
   setEventData,
@@ -36,6 +38,8 @@ const EventForm = ({
   isCashInHand,
   utmData,
 }: {
+  formNumber: number;
+  setFormNumber: Dispatch<React.SetStateAction<number>>;
   eventFormData: FormEventData;
   eventTitle: string | undefined;
   setEventData?: Dispatch<React.SetStateAction<EventType | undefined>>;
@@ -66,7 +70,6 @@ const EventForm = ({
   const [loading, setLoading] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<FormDataType>({});
-  const [formNumber, setFormNumber] = useState<number>(eventFormData.show_ticket_first ? 1 : 0);
   const [selectedDate, setSelectedDate] = useState<string | null>();
   const [formErrors, setFormErrors] = useState<{ [key: string]: string[] }>({});
   const [formIdToKey, setFormIdToKey] = useState<{ [key: string]: string }>({});
@@ -93,18 +96,22 @@ const EventForm = ({
   const newSearchParams = new URLSearchParams(location.search);
 
   useEffect(() => {
-    const accessCodeParam = newSearchParams.get('access_code');
-    if (accessCodeParam) {
-      setAccessCode(accessCodeParam);
-    }
-    if (eventFormData?.form) {
+    if (newSearchParams.size > 0)
       setFormData(
         eventFormData?.form.reduce((data: FormDataType, field: FormFieldType) => {
           data[field.field_key] = newSearchParams.get(field.field_key) || '';
           return data;
         }, {}),
       );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  useEffect(() => {
+    const accessCodeParam = newSearchParams.get('access_code');
+    if (accessCodeParam) {
+      setAccessCode(accessCodeParam);
+    }
+    if (eventFormData?.form) {
       eventFormData?.form.forEach((field) => {
         setFormIdToKey((prevState) => {
           return { ...prevState, [field.id]: field.field_key };
@@ -271,7 +278,6 @@ const EventForm = ({
   //write the function to check whether the all the required filed in the form are filled or not with proper validation
   useEffect(() => {
     let isSubmitable = true;
-    console.log(formData);
 
     eventFormData.form.forEach((field) => {
       if (
@@ -282,8 +288,6 @@ const EventForm = ({
       }
     });
     setIsFormSubmitable(isSubmitable);
-
-    console.log(isSubmitable);
   }, [formData, eventFormData.form]);
 
   useEffect(() => {
@@ -414,6 +418,7 @@ const EventForm = ({
                 formData,
                 setFormNumber,
                 setFormErrors,
+                setLoading,
                 selectedDate,
               ).then(() => {
                 if (eventFormData.show_ticket_first)
@@ -485,7 +490,7 @@ const EventForm = ({
         >
           {loading ? (
             <PropagateLoader
-              color={'#fff'}
+              color={isFormSubmitable ? '#272727' : 'ffffff'}
               loading={loading}
               size={10}
               style={{

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
@@ -31,10 +31,6 @@ const SpeakerModal = ({
     image: null,
     type: '',
   });
-
-  useEffect(() => {
-    console.log(speakers.speakerList);
-  }, [speakers]);
 
   return (
     <>

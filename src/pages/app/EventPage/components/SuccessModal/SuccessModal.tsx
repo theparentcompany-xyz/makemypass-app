@@ -38,10 +38,6 @@ const SuccessModal = ({
     }
   }, [success, isRevealed, hasScratchCard]);
 
-  useEffect(() => {
-    console.log('success', success);
-  }, [success]);
-
   return (
     <div>
       <motion.div

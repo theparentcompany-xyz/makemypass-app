@@ -25,7 +25,6 @@ export const listOrgs = (setOrgs: Dispatch<SetStateAction<DefaultListType[]>>) =
   privateGateway
     .get(makeMyPass.listOrgs)
     .then((response) => {
-      console.log(response);
       setOrgs(response.data.response);
     })
     .catch((error) => {

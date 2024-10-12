@@ -17,7 +17,9 @@ import type { ClaimCodeExceedType, SuccessModalProps } from './types';
 const EventPage = () => {
   const { eventTitle } = useParams<{ eventTitle: string }>();
   const [showTicketFirst, setShowTicketFirst] = useState<boolean>(false);
+
   const [eventData, setEventData] = useState<EventType>();
+  const [formNumber, setFormNumber] = useState<number>(eventData?.show_ticket_first ? 1 : 0);
   const [success, setSuccess] = useState<SuccessModalProps>({
     showModal: false,
     eventTitle: eventData?.title,
@@ -77,6 +79,18 @@ const EventPage = () => {
 
     scrollToTop();
   }, [success]);
+
+  useEffect(() => {
+    setFormNumber(eventData?.show_ticket_first ? 1 : 0);
+  }, [eventData]);
+
+  const showEventHeader = () => {
+    const defaultForm = eventData?.show_ticket_first ? 1 : 0;
+
+    if (formNumber === defaultForm) return true;
+
+    return false;
+  };
 
   return (
     <>
@@ -138,13 +152,15 @@ const EventPage = () => {
 
         {eventData && !eventData?.err_message && eventData?.form?.length > 0 ? (
           <div className={styles.eventPageContainer}>
-            {typeParam !== 'embed' && (
+            {typeParam !== 'embed' && showEventHeader() && (
               <div className={styles.eventHeaderContainer}>
                 <EventPageHeader eventData={eventData} />
               </div>
             )}
             <div className={styles.formContainer}>
               <EventForm
+                formNumber={formNumber}
+                setFormNumber={setFormNumber}
                 eventFormData={{
                   id: eventData.id,
                   form: eventData.form,

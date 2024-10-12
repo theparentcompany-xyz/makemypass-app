@@ -41,14 +41,14 @@ const ExpectedInvoice = ({
               )}
             </p>
             <p className={styles.receiptItemPrice}>
-              {ticket.currency} {ticket.total > 0 && ticket.total}
+              {ticket.currency} {ticket.total > 0 && ticket.total.toFixed(2)}
             </p>
           </div>
         ))}
         <div className={styles.totalPrice}>
           <p>
             Total Price: {billReceipt[0].currency}{' '}
-            {billReceipt.reduce((acc, ticket) => acc + ticket.total, 0)}
+            {billReceipt.reduce((acc, ticket) => acc + ticket.total, 0).toFixed(2)}
           </p>
         </div>
       </div>

@@ -69,6 +69,7 @@ export const updateGuestSubmission = async (
         toast.success(response.data.message.general[0] || 'Submission edited successfully');
         const updatedData = response.data.response;
         setSelectedGuestId(null);
+
         setFormData({});
         setGuests((prev) => {
           return prev.map((guest) => {

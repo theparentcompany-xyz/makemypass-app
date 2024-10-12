@@ -296,8 +296,10 @@ export const validateRSVPData = (
   formData: FormDataType,
   setFormNumber: React.Dispatch<React.SetStateAction<number>>,
   setFieldErrors: Dispatch<React.SetStateAction<ErrorMessages>>,
+  setLoading: Dispatch<React.SetStateAction<boolean>>,
   selectedDate?: string | null,
 ) => {
+  setLoading(true);
   return new Promise<void>((resolve, reject) => {
     const selectedDateFormatted = selectedDate
       ? new Date(selectedDate).toISOString().split('T')[0]
@@ -352,6 +354,9 @@ export const validateRSVPData = (
       .catch((error) => {
         setFieldErrors(error.response.data.message);
         reject(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   });
 };

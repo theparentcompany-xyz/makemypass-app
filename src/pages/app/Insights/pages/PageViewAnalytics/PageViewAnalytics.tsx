@@ -47,13 +47,6 @@ const PageViewAnalytics = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (pageViewAnalytics) {
-      console.log(transformData(pageViewAnalytics.metadata));
-      console.log(Object.keys(pageViewAnalytics.metadata));
-    }
-  }, [pageViewAnalytics]);
-
   const options = {
     responsive: true,
     plugins: {
