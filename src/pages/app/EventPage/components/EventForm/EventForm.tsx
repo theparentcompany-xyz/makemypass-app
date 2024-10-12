@@ -397,12 +397,12 @@ const EventForm = ({
             background: isFormSubmitable
               ? 'linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 100%)'
               : 'linear-gradient(90deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 100%)',
-            color: isFormSubmitable ? '#000' : 'rgba(255, 255, 255, 0.5)',
+            color: isFormSubmitable ? '#000' : '#fff)',
           }}
           transition={{ duration: 0.6 }}
           whileTap={{ scale: 0.95 }}
           type='submit'
-          disabled={loading || !isFormSubmitable}
+          disabled={loading}
           onClick={() => {
             if (
               (formNumber === 0 && !directRegister) ||
