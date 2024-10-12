@@ -54,8 +54,6 @@
 }
 
 .formFields {
-  overflow: auto;
-  overflow-x: hidden;
   margin-top: 1rem;
   padding: 0.1rem;
   width: 100%;
