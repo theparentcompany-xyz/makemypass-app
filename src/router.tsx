@@ -39,6 +39,7 @@ import Randomizer from './pages/app/Randomizer/Randomizer';
 import SelfCheckIn from './pages/app/SelfCheckIn/SelfCheckIn';
 import SetProfilePage from './pages/app/SetProfilePage/SetProfilePage';
 import Spinwheel from './pages/app/Spinwheel/Spinwheel';
+import ListSubEvents from './pages/app/SubEvents/User/ListSubEvents';
 import TermsConditions from './pages/app/TermsCondictions/TermsConditions';
 import ValidateData from './pages/app/ValidateData/ValidateData';
 import Login from './pages/auth/Login/Login';
@@ -311,6 +312,10 @@ const routes: RouteObject[] = [
   {
     path: '/:eventTitle/thank-you',
     element: <ThankYouPage />,
+  },
+  {
+    path: '/:eventTitle/sub-event/:eventRegisterId',
+    element: <ListSubEvents />,
   },
   {
     path: '*',

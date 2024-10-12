@@ -426,3 +426,19 @@ export type DefaultListType = {
   id: string;
   name: string;
 };
+
+export type SubEventType = {
+  id: string;
+  title: string;
+  description: string;
+  start_time: string;
+  end_time: string;
+  place: string;
+  location: string;
+  capacity_left: number;
+  price: number;
+  currency: string;
+  platform_fee: number;
+  gateway_fee: number;
+  already_booked: boolean;
+};

@@ -166,6 +166,10 @@ export const makeMyPass = {
 
   utmList: (eventId: string) => makeMyPassURL(`/utm/${eventId}/list/`), //Till Viewer
   createUtm: (eventId: string) => makeMyPassURL(`/utm/${eventId}/create/`), //Till Viewer
+
+  //Sub-Event
+  viewSubEvent: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/sub-events/${eventId}/view/${eventRegisterId}/`), //Till Editor
 };
 
 export const makeMyPassSocket = {

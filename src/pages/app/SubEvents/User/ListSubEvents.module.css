@@ -1,0 +1,104 @@
+.eventsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  z-index: 2;
+  margin: auto;
+  overflow: hidden;
+
+  row-gap: 1rem;
+  column-gap: 1rem;
+
+  font-family: 'Inter', sans-serif;
+}
+
+.eventCard {
+  max-width: 18rem;
+  min-width: 18rem;
+}
+
+.innerCard {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  column-gap: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background 0.2s ease-in-out;
+
+  font-family: 'Inter';
+}
+
+.innerCard:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.eventDetails {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.eventDetailsHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.date {
+  font-size: 0.8rem;
+  color: #a4a4a4;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+.eventName {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.manage {
+  width: 6rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #a4a4a4;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.manage:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 720px) {
+  .innerCard {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 1rem;
+  }
+}
+
+@media (max-width: 1330px) {
+  .subEventsListingContainer {
+    padding: 0 1.25rem;
+  }
+}
+
+.selectedCard {
+  border: 2px solid #4caf50; /* Green border to indicate selection */
+}
