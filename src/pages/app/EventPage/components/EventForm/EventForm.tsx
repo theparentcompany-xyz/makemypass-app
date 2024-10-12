@@ -71,6 +71,7 @@ const EventForm = ({
   const [formErrors, setFormErrors] = useState<{ [key: string]: string[] }>({});
   const [formIdToKey, setFormIdToKey] = useState<{ [key: string]: string }>({});
   const [tickets, setTickets] = useState<Tickets[]>([]);
+  const [isFormSubmitable, setIsFormSubmitable] = useState<boolean>(false);
   const [discount, setDiscount] = useState<DiscountData>({
     discount_type: '',
     discount_value: 0,
@@ -267,6 +268,24 @@ const EventForm = ({
     setPreviews(newPreviews);
   };
 
+  //write the function to check whether the all the required filed in the form are filled or not with proper validation
+  useEffect(() => {
+    let isSubmitable = true;
+    console.log(formData);
+
+    eventFormData.form.forEach((field) => {
+      if (
+        (field.required && !formData[field.field_key]) ||
+        (Array.isArray(formData[field.field_key]) && formData[field.field_key].length === 0)
+      ) {
+        isSubmitable = false;
+      }
+    });
+    setIsFormSubmitable(isSubmitable);
+
+    console.log(isSubmitable);
+  }, [formData, eventFormData.form]);
+
   useEffect(() => {
     if (previews.length === 0) {
       eventFormData.form.forEach((field) => {
@@ -372,10 +391,18 @@ const EventForm = ({
       <div className={styles.buttons}>
         <motion.button
           initial={{ opacity: 0, y: 35 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            background: isFormSubmitable
+              ? 'linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 100%)'
+              : 'linear-gradient(90deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 100%)',
+            color: isFormSubmitable ? '#000' : 'rgba(255, 255, 255, 0.5)',
+          }}
+          transition={{ duration: 0.6 }}
           whileTap={{ scale: 0.95 }}
           type='submit'
-          disabled={loading}
+          disabled={loading || !isFormSubmitable}
           onClick={() => {
             if (
               (formNumber === 0 && !directRegister) ||
