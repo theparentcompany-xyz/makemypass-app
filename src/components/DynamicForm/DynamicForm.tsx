@@ -409,6 +409,7 @@ const DynamicForm = ({
                           checked={(formData[field.field_key] as string[])?.includes(option)}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             const value = e.target.value;
+
                             if ((formData[field.field_key] as string[])?.includes(value)) {
                               const newValues = (formData[field.field_key] as string[]).filter(
                                 (val) => val !== value,

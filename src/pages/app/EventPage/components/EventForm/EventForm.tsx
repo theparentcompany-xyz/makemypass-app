@@ -96,13 +96,12 @@ const EventForm = ({
   const newSearchParams = new URLSearchParams(location.search);
 
   useEffect(() => {
-    if (newSearchParams.size > 0)
-      setFormData(
-        eventFormData?.form.reduce((data: FormDataType, field: FormFieldType) => {
-          data[field.field_key] = newSearchParams.get(field.field_key) || '';
-          return data;
-        }, {}),
-      );
+    setFormData(
+      eventFormData?.form.reduce((data: FormDataType, field: FormFieldType) => {
+        data[field.field_key] = newSearchParams.get(field.field_key) || '';
+        return data;
+      }, {}),
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
