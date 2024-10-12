@@ -320,10 +320,10 @@
   padding: 0.75rem;
   width: 100%;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  color: #fff;
+  background: white;
+  color: #212325;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 00;
   cursor: pointer;
   transition: all 0.2s ease;
   border: none;

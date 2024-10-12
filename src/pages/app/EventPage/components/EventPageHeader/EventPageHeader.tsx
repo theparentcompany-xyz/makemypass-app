@@ -14,13 +14,14 @@ import {
   IoMailOutline,
   IoMapOutline,
   IoPodiumOutline,
-  IoShareSocial,
 } from 'react-icons/io5';
+import { MdContacts } from 'react-icons/md';
 import { useNavigate } from 'react-router';
 
 import { EventHosts, EventType } from '../../../../../apis/types';
 import { getDay, getMonthAbbreviation } from '../../constants';
 import styles from './EventPageHeader.module.css';
+import { getFormatedStartAndEndTime } from './functions';
 
 const EventPageHeader = ({ eventData }: { eventData: EventType | undefined }) => {
   const [showFullDesc, setShowFullDesc] = useState(false);
@@ -117,25 +118,7 @@ const EventPageHeader = ({ eventData }: { eventData: EventType | undefined }) =>
                         }) ?? ''}
                       </p>
                       <p className={styles.eventTimeText}>
-                        {new Date(eventData?.event_start_date).toLocaleTimeString([], {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}{' '}
-                        -{' '}
-                        {eventData?.event_end_date && (
-                          <>
-                            {new Date(eventData?.event_end_date).toLocaleTimeString([], {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                            {', '}
-                            {new Date(eventData?.event_end_date).toLocaleDateString([], {
-                              month: 'long',
-                              day: 'numeric',
-                              year: 'numeric',
-                            })}
-                          </>
-                        )}
+                        {getFormatedStartAndEndTime(eventData)}
                       </p>
                     </div>
                   </>
@@ -186,9 +169,12 @@ const EventPageHeader = ({ eventData }: { eventData: EventType | undefined }) =>
             )}
             {eventData?.host_communicate && (
               <div className={styles.hostCommunicate}>
-                <div className={styles.socialBox}>
-                  <IoShareSocial size={20} className={styles.locationIcon} />
-                </div>
+                {Object.values(eventData?.host_communicate).filter((social) => social != null)
+                  .length > 0 && (
+                  <div className={styles.socialBox}>
+                    <MdContacts size={20} className={styles.locationIcon} />
+                  </div>
+                )}
                 <div className={styles.hostCommunicateIcons}>
                   {eventData.host_communicate.phone && (
                     <a href={`tel:${eventData.host_communicate.phone}`}>
@@ -237,7 +223,7 @@ const EventPageHeader = ({ eventData }: { eventData: EventType | undefined }) =>
             )}
             {eventData && eventData?.form?.length > 0 && (
               <a href='#formFields'>
-                <button className={styles.registerButton}>Register Now!</button>
+                <button className={styles.registerButton}>Register Now</button>
               </a>
             )}
           </div>

@@ -38,16 +38,34 @@ const Header = ({ type }: { type?: string | undefined }) => {
       },
     },
   };
-  const currentTime = new Date();
-  const hours = currentTime.getHours();
-  const minutes = currentTime.getMinutes();
-  const timezoneOffset = currentTime.getTimezoneOffset();
-  const timezoneOffsetHours = Math.abs(Math.floor(timezoneOffset / 60));
-  const timezoneOffsetMinutes = Math.abs(timezoneOffset % 60);
-  const timezoneSign = timezoneOffset > 0 ? '-' : '+';
-  const formattedTimezone = `GMT${timezoneSign}${(timezoneOffsetHours - 1).toString().padStart(2, '0')}:${timezoneOffsetMinutes.toString().padStart(2, '0')}`;
 
-  const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${formattedTimezone}`;
+  const [formattedTime, setFormattedTime] = useState('');
+
+  useEffect(() => {
+    const updateFormattedTime = () => {
+      const currentTime = new Date();
+      const [hours, minutes, seconds] = [
+        currentTime.getHours(),
+        currentTime.getMinutes(),
+        currentTime.getSeconds(),
+      ].map((unit) => unit.toString().padStart(2, '0'));
+
+      const timezoneOffset = currentTime.getTimezoneOffset();
+      const timezoneSign = timezoneOffset > 0 ? '-' : '+';
+      const [timezoneOffsetHours, timezoneOffsetMinutes] = [
+        Math.abs(Math.floor(timezoneOffset / 60)),
+        Math.abs(timezoneOffset % 60),
+      ].map((unit) => unit.toString().padStart(2, '0'));
+
+      const formattedTimezone = `GMT${timezoneSign}${timezoneOffsetHours}:${timezoneOffsetMinutes}`;
+      setFormattedTime(`${hours}:${minutes}:${seconds} ${formattedTimezone}`);
+    };
+
+    updateFormattedTime();
+    const intervalId = setInterval(updateFormattedTime, 1000); // Update every second
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []);
 
   return (
     <>
