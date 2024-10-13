@@ -18,6 +18,7 @@ import Modal from '../../../../components/Modal/Modal';
 import Theme from '../../../../components/Theme/Theme';
 import { getDay, getMonthAbbreviation } from '../../EventPage/constants';
 import styles from './ListSubEvents.module.css';
+import type { SelectedSubEventsType } from './types';
 
 const groupEventsByDateAndTime = (events: SubEventType[]) => {
   return events.reduce((acc: Record<string, Record<string, SubEventType[]>>, event) => {
@@ -37,8 +38,7 @@ const groupEventsByDateAndTime = (events: SubEventType[]) => {
 const ListSubEvents = () => {
   const [subEvents, setSubEvents] = useState<SubEventType[]>([]);
   const [eventId, setEventId] = useState('');
-  const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
-  const [disabledEvents, setDisabledEvents] = useState<string[]>([]);
+  const [selectedEvents, setSelectedEvents] = useState<SelectedSubEventsType[]>([]);
   const [showDetailedView, setShowDetailedView] = useState<SubEventType | null>(null);
   const [subEventForm, setSubEventForm] = useState<FormFieldType[]>([]);
   const [formErrors, setFormErrors] = useState<Record<string, string[]>>({});
@@ -73,7 +73,7 @@ const ListSubEvents = () => {
   useEffect(() => {
     const preSelectedEvents = subEvents
       .filter((event) => event.already_booked)
-      .map((event) => event.id);
+      .map((event) => ({ id: event.id, alreadyRegistered: true }));
     setSelectedEvents(preSelectedEvents);
   }, [subEvents]);
 
@@ -92,16 +92,13 @@ const ListSubEvents = () => {
   }, [subEventForm]);
 
   const handleSelectEvent = (event: SubEventType) => {
-    const alreadySelected = selectedEvents.find((e) => e === event.id);
-    if (alreadySelected) {
-      setSelectedEvents(selectedEvents.filter((e) => e !== event.id));
-      setDisabledEvents([]);
+    if (selectedEvents.find((e) => e.id === event.id)) {
+      console.log('Selected');
+      setSelectedEvents(selectedEvents.filter((e) => e.id !== event.id));
     } else {
-      setSelectedEvents([...selectedEvents, event.id]);
-      const simultaneousEvents = subEvents.filter(
-        (e) => e.start_time === event.start_time && e.id !== event.id,
-      );
-      setDisabledEvents(simultaneousEvents.map((e) => e.id));
+      console.log('Not selected');
+
+      setSelectedEvents([...selectedEvents, { id: event.id, alreadyRegistered: false }]);
     }
   };
 
@@ -114,6 +111,30 @@ const ListSubEvents = () => {
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
     setFormData({ ...formData, [fieldName]: fieldValue });
+  };
+
+  const isEventDisabled = (event: SubEventType) => {
+    /*
+   iterate over the selectedEvents array and for each event in the array, find the start_time and end_time for the event from the subEvents
+    array and compare it with the start_time and end_time of the event passed as an argument. If the start_time and end_time of the event
+    passed as an argument lies between the start_time and end_time of the event in the selectedEvents array, return true.
+
+
+    */
+
+    if (event.already_booked) return false;
+
+    return selectedEvents.some((e) => {
+      const selectedEvent = subEvents.find((se) => se.id === e.id);
+      if (!selectedEvent) return false;
+      const eventDate = formatDate(event.start_time);
+      const selectedEventDate = formatDate(selectedEvent.start_time);
+      return (
+        eventDate === selectedEventDate &&
+        new Date(event.start_time) >= new Date(selectedEvent.start_time) &&
+        new Date(event.end_time) <= new Date(selectedEvent.end_time)
+      );
+    });
   };
 
   return (
@@ -233,7 +254,7 @@ const ListSubEvents = () => {
                   onClick={() => handleSelectEvent(showDetailedView)}
                   className={styles.manage}
                 >
-                  {selectedEvents.find((e) => e === showDetailedView.id) ? 'Deselect' : 'Select'}
+                  {selectedEvents.find((e) => e.id === showDetailedView.id) ? 'Deselect' : 'Select'}
                 </motion.button>
               </div>
             </div>
@@ -290,15 +311,21 @@ const ListSubEvents = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
                             className={`${styles.eventCard} ${
-                              selectedEvents.find((e) => e === event.id) ? styles.selectedCard : ''
+                              selectedEvents.find((e) => e.id === event.id)
+                                ? styles.selectedCard
+                                : ''
                             }`} // Add a selected class if event is selected
                             onClick={() =>
-                              !disabledEvents.includes(event.id) && handleSelectEvent(event)
-                            } // Handle select
+                              isEventDisabled(event)
+                                ? handleSelectEvent(event)
+                                : toast.error(
+                                    'Cannot select this event as it clashes with already selected event',
+                                  )
+                            }
                             style={{
                               zIndex: 0,
-                              pointerEvents: disabledEvents.includes(event.id) ? 'none' : 'auto',
-                              opacity: disabledEvents.includes(event.id) ? 0.5 : 1,
+                              pointerEvents: isEventDisabled(event) ? 'none' : 'auto',
+                              opacity: isEventDisabled(event) ? 0.3 : 1,
                             }}
                           >
                             <div className={styles.innerCard}>
@@ -375,14 +402,13 @@ const ListSubEvents = () => {
                                     whileHover={{ scale: 1.05 }}
                                     className={styles.manage}
                                     onClick={() => {
-                                      if (event.already_booked) {
-                                        setSubEventToRemove(event.id);
-                                      }
+                                      if (event.already_booked) setSubEventToRemove(event.id);
+                                      else handleSelectEvent(event);
                                     }}
                                   >
                                     {event.already_booked
                                       ? 'Cancel'
-                                      : selectedEvents.find((e) => e === event.id)
+                                      : selectedEvents.find((e) => e.id === event.id)
                                         ? 'Deselect'
                                         : 'Select'}
                                   </motion.button>

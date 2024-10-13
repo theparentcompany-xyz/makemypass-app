@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 
 import { publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
+import type { SelectedSubEventsType } from '../pages/app/SubEvents/User/types';
 import { FormFieldType, SubEventType } from './types';
 
 export const getSubEvents = (
@@ -23,7 +24,7 @@ export const getSubEvents = (
 export const getSubEventForm = (
   eventId: string,
   eventRegisterId: string,
-  selectedSubEventIds: string[],
+  selectedSubEventIds: SelectedSubEventsType[],
   setSubEventForm: React.Dispatch<React.SetStateAction<FormFieldType[]>>,
 ) => {
   publicGateway
@@ -32,7 +33,6 @@ export const getSubEventForm = (
     })
     .then((response) => {
       setSubEventForm(response.data.response.form);
-    
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
@@ -43,14 +43,14 @@ export const subEventRegister = (
   eventId: string,
   eventRegisterId: string,
   formData: Record<string, string | string[]>,
-  selectedEvents: string[],
+  selectedEvents: SelectedSubEventsType[],
   setFormErrors: React.Dispatch<React.SetStateAction<Record<string, string[]>>>,
   setTriggerFetch: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const backendFormData = new FormData();
 
   selectedEvents.forEach((eventId) => {
-    backendFormData.append('sub_event_ids[]', eventId);
+    if (!eventId.alreadyRegistered) backendFormData.append('sub_event_ids[]', eventId.id);
   });
 
   //Trim the formData to remove spaces
@@ -99,7 +99,7 @@ export const removeSubEvent = (
   eventId: string,
   eventRegisterId: string,
   subEventId: string,
-  setSelectedEvents: Dispatch<SetStateAction<string[]>>,
+  setSelectedEvents: Dispatch<SetStateAction<SelectedSubEventsType[]>>,
   setSubEventToRemove: Dispatch<SetStateAction<string | null>>,
   setTriggerFetch: Dispatch<SetStateAction<boolean>>,
 ) => {
@@ -108,7 +108,7 @@ export const removeSubEvent = (
     .then(() => {
       toast.success('Sub Event removed successfully');
       setSelectedEvents((selectedEvents) =>
-        selectedEvents.filter((eventId) => eventId !== subEventId),
+        selectedEvents.filter((eventId) => eventId.id !== subEventId),
       );
       setSubEventToRemove(null);
       setTimeout(() => {
