@@ -13,11 +13,10 @@ import Theme from '../../../../components/Theme/Theme';
 import { getDay, getMonthAbbreviation } from '../../EventPage/constants';
 import styles from './ListSubEvents.module.css';
 
-// Helper function to group events by start date and time
 const groupEventsByDateAndTime = (events: SubEventType[]) => {
   return events.reduce((acc: Record<string, Record<string, SubEventType[]>>, event) => {
-    const eventDate = formatDate(event.start_time); // Format to group by date
-    const eventTime = formatTime(event.start_time); // Format to group by time
+    const eventDate = formatDate(event.start_time);
+    const eventTime = formatTime(event.start_time);
     if (!acc[eventDate]) {
       acc[eventDate] = {};
     }
@@ -32,7 +31,8 @@ const groupEventsByDateAndTime = (events: SubEventType[]) => {
 const ListSubEvents = () => {
   const [subEvents, setSubEvents] = useState<SubEventType[]>([]);
   const [eventId, setEventId] = useState('');
-  const [selectedEvents, setSelectedEvents] = useState<SubEventType[]>([]);
+  const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
+  const [disabledEvents, setDisabledEvents] = useState<string[]>([]);
   const [showDetailedView, setShowDetailedView] = useState<SubEventType | null>(null);
 
   const { eventTitle, eventRegisterId } = useParams<{
@@ -60,11 +60,16 @@ const ListSubEvents = () => {
   }, [eventId, eventRegisterId]);
 
   const handleSelectEvent = (event: SubEventType) => {
-    const alreadySelected = selectedEvents.find((e) => e.id === event.id);
+    const alreadySelected = selectedEvents.find((e) => e === event.id);
     if (alreadySelected) {
-      setSelectedEvents(selectedEvents.filter((e) => e.id !== event.id));
+      setSelectedEvents(selectedEvents.filter((e) => e !== event.id));
+      setDisabledEvents([]);
     } else {
-      setSelectedEvents([...selectedEvents, event]);
+      setSelectedEvents([...selectedEvents, event.id]);
+      const simultaneousEvents = subEvents.filter(
+        (e) => e.start_time === event.start_time && e.id !== event.id,
+      );
+      setDisabledEvents(simultaneousEvents.map((e) => e.id));
     }
   };
 
@@ -156,7 +161,7 @@ const ListSubEvents = () => {
                   onClick={() => handleSelectEvent(showDetailedView)}
                   className={styles.manage}
                 >
-                  {selectedEvents.find((e) => e.id === showDetailedView.id) ? 'Deselect' : 'Select'}
+                  {selectedEvents.find((e) => e === showDetailedView.id) ? 'Deselect' : 'Select'}
                 </motion.button>
               </div>
             </div>
@@ -179,11 +184,15 @@ const ListSubEvents = () => {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.5 }}
                           className={`${styles.eventCard} ${
-                            selectedEvents.find((e) => e.id === event.id) ? styles.selectedCard : ''
+                            selectedEvents.find((e) => e === event.id) ? styles.selectedCard : ''
                           }`} // Add a selected class if event is selected
-                          onClick={() => handleSelectEvent(event)} // Handle select
+                          onClick={() =>
+                            !disabledEvents.includes(event.id) && handleSelectEvent(event)
+                          } // Handle select
                           style={{
                             zIndex: 0,
+                            pointerEvents: disabledEvents.includes(event.id) ? 'none' : 'auto',
+                            opacity: disabledEvents.includes(event.id) ? 0.5 : 1,
                           }}
                         >
                           <div className={styles.innerCard}>
@@ -260,7 +269,7 @@ const ListSubEvents = () => {
                                   whileHover={{ scale: 1.05 }}
                                   className={styles.manage}
                                 >
-                                  {selectedEvents.find((e) => e.id === event.id)
+                                  {selectedEvents.find((e) => e === event.id)
                                     ? 'Deselect'
                                     : 'Select'}
                                 </motion.button>
@@ -283,6 +292,15 @@ const ListSubEvents = () => {
           </div>
         ))}
       </div>
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        className={styles.submitButton}
+        onClick={() => {
+          toast.success('Events selected successfully');
+        }}
+      >
+        Submit
+      </motion.button>
     </Theme>
   );
 };

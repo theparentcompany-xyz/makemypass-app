@@ -7,7 +7,12 @@
   margin: auto;
   overflow: hidden;
   height: 100%;
-  padding: 0 1.25rem;
+}
+
+@media screen and (max-width: 1330px) {
+  .subEventsListingContainer {
+    padding: 0 1.25rem;
+  }
 }
 
 .dateHeader {
@@ -268,7 +273,7 @@
   margin-top: 1rem;
 }
 
-.eventDescription{
+.eventDescription {
   margin-bottom: 1rem;
 }
 
@@ -288,3 +293,14 @@
   color: #a4a4a4;
 }
 
+.submitButton {
+  padding: 0.5rem 2rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #000;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+}
