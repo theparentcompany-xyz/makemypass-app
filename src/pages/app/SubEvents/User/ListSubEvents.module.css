@@ -1,4 +1,4 @@
-.eventsContainer {
+.subEventsListingContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -6,16 +6,66 @@
   z-index: 2;
   margin: auto;
   overflow: hidden;
+  height: 100%;
+  padding: 0 1.25rem;
+}
 
+.dateHeader {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  color: white;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.timeHeader {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: #a4a4a4;
+  text-align: left;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.eventsContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
   row-gap: 1rem;
   column-gap: 1rem;
+}
 
-  font-family: 'Inter', sans-serif;
+.event {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .eventCard {
-  max-width: 18rem;
-  min-width: 18rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+  max-width: 20rem;
+  min-width: 20rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  color: white;
+}
+
+.eventCard:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.selectedCard {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .innerCard {
@@ -23,51 +73,158 @@
   flex-direction: row;
   align-items: flex-start;
   column-gap: 1rem;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 8px;
-  padding: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  transition: background 0.2s ease-in-out;
-
-  font-family: 'Inter';
-}
-
-.innerCard:hover {
-  background: rgba(255, 255, 255, 0.08);
 }
 
 .eventDetails {
   width: 100%;
+}
+
+.eventDate {
+  margin-right: 1rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.eventDate,
+.eventPlace {
+  margin-top: 0.25rem;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
 }
 
-.eventDetailsHeader {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
+.dateBox {
+  width: 3rem;
+
+  height: 3rem;
+  border: 2px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
 }
 
-.date {
-  font-size: 0.8rem;
-  color: #a4a4a4;
-  opacity: 0.9;
-  margin-bottom: 0.5rem;
-}
-
-.eventName {
-  font-size: 1rem;
+.eventMonth {
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
   font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.04);
   color: #fff;
   font-family: 'Inter', sans-serif;
+}
+
+.eventDateNum {
+  margin: 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.eventDateText {
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  max-width: 15rem;
+}
+
+.eventTimeText {
+  margin-top: 0.5rem;
+  max-width: 10rem;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #bbbaba;
+  word-wrap: break-all;
+  font-family: 'Inter', sans-serif;
+}
+
+.eventTimeText span {
+  word-break: break-all;
+}
+
+.locationBox {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 2.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+}
+
+.eventDatePlace {
+  padding-right: 0;
+  width: 100%;
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+
+.banner {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  fill: #d8ffff11;
+  max-width: 23rem;
+  max-height: 9rem;
+  object-fit: cover;
+}
+
+.eventTitle {
+  font-size: 1.25rem;
+  max-width: 10;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  max-width: 26rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 1rem;
+  column-gap: 0.5rem;
+
+  position: absolute;
+  bottom: 1rem;
+}
+
+.editEventButton {
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+}
+
+@media (max-width: 923px) {
+  .buttons {
+    position: relative;
+    justify-content: flex-start;
+    padding: 1rem 0;
+  }
+}
+
+@media (max-width: 435px) {
+  .banner {
+    padding: 0;
+  }
+
+  .eventDatePlace,
+  .headingTexts {
+    padding-left: 0.5rem;
+  }
 }
 
 .manage {
   width: 6rem;
   border-radius: 8px;
-  margin-top: 1rem;
   background: rgba(255, 255, 255, 0.08);
   border: none;
   color: #a4a4a4;
@@ -77,28 +234,57 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  column-gap: 0.25rem;
+  left: 1rem;
   cursor: pointer;
   transition: background 0.2s ease-in-out;
 }
 
 .manage:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 @media (max-width: 720px) {
-  .innerCard {
+  .eventsContainer {
     flex-direction: column;
-    align-items: flex-start;
-    row-gap: 1rem;
+    align-items: stretch;
+  }
+
+  .eventCard {
+    max-width: 100%;
+    min-width: auto;
   }
 }
 
-@media (max-width: 1330px) {
-  .subEventsListingContainer {
-    padding: 0 1.25rem;
-  }
+.detailedView {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  z-index: 2;
+  margin: auto;
+
+  margin-top: 1rem;
 }
 
-.selectedCard {
-  border: 2px solid #4caf50; /* Green border to indicate selection */
+.eventDescription{
+  margin-bottom: 1rem;
 }
+
+.eventDescription p:first-of-type {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  color: #a4a4a4;
+}
+
+.eventDescription p:not(:first-of-type) {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  color: #a4a4a4;
+}
+
