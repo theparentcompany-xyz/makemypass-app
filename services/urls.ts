@@ -170,6 +170,14 @@ export const makeMyPass = {
   //Sub-Event
   viewSubEvent: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/sub-events/${eventId}/view/${eventRegisterId}/`), //Till Editor
+  getSubEventForm: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/sub-events/${eventId}/get-form/${eventRegisterId}/`), //Till Editor
+  subEventRegister: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/sub-events/${eventId}/register/${eventRegisterId}/`), //Till Viewer
+  removeRegisteredSubEvent: (eventId: string, eventRegisterId: string, userSubEventId: string) =>
+    makeMyPassURL(
+      `/sub-events/${eventId}/remove-register/${eventRegisterId}/sub-event/${userSubEventId}/`,
+    ), //Till Viewer
 };
 
 export const makeMyPassSocket = {

@@ -48,6 +48,8 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  overflow: hidden;
+  position: relative;
 }
 
 .eventCard {
@@ -228,7 +230,6 @@
 }
 
 .manage {
-  width: 6rem;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.08);
   border: none;
@@ -303,4 +304,41 @@
   font-size: 0.9rem;
   cursor: pointer;
   border: none;
+}
+
+.cancelButton {
+  padding: 0.5rem 2rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+}
+
+.formContainer {
+  width: 100%;
+}
+
+.modalDescription {
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  color: #a4a4a4;
+}
+
+.registedTag {
+  font-size: 0.9rem;
+  font-weight: 300;
+  font-family: 'Inter', sans-serif;
+  color: #000;
+  margin-top: 1rem;
+  background: #fff;
+  padding: 0.25rem 1.5rem;
+  position: absolute;
+  top: 6px;
+  right: -29px;
+  transform: rotate(45deg); /* Rotate the element */
 }
