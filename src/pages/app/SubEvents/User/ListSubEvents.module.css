@@ -17,7 +17,7 @@
 
 .dateHeader {
   font-family: 'Inter', sans-serif;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   color: white;
   margin-bottom: 1rem;
   margin-top: 1rem;
@@ -27,7 +27,7 @@
 .timeHeader {
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
-  color: #a4a4a4;
+  color: #c5c5c5;
   text-align: left;
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -72,7 +72,11 @@
 }
 
 .selectedCard {
-  background: rgba(255, 255, 255, 0.12);
+  border: 2px solid #fff;
+}
+
+.disabledCard{
+  opacity: 0.6;
 }
 
 .innerCard {
@@ -85,7 +89,6 @@
 .eventDetails {
   width: 100%;
 }
-
 
 .banner {
   width: 100%;
@@ -226,16 +229,21 @@
   border: none;
 }
 
-.cancelButton {
-  padding: 0.5rem 2rem;
-  margin-top: 1rem;
+.cardPrimaryButton {
   border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.04);
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  cursor: pointer;
+  background: white;
   border: none;
+  color: #000;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.25rem;
+  left: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
 }
 
 .formContainer {
@@ -251,9 +259,7 @@
 
 .registedTag {
   font-size: 0.9rem;
-  font-weight: 500;
   font-family: 'Inter', sans-serif;
-  color: #000;
   margin-top: 1rem;
   background: #fff;
   padding: 0.25rem 1.5rem;

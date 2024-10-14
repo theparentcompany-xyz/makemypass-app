@@ -1,4 +1,4 @@
 export type SelectedSubEventsType = {
-  id: string,
-  alreadyRegistered: boolean,
+  id: string;
+  alreadyRegistered: boolean;
 };

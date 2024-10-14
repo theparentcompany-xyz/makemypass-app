@@ -28,22 +28,20 @@ export const getSubEventForm = (
   eventId: string,
   eventRegisterId: string,
   selectedSubEventIds: SelectedSubEventsType[],
-  setSubEventForm: React.Dispatch<React.SetStateAction<FormFieldType[]>>,
-  setShowFormModal: React.Dispatch<React.SetStateAction<boolean>>,
-) => {
-  publicGateway
-    .post(makeMyPass.getSubEventForm(eventId, eventRegisterId), {
-      sub_event_ids: selectedSubEventIds.map((subEvent) => subEvent.id),
-    })
-    .then((response) => {
-      setSubEventForm(response.data.response.form);
-      if (response.data.response.form.length > 0) {
-        setShowFormModal(true);
-      }
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-    });
+): Promise<FormFieldType[]> => {
+  return new Promise((resolve, reject) => {
+    publicGateway
+      .post(makeMyPass.getSubEventForm(eventId, eventRegisterId), {
+        sub_event_ids: selectedSubEventIds.map((subEvent) => subEvent.id),
+      })
+      .then((response) => {
+        resolve(response.data.response.form);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+        reject(error);
+      });
+  });
 };
 
 export const subEventRegister = (

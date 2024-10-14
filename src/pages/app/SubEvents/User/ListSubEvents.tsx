@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import { HashLoader } from 'react-spinners';
 
 import { getEventId } from '../../../../apis/events';
-import { getSubEventForm, getSubEvents } from '../../../../apis/subevents';
+import { getSubEventForm, getSubEvents, subEventRegister } from '../../../../apis/subevents';
 import { FormFieldType, SubEventType } from '../../../../apis/types';
 import { formatDate, formatTime } from '../../../../common/commonFunctions';
 import Theme from '../../../../components/Theme/Theme';
@@ -79,20 +79,6 @@ const ListSubEvents = () => {
     setSelectedEvents(preSelectedEvents);
   }, [subEvents]);
 
-  // useEffect(() => {
-  //   if (subEventForm.length === 0 && eventRegisterId && eventId) {
-  //     subEventRegister(
-  //       eventId,
-  //       eventRegisterId,
-  //       formData,
-  //       selectedEvents,
-  //       setFormErrors,
-  //       setTriggerFetch,
-  //     );
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [subEventForm]);
-
   const handleSelectEvent = (event: SubEventType) => {
     if (selectedEvents.find((e) => e.id === event.id)) {
       setSelectedEvents(selectedEvents.filter((e) => e.id !== event.id));
@@ -105,7 +91,25 @@ const ListSubEvents = () => {
 
   const handleSubmit = () => {
     if (eventId && eventRegisterId)
-      getSubEventForm(eventId, eventRegisterId, selectedEvents, setSubEventForm, setShowFormModal);
+      getSubEventForm(eventId, eventRegisterId, selectedEvents)
+        .then((form) => {
+          if (form.length !== 0) {
+            setSubEventForm(form);
+            setShowFormModal(true);
+          } else {
+            subEventRegister(
+              eventId,
+              eventRegisterId,
+              formData,
+              selectedEvents,
+              setFormErrors,
+              setTriggerFetch,
+            );
+          }
+        })
+        .catch(() => {
+          toast.error('Unable to process the request');
+        });
   };
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
@@ -113,21 +117,24 @@ const ListSubEvents = () => {
   };
 
   const isEventDisabled = (event: SubEventType) => {
-    if (event.already_booked) return false;
+    const eventStartTime = new Date(event.start_time);
+    const eventEndTime = new Date(event.end_time);
 
-    return selectedEvents.some((e) => {
-      const selectedEvent = subEvents.find((se) => se.id === e.id && event.id !== e.id);
-      if (!selectedEvent) return false;
+    return selectedEvents.some((selectedEvent) => {
+      const selectedEventStartTime = new Date(
+        subEvents.find((e) => e.id === selectedEvent.id)?.start_time || '',
+      );
+      const selectedEventEndTime = new Date(
+        subEvents.find((e) => e.id === selectedEvent.id)?.end_time || '',
+      );
 
-      const eventDate = formatDate(event.start_time);
-      const selectedEventDate = formatDate(selectedEvent.start_time);
-
-      if (eventDate === selectedEventDate) console.log(event.title, selectedEvent.title);
+      if (event.id === selectedEvent.id || !selectedEventStartTime || !selectedEventEndTime) {
+        return false;
+      }
 
       return (
-        eventDate === selectedEventDate &&
-        new Date(event.start_time) >= new Date(selectedEvent.start_time) &&
-        new Date(event.end_time) <= new Date(selectedEvent.end_time)
+        (eventStartTime <= selectedEventStartTime && eventEndTime > selectedEventStartTime) ||
+        (selectedEventStartTime <= eventStartTime && selectedEventEndTime > eventStartTime)
       );
     });
   };
@@ -150,22 +157,21 @@ const ListSubEvents = () => {
         handleSelectEvent={handleSelectEvent}
       />
 
-     
-        <SubEventForm
-          subEventForm={subEventForm}
-          setSubEventForm={setSubEventForm}
-          formErrors={formErrors}
-          formData={formData}
-          onFieldChange={onFieldChange}
-          eventId={eventId}
-          eventRegisterId={eventRegisterId}
-          selectedEvents={selectedEvents}
-          setFormErrors={setFormErrors}
-          setTriggerFetch={setTriggerFetch}
-          setShowFormModal={setShowFormModal}
-          showFormModal={showFormModal}
-        />
-      
+      <SubEventForm
+        subEventForm={subEventForm}
+        setSubEventForm={setSubEventForm}
+        formErrors={formErrors}
+        formData={formData}
+        onFieldChange={onFieldChange}
+        eventId={eventId}
+        eventRegisterId={eventRegisterId}
+        selectedEvents={selectedEvents}
+        setFormErrors={setFormErrors}
+        setTriggerFetch={setTriggerFetch}
+        setShowFormModal={setShowFormModal}
+        showFormModal={showFormModal}
+      />
+
       {!isEventsLoading ? (
         <>
           <div className={styles.subEventsListingContainer}>
@@ -178,7 +184,7 @@ const ListSubEvents = () => {
                     {Object.keys(groupedEvents[date]).map((time) => (
                       <div key={time}>
                         {/* Display time header */}
-                        <p className={styles.timeHeader}>{time}</p>
+                        <p className={styles.timeHeader}>Events @ {time}</p>
                         <div className={styles.eventsContainer}>
                           {groupedEvents[date][time].map((event) => (
                             <div key={event.id} className={styles.event}>
@@ -186,22 +192,17 @@ const ListSubEvents = () => {
                                 <p className={styles.registedTag}>Registered</p>
                               )}
                               <div>
-                                <motion.div
-                                  initial={{ opacity: 0, y: 50 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  transition={{ duration: 0.5 }}
+                                <div
                                   className={`${styles.eventCard} ${
-                                    selectedEvents.find((e) => e.id === event.id)
+                                    selectedEvents.find(
+                                      (e) => e.id === event.id && !event.already_booked,
+                                    )
                                       ? styles.selectedCard
-                                      : ''
+                                      : isEventDisabled(event) && styles.disabledCard
                                   }`}
                                   onClick={() =>
                                     !isEventDisabled(event) && handleSelectEvent(event)
                                   }
-                                  style={{
-                                    zIndex: 0,
-                                    opacity: isEventDisabled(event) ? 0.3 : 1,
-                                  }}
                                 >
                                   <div className={styles.innerCard}>
                                     <div className={styles.eventDetails}>
@@ -212,10 +213,10 @@ const ListSubEvents = () => {
                                       <DatePlace event={event} />
 
                                       <div className='row'>
-                                        {
+                                        {!isEventDisabled(event) && (
                                           <motion.button
                                             whileHover={{ scale: 1.05 }}
-                                            className={styles.manage}
+                                            className={styles.cardPrimaryButton}
                                             disabled={isEventDisabled(event)}
                                             onClick={() => {
                                               if (event.already_booked)
@@ -224,12 +225,12 @@ const ListSubEvents = () => {
                                             }}
                                           >
                                             {event.already_booked
-                                              ? 'Cancel'
+                                              ? 'Withdraw'
                                               : selectedEvents.find((e) => e.id === event.id)
                                                 ? 'Deselect'
                                                 : 'Select'}
                                           </motion.button>
-                                        }
+                                        )}
                                         <motion.button
                                           onClick={() => setShowDetailedView(event)}
                                           className={styles.manage}
@@ -239,7 +240,7 @@ const ListSubEvents = () => {
                                       </div>
                                     </div>
                                   </div>
-                                </motion.div>
+                                </div>
                               </div>
                             </div>
                           ))}
@@ -250,15 +251,17 @@ const ListSubEvents = () => {
                 </div>
               ))}
           </div>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            className={styles.submitButton}
-            onClick={() => {
-              handleSubmit();
-            }}
-          >
-            Submit
-          </motion.button>
+          <div className={styles.stickButtonContainer}>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              className={styles.submitButton}
+              onClick={() => {
+                handleSubmit();
+              }}
+            >
+              Submit
+            </motion.button>
+          </div>
         </>
       ) : (
         <div className='center'>

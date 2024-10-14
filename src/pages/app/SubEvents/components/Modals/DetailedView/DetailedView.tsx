@@ -6,7 +6,7 @@ import { SubEventType } from '../../../../../../apis/types';
 import Modal from '../../../../../../components/Modal/Modal';
 import { getDay, getMonthAbbreviation } from '../../../../EventPage/constants';
 import styles from '../../../User/ListSubEvents.module.css';
-import type  { SelectedSubEventsType } from '../../../User/types';
+import type { SelectedSubEventsType } from '../../../User/types';
 
 const DetailedView = ({
   showDetailedView,

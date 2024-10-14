@@ -27,6 +27,7 @@ const DatePlace = ({ event }: { event: SubEventType }) => {
                 {new Date(event?.start_time).toLocaleTimeString([], {
                   hour: '2-digit',
                   minute: '2-digit',
+                  hour12: true,
                 })}{' '}
                 -{' '}
                 {event?.end_time && (
@@ -34,6 +35,7 @@ const DatePlace = ({ event }: { event: SubEventType }) => {
                     {new Date(event?.end_time).toLocaleTimeString([], {
                       hour: '2-digit',
                       minute: '2-digit',
+                      hour12: true,
                     })}
                     {', '}
                     {new Date(event?.end_time).toLocaleDateString([], {
