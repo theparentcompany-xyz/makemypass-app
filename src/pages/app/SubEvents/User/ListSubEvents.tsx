@@ -34,7 +34,7 @@ const groupEventsByDateAndTime = (events: SubEventType[]) => {
 const ListSubEvents = () => {
   const [subEvents, setSubEvents] = useState<SubEventType[]>([]);
   const [eventId, setEventId] = useState('');
-  const [selectedEvents, setSelectedEvents] = useState<SelectedSubEventsType[]>([]);
+  const [selectedEventsIds, setSelectedEventsIds] = useState<SelectedSubEventsType[]>([]);
   const [showDetailedView, setShowDetailedView] = useState<SubEventType | null>(null);
   const [subEventForm, setSubEventForm] = useState<FormFieldType[]>([]);
   const [formErrors, setFormErrors] = useState<Record<string, string[]>>({});
@@ -73,17 +73,20 @@ const ListSubEvents = () => {
 
   //Setting the preselected events
   useEffect(() => {
-    const preSelectedEvents = subEvents
-      .filter((event) => event.already_booked)
-      .map((event) => ({ id: event.id, alreadyRegistered: true }));
-    setSelectedEvents(preSelectedEvents);
+    if (!selectedEventsIds) {
+      const preSelectedEvents = subEvents
+        .filter((event) => event.already_booked)
+        .map((event) => ({ id: event.id, alreadyRegistered: true }));
+
+      setSelectedEventsIds(preSelectedEvents);
+    }
   }, [subEvents]);
 
   const handleSelectEvent = (event: SubEventType) => {
-    if (selectedEvents.find((e) => e.id === event.id)) {
-      setSelectedEvents(selectedEvents.filter((e) => e.id !== event.id));
+    if (selectedEventsIds.find((e) => e.id === event.id)) {
+      setSelectedEventsIds(selectedEventsIds.filter((e) => e.id !== event.id));
     } else {
-      setSelectedEvents([...selectedEvents, { id: event.id, alreadyRegistered: false }]);
+      setSelectedEventsIds([...selectedEventsIds, { id: event.id, alreadyRegistered: false }]);
     }
   };
 
@@ -91,7 +94,7 @@ const ListSubEvents = () => {
 
   const handleSubmit = () => {
     if (eventId && eventRegisterId)
-      getSubEventForm(eventId, eventRegisterId, selectedEvents)
+      getSubEventForm(eventId, eventRegisterId, selectedEventsIds)
         .then((form) => {
           if (form.length !== 0) {
             setSubEventForm(form);
@@ -101,7 +104,7 @@ const ListSubEvents = () => {
               eventId,
               eventRegisterId,
               formData,
-              selectedEvents,
+              selectedEventsIds,
               setFormErrors,
               setTriggerFetch,
             );
@@ -116,11 +119,11 @@ const ListSubEvents = () => {
     setFormData({ ...formData, [fieldName]: fieldValue });
   };
 
-  const isEventDisabled = (event: SubEventType) => {
+  const findConflictingEvent = (event: SubEventType) => {
     const eventStartTime = new Date(event.start_time);
     const eventEndTime = new Date(event.end_time);
 
-    return selectedEvents.some((selectedEvent) => {
+    const conflictingEvent = selectedEventsIds.find((selectedEvent) => {
       const selectedEventStartTime = new Date(
         subEvents.find((e) => e.id === selectedEvent.id)?.start_time || '',
       );
@@ -137,7 +140,23 @@ const ListSubEvents = () => {
         (selectedEventStartTime <= eventStartTime && selectedEventEndTime > eventStartTime)
       );
     });
+
+    return subEvents.find((e) => e.id === conflictingEvent?.id)?.title;
   };
+
+  useEffect(() => {
+    setSubEvents((prev) => {
+      return prev.map((subEvent) => {
+        const conflictingEventName = findConflictingEvent(subEvent);
+
+        if (conflictingEventName) {
+          subEvent.conflicting_event = conflictingEventName;
+        }
+
+        return subEvent;
+      });
+    });
+  }, [selectedEventsIds]);
 
   return (
     <Theme>
@@ -145,7 +164,7 @@ const ListSubEvents = () => {
         eventId={eventId}
         eventRegisterId={eventRegisterId}
         setSubEventToRemove={setSubEventToRemove}
-        setSelectedEvents={setSelectedEvents}
+        setSelectedEvents={setSelectedEventsIds}
         setTriggerFetch={setTriggerFetch}
         subEventToRemove={subEventToRemove}
       />
@@ -153,7 +172,7 @@ const ListSubEvents = () => {
       <DetailedView
         showDetailedView={showDetailedView}
         setShowDetailedView={setShowDetailedView}
-        selectedEvents={selectedEvents}
+        selectedEvents={selectedEventsIds}
         handleSelectEvent={handleSelectEvent}
       />
 
@@ -165,7 +184,7 @@ const ListSubEvents = () => {
         onFieldChange={onFieldChange}
         eventId={eventId}
         eventRegisterId={eventRegisterId}
-        selectedEvents={selectedEvents}
+        selectedEvents={selectedEventsIds}
         setFormErrors={setFormErrors}
         setTriggerFetch={setTriggerFetch}
         setShowFormModal={setShowFormModal}
@@ -187,62 +206,69 @@ const ListSubEvents = () => {
                         <p className={styles.timeHeader}>Events @ {time}</p>
                         <div className={styles.eventsContainer}>
                           {groupedEvents[date][time].map((event) => (
-                            <div key={event.id} className={styles.event}>
-                              {event.already_booked && (
-                                <p className={styles.registedTag}>Registered</p>
-                              )}
-                              <div>
-                                <div
-                                  className={`${styles.eventCard} ${
-                                    selectedEvents.find(
-                                      (e) => e.id === event.id && !event.already_booked,
-                                    )
-                                      ? styles.selectedCard
-                                      : isEventDisabled(event) && styles.disabledCard
-                                  }`}
-                                  onClick={() =>
-                                    !isEventDisabled(event) && handleSelectEvent(event)
-                                  }
-                                >
-                                  <div className={styles.innerCard}>
-                                    <div className={styles.eventDetails}>
-                                      <div className={styles.headingTexts}>
-                                        <p className={styles.eventTitle}>{event?.title}</p>
-                                      </div>
+                            <>
+                              <div key={event.id} className={styles.event}>
+                                {event.already_booked && (
+                                  <p className={styles.registedTag}>Registered</p>
+                                )}
+                                <div>
+                                  <div
+                                    className={`${styles.eventCard} ${
+                                      selectedEventsIds.find(
+                                        (e) => e.id === event.id && !event.already_booked,
+                                      )
+                                        ? styles.selectedCard
+                                        : event.conflicting_event && styles.disabledCard
+                                    }`}
+                                    onClick={() =>
+                                      !event.conflicting_event && handleSelectEvent(event)
+                                    }
+                                  >
+                                    <div className={styles.innerCard}>
+                                      <div className={styles.eventDetails}>
+                                        <div className={styles.headingTexts}>
+                                          <p className={styles.eventTitle}>{event?.title}</p>
+                                        </div>
 
-                                      <DatePlace event={event} />
+                                        <DatePlace event={event} />
 
-                                      <div className='row'>
-                                        {!isEventDisabled(event) && (
+                                        <div className='row'>
+                                          {!event.conflicting_event && (
+                                            <motion.button
+                                              whileHover={{ scale: 1.05 }}
+                                              className={styles.cardPrimaryButton}
+                                              onClick={() => {
+                                                if (event.already_booked)
+                                                  setSubEventToRemove(event.id);
+                                                else handleSelectEvent(event);
+                                              }}
+                                            >
+                                              {event.already_booked
+                                                ? 'Withdraw'
+                                                : selectedEventsIds.find((e) => e.id === event.id)
+                                                  ? 'Deselect'
+                                                  : 'Select'}
+                                            </motion.button>
+                                          )}
                                           <motion.button
-                                            whileHover={{ scale: 1.05 }}
-                                            className={styles.cardPrimaryButton}
-                                            disabled={isEventDisabled(event)}
-                                            onClick={() => {
-                                              if (event.already_booked)
-                                                setSubEventToRemove(event.id);
-                                              else handleSelectEvent(event);
-                                            }}
+                                            onClick={() => setShowDetailedView(event)}
+                                            className={styles.manage}
                                           >
-                                            {event.already_booked
-                                              ? 'Withdraw'
-                                              : selectedEvents.find((e) => e.id === event.id)
-                                                ? 'Deselect'
-                                                : 'Select'}
+                                            View More
                                           </motion.button>
+                                        </div>
+
+                                        {event.conflicting_event && (
+                                          <p className={styles.conflictingMessage}>
+                                            Kindly unselect {event.conflicting_event}, to register.
+                                          </p>
                                         )}
-                                        <motion.button
-                                          onClick={() => setShowDetailedView(event)}
-                                          className={styles.manage}
-                                        >
-                                          View More
-                                        </motion.button>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            </>
                           ))}
                         </div>
                       </div>

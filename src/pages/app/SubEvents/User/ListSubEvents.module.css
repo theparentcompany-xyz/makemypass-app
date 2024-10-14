@@ -44,9 +44,9 @@
 
 .event {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
   overflow: hidden;
   position: relative;
@@ -75,7 +75,7 @@
   border: 2px solid #fff;
 }
 
-.disabledCard{
+.disabledCard {
   opacity: 0.6;
 }
 
@@ -107,6 +107,7 @@
   font-weight: 600;
   max-width: 26rem;
   font-family: 'Inter', sans-serif;
+
 }
 
 .buttons {
@@ -352,4 +353,13 @@
   width: 100%;
   opacity: 0.8;
   margin-bottom: 1rem;
+}
+
+.conflictingMessage{
+  margin-top: 0.5rem;
+  color: #f04b4b;
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
 }
