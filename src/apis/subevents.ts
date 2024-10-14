@@ -10,7 +10,9 @@ export const getSubEvents = (
   eventId: string,
   eventRegisterId: string,
   setSubEvents: React.Dispatch<React.SetStateAction<SubEventType[]>>,
+  setIsEventsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
+  setIsEventsLoading(true);
   publicGateway
     .get(makeMyPass.viewSubEvent(eventId, eventRegisterId))
     .then((response) => {
@@ -19,6 +21,7 @@ export const getSubEvents = (
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
+  setIsEventsLoading(false);
 };
 
 export const getSubEventForm = (

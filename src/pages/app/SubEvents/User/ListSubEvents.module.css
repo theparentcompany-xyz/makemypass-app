@@ -86,86 +86,6 @@
   width: 100%;
 }
 
-.eventDate {
-  margin-right: 1rem;
-  font-size: 0.85rem;
-  white-space: nowrap;
-}
-
-.eventDate,
-.eventPlace {
-  margin-top: 0.25rem;
-  display: flex;
-  align-items: center;
-  row-gap: 0.5rem;
-  column-gap: 0.5rem;
-}
-
-.dateBox {
-  width: 3rem;
-
-  height: 3rem;
-  border: 2px solid rgba(255, 255, 255, 0.04);
-  border-radius: 8px;
-}
-
-.eventMonth {
-  text-align: center;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.7rem;
-  font-weight: 500;
-  background-color: rgba(255, 255, 255, 0.04);
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-}
-
-.eventDateNum {
-  margin: 0.25rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  text-align: center;
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-}
-
-.eventDateText {
-  font-size: 0.8rem;
-  font-weight: 400;
-  font-family: 'Inter', sans-serif;
-  max-width: 15rem;
-}
-
-.eventTimeText {
-  margin-top: 0.5rem;
-  max-width: 10rem;
-  font-size: 0.7rem;
-  font-weight: 400;
-  color: #bbbaba;
-  word-wrap: break-all;
-  font-family: 'Inter', sans-serif;
-}
-
-.eventTimeText span {
-  word-break: break-all;
-}
-
-.locationBox {
-  margin-top: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 3rem;
-  height: 2.5rem;
-  border: 2px solid rgba(255, 255, 255, 0.04);
-  border-radius: 8px;
-}
-
-.eventDatePlace {
-  padding-right: 0;
-  width: 100%;
-  opacity: 0.8;
-  margin-bottom: 1rem;
-}
 
 .banner {
   width: 100%;
@@ -345,4 +265,85 @@
 
 .timeContaianer {
   margin-left: 1rem;
+}
+
+.eventDate {
+  margin-right: 1rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.eventDate,
+.eventPlace {
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+}
+
+.dateBox {
+  width: 3rem;
+
+  height: 3rem;
+  border: 2px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+}
+
+.eventMonth {
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.eventDateNum {
+  margin: 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.eventDateText {
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  max-width: 15rem;
+}
+
+.eventTimeText {
+  margin-top: 0.5rem;
+  max-width: 10rem;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #bbbaba;
+  word-wrap: break-all;
+  font-family: 'Inter', sans-serif;
+}
+
+.eventTimeText span {
+  word-break: break-all;
+}
+
+.locationBox {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 2.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+}
+
+.eventDatePlace {
+  padding-right: 0;
+  width: 100%;
+  opacity: 0.8;
+  margin-bottom: 1rem;
 }
