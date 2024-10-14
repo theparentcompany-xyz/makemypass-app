@@ -331,7 +331,7 @@
 
 .registedTag {
   font-size: 0.9rem;
-  font-weight: 300;
+  font-weight: 500;
   font-family: 'Inter', sans-serif;
   color: #000;
   margin-top: 1rem;
@@ -341,4 +341,8 @@
   top: 6px;
   right: -29px;
   transform: rotate(45deg); /* Rotate the element */
+}
+
+.timeContaianer {
+  margin-left: 1rem;
 }

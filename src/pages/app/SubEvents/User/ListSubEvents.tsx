@@ -45,6 +45,7 @@ const ListSubEvents = () => {
   const [formData, setFormData] = useState<Record<string, string | string[]>>({});
   const [subEventToRemove, setSubEventToRemove] = useState<string | null>(null);
   const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
+  const [showFormModal, setShowFormModal] = useState<boolean>(false);
 
   const { eventTitle, eventRegisterId } = useParams<{
     eventTitle: string;
@@ -93,11 +94,8 @@ const ListSubEvents = () => {
 
   const handleSelectEvent = (event: SubEventType) => {
     if (selectedEvents.find((e) => e.id === event.id)) {
-      console.log('Selected');
       setSelectedEvents(selectedEvents.filter((e) => e.id !== event.id));
     } else {
-      console.log('Not selected');
-
       setSelectedEvents([...selectedEvents, { id: event.id, alreadyRegistered: false }]);
     }
   };
@@ -106,7 +104,7 @@ const ListSubEvents = () => {
 
   const handleSubmit = () => {
     if (eventId && eventRegisterId)
-      getSubEventForm(eventId, eventRegisterId, selectedEvents, setSubEventForm);
+      getSubEventForm(eventId, eventRegisterId, selectedEvents, setSubEventForm, setShowFormModal);
   };
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
@@ -114,27 +112,46 @@ const ListSubEvents = () => {
   };
 
   const isEventDisabled = (event: SubEventType) => {
-    /*
-   iterate over the selectedEvents array and for each event in the array, find the start_time and end_time for the event from the subEvents
-    array and compare it with the start_time and end_time of the event passed as an argument. If the start_time and end_time of the event
-    passed as an argument lies between the start_time and end_time of the event in the selectedEvents array, return true.
-
-
-    */
-
     if (event.already_booked) return false;
 
     return selectedEvents.some((e) => {
-      const selectedEvent = subEvents.find((se) => se.id === e.id);
+      const selectedEvent = subEvents.find((se) => se.id === e.id && event.id !== e.id);
       if (!selectedEvent) return false;
+
       const eventDate = formatDate(event.start_time);
       const selectedEventDate = formatDate(selectedEvent.start_time);
+
+      if (eventDate === selectedEventDate) console.log(event.title, selectedEvent.title);
+
       return (
         eventDate === selectedEventDate &&
         new Date(event.start_time) >= new Date(selectedEvent.start_time) &&
         new Date(event.end_time) <= new Date(selectedEvent.end_time)
       );
     });
+  };
+
+  const showErrorMessage = (event: SubEventType) => {
+    const collidingEvents = selectedEvents
+      .map((e) => subEvents.find((se) => se.id === e.id))
+      .filter((selectedEvent) => {
+        if (!selectedEvent) return false;
+
+        const eventDate = formatDate(event.start_time);
+        const selectedEventDate = formatDate(selectedEvent.start_time);
+
+        return (
+          eventDate === selectedEventDate &&
+          new Date(event.start_time) >= new Date(selectedEvent.start_time) &&
+          new Date(event.end_time) <= new Date(selectedEvent.end_time)
+        );
+      })
+      .map((e) => e?.title)
+      .filter(Boolean);
+
+    if (collidingEvents.length > 0) {
+      toast.error(`This event timings clashes with: ${collidingEvents.join(', ')}`);
+    }
   };
 
   return (
@@ -261,7 +278,7 @@ const ListSubEvents = () => {
           </div>
         </Modal>
       )}
-      {subEventForm && subEventForm.length > 0 && (
+      {showFormModal && subEventForm && subEventForm.length > 0 && (
         <Modal title='Enter Additional Information' onClose={() => setSubEventForm([])} type='side'>
           <p className={styles.modalDescription}>
             Required below are the fields which are newly required for the selected events.
@@ -286,6 +303,7 @@ const ListSubEvents = () => {
                   selectedEvents,
                   setFormErrors,
                   setTriggerFetch,
+                  setShowFormModal,
                 );
             }}
           >
@@ -298,136 +316,144 @@ const ListSubEvents = () => {
           Object.keys(groupedEvents).map((date) => (
             <div key={date}>
               <p className={styles.dateHeader}>{date}</p> {/* Display date header */}
-              {Object.keys(groupedEvents[date]).map((time) => (
-                <div key={time}>
-                  <p className={styles.timeHeader}>{time}</p> {/* Display time header */}
-                  <div className={styles.eventsContainer}>
-                    {groupedEvents[date][time].map((event) => (
-                      <div key={event.id} className={styles.event}>
-                        {event.already_booked && <p className={styles.registedTag}>Registered</p>}
-                        <div>
-                          <motion.div
-                            initial={{ opacity: 0, y: 50 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className={`${styles.eventCard} ${
-                              selectedEvents.find((e) => e.id === event.id)
-                                ? styles.selectedCard
-                                : ''
-                            }`} // Add a selected class if event is selected
-                            onClick={() =>
-                              isEventDisabled(event)
-                                ? handleSelectEvent(event)
-                                : toast.error(
-                                    'Cannot select this event as it clashes with already selected event',
-                                  )
-                            }
-                            style={{
-                              zIndex: 0,
-                              pointerEvents: isEventDisabled(event) ? 'none' : 'auto',
-                              opacity: isEventDisabled(event) ? 0.3 : 1,
-                            }}
-                          >
-                            <div className={styles.innerCard}>
-                              <div className={styles.eventDetails}>
-                                <div className={styles.headingTexts}>
-                                  <p className={styles.eventTitle}>{event?.title}</p>
-                                </div>
-
-                                <div className={styles.eventDatePlace}>
-                                  <div className={styles.eventDate}>
-                                    {event?.start_time && (
-                                      <>
-                                        <div className={styles.dateBox}>
-                                          <p className={styles.eventMonth}>
-                                            {getMonthAbbreviation(event?.start_time)}
-                                          </p>
-                                          <p className={styles.eventDateNum}>
-                                            {getDay(event?.start_time)}
-                                          </p>
-                                        </div>
-                                        <div className={styles.eventDateTimeText}>
-                                          <p className={styles.eventDateText}>
-                                            {new Date(event?.start_time).toLocaleDateString([], {
-                                              weekday: 'long',
-                                              month: 'long',
-                                              day: 'numeric',
-                                              year: 'numeric',
-                                            }) ?? ''}
-                                          </p>
-                                          <p className={styles.eventTimeText}>
-                                            {new Date(event?.start_time).toLocaleTimeString([], {
-                                              hour: '2-digit',
-                                              minute: '2-digit',
-                                            })}{' '}
-                                            -{' '}
-                                            {event?.end_time && (
-                                              <>
-                                                {new Date(event?.end_time).toLocaleTimeString([], {
-                                                  hour: '2-digit',
-                                                  minute: '2-digit',
-                                                })}
-                                                {', '}
-                                                {new Date(event?.end_time).toLocaleDateString([], {
-                                                  month: 'long',
-                                                  day: 'numeric',
-                                                  year: 'numeric',
-                                                })}
-                                              </>
-                                            )}
-                                          </p>
-                                        </div>
-                                      </>
-                                    )}
+              <div className={styles.timeContaianer}>
+                {Object.keys(groupedEvents[date]).map((time) => (
+                  <div key={time}>
+                    <p className={styles.timeHeader}>{time}</p> {/* Display time header */}
+                    <div className={styles.eventsContainer}>
+                      {groupedEvents[date][time].map((event) => (
+                        <div key={event.id} className={styles.event}>
+                          {event.already_booked && <p className={styles.registedTag}>Registered</p>}
+                          <div>
+                            <motion.div
+                              initial={{ opacity: 0, y: 50 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.5 }}
+                              className={`${styles.eventCard} ${
+                                selectedEvents.find((e) => e.id === event.id)
+                                  ? styles.selectedCard
+                                  : ''
+                              }`} // Add a selected class if event is selected
+                              onClick={() =>
+                                isEventDisabled(event)
+                                  ? showErrorMessage(event)
+                                  : handleSelectEvent(event)
+                              }
+                              style={{
+                                zIndex: 0,
+                                opacity: isEventDisabled(event) ? 0.3 : 1,
+                              }}
+                            >
+                              <div className={styles.innerCard}>
+                                <div className={styles.eventDetails}>
+                                  <div className={styles.headingTexts}>
+                                    <p className={styles.eventTitle}>{event?.title}</p>
                                   </div>
-                                  <div className={styles.eventPlace}>
-                                    {event?.place && (
-                                      <>
-                                        <div className={styles.locationBox}>
-                                          <IoLocationOutline
-                                            size={25}
-                                            className={styles.locationIcon}
-                                          />
-                                        </div>
-                                        <div className={styles.eventDateTimeText}>
-                                          <p className={styles.eventDateText}>{event?.place}</p>
-                                        </div>
-                                      </>
-                                    )}
-                                  </div>
-                                </div>
 
-                                <div className='row'>
-                                  <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    className={styles.manage}
-                                    onClick={() => {
-                                      if (event.already_booked) setSubEventToRemove(event.id);
-                                      else handleSelectEvent(event);
-                                    }}
-                                  >
-                                    {event.already_booked
-                                      ? 'Cancel'
-                                      : selectedEvents.find((e) => e.id === event.id)
-                                        ? 'Deselect'
-                                        : 'Select'}
-                                  </motion.button>
-                                  <motion.button
-                                    onClick={() => setShowDetailedView(event)}
-                                    className={styles.manage}
-                                  >
-                                    View More
-                                  </motion.button>
+                                  <div className={styles.eventDatePlace}>
+                                    <div className={styles.eventDate}>
+                                      {event?.start_time && (
+                                        <>
+                                          <div className={styles.dateBox}>
+                                            <p className={styles.eventMonth}>
+                                              {getMonthAbbreviation(event?.start_time)}
+                                            </p>
+                                            <p className={styles.eventDateNum}>
+                                              {getDay(event?.start_time)}
+                                            </p>
+                                          </div>
+                                          <div className={styles.eventDateTimeText}>
+                                            <p className={styles.eventDateText}>
+                                              {new Date(event?.start_time).toLocaleDateString([], {
+                                                weekday: 'long',
+                                                month: 'long',
+                                                day: 'numeric',
+                                                year: 'numeric',
+                                              }) ?? ''}
+                                            </p>
+                                            <p className={styles.eventTimeText}>
+                                              {new Date(event?.start_time).toLocaleTimeString([], {
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                              })}{' '}
+                                              -{' '}
+                                              {event?.end_time && (
+                                                <>
+                                                  {new Date(event?.end_time).toLocaleTimeString(
+                                                    [],
+                                                    {
+                                                      hour: '2-digit',
+                                                      minute: '2-digit',
+                                                    },
+                                                  )}
+                                                  {', '}
+                                                  {new Date(event?.end_time).toLocaleDateString(
+                                                    [],
+                                                    {
+                                                      month: 'long',
+                                                      day: 'numeric',
+                                                      year: 'numeric',
+                                                    },
+                                                  )}
+                                                </>
+                                              )}
+                                            </p>
+                                          </div>
+                                        </>
+                                      )}
+                                    </div>
+                                    <div className={styles.eventPlace}>
+                                      {event?.place && (
+                                        <>
+                                          <div className={styles.locationBox}>
+                                            <IoLocationOutline
+                                              size={25}
+                                              className={styles.locationIcon}
+                                            />
+                                          </div>
+                                          <div className={styles.eventDateTimeText}>
+                                            <p className={styles.eventDateText}>{event?.place}</p>
+                                          </div>
+                                        </>
+                                      )}
+                                    </div>
+                                  </div>
+
+                                  <div className='row'>
+                                    {
+                                      <motion.button
+                                        whileHover={{ scale: 1.05 }}
+                                        className={styles.manage}
+                                        disabled={isEventDisabled(event)}
+                                        onClick={() => {
+                                          if (event.already_booked) setSubEventToRemove(event.id);
+                                          else handleSelectEvent(event);
+                                        }}
+                                      >
+                                        {event.already_booked
+                                          ? 'Cancel'
+                                          : selectedEvents.find((e) => e.id === event.id)
+                                            ? 'Deselect'
+                                            : 'Select'}
+                                      </motion.button>
+                                    }
+                                    <motion.button
+                                      onClick={() => setShowDetailedView(event)}
+                                      className={styles.manage}
+                                    >
+                                      View More
+                                    </motion.button>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </motion.div>
+                            </motion.div>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           ))}
       </div>

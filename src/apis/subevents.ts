@@ -26,13 +26,17 @@ export const getSubEventForm = (
   eventRegisterId: string,
   selectedSubEventIds: SelectedSubEventsType[],
   setSubEventForm: React.Dispatch<React.SetStateAction<FormFieldType[]>>,
+  setShowFormModal: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   publicGateway
     .post(makeMyPass.getSubEventForm(eventId, eventRegisterId), {
-      sub_event_ids: selectedSubEventIds,
+      sub_event_ids: selectedSubEventIds.map((subEvent) => subEvent.id),
     })
     .then((response) => {
       setSubEventForm(response.data.response.form);
+      if (response.data.response.form.length > 0) {
+        setShowFormModal(true);
+      }
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
@@ -46,6 +50,7 @@ export const subEventRegister = (
   selectedEvents: SelectedSubEventsType[],
   setFormErrors: React.Dispatch<React.SetStateAction<Record<string, string[]>>>,
   setTriggerFetch: React.Dispatch<React.SetStateAction<boolean>>,
+  setShowFormModal?: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const backendFormData = new FormData();
 
@@ -85,6 +90,8 @@ export const subEventRegister = (
     })
     .then(() => {
       toast.success('Registered successfully');
+      setFormErrors({});
+      setShowFormModal && setShowFormModal(false);
       setTimeout(() => {
         setTriggerFetch((prev) => !prev);
       }, 1000);
