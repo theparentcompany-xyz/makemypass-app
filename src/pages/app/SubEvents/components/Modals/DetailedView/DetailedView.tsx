@@ -9,11 +9,9 @@ import styles from './DetailedView.module.css';
 const DetailedView = ({
   showDetailedView,
   setShowDetailedView,
-
 }: {
   showDetailedView: SubEventType | null;
   setShowDetailedView: Dispatch<SetStateAction<SubEventType | null>>;
-
 }) => {
   if (!showDetailedView) return null;
   return (
@@ -92,8 +90,6 @@ const DetailedView = ({
               ></p>
             </div>
           </div>
-
-        
         </div>
       </div>
     </Modal>
