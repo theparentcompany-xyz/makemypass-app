@@ -61,7 +61,11 @@ const SubEventListing = ({
                                   ? styles.selectedCard
                                   : event.conflicting_event && styles.disabledCard
                               }`}
-                              onClick={() => !event.conflicting_event && handleSelectEvent(event)}
+                              onClick={() =>
+                                !event.conflicting_event &&
+                                !event.already_booked &&
+                                handleSelectEvent(event)
+                              }
                             >
                               <div className={styles.innerCard}>
                                 <div className={styles.eventDetails}>
