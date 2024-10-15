@@ -1,8 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
 
-import { publicGateway } from '../../services/apiGateway';
+import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
+import { formatDate } from '../common/commonFunctions';
+import { SubEventListType } from '../pages/app/CheckIns/pages/SubEvent/types';
+import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
 import type { SelectedSubEventsType } from '../pages/app/SubEvents/User/types';
 import { FormFieldType, SubEventType } from './types';
 
@@ -122,6 +125,57 @@ export const removeSubEvent = (
       setTimeout(() => {
         setTriggerFetch((prev) => !prev);
       }, 1000);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
+export const checkInUserSubEvent = async (
+  ticketCode: string,
+  eventId: string,
+  selectedSubEvent: SubEventListType | null,
+  setScanLogs: Dispatch<React.SetStateAction<LogType[]>>,
+) => {
+  if (selectedSubEvent)
+    privateGateway
+      .post(makeMyPass.scanGuestSubEventCheckin(eventId), {
+        sub_event_id: selectedSubEvent?.id,
+        ticket_code: ticketCode,
+      })
+      .then((response) => {
+        setScanLogs((prev) => [
+          ...prev,
+          {
+            message: `${response.data.message.general[0]}`,
+            timestamp: formatDate(new Date().toString(), true),
+            hasError: false,
+          },
+        ]);
+      })
+      .catch((error) => {
+        setScanLogs((prev) => [
+          ...prev,
+          {
+            message: `${error.response.data.message.general[0]}`,
+            timestamp: formatDate(new Date().toString(), true),
+            hasError: true,
+          },
+        ]);
+      });
+  else {
+    toast.error('Please select a sub-event to check-in');
+  }
+};
+
+export const listCheckInSubEvents = async (
+  eventId: string,
+  setSubEvents: Dispatch<React.SetStateAction<SubEventListType[]>>,
+) => {
+  privateGateway
+    .get(makeMyPass.scanGuestSubEventList(eventId))
+    .then((response) => {
+      setSubEvents(response.data.response.sub_events);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');

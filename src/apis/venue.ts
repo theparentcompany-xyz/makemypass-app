@@ -22,23 +22,6 @@ export const listGuestVenues = async (
     });
 };
 
-export const listEventVenues = async (
-  eventId: string,
-  setVenue: Dispatch<React.SetStateAction<VenueCRUDType>>,
-) => {
-  privateGateway
-    .get(makeMyPass.eventVenueList(eventId))
-    .then((response) => {
-      setVenue((prev) => ({
-        ...prev,
-        venueList: response.data.response.venues,
-      }));
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-    });
-};
-
 export const createEventVenue = async (
   eventId: string,
   venueName: string,
@@ -142,4 +125,21 @@ export const checkInUserVenue = async (
   else {
     toast.error('Please select a venue to check-in');
   }
+};
+
+export const listEventVenues = async (
+  eventId: string,
+  setVenue: Dispatch<React.SetStateAction<VenueCRUDType>>,
+) => {
+  privateGateway
+    .get(makeMyPass.eventVenueList(eventId))
+    .then((response) => {
+      setVenue((prev) => ({
+        ...prev,
+        venueList: response.data.response.venues,
+      }));
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
 };

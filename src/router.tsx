@@ -9,6 +9,7 @@ import CheckIns from './pages/app/CheckIns/CheckIns';
 import CheckOutScan from './pages/app/CheckIns/pages/CheckOutScan/CheckOutScan';
 import Perks from './pages/app/CheckIns/pages/Perks/Perks';
 import ScanQR from './pages/app/CheckIns/pages/ScanQR/ScanQR';
+import SubEvent from './pages/app/CheckIns/pages/SubEvent/SubEvent';
 import Venue from './pages/app/CheckIns/pages/Venue/Venue';
 import Coupon from './pages/app/Coupon/Coupon';
 import CreateEvent from './pages/app/CreateEvent/CreateEvent';
@@ -164,6 +165,14 @@ const routes: RouteObject[] = [
         element: (
           <RoleChecker roles={TillRoles.VOLUNTEER}>
             <CheckOutScan />
+          </RoleChecker>
+        ),
+      },
+      {
+        path: '/:eventTitle/checkins/checkin/sub-event',
+        element: (
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
+            <SubEvent />
           </RoleChecker>
         ),
       },

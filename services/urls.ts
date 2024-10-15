@@ -22,6 +22,10 @@ export const makeMyPass = {
   scanGuestPerkClaim: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/perk/claim`), //Till Volunteer
   scanGuestPerkList: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/perk/list`), //Till Viewer, Patch Editor
   scanGuestPrint: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/print`), //Till Volunteer
+  scanGuestSubEventCheckin: (eventId: string) =>
+    makeMyPassURL(`/scan-guest/${eventId}/sub-event/checkin/`), //Till Volunteer
+  scanGuestSubEventList: (eventId: string) =>
+    makeMyPassURL(`/scan-guest/${eventId}/sub-event/list`), //Till Volunteer
 
   //Manage Guests
   eventCreate: makeMyPassURL(`/manage-event/create/`), // SuperUser
