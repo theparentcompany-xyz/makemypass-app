@@ -17,9 +17,9 @@ import {
 import { FiGlobe, FiMail, FiPhone } from 'react-icons/fi';
 import { GrLocation } from 'react-icons/gr';
 import { HiOutlineTicket, HiOutlineUserGroup } from 'react-icons/hi2';
-import { IoCloseOutline } from 'react-icons/io5';
+import { IoCheckmarkDoneOutline, IoCloseOutline } from 'react-icons/io5';
 import { LuPencil } from 'react-icons/lu';
-import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
+import { MdDatasetLinked, MdOutlineShoppingCartCheckout } from 'react-icons/md';
 import {
   TbHeartHandshake,
   TbMailStar,
@@ -409,6 +409,38 @@ const EditEvent = () => {
                         setEventData({
                           ...eventData,
                           need_confirmation: !eventData.need_confirmation,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className={styles.option}>
+                    <label>
+                      <IoCheckmarkDoneOutline size={25} color='#949597' />
+                      Check In Confirmation
+                    </label>
+                    <Slider
+                      checked={eventData.checkin_confirmation_required as boolean}
+                      text={''}
+                      onChange={() =>
+                        setEventData({
+                          ...eventData,
+                          checkin_confirmation_required: !eventData.checkin_confirmation_required,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className={styles.option}>
+                    <label>
+                      <MdDatasetLinked size={25} color='#949597' />
+                      Link another ID
+                    </label>
+                    <Slider
+                      checked={eventData.map_new_code as boolean}
+                      text={''}
+                      onChange={() =>
+                        setEventData({
+                          ...eventData,
+                          map_new_code: !eventData.map_new_code,
                         })
                       }
                     />
