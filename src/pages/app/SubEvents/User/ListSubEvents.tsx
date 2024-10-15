@@ -14,7 +14,6 @@ import SubEventForm from '../components/Modals/SubEventForm/SubEventForm';
 import SubEventListing from '../components/SubEventListing/SubEventListing';
 import styles from './ListSubEvents.module.css';
 import type { SelectedSubEventsType } from './types';
-import { ImWondering, ImWondering2 } from 'react-icons/im';
 
 const ListSubEvents = () => {
   const [subEvents, setSubEvents] = useState<SubEventType[]>([]);

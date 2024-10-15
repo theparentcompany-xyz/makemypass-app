@@ -182,6 +182,10 @@ export const makeMyPass = {
     makeMyPassURL(
       `/sub-events/${eventId}/remove-register/${eventRegisterId}/sub-event/${userSubEventId}/`,
     ), //Till Viewer
+  listSubEvents: (eventId: string) => makeMyPassURL(`/sub-events/${eventId}/list/`), //Till Viewer
+  createNewSubEvent: (eventId: string) => makeMyPassURL(`/sub-events/${eventId}/create/`), //Till Editor
+  updateSubEvent: (eventId: string, subEventId: string) =>
+    makeMyPassURL(`/sub-event/${eventId}/update/${subEventId}/`), //Till Editor
 };
 
 export const makeMyPassSocket = {

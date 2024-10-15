@@ -185,3 +185,50 @@ export const listCheckInSubEvents = async (
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };
+
+//Dashboard.tsx
+
+export const listDashboardSubEvents = async (
+  eventId: string,
+  setSubEvents: Dispatch<React.SetStateAction<SubEventListType[]>>,
+) => {
+  privateGateway
+    .get(makeMyPass.listSubEvents(eventId))
+    .then((response) => {
+      setSubEvents(response.data.response);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
+export const createNewSubEvent = async (
+  eventId: string,
+  subEvent: SubEventListType,
+  setSubEvents: Dispatch<React.SetStateAction<SubEventListType[]>>,
+) => {
+  privateGateway
+    .post(makeMyPass.createNewSubEvent(eventId), subEvent)
+    .then(() => {
+      toast.success('Sub Event created successfully');
+      listDashboardSubEvents(eventId, setSubEvents);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
+export const getSubEventData = async (
+  eventId: string,
+  subEventId: string,
+  setSelectedSubEvent: Dispatch<SetStateAction<SubEventListType>>,
+) => {
+  privateGateway
+    .get(makeMyPass.updateSubEvent(eventId, subEventId))
+    .then((response) => {
+      setSelectedSubEvent(response.data.response);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
