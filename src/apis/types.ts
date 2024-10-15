@@ -174,6 +174,8 @@ export interface EventType {
   is_sub_event: boolean;
   is_random_user: boolean;
   status: string;
+  map_new_code: boolean;
+  checkin_confirmation_required: boolean;
   is_scratch_card: boolean;
   need_confirmation: boolean;
   confirmation_fields: string[];
