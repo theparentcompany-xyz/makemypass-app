@@ -1,10 +1,11 @@
 import { IoLocationOutline } from 'react-icons/io5';
 
 import { SubEventType } from '../../../../../apis/types';
+import type { SubEventListType } from '../../../CheckIns/pages/SubEvent/types';
 import { getDay, getMonthAbbreviation } from '../../../EventPage/constants';
 import styles from './DatePlace.module.css';
 
-const DatePlace = ({ event }: { event: SubEventType }) => {
+const DatePlace = ({ event }: { event: SubEventType | SubEventListType }) => {
   return (
     <div className={styles.eventDatePlace}>
       <div className={styles.eventDate}>

@@ -64,6 +64,8 @@ const ListSubEvents = () => {
 
       setSelectedEventsIds(preSelectedEvents);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subEvents]);
 
   const handleSelectEvent = (event: SubEventType) => {
@@ -138,6 +140,8 @@ const ListSubEvents = () => {
         return subEvent;
       });
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedEventsIds]);
 
   return (

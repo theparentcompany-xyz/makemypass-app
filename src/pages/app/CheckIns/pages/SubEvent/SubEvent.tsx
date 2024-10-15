@@ -1,14 +1,16 @@
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 import { checkInUserSubEvent, listCheckInSubEvents } from '../../../../../apis/subevents';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
 import Scanner from '../../../../../components/Scanner/Scanner';
 import Theme from '../../../../../components/Theme/Theme';
+import DatePlace from '../../../SubEvents/components/DatePlace/DatePlace';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
 import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerResponseModal';
 import { LogType } from '../Venue/Venue';
 import styles from './SubEvent.module.css';
-import { SubEventListType } from './types';
+import type { SubEventListType } from './types';
 
 const SubEvent = () => {
   const [subEvents, setSubEvents] = useState<SubEventListType[]>([]);
@@ -72,7 +74,30 @@ const SubEvent = () => {
                           setShowScanner(true);
                         }}
                       >
-                        {subevent.title}
+                        <div className={styles.event}>
+                          <div>
+                            <div className={styles.eventCard}>
+                              <div className={styles.innerCard}>
+                                <div className={styles.eventDetails}>
+                                  <div className={styles.headingTexts}>
+                                    <p className={styles.eventTitle}>{subevent?.title}</p>
+                                  </div>
+
+                                  <DatePlace event={subevent} />
+
+                                  <div className='row'>
+                                    <motion.button
+                                      whileHover={{ scale: 1.05 }}
+                                      className={styles.cardPrimaryButton}
+                                    >
+                                      Select
+                                    </motion.button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     ))}
                 </div>

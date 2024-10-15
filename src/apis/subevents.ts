@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { formatDate } from '../common/commonFunctions';
-import { SubEventListType } from '../pages/app/CheckIns/pages/SubEvent/types';
+import type { SubEventListType } from '../pages/app/CheckIns/pages/SubEvent/types';
 import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
 import type { SelectedSubEventsType } from '../pages/app/SubEvents/User/types';
 import { FormFieldType, SubEventType } from './types';

@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 import { SubEventType } from '../../../../../apis/types';
 import { formatDate, formatTime } from '../../../../../common/commonFunctions';
-import { SelectedSubEventsType } from '../../User/types';
+import type { SelectedSubEventsType } from '../../User/types';
 import DatePlace from '../DatePlace/DatePlace';
 import styles from './SubEventListing.module.css';
 
