@@ -51,22 +51,20 @@ const ListSubEvents = () => {
   //Fetching the sub events for the event
   useEffect(() => {
     if (eventId && eventRegisterId) {
-      getSubEvents(eventId, eventRegisterId, setSubEvents, setIsEventsLoading);
+      getSubEvents(eventId, eventRegisterId, setIsEventsLoading).then((subEvents) => {
+        const preSelectedEvents = subEvents
+          .filter((event) => event.already_booked)
+          .map((event) => ({ id: event.id, alreadyRegistered: true }));
+
+        setSubEvents(subEvents);
+        console.log(preSelectedEvents);
+
+        setSelectedEventsIds(preSelectedEvents);
+
+        // Further logic if needed after sub-events are loaded
+      });
     }
   }, [eventId, eventRegisterId, triggerFetch]);
-
-  //Setting the preselected events
-  useEffect(() => {
-    if (!selectedEventsIds) {
-      const preSelectedEvents = subEvents
-        .filter((event) => event.already_booked)
-        .map((event) => ({ id: event.id, alreadyRegistered: true }));
-
-      setSelectedEventsIds(preSelectedEvents);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subEvents]);
 
   const handleSelectEvent = (event: SubEventType) => {
     if (selectedEventsIds.find((e) => e.id === event.id)) {
@@ -135,12 +133,12 @@ const ListSubEvents = () => {
 
         if (conflictingEventName) {
           subEvent.conflicting_event = conflictingEventName;
+        } else {
+          subEvent.conflicting_event = undefined
         }
-
         return subEvent;
       });
     });
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedEventsIds]);
 
@@ -199,7 +197,7 @@ const ListSubEvents = () => {
           </div>
         </>
       ) : (
-        <div className='center'>
+        <div className="center">
           <HashLoader color={'#46BF75'} size={50} />
         </div>
       )}

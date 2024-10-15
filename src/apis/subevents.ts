@@ -9,22 +9,23 @@ import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
 import type { SelectedSubEventsType } from '../pages/app/SubEvents/User/types';
 import { FormFieldType, SubEventType } from './types';
 
-export const getSubEvents = (
+export const getSubEvents = async (
   eventId: string,
   eventRegisterId: string,
-  setSubEvents: React.Dispatch<React.SetStateAction<SubEventType[]>>,
   setIsEventsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-) => {
+): Promise<SubEventType[]> => {
   setIsEventsLoading(true);
-  publicGateway
-    .get(makeMyPass.viewSubEvent(eventId, eventRegisterId))
-    .then((response) => {
-      setSubEvents(response.data.response.sub_events);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-    });
-  setIsEventsLoading(false);
+
+  try {
+    const response = await publicGateway
+      .get(makeMyPass.viewSubEvent(eventId, eventRegisterId));
+    setIsEventsLoading(false);
+    return response.data.response.sub_events;
+  } catch (error: any) {
+    setIsEventsLoading(false);
+    toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    return [];
+  }
 };
 
 export const getSubEventForm = (
