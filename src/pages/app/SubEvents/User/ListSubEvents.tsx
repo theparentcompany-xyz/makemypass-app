@@ -75,26 +75,28 @@ const ListSubEvents = () => {
   };
 
   const handleSubmit = () => {
-    if (eventId && eventRegisterId)
-      getSubEventForm(eventId, eventRegisterId, selectedEventsIds)
-        .then((form) => {
-          if (form.length !== 0) {
-            setSubEventForm(form);
-            setShowFormModal(true);
-          } else {
-            subEventRegister(
-              eventId,
-              eventRegisterId,
-              formData,
-              selectedEventsIds,
-              setFormErrors,
-              setTriggerFetch,
-            );
-          }
-        })
-        .catch(() => {
-          toast.error('Unable to process the request');
-        });
+    if (!selectedEventsIds.some((event) => event.alreadyRegistered)) {
+      if (eventId && eventRegisterId)
+        getSubEventForm(eventId, eventRegisterId, selectedEventsIds)
+          .then((form) => {
+            if (form.length !== 0) {
+              setSubEventForm(form);
+              setShowFormModal(true);
+            } else {
+              subEventRegister(
+                eventId,
+                eventRegisterId,
+                formData,
+                selectedEventsIds,
+                setFormErrors,
+                setTriggerFetch,
+              );
+            }
+          })
+          .catch(() => {
+            toast.error('Unable to process the request');
+          });
+    } else toast.error('Please select at least one event to register');
   };
 
   const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
@@ -134,7 +136,7 @@ const ListSubEvents = () => {
         if (conflictingEventName) {
           subEvent.conflicting_event = conflictingEventName;
         } else {
-          subEvent.conflicting_event = undefined
+          subEvent.conflicting_event = undefined;
         }
         return subEvent;
       });
@@ -153,12 +155,7 @@ const ListSubEvents = () => {
         subEventToRemove={subEventToRemove}
       />
 
-      <DetailedView
-        showDetailedView={showDetailedView}
-        setShowDetailedView={setShowDetailedView}
-        selectedEvents={selectedEventsIds}
-        handleSelectEvent={handleSelectEvent}
-      />
+      <DetailedView showDetailedView={showDetailedView} setShowDetailedView={setShowDetailedView} />
 
       <SubEventForm
         subEventForm={subEventForm}
@@ -187,7 +184,7 @@ const ListSubEvents = () => {
             />
             <motion.button
               whileHover={{ scale: 1.05 }}
-              className={styles.submitButton}
+              className={styles.confirmButton}
               onClick={() => {
                 handleSubmit();
               }}
@@ -197,7 +194,7 @@ const ListSubEvents = () => {
           </div>
         </>
       ) : (
-        <div className="center">
+        <div className='center'>
           <HashLoader color={'#46BF75'} size={50} />
         </div>
       )}

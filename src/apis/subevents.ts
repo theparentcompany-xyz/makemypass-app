@@ -5,27 +5,30 @@ import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { formatDate } from '../common/commonFunctions';
 import type { SubEventListType } from '../pages/app/CheckIns/pages/SubEvent/types';
-import { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
+import type { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
 import type { SelectedSubEventsType } from '../pages/app/SubEvents/User/types';
-import { FormFieldType, SubEventType } from './types';
+import type { FormFieldType, SubEventType } from './types';
 
-export const getSubEvents = async (
+export const getSubEvents = (
   eventId: string,
   eventRegisterId: string,
   setIsEventsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<SubEventType[]> => {
-  setIsEventsLoading(true);
+  return new Promise((resolve, reject) => {
+    setIsEventsLoading(true);
 
-  try {
-    const response = await publicGateway
-      .get(makeMyPass.viewSubEvent(eventId, eventRegisterId));
-    setIsEventsLoading(false);
-    return response.data.response.sub_events;
-  } catch (error: any) {
-    setIsEventsLoading(false);
-    toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-    return [];
-  }
+    publicGateway
+      .get(makeMyPass.viewSubEvent(eventId, eventRegisterId))
+      .then((response) => {
+        setIsEventsLoading(false);
+        resolve(response.data.response.sub_events);
+      })
+      .catch((error) => {
+        setIsEventsLoading(false);
+        toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+        reject([]);
+      });
+  });
 };
 
 export const getSubEventForm = (

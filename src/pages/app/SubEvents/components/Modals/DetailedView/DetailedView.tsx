@@ -1,23 +1,19 @@
-import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { IoLocationOutline } from 'react-icons/io5';
 
 import { SubEventType } from '../../../../../../apis/types';
 import Modal from '../../../../../../components/Modal/Modal';
 import { getDay, getMonthAbbreviation } from '../../../../EventPage/constants';
-import styles from '../../../User/ListSubEvents.module.css';
-import type { SelectedSubEventsType } from '../../../User/types';
+import styles from './DetailedView.module.css';
 
 const DetailedView = ({
   showDetailedView,
   setShowDetailedView,
-  selectedEvents,
-  handleSelectEvent,
+
 }: {
   showDetailedView: SubEventType | null;
   setShowDetailedView: Dispatch<SetStateAction<SubEventType | null>>;
-  selectedEvents: SelectedSubEventsType[];
-  handleSelectEvent: (event: SubEventType) => void;
+
 }) => {
   if (!showDetailedView) return null;
   return (
@@ -25,7 +21,6 @@ const DetailedView = ({
       <div className={styles.detailedView}>
         <div className={styles.eventDetails}>
           <div className={styles.headingTexts}>
-            <p className={styles.eventTitle}>{showDetailedView?.title}</p>
             <div className={styles.eventDatePlace}>
               <div className={styles.eventDate}>
                 {showDetailedView?.start_time && (
@@ -84,6 +79,7 @@ const DetailedView = ({
               </div>
             </div>
             <div className={styles.eventDescription}>
+              <p className={styles.eventDescriptionHeader}>About the Event</p>
               <p
                 dangerouslySetInnerHTML={
                   showDetailedView.description
@@ -97,14 +93,7 @@ const DetailedView = ({
             </div>
           </div>
 
-          <div className='row'>
-            <motion.button
-              onClick={() => handleSelectEvent(showDetailedView)}
-              className={styles.manage}
-            >
-              {selectedEvents.find((e) => e.id === showDetailedView.id) ? 'Deselect' : 'Select'}
-            </motion.button>
-          </div>
+        
         </div>
       </div>
     </Modal>
