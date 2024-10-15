@@ -2,36 +2,39 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router';
+import { HashLoader } from 'react-spinners';
 
 import { getEventId } from '../../../../apis/events';
-import { getSubEvents } from '../../../../apis/subevents';
-import { SubEventType } from '../../../../apis/types';
-import { formatDate } from '../../../../common/commonFunctions';
+import { getSubEventForm, getSubEvents, subEventRegister } from '../../../../apis/subevents';
+import { FormFieldType, SubEventType } from '../../../../apis/types';
 import Theme from '../../../../components/Theme/Theme';
+import DetailedView from '../components/Modals/DetailedView/DetailedView';
+import RemoveConfirmation from '../components/Modals/RemoveConfirmation/RemoveConfirmation';
+import SubEventForm from '../components/Modals/SubEventForm/SubEventForm';
+import SubEventListing from '../components/SubEventListing/SubEventListing';
 import styles from './ListSubEvents.module.css';
-
-// Helper function to group events by start date
-const groupEventsByDate = (events: SubEventType[]) => {
-  return events.reduce((acc: Record<string, SubEventType[]>, event) => {
-    const eventDate = formatDate(event.start_time); // Format to group by date
-    if (!acc[eventDate]) {
-      acc[eventDate] = [];
-    }
-    acc[eventDate].push(event);
-    return acc;
-  }, {});
-};
+import type { SelectedSubEventsType } from './types';
 
 const ListSubEvents = () => {
   const [subEvents, setSubEvents] = useState<SubEventType[]>([]);
   const [eventId, setEventId] = useState('');
-  const [selectedEvents, setSelectedEvents] = useState<SubEventType[]>([]);
+  const [selectedEventsIds, setSelectedEventsIds] = useState<SelectedSubEventsType[]>([]);
+  const [showDetailedView, setShowDetailedView] = useState<SubEventType | null>(null);
+  const [subEventForm, setSubEventForm] = useState<FormFieldType[]>([]);
+  const [formErrors, setFormErrors] = useState<Record<string, string[]>>({});
+  const [formData, setFormData] = useState<Record<string, string | string[]>>({});
+  const [subEventToRemove, setSubEventToRemove] = useState<string | null>(null);
+  const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
+  const [showFormModal, setShowFormModal] = useState<boolean>(false);
+
+  const [isEventsLoading, setIsEventsLoading] = useState(true);
 
   const { eventTitle, eventRegisterId } = useParams<{
     eventTitle: string;
     eventRegisterId: string;
   }>();
 
+  //Getting the event id from the event title(used in the url)
   useEffect(() => {
     if (eventTitle && !eventId) {
       getEventId(eventTitle)
@@ -45,74 +48,165 @@ const ListSubEvents = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
 
+  //Fetching the sub events for the event
   useEffect(() => {
     if (eventId && eventRegisterId) {
-      getSubEvents(eventId, eventRegisterId, setSubEvents);
+      getSubEvents(eventId, eventRegisterId, setIsEventsLoading).then((subEvents) => {
+        const preSelectedEvents = subEvents
+          .filter((event) => event.already_booked)
+          .map((event) => ({ id: event.id, alreadyRegistered: true }));
+
+        setSubEvents(subEvents);
+        console.log(preSelectedEvents);
+
+        setSelectedEventsIds(preSelectedEvents);
+
+        // Further logic if needed after sub-events are loaded
+      });
     }
-  }, [eventId, eventRegisterId]);
+  }, [eventId, eventRegisterId, triggerFetch]);
 
   const handleSelectEvent = (event: SubEventType) => {
-    const alreadySelected = selectedEvents.find((e) => e.id === event.id);
-    if (alreadySelected) {
-      setSelectedEvents(selectedEvents.filter((e) => e.id !== event.id));
+    if (selectedEventsIds.find((e) => e.id === event.id)) {
+      setSelectedEventsIds(selectedEventsIds.filter((e) => e.id !== event.id));
     } else {
-      setSelectedEvents([...selectedEvents, event]);
+      setSelectedEventsIds([...selectedEventsIds, { id: event.id, alreadyRegistered: false }]);
     }
   };
 
-  const groupedEvents = groupEventsByDate(subEvents);
+  const handleSubmit = () => {
+    if (!selectedEventsIds.some((event) => event.alreadyRegistered)) {
+      if (eventId && eventRegisterId)
+        getSubEventForm(eventId, eventRegisterId, selectedEventsIds)
+          .then((form) => {
+            if (form.length !== 0) {
+              setSubEventForm(form);
+              setShowFormModal(true);
+            } else {
+              subEventRegister(
+                eventId,
+                eventRegisterId,
+                formData,
+                selectedEventsIds,
+                setFormErrors,
+                setTriggerFetch,
+              );
+            }
+          })
+          .catch(() => {
+            toast.error('Unable to process the request');
+          });
+    } else toast.error('Please select at least one event to register');
+  };
+
+  const onFieldChange = (fieldName: string, fieldValue: string | string[]) => {
+    setFormData({ ...formData, [fieldName]: fieldValue });
+  };
+
+  const findConflictingEvent = (event: SubEventType) => {
+    const eventStartTime = new Date(event.start_time);
+    const eventEndTime = new Date(event.end_time);
+
+    const conflictingEvent = selectedEventsIds.find((selectedEvent) => {
+      const selectedEventStartTime = new Date(
+        subEvents.find((e) => e.id === selectedEvent.id)?.start_time || '',
+      );
+      const selectedEventEndTime = new Date(
+        subEvents.find((e) => e.id === selectedEvent.id)?.end_time || '',
+      );
+
+      if (event.id === selectedEvent.id || !selectedEventStartTime || !selectedEventEndTime) {
+        return false;
+      }
+
+      return (
+        (eventStartTime <= selectedEventStartTime && eventEndTime > selectedEventStartTime) ||
+        (selectedEventStartTime <= eventStartTime && selectedEventEndTime > eventStartTime)
+      );
+    });
+
+    return subEvents.find((e) => e.id === conflictingEvent?.id)?.title;
+  };
+
+  useEffect(() => {
+    setSubEvents((prev) => {
+      return prev.map((subEvent) => {
+        const conflictingEventName = findConflictingEvent(subEvent);
+
+        if (conflictingEventName) {
+          subEvent.conflicting_event = conflictingEventName;
+        } else {
+          subEvent.conflicting_event = undefined;
+        }
+        return subEvent;
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedEventsIds]);
 
   return (
     <Theme>
-      <div className={styles.subEventsListingContainer}>
-        {Object.keys(groupedEvents).map((date) => (
-          <div key={date}>
-            <h2 className={styles.dateHeader}>{date}</h2> {/* Display date header */}
-            <div className={styles.eventsContainer}>
-              {groupedEvents[date].map((event) => (
-                <div key={event.id} className={styles.event}>
-                  <div>
-                    <motion.div
-                      initial={{ opacity: 0, y: 50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className={`${styles.eventCard} ${
-                        selectedEvents.find((e) => e.id === event.id) ? styles.selectedCard : ''
-                      }`} // Add a selected class if event is selected
-                      onClick={() => handleSelectEvent(event)} // Handle select
-                      style={{
-                        zIndex: 0,
-                      }}
-                    >
-                      <div className={styles.innerCard}>
-                        <div className={styles.eventDetails}>
-                          <div className={styles.eventDetailsHeader}>
-                            <div>
-                              {event.start_time && (
-                                <motion.div className={styles.eventDate}>
-                                  <p className={styles.date}>{formatDate(event?.start_time)}</p>
-                                </motion.div>
-                              )}
-                              <p className={styles.eventName}>
-                                {event.title.substring(0, 40)}
-                                {event.title.length > 40 ? '...' : ''}
-                              </p>
-                            </div>
-                          </div>
+      <RemoveConfirmation
+        eventId={eventId}
+        eventRegisterId={eventRegisterId}
+        setSubEventToRemove={setSubEventToRemove}
+        setSelectedEvents={setSelectedEventsIds}
+        setTriggerFetch={setTriggerFetch}
+        subEventToRemove={subEventToRemove}
+      />
 
-                          <motion.button whileHover={{ scale: 1.05 }} className={styles.manage}>
-                            {selectedEvents.find((e) => e.id === event.id) ? 'Deselect' : 'Select'}
-                          </motion.button>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
-              ))}
+      <DetailedView showDetailedView={showDetailedView} setShowDetailedView={setShowDetailedView} />
+
+      <SubEventForm
+        subEventForm={subEventForm}
+        setSubEventForm={setSubEventForm}
+        formErrors={formErrors}
+        formData={formData}
+        onFieldChange={onFieldChange}
+        eventId={eventId}
+        eventRegisterId={eventRegisterId}
+        selectedEvents={selectedEventsIds}
+        setFormErrors={setFormErrors}
+        setTriggerFetch={setTriggerFetch}
+        setShowFormModal={setShowFormModal}
+        showFormModal={showFormModal}
+      />
+
+      {!isEventsLoading ? (
+        <>
+          {subEvents.length > 0 ? (
+            <div className={styles.stickButtonContainer}>
+              <SubEventListing
+                subEvents={subEvents}
+                selectedEventsIds={selectedEventsIds}
+                handleSelectEvent={handleSelectEvent}
+                setShowDetailedView={setShowDetailedView}
+                setSubEventToRemove={setSubEventToRemove}
+              />
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                className={styles.confirmButton}
+                onClick={() => {
+                  handleSubmit();
+                }}
+              >
+                Submit
+              </motion.button>
             </div>
-          </div>
-        ))}
-      </div>
+          ) : (
+            <div className='center'>
+              <p className={styles.alertMessage}>
+                No sub events available for this user/event. Please check back later or contact the
+                event organizers.
+              </p>
+            </div>
+          )}
+        </>
+      ) : (
+        <div className='center'>
+          <HashLoader color={'#46BF75'} size={50} />
+        </div>
+      )}
     </Theme>
   );
 };

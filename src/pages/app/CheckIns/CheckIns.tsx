@@ -53,6 +53,15 @@ const CheckIns = () => {
                   />
                 </Link>
               )}
+              {checkInsButtons?.sub_events && (
+                <Link to='checkin/sub-event'>
+                  <SectionButton
+                    buttonText='Sub-Event Check-In'
+                    buttonColor='#'
+                    icon={<BsQrCodeScan size={25} color='#5B75FB' />}
+                  />
+                </Link>
+              )}
               {checkInsButtons?.gift && (
                 <Link to='checkin/gifts'>
                   <SectionButton

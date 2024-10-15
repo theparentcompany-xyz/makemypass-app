@@ -18,6 +18,10 @@ module.exports = {
     'src/components/Editor/Editor.tsx',
   ],
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
+  },
   plugins: ['react-refresh', 'import', 'simple-import-sort'],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],

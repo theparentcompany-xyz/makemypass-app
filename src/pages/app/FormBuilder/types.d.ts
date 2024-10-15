@@ -23,6 +23,7 @@ export type Field = {
   field_key: string;
   team_field: boolean;
   description: string | null;
+  sub_event_ids?: string[] | null;
 };
 
 export type ErrorResponse = {

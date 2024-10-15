@@ -1,23 +1,3 @@
-.eventGlance {
-  margin-top: 1rem;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  position: relative;
-  width: 17rem;
-  min-height: 23rem;
-  color: white;
-
-  font-family: 'Inter', sans-serif;
-  padding: 1rem;
-}
-
-.headingTexts {
-  display: flex;
-  flex-direction: column;
-  row-gap: 0.5rem;
-  padding: 0.5rem 0;
-}
-
 .eventDate {
   margin-right: 1rem;
   font-size: 0.85rem;
@@ -96,66 +76,26 @@
   padding-right: 0;
   width: 100%;
   opacity: 0.8;
-  height: 10rem;
+  margin-bottom: 1rem;
 }
 
-.banner {
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  fill: #d8ffff11;
-  max-width: 23rem;
-  max-height: 9rem;
-  object-fit: cover;
-}
-
-.eventTitle {
-  font-size: 1.25rem;
-  max-width: 10;
-  font-weight: 600;
-  max-width: 26rem;
-  font-family: 'Inter', sans-serif;
-}
-
-.buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin-top: 1rem;
-  column-gap: 0.5rem;
-
-  position: absolute;
-  bottom: 1rem;
-}
-
-.editEventButton {
-  padding: 0.5rem 1.5rem;
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.04);
-  color: #fff;
-  font-family: 'Inter', sans-serif;
+.eventDescription {
   font-size: 0.9rem;
+  font-weight: 400;
+  color: #fff;
+  opacity: 0.8;
+  opacity: 0.8;
+  font-family: 'Inter', sans-serif;
+}
+
+.eventDescription p {
+  margin: 1rem 0;
+}
+
+.eventDescriptionHeader {
+  font-size: 1.1rem;
   font-weight: 500;
-  cursor: pointer;
-  border: none;
-}
-
-@media (max-width: 923px) {
-  .buttons {
-    position: relative;
-    justify-content: flex-start;
-    padding: 1rem 0;
-  }
-}
-
-@media (max-width: 435px) {
-  .banner {
-    padding: 0;
-  }
-
-  .eventDatePlace,
-  .headingTexts {
-    padding-left: 0.5rem;
-  }
+  color: #fff;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
 }

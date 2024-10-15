@@ -157,26 +157,6 @@
   margin-top: 0.5rem;
 }
 
-.confirmButton {
-  background: #fdfdfd;
-  color: rgb(43, 42, 42);
-  border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  cursor: pointer;
-  margin-top: 1rem;
+.timeContaianer {
   margin-left: 1rem;
-  margin-bottom: 1rem;
-}
-
-.alertMessage {
-  font-size: 0.9rem;
-  font-family: 'Inter', sans-serif;
-  margin-top: 0.5rem;
-  color: #fff;
-  opacity: 0.8;
-  max-width: 25rem;
-  text-align: center;
-  margin-top: 0.5rem;
 }

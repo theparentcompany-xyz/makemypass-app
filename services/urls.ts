@@ -22,6 +22,10 @@ export const makeMyPass = {
   scanGuestPerkClaim: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/perk/claim`), //Till Volunteer
   scanGuestPerkList: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/perk/list`), //Till Viewer, Patch Editor
   scanGuestPrint: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/print`), //Till Volunteer
+  scanGuestSubEventCheckin: (eventId: string) =>
+    makeMyPassURL(`/scan-guest/${eventId}/sub-event/checkin/`), //Till Volunteer
+  scanGuestSubEventList: (eventId: string) =>
+    makeMyPassURL(`/scan-guest/${eventId}/sub-event/list`), //Till Volunteer
 
   //Manage Guests
   eventCreate: makeMyPassURL(`/manage-event/create/`), // SuperUser
@@ -170,6 +174,18 @@ export const makeMyPass = {
   //Sub-Event
   viewSubEvent: (eventId: string, eventRegisterId: string) =>
     makeMyPassURL(`/sub-events/${eventId}/view/${eventRegisterId}/`), //Till Editor
+  getSubEventForm: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/sub-events/${eventId}/get-form/${eventRegisterId}/`), //Till Editor
+  subEventRegister: (eventId: string, eventRegisterId: string) =>
+    makeMyPassURL(`/sub-events/${eventId}/register/${eventRegisterId}/`), //Till Viewer
+  removeRegisteredSubEvent: (eventId: string, eventRegisterId: string, userSubEventId: string) =>
+    makeMyPassURL(
+      `/sub-events/${eventId}/remove-register/${eventRegisterId}/sub-event/${userSubEventId}/`,
+    ), //Till Viewer
+  listSubEvents: (eventId: string) => makeMyPassURL(`/sub-events/${eventId}/list/`), //Till Viewer
+  createNewSubEvent: (eventId: string) => makeMyPassURL(`/sub-events/${eventId}/create/`), //Till Editor
+  updateSubEvent: (eventId: string, subEventId: string) =>
+    makeMyPassURL(`/sub-event/${eventId}/update/${subEventId}/`), //Till Editor
 };
 
 export const makeMyPassSocket = {

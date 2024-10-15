@@ -1,7 +1,7 @@
 // import { LuClock, LuPencil } from 'react-icons/lu';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import { BsQrCodeScan } from 'react-icons/bs';
+import { BsCalendarEventFill, BsQrCodeScan } from 'react-icons/bs';
 import { FaTags } from 'react-icons/fa';
 import { FaHouse, FaWrench } from 'react-icons/fa6';
 import { HiUserGroup } from 'react-icons/hi2';
@@ -545,6 +545,15 @@ const EventGlance = () => {
                   setVenues({ ...venues, showModal: true });
                 }}
               />
+              {import.meta.env.VITE_CURRENT_ENV == 'dev' && (
+                <Link to={`/${eventName}/manage/sub-events`}>
+                  <SectionButton
+                    buttonText='Sub-Events'
+                    buttonColor='#5B75FB'
+                    icon={<BsCalendarEventFill size={25} color='#5B75FB' />}
+                  />
+                </Link>
+              )}
 
               {import.meta.env.VITE_CURRENT_ENV == 'dev' && (
                 <SectionButton

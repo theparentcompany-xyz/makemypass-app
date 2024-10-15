@@ -9,6 +9,7 @@ import CheckIns from './pages/app/CheckIns/CheckIns';
 import CheckOutScan from './pages/app/CheckIns/pages/CheckOutScan/CheckOutScan';
 import Perks from './pages/app/CheckIns/pages/Perks/Perks';
 import ScanQR from './pages/app/CheckIns/pages/ScanQR/ScanQR';
+import SubEvent from './pages/app/CheckIns/pages/SubEvent/SubEvent';
 import Venue from './pages/app/CheckIns/pages/Venue/Venue';
 import Coupon from './pages/app/Coupon/Coupon';
 import CreateEvent from './pages/app/CreateEvent/CreateEvent';
@@ -39,6 +40,7 @@ import Randomizer from './pages/app/Randomizer/Randomizer';
 import SelfCheckIn from './pages/app/SelfCheckIn/SelfCheckIn';
 import SetProfilePage from './pages/app/SetProfilePage/SetProfilePage';
 import Spinwheel from './pages/app/Spinwheel/Spinwheel';
+import Dashboard from './pages/app/SubEvents/Admin/Dashboard/Dashboard';
 import ListSubEvents from './pages/app/SubEvents/User/ListSubEvents';
 import TermsConditions from './pages/app/TermsCondictions/TermsConditions';
 import ValidateData from './pages/app/ValidateData/ValidateData';
@@ -168,6 +170,14 @@ const routes: RouteObject[] = [
         ),
       },
       {
+        path: '/:eventTitle/checkins/checkin/sub-event',
+        element: (
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
+            <SubEvent />
+          </RoleChecker>
+        ),
+      },
+      {
         path: '/:eventTitle/inevent',
         element: (
           <RoleChecker roles={TillRoles.VOLUNTEER}>
@@ -224,6 +234,14 @@ const routes: RouteObject[] = [
         element: (
           <RoleChecker roles={TillRoles.VOLUNTEER}>
             <Spinwheel />
+          </RoleChecker>
+        ),
+      },
+      {
+        path: '/:eventTitle/manage/sub-events',
+        element: (
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
+            <Dashboard />
           </RoleChecker>
         ),
       },
