@@ -1,5 +1,5 @@
 export type SubEventListType = {
-  id: string;
+  id?: string;
   title: string;
   start_time: string;
   end_time: string;

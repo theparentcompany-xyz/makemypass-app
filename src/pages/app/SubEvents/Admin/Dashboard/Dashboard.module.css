@@ -5,6 +5,12 @@
   gap: 1rem;
 }
 
+@media (max-width: 1330px) {
+  .mainContainer {
+    padding: 0 1.25rem;
+  }
+}
+
 .event {
   display: flex;
   flex-direction: column;
@@ -13,6 +19,14 @@
   flex-wrap: wrap;
   overflow: hidden;
   position: relative;
+}
+
+.deleteIcon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  opacity: 0.7;
 }
 
 .eventCard {
@@ -113,7 +127,8 @@
   width: 100%;
 }
 
-.submitButton {
+.submitButton,
+.deleteButton {
   background: #ffffff;
   border: none;
   border-radius: 8px;
@@ -122,4 +137,63 @@
   color: #000;
   cursor: pointer;
   transition: background 0.2s ease-in-out;
+}
+
+.deleteConfirmationText {
+  font-size: 0.9rem;
+  color: #d7d7d7;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 1rem;
+}
+
+.deleteConfirmationButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  column-gap: 0.5rem;
+}
+
+.cancelButton {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.subEventDescription {
+  font-size: 0.9rem;
+  color: #d7d7d7;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.04);
+  color: #d7d7d7;
+  resize: none;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #d7d7d7;
+  opacity: 0.8;
+  outline: none;
+  padding: 1rem 0;
+  width: 100%;
+  max-height: 5rem;
+  overflow: hidden;
+  text-align: left;
+
+  margin-bottom: 1rem;
+}
+
+.label {
+  color: #a4a4a4;
+  font-size: 0.875rem;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
 }

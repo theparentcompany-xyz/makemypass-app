@@ -1,7 +1,15 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { MdDelete } from 'react-icons/md';
 
-import { getSubEventData, listDashboardSubEvents } from '../../../../../apis/subevents';
+import {
+  createNewSubEvent,
+  deleteSubEvent,
+  editSubEvent,
+  getSubEventData,
+  listDashboardSubEvents,
+} from '../../../../../apis/subevents';
+import Editor from '../../../../../components/Editor/Editor';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
 import Modal from '../../../../../components/Modal/Modal';
 import Theme from '../../../../../components/Theme/Theme';
@@ -60,14 +68,16 @@ const Dashboard = () => {
     place: '',
     description: '',
   });
+  const [subEventDescription, setSubEventDescription] = useState<string>('');
   const [currentSelectType, setCurrentSelectType] = useState<string>('');
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<boolean>(false);
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   useEffect(() => {
     listDashboardSubEvents(eventId, setSubEvents);
   }, [eventId]);
 
   useEffect(() => {
-    if (currentSelectType === 'edit') {
+    if (currentSelectType === 'edit' && selectedSubEvent.id) {
       getSubEventData(eventId, selectedSubEvent.id, setSelectedSubEvent);
     }
 
@@ -76,6 +86,27 @@ const Dashboard = () => {
 
   const groupedSubEvents = groupSubEventsByDateAndTime(subEvents);
 
+  // useEffect(() => {
+  //   if (subEventDescription) {
+  //     setSelectedSubEvent({ ...selectedSubEvent, description: subEventDescription });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [subEventDescription]);
+
+  const handleSubmit = () => {
+    if (subEventDescription.length > 0) {
+      setSelectedSubEvent({ ...selectedSubEvent, description: subEventDescription });
+    }
+    if (currentSelectType === 'add') {
+      createNewSubEvent(eventId, selectedSubEvent, setSubEvents);
+    } else {
+      editSubEvent(eventId, selectedSubEvent, setSubEvents);
+    }
+  };
+
+  const handleDelete = () => {
+    if (selectedSubEvent.id) deleteSubEvent(eventId, selectedSubEvent.id, setSubEvents);
+  };
   return (
     <>
       <Theme>
@@ -89,7 +120,7 @@ const Dashboard = () => {
                 name='subEventTitle'
                 id='subEventTitle'
                 icon={<></>}
-                value=''
+                value={selectedSubEvent.title}
                 onChange={(e) => {
                   setSelectedSubEvent({ ...selectedSubEvent, title: e.target.value });
                 }}
@@ -101,7 +132,7 @@ const Dashboard = () => {
                 name='subEventStartTime'
                 id='subEventStartTime'
                 icon={<></>}
-                value=''
+                value={selectedSubEvent.start_time}
                 onChange={(e) => {
                   setSelectedSubEvent({ ...selectedSubEvent, start_time: e.target.value });
                 }}
@@ -113,7 +144,7 @@ const Dashboard = () => {
                 name='subEventEndTime'
                 id='subEventEndTime'
                 icon={<></>}
-                value=''
+                value={selectedSubEvent.end_time}
                 onChange={(e) => {
                   setSelectedSubEvent({ ...selectedSubEvent, end_time: e.target.value });
                 }}
@@ -125,15 +156,42 @@ const Dashboard = () => {
                 name='subEventLocation'
                 id='subEventLocation'
                 icon={<></>}
-                value=''
+                value={selectedSubEvent.place}
                 onChange={(e) => {
                   setSelectedSubEvent({ ...selectedSubEvent, place: e.target.value });
                 }}
               />
+              <p className={styles.label}>Sub Event Description</p>
+              <div className={styles.subEventDescription}>
+                <Editor
+                  description={selectedSubEvent?.description ?? ''}
+                  setNewDescription={setSubEventDescription}
+                />
+              </div>
 
-              <button className={styles.submitButton}>
+              <button className={styles.submitButton} onClick={handleSubmit}>
                 {currentSelectType === 'add' ? 'Add Sub Event' : 'Edit Sub Event'}
               </button>
+            </div>
+          </Modal>
+        )}
+        {showDeleteConfirmation && (
+          <Modal title='Delete Sub Event' onClose={() => setShowDeleteConfirmation(false)}>
+            <div className={styles.modalContent}>
+              <p className={styles.deleteConfirmationText}>
+                Are you sure you want to delete the sub event?
+              </p>
+              <div className={styles.deleteConfirmationButtons}>
+                <button className={styles.deleteButton} onClick={handleDelete}>
+                  Delete
+                </button>
+                <button
+                  className={styles.cancelButton}
+                  onClick={() => setShowDeleteConfirmation(false)}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </Modal>
         )}
@@ -172,6 +230,16 @@ const Dashboard = () => {
                             <div className={styles.event}>
                               <div>
                                 <div className={styles.eventCard}>
+                                  <div className={styles.deleteIcon}>
+                                    <MdDelete
+                                      color={'#fff'}
+                                      size={20}
+                                      onClick={() => {
+                                        setSelectedSubEvent(subevent);
+                                        setShowDeleteConfirmation(true);
+                                      }}
+                                    />
+                                  </div>
                                   <div className={styles.innerCard}>
                                     <div className={styles.eventDetails}>
                                       <div className={styles.headingTexts}>

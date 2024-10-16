@@ -208,7 +208,13 @@ export const createNewSubEvent = async (
   setSubEvents: Dispatch<React.SetStateAction<SubEventListType[]>>,
 ) => {
   privateGateway
-    .post(makeMyPass.createNewSubEvent(eventId), subEvent)
+    .post(makeMyPass.createNewSubEvent(eventId), {
+      title: subEvent.title,
+      start_time: subEvent.start_time,
+      end_time: subEvent.end_time,
+      place: subEvent.place,
+      description: subEvent.description,
+    })
     .then(() => {
       toast.success('Sub Event created successfully');
       listDashboardSubEvents(eventId, setSubEvents);
@@ -227,6 +233,39 @@ export const getSubEventData = async (
     .get(makeMyPass.updateSubEvent(eventId, subEventId))
     .then((response) => {
       setSelectedSubEvent(response.data.response);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
+export const deleteSubEvent = async (
+  eventId: string,
+  subEventId: string,
+  setSubEvents: Dispatch<React.SetStateAction<SubEventListType[]>>,
+) => {
+  privateGateway
+    .delete(makeMyPass.updateSubEvent(eventId, subEventId))
+    .then(() => {
+      toast.success('Sub Event deleted successfully');
+      listDashboardSubEvents(eventId, setSubEvents);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
+export const editSubEvent = async (
+  eventId: string,
+  subEvent: Partial<SubEventListType>,
+  setSubEvents: Dispatch<React.SetStateAction<SubEventListType[]>>,
+) => {
+  if (!subEvent.id) return;
+  privateGateway
+    .patch(makeMyPass.updateSubEvent(eventId, subEvent.id), subEvent)
+    .then(() => {
+      toast.success('Sub Event updated successfully');
+      listDashboardSubEvents(eventId, setSubEvents);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
