@@ -184,3 +184,48 @@
   margin-top: 1rem;
   transition: background 0.2s ease-in-out;
 }
+
+.eventListingNavbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.confirmButton {
+  background: #fff;
+  font-size: 0.9rem;
+  color: rgb(43, 42, 42);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.eventSmallBoxContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  row-gap: 1rem;
+  column-gap: 1rem;
+}
+
+.selectedEventsContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+}
+
+.selectedEvent {
+  background: rgba(255, 255, 255, 0.08);
+  font-family: 'Inter', sans-serif;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  color: white;
+}

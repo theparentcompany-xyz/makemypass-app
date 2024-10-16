@@ -29,29 +29,16 @@ const SubEventListing = ({
   handleSelectEvent,
   setShowDetailedView,
   setSubEventToRemove,
-  handleSubmit,
 }: {
   subEvents: SubEventType[];
   selectedEventsIds: SelectedSubEventsType[];
   handleSelectEvent: (event: SubEventType) => void;
   setShowDetailedView: (event: SubEventType | null) => void;
   setSubEventToRemove: (id: string | null) => void;
-  handleSubmit: () => void;
 }) => {
   const groupedEvents = groupEventsByDateAndTime(subEvents);
   return (
     <div className={styles.subEventsListingContainer}>
-      <div className={styles.submitButtonContainer}>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          className={styles.confirmButton}
-          onClick={() => {
-            handleSubmit();
-          }}
-        >
-          Register
-        </motion.button>
-      </div>
       {subEvents &&
         Object.keys(groupedEvents).map((date) => (
           <div key={date} className={styles.dayEventsContainer}>

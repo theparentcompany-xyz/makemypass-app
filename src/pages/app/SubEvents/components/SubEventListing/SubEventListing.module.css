@@ -174,23 +174,3 @@
   column-gap: 0.5rem;
   margin-top: 0.5rem;
 }
-
-.submitButtonContainer {
-  position: absolute;
-  top: 0rem;
-  right: 0.5rem;
-  z-index: 1000; /* Ensure it appears above other elements */
-}
-
-.confirmButton {
-  background: #47c97e;
-  font-size: 0.9rem;
-  color: rgb(43, 42, 42);
-  border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  margin-top: 1rem;
-  margin-left: 1rem;
-  margin-bottom: 1rem;
-}
