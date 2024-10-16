@@ -4,6 +4,17 @@
   }
 }
 
+.modalDescription {
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  color: #c5c5c5;
+  text-align: left;
+}
+
+.formContainer {
+  width: 100%;
+}
+
 .dateHeader {
   font-family: 'Inter', sans-serif;
   font-size: 1.2rem;
@@ -155,4 +166,21 @@
   max-width: 25rem;
   text-align: center;
   margin-top: 0.5rem;
+}
+
+.submitButton {
+  border-radius: 8px;
+  background: white;
+  border: none;
+  color: #000;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.25rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s ease-in-out;
 }

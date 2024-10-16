@@ -65,7 +65,7 @@ const SubEventForm = ({
             );
         }}
       >
-        Submit
+        Submit Form
       </motion.button>
     </Modal>
   );
