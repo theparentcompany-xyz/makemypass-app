@@ -57,6 +57,13 @@
   }
 }
 
+@media (max-width: 438px) {
+  .ticketTypeTitle {
+    max-width: 10rem;
+  }
+  
+}
+
 .ticketTypeDescription {
   font-size: 0.9rem;
   width: 100%;
@@ -355,6 +362,7 @@
 
   padding: 0.75rem 0.5rem;
   padding-right: 2rem;
+  padding-left: 2rem;
   margin-bottom: 1rem;
 
   margin-bottom: 1rem;
@@ -366,6 +374,8 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  row-gap: 0.5rem;
+  flex-wrap: wrap;
   justify-content: space-between;
 
   div {

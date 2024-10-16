@@ -174,24 +174,33 @@ const ListSubEvents = () => {
 
       {!isEventsLoading ? (
         <>
-          <div className={styles.stickButtonContainer}>
-            <SubEventListing
-              subEvents={subEvents}
-              selectedEventsIds={selectedEventsIds}
-              handleSelectEvent={handleSelectEvent}
-              setShowDetailedView={setShowDetailedView}
-              setSubEventToRemove={setSubEventToRemove}
-            />
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              className={styles.confirmButton}
-              onClick={() => {
-                handleSubmit();
-              }}
-            >
-              Submit
-            </motion.button>
-          </div>
+          {subEvents.length > 0 ? (
+            <div className={styles.stickButtonContainer}>
+              <SubEventListing
+                subEvents={subEvents}
+                selectedEventsIds={selectedEventsIds}
+                handleSelectEvent={handleSelectEvent}
+                setShowDetailedView={setShowDetailedView}
+                setSubEventToRemove={setSubEventToRemove}
+              />
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                className={styles.confirmButton}
+                onClick={() => {
+                  handleSubmit();
+                }}
+              >
+                Submit
+              </motion.button>
+            </div>
+          ) : (
+            <div className='center'>
+              <p className={styles.alertMessage}>
+                No sub events available for this user/event. Please check back later or contact the
+                event organizers.
+              </p>
+            </div>
+          )}
         </>
       ) : (
         <div className='center'>
