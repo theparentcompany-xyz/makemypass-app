@@ -224,3 +224,12 @@ option {
   background-color: #131c1a;
   opacity: 0.5;
 }
+
+.noData {
+  color: #fff;
+  opacity: 0.8;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: 400;
+}

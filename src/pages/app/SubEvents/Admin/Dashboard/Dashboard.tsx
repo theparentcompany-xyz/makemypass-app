@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { MdDelete } from 'react-icons/md';
+import { useNavigate } from 'react-router';
 
 import {
   createNewSubEvent,
@@ -92,18 +93,10 @@ const Dashboard = () => {
         description: '',
       });
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSelectType]);
 
   const groupedSubEvents = groupSubEventsByDateAndTime(subEvents);
-
-  // useEffect(() => {
-  //   if (subEventDescription) {
-  //     setSelectedSubEvent({ ...selectedSubEvent, description: subEventDescription });
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [subEventDescription]);
 
   const handleSubmit = () => {
     if (currentSelectType === 'add') {
@@ -128,6 +121,9 @@ const Dashboard = () => {
   const handleDelete = () => {
     if (selectedSubEvent.id) deleteSubEvent(eventId, selectedSubEvent.id, setSubEvents);
   };
+
+  const navigate = useNavigate();
+
   return (
     <>
       <Theme>
@@ -273,6 +269,15 @@ const Dashboard = () => {
                                         <motion.button
                                           whileHover={{ scale: 1.05 }}
                                           className={styles.cardPrimaryButton}
+                                          onClick={() => {
+                                            navigate(`${subevent.id}`, { state: { subevent } });
+                                          }}
+                                        >
+                                          Dashboard
+                                        </motion.button>
+                                        <motion.button
+                                          whileHover={{ scale: 1.05 }}
+                                          className={styles.cardSecondaryButton}
                                           onClick={() => {
                                             setSelectedSubEvent(subevent);
                                             setCurrentSelectType('edit');

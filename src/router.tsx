@@ -41,6 +41,7 @@ import SelfCheckIn from './pages/app/SelfCheckIn/SelfCheckIn';
 import SetProfilePage from './pages/app/SetProfilePage/SetProfilePage';
 import Spinwheel from './pages/app/Spinwheel/Spinwheel';
 import Dashboard from './pages/app/SubEvents/Admin/Dashboard/Dashboard';
+import SubEventDashboard from './pages/app/SubEvents/Admin/SubEventDashboard/SubEventDashboard';
 import ListSubEvents from './pages/app/SubEvents/User/ListSubEvents';
 import TermsConditions from './pages/app/TermsCondictions/TermsConditions';
 import ValidateData from './pages/app/ValidateData/ValidateData';
@@ -242,6 +243,14 @@ const routes: RouteObject[] = [
         element: (
           <RoleChecker roles={TillRoles.VOLUNTEER}>
             <Dashboard />
+          </RoleChecker>
+        ),
+      },
+      {
+        path: '/:eventTitle/manage/sub-events/:subEventId',
+        element: (
+          <RoleChecker roles={TillRoles.VOLUNTEER}>
+            <SubEventDashboard />
           </RoleChecker>
         ),
       },

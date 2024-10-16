@@ -254,30 +254,36 @@ const Table = ({
         </div>
 
         <div className={styles.tableContainer}>
-          <div className={styles.table}>
-            {paginationData && paginationData.fetchingData ? (
-              <div
-                className='center'
-                style={{
-                  height: '34vh',
-                }}
-              >
-                <HashLoader color='#47c97e' size={50} />
-              </div>
-            ) : (
-              <AnimatePresence>
-                <FixedSizeList
-                  height={Object.keys(groupByTeam).length > 50 ? 550 : tableData.length * 38}
-                  width='100%'
-                  itemCount={Object.keys(groupByTeam).length}
-                  itemSize={37} // Adjust based on row height
-                  itemData={itemData}
+          {tableData.length > 0 ? (
+            <div className={styles.table}>
+              {paginationData && paginationData.fetchingData ? (
+                <div
+                  className='center'
+                  style={{
+                    height: '34vh',
+                  }}
                 >
-                  {RowComponent}
-                </FixedSizeList>
-              </AnimatePresence>
-            )}
-          </div>
+                  <HashLoader color='#47c97e' size={50} />
+                </div>
+              ) : (
+                <AnimatePresence>
+                  <FixedSizeList
+                    height={Object.keys(groupByTeam).length > 50 ? 550 : tableData.length * 38}
+                    width='100%'
+                    itemCount={Object.keys(groupByTeam).length}
+                    itemSize={37} // Adjust based on row height
+                    itemData={itemData}
+                  >
+                    {RowComponent}
+                  </FixedSizeList>
+                </AnimatePresence>
+              )}
+            </div>
+          ) : (
+            <div className={styles.noData}>
+              <p>No data found</p>
+            </div>
+          )}
         </div>
 
         <div className={styles.paginationContainer}>

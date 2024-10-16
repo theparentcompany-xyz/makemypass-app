@@ -4,8 +4,10 @@ import toast from 'react-hot-toast';
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
 import { formatDate } from '../common/commonFunctions';
+import { TableType } from '../components/Table/types';
 import type { SubEventListType } from '../pages/app/CheckIns/pages/SubEvent/types';
 import type { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
+import { PaginationDataType } from '../pages/app/Guests/types';
 import type { SelectedSubEventsType } from '../pages/app/SubEvents/User/types';
 import type { FormFieldType, SubEventType } from './types';
 
@@ -283,6 +285,23 @@ export const editSubEvent = async (
       toast.success('Sub Event updated successfully');
       listDashboardSubEvents(eventId, setSubEvents);
       setCurrentSelectedType('');
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    });
+};
+
+export const listSubEventGuests = async (
+  eventId: string,
+  subEventId: string,
+  setSubEventGuests: Dispatch<React.SetStateAction<TableType[]>>,
+  setPaginationData: Dispatch<React.SetStateAction<PaginationDataType>>,
+) => {
+  privateGateway
+    .get(makeMyPass.subEventGuestList(eventId, subEventId))
+    .then((response) => {
+      setSubEventGuests(response.data.response.data);
+      setPaginationData(response.data.response.pagination);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');

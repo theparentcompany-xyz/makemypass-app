@@ -1,0 +1,21 @@
+@media (max-width: 1330px) {
+  .mainContainer {
+    padding: 0 1.25rem;
+  }
+}
+
+.subEventHeading {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 0.25rem;
+}
+
+.helperText {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 2rem;
+}

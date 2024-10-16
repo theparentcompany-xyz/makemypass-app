@@ -84,6 +84,23 @@
   transition: background 0.2s ease-in-out;
 }
 
+.cardSecondaryButton {
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.25rem;
+  left: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
 .eventTime {
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;

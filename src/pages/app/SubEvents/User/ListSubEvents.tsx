@@ -74,8 +74,8 @@ const ListSubEvents = () => {
   };
 
   const handleSubmit = () => {
-    if (!selectedEventsIds.some((event) => event.alreadyRegistered)) {
-      if (eventId && eventRegisterId)
+    if (selectedEventsIds.filter((event) => !event.alreadyRegistered).length > 0) {
+      if (eventId && eventRegisterId) {
         getSubEventForm(eventId, eventRegisterId, selectedEventsIds)
           .then((form) => {
             if (form.length !== 0) {
@@ -95,6 +95,7 @@ const ListSubEvents = () => {
           .catch(() => {
             toast.error('Unable to process the request');
           });
+      }
     } else toast.error('Please select at least one event to register');
   };
 
