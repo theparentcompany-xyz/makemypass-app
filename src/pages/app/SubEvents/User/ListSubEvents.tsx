@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router';
@@ -7,6 +6,7 @@ import { HashLoader } from 'react-spinners';
 import { getEventId } from '../../../../apis/events';
 import { getSubEventForm, getSubEvents, subEventRegister } from '../../../../apis/subevents';
 import { FormFieldType, SubEventType } from '../../../../apis/types';
+import EventHeader from '../../../../components/EventHeader/EventHeader';
 import Theme from '../../../../components/Theme/Theme';
 import DetailedView from '../components/Modals/DetailedView/DetailedView';
 import RemoveConfirmation from '../components/Modals/RemoveConfirmation/RemoveConfirmation';
@@ -57,8 +57,6 @@ const ListSubEvents = () => {
           .map((event) => ({ id: event.id, alreadyRegistered: true }));
 
         setSubEvents(subEvents);
-        console.log(preSelectedEvents);
-
         setSelectedEventsIds(preSelectedEvents);
 
         // Further logic if needed after sub-events are loaded
@@ -176,22 +174,17 @@ const ListSubEvents = () => {
         <>
           {subEvents.length > 0 ? (
             <div className={styles.stickButtonContainer}>
+              <div className={styles.eventHeaderContainer}>
+                <EventHeader />
+              </div>
               <SubEventListing
                 subEvents={subEvents}
                 selectedEventsIds={selectedEventsIds}
                 handleSelectEvent={handleSelectEvent}
                 setShowDetailedView={setShowDetailedView}
                 setSubEventToRemove={setSubEventToRemove}
+                handleSubmit={handleSubmit}
               />
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                className={styles.confirmButton}
-                onClick={() => {
-                  handleSubmit();
-                }}
-              >
-                Submit
-              </motion.button>
             </div>
           ) : (
             <div className='center'>

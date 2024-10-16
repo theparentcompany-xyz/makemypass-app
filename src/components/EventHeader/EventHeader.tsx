@@ -7,7 +7,7 @@ const EventHeader = ({
   previousPageNavigate,
   isLive,
 }: {
-  previousPageNavigate: string;
+  previousPageNavigate?: string;
   isLive?: boolean;
 }) => {
   const localEventData = JSON.parse(sessionStorage.getItem('eventData')!);
@@ -24,19 +24,20 @@ const EventHeader = ({
           className={styles.headerRow}
         >
           <div className='row'>
-            <button
-              onClick={() => {
-                if (previousPageNavigate === '-1') {
-                  navigate(-1);
-                } else {
-                  navigate(previousPageNavigate);
-                }
-              }}
-              className={styles.goBack}
-            >
-              {'<'}
-            </button>
-
+            {previousPageNavigate && (
+              <button
+                onClick={() => {
+                  if (previousPageNavigate === '-1') {
+                    navigate(-1);
+                  } else {
+                    navigate(previousPageNavigate);
+                  }
+                }}
+                className={styles.goBack}
+              >
+                {'<'}
+              </button>
+            )}
             <div className={styles.headerText}>
               {localEventData.logo ? (
                 <img

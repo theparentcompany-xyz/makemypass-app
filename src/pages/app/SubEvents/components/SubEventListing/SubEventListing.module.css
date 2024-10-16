@@ -7,6 +7,8 @@
   margin: auto;
   overflow: hidden;
   height: 100%;
+  position: relative;
+  row-gap: 1rem;
 }
 
 @media screen and (max-width: 1330px) {
@@ -17,24 +19,30 @@
 
 .dateHeader {
   font-family: 'Inter', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: white;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
   text-align: left;
+  margin-top: 1rem;
 }
 
 .timeHeader {
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
+  font-weight: 400;
   color: #c5c5c5;
   text-align: left;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.conflictIcon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 
 .eventsContainer {
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -157,6 +165,32 @@
   margin-top: 0.5rem;
 }
 
-.timeContaianer {
+.timeContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.submitButtonContainer {
+  position: absolute;
+  top: 0rem;
+  right: 0.5rem;
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.confirmButton {
+  background: #47c97e;
+  font-size: 0.9rem;
+  color: rgb(43, 42, 42);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
   margin-left: 1rem;
+  margin-bottom: 1rem;
 }

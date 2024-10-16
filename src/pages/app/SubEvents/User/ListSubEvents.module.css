@@ -1,16 +1,5 @@
-.subEventsListingContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  z-index: 2;
-  margin: auto;
-  overflow: hidden;
-  height: 100%;
-}
-
 @media screen and (max-width: 1330px) {
-  .subEventsListingContainer {
+  .eventHeaderContainer {
     padding: 0 1.25rem;
   }
 }
@@ -155,19 +144,6 @@
   font-weight: 400;
   font-family: 'Inter', sans-serif;
   margin-top: 0.5rem;
-}
-
-.confirmButton {
-  background: #fdfdfd;
-  color: rgb(43, 42, 42);
-  border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  cursor: pointer;
-  margin-top: 1rem;
-  margin-left: 1rem;
-  margin-bottom: 1rem;
 }
 
 .alertMessage {

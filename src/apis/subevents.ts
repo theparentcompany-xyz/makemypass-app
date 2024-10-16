@@ -22,6 +22,14 @@ export const getSubEvents = (
       .then((response) => {
         setIsEventsLoading(false);
         resolve(response.data.response.sub_events);
+
+        const localStorageData = {
+          title: response.data.response.title,
+          id: response.data.response.id,
+          logo: response.data.response.logo,
+        };
+
+        sessionStorage.setItem('eventData', JSON.stringify(localStorageData));
       })
       .catch((error) => {
         setIsEventsLoading(false);
