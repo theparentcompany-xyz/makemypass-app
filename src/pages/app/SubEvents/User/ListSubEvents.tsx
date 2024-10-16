@@ -179,8 +179,9 @@ const ListSubEvents = () => {
               <div className={styles.eventHeaderContainer}>
                 <EventHeader />
               </div>
-              <div className={styles.eventListingNavbar}>
-                {/* <div className={styles.eventSmallBoxContainer}>
+
+              {/* <div className={styles.eventListingNavbar}>
+                <div className={styles.eventSmallBoxContainer}>
                   {selectedEventsIds.length > 0 && (
                     <div className={styles.selectedEventsContainer}>
                       {selectedEventsIds.map((event) => {
@@ -204,7 +205,7 @@ const ListSubEvents = () => {
                       })}
                     </div>
                   )}
-                </div> */}
+                </div>
                 <div className={styles.submitButtonContainer}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -216,7 +217,7 @@ const ListSubEvents = () => {
                     Register
                   </motion.button>
                 </div>
-              </div>
+              </div> */}
 
               <SubEventListing
                 subEvents={subEvents}
@@ -234,7 +235,7 @@ const ListSubEvents = () => {
                     handleSubmit();
                   }}
                 >
-                  Register
+                  Register Now
                 </motion.button>
               </div>
             </div>

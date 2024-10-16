@@ -57,6 +57,7 @@ const Insights = ({ type }: { type?: string }) => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [perkData, setPerkData] = useState<ChartData>();
   const [utmData, setUtmData] = useState<utmDataType>();
+  // const [subEventAnalytics, setSubEventAnalytics] = useState<ChartData>();
 
   const expandedColors = [
     '#47C97E',
@@ -97,6 +98,8 @@ const Insights = ({ type }: { type?: string }) => {
 
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [isPublished, setIsPublished] = useState(false);
+
+  // console.log(subEventAnalytics);
 
   const options = {
     responsive: true,
@@ -139,7 +142,7 @@ const Insights = ({ type }: { type?: string }) => {
   useEffect(() => {
     if (eventData && eventData.id) eventId.current = eventData.id;
 
-    if (eventId)
+    if (eventId) {
       connectPrivateSocket({
         url: makeMyPassSocket.registerInsights(eventId.current),
         type: type,
@@ -250,6 +253,9 @@ const Insights = ({ type }: { type?: string }) => {
 
         setSocket(ws);
       });
+
+      // getSubEventAnalytics(eventId.current, setSubEventAnalytics);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId, eventData]);
 

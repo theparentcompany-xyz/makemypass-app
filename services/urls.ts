@@ -157,6 +157,8 @@ export const makeMyPass = {
   getVenueAnalytics: (eventId: string) => makeMyPassURL(`/analytics/${eventId}/venue-analytics/`), //Till Volunteer
   getPageViewAnalytics: (eventId: string) =>
     makeMyPassURL(`/analytics/${eventId}/page-view-analytics/`), //Till Viewer
+  subEventAnalytics: (eventId: string) =>
+    makeMyPassURL(`/analytics/${eventId}/sub-event-analytics/`), //Till Viewer
 
   //Manage Games
   scratchCardClaim: (eventId: string, eventRegisterId: string) =>

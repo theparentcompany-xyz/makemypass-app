@@ -241,7 +241,12 @@ const Dashboard = () => {
                   {Object.entries(times).map(([time, events]) => (
                     <div key={time}>
                       <p className={styles.eventTime}>{time}</p>
-                      <div className='row'>
+                      <div
+                        className='row'
+                        style={{
+                          alignItems: 'flex-start',
+                        }}
+                      >
                         {events.map((subevent, index) => (
                           <div key={index} className={styles.subevent}>
                             <div className={styles.event}>

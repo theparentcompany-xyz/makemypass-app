@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { BiSolidError } from 'react-icons/bi';
+import { BsFillPeopleFill } from 'react-icons/bs';
 
 import { SubEventType } from '../../../../../apis/types';
 import { formatDate, formatTime } from '../../../../../common/commonFunctions';
@@ -71,40 +72,60 @@ const SubEventListing = ({
                             >
                               <div className={styles.innerCard}>
                                 <div
-                                  className={`{styles.eventDetails} ${event.conflicting_event && styles.disabledCard}`}
+                                  className={`${styles.eventDetails} ${event.conflicting_event && styles.disabledCard}`}
                                 >
                                   <div className={styles.headingTexts}>
                                     <p className={styles.eventTitle}>{event?.title}</p>
                                   </div>
-
                                   <DatePlace event={event} />
-
-                                  <div className='row'>
-                                    {!event.conflicting_event && (
+                                  <div
+                                    className='row'
+                                    style={{
+                                      justifyContent: 'space-between',
+                                      alignItems: 'flex-end',
+                                    }}
+                                  >
+                                    <div className='row'>
+                                      {!event.conflicting_event && (
+                                        <motion.button
+                                          whileHover={{ scale: 1.05 }}
+                                          className={styles.cardPrimaryButton}
+                                          onClick={() => {
+                                            if (event.already_booked) setSubEventToRemove(event.id);
+                                            else handleSelectEvent(event);
+                                          }}
+                                        >
+                                          {event.already_booked
+                                            ? 'Withdraw'
+                                            : selectedEventsIds.find((e) => e.id === event.id)
+                                              ? 'Deselect'
+                                              : 'Select'}
+                                        </motion.button>
+                                      )}
                                       <motion.button
-                                        whileHover={{ scale: 1.05 }}
-                                        className={styles.cardPrimaryButton}
-                                        onClick={() => {
-                                          if (event.already_booked) setSubEventToRemove(event.id);
-                                          else handleSelectEvent(event);
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setShowDetailedView(event);
+                                        }}
+                                        className={styles.manage}
+                                      >
+                                        View More
+                                      </motion.button>
+                                    </div>
+
+                                    {event.capacity_left && (
+                                      <div
+                                        className='row'
+                                        style={{
+                                          columnGap: '0.25rem',
                                         }}
                                       >
-                                        {event.already_booked
-                                          ? 'Withdraw'
-                                          : selectedEventsIds.find((e) => e.id === event.id)
-                                            ? 'Deselect'
-                                            : 'Select'}
-                                      </motion.button>
+                                        <BsFillPeopleFill size={18} color='#E5E5E5' />
+                                        <span className={styles.capacityText}>
+                                          {event.capacity_left} Left
+                                        </span>
+                                      </div>
                                     )}
-                                    <motion.button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        setShowDetailedView(event);
-                                      }}
-                                      className={styles.manage}
-                                    >
-                                      View More
-                                    </motion.button>
                                   </div>
                                 </div>
 

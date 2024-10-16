@@ -203,14 +203,9 @@
   }
 }
 
-.mobileButton {
-  display: block;
-  padding: 0 1.25rem;
-}
-
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 1330px) {
   .mobileButton {
-    display: none;
+    padding: 0 1.25rem;
   }
 }
 
@@ -225,10 +220,6 @@
   cursor: pointer;
   margin-top: 1rem;
   margin-bottom: 1rem;
-}
-
-.confirmButtonMobile {
-  width: 100%;
 }
 
 .eventSmallBoxContainer {

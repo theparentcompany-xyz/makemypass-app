@@ -70,3 +70,19 @@ export const getPageViewAnalytics = (
       setDataLoaded(true);
     });
 };
+
+// export const getSubEventAnalytics = (
+//   eventId: string,
+//   setVenueAnalytics: Dispatch<SetStateAction<AnalyticsData | undefined>>,
+// ) => {
+//   privateGateway
+//     .get(makeMyPass.subEventAnalytics(eventId))
+//     .then((response) => {
+//       setVenueAnalytics(response.data.response);
+//     })
+//     .catch((error) => {
+//       toast.error(
+//         error.response.data.message.general[0] || 'Error in Fetching Sub Event Analytics Data',
+//       );
+//     });
+// };
