@@ -39,6 +39,20 @@
   margin-top: 1rem;
 }
 
+.modalSecondaryButton {
+  width: 100%;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
 .inputLabel {
   display: flex;
   flex-direction: column;

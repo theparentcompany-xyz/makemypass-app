@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 
 import Modal from '../../../../../components/Modal/Modal';
-import { multipleTicketCount } from '../../pages/ScanQR/types';
+import { MapNewCode, multipleTicketCount } from '../../pages/ScanQR/types';
 import styles from './ScannerResponseModal.module.css';
 
 const ScannerResponseModal = ({
@@ -12,6 +12,8 @@ const ScannerResponseModal = ({
   setMultipleTickets,
   multipleTickets,
   type,
+  mappingNewCode,
+  setMappingNewCode,
 }: {
   message: string;
   setMessage: (message: string) => void;
@@ -20,6 +22,8 @@ const ScannerResponseModal = ({
   setMultipleTickets?: Dispatch<React.SetStateAction<multipleTicketCount>>;
   multipleTickets?: multipleTicketCount;
   type?: string;
+  mappingNewCode?: MapNewCode;
+  setMappingNewCode?: Dispatch<React.SetStateAction<MapNewCode | undefined>>;
 }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -57,6 +61,23 @@ const ScannerResponseModal = ({
               >
                 Close
               </button>
+              {type === 'checkIn' && mappingNewCode?.apiConfirmation && (
+                <button
+                  className={styles.modalSecondaryButton}
+                  onClick={() => {
+                    setMessage('');
+                    if (setTicketId) setTicketId('');
+                    setTrigger(false);
+                    if (setMappingNewCode)
+                      setMappingNewCode({
+                        ...mappingNewCode,
+                        modalConfirmation: true,
+                      });
+                  }}
+                >
+                  Link New Code
+                </button>
+              )}
             </>
           )}
           {multipleTickets && multipleTickets.hasMultipleTickets && (
@@ -144,6 +165,23 @@ const ScannerResponseModal = ({
               >
                 Close
               </button>
+              {type === 'checkIn' && mappingNewCode?.apiConfirmation && (
+                <button
+                  className={styles.modalSecondaryButton}
+                  onClick={() => {
+                    setMessage('');
+                    if (setTicketId) setTicketId('');
+                    setTrigger(false);
+                    if (setMappingNewCode)
+                      setMappingNewCode({
+                        ...mappingNewCode,
+                        modalConfirmation: true,
+                      });
+                  }}
+                >
+                  Link New Code
+                </button>
+              )}
             </>
           )}
         </Modal>

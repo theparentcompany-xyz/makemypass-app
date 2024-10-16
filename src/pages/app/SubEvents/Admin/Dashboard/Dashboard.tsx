@@ -116,7 +116,6 @@ const Dashboard = () => {
       );
     } else {
       editSubEvent(
-        subEvents,
         eventId,
         selectedSubEvent,
         setSubEvents,

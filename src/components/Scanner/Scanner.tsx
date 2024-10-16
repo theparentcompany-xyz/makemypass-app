@@ -17,6 +17,7 @@ const Scanner = ({
   onClose,
   roomNumber,
   setRoomNumber,
+  type,
 }: {
   ticketId: string | undefined;
   setTicketId: Dispatch<React.SetStateAction<string>> | undefined;
@@ -26,11 +27,12 @@ const Scanner = ({
   onClose?: () => void;
   roomNumber?: RoomType;
   setRoomNumber?: Dispatch<React.SetStateAction<RoomType>>;
+  type?: string;
 }) => {
   const navigate = useNavigate();
   return (
     <div className={styles.scannerContainer}>
-      <p className={styles.scanHeader}>Scan QR Code Below</p>
+      <p className={styles.scanHeader}>{!type ? 'Scan QR Code Below' : 'Scan New QR Code Below'}</p>
       <div className={styles.scannerOuterContainer}>
         <div className={styles.scanner}>
           <div className={styles.closeButton}>

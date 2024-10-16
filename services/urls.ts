@@ -12,6 +12,7 @@ export const makeMyPass = {
 
   //Scan Guest
   scanGuestCheckin: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkin`), //Till Volunteer
+  scanGuestMapNewCode: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/map-new-code`), //Till Volunteer
   scanGuestButtons: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/buttons/`), //Till Volunteer
   scanGuestCheckout: (eventId: string) => makeMyPassURL(`/scan-guest/${eventId}/checkout`), //Till Volunteer
   scanGuestVenueCheckin: (eventId: string) =>

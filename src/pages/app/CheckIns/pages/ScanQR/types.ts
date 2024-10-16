@@ -32,3 +32,9 @@ export type RoomType = {
   roomNumber: string;
   showModel: boolean;
 };
+
+export type MapNewCode = {
+  apiConfirmation: boolean;
+  modalConfirmation: boolean;
+  ticketCode: string;
+};

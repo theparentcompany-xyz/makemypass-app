@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { CgClose } from 'react-icons/cg';
 import { LuCheck } from 'react-icons/lu';
 
-import { checkInUser } from '../../../../../apis/scan';
+import { checkInUser, mapNewCode } from '../../../../../apis/scan';
 import { PreviewData } from '../../../../../apis/types';
 import Loader from '../../../../../components/Loader';
 import Modal from '../../../../../components/Modal/Modal';
@@ -16,7 +16,7 @@ import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerR
 import { LogType } from '../Venue/Venue';
 import MultipleTicket from './components/MultipleTicket';
 import styles from './ScanQR.module.css';
-import { multipleTicketCount, RoomType } from './types';
+import { MapNewCode, multipleTicketCount, RoomType } from './types';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -34,6 +34,10 @@ const ScanQR = () => {
     showModel: false,
   } as RoomType);
   const [scanLogs, setScanLogs] = useState<LogType[]>([]);
+
+  const [mappingNewCode, setMappingNewCode] = useState<MapNewCode>();
+  const [newCode, setNewCode] = useState<string>('');
+  const [newCodeTrigger, setNewCodeTrigger] = useState<boolean>(false);
 
   const [previewData, setPreviewData] = useState<PreviewData>({
     name: '',
@@ -57,10 +61,38 @@ const ScanQR = () => {
         multipleTickets,
         setTrigger,
         roomNumber: roomNumber.roomNumber,
+        setMappingNewCode,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trigger, eventId]);
+
+  useEffect(() => {
+    console.log('Hi');
+    if (newCode.length > 0 && mappingNewCode?.apiConfirmation) {
+      console.log('Hello');
+
+      mapNewCode({
+        mappingNewCode,
+        newCode,
+        eventId,
+        setMappingNewCode,
+        setMessage,
+      })
+        .then((response) => {
+          if (response) {
+            setNewCode('');
+            setNewCodeTrigger(false);
+          }
+        })
+        .finally(() => {
+          if (setChecking) {
+            setChecking(false);
+          }
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newCodeTrigger]);
 
   useEffect(() => {
     sessionStorage.setItem('roomNumber', roomNumber.roomNumber);
@@ -121,6 +153,8 @@ const ScanQR = () => {
                 setMultipleTickets={setMultipleTickets}
                 multipleTickets={multipleTickets}
                 type='checkIn'
+                setMappingNewCode={setMappingNewCode}
+                mappingNewCode={mappingNewCode}
               />
               {previewData && previewData.name && (
                 <>
@@ -167,6 +201,7 @@ const ScanQR = () => {
                             setMultipleTickets,
                             multipleTickets,
                             setTrigger,
+                            setMappingNewCode,
                           });
                           setTicketId('');
                         }}
@@ -183,15 +218,26 @@ const ScanQR = () => {
                 <hr className={styles.line} />
               </div>
 
-              <Scanner
-                ticketId={ticketId}
-                setTicketId={setTicketId}
-                trigger={trigger}
-                setTrigger={setTrigger}
-                checking={checking}
-                roomNumber={roomNumber}
-                setRoomNumber={setRoomNumber}
-              />
+              {!mappingNewCode?.modalConfirmation ? (
+                <Scanner
+                  ticketId={ticketId}
+                  setTicketId={setTicketId}
+                  trigger={trigger}
+                  setTrigger={setTrigger}
+                  checking={checking}
+                  roomNumber={roomNumber}
+                  setRoomNumber={setRoomNumber}
+                />
+              ) : (
+                <Scanner
+                  ticketId={newCode}
+                  setTicketId={setNewCode}
+                  trigger={newCodeTrigger}
+                  setTrigger={setNewCodeTrigger}
+                  checking={checking}
+                  type='newCode'
+                />
+              )}
               <ScanLogs scanLogs={scanLogs} />
             </>
           )}
