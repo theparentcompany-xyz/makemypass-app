@@ -187,11 +187,35 @@
 
 .eventListingNavbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 
-.confirmButton {
+@media screen and (max-width: 1330px) {
+  .eventListingNavbar {
+    padding: 0 1.25rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .eventListingNavbar {
+    display: none;
+  }
+}
+
+.mobileButton {
+  display: block;
+  padding: 0 1.25rem;
+}
+
+@media screen and (min-width: 768px) {
+  .mobileButton {
+    display: none;
+  }
+}
+
+.confirmButton,
+.confirmButtonMobile {
   background: #fff;
   font-size: 0.9rem;
   color: rgb(43, 42, 42);
@@ -201,6 +225,10 @@
   cursor: pointer;
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.confirmButtonMobile {
+  width: 100%;
 }
 
 .eventSmallBoxContainer {

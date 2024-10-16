@@ -179,7 +179,7 @@ const ListSubEvents = () => {
                 <EventHeader />
               </div>
               <div className={styles.eventListingNavbar}>
-                <div className={styles.eventSmallBoxContainer}>
+                {/* <div className={styles.eventSmallBoxContainer}>
                   {selectedEventsIds.length > 0 && (
                     <div className={styles.selectedEventsContainer}>
                       {selectedEventsIds.map((event) => {
@@ -203,7 +203,7 @@ const ListSubEvents = () => {
                       })}
                     </div>
                   )}
-                </div>
+                </div> */}
                 <div className={styles.submitButtonContainer}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -224,6 +224,18 @@ const ListSubEvents = () => {
                 setShowDetailedView={setShowDetailedView}
                 setSubEventToRemove={setSubEventToRemove}
               />
+
+              <div className={styles.mobileButton}>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  className={styles.confirmButtonMobile}
+                  onClick={() => {
+                    handleSubmit();
+                  }}
+                >
+                  Register
+                </motion.button>
+              </div>
             </div>
           ) : (
             <div className='center'>
