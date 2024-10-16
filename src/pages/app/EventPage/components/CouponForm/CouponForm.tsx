@@ -694,7 +694,6 @@ const CouponForm = ({
                 style={{
                   fontSize: '0.9rem',
                   textDecoration: 'underline',
-                  
                 }}
               >
                 Expected Invoice

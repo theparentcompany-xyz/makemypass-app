@@ -81,6 +81,18 @@ const Dashboard = () => {
       getSubEventData(eventId, selectedSubEvent.id, setSelectedSubEvent);
     }
 
+    if (currentSelectType === '') {
+      setSubEventDescription('');
+      setSelectedSubEvent({
+        id: '',
+        title: '',
+        start_time: '',
+        end_time: '',
+        place: '',
+        description: '',
+      });
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSelectType]);
 
@@ -94,13 +106,23 @@ const Dashboard = () => {
   // }, [subEventDescription]);
 
   const handleSubmit = () => {
-    if (subEventDescription.length > 0) {
-      setSelectedSubEvent({ ...selectedSubEvent, description: subEventDescription });
-    }
     if (currentSelectType === 'add') {
-      createNewSubEvent(eventId, selectedSubEvent, setSubEvents);
+      createNewSubEvent(
+        eventId,
+        selectedSubEvent,
+        setSubEvents,
+        setCurrentSelectType,
+        subEventDescription,
+      );
     } else {
-      editSubEvent(eventId, selectedSubEvent, setSubEvents);
+      editSubEvent(
+        subEvents,
+        eventId,
+        selectedSubEvent,
+        setSubEvents,
+        setCurrentSelectType,
+        subEventDescription,
+      );
     }
   };
 

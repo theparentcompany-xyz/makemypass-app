@@ -206,6 +206,8 @@ export const createNewSubEvent = async (
   eventId: string,
   subEvent: SubEventListType,
   setSubEvents: Dispatch<React.SetStateAction<SubEventListType[]>>,
+  setCurrentSelectedType: Dispatch<React.SetStateAction<string>>,
+  subEventDescription: string,
 ) => {
   privateGateway
     .post(makeMyPass.createNewSubEvent(eventId), {
@@ -213,11 +215,12 @@ export const createNewSubEvent = async (
       start_time: subEvent.start_time,
       end_time: subEvent.end_time,
       place: subEvent.place,
-      description: subEvent.description,
+      description: subEventDescription,
     })
     .then(() => {
       toast.success('Sub Event created successfully');
       listDashboardSubEvents(eventId, setSubEvents);
+      setCurrentSelectedType('');
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
@@ -259,13 +262,19 @@ export const editSubEvent = async (
   eventId: string,
   subEvent: Partial<SubEventListType>,
   setSubEvents: Dispatch<React.SetStateAction<SubEventListType[]>>,
+  setCurrentSelectedType: Dispatch<React.SetStateAction<string>>,
+  subEventDescription: string,
 ) => {
   if (!subEvent.id) return;
   privateGateway
-    .patch(makeMyPass.updateSubEvent(eventId, subEvent.id), subEvent)
+    .patch(makeMyPass.updateSubEvent(eventId, subEvent.id), {
+      ...subEvent,
+      description: subEventDescription,
+    })
     .then(() => {
       toast.success('Sub Event updated successfully');
       listDashboardSubEvents(eventId, setSubEvents);
+      setCurrentSelectedType('');
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
