@@ -42,7 +42,7 @@ const EventLogs = () => {
             </p>
             <div className={styles.mailsContainer}>
               {mailLogs.map((mail, index) => (
-                <div className={styles.mail} key={index}>
+                <div className={styles.mail} key={index} onClick={() => toggleMailContent(mail.id)}>
                   <div className={styles.expandIcon}>
                     {
                       <BiChevronDown
@@ -60,6 +60,12 @@ const EventLogs = () => {
                       <p className={styles.mailType}>
                         {mail.type} Mail @ {formatDate(mail.created_at, true)}
                       </p>
+
+                      {mail.opened_at && (
+                        <p className={styles.mailType}>
+                          Mail Opened @ {formatDate(mail.opened_at, true)}
+                        </p>
+                      )}
                       <p className={styles.mailSubject}>{mail.subject}</p>
 
                       <p className={styles.mailDescription}>

@@ -265,6 +265,7 @@ export type MailType = {
   subject: string;
   type: string;
   updated_at: string;
+  opened_at: string;
 };
 
 export type listMailType = {
