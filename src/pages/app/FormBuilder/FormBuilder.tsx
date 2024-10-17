@@ -261,28 +261,30 @@ const FormBuilder = () => {
               </p>
             </div>
             <div className={styles.customFieldsContainer}>
-              <div className={styles.customFieldsHeader}>
-                <div className={styles.customFieldsHeading}>
-                  <div
-                    className={styles.image}
-                    style={{
-                      backgroundColor: '#FF9641',
+              {import.meta.env.CURRENT_ENV == 'dev' && (
+                <div className={styles.customFieldsHeader}>
+                  <div className={styles.customFieldsHeading}>
+                    <div
+                      className={styles.image}
+                      style={{
+                        backgroundColor: '#FF9641',
+                      }}
+                    >
+                      <FaAddressCard size={20} color='#ffffff' />
+                    </div>
+                    <p className={styles.customFieldsText}>Custom Fields</p>
+                  </div>
+                  <button
+                    className={styles.generateWithAIButton}
+                    onClick={() => {
+                      setShowGenerateWithAI(true);
                     }}
                   >
-                    <FaAddressCard size={20} color='#ffffff' />
-                  </div>
-                  <p className={styles.customFieldsText}>Custom Fields</p>
+                    {' '}
+                    <FaWandMagicSparkles /> Generate With AI
+                  </button>
                 </div>
-                <button
-                  className={styles.generateWithAIButton}
-                  onClick={() => {
-                    setShowGenerateWithAI(true);
-                  }}
-                >
-                  {' '}
-                  <FaWandMagicSparkles /> Generate With AI
-                </button>
-              </div>
+              )}
 
               <div className={styles.customFields}>
                 <Reorder.Group values={formFields} onReorder={setFormFields}>
