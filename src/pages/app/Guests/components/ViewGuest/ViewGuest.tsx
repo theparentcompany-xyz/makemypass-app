@@ -184,14 +184,14 @@ const ViewGuest = ({
             })
           }
           style={{
-            maxWidth: '40rem',
+            maxWidth: '35rem',
             alignItems: 'flex-start',
           }}
         >
           <div className={styles.mailsContainer}>
             {mailLog.logs.map((mail, index) => {
               return (
-                <div className={styles.mail} key={index}>
+                <div className={styles.mail} key={index} onClick={() => toggleMailContent(mail.id)}>
                   <div className={styles.expandIcon}>
                     {
                       <BiChevronDown
@@ -208,6 +208,11 @@ const ViewGuest = ({
                     <MdMail size={25} />
                     <div className={styles.mailHeaderContents}>
                       <p className={styles.mailType}>{mail.type} Mail</p>
+                      {mail.opened_at && (
+                        <p className={styles.mailType}>
+                          Mail Opened @ {formatDate(mail.opened_at, true)}
+                        </p>
+                      )}
                       <p className={styles.mailSubject}>{mail.subject}</p>
                       <p className={styles.mailDescription}>
                         To: <span>{mail.send_to}</span> <br />

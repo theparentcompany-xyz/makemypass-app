@@ -18,5 +18,6 @@ export type EmailType = {
   type: string;
   created_at: string;
   created_by: string;
+  opened_at: string;
   show_content: boolean;
 };
