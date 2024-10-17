@@ -445,4 +445,5 @@ export type SubEventType = {
   gateway_fee: number;
   already_booked: boolean;
   conflicting_event?: string;
+  capacity: number;
 };

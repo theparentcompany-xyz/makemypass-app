@@ -10,16 +10,18 @@ import {
   getSubEventData,
   listDashboardSubEvents,
 } from '../../../../../apis/subevents';
-import { SubEventType } from '../../../../../apis/types';
+import { isUserEditor } from '../../../../../common/commonFunctions';
 import Editor from '../../../../../components/Editor/Editor';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
 import Modal from '../../../../../components/Modal/Modal';
+import Slider from '../../../../../components/SliderButton/Slider';
 import Theme from '../../../../../components/Theme/Theme';
 import InputField from '../../../../auth/Login/InputField';
 import type { SubEventListType } from '../../../CheckIns/pages/SubEvent/types';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import DatePlace from '../../components/DatePlace/DatePlace';
 import styles from './Dashboard.module.css';
+import type { SubEventCRUDType } from './types';
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -62,7 +64,7 @@ const groupSubEventsByDateAndTime = (subEvents: SubEventListType[]) => {
 
 const Dashboard = () => {
   const [subEvents, setSubEvents] = useState<SubEventListType[]>([]);
-  const [selectedSubEvent, setSelectedSubEvent] = useState<SubEventType>({
+  const [selectedSubEvent, setSelectedSubEvent] = useState<SubEventCRUDType>({
     id: '',
     title: '',
     description: '',
@@ -70,31 +72,28 @@ const Dashboard = () => {
     end_time: '',
     place: '',
     location: '',
-    capacity_left: 0,
     price: 0,
     currency: '',
     platform_fee: 0,
     gateway_fee: 0,
-    already_booked: false,
-    conflicting_event: undefined,
+    capacity: 0,
+    approval_required: false,
+    active: false,
   });
   const [selectedSubEventId, setSelectedSubEventId] = useState<string>('');
   const [subEventDescription, setSubEventDescription] = useState<string>('');
   const [currentSelectType, setCurrentSelectType] = useState<string>('');
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<boolean>(false);
+  const [limitCapacity, setLimitCapacity] = useState<boolean>(false);
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   useEffect(() => {
     listDashboardSubEvents(eventId, setSubEvents);
   }, [eventId]);
 
   useEffect(() => {
-    console.log(selectedSubEvent);
-  }, [selectedSubEvent]);
-
-  useEffect(() => {
     if (selectedSubEventId)
       if (currentSelectType === 'edit' && selectedSubEventId) {
-        getSubEventData(eventId, selectedSubEventId, setSelectedSubEvent);
+        getSubEventData(eventId, selectedSubEventId, setSelectedSubEvent, setLimitCapacity);
       }
 
     if (currentSelectType === '') {
@@ -107,13 +106,13 @@ const Dashboard = () => {
         end_time: '',
         place: '',
         location: '',
-        capacity_left: 0,
         price: 0,
         currency: '',
         platform_fee: 0,
         gateway_fee: 0,
-        already_booked: false,
-        conflicting_event: undefined,
+        capacity: 0,
+        approval_required: false,
+        active: false,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -129,7 +128,11 @@ const Dashboard = () => {
         setSubEvents,
         setCurrentSelectType,
         subEventDescription,
-      );
+      ).then(() => {
+        setTimeout(() => {
+          listDashboardSubEvents(eventId, setSubEvents);
+        }, 1000);
+      });
     } else {
       editSubEvent(
         eventId,
@@ -222,6 +225,7 @@ const Dashboard = () => {
                   });
                 }}
               />
+
               <p className={styles.label}>Sub Event Description</p>
               <div className={styles.subEventDescription}>
                 <Editor
@@ -230,6 +234,78 @@ const Dashboard = () => {
                 />
               </div>
 
+              <div className={styles.ticketSlider}>
+                <p className={styles.ticketSliderLabel}>Limit Capacity</p>
+                <Slider
+                  checked={selectedSubEvent?.capacity != null && limitCapacity}
+                  onChange={() => {
+                    setLimitCapacity(!limitCapacity);
+                    setSelectedSubEvent({
+                      ...selectedSubEvent,
+                      capacity: limitCapacity ? 0 : 0,
+                    });
+                  }}
+                  size='medium'
+                />
+              </div>
+
+              {selectedSubEvent?.capacity != null && limitCapacity && (
+                <motion.div
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  className={styles.ticketSlider}
+                >
+                  <div className={styles.ticketCapacityContainer}>
+                    <label className={styles.ticketCapacityLabel}>Capacity</label>
+                    <input
+                      type='number'
+                      placeholder='Unlimited'
+                      disabled={!isUserEditor()}
+                      value={selectedSubEvent?.capacity}
+                      onChange={(e) => {
+                        if (Number(e.target.value) < 0) {
+                          return;
+                        }
+                        setSelectedSubEvent({
+                          ...selectedSubEvent,
+                          capacity: parseInt(e.target.value),
+                        });
+                      }}
+                      className={styles.ticketCapacityInput}
+                    />
+                  </div>
+                </motion.div>
+              )}
+
+              <div className={styles.ticketSlider}>
+                <p className={styles.ticketSliderLabel}>Approval Required</p>
+                <Slider
+                  checked={selectedSubEvent?.approval_required}
+                  onChange={() => {
+                    setSelectedSubEvent({
+                      ...selectedSubEvent,
+                      approval_required: !selectedSubEvent.approval_required,
+                    });
+                  }}
+                  size='medium'
+                />
+              </div>
+
+              <div className={styles.ticketSlider}>
+                <p className={styles.ticketSliderLabel}>Active</p>
+                <Slider
+                  checked={selectedSubEvent?.active}
+                  onChange={() => {
+                    setSelectedSubEvent({
+                      ...selectedSubEvent,
+                      active: !selectedSubEvent.active,
+                    });
+                  }}
+                  size='medium'
+                />
+              </div>
+              <br />
               <button className={styles.submitButton} onClick={handleSubmit}>
                 {currentSelectType === 'add' ? 'Add Sub Event' : 'Edit Sub Event'}
               </button>

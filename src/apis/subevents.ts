@@ -8,6 +8,7 @@ import { TableType } from '../components/Table/types';
 import type { SubEventListType } from '../pages/app/CheckIns/pages/SubEvent/types';
 import type { LogType } from '../pages/app/CheckIns/pages/Venue/Venue';
 import { PaginationDataType } from '../pages/app/Guests/types';
+import type { SubEventCRUDType } from '../pages/app/SubEvents/Admin/Dashboard/types';
 import type { SelectedSubEventsType } from '../pages/app/SubEvents/User/types';
 import type { FormFieldType, SubEventType } from './types';
 
@@ -212,38 +213,49 @@ export const listDashboardSubEvents = async (
     });
 };
 
-export const createNewSubEvent = async (
+export const createNewSubEvent = (
   eventId: string,
-  subEvent: SubEventType,
+  subEvent: SubEventCRUDType,
   setSubEvents: Dispatch<React.SetStateAction<SubEventListType[]>>,
   setCurrentSelectedType: Dispatch<React.SetStateAction<string>>,
   subEventDescription: string,
-) => {
-  console.log(subEvent);
-  privateGateway
-    .post(makeMyPass.createNewSubEvent(eventId), {
-      ...subEvent,
-      description: subEventDescription,
-    })
-    .then(() => {
-      toast.success('Sub Event created successfully');
-      listDashboardSubEvents(eventId, setSubEvents);
-      setCurrentSelectedType('');
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message.general[0] || 'Unable to process the request');
-    });
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const filteredSubEventData = Object.fromEntries(
+      Object.entries(subEvent).filter(
+        ([key, value]) => key != 'id' && value !== '' && value !== null && value !== undefined,
+      ),
+    );
+
+    privateGateway
+      .post(makeMyPass.createNewSubEvent(eventId), {
+        ...filteredSubEventData,
+        description: subEventDescription,
+      })
+      .then((response) => {
+        toast.success('Sub Event created successfully');
+        listDashboardSubEvents(eventId, setSubEvents);
+        setCurrentSelectedType('');
+        resolve(response.data);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+        reject(error);
+      });
+  });
 };
 
 export const getSubEventData = async (
   eventId: string,
   subEventId: string,
-  setSelectedSubEvent: Dispatch<SetStateAction<SubEventType>>,
+  setSelectedSubEvent: Dispatch<SetStateAction<SubEventCRUDType>>,
+  setLimitCapacity: Dispatch<SetStateAction<boolean>>,
 ) => {
   privateGateway
     .get(makeMyPass.updateSubEvent(eventId, subEventId))
     .then((response) => {
       setSelectedSubEvent(response.data.response);
+      setLimitCapacity(response.data.response.capacity !== 0);
     })
     .catch((error) => {
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
@@ -268,7 +280,7 @@ export const deleteSubEvent = async (
 
 export const editSubEvent = async (
   eventId: string,
-  subEvent: SubEventType | undefined,
+  subEvent: SubEventCRUDType,
   setSubEvents: Dispatch<React.SetStateAction<SubEventListType[]>>,
   setCurrentSelectedType: Dispatch<React.SetStateAction<string>>,
   subEventDescription: string,
