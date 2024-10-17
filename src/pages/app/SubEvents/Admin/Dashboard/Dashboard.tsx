@@ -10,6 +10,7 @@ import {
   getSubEventData,
   listDashboardSubEvents,
 } from '../../../../../apis/subevents';
+import { SubEventType } from '../../../../../apis/types';
 import Editor from '../../../../../components/Editor/Editor';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
 import Modal from '../../../../../components/Modal/Modal';
@@ -61,14 +62,23 @@ const groupSubEventsByDateAndTime = (subEvents: SubEventListType[]) => {
 
 const Dashboard = () => {
   const [subEvents, setSubEvents] = useState<SubEventListType[]>([]);
-  const [selectedSubEvent, setSelectedSubEvent] = useState<SubEventListType>({
+  const [selectedSubEvent, setSelectedSubEvent] = useState<SubEventType>({
     id: '',
     title: '',
+    description: '',
     start_time: '',
     end_time: '',
     place: '',
-    description: '',
+    location: '',
+    capacity_left: 0,
+    price: 0,
+    currency: '',
+    platform_fee: 0,
+    gateway_fee: 0,
+    already_booked: false,
+    conflicting_event: undefined,
   });
+  const [selectedSubEventId, setSelectedSubEventId] = useState<string>('');
   const [subEventDescription, setSubEventDescription] = useState<string>('');
   const [currentSelectType, setCurrentSelectType] = useState<string>('');
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<boolean>(false);
@@ -78,19 +88,32 @@ const Dashboard = () => {
   }, [eventId]);
 
   useEffect(() => {
-    if (currentSelectType === 'edit' && selectedSubEvent.id) {
-      getSubEventData(eventId, selectedSubEvent.id, setSelectedSubEvent);
-    }
+    console.log(selectedSubEvent);
+  }, [selectedSubEvent]);
+
+  useEffect(() => {
+    if (selectedSubEventId)
+      if (currentSelectType === 'edit' && selectedSubEventId) {
+        getSubEventData(eventId, selectedSubEventId, setSelectedSubEvent);
+      }
 
     if (currentSelectType === '') {
       setSubEventDescription('');
       setSelectedSubEvent({
         id: '',
         title: '',
+        description: '',
         start_time: '',
         end_time: '',
         place: '',
-        description: '',
+        location: '',
+        capacity_left: 0,
+        price: 0,
+        currency: '',
+        platform_fee: 0,
+        gateway_fee: 0,
+        already_booked: false,
+        conflicting_event: undefined,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,7 +142,8 @@ const Dashboard = () => {
   };
 
   const handleDelete = () => {
-    if (selectedSubEvent.id) deleteSubEvent(eventId, selectedSubEvent.id, setSubEvents);
+    if (selectedSubEvent && selectedSubEvent.id)
+      deleteSubEvent(eventId, selectedSubEvent.id, setSubEvents);
   };
 
   const navigate = useNavigate();
@@ -137,9 +161,14 @@ const Dashboard = () => {
                 name='subEventTitle'
                 id='subEventTitle'
                 icon={<></>}
-                value={selectedSubEvent.title}
+                value={selectedSubEvent?.title}
                 onChange={(e) => {
-                  setSelectedSubEvent({ ...selectedSubEvent, title: e.target.value });
+                  setSelectedSubEvent((prev) => {
+                    return {
+                      ...prev,
+                      title: e.target.value,
+                    };
+                  });
                 }}
               />
               <InputField
@@ -149,9 +178,14 @@ const Dashboard = () => {
                 name='subEventStartTime'
                 id='subEventStartTime'
                 icon={<></>}
-                value={selectedSubEvent.start_time}
+                value={selectedSubEvent?.start_time}
                 onChange={(e) => {
-                  setSelectedSubEvent({ ...selectedSubEvent, start_time: e.target.value });
+                  setSelectedSubEvent((prev) => {
+                    return {
+                      ...prev,
+                      start_time: e.target.value,
+                    };
+                  });
                 }}
               />
               <InputField
@@ -161,9 +195,14 @@ const Dashboard = () => {
                 name='subEventEndTime'
                 id='subEventEndTime'
                 icon={<></>}
-                value={selectedSubEvent.end_time}
+                value={selectedSubEvent?.end_time}
                 onChange={(e) => {
-                  setSelectedSubEvent({ ...selectedSubEvent, end_time: e.target.value });
+                  setSelectedSubEvent((prev) => {
+                    return {
+                      ...prev,
+                      end_time: e.target.value,
+                    };
+                  });
                 }}
               />
               <InputField
@@ -173,9 +212,14 @@ const Dashboard = () => {
                 name='subEventLocation'
                 id='subEventLocation'
                 icon={<></>}
-                value={selectedSubEvent.place}
+                value={selectedSubEvent?.place}
                 onChange={(e) => {
-                  setSelectedSubEvent({ ...selectedSubEvent, place: e.target.value });
+                  setSelectedSubEvent((prev) => {
+                    return {
+                      ...prev,
+                      place: e.target.value,
+                    };
+                  });
                 }}
               />
               <p className={styles.label}>Sub Event Description</p>
@@ -257,8 +301,10 @@ const Dashboard = () => {
                                       color={'#fff'}
                                       size={20}
                                       onClick={() => {
-                                        setSelectedSubEvent(subevent);
-                                        setShowDeleteConfirmation(true);
+                                        if (subevent.id) {
+                                          setSelectedSubEventId(subevent.id);
+                                          setShowDeleteConfirmation(true);
+                                        }
                                       }}
                                     />
                                   </div>
@@ -284,8 +330,10 @@ const Dashboard = () => {
                                           whileHover={{ scale: 1.05 }}
                                           className={styles.cardSecondaryButton}
                                           onClick={() => {
-                                            setSelectedSubEvent(subevent);
-                                            setCurrentSelectType('edit');
+                                            if (subevent.id) {
+                                              setSelectedSubEventId(subevent.id);
+                                              setCurrentSelectType('edit');
+                                            }
                                           }}
                                         >
                                           Edit

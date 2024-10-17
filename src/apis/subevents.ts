@@ -214,17 +214,15 @@ export const listDashboardSubEvents = async (
 
 export const createNewSubEvent = async (
   eventId: string,
-  subEvent: SubEventListType,
+  subEvent: SubEventType,
   setSubEvents: Dispatch<React.SetStateAction<SubEventListType[]>>,
   setCurrentSelectedType: Dispatch<React.SetStateAction<string>>,
   subEventDescription: string,
 ) => {
+  console.log(subEvent);
   privateGateway
     .post(makeMyPass.createNewSubEvent(eventId), {
-      title: subEvent.title,
-      start_time: subEvent.start_time,
-      end_time: subEvent.end_time,
-      place: subEvent.place,
+      ...subEvent,
       description: subEventDescription,
     })
     .then(() => {
@@ -240,7 +238,7 @@ export const createNewSubEvent = async (
 export const getSubEventData = async (
   eventId: string,
   subEventId: string,
-  setSelectedSubEvent: Dispatch<SetStateAction<SubEventListType>>,
+  setSelectedSubEvent: Dispatch<SetStateAction<SubEventType>>,
 ) => {
   privateGateway
     .get(makeMyPass.updateSubEvent(eventId, subEventId))
@@ -270,12 +268,12 @@ export const deleteSubEvent = async (
 
 export const editSubEvent = async (
   eventId: string,
-  subEvent: Partial<SubEventListType>,
+  subEvent: SubEventType | undefined,
   setSubEvents: Dispatch<React.SetStateAction<SubEventListType[]>>,
   setCurrentSelectedType: Dispatch<React.SetStateAction<string>>,
   subEventDescription: string,
 ) => {
-  if (!subEvent.id) return;
+  if (!subEvent) return;
   privateGateway
     .patch(makeMyPass.updateSubEvent(eventId, subEvent.id), {
       ...subEvent,
