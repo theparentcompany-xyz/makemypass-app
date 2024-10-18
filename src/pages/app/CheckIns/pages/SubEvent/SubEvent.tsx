@@ -1,20 +1,20 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import Select from 'react-select';
 
 import { checkInUserSubEvent, listCheckInSubEvents } from '../../../../../apis/subevents';
+import { formatDate, formatTime } from '../../../../../common/commonFunctions';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
 import Scanner from '../../../../../components/Scanner/Scanner';
 import Theme from '../../../../../components/Theme/Theme';
+import { customStyles } from '../../../EventPage/constants';
 import DatePlace from '../../../SubEvents/components/DatePlace/DatePlace';
 import ScanLogs from '../../components/ScanLogs/ScanLogs';
 import ScannerResponseModal from '../../components/ScannerResponseModal/ScannerResponseModal';
 import { LogType } from '../Venue/Venue';
 import styles from './SubEvent.module.css';
 import type { SubEventListType } from './types';
-import { formatDate, formatTime } from '../../../../../common/commonFunctions';
-import Select from 'react-select';
-import { customStyles } from '../../../EventPage/constants';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 const groupEventsByDateAndTime = (events: SubEventListType[], place?: string, title?: string) => {
   return events

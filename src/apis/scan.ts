@@ -126,8 +126,6 @@ export const checkInUser = async ({
         toast.success(response.data.message.general[0] || 'Check-In Successful');
       }
 
-      console.log(response.data.response.map_new_code);
-      console.log(setMappingNewCode && response.data.response.map_new_code);
       if (setMappingNewCode && response.data.response.map_new_code) {
         setMappingNewCode({
           apiConfirmation: true,
@@ -149,7 +147,6 @@ export const checkInUser = async ({
             remaining_count: ticket.remaining_count,
             checked_in_count: ticket.remaining_count > 0 ? 1 : 0,
           })),
-          // userName: error.response.data.response.user_name,
           userData: error.response.data.response.user_data,
           entryDate: error.response.data.response.entry_date,
         }));
@@ -186,6 +183,7 @@ export const checkInUser = async ({
       }
     });
 };
+
 export const checkOutUser = async (
   ticketId: string,
   eventId: string,

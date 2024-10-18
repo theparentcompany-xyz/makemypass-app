@@ -88,7 +88,7 @@ const SubEventListing = ({
       <div className={styles.subEventsListingHeader}>
         <div>
           <p className={styles.subEventHeading}>Sub Events @ IEDC Summit 2024</p>
-          <p className={styles.helperText}>Select the events you want to participate in.</p>
+          <p className={styles.helperText}>Don't share this unique link. Select your events.</p>
         </div>
         <div
           className='row'
