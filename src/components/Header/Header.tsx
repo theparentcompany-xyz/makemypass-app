@@ -6,7 +6,13 @@ import { Link } from 'react-router-dom';
 import SecondaryButton from '../../pages/app/Overview/components/SecondaryButton/SecondaryButton';
 import styles from './Header.module.css';
 
-const Header = ({ type }: { type?: string | undefined }) => {
+const Header = ({
+  type,
+  hideLogin,
+}: {
+  type?: string | undefined;
+  hideLogin: boolean | undefined;
+}) => {
   const [openSettings, setOpenSettings] = useState(false);
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -137,11 +143,15 @@ const Header = ({ type }: { type?: string | undefined }) => {
                     </div>
                   </>
                 ) : (
-                  <div className={styles.buttons}>
-                    <Link to='/login'>
-                      <SecondaryButton buttonText='Login' />
-                    </Link>
-                  </div>
+                  <>
+                    {!hideLogin && (
+                      <div className={styles.buttons}>
+                        <Link to='/login'>
+                          <SecondaryButton buttonText='Login' />
+                        </Link>
+                      </div>
+                    )}
+                  </>
                 )
               ) : (
                 <div className={styles.buttons}>

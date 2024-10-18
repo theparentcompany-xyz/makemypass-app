@@ -149,7 +149,7 @@ const ListSubEvents = () => {
   }, [selectedEventsIds]);
 
   return (
-    <Theme>
+    <Theme hideLogin={true}>
       <RemoveConfirmation
         eventId={eventId}
         eventRegisterId={eventRegisterId}
