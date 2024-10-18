@@ -215,10 +215,12 @@
   color: rgb(43, 42, 42);
   border: none;
   border-radius: 8px;
+  width: 100%;
   padding: 0.5rem 1rem;
   cursor: pointer;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  max-width: 10rem;
 }
 
 .eventSmallBoxContainer {

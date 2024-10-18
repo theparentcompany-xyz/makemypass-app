@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router';
-import { HashLoader } from 'react-spinners';
+import { BeatLoader, HashLoader } from 'react-spinners';
 
 import { getEventId } from '../../../../apis/events';
 import { getSubEventForm, getSubEvents, subEventRegister } from '../../../../apis/subevents';
@@ -27,6 +27,8 @@ const ListSubEvents = () => {
   const [subEventToRemove, setSubEventToRemove] = useState<string | null>(null);
   const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
   const [showFormModal, setShowFormModal] = useState<boolean>(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isEventsLoading, setIsEventsLoading] = useState(true);
 
@@ -76,6 +78,7 @@ const ListSubEvents = () => {
   const handleSubmit = () => {
     if (selectedEventsIds.filter((event) => !event.alreadyRegistered).length > 0) {
       if (eventId && eventRegisterId) {
+        setIsLoading(true);
         getSubEventForm(eventId, eventRegisterId, selectedEventsIds)
           .then((form) => {
             if (form.length !== 0) {
@@ -89,6 +92,7 @@ const ListSubEvents = () => {
                 selectedEventsIds,
                 setFormErrors,
                 setTriggerFetch,
+                setIsLoading,
               );
             }
           })
@@ -196,7 +200,11 @@ const ListSubEvents = () => {
                     handleSubmit();
                   }}
                 >
-                  Register Now
+                  {isLoading ? (
+                    <BeatLoader color='#272727' loading={isLoading} size={10} />
+                  ) : (
+                    'Register Now'
+                  )}
                 </motion.button>
               </div>
             </div>

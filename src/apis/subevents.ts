@@ -70,6 +70,7 @@ export const subEventRegister = (
   setFormErrors: React.Dispatch<React.SetStateAction<Record<string, string[]>>>,
   setTriggerFetch: React.Dispatch<React.SetStateAction<boolean>>,
   setShowFormModal?: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const backendFormData = new FormData();
 
@@ -118,6 +119,9 @@ export const subEventRegister = (
     .catch((error) => {
       setFormErrors(error.response.data.message);
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
+    })
+    .finally(() => {
+      setIsLoading && setIsLoading(false);
     });
 };
 

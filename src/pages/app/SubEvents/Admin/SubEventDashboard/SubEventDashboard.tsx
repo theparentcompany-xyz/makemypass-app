@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router';
 
+import { TillRoles } from '../../../../../../services/enums';
 import { downloadSubEventCSV, listSubEventGuests } from '../../../../../apis/subevents';
+import { isUserAuthorized } from '../../../../../common/commonFunctions';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
 import Table from '../../../../../components/Table/Table';
 import { TableType } from '../../../../../components/Table/types';
@@ -9,8 +11,6 @@ import Theme from '../../../../../components/Theme/Theme';
 import { PaginationDataType } from '../../../Guests/types';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 import styles from './SubEventDashboard.module.css';
-import { isUserAuthorized } from '../../../../../common/commonFunctions';
-import { TillRoles } from '../../../../../../services/enums';
 
 const SubEventDashboard = () => {
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;

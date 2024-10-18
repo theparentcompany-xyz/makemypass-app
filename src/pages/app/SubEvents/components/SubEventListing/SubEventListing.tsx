@@ -90,20 +90,25 @@ const SubEventListing = ({
           <p className={styles.subEventHeading}>Sub Events @ IEDC Summit 2024</p>
           <p className={styles.helperText}>Select the events you want to participate in.</p>
         </div>
-        <div className='row'>
-          <Select
-            options={availableLocations.map((location) => ({ value: location, label: location }))}
-            value={selectedLocation ? { value: selectedLocation, label: selectedLocation } : null}
-            onChange={(newValue) => setSelectedLocation(newValue ? newValue.value : undefined)}
-            styles={customStyles}
-            placeholder='Filter by Location'
-          />
+        <div
+          className='row'
+          style={{
+            columnGap: '0.5rem',
+          }}
+        >
           <input
             type='text'
             placeholder='Search by Title'
             className={styles.searchInput}
             value={searchTitle}
             onChange={(e) => setSearchTitle(e.target.value)}
+          />
+          <Select
+            options={availableLocations.map((location) => ({ value: location, label: location }))}
+            value={selectedLocation ? { value: selectedLocation, label: selectedLocation } : null}
+            onChange={(newValue) => setSelectedLocation(newValue ? newValue.value : undefined)}
+            styles={customStyles}
+            placeholder='Filter by Location'
           />
         </div>
       </div>
