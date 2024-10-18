@@ -180,45 +180,6 @@ const ListSubEvents = () => {
                 <EventHeader />
               </div>
 
-              {/* <div className={styles.eventListingNavbar}>
-                <div className={styles.eventSmallBoxContainer}>
-                  {selectedEventsIds.length > 0 && (
-                    <div className={styles.selectedEventsContainer}>
-                      {selectedEventsIds.map((event) => {
-                        const subEvent = subEvents.find((e) => e.id === event.id);
-                        const eventStyle = event.alreadyRegistered
-                          ? { background: 'white', color: 'black' }
-                          : {};
-
-                        return (
-                          <div
-                            key={event.id}
-                            className={styles.selectedEvent}
-                            style={eventStyle}
-                            onClick={() => {
-                              if (subEvent) setShowDetailedView(subEvent);
-                            }}
-                          >
-                            <p>{subEvent?.title.charAt(0).toUpperCase()}</p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-                <div className={styles.submitButtonContainer}>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    className={styles.confirmButton}
-                    onClick={() => {
-                      handleSubmit();
-                    }}
-                  >
-                    Register
-                  </motion.button>
-                </div>
-              </div> */}
-
               <SubEventListing
                 subEvents={subEvents}
                 selectedEventsIds={selectedEventsIds}
