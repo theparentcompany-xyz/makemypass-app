@@ -58,6 +58,7 @@ export type SuccessModalProps = {
   eventRegisterId?: string;
   followupMessage?: string;
   is_approved?: string;
+  show_sub_event?: boolean;
   loading?: boolean;
   eventId?: string;
   redirection?: {

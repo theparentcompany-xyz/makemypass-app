@@ -66,6 +66,20 @@ const SuccessButtonsContainer = ({
             </>
           )}
 
+          {success.show_sub_event && (
+            <>
+              <button
+                onClick={() => {
+                  const eventTitle = JSON.parse(sessionStorage.getItem('eventData')!).event_name;
+                  window.open(`/${eventTitle}/sub-event/${success.eventRegisterId}`, '_blank');
+                }}
+                className={styles.downloadTicketButton}
+              >
+                Sub Event Registration
+              </button>
+            </>
+          )}
+
           {hasScratchCard && (
             <button
               onClick={() => {

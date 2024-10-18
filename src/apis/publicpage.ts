@@ -166,6 +166,7 @@ export const submitForm = async ({
                   setSuccess((prev) => ({
                     ...prev,
                     is_approved: response.data.response.is_approved,
+                    show_sub_event: response.data.response.show_sub_event,
                     followupMessage: response.data.response.followup_msg,
                     eventRegisterId: response.data.response.event_register_id,
                     loading: false,
@@ -214,6 +215,7 @@ export const submitForm = async ({
         const successData = {
           showModal: true,
           is_approved: response.data.response.is_approved,
+          show_sub_event: response.data.response.show_sub_event,
           ticketURL: response.data.response.ticket_url,
           followupMessage: response.data.response.followup_msg,
           eventRegisterId: response.data.response.event_register_id,
