@@ -76,7 +76,7 @@ const Dashboard = () => {
     currency: '',
     platform_fee: 0,
     gateway_fee: 0,
-    capacity: 0,
+    capacity: null,
     approval_required: false,
     active: false,
   });
@@ -110,7 +110,7 @@ const Dashboard = () => {
         currency: '',
         platform_fee: 0,
         gateway_fee: 0,
-        capacity: 0,
+        capacity: null,
         approval_required: false,
         active: false,
       });
@@ -134,6 +134,7 @@ const Dashboard = () => {
         }, 1000);
       });
     } else {
+      console.log(selectedSubEvent);
       editSubEvent(
         eventId,
         selectedSubEvent,
@@ -155,7 +156,11 @@ const Dashboard = () => {
     <>
       <Theme>
         {(currentSelectType == 'add' || currentSelectType == 'edit') && (
-          <Modal title='Add Sub Event' type='side' onClose={() => setCurrentSelectType('')}>
+          <Modal
+            title={currentSelectType === 'edit' ? 'Edit Sub Event' : 'Add Sub Event'}
+            type='side'
+            onClose={() => setCurrentSelectType('')}
+          >
             <div className={styles.modalContent}>
               <InputField
                 title='Sub Event Title'
@@ -240,9 +245,11 @@ const Dashboard = () => {
                   checked={selectedSubEvent?.capacity != null && limitCapacity}
                   onChange={() => {
                     setLimitCapacity(!limitCapacity);
-                    setSelectedSubEvent({
-                      ...selectedSubEvent,
-                      capacity: limitCapacity ? 0 : 0,
+                    setSelectedSubEvent((prev) => {
+                      return {
+                        ...prev,
+                        capacity: limitCapacity ? null : 0,
+                      };
                     });
                   }}
                   size='medium'
@@ -259,17 +266,26 @@ const Dashboard = () => {
                   <div className={styles.ticketCapacityContainer}>
                     <label className={styles.ticketCapacityLabel}>Capacity</label>
                     <input
-                      type='number'
+                      type='text'
                       placeholder='Unlimited'
                       disabled={!isUserEditor()}
                       value={selectedSubEvent?.capacity}
                       onChange={(e) => {
+                        if (isNaN(Number(e.target.value))) {
+                          return;
+                        }
+
                         if (Number(e.target.value) < 0) {
                           return;
                         }
-                        setSelectedSubEvent({
-                          ...selectedSubEvent,
-                          capacity: parseInt(e.target.value),
+                        console.log(e.target.value);
+                        console.log(Number(e.target.value));
+
+                        setSelectedSubEvent((prev) => {
+                          return {
+                            ...prev,
+                            capacity: Number(e.target.value),
+                          };
                         });
                       }}
                       className={styles.ticketCapacityInput}
@@ -307,7 +323,7 @@ const Dashboard = () => {
               </div>
               <br />
               <button className={styles.submitButton} onClick={handleSubmit}>
-                {currentSelectType === 'add' ? 'Add Sub Event' : 'Edit Sub Event'}
+                {currentSelectType === 'edit' ? 'Edit Sub Event' : 'Add Sub Event'}
               </button>
             </div>
           </Modal>

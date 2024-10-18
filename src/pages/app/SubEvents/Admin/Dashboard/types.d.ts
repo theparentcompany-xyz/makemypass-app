@@ -6,7 +6,7 @@ export type SubEventCRUDType = {
   end_time: string;
   place: string;
   location: string | null;
-  capacity: number;
+  capacity: null | number;
   price: number;
   currency: string;
   approval_required: boolean;
