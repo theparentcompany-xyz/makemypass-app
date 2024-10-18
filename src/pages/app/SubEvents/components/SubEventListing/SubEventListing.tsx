@@ -10,18 +10,31 @@ import DatePlace from '../DatePlace/DatePlace';
 import styles from './SubEventListing.module.css';
 
 const groupEventsByDateAndTime = (events: SubEventType[]) => {
-  return events.reduce((acc: Record<string, Record<string, SubEventType[]>>, event) => {
-    const eventDate = event.start_time ? formatDate(event.start_time) : 'No Specific Date';
-    const eventTime = event.start_time ? formatTime(event.start_time) : 'No Specific Time';
-    if (!acc[eventDate]) {
-      acc[eventDate] = {};
-    }
-    if (!acc[eventDate][eventTime]) {
-      acc[eventDate][eventTime] = [];
-    }
-    acc[eventDate][eventTime].push(event);
-    return acc;
-  }, {});
+  return (
+    events
+      // Sort events by start_time in ascending order (morning events come first)
+      .sort((a, b) => {
+        const timeA = a.start_time ? new Date(a.start_time).getTime() : 0;
+        const timeB = b.start_time ? new Date(b.start_time).getTime() : 0;
+        return timeA - timeB;
+      })
+      // Then group events by date and time
+      .reduce((acc: Record<string, Record<string, SubEventType[]>>, event) => {
+        const eventDate = event.start_time ? formatDate(event.start_time) : 'No Specific Date';
+        const eventTime = event.start_time ? formatTime(event.start_time) : 'No Specific Time';
+
+        if (!acc[eventDate]) {
+          acc[eventDate] = {};
+        }
+        if (!acc[eventDate][eventTime]) {
+          acc[eventDate][eventTime] = [];
+        }
+
+        acc[eventDate][eventTime].push(event);
+
+        return acc;
+      }, {})
+  );
 };
 
 const SubEventListing = ({
@@ -76,10 +89,16 @@ const SubEventListing = ({
                                 <div
                                   className={`${styles.eventDetails} ${event.conflicting_event && styles.disabledCard}`}
                                 >
-                                  <div className={styles.headingTexts}>
-                                    <p className={styles.eventTitle}>{event?.title}</p>
+                                  <div className={styles.eventCardHeader}>
+                                    <div className={styles.headingTexts}>
+                                      <p className={styles.eventTitle}>
+                                        {event?.title.length > 50
+                                          ? `${event.title.substring(0, 50)}...`
+                                          : event.title}
+                                      </p>
+                                    </div>
+                                    <DatePlace event={event} />
                                   </div>
-                                  <DatePlace event={event} />
                                   <div
                                     className='row'
                                     style={{
@@ -87,7 +106,30 @@ const SubEventListing = ({
                                       alignItems: 'flex-end',
                                     }}
                                   >
+                                    {event.capacity_left && (
+                                      <div
+                                        className='row'
+                                        style={{
+                                          columnGap: '0.25rem',
+                                        }}
+                                      >
+                                        <BsFillPeopleFill size={18} color='#E5E5E5' />
+                                        <span className={styles.capacityText}>
+                                          {event.capacity_left} Left
+                                        </span>
+                                      </div>
+                                    )}
+
                                     <div className='row'>
+                                      <motion.button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setShowDetailedView(event);
+                                        }}
+                                        className={styles.manage}
+                                      >
+                                        View More
+                                      </motion.button>
                                       {!event.conflicting_event && (
                                         <motion.button
                                           whileHover={{ scale: 1.05 }}
@@ -104,30 +146,7 @@ const SubEventListing = ({
                                               : 'Select'}
                                         </motion.button>
                                       )}
-                                      <motion.button
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          setShowDetailedView(event);
-                                        }}
-                                        className={styles.manage}
-                                      >
-                                        View More
-                                      </motion.button>
                                     </div>
-
-                                    {event.capacity_left && (
-                                      <div
-                                        className='row'
-                                        style={{
-                                          columnGap: '0.25rem',
-                                        }}
-                                      >
-                                        <BsFillPeopleFill size={18} color='#E5E5E5' />
-                                        <span className={styles.capacityText}>
-                                          {event.capacity_left} Left
-                                        </span>
-                                      </div>
-                                    )}
                                   </div>
                                 </div>
 
