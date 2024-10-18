@@ -109,3 +109,8 @@ export type LineBarData = {
   backgroundColor: string;
   borderColor: string;
 }[];
+
+export type SubEventInsightsType = {
+  checkin_count: Record<string, number>;
+  registration_count: Record<string, number>;
+};

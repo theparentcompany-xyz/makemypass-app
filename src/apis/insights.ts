@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 
 import { privateGateway, publicGateway } from '../../services/apiGateway';
 import { makeMyPass } from '../../services/urls';
+import type { SubEventInsightsType } from '../pages/app/Insights/types';
 import { AnalyticsData, EventPerkClaimedHourly, HourlyDataVenue } from './types';
 
 export const getInsightsVisibility = (
@@ -71,18 +72,18 @@ export const getPageViewAnalytics = (
     });
 };
 
-// export const getSubEventAnalytics = (
-//   eventId: string,
-//   setVenueAnalytics: Dispatch<SetStateAction<AnalyticsData | undefined>>,
-// ) => {
-//   privateGateway
-//     .get(makeMyPass.subEventAnalytics(eventId))
-//     .then((response) => {
-//       setVenueAnalytics(response.data.response);
-//     })
-//     .catch((error) => {
-//       toast.error(
-//         error.response.data.message.general[0] || 'Error in Fetching Sub Event Analytics Data',
-//       );
-//     });
-// };
+export const getSubEventAnalytics = (
+  eventId: string,
+  setSubEventAnalytics: Dispatch<SetStateAction<SubEventInsightsType | undefined>>,
+) => {
+  privateGateway
+    .get(makeMyPass.subEventAnalytics(eventId))
+    .then((response) => {
+      setSubEventAnalytics(response.data.response.sub_event_analytics);
+    })
+    .catch((error) => {
+      toast.error(
+        error.response.data.message.general[0] || 'Error in Fetching Sub Event Analytics Data',
+      );
+    });
+};

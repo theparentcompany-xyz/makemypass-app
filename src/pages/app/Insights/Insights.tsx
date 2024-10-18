@@ -23,13 +23,19 @@ import { connectPrivateSocket } from '../../../../services/apiGateway';
 import { TillRoles } from '../../../../services/enums';
 import { makeMyPassSocket } from '../../../../services/urls';
 import { getEventId, updateEventData } from '../../../apis/events';
-import { getInsightsVisibility } from '../../../apis/insights';
+import { getInsightsVisibility, getSubEventAnalytics } from '../../../apis/insights';
 import { isUserAuthorized, isUserEditor } from '../../../common/commonFunctions';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import Modal from '../../../components/Modal/Modal';
 import Theme from '../../../components/Theme/Theme';
 import styles from './Insights.module.css';
-import type { AnalyticsData, ChartData, LineBarData, utmDataType } from './types';
+import type {
+  AnalyticsData,
+  ChartData,
+  LineBarData,
+  SubEventInsightsType,
+  utmDataType,
+} from './types';
 
 ChartJS.register(
   CategoryScale,
@@ -57,7 +63,7 @@ const Insights = ({ type }: { type?: string }) => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [perkData, setPerkData] = useState<ChartData>();
   const [utmData, setUtmData] = useState<utmDataType>();
-  // const [subEventAnalytics, setSubEventAnalytics] = useState<ChartData>();
+  const [subEventAnalytics, setSubEventAnalytics] = useState<SubEventInsightsType>();
 
   const expandedColors = [
     '#47C97E',
@@ -98,8 +104,6 @@ const Insights = ({ type }: { type?: string }) => {
 
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [isPublished, setIsPublished] = useState(false);
-
-  // console.log(subEventAnalytics);
 
   const options = {
     responsive: true,
@@ -254,7 +258,7 @@ const Insights = ({ type }: { type?: string }) => {
         setSocket(ws);
       });
 
-      // getSubEventAnalytics(eventId.current, setSubEventAnalytics);
+      getSubEventAnalytics(eventId.current, setSubEventAnalytics);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId, eventData]);
@@ -266,6 +270,62 @@ const Insights = ({ type }: { type?: string }) => {
       updateEventData({ eventId: eventId.current, eventData, setIsPublished });
     } else {
       toast.error('You are not authorized to perform this action');
+    }
+  };
+
+  const renderBarChart = () => {
+    if (subEventAnalytics) {
+      const allKeys: string[] = [
+        ...new Set([
+          ...Object.keys(subEventAnalytics.checkin_count || {}),
+          ...Object.keys(subEventAnalytics.registration_count || {}),
+        ]),
+      ];
+
+      const chartData = {
+        labels: allKeys,
+        datasets: [
+          {
+            label: 'Check In Count',
+            data: allKeys.map((key) => subEventAnalytics.checkin_count[key] || 0),
+            backgroundColor: 'rgb(71, 201, 126)',
+            barPercentage: 0.9,
+            categoryPercentage: 0.8,
+          },
+          {
+            label: 'Registeration Count',
+            data: allKeys.map((key) => subEventAnalytics.registration_count[key] || 0),
+            backgroundColor: 'rgb(251, 216, 91)',
+            barPercentage: 0.9,
+            categoryPercentage: 0.8,
+          },
+        ],
+      };
+
+      const barOptions = {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top' as const },
+          title: { display: true, text: `Sub Event Analytics` },
+        },
+        scales: {
+          x: {
+        stacked: false,
+          },
+          y: {
+        stacked: false,
+        ticks: {
+          precision: 0,
+        },
+          },
+        },
+      };
+
+      return (
+        <div className={styles.subEventGraph}>
+          <Bar data={chartData} options={barOptions} />
+        </div>
+      );
     }
   };
 
@@ -720,94 +780,105 @@ const Insights = ({ type }: { type?: string }) => {
                   )}
               </div>
 
-              <div className={styles.insightsContainer}>
-                {Object.entries(message?.organisation_count || {}).length > 0 && (
-                  <div className={styles.categorySection}>
-                    <p className={styles.rightSectionHeading}>Organization Counts</p>
-
-                    <div className={styles.categories}>
-                      {Object.entries(message?.organisation_count || {}).map(([key, value]) => (
-                        <div className={styles.category}>
-                          <p className={styles.categoryName}>{key}</p>
-                          <p className={styles.categoryCount}>{value}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+              {subEventAnalytics?.checkin_count &&
+                Object.keys(subEventAnalytics.checkin_count).length > 0 && (
+                  <div className={styles.insightsContainer}>{renderBarChart()}</div>
                 )}
 
-                {venueBarData && venueBarData.datasets[0].data.length > 0 && (
-                  <div className={styles.registrationCount}>
-                    <div className={styles.logButton}>
-                      <FaExpandArrowsAlt
-                        color='rgb(255, 255, 255, 0.8)'
-                        onClick={() => {
-                          navigate(`/${eventTitle}/venue-analytics`);
-                        }}
-                        className='pointer'
-                      />
-                    </div>
-                    <div className={styles.graphContainer}>
-                      {venueBarData && venueBarData.datasets[0].data && (
-                        <Bar options={options} data={venueBarData} />
-                      )}
-                    </div>
-                  </div>
-                )}
+              {(Object.entries(message?.organisation_count || {}).length > 0 ||
+                (venueBarData && venueBarData.datasets[0].data.length > 0) ||
+                (perkData && perkData.datasets[0].data.length > 0) ||
+                Object.entries(message?.referral_analytics || {}).length > 0 ||
+                (entryDateCount && entryDateCount.datasets[0].data.length > 0)) && (
+                <div className={styles.insightsContainer}>
+                  {Object.entries(message?.organisation_count || {}).length > 0 && (
+                    <div className={styles.categorySection}>
+                      <p className={styles.rightSectionHeading}>Organization Counts</p>
 
-                {perkData && perkData.datasets[0].data.length > 0 && (
-                  <div className={styles.registrationCount}>
-                    <div className={styles.logButton}>
-                      <FaExpandArrowsAlt
-                        color='rgb(255, 255, 255, 0.8)'
-                        onClick={() => {
-                          navigate(`/${eventTitle}/perks-analytics`);
-                        }}
-                        className='pointer'
-                      />
-                    </div>
-                    <div className={styles.graphContainer}>
-                      {perkData && perkData.datasets[0].data && (
-                        <Bar options={options} data={perkData} />
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {Object.entries(message?.referral_analytics || {}).length > 0 && (
-                  <div className={styles.categorySection}>
-                    <p className={styles.rightSectionHeading}>Referral Analytics</p>
-
-                    <div className={styles.categories}>
-                      <div className={styles.category}>
-                        <p className={styles.categoryName}>Referral Code</p>
-                        <p className={styles.categoryCount}>Registrations</p>
-
-                        <p className={styles.categoryCount}>Amount(Rs.)</p>
+                      <div className={styles.categories}>
+                        {Object.entries(message?.organisation_count || {}).map(([key, value]) => (
+                          <div className={styles.category}>
+                            <p className={styles.categoryName}>{key}</p>
+                            <p className={styles.categoryCount}>{value}</p>
+                          </div>
+                        ))}
                       </div>
+                    </div>
+                  )}
 
-                      {Object.entries(message?.referral_analytics || {}).map(([key, value]) => (
+                  {venueBarData && venueBarData.datasets[0].data.length > 0 && (
+                    <div className={styles.registrationCount}>
+                      <div className={styles.logButton}>
+                        <FaExpandArrowsAlt
+                          color='rgb(255, 255, 255, 0.8)'
+                          onClick={() => {
+                            navigate(`/${eventTitle}/venue-analytics`);
+                          }}
+                          className='pointer'
+                        />
+                      </div>
+                      <div className={styles.graphContainer}>
+                        {venueBarData && venueBarData.datasets[0].data && (
+                          <Bar options={options} data={venueBarData} />
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {perkData && perkData.datasets[0].data.length > 0 && (
+                    <div className={styles.registrationCount}>
+                      <div className={styles.logButton}>
+                        <FaExpandArrowsAlt
+                          color='rgb(255, 255, 255, 0.8)'
+                          onClick={() => {
+                            navigate(`/${eventTitle}/perks-analytics`);
+                          }}
+                          className='pointer'
+                        />
+                      </div>
+                      <div className={styles.graphContainer}>
+                        {perkData && perkData.datasets[0].data && (
+                          <Bar options={options} data={perkData} />
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {Object.entries(message?.referral_analytics || {}).length > 0 && (
+                    <div className={styles.categorySection}>
+                      <p className={styles.rightSectionHeading}>Referral Analytics</p>
+
+                      <div className={styles.categories}>
                         <div className={styles.category}>
-                          <p className={styles.categoryName}>{key}</p>
-                          <p className={styles.categoryCount}>{value.count}</p>
+                          <p className={styles.categoryName}>Referral Code</p>
+                          <p className={styles.categoryCount}>Registrations</p>
 
-                          <p className={styles.categoryCount}>Rs.{value.amount}</p>
+                          <p className={styles.categoryCount}>Amount(Rs.)</p>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
 
-                {entryDateCount && entryDateCount.datasets[0].data.length > 0 && (
-                  <div className={styles.registrationCount}>
-                    <div className={styles.graphContainer}>
-                      {entryDateCount && entryDateCount.datasets[0].data && (
-                        <Bar options={options} data={entryDateCount} />
-                      )}
+                        {Object.entries(message?.referral_analytics || {}).map(([key, value]) => (
+                          <div className={styles.category}>
+                            <p className={styles.categoryName}>{key}</p>
+                            <p className={styles.categoryCount}>{value.count}</p>
+
+                            <p className={styles.categoryCount}>Rs.{value.amount}</p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                  )}
+
+                  {entryDateCount && entryDateCount.datasets[0].data.length > 0 && (
+                    <div className={styles.registrationCount}>
+                      <div className={styles.graphContainer}>
+                        {entryDateCount && entryDateCount.datasets[0].data && (
+                          <Bar options={options} data={entryDateCount} />
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {utmData && (
                 <div className={styles.utmContainer}>
