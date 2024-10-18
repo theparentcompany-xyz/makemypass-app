@@ -123,6 +123,12 @@
   font-family: 'Inter', sans-serif;
 }
 
+@media screen and (max-width: 768px) {
+  .eventTitle {
+    max-width: 15rem;
+  }
+}
+
 .cardPrimaryButton {
   border-radius: 8px;
   background: white;

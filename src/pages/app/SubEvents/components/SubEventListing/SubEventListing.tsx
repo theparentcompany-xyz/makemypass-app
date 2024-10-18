@@ -235,33 +235,32 @@ const SubEventListing = ({
                                   </div>
                                 </div>
 
-                                {(event.conflicting_event ||
-                                  (event.capacity_left != null &&
-                                    event.capacity_left <= 0 &&
-                                    !event.already_booked)) && (
-                                  <motion.div
-                                    className={styles.conflictIcon}
-                                    whileHover={{ scale: 1.2 }}
-                                    onClick={() => {
-                                      if (event.capacity_left <= 0) {
-                                        toast.error(
-                                          'This event is fully booked. No more capacity left.',
-                                        );
-                                      } else {
-                                        toast.error(
-                                          `The time of this event clashes with ${event.conflicting_event}. Kindly unselect it to register.`,
-                                        );
+                                {!event.already_booked &&
+                                  (event.conflicting_event ||
+                                    (event.capacity_left !== null && event.capacity_left <= 0)) && (
+                                    <motion.div
+                                      className={styles.conflictIcon}
+                                      whileHover={{ scale: 1.2 }}
+                                      onClick={() => {
+                                        if (event.capacity_left <= 0) {
+                                          toast.error(
+                                            'This event is fully booked. No more capacity left.',
+                                          );
+                                        } else {
+                                          toast.error(
+                                            `The time of this event clashes with ${event.conflicting_event}. Kindly unselect it to register.`,
+                                          );
+                                        }
+                                      }}
+                                      title={
+                                        event.capacity_left <= 0
+                                          ? 'This event is fully booked. No more capacity left.'
+                                          : `The time of this event clashes with ${event.conflicting_event}. Kindly reorder to register.`
                                       }
-                                    }}
-                                    title={
-                                      event.capacity_left <= 0
-                                        ? 'This event is fully booked. No more capacity left.'
-                                        : `The time of this event clashes with ${event.conflicting_event}. Kindly reorder to register.`
-                                    }
-                                  >
-                                    <BiSolidError color='#f04b4b' size={20} />
-                                  </motion.div>
-                                )}
+                                    >
+                                      <BiSolidError color='#f04b4b' size={20} />
+                                    </motion.div>
+                                  )}
                               </div>
                             </div>
                           </div>
