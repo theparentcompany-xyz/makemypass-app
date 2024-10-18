@@ -318,3 +318,21 @@ export const listSubEventGuests = async (
       toast.error(error.response.data.message.general[0] || 'Unable to process the request');
     });
 };
+
+export const downloadSubEventCSV = async (eventId: string, subEventId: string) => {
+  privateGateway
+    .get(makeMyPass.subEventCSVDownload(eventId, subEventId))
+    .then((response) => {
+      const csvData = response.data;
+      const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'data.csv');
+      document.body.appendChild(link);
+      link.click();
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message.general[0] || 'Something went wrong');
+    });
+};

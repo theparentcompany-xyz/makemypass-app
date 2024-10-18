@@ -191,6 +191,8 @@ export const makeMyPass = {
     makeMyPassURL(`/sub-events/${eventId}/sub-event/${subEventId}/`), //Till Editor
   subEventGuestList: (eventId: string, subEventId: string) =>
     makeMyPassURL(`/sub-events/${eventId}/sub-event/${subEventId}/guest/list/`), //Till Viewer
+  subEventCSVDownload: (eventId: string, subEventId: string) =>
+    makeMyPassURL(`/sub-events/${eventId}/sub-event/${subEventId}/guest/download-csv/`), //Till Viewer
 };
 
 export const makeMyPassSocket = {

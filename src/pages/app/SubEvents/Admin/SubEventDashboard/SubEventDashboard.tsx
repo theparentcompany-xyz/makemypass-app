@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router';
 
-import { listSubEventGuests } from '../../../../../apis/subevents';
+import { downloadSubEventCSV, listSubEventGuests } from '../../../../../apis/subevents';
 import EventHeader from '../../../../../components/EventHeader/EventHeader';
 import Table from '../../../../../components/Table/Table';
 import { TableType } from '../../../../../components/Table/types';
 import Theme from '../../../../../components/Theme/Theme';
 import { PaginationDataType } from '../../../Guests/types';
 import styles from './SubEventDashboard.module.css';
+import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
 
 const SubEventDashboard = () => {
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
@@ -45,6 +46,14 @@ const SubEventDashboard = () => {
           tableData={subEventGuests}
           paginationData={paginationData}
           setPaginationData={setPaginationData}
+          secondaryButton={
+            <SecondaryButton
+              onClick={() => {
+                if (eventId && subEventId) downloadSubEventCSV(eventId, subEventId);
+              }}
+              buttonText='Download CSV'
+            />
+          }
         />
       </div>
     </Theme>
