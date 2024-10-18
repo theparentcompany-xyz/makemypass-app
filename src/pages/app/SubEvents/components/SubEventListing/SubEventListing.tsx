@@ -198,14 +198,15 @@ const SubEventListing = ({
                                       >
                                         View More
                                       </motion.button>
-                                      {!event.conflicting_event && event.capacity_left > 0 && (
+                                      {!event.conflicting_event && (
                                         <motion.button
                                           whileHover={{ scale: 1.05 }}
                                           className={styles.cardPrimaryButton}
                                           onClick={(e) => {
                                             e.stopPropagation();
                                             if (event.already_booked) setSubEventToRemove(event.id);
-                                            else handleSelectEvent(event);
+                                            else if (event.capacity_left > 0)
+                                              handleSelectEvent(event);
                                           }}
                                         >
                                           {event.already_booked

@@ -68,8 +68,8 @@ const Dashboard = () => {
     id: '',
     title: '',
     description: '',
-    start_time: '',
-    end_time: '',
+    start_time: undefined,
+    end_time: undefined,
     place: '',
     location: '',
     price: 0,
@@ -84,7 +84,7 @@ const Dashboard = () => {
   const [subEventDescription, setSubEventDescription] = useState<string>('');
   const [currentSelectType, setCurrentSelectType] = useState<string>('');
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<boolean>(false);
-  const [limitCapacity, setLimitCapacity] = useState<boolean>(false);
+  const [limitCapacity, setLimitCapacity] = useState<boolean>(true);
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
   useEffect(() => {
     listDashboardSubEvents(eventId, setSubEvents);
@@ -102,8 +102,8 @@ const Dashboard = () => {
         id: '',
         title: '',
         description: '',
-        start_time: '',
-        end_time: '',
+        start_time: undefined,
+        end_time: undefined,
         place: '',
         location: '',
         price: 0,
@@ -152,6 +152,20 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
 
+  function formatDateTime(date: Date) {
+    const dateObj = new Date(date);
+
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
+    const day = String(dateObj.getDate()).padStart(2, '0');
+
+    const hours = String(dateObj.getHours()).padStart(2, '0');
+    const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+    const seconds = String(dateObj.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
   return (
     <>
       <Theme>
@@ -186,12 +200,14 @@ const Dashboard = () => {
                 name='subEventStartTime'
                 id='subEventStartTime'
                 icon={<></>}
-                value={selectedSubEvent?.start_time}
+                value={selectedSubEvent.start_time}
                 onChange={(e) => {
                   setSelectedSubEvent((prev) => {
                     return {
                       ...prev,
-                      start_time: e.target.value,
+                      start_time: e.target.value
+                        ? formatDateTime(new Date(e.target.value))
+                        : undefined,
                     };
                   });
                 }}
@@ -203,12 +219,14 @@ const Dashboard = () => {
                 name='subEventEndTime'
                 id='subEventEndTime'
                 icon={<></>}
-                value={selectedSubEvent?.end_time}
+                value={selectedSubEvent.end_time}
                 onChange={(e) => {
                   setSelectedSubEvent((prev) => {
                     return {
                       ...prev,
-                      end_time: e.target.value,
+                      end_time: e.target.value
+                        ? formatDateTime(new Date(e.target.value))
+                        : undefined,
                     };
                   });
                 }}
@@ -242,7 +260,7 @@ const Dashboard = () => {
               <div className={styles.ticketSlider}>
                 <p className={styles.ticketSliderLabel}>Limit Capacity</p>
                 <Slider
-                  checked={selectedSubEvent?.capacity != null && limitCapacity}
+                  checked={selectedSubEvent?.capacity !== null && limitCapacity}
                   onChange={() => {
                     setLimitCapacity(!limitCapacity);
                     setSelectedSubEvent((prev) => {

@@ -2,8 +2,8 @@ export type SubEventCRUDType = {
   id: string;
   title: string;
   description: string;
-  start_time: string;
-  end_time: string;
+  start_time: string | undefined;
+  end_time: string | undefined;
   place: string;
   location: string | null;
   capacity: null | number;
