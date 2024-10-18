@@ -26,7 +26,7 @@ const SuccessButtonsContainer = ({
         <div className={styles.modalTexts}>
           <div dangerouslySetInnerHTML={{ __html: success.followupMessage || '' }}></div>
 
-          {success.ticketURL && import.meta.env.VITE_CURRENT_ENV === 'dev' && (
+          {success.is_approved && (
             <>
               <button
                 onClick={() => {
@@ -38,11 +38,11 @@ const SuccessButtonsContainer = ({
                 View Ticket
               </button>
 
-              {success.ticketURL && (
+              {success.is_approved && (
                 <button
                   onClick={async () => {
                     try {
-                      const response = await fetch(success.ticketURL || '');
+                      const response = await fetch(success.is_approved || '');
                       const blob = await response.blob();
 
                       const link = document.createElement('a');

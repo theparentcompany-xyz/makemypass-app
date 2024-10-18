@@ -392,6 +392,21 @@ const EventForm = ({
       )}
 
       <div className={styles.buttons}>
+        {((formNumber === 0 && eventFormData.show_ticket_first) ||
+          (formNumber === 1 && !eventFormData.show_ticket_first)) && (
+          <div
+            onClick={() => {
+              if (eventFormData.show_ticket_first) {
+                setFormNumber(1);
+              } else {
+                setFormNumber(0);
+              }
+            }}
+            className={styles.backButton}
+          >
+            <p>Back</p>
+          </div>
+        )}
         <motion.button
           initial={{ opacity: 0, y: 35 }}
           animate={{
@@ -509,21 +524,6 @@ const EventForm = ({
             'Submit'
           )}
         </motion.button>
-        {((formNumber === 0 && eventFormData.show_ticket_first) ||
-          (formNumber === 1 && !eventFormData.show_ticket_first)) && (
-          <div
-            onClick={() => {
-              if (eventFormData.show_ticket_first) {
-                setFormNumber(1);
-              } else {
-                setFormNumber(0);
-              }
-            }}
-            className={styles.backButton}
-          >
-            <p>Back</p>
-          </div>
-        )}
       </div>
     </>
   );
