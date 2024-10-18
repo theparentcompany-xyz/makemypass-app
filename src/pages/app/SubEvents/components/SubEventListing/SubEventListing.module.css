@@ -8,7 +8,6 @@
   overflow: hidden;
   height: 100%;
   position: relative;
-  row-gap: 1rem;
 }
 
 @media screen and (max-width: 1330px) {
@@ -24,6 +23,7 @@
 .dateHeader {
   font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
+  margin-bottom: 0.5rem;
   color: white;
   text-align: left;
   margin-top: 1rem;
@@ -31,7 +31,8 @@
 
 .timeHeader {
   font-family: 'Inter', sans-serif;
-  font-size: 1rem;
+
+  font-size: 0.9rem;
   font-weight: 400;
   color: #c5c5c5;
   text-align: left;
@@ -76,6 +77,13 @@
   cursor: pointer;
   transition: background 0.2s ease-in-out;
   color: white;
+  min-width: 17.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  .eventCard {
+    min-width: 20rem;
+  }
 }
 
 .eventCard:hover {
@@ -205,4 +213,60 @@
 
 .timeBlock {
   width: calc(100% - 20px);
+}
+
+.subEventHeading {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 0.25rem;
+}
+
+.helperText {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-family: 'Inter', sans-serif;
+  max-width: 25rem;
+}
+
+.subEventsListingHeader {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 8rem;
+  padding: 0.7rem 1rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  margin-right: 1rem;
+}
+
+.noEventsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.noEventsText {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 0.25rem;
 }

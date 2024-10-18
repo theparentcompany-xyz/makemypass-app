@@ -1,18 +1,22 @@
-import  { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BiSolidError } from 'react-icons/bi';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import Select from 'react-select';
 
 import { SubEventType } from '../../../../../apis/types';
 import { formatDate, formatTime } from '../../../../../common/commonFunctions';
+import { customStyles } from '../../../EventPage/constants';
 import type { SelectedSubEventsType } from '../../User/types';
 import DatePlace from '../DatePlace/DatePlace';
 import styles from './SubEventListing.module.css';
 
-const groupEventsByDateAndTime = (events: SubEventType[]) => {
+const groupEventsByDateAndTime = (events: SubEventType[], place?: string, title?: string) => {
   return events
+    .filter((event) => !place || event.place === place)
+    .filter((event) => !title || event.title.toLowerCase().includes(title.toLowerCase()))
     .sort((a, b) => {
       const timeA = a.start_time ? new Date(a.start_time).getTime() : 0;
       const timeB = b.start_time ? new Date(b.start_time).getTime() : 0;
@@ -48,17 +52,13 @@ const SubEventListing = ({
   setShowDetailedView: (event: SubEventType | null) => void;
   setSubEventToRemove: (id: string | null) => void;
 }) => {
-  const groupedEvents = groupEventsByDateAndTime(subEvents);
-  const [expandedTimes, setExpandedTimes] = useState<Record<string, boolean>>(() => {
-    const initialExpandedTimes: Record<string, boolean> = {};
-    if (subEvents.length > 0) {
-      const firstEvent = subEvents[0];
-      const firstEventDate = firstEvent.start_time ? formatDate(firstEvent.start_time) : 'No Specific Date';
-      const firstEventTime = firstEvent.start_time ? formatTime(firstEvent.start_time) : 'No Specific Time';
-      initialExpandedTimes[`${firstEventDate}-${firstEventTime}`] = true;
-    }
-    return initialExpandedTimes;
-  });
+  const [availableLocations, setAvailableLocations] = useState<string[]>([]);
+  const [groupedEvents, setGroupedEvents] = useState<
+    Record<string, Record<string, SubEventType[]>>
+  >(groupEventsByDateAndTime(subEvents));
+  const [selectedLocation, setSelectedLocation] = useState<string | undefined>(undefined);
+  const [searchTitle, setSearchTitle] = useState<string>('');
+  const [expandedTimes, setExpandedTimes] = useState<Record<string, boolean>>({});
 
   const toggleTimeExpansion = (date: string, time: string) => {
     setExpandedTimes((prev) => {
@@ -71,9 +71,44 @@ const SubEventListing = ({
     });
   };
 
+  useEffect(() => {
+    const locations = subEvents.map((event) => event.place);
+    setAvailableLocations([...new Set(locations)]);
+    setGroupedEvents(groupEventsByDateAndTime(subEvents, selectedLocation, searchTitle));
+    if (subEvents.length > 0 && Object.keys(expandedTimes).length === 0) {
+      const firstDate = Object.keys(groupedEvents)[0];
+      const firstTime = Object.keys(groupedEvents[firstDate])[0];
+      setExpandedTimes({ [`${firstDate}-${firstTime}`]: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subEvents, selectedLocation, searchTitle]);
+
   return (
     <div className={styles.subEventsListingContainer}>
-      {subEvents &&
+      <div className={styles.subEventsListingHeader}>
+        <div>
+          <p className={styles.subEventHeading}>Sub Events @ IEDC Summit 2024</p>
+          <p className={styles.helperText}>Select the events you want to participate in.</p>
+        </div>
+        <div className='row'>
+          <Select
+            options={availableLocations.map((location) => ({ value: location, label: location }))}
+            value={selectedLocation ? { value: selectedLocation, label: selectedLocation } : null}
+            onChange={(newValue) => setSelectedLocation(newValue ? newValue.value : undefined)}
+            styles={customStyles}
+            placeholder='Filter by Location'
+          />
+          <input
+            type='text'
+            placeholder='Search by Title'
+            className={styles.searchInput}
+            value={searchTitle}
+            onChange={(e) => setSearchTitle(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {subEvents && groupedEvents && Object.keys(groupedEvents).length > 0 ? (
         Object.keys(groupedEvents).map((date) => (
           <div key={date} className={styles.dayEventsContainer}>
             <p className={styles.dateHeader}>{date}</p>
@@ -167,7 +202,8 @@ const SubEventListing = ({
                                           <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             className={styles.cardPrimaryButton}
-                                            onClick={() => {
+                                            onClick={(e) => {
+                                              e.stopPropagation();
                                               if (event.already_booked)
                                                 setSubEventToRemove(event.id);
                                               else handleSelectEvent(event);
@@ -210,7 +246,12 @@ const SubEventListing = ({
               ))}
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <div className={styles.noEventsContainer}>
+          <p className={styles.noEventsText}>No Events Found</p>
+        </div>
+      )}
     </div>
   );
 };

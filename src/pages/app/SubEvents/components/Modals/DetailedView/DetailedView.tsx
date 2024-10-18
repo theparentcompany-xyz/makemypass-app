@@ -77,7 +77,9 @@ const DetailedView = ({
               </div>
             </div>
             <div className={styles.eventDescription}>
-              <p className={styles.eventDescriptionHeader}>About the Event</p>
+              {showDetailedView?.description?.length > 0 && (
+                <p className={styles.eventDescriptionHeader}>About the Event</p>
+              )}
               <p
                 dangerouslySetInnerHTML={
                   showDetailedView.description
