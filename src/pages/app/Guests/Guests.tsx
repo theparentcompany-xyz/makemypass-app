@@ -378,14 +378,26 @@ const Guests = () => {
                   <div className={styles.tableButtons}>
                     <Slider
                       checked={showCheckedInOnly}
-                      onChange={() => setShowCheckedInOnly(!showCheckedInOnly)}
+                      onChange={() => {
+                        setShowCheckedInOnly(!showCheckedInOnly);
+                        setPaginationData({
+                          ...paginationData,
+                          page: 1,
+                        });
+                      }}
                       size='small'
                       text='Checked-In'
                     />
 
                     <Slider
                       checked={showApprovedOnly}
-                      onChange={() => setShowApprovedOnly(!showApprovedOnly)}
+                      onChange={() => {
+                        setShowApprovedOnly(!showApprovedOnly);
+                        setPaginationData({
+                          ...paginationData,
+                          page: 1,
+                        });
+                      }}
                       size='small'
                       text='Shortlisted-Only'
                     />
