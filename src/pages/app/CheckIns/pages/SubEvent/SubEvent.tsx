@@ -56,7 +56,7 @@ const SubEvent = () => {
             {!showScanner ? (
               <>
                 <p className={styles.subEventHeading}>
-                  {subEvents.length > 0 ? 'SubEvent Listing' : 'No SubEvent Available'}
+                  {subEvents.length > 0 ? 'Sub Event Listing' : 'No SubEvent Available'}
                 </p>
                 <p className={styles.helperText}>
                   {subEvents.length > 0
@@ -85,13 +85,26 @@ const SubEvent = () => {
 
                                   <DatePlace event={subevent} />
 
-                                  <div className='row'>
+                                  <div
+                                    className='row'
+                                    style={{
+                                      justifyContent: 'space-between',
+                                      alignItems: 'flex-end',
+                                    }}
+                                  >
                                     <motion.button
                                       whileHover={{ scale: 1.05 }}
                                       className={styles.cardPrimaryButton}
                                     >
                                       Select
                                     </motion.button>
+
+                                    <div className='row'>
+                                      <p className={styles.checkInCount}>
+                                        {subevent.total_checkins}/{subevent.total_registrations}
+                                      </p>
+                                      <p className={styles.checkInText}>Check-ins</p>
+                                    </div>
                                   </div>
                                 </div>
                               </div>

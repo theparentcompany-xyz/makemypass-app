@@ -47,8 +47,8 @@ const groupSubEventsByDateAndTime = (subEvents: SubEventListType[]) => {
     .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())
     .reduce<Record<string, Record<string, SubEventListType[]>>>(
       (acc, subevent) => {
-        const date = formatDate(subevent.start_time);
-        const time = formatTime(subevent.start_time);
+        const date = subevent.start_time ? formatDate(subevent.start_time) : 'No Specific Date';
+        const time = subevent.start_time ? formatTime(subevent.start_time) : 'No Specific Time';
         if (!acc[date]) {
           acc[date] = {};
         }
@@ -371,7 +371,12 @@ const Dashboard = () => {
                           <div key={index} className={styles.subevent}>
                             <div className={styles.event}>
                               <div>
-                                <div className={styles.eventCard}>
+                                <div
+                                  className={styles.eventCard}
+                                  onClick={() => {
+                                    navigate(`${subevent.id}`, { state: { subevent } });
+                                  }}
+                                >
                                   <div className={styles.deleteIcon}>
                                     <MdDelete
                                       color={'#fff'}
@@ -405,8 +410,9 @@ const Dashboard = () => {
                                         <motion.button
                                           whileHover={{ scale: 1.05 }}
                                           className={styles.cardSecondaryButton}
-                                          onClick={() => {
+                                          onClick={(e) => {
                                             if (subevent.id) {
+                                              e.stopPropagation();
                                               setSelectedSubEventId(subevent.id);
                                               setCurrentSelectType('edit');
                                             }

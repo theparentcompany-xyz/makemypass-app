@@ -35,6 +35,7 @@
   background: rgba(255, 255, 255, 0.04);
   max-width: 20rem;
   min-width: 20rem;
+  min-height: 12rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;

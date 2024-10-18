@@ -153,3 +153,18 @@
   cursor: pointer;
   transition: background 0.2s ease-in-out;
 }
+
+.checkInCount {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #9ca3af;
+  opacity: 0.8;
+  font-family: 'Inter', sans-serif;
+}
+
+.checkInText {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  opacity: 0.8;
+  font-family: 'Inter', sans-serif;
+}
