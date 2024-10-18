@@ -185,12 +185,13 @@ const Dashboard = () => {
                 icon={<></>}
                 value={selectedSubEvent?.title}
                 onChange={(e) => {
-                  setSelectedSubEvent((prev) => {
-                    return {
-                      ...prev,
-                      title: e.target.value,
-                    };
-                  });
+                  if (isUserEditor())
+                    setSelectedSubEvent((prev) => {
+                      return {
+                        ...prev,
+                        title: e.target.value,
+                      };
+                    });
                 }}
               />
               <InputField
@@ -202,14 +203,15 @@ const Dashboard = () => {
                 icon={<></>}
                 value={selectedSubEvent.start_time}
                 onChange={(e) => {
-                  setSelectedSubEvent((prev) => {
-                    return {
-                      ...prev,
-                      start_time: e.target.value
-                        ? formatDateTime(new Date(e.target.value))
-                        : undefined,
-                    };
-                  });
+                  if (isUserEditor())
+                    setSelectedSubEvent((prev) => {
+                      return {
+                        ...prev,
+                        start_time: e.target.value
+                          ? formatDateTime(new Date(e.target.value))
+                          : undefined,
+                      };
+                    });
                 }}
               />
               <InputField
@@ -221,14 +223,15 @@ const Dashboard = () => {
                 icon={<></>}
                 value={selectedSubEvent.end_time}
                 onChange={(e) => {
-                  setSelectedSubEvent((prev) => {
-                    return {
-                      ...prev,
-                      end_time: e.target.value
-                        ? formatDateTime(new Date(e.target.value))
-                        : undefined,
-                    };
-                  });
+                  if (isUserEditor())
+                    setSelectedSubEvent((prev) => {
+                      return {
+                        ...prev,
+                        end_time: e.target.value
+                          ? formatDateTime(new Date(e.target.value))
+                          : undefined,
+                      };
+                    });
                 }}
               />
               <InputField
@@ -240,12 +243,13 @@ const Dashboard = () => {
                 icon={<></>}
                 value={selectedSubEvent?.place}
                 onChange={(e) => {
-                  setSelectedSubEvent((prev) => {
-                    return {
-                      ...prev,
-                      place: e.target.value,
-                    };
-                  });
+                  if (isUserEditor())
+                    setSelectedSubEvent((prev) => {
+                      return {
+                        ...prev,
+                        place: e.target.value,
+                      };
+                    });
                 }}
               />
 
@@ -262,13 +266,15 @@ const Dashboard = () => {
                 <Slider
                   checked={selectedSubEvent?.capacity !== null && limitCapacity}
                   onChange={() => {
-                    setLimitCapacity(!limitCapacity);
-                    setSelectedSubEvent((prev) => {
-                      return {
-                        ...prev,
-                        capacity: limitCapacity ? null : 0,
-                      };
-                    });
+                    if (isUserEditor()) {
+                      setLimitCapacity(!limitCapacity);
+                      setSelectedSubEvent((prev) => {
+                        return {
+                          ...prev,
+                          capacity: limitCapacity ? null : 0,
+                        };
+                      });
+                    }
                   }}
                   size='medium'
                 />
@@ -289,6 +295,8 @@ const Dashboard = () => {
                       disabled={!isUserEditor()}
                       value={selectedSubEvent?.capacity}
                       onChange={(e) => {
+                        if (!isUserEditor()) return;
+
                         if (isNaN(Number(e.target.value))) {
                           return;
                         }
@@ -317,10 +325,11 @@ const Dashboard = () => {
                 <Slider
                   checked={selectedSubEvent?.approval_required}
                   onChange={() => {
-                    setSelectedSubEvent({
-                      ...selectedSubEvent,
-                      approval_required: !selectedSubEvent.approval_required,
-                    });
+                    if (isUserEditor())
+                      setSelectedSubEvent({
+                        ...selectedSubEvent,
+                        approval_required: !selectedSubEvent.approval_required,
+                      });
                   }}
                   size='medium'
                 />
@@ -331,18 +340,21 @@ const Dashboard = () => {
                 <Slider
                   checked={selectedSubEvent?.active}
                   onChange={() => {
-                    setSelectedSubEvent({
-                      ...selectedSubEvent,
-                      active: !selectedSubEvent.active,
-                    });
+                    if (isUserEditor())
+                      setSelectedSubEvent({
+                        ...selectedSubEvent,
+                        active: !selectedSubEvent.active,
+                      });
                   }}
                   size='medium'
                 />
               </div>
               <br />
-              <button className={styles.submitButton} onClick={handleSubmit}>
-                {currentSelectType === 'edit' ? 'Edit Sub Event' : 'Add Sub Event'}
-              </button>
+              {isUserEditor() && (
+                <button className={styles.submitButton} onClick={handleSubmit}>
+                  {currentSelectType === 'edit' ? 'Edit Sub Event' : 'Add Sub Event'}
+                </button>
+              )}
             </div>
           </Modal>
         )}
@@ -406,18 +418,20 @@ const Dashboard = () => {
                             <div className={styles.event}>
                               <div>
                                 <div className={styles.eventCard}>
-                                  <div className={styles.deleteIcon}>
-                                    <MdDelete
-                                      color={'#fff'}
-                                      size={20}
-                                      onClick={() => {
-                                        if (subevent.id) {
-                                          setSelectedSubEventId(subevent.id);
-                                          setShowDeleteConfirmation(true);
-                                        }
-                                      }}
-                                    />
-                                  </div>
+                                  {isUserEditor() && (
+                                    <div className={styles.deleteIcon}>
+                                      <MdDelete
+                                        color={'#fff'}
+                                        size={20}
+                                        onClick={() => {
+                                          if (subevent.id) {
+                                            setSelectedSubEventId(subevent.id);
+                                            setShowDeleteConfirmation(true);
+                                          }
+                                        }}
+                                      />
+                                    </div>
+                                  )}
                                   <div className={styles.innerCard}>
                                     <div className={styles.eventDetails}>
                                       <div className={styles.headingTexts}>
@@ -437,19 +451,21 @@ const Dashboard = () => {
                                           alignItems: 'flex-end',
                                         }}
                                       >
-                                        <motion.button
-                                          whileHover={{ scale: 1.05 }}
-                                          className={styles.cardSecondaryButton}
-                                          onClick={(e) => {
-                                            if (subevent.id) {
-                                              e.stopPropagation();
-                                              setSelectedSubEventId(subevent.id);
-                                              setCurrentSelectType('edit');
-                                            }
-                                          }}
-                                        >
-                                          Edit
-                                        </motion.button>
+                                        {isUserEditor() && (
+                                          <motion.button
+                                            whileHover={{ scale: 1.05 }}
+                                            className={styles.cardSecondaryButton}
+                                            onClick={(e) => {
+                                              if (subevent.id) {
+                                                e.stopPropagation();
+                                                setSelectedSubEventId(subevent.id);
+                                                setCurrentSelectType('edit');
+                                              }
+                                            }}
+                                          >
+                                            Edit
+                                          </motion.button>
+                                        )}
                                         <motion.button
                                           whileHover={{ scale: 1.05 }}
                                           className={styles.cardPrimaryButton}

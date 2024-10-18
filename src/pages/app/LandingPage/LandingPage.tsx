@@ -159,7 +159,7 @@ const LandingPage = () => {
                   }}
                 >
                   {' '}
-                  Insighful
+                  Insightful
                 </span>
               </p>
               <p className={styles.frSubHeading}>

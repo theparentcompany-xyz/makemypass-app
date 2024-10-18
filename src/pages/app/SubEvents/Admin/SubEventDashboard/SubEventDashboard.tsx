@@ -7,8 +7,10 @@ import Table from '../../../../../components/Table/Table';
 import { TableType } from '../../../../../components/Table/types';
 import Theme from '../../../../../components/Theme/Theme';
 import { PaginationDataType } from '../../../Guests/types';
-import styles from './SubEventDashboard.module.css';
 import SecondaryButton from '../../../Overview/components/SecondaryButton/SecondaryButton';
+import styles from './SubEventDashboard.module.css';
+import { isUserAuthorized } from '../../../../../common/commonFunctions';
+import { TillRoles } from '../../../../../../services/enums';
 
 const SubEventDashboard = () => {
   const eventId = JSON.parse(sessionStorage.getItem('eventData')!).event_id;
@@ -47,12 +49,14 @@ const SubEventDashboard = () => {
           paginationData={paginationData}
           setPaginationData={setPaginationData}
           secondaryButton={
-            <SecondaryButton
-              onClick={() => {
-                if (eventId && subEventId) downloadSubEventCSV(eventId, subEventId);
-              }}
-              buttonText='Download CSV'
-            />
+            isUserAuthorized(TillRoles.VIEWER) ? (
+              <SecondaryButton
+                onClick={() => {
+                  if (eventId && subEventId) downloadSubEventCSV(eventId, subEventId);
+                }}
+                buttonText='Download CSV'
+              />
+            ) : undefined
           }
         />
       </div>
