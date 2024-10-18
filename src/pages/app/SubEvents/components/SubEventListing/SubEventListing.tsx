@@ -146,16 +146,19 @@ const SubEventListing = ({
                                   ? styles.selectedCard
                                   : undefined
                               }`}
-                              onClick={() =>
-                                !event.conflicting_event &&
-                                !event.already_booked &&
-                                event.capacity_left > 0 &&
-                                handleSelectEvent(event)
-                              }
+                              onClick={() => {
+                                if (
+                                  !event.conflicting_event &&
+                                  !event.already_booked &&
+                                  (event.capacity_left > 0 || event.capacity_left === null)
+                                ) {
+                                  handleSelectEvent(event);
+                                }
+                              }}
                             >
                               <div className={styles.innerCard}>
                                 <div
-                                  className={`${styles.eventDetails} ${event.conflicting_event && styles.disabledCard}`}
+                                  className={`${styles.eventDetails} ${(event.conflicting_event || !(event.capacity_left > 0 || event.capacity_left === null)) && styles.disabledCard}`}
                                 >
                                   <div className={styles.eventCardHeader}>
                                     <div className={styles.headingTexts}>
@@ -174,7 +177,7 @@ const SubEventListing = ({
                                       alignItems: 'flex-end',
                                     }}
                                   >
-                                    {event.capacity_left && (
+                                    {event.capacity_left != null && (
                                       <div
                                         className='row'
                                         style={{
@@ -183,7 +186,7 @@ const SubEventListing = ({
                                       >
                                         <BsFillPeopleFill size={18} color='#E5E5E5' />
                                         <span className={styles.capacityText}>
-                                          {event.capacity_left} Left
+                                          {event.capacity_left >= 0 ? event.capacity_left : 0} Left
                                         </span>
                                       </div>
                                     )}
@@ -198,47 +201,57 @@ const SubEventListing = ({
                                       >
                                         View More
                                       </motion.button>
-                                      {!event.conflicting_event && (
-                                        <motion.button
-                                          whileHover={{ scale: 1.05 }}
-                                          className={styles.cardPrimaryButton}
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            if (event.already_booked) setSubEventToRemove(event.id);
-                                            else if (event.capacity_left > 0)
-                                              handleSelectEvent(event);
-                                          }}
-                                        >
-                                          {event.already_booked
-                                            ? 'Withdraw'
-                                            : selectedEventsIds.find((e) => e.id === event.id)
-                                              ? 'Deselect'
-                                              : 'Select'}
-                                        </motion.button>
-                                      )}
+                                      {!event.conflicting_event &&
+                                        (event.capacity_left > 0 ||
+                                          event.capacity_left === null ||
+                                          event.already_booked) && (
+                                          <motion.button
+                                            whileHover={{ scale: 1.05 }}
+                                            className={styles.cardPrimaryButton}
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              if (event.already_booked)
+                                                setSubEventToRemove(event.id);
+                                              else if (
+                                                event.capacity_left > 0 ||
+                                                event.capacity_left === null
+                                              )
+                                                handleSelectEvent(event);
+                                            }}
+                                          >
+                                            {event.already_booked
+                                              ? 'Withdraw'
+                                              : selectedEventsIds.find((e) => e.id === event.id)
+                                                ? 'Deselect'
+                                                : 'Select'}
+                                          </motion.button>
+                                        )}
                                     </div>
                                   </div>
                                 </div>
 
-                                {(event.conflicting_event || event.capacity_left === 0) && (
+                                {(event.conflicting_event ||
+                                  (event.capacity_left != null &&
+                                    event.capacity_left <= 0 &&
+                                    !event.already_booked)) && (
                                   <motion.div
                                     className={styles.conflictIcon}
                                     whileHover={{ scale: 1.2 }}
                                     onClick={() => {
-                                      if (event.capacity_left === 0) {
+                                      if (event.capacity_left <= 0) {
                                         toast.error(
                                           'This event is fully booked. No more capacity left.',
                                         );
                                       } else {
                                         toast.error(
-                                          `The time of this event clashes with another event. Kindly reorder to register.`,
+                                          `The time of this event clashes with ${event.conflicting_event}. Kindly unselect it to register.`,
                                         );
                                       }
                                     }}
                                     title={
-                                      event.capacity_left === 0
+                                      event.capacity_left <= 0
                                         ? 'This event is fully booked. No more capacity left.'
-                                        : 'The time of this event clashes with another event. Kindly reorder to register.'
+                                        : `The time of this event clashes with ${event.conflicting_event}. Kindly reorder to register.`
                                     }
                                   >
                                     <BiSolidError color='#f04b4b' size={20} />
