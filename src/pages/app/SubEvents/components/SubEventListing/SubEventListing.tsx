@@ -11,8 +11,8 @@ import styles from './SubEventListing.module.css';
 
 const groupEventsByDateAndTime = (events: SubEventType[]) => {
   return events.reduce((acc: Record<string, Record<string, SubEventType[]>>, event) => {
-    const eventDate = formatDate(event.start_time);
-    const eventTime = formatTime(event.start_time);
+    const eventDate = event.start_time ? formatDate(event.start_time) : 'No Specific Date';
+    const eventTime = event.start_time ? formatTime(event.start_time) : 'No Specific Time';
     if (!acc[eventDate]) {
       acc[eventDate] = {};
     }
@@ -49,7 +49,9 @@ const SubEventListing = ({
               {Object.keys(groupedEvents[date]).map((time) => (
                 <div key={time}>
                   {/* Display time header */}
-                  <p className={styles.timeHeader}>Events @ {time}</p>
+                  <p className={styles.timeHeader}>
+                    {time == 'No Specific Time' ? '' : 'Events @'} {time}
+                  </p>
                   <div className={styles.eventsContainer}>
                     {groupedEvents[date][time].map((event) => (
                       <>

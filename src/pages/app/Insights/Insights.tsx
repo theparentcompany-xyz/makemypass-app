@@ -310,13 +310,13 @@ const Insights = ({ type }: { type?: string }) => {
         },
         scales: {
           x: {
-        stacked: false,
+            stacked: false,
           },
           y: {
-        stacked: false,
-        ticks: {
-          precision: 0,
-        },
+            stacked: false,
+            ticks: {
+              precision: 0,
+            },
           },
         },
       };
