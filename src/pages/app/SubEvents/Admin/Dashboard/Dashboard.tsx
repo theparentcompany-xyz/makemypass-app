@@ -371,12 +371,7 @@ const Dashboard = () => {
                           <div key={index} className={styles.subevent}>
                             <div className={styles.event}>
                               <div>
-                                <div
-                                  className={styles.eventCard}
-                                  onClick={() => {
-                                    navigate(`${subevent.id}`, { state: { subevent } });
-                                  }}
-                                >
+                                <div className={styles.eventCard}>
                                   <div className={styles.deleteIcon}>
                                     <MdDelete
                                       color={'#fff'}
@@ -392,21 +387,22 @@ const Dashboard = () => {
                                   <div className={styles.innerCard}>
                                     <div className={styles.eventDetails}>
                                       <div className={styles.headingTexts}>
-                                        <p className={styles.eventTitle}>{subevent?.title}</p>
+                                        <p className={styles.eventTitle}>
+                                          {subevent?.title.length > 50
+                                            ? `${subevent.title.substring(0, 50)}...`
+                                            : subevent.title}
+                                        </p>
                                       </div>
 
                                       <DatePlace event={subevent} />
 
-                                      <div className='row'>
-                                        <motion.button
-                                          whileHover={{ scale: 1.05 }}
-                                          className={styles.cardPrimaryButton}
-                                          onClick={() => {
-                                            navigate(`${subevent.id}`, { state: { subevent } });
-                                          }}
-                                        >
-                                          Dashboard
-                                        </motion.button>
+                                      <div
+                                        className='row'
+                                        style={{
+                                          justifyContent: 'flex-end',
+                                          alignItems: 'flex-end',
+                                        }}
+                                      >
                                         <motion.button
                                           whileHover={{ scale: 1.05 }}
                                           className={styles.cardSecondaryButton}
@@ -419,6 +415,15 @@ const Dashboard = () => {
                                           }}
                                         >
                                           Edit
+                                        </motion.button>
+                                        <motion.button
+                                          whileHover={{ scale: 1.05 }}
+                                          className={styles.cardPrimaryButton}
+                                          onClick={() => {
+                                            navigate(`${subevent.id}`, { state: { subevent } });
+                                          }}
+                                        >
+                                          View Guests
                                         </motion.button>
                                       </div>
                                     </div>

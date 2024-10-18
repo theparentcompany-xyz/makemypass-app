@@ -138,103 +138,111 @@ const SubEventListing = ({
                             {event.already_booked && (
                               <p className={styles.registedTag}>Registered</p>
                             )}
-                            <div>
-                              <div
-                                className={`${styles.eventCard} ${
-                                  selectedEventsIds.find(
-                                    (e) => e.id === event.id && !event.already_booked,
-                                  )
-                                    ? styles.selectedCard
-                                    : undefined
-                                }`}
-                                onClick={() =>
-                                  !event.conflicting_event &&
-                                  !event.already_booked &&
-                                  handleSelectEvent(event)
-                                }
-                              >
-                                <div className={styles.innerCard}>
-                                  <div
-                                    className={`${styles.eventDetails} ${event.conflicting_event && styles.disabledCard}`}
-                                  >
-                                    <div className={styles.eventCardHeader}>
-                                      <div className={styles.headingTexts}>
-                                        <p className={styles.eventTitle}>
-                                          {event?.title.length > 50
-                                            ? `${event.title.substring(0, 50)}...`
-                                            : event.title}
-                                        </p>
-                                      </div>
-                                      <DatePlace event={event} />
+                            <div
+                              className={`${styles.eventCard} ${
+                                selectedEventsIds.find(
+                                  (e) => e.id === event.id && !event.already_booked,
+                                )
+                                  ? styles.selectedCard
+                                  : undefined
+                              }`}
+                              onClick={() =>
+                                !event.conflicting_event &&
+                                !event.already_booked &&
+                                event.capacity_left > 0 &&
+                                handleSelectEvent(event)
+                              }
+                            >
+                              <div className={styles.innerCard}>
+                                <div
+                                  className={`${styles.eventDetails} ${event.conflicting_event && styles.disabledCard}`}
+                                >
+                                  <div className={styles.eventCardHeader}>
+                                    <div className={styles.headingTexts}>
+                                      <p className={styles.eventTitle}>
+                                        {event?.title.length > 50
+                                          ? `${event.title.substring(0, 50)}...`
+                                          : event.title}
+                                      </p>
                                     </div>
-                                    <div
-                                      className='row'
-                                      style={{
-                                        justifyContent: 'space-between',
-                                        alignItems: 'flex-end',
-                                      }}
-                                    >
-                                      {event.capacity_left && (
-                                        <div
-                                          className='row'
-                                          style={{
-                                            columnGap: '0.25rem',
-                                          }}
-                                        >
-                                          <BsFillPeopleFill size={18} color='#E5E5E5' />
-                                          <span className={styles.capacityText}>
-                                            {event.capacity_left} Left
-                                          </span>
-                                        </div>
-                                      )}
+                                    <DatePlace event={event} />
+                                  </div>
+                                  <div
+                                    className='row'
+                                    style={{
+                                      justifyContent: 'space-between',
+                                      alignItems: 'flex-end',
+                                    }}
+                                  >
+                                    {event.capacity_left && (
+                                      <div
+                                        className='row'
+                                        style={{
+                                          columnGap: '0.25rem',
+                                        }}
+                                      >
+                                        <BsFillPeopleFill size={18} color='#E5E5E5' />
+                                        <span className={styles.capacityText}>
+                                          {event.capacity_left} Left
+                                        </span>
+                                      </div>
+                                    )}
 
-                                      <div className='row'>
+                                    <div className='row'>
+                                      <motion.button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setShowDetailedView(event);
+                                        }}
+                                        className={styles.manage}
+                                      >
+                                        View More
+                                      </motion.button>
+                                      {!event.conflicting_event && event.capacity_left > 0 && (
                                         <motion.button
+                                          whileHover={{ scale: 1.05 }}
+                                          className={styles.cardPrimaryButton}
                                           onClick={(e) => {
                                             e.stopPropagation();
-                                            setShowDetailedView(event);
+                                            if (event.already_booked) setSubEventToRemove(event.id);
+                                            else handleSelectEvent(event);
                                           }}
-                                          className={styles.manage}
                                         >
-                                          View More
+                                          {event.already_booked
+                                            ? 'Withdraw'
+                                            : selectedEventsIds.find((e) => e.id === event.id)
+                                              ? 'Deselect'
+                                              : 'Select'}
                                         </motion.button>
-                                        {!event.conflicting_event && (
-                                          <motion.button
-                                            whileHover={{ scale: 1.05 }}
-                                            className={styles.cardPrimaryButton}
-                                            onClick={(e) => {
-                                              e.stopPropagation();
-                                              if (event.already_booked)
-                                                setSubEventToRemove(event.id);
-                                              else handleSelectEvent(event);
-                                            }}
-                                          >
-                                            {event.already_booked
-                                              ? 'Withdraw'
-                                              : selectedEventsIds.find((e) => e.id === event.id)
-                                                ? 'Deselect'
-                                                : 'Select'}
-                                          </motion.button>
-                                        )}
-                                      </div>
+                                      )}
                                     </div>
                                   </div>
+                                </div>
 
-                                  {event.conflicting_event && (
-                                    <motion.div
-                                      className={styles.conflictIcon}
-                                      whileHover={{ scale: 1.2 }}
-                                      onClick={() => {
+                                {(event.conflicting_event || event.capacity_left === 0) && (
+                                  <motion.div
+                                    className={styles.conflictIcon}
+                                    whileHover={{ scale: 1.2 }}
+                                    onClick={() => {
+                                      if (event.capacity_left === 0) {
+                                        toast.error(
+                                          'This event is fully booked. No more capacity left.',
+                                        );
+                                      } else {
                                         toast.error(
                                           `The time of this event clashes with another event. Kindly reorder to register.`,
                                         );
-                                      }}
-                                      title='The time of this event clashes with another event. Kindly reorder to register.'
-                                    >
-                                      <BiSolidError color='#f04b4b' size={20} />
-                                    </motion.div>
-                                  )}
-                                </div>
+                                      }
+                                    }}
+                                    title={
+                                      event.capacity_left === 0
+                                        ? 'This event is fully booked. No more capacity left.'
+                                        : 'The time of this event clashes with another event. Kindly reorder to register.'
+                                    }
+                                  >
+                                    <BiSolidError color='#f04b4b' size={20} />
+                                  </motion.div>
+                                )}
                               </div>
                             </div>
                           </div>
