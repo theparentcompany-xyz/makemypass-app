@@ -28,9 +28,6 @@ export const mapNewCode = async ({
   setMappingNewCode: React.Dispatch<React.SetStateAction<MapNewCode | undefined>>;
   setMessage: React.Dispatch<React.SetStateAction<string>>;
 }): Promise<unknown> => {
-
-  
-
   return new Promise((resolve, reject) => {
     privateGateway
       .post(makeMyPass.scanGuestMapNewCode(eventId), {

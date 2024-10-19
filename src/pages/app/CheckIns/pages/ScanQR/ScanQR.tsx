@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { CgClose } from 'react-icons/cg';
 import { LuCheck } from 'react-icons/lu';
 
@@ -17,7 +18,6 @@ import { LogType } from '../Venue/Venue';
 import MultipleTicket from './components/MultipleTicket';
 import styles from './ScanQR.module.css';
 import { MapNewCode, multipleTicketCount, RoomType } from './types';
-import toast from 'react-hot-toast';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
