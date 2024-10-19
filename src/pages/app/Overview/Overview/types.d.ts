@@ -43,6 +43,7 @@ export type RegistrationDataType = {
   event_approval_required: boolean;
   has_venues: boolean;
   ticket_code: string;
+  mapped_code: string;
   is_approved: boolean;
   entry_date: string | null;
   invited_by: string;
