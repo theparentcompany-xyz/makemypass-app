@@ -158,7 +158,15 @@ export const checkInUser = async ({
         }));
       }
 
-      if (error.response.data.statusCode !== 1101)
+      if (error.response.data.statusCode !== 1101) {
+        if (setMappingNewCode && error.response.data.response.map_new_code) {
+          setMappingNewCode({
+            apiConfirmation: true,
+            ticketCode: ticketId,
+            modalConfirmation: false,
+          });
+        }
+
         if (setMessage) {
           setMessage(error.response.data.message.general[0] || 'Check-In Failed');
           if (setScanLogs)
@@ -173,6 +181,7 @@ export const checkInUser = async ({
         } else {
           toast.error(error.response.data.message.general[0] || 'Check-In Failed');
         }
+      }
     })
     .finally(() => {
       if (setChecking) {

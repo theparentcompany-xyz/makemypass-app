@@ -26,7 +26,6 @@ const ScannerResponseModal = ({
   setMappingNewCode?: Dispatch<React.SetStateAction<MapNewCode | undefined>>;
 }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
-
   return (
     message &&
     message.length > 0 && (

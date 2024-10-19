@@ -68,10 +68,7 @@ const ScanQR = () => {
   }, [trigger, eventId]);
 
   useEffect(() => {
-    console.log('Hi');
     if (newCode.length > 0 && mappingNewCode?.apiConfirmation) {
-      console.log('Hello');
-
       mapNewCode({
         mappingNewCode,
         newCode,
@@ -227,6 +224,7 @@ const ScanQR = () => {
                   checking={checking}
                   roomNumber={roomNumber}
                   setRoomNumber={setRoomNumber}
+                  
                 />
               ) : (
                 <Scanner
