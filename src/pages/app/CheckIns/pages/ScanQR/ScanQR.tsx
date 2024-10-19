@@ -224,7 +224,6 @@ const ScanQR = () => {
                   checking={checking}
                   roomNumber={roomNumber}
                   setRoomNumber={setRoomNumber}
-                  
                 />
               ) : (
                 <Scanner
