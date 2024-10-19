@@ -50,7 +50,9 @@ export const getSubEventForm = (
   return new Promise((resolve, reject) => {
     publicGateway
       .post(makeMyPass.getSubEventForm(eventId, eventRegisterId), {
-        sub_event_ids: selectedSubEventIds.map((subEvent) => subEvent.id),
+        sub_event_ids: selectedSubEventIds
+          .filter((subEvent) => !subEvent.alreadyRegistered)
+          .map((subEvent) => subEvent.id),
       })
       .then((response) => {
         resolve(response.data.response.form);
