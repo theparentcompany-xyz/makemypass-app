@@ -457,7 +457,7 @@ const Guests = () => {
                       />
                     )}
 
-                    {isUserEditor() && (
+                    {(isUserEditor() || isUserAuthorized(TillRoles.VOLUNTEER)) && (
                       <TiUserAdd
                         onClick={() => {
                           setSelectedGuestId({
