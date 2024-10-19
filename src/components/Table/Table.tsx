@@ -5,8 +5,8 @@ import { MdCheckBox, MdCheckBoxOutlineBlank, MdDelete, MdEdit } from 'react-icon
 import { HashLoader } from 'react-spinners';
 import { FixedSizeList } from 'react-window';
 
-import { Roles } from '../../../services/enums';
-import { isUserEditor, timeAgo } from '../../common/commonFunctions';
+import { Roles, TillRoles } from '../../../services/enums';
+import { isUserAuthorized, isUserEditor, timeAgo } from '../../common/commonFunctions';
 import { PaginationDataType, ResentTicket, SelectedGuest } from '../../pages/app/Guests/types';
 import { checkUserHierarchy } from '../../pages/app/Overview/Overview/functions';
 import type { hostId } from '../../pages/app/Overview/Overview/types';
@@ -89,7 +89,7 @@ const RowComponent = React.memo(({ index, data }: { index: number; data: ItemDat
               <p className={styles.rowDate}>{timeAgo(item.registered_at)}</p>
               {setResentTicket && (
                 <>
-                  {isUserEditor() && (
+                  {(isUserEditor() || isUserAuthorized(TillRoles.VOLUNTEER)) && (
                     <div className={styles.icon}>
                       <MdEdit
                         className='pointer'

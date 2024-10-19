@@ -8,6 +8,7 @@ import { FaCheck } from 'react-icons/fa6';
 import { MdDownload, MdMail } from 'react-icons/md';
 import { HashLoader } from 'react-spinners';
 
+import { TillRoles } from '../../../../../../services/enums';
 import { setGuestShortlistStatus } from '../../../../../apis/guest';
 import {
   deleteGuestSubmission,
@@ -16,7 +17,7 @@ import {
   initateGuestRefund,
 } from '../../../../../apis/guests';
 import { checkInUser } from '../../../../../apis/scan';
-import { formatDate, isUserEditor } from '../../../../../common/commonFunctions';
+import { formatDate, isUserAuthorized, isUserEditor } from '../../../../../common/commonFunctions';
 import Modal from '../../../../../components/Modal/Modal';
 import ScannerResponseModal from '../../../CheckIns/components/ScannerResponseModal/ScannerResponseModal';
 import { multipleTicketCount } from '../../../CheckIns/pages/ScanQR/types';
@@ -509,17 +510,20 @@ const ViewGuest = ({
                 </div>
               )}
 
-              {isUserEditor() && (
+              {(isUserEditor() || isUserAuthorized(TillRoles.VOLUNTEER)) && (
                 <div className='row'>
-                  <div
-                    className={styles.deleteIcon}
-                    onClick={() => {
-                      setDeleteModal(true);
-                    }}
-                  >
-                    <FaTrash size={15} color='#8E8E8E' />
-                    <span> Delete Submission</span>
-                  </div>
+                  {isUserEditor() && (
+                    <div
+                      className={styles.deleteIcon}
+                      onClick={() => {
+                        setDeleteModal(true);
+                      }}
+                    >
+                      <FaTrash size={15} color='#8E8E8E' />
+                      <span> Delete Submission</span>
+                    </div>
+                  )}
+
                   {!type && (
                     <div
                       className={styles.deleteIcon}
