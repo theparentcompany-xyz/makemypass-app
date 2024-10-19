@@ -17,6 +17,7 @@ import { LogType } from '../Venue/Venue';
 import MultipleTicket from './components/MultipleTicket';
 import styles from './ScanQR.module.css';
 import { MapNewCode, multipleTicketCount, RoomType } from './types';
+import toast from 'react-hot-toast';
 
 const ScanQR = () => {
   const [ticketId, setTicketId] = useState<string>('');
@@ -69,6 +70,15 @@ const ScanQR = () => {
 
   useEffect(() => {
     if (newCode.length > 0 && mappingNewCode?.apiConfirmation) {
+      if (newCode.length > 0 && mappingNewCode?.ticketCode === newCode) {
+        toast.error('Mapping Code and Ticket Code cannot be same', {
+          id: 'mapping-code-error',
+        });
+        setNewCode('');
+        setNewCodeTrigger(false);
+        return;
+      }
+
       mapNewCode({
         mappingNewCode,
         newCode,
