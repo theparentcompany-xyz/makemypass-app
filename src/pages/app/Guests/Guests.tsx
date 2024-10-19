@@ -97,7 +97,12 @@ const Guests = () => {
 
   const getGuestData = () => {
     if (!eventFormData) getEventFormData(eventId, setEventFormData);
-    if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'edit' && isUserEditor()) {
+    if (
+      selectedGuestId &&
+      selectedGuestId.id &&
+      selectedGuestId.type == 'edit' &&
+      (isUserEditor() || isUserAuthorized(TillRoles.VOLUNTEER))
+    ) {
       getGuestEditPrefillData(eventId, selectedGuestId.id, setSelectedGuest, setFormData);
     } else if (selectedGuestId && selectedGuestId.id && selectedGuestId.type == 'view')
       getGuestInformation(eventId, selectedGuestId.id, setSelectedGuest);
