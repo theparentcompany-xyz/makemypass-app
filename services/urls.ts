@@ -58,6 +58,10 @@ export const makeMyPass = {
   guestListFormCategories: (eventId: string) =>
     makeMyPassURL(`/manage-guest/${eventId}/list-form-categories/`),
   guestList: (eventId = '') => makeMyPassURL(`/manage-guest/${eventId}/register-list/`), //Till Volunteer
+  removeTicketCode: (eventId: string, eventRegisterId: string, ticketCode: string) =>
+    makeMyPassURL(
+      `/manage-guest/${eventId}/guest/${eventRegisterId}/remove-ticket-code/${ticketCode}/`,
+    ), //Till Admin
 
   //Manage Logs
   mailLog: (eventId: string) => makeMyPassURL(`/manage-log/${eventId}/mail-log/`), //Till Admin

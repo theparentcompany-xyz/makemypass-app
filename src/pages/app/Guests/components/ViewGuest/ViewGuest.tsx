@@ -5,7 +5,7 @@ import { BiChevronDown } from 'react-icons/bi';
 import { BsTicketPerforatedFill } from 'react-icons/bs';
 import { FaEdit, FaMailBulk, FaTrash, FaWalking } from 'react-icons/fa';
 import { FaCheck } from 'react-icons/fa6';
-import { MdDownload, MdMail } from 'react-icons/md';
+import { MdDownload, MdMail, MdRemove } from 'react-icons/md';
 import { HashLoader } from 'react-spinners';
 
 import { TillRoles } from '../../../../../../services/enums';
@@ -15,6 +15,7 @@ import {
   getGuestMailLog,
   getGuestVisistedVenues,
   initateGuestRefund,
+  removeMappedCode,
 } from '../../../../../apis/guests';
 import { checkInUser } from '../../../../../apis/scan';
 import { formatDate, isUserAuthorized, isUserEditor } from '../../../../../common/commonFunctions';
@@ -50,6 +51,7 @@ const ViewGuest = ({
     value: false,
   });
   const [deleteModal, setDeleteModal] = useState(false);
+  const [removeTicketCode, setRemoveTicketCode] = useState(false);
   const [mailLog, setMailLog] = useState<{
     showLog: boolean;
     logs: EmailType[];
@@ -146,6 +148,43 @@ const ViewGuest = ({
             </div>
           </Modal>
         </>
+      )}
+      {removeTicketCode && (
+        <Modal
+          title='Remove Ticket Code'
+          onClose={() => {
+            setRemoveTicketCode(false);
+          }}
+        >
+          <div className={styles.deleteModal}>
+            <p className={styles.deleteModalText}>
+              Are you sure you want to remove this ticket code?
+            </p>
+            <div className={styles.deleteModalButtons}>
+              <SecondaryButton
+                buttonText='Cancel'
+                onClick={() => {
+                  setRemoveTicketCode(false);
+                }}
+              />
+              <SecondaryButton
+                buttonText='Remove'
+                onClick={() => {
+                  if (selectedGuestData) {
+                    removeMappedCode(
+                      eventId,
+                      selectedGuestData['id'],
+                      selectedGuestData['mapped_code'],
+                      setTriggerFetch,
+                    );
+                  }
+                  setSelectedGuestId(null);
+                  setRemoveTicketCode(false);
+                }}
+              />
+            </div>
+          </div>
+        </Modal>
       )}
       {visitedVenues.status && (
         <div className={styles.topLayer}>
@@ -513,6 +552,18 @@ const ViewGuest = ({
                     <FaMailBulk size={20} color='#8E8E8E' />
                     <span>View Mail Log</span>
                   </div>
+
+                  {selectedGuestData.mapped_code && (
+                    <div
+                      className={styles.deleteIcon}
+                      onClick={() => {
+                        setRemoveTicketCode(true);
+                      }}
+                    >
+                      <MdRemove size={15} color='#8E8E8E' />
+                      <span>Remove Mapped Code</span>
+                    </div>
+                  )}
                 </div>
               )}
 
