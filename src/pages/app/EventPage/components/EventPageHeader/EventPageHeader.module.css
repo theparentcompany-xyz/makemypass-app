@@ -282,6 +282,11 @@
   margin: 1rem 0;
 }
 
+.eventDescription img {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
 .eventDescription li {
   margin: 0.5rem 0;
 }
